@@ -22,22 +22,22 @@ public class LiveServlet extends HttpServlet {
 		String action = req.getParameter("action");
 
 		if ("getAll".equals(action)) {
-			/***************************¶}©l¬d¸ß¸ê®Æ ****************************************/
+			/***************************é–‹å§‹æŸ¥è©¢è³‡æ–™ ****************************************/
 			LiveJDBCDAO dao = new LiveJDBCDAO();
 			List<LiveVO> list = dao.getAll();
 
-			/***************************¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
+			/***************************æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
 			HttpSession session = req.getSession();
-			session.setAttribute("list", list);    // ¸ê®Æ®w¨ú¥Xªºlistª«¥ó,¦s¤Jsession
+			session.setAttribute("list", list);    // è³‡æ–™åº«å–å‡ºçš„listç‰©ä»¶,å­˜å…¥session
 			// Send the Success view
 			String url = "/live/listAllLive2_getFromSession.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);// ¦¨¥\Âà¥ælistAllEmp2_getFromSession.jsp
+			RequestDispatcher successView = req.getRequestDispatcher(url);// æˆåŠŸè½‰äº¤listAllEmp2_getFromSession.jsp
 			successView.forward(req, res);
 			return;
 		}
 
 
-		if ("getOne_For_Display".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ğ¨D
+		if ("getOne_For_Display".equals(action)) { // ä¾†è‡ªselect_page.jspçš„è«‹æ±‚
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -45,56 +45,56 @@ public class LiveServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
-				/***************************1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z**********************/
+				/***************************1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç†**********************/
 				String str = req.getParameter("live_id");
 				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("½Ğ¿é¤Jª½¼½½s¸¹");
+					errorMsgs.add("è«‹è¼¸å…¥ç›´æ’­ç·¨è™Ÿ");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/live/select_page.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ç¨‹å¼ä¸­æ–·
 				}
 				
 				Integer live_id = null;
 				try {
 					live_id = new Integer(str);
 				} catch (Exception e) {
-					errorMsgs.add("ª½¼½½s¸¹®æ¦¡¤£¥¿½T");
+					errorMsgs.add("ç›´æ’­ç·¨è™Ÿæ ¼å¼ä¸æ­£ç¢º");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/live/select_page.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ç¨‹å¼ä¸­æ–·
 				}
 				
-				/***************************2.¶}©l¬d¸ß¸ê®Æ*****************************************/
+				/***************************2.é–‹å§‹æŸ¥è©¢è³‡æ–™*****************************************/
 				LiveJDBCDAO dao = new LiveJDBCDAO();
 				LiveVO liveVO = dao.findByPrimaryKey(live_id);
 				if (liveVO == null) {
-					errorMsgs.add("¬dµL¸ê®Æ");
+					errorMsgs.add("æŸ¥ç„¡è³‡æ–™");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/live/select_page.jsp");
 					failureView.forward(req, res);
-					return;//µ{¦¡¤¤Â_
+					return;//ç¨‹å¼ä¸­æ–·
 				}
 				
-				/***************************3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view)*************/
-				req.setAttribute("liveVO", liveVO); // ¸ê®Æ®w¨ú¥XªºempVOª«¥ó,¦s¤Jreq
+				/***************************3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view)*************/
+				req.setAttribute("liveVO", liveVO); // è³‡æ–™åº«å–å‡ºçš„empVOç‰©ä»¶,å­˜å…¥req
 				String url = "/live/listOneLive.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ¦¨¥\Âà¥æ listOneEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // æˆåŠŸè½‰äº¤ listOneEmp.jsp
 				successView.forward(req, res);
 
-				/***************************¨ä¥L¥i¯àªº¿ù»~³B²z*************************************/
+				/***************************å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç†*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
+				errorMsgs.add("ç„¡æ³•å–å¾—è³‡æ–™:" + e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/live/select_page.jsp");
 				failureView.forward(req, res);

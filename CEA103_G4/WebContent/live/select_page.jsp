@@ -73,7 +73,7 @@
    
   <li>
      <FORM METHOD="post" ACTION="live.do" >
-       <b>輸入直播編號 (如1001):</b>
+       <b>請選擇直播編號:</b>
        <select size="1" name="live_id">
          <c:forEach var="liveVO" items="${dao.all}" > 
           <option value="${liveVO.live_id}">${liveVO.live_id}
@@ -87,7 +87,7 @@
   <li>
      <FORM METHOD="post" ACTION="live.do" >
        <b>請選擇直播編號:</b>
-       <select size="1" name="live_type">
+       <select size="1" name="live_id">
          <c:forEach var="liveVO" items="${dao.all}" > 
           <option value="${liveVO.live_id}">${liveVO.live_id}
          </c:forEach>   
@@ -102,11 +102,11 @@
    function fun1(){
       with(document.form1){
          if (live_id.value=="") 
-             alert("請選擇直播標號!");
+             alert("請選擇直播編號!");
          else if (isNaN(live_id.value)) 
              alert("直播編號格式不正確!");
          else if ((live_id.value < 1001) || (live_id.value > 1999)) 
-             alert("請填寫介於1001和1999之間的數字!");
+             alert("請填寫1001~1999之數字");
          else
              submit();
       }

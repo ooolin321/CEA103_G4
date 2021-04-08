@@ -8,12 +8,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 
 public class LiveJDBCDAO implements LiveDAO_interface {
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://database-1.canq3t4lp2za.ap-northeast-1.rds.amazonaws.com:3306/CEA103_G4?serverTimezone=Asia/Taipei";
-	String userid = "admin";
-	String passwd = "12345678";
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/admin");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT_STMT = "INSERT INTO LIVE (live_id,live_type,live_name,live_time,live_state,user_id,empno) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM LIVE order by live_id";
@@ -28,8 +38,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, liveVO.getLive_id());
@@ -42,8 +51,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -71,8 +79,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, liveVO.getLive_type());
@@ -84,9 +91,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -117,8 +122,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setInt(1, live_id);
@@ -126,9 +130,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -161,8 +163,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, live_id);
@@ -170,7 +171,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// liveVO 也稱為 Domain objects
+				
 				liveVO = new LiveVO();
 				liveVO.setLive_id(rs.getInt("live_id"));
 				liveVO.setLive_type(rs.getString("live_type"));
@@ -182,9 +183,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
+		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -225,13 +224,12 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 		
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// liveVO 也稱為 Domain objects
+				
 				liveVO = new LiveVO();
 				liveVO.setLive_id(rs.getInt("live_id"));
 				liveVO.setLive_type(rs.getString("live_type"));
@@ -244,10 +242,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
+		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());

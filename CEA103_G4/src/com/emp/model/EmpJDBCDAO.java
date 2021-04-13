@@ -4,10 +4,15 @@ import java.util.*;
 import java.sql.*;
 
 public class EmpJDBCDAO implements EmpDAO_interface {
+//	String driver = "com.mysql.cj.jdbc.Driver";
+//	String url = "jdbc:mysql://localhost:3306/CEA103_G4?serverTimezone=Asia/Taipei";
+//	String userid = "root";
+//	String passwd = "771414";
+	
 	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/CEA103_G4?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "771414";
+	String url = "jdbc:mysql://database-1.canq3t4lp2za.ap-northeast-1.rds.amazonaws.com:3306/CEA103_G4?serverTimezone=Asia/Taipei";
+	String userid = "admin";
+	String passwd = "12345678";
 
 	private static final String INSERT_STMT = 
 			"INSERT INTO EMP (ENAME,JOB,ID,GENDER,DOB,ADDR,SAL,STATE,HIREDATE,EMP_PWD) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

@@ -18,7 +18,7 @@ public class EmpDAO implements EmpDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CEA103_G4");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/admin");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

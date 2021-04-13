@@ -53,8 +53,8 @@
   
   <li>
     <FORM METHOD="post" ACTION="live.do" >
-        <b>輸入直播編號 (如1001):</b>
-        <input type="text" name="live_id">
+        <b>輸入直播編號 (如8001):</b>
+        <input type="text" name="live_no">
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="submit" value="送出">                   <h4>(資料格式驗證  by Controller ).</h4> 
     </FORM>
@@ -62,8 +62,8 @@
   
   <li>
     <FORM METHOD="post" ACTION="live.do" name="form1">
-        <b>輸入直播編號 (如1001):</b>
-        <input type="text" name="live_id">
+        <b>輸入直播編號 (如8001):</b>
+        <input type="text" name="live_no">
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="button" value="送出" onclick="fun1()">  <h4>(資料格式驗證  by Java Script).</h4> 
     </FORM>
@@ -74,9 +74,9 @@
   <li>
      <FORM METHOD="post" ACTION="live.do" >
        <b>請選擇直播編號:</b>
-       <select size="1" name="live_id">
+       <select size="1" name="live_no">
          <c:forEach var="liveVO" items="${dao.all}" > 
-          <option value="${liveVO.live_id}">${liveVO.live_id}
+          <option value="${liveVO.live_no}">${liveVO.live_no}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -84,29 +84,16 @@
     </FORM>
   </li>
   
-  <li>
-     <FORM METHOD="post" ACTION="live.do" >
-       <b>請選擇直播編號:</b>
-       <select size="1" name="live_id">
-         <c:forEach var="liveVO" items="${dao.all}" > 
-          <option value="${liveVO.live_id}">${liveVO.live_id}
-         </c:forEach>   
-       </select>
-       <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出">
-     </FORM>
-  </li>
-</ul>
 
 <script>    
    function fun1(){
       with(document.form1){
-         if (live_id.value=="") 
+         if (live_no.value=="") 
              alert("請選擇直播編號!");
-         else if (isNaN(live_id.value)) 
+         else if (isNaN(live_no.value)) 
              alert("直播編號格式不正確!");
-         else if ((live_id.value < 1001) || (live_id.value > 1999)) 
-             alert("請填寫1001~1999之數字");
+         else if ((live_no.value < 8001) || (live_no.value > 8999)) 
+             alert("請填寫8001~8999之數字");
          else
              submit();
       }

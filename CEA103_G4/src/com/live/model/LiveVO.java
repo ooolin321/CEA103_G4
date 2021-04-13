@@ -3,7 +3,7 @@ package com.live.model;
 import java.sql.Date;
 
 public class LiveVO implements java.io.Serializable {
-	private Integer live_id;
+	private Integer live_no;
 	private String live_type;
 	private String live_name;
 	private Date live_time;
@@ -11,12 +11,12 @@ public class LiveVO implements java.io.Serializable {
 	private String user_id;
 	private Integer empno;
 
-	public Integer getLive_id() {
-		return live_id;
+	public Integer getLive_no() {
+		return live_no;
 	}
 
-	public void setLive_id(Integer live_id) {
-		this.live_id = live_id;
+	public void setLive_no(Integer live_no) {
+		this.live_no = live_no;
 	}
 
 	public String getLive_type() {

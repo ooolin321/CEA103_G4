@@ -25,11 +25,11 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO LIVE (live_id,live_type,live_name,live_time,live_state,user_id,empno) VALUES (?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT * FROM LIVE order by live_id";
-	private static final String GET_ONE_STMT = "SELECT * FROM LIVE where live_id = ?";
-	private static final String DELETE = "DELETE FROM LIVE where live_id = ?";
-	private static final String UPDATE = "UPDATE LIVE set live_type=?, live_name=?, live_time=?, live_state=? where live_id = ?";
+	private static final String INSERT_STMT = "INSERT INTO LIVE (live_no,live_type,live_name,live_time,live_state,user_id,empno) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String GET_ALL_STMT = "SELECT * FROM LIVE order by live_no";
+	private static final String GET_ONE_STMT = "SELECT * FROM LIVE where live_no = ?";
+	private static final String DELETE = "DELETE FROM LIVE where live_no = ?";
+	private static final String UPDATE = "UPDATE LIVE set live_type=?, live_name=?, live_time=?, live_state=? where live_no = ?";
 
 	@Override
 	public void insert(LiveVO liveVO) {
@@ -41,7 +41,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, liveVO.getLive_id());
+			pstmt.setInt(1, liveVO.getLive_no());
 			pstmt.setString(2, liveVO.getLive_type());
 			pstmt.setString(3, liveVO.getLive_name());
 			pstmt.setDate(4, liveVO.getLive_time());
@@ -86,7 +86,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 			pstmt.setString(2, liveVO.getLive_name());
 			pstmt.setDate(3, liveVO.getLive_time());
 			pstmt.setString(4, liveVO.getLive_state());
-			pstmt.setInt(5, liveVO.getLive_id());
+			pstmt.setInt(5, liveVO.getLive_no());
 
 			pstmt.executeUpdate();
 
@@ -115,7 +115,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 	}
 
 	@Override
-	public void delete(Integer live_id) {
+	public void delete(Integer live_no) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -125,7 +125,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setInt(1, live_id);
+			pstmt.setInt(1, live_no);
 
 			pstmt.executeUpdate();
 
@@ -154,7 +154,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 	}
 
 	@Override
-	public LiveVO findByPrimaryKey(Integer live_id) {
+	public LiveVO findByPrimaryKey(Integer live_no) {
 
 		LiveVO liveVO = null;
 		Connection con = null;
@@ -166,14 +166,14 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setInt(1, live_id);
+			pstmt.setInt(1, live_no);
 
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				
 				liveVO = new LiveVO();
-				liveVO.setLive_id(rs.getInt("live_id"));
+				liveVO.setLive_no(rs.getInt("live_no"));
 				liveVO.setLive_type(rs.getString("live_type"));
 				liveVO.setLive_name(rs.getString("live_name"));
 				liveVO.setLive_time(rs.getDate("live_time"));
@@ -231,7 +231,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 			while (rs.next()) {
 				
 				liveVO = new LiveVO();
-				liveVO.setLive_id(rs.getInt("live_id"));
+				liveVO.setLive_no(rs.getInt("live_no"));
 				liveVO.setLive_type(rs.getString("live_type"));
 				liveVO.setLive_name(rs.getString("live_name"));
 				liveVO.setLive_time(rs.getDate("live_time"));

@@ -46,7 +46,7 @@ public class LiveServlet extends HttpServlet {
 
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				String str = req.getParameter("live_id");
+				String str = req.getParameter("live_no");
 				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入直播編號");
 				}
@@ -58,9 +58,9 @@ public class LiveServlet extends HttpServlet {
 					return;//程式中斷
 				}
 				
-				Integer live_id = null;
+				Integer live_no = null;
 				try {
-					live_id = new Integer(str);
+					live_no = new Integer(str);
 				} catch (Exception e) {
 					errorMsgs.add("直播編號格式不正確");
 				}
@@ -74,7 +74,7 @@ public class LiveServlet extends HttpServlet {
 				
 				/***************************2.開始查詢資料*****************************************/
 				LiveJDBCDAO dao = new LiveJDBCDAO();
-				LiveVO liveVO = dao.findByPrimaryKey(live_id);
+				LiveVO liveVO = dao.findByPrimaryKey(live_no);
 				if (liveVO == null) {
 					errorMsgs.add("查無資料");
 				}

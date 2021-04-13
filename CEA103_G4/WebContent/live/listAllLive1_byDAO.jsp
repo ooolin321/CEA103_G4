@@ -82,7 +82,7 @@
 	<%@ include file="page1.file" %> 
 	<c:forEach var="liveVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		<tr>
-			<td>${liveVO.live_id}</td>
+			<td>${liveVO.live_no}</td>
 			<td>${liveVO.live_type}</td>
 			<td>${liveVO.live_name}</td>
 			<td>${liveVO.live_time}</td>

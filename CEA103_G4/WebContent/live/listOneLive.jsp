@@ -65,7 +65,7 @@
 		<th>empno</th>
 	</tr>
 	<tr>
-		<td><%=liveVO.getLive_id()%></td>
+		<td><%=liveVO.getLive_no()%></td>
 		<td><%=liveVO.getLive_type()%></td>
 		<td><%=liveVO.getLive_name()%></td>
 		<td><%=liveVO.getLive_time()%></td>

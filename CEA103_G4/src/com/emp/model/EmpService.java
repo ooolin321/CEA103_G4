@@ -10,13 +10,13 @@ public class EmpService {
 		dao = new EmpDAO();
 	}
 
-	public EmpVO addEmp(String ename, String job, String id, String gender, 
-			java.sql.Date dob, String addr, Double sal,String state, java.sql.Date hiredate)
-	{
+	public EmpVO addEmp(String ename, String job, String id, String gender, java.sql.Date dob, String addr, Double sal,
+			Integer state, java.sql.Date hiredate, String empPwd) {
+
 		EmpVO empVO = new EmpVO();
-		
-		empVO.setJob(job);
+
 		empVO.setEname(ename);
+		empVO.setJob(job);
 		empVO.setId(id);
 		empVO.setGender(gender);
 		empVO.setDob(dob);
@@ -24,20 +24,21 @@ public class EmpService {
 		empVO.setSal(sal);
 		empVO.setState(state);
 		empVO.setHiredate(hiredate);
+		empVO.setEmp_pwd(empPwd);
 		
 		dao.insert(empVO);
-
+		
 		return empVO;
 	}
 
-	public EmpVO updateEmp(Integer empno, String ename, String job, String id, String gender, java.sql.Date dob, String addr, 
-			Double sal,String state, java.sql.Date hiredate) {
+	public EmpVO updateEmp(Integer empno, String ename, String job, String id, String gender, java.sql.Date dob,
+			String addr, Double sal, Integer state, java.sql.Date hiredate, String empPwd) {
 
 		EmpVO empVO = new EmpVO();
-		
+
 		empVO.setEmpno(empno);
-		empVO.setJob(job);
 		empVO.setEname(ename);
+		empVO.setJob(job);
 		empVO.setId(id);
 		empVO.setGender(gender);
 		empVO.setDob(dob);
@@ -45,7 +46,8 @@ public class EmpService {
 		empVO.setSal(sal);
 		empVO.setState(state);
 		empVO.setHiredate(hiredate);
-		
+		empVO.setEmp_pwd(empPwd);
+
 		dao.update(empVO);
 
 		return empVO;

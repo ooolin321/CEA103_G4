@@ -4,35 +4,36 @@ import java.io.Serializable;
 import java.sql.Date;
 
 
-
 public class EmpVO implements Serializable{
 	private Integer empno;
-	private String job;
 	private String ename;
+	private String job;
 	private String id;
 	private String gender;
 	private Date dob;
 	private String addr;
 	private Double sal;
-	private String state;
+	private Integer state;
 	private Date hiredate;
+	private String emp_pwd;
+	
 	public Integer getEmpno() {
 		return empno;
 	}
 	public void setEmpno(Integer empno) {
 		this.empno = empno;
 	}
-	public String getJob() {
-		return job;
-	}
-	public void setJob(String job) {
-		this.job = job;
-	}
 	public String getEname() {
 		return ename;
 	}
 	public void setEname(String ename) {
 		this.ename = ename;
+	}
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
 	}
 	public String getId() {
 		return id;
@@ -64,10 +65,10 @@ public class EmpVO implements Serializable{
 	public void setSal(Double sal) {
 		this.sal = sal;
 	}
-	public String getState() {
+	public Integer getState() {
 		return state;
 	}
-	public void setState(String state) {
+	public void setState(Integer state) {
 		this.state = state;
 	}
 	public Date getHiredate() {
@@ -76,6 +77,13 @@ public class EmpVO implements Serializable{
 	public void setHiredate(Date hiredate) {
 		this.hiredate = hiredate;
 	}
+	public String getEmp_pwd() {
+		return emp_pwd;
+	}
+	public void setEmp_pwd(String empPwd) {
+		this.emp_pwd = empPwd;
+	}
 
+	
 	
 }

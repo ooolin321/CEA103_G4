@@ -7,7 +7,7 @@ public class LiveVO implements java.io.Serializable {
 	private String live_type;
 	private String live_name;
 	private Date live_time;
-	private String live_state;
+	private Integer live_state;
 	private String user_id;
 	private Integer empno;
 
@@ -43,11 +43,11 @@ public class LiveVO implements java.io.Serializable {
 		this.live_time = live_time;
 	}
 
-	public String getLive_state() {
+	public Integer getLive_state() {
 		return live_state;
 	}
 
-	public void setLive_state(String live_state) {
+	public void setLive_state(Integer live_state) {
 		this.live_state = live_state;
 	}
 

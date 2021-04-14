@@ -23,7 +23,7 @@ public class LiveServlet extends HttpServlet {
 
 		if ("getAll".equals(action)) {
 			/***************************開始查詢資料 ****************************************/
-			LiveJDBCDAO dao = new LiveJDBCDAO();
+			LiveJNDIDAO dao = new LiveJNDIDAO();
 			List<LiveVO> list = dao.getAll();
 
 			/***************************查詢完成,準備轉交(Send the Success view)*************/
@@ -73,7 +73,7 @@ public class LiveServlet extends HttpServlet {
 				}
 				
 				/***************************2.開始查詢資料*****************************************/
-				LiveJDBCDAO dao = new LiveJDBCDAO();
+				LiveJNDIDAO dao = new LiveJNDIDAO();
 				LiveVO liveVO = dao.findByPrimaryKey(live_no);
 				if (liveVO == null) {
 					errorMsgs.add("查無資料");

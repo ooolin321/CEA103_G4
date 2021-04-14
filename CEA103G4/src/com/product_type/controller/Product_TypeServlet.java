@@ -163,7 +163,7 @@ public class Product_TypeServlet  extends HttpServlet {
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("product_typeVO", product_typeVO); // 資料庫update成功後,正確的的product_typeVO物件,存入req
 				String url = "/back-end/product_type/listOneProduct_Type.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneProduct_Type.jsp
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理*************************************/

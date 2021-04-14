@@ -49,7 +49,7 @@
 <table id="table-1">
 	<tr><td>
 		 <h3>商品類別資料 </h3>
-		 <h4><a href="select_page.jsp">回首頁</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/back-end/product_type/select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
 

@@ -18,10 +18,9 @@ public class SetCharacterEncodingFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 
-		// 使用 Filter 解決 Query String 之編碼問題
-		// request.setCharacterEncoding("特定的字碼集");
+
 		request.setCharacterEncoding(encoding);
-		// 將程式控制權交給後續的過濾器
+
 		chain.doFilter(request, response);
 	}
 

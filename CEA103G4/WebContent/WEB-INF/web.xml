@@ -78,6 +78,27 @@
 		<servlet-name>Live_orderServlet</servlet-name>
 		<url-pattern>/front-end/live_order/live_order.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Live_reportServlet</servlet-name>
+		<servlet-class>com.live_report.controller.Live_reportServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Live_reportServlet</servlet-name>
+		<url-pattern>/back-end/live_report/live_report.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>DBGifReader</servlet-name>
+		<servlet-class>com.live_report.controller.DBGifReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DBGifReader</servlet-name>
+		<url-pattern>/live_report/DBGifReader.do</url-pattern>
+	</servlet-mapping>
+	
+	
 	<servlet>
 		<servlet-name>EmpServlet</servlet-name>
 		<servlet-class>com.emp.controller.EmpServlet</servlet-class>

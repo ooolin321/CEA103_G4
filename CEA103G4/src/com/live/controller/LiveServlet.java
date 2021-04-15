@@ -30,7 +30,7 @@ public class LiveServlet extends HttpServlet {
 			HttpSession session = req.getSession();
 			session.setAttribute("list", list);    // 資料庫取出的list物件,存入session
 			// Send the Success view
-			String url = "/live/listAllLive2_getFromSession.jsp";
+			String url = "/front-end/live/listAllLive2_getFromSession.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交listAllEmp2_getFromSession.jsp
 			successView.forward(req, res);
 			return;
@@ -53,7 +53,7 @@ public class LiveServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/live/select_page.jsp");
+							.getRequestDispatcher("/front-end/live/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -67,7 +67,7 @@ public class LiveServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/live/select_page.jsp");
+							.getRequestDispatcher("/front-end/live/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -81,14 +81,14 @@ public class LiveServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/live/select_page.jsp");
+							.getRequestDispatcher("/front-end/live/select_page.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("liveVO", liveVO); // 資料庫取出的empVO物件,存入req
-				String url = "/live/listOneLive.jsp";
+				String url = "/front-end/live/listOneLive.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -96,7 +96,7 @@ public class LiveServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/live/select_page.jsp");
+						.getRequestDispatcher("/front-end/live/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}

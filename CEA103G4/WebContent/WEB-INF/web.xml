@@ -66,7 +66,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LiveServlet</servlet-name>
-		<url-pattern>/live/live.do</url-pattern>
+		<url-pattern>/front-end/live/live.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>MsgServlet</servlet-name>
@@ -83,7 +83,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Live_orderServlet</servlet-name>
-		<url-pattern>/live_order/live_order.do</url-pattern>
+		<url-pattern>/front-end/live_order/live_order.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>EmpServlet</servlet-name>

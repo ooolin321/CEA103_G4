@@ -1,15 +1,20 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.live_order.model.*"%>
-<%-- 此頁暫練習採用 Script 的寫法取值 --%>
+<%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-  Live_orderVO live_orderVO = (Live_orderVO) request.getAttribute("live_orderVO"); //EmpServlet.java(Concroller), 存入req的live_orderVO物件
+    Live_orderService live_orderSvc = new Live_orderService();
+    List<Live_orderVO> list = live_orderSvc.getAll();
+    pageContext.setAttribute("list",list);
 %>
+
 
 <html>
 <head>
-<title>直播訂單資料 - listOneLive_order.jsp</title>
+<title>所有直播訂單資料 - listAllLive_order.jsp</title>
 
 <style>
   table#table-1 {
@@ -30,7 +35,7 @@
 
 <style>
   table {
-	width: 600px;
+	width: 800px;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -47,13 +52,23 @@
 </head>
 <body bgcolor='white'>
 
-<h4>此頁暫練習採用 Script 的寫法取值:</h4>
+<h4>此頁練習採用 EL 的寫法取值:</h4>
 <table id="table-1">
 	<tr><td>
-		 <h3>員工資料 - ListOneEmp.jsp</h3>
+		 <h3>所有直播訂單資料 - listAllLive_order.jsp</h3>
 		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
+
+<%-- 錯誤表列 --%>
+<c:if test="${not empty errorMsgs}">
+	<font style="color:red">請修正以下錯誤:</font>
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message}</li>
+		</c:forEach>
+	</ul>
+</c:if>
 
 <table>
 	<tr>
@@ -78,6 +93,9 @@
 		<th>賣家評價內容</th>
 		<th>點數回饋</th>
 	</tr>
+	<%@ include file="page1.file" %> 
+	<c:forEach var="live_orderVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+		
 		<tr>
 			<td>${live_orderVO.live_order_no}</td>
 			<td><fmt:formatDate value="${live_orderVO.order_date}" pattern="yyyy-MM-dd"/></td>
@@ -101,19 +119,21 @@
 			<td>${live_orderVO.point}</td>
 			
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_order/live_order.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/live_order/live_order.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="live_order_no"  value="${live_orderVO.live_order_no}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_order/live_order.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/live_order/live_order.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="live_order_no"  value="${live_orderVO.live_order_no}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
-		<tr>
+		</tr>
+	</c:forEach>
 </table>
+<%@ include file="page2.file" %>
 
 </body>
 </html>

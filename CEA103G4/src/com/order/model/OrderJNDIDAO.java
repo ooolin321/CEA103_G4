@@ -262,7 +262,7 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				//
+				
 				orderVO = new OrderVO();
 				orderVO.setOrder_no(rs.getInt("order_no"));
 				orderVO.setOrder_date(rs.getDate("order_date"));

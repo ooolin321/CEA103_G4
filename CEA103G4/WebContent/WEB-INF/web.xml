@@ -128,7 +128,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>OrderServlet</servlet-name>
-		<url-pattern>/order/order.do</url-pattern>
+		<url-pattern>/front-end/order/order.do</url-pattern>
 	</servlet-mapping>
 
 	<filter>

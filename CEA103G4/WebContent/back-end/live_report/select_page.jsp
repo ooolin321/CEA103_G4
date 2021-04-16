@@ -52,7 +52,7 @@
   
   
   <li>
-    <FORM METHOD="post" ACTION="live_report.do" >
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_report/live_report.do" >
         <b>輸入直播檢舉編號 (如13001):</b>
         <input type="text" name="live_report_no">
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -63,7 +63,7 @@
   <jsp:useBean id="live_reportSvc" scope="page" class="com.live_report.model.Live_reportService" />
    
   <li>
-     <FORM METHOD="post" ACTION="live_report.do" >
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_report/live_report.do" >
        <b>選擇直播檢舉編號:</b>
        <select size="1" name="live_report_no">
          <c:forEach var="live_reportVO" items="${live_reportSvc.all}" > 

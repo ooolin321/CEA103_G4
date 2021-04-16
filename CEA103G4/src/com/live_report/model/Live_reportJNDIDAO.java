@@ -23,11 +23,11 @@ public class Live_reportJNDIDAO implements Live_reportDAO_interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO LIVE_REPORT (LIVE_REPORT_CONTENT,LIVE_ID,USER_ID,EMPNO,LIVE_REPORT_STATE,REPORT_DATE,PHOTO) VALUES (?, ?, ? ,? ,? ,? ,? )";
+	private static final String INSERT_STMT = "INSERT INTO LIVE_REPORT (LIVE_REPORT_CONTENT,LIVE_NO,USER_ID,EMPNO,LIVE_REPORT_STATE,PHOTO) VALUES (?, ?, ? ,? ,? ,? )";
 	private static final String GET_ALL_STMT = "SELECT * FROM LIVE_REPORT ORDER BY LIVE_REPORT_NO";
 	private static final String GET_ONE_STMT = "SELECT * FROM LIVE_REPORT WHERE LIVE_REPORT_NO = ?";
 	private static final String DELETE = "DELETE FROM LIVE_REPORT where LIVE_REPORT_NO = ?";
-	private static final String UPDATE = "UPDATE LIVE_REPORT SET LIVE_REPORT_CONTENT=?,LIVE_ID=?,USER_ID=?,EMPNO=?,LIVE_REPORT_STATE=?,REPORT_DATE=?,PHOTO=? WHERE LIVE_REPORT_NO = ?";
+	private static final String UPDATE = "UPDATE LIVE_REPORT SET LIVE_REPORT_CONTENT=?,LIVE_NO=?,USER_ID=?,EMPNO=?,LIVE_REPORT_STATE=?,PHOTO=? WHERE LIVE_REPORT_NO = ?";
 
 	@Override
 	public void insert(Live_reportVO live_reportVO) {
@@ -44,8 +44,7 @@ public class Live_reportJNDIDAO implements Live_reportDAO_interface {
 			pstmt.setString(3, live_reportVO.getUser_id());
 			pstmt.setInt(4, live_reportVO.getEmpno());
 			pstmt.setInt(5, live_reportVO.getLive_report_state());
-			pstmt.setDate(6, live_reportVO.getReport_date());
-			pstmt.setBytes(7, live_reportVO.getPhoto());
+			pstmt.setBytes(6, live_reportVO.getPhoto());
 
 			pstmt.executeUpdate();
 
@@ -84,9 +83,8 @@ public class Live_reportJNDIDAO implements Live_reportDAO_interface {
 			pstmt.setString(3, live_reportVO.getUser_id());
 			pstmt.setInt(4, live_reportVO.getEmpno());
 			pstmt.setInt(5, live_reportVO.getLive_report_state());
-			pstmt.setDate(6, live_reportVO.getReport_date());
-			pstmt.setBytes(7, live_reportVO.getPhoto());
-			pstmt.setInt(8, live_reportVO.getLive_report_no());
+			pstmt.setBytes(6, live_reportVO.getPhoto());
+			pstmt.setInt(7, live_reportVO.getLive_report_no());
 
 			pstmt.executeUpdate();
 
@@ -173,7 +171,7 @@ public class Live_reportJNDIDAO implements Live_reportDAO_interface {
 				live_reportVO.setUser_id(rs.getString("User_id"));
 				live_reportVO.setEmpno(rs.getInt("empno"));
 				live_reportVO.setLive_report_state(rs.getInt("live_report_state"));
-				live_reportVO.setReport_date(rs.getDate("report_date"));
+				live_reportVO.setReport_date(rs.getTimestamp("report_date"));
 				live_reportVO.setPhoto(rs.getBytes("photo"));
 			}
 
@@ -231,7 +229,7 @@ public class Live_reportJNDIDAO implements Live_reportDAO_interface {
 				live_reportVO.setUser_id(rs.getString("User_id"));
 				live_reportVO.setEmpno(rs.getInt("empno"));
 				live_reportVO.setLive_report_state(rs.getInt("live_report_state"));
-				live_reportVO.setReport_date(rs.getDate("report_date"));
+				live_reportVO.setReport_date(rs.getTimestamp("report_date"));
 				live_reportVO.setPhoto(rs.getBytes("photo"));
 				list.add(live_reportVO);
 			}

@@ -5,7 +5,7 @@
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
 %>
-<%=empVO == null%>
+
 
 <html>
 <head>
@@ -102,8 +102,8 @@ th, td {
 			<tr>
 				<td>性別:</td>
 				<td><select size="1" name="gender">
-						<option value="M">男
-						<option value="W">女
+						<option value="1" ${(empVO.gender==0)? 'selected':''}>男</option>
+						<option value="0" ${(empVO.gender==0)? 'selected':''}>女</option>  
 					</select></td>
 			</tr>
 			<tr>
@@ -116,6 +116,11 @@ th, td {
 					value="<%=(empVO == null) ? "" : empVO.getAddr()%>" /></td>
 			</tr>
 			<tr>
+				<td>email:</td>
+				<td><input type="TEXT" name="email" size="45"
+					value="<%=(empVO == null) ? "" : empVO.getEmail()%>" /></td>
+			</tr>
+			<tr>
 				<td>薪水:</td>
 				<td><input type="TEXT" name="sal" size="45"
 					value="<%=(empVO == null) ? "" : empVO.getSal()%>" /></td>
@@ -123,8 +128,8 @@ th, td {
 			<tr>
 			<td>狀態:</td>
 				<td><select size="1" name="state">
-						<option value="1">在職
-						<option value="0">離職
+						<option value="1" ${(empVO.state==0)? 'selected':''}>在職</option>
+						<option value="0" ${(empVO.state==0)? 'selected':''}>離職</option>  
 					</select>
 				</td>
 			</tr>

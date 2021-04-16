@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.emp.model.*"%>
-<%-- 此頁暫練習採用 Script 的寫法取值 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
@@ -37,13 +38,14 @@ table {
 
 table, th, td {
 	border: 1px solid #CCCCFF;
+	
 }
 
 th, td {
 	padding: 5px;
 	text-align: center;
-	max-width: 89px;
-	min-width: 89px;
+	max-width: 150px;
+	min-width: 200px;
 }
 
 table th .AutoNewline {
@@ -76,23 +78,41 @@ table th .AutoNewline {
 			<th>性別</th>
 			<th>生日</th>
 			<th>地址</th>
+			<th>email</th>
 			<th>薪水</th>
 			<th>狀態</th>
 			<th>到職日期</th>
 			<th>員工密碼</th>
 		</tr>
 		<tr>
-			<td><%=empVO.getEmpno()%></td>
-			<td><%=empVO.getEname()%></td>
-			<td><%=empVO.getJob()%></td>
-			<td><%=empVO.getId()%></td>
-			<td><%=empVO.getGender()%></td>
-			<td><%=empVO.getDob()%></td>
-			<td><%=empVO.getAddr()%></td>
-			<td><%=empVO.getSal()%></td>
-			<td><%=empVO.getState()%></td>
-			<td><%=empVO.getHiredate()%></td>
-			<td><%=empVO.getEmp_pwd()%></td>
+		<td>${empVO.empno}</td>
+				<td>${empVO.ename}</td>
+				<td>${empVO.job}</td>
+				<td>${empVO.id}</td>
+				<c:choose>
+					<c:when test="${empVO.gender==0}">
+						<td>女</td>
+					</c:when>
+					<c:when test="${empVO.gender==1}">
+						<td>男</td>
+					</c:when>
+				</c:choose>
+				<td>${empVO.dob}</td>
+				<td>${empVO.addr}</td>
+				<td>${empVO.email}</td>
+				<td>${empVO.sal}</td>
+				<%-- <td>${empVO.state}</td> --%>
+					<c:choose>
+					<c:when test="${empVO.state==0}">
+						<td>離職</td>
+					</c:when>
+					<c:when test="${empVO.state==1}">
+						<td>在職</td>
+					</c:when>
+				</c:choose>
+				<td><fmt:formatDate value="${empVO.hiredate}"
+						pattern="yyyy-MM-dd" /></td>
+				<td>${empVO.emp_pwd}</td>
 		</tr>
 	</table>
 

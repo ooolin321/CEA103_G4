@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -18,21 +19,21 @@ public class EmpDAO implements EmpDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/admin");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CEA103_G4");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 	private static final String INSERT_STMT = 
-			"INSERT INTO EMP (ENAME,JOB,ID,GENDER,DOB,ADDR,SAL,STATE,HIREDATE,EMP_PWD) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO EMP (ENAME,JOB,ID,GENDER,DOB,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,ADDR,SAL,STATE,HIREDATE,EMP_PWD FROM EMP ORDER BY EMPNO";
+			"SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP ORDER BY EMPNO";
 	private static final String GET_ONE_STMT = 
-			"SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,ADDR,SAL,STATE,HIREDATE,EMP_PWD FROM EMP WHERE EMPNO = ?";
+			"SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP WHERE EMPNO = ?";
 	private static final String DELETE = 
 			"DELETE FROM EMP WHERE EMPNO = ?";
 	private static final String UPDATE = 
-			"UPDATE EMP SET ENAME=?, JOB=?, ID=?, GENDER=?, DOB=?, ADDR=?, SAL=?, STATE=?, HIREDATE=?, EMP_PWD=? WHERE EMPNO = ?";
+			"UPDATE EMP SET ENAME=?, JOB=?, ID=?, GENDER=?, DOB=?, ADDR=?,EMAIL=?, SAL=?, STATE=?, HIREDATE=?, EMP_PWD=? WHERE EMPNO = ?";
 
 	@Override
 	public void insert(EmpVO empVO) {
@@ -47,13 +48,14 @@ public class EmpDAO implements EmpDAO_interface {
 			pstmt.setString(1, empVO.getEname());
 			pstmt.setString(2, empVO.getJob());
 			pstmt.setString(3, empVO.getId());
-			pstmt.setString(4, empVO.getGender());
+			pstmt.setInt(4, empVO.getGender());
 			pstmt.setDate(5, empVO.getDob());
 			pstmt.setString(6, empVO.getAddr());
-			pstmt.setDouble(7, empVO.getSal());
-			pstmt.setInt(8, empVO.getState());
-			pstmt.setDate(9, empVO.getHiredate());
-			pstmt.setString(10, empVO.getEmp_pwd());
+			pstmt.setString(7, empVO.getEmail());
+			pstmt.setDouble(8, empVO.getSal());
+			pstmt.setInt(9, empVO.getState());
+			pstmt.setDate(10, empVO.getHiredate());
+			pstmt.setString(11, empVO.getEmp_pwd());
 
 
 			pstmt.executeUpdate();
@@ -90,14 +92,15 @@ public class EmpDAO implements EmpDAO_interface {
 			pstmt.setString(1, empVO.getEname());
 			pstmt.setString(2, empVO.getJob());
 			pstmt.setString(3, empVO.getId());
-			pstmt.setString(4, empVO.getGender());
+			pstmt.setInt(4, empVO.getGender());
 			pstmt.setDate(5, empVO.getDob());
 			pstmt.setString(6, empVO.getAddr());
-			pstmt.setDouble(7, empVO.getSal());
-			pstmt.setInt(8, empVO.getState());
-			pstmt.setDate(9, empVO.getHiredate());
-			pstmt.setString(10, empVO.getEmp_pwd());
-			pstmt.setInt(11, empVO.getEmpno());
+			pstmt.setString(7, empVO.getEmail());
+			pstmt.setDouble(8, empVO.getSal());
+			pstmt.setInt(9, empVO.getState());
+			pstmt.setDate(10, empVO.getHiredate());
+			pstmt.setString(11, empVO.getEmp_pwd());
+			pstmt.setInt(12, empVO.getEmpno());
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
@@ -174,9 +177,10 @@ public class EmpDAO implements EmpDAO_interface {
 				empVO.setEname(rs.getString("ename"));
 				empVO.setJob(rs.getString("job"));
 				empVO.setId(rs.getString("id"));
-				empVO.setGender(rs.getString("gender"));
+				empVO.setGender(rs.getInt("gender"));
 				empVO.setDob(rs.getDate("dob"));
 				empVO.setAddr(rs.getString("addr"));
+				empVO.setEmail(rs.getString("email"));
 				empVO.setSal(rs.getDouble("sal"));
 				empVO.setState(rs.getInt("state"));
 				empVO.setHiredate(rs.getDate("hiredate"));
@@ -235,9 +239,10 @@ public class EmpDAO implements EmpDAO_interface {
 				empVO.setEname(rs.getString("ename"));
 				empVO.setJob(rs.getString("job"));
 				empVO.setId(rs.getString("id"));
-				empVO.setGender(rs.getString("gender"));
+				empVO.setGender(rs.getInt("gender"));
 				empVO.setDob(rs.getDate("dob"));
 				empVO.setAddr(rs.getString("addr"));
+				empVO.setEmail(rs.getString("email"));
 				empVO.setSal(rs.getDouble("sal"));
 				empVO.setState(rs.getInt("state"));
 				empVO.setHiredate(rs.getDate("hiredate"));
@@ -275,4 +280,17 @@ public class EmpDAO implements EmpDAO_interface {
 		}
 		return list;
 	}
+	
+//	@Override
+//	public String GenAuthCode() {
+//		EmpVO empVO = new EmpVO();
+//		String empPwd = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";//儲存數字0-9 和 大小寫字母
+//		StringBuffer sb = new StringBuffer(); //宣告一個StringBuffer物件sb 儲存 驗證碼
+//		for (int i = 0; i < 8; i++) {
+//			Random random = new Random();//建立一個新的隨機數生成器
+//			int index = random.nextInt(empPwd.length());//返回[0,string.length)範圍的int值    作用：儲存下標
+//			char ch = empPwd.charAt(index);//charAt() : 返回指定索引處的 char 值   ==》賦值給char字元物件ch
+//		 sb.append(ch);// append(char c) :將 char 引數的字串表示形式追加到此序列  ==》即將每次獲取的ch值作拼接
+//		}return sb.toString();		
+//	}
 }

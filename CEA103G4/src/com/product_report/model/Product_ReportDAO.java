@@ -7,6 +7,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.product_type.model.Product_TypeVO;
+
 public class Product_ReportDAO implements Product_ReportDAO_interface {
 
 	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
@@ -25,6 +27,9 @@ public class Product_ReportDAO implements Product_ReportDAO_interface {
 	//後台查詢所有商品檢舉資料
 	private static final String GET_ALL_STMT = 
 		"SELECT * FROM PRODUCT_REPORT order by pro_report_no";
+	//後台查詢一個商品檢舉資料
+	private static final String GET_ONE_STMT = 
+		"SELECT * FROM PRODUCT_REPORT where pro_report_no = ?";
 	//後台依照不同的檢舉處理狀態做查詢
 	private static final String GET_REPORT_STATE = 
 		"SELECT * FROM PRODUCT_REPORT where proreport_state = ?";
@@ -33,7 +38,7 @@ public class Product_ReportDAO implements Product_ReportDAO_interface {
 		"DELETE FROM PRODUCT_REPORT where pro_report_no = ?";
 	//後台修改檢舉狀態
 	private static final String UPDATE = 
-		"UPDATE PRODUCT_REPORT set pro_report_content=?, product_no=?, user_id=?, report_date=?, empno=?, proreport_state=? where pro_report_no = ?";
+		"UPDATE PRODUCT_REPORT set pro_report_content=?, product_no=?, user_id=?, empno=?, proreport_state=? where pro_report_no = ?";
 
 	@Override
 	public void insert(Product_ReportVO product_reportVO) {
@@ -90,10 +95,10 @@ public class Product_ReportDAO implements Product_ReportDAO_interface {
 			pstmt.setString(1, product_reportVO.getPro_report_content());
 			pstmt.setInt(2, product_reportVO.getProduct_no());
 			pstmt.setString(3, product_reportVO.getUser_id());
-			pstmt.setDate(4, product_reportVO.getReport_date());
-			pstmt.setInt(5, product_reportVO.getEmpno());
-			pstmt.setInt(6, product_reportVO.getProreport_state());
-			pstmt.setInt(7, product_reportVO.getPro_report_no());
+//			pstmt.setDate(4, product_reportVO.getReport_date());
+			pstmt.setInt(4, product_reportVO.getEmpno());
+			pstmt.setInt(5, product_reportVO.getProreport_state());
+			pstmt.setInt(6, product_reportVO.getPro_report_no());
 
 			pstmt.executeUpdate();
 
@@ -157,6 +162,67 @@ public class Product_ReportDAO implements Product_ReportDAO_interface {
 			}
 		}
 
+	}
+	
+	@Override
+	public Product_ReportVO findByPrimaryKey(Integer pro_report_no){
+
+		Product_ReportVO product_reportVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+
+			pstmt.setInt(1, pro_report_no);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+		
+				product_reportVO = new Product_ReportVO();
+				product_reportVO.setPro_report_no(rs.getInt("pro_report_no"));
+				product_reportVO.setPro_report_content(rs.getString("pro_report_content"));
+				product_reportVO.setProduct_no(rs.getInt("product_no"));
+				product_reportVO.setUser_id(rs.getString("user_id"));
+				product_reportVO.setReport_date(rs.getDate("report_date"));
+				product_reportVO.setEmpno(rs.getInt("empno"));
+				product_reportVO.setProreport_state(rs.getInt("proreport_state"));
+				
+			}
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return product_reportVO;
 	}
 
 	@Override

@@ -13,7 +13,7 @@ public class ProductService {
 
 	public ProductVO addProduct(String product_name, String product_info, Integer product_price,
 			Integer product_quantity, Integer product_remaining, Integer product_state, byte[] product_photo, String user_id,
-			Integer pdtype_no, Integer start_price, Integer live_no) {
+			Integer pdtype_no) {
 
 		ProductVO productVO = new ProductVO();
 		
@@ -26,8 +26,6 @@ public class ProductService {
 		productVO.setProduct_photo(product_photo);
 		productVO.setUser_id(user_id);
 		productVO.setPdtype_no(pdtype_no);
-		productVO.setStart_price(start_price);
-		productVO.setLive_no(live_no);
 		dao.insert(productVO);
 
 		return productVO;
@@ -35,7 +33,7 @@ public class ProductService {
 
 	public ProductVO updateProduct(Integer product_no, String product_name, String product_info, Integer product_price,
 			Integer product_quantity, Integer product_remaining, Integer product_state, byte[] product_photo, String user_id,
-			Integer pdtype_no, Integer start_price, Integer live_no) {
+			Integer pdtype_no) {
 
 		ProductVO productVO = new ProductVO();
 
@@ -49,8 +47,6 @@ public class ProductService {
 		productVO.setProduct_photo(product_photo);
 		productVO.setUser_id(user_id);
 		productVO.setPdtype_no(pdtype_no);
-		productVO.setStart_price(start_price);
-		productVO.setLive_no(live_no);
 		dao.update(productVO);
 
 		return productVO;

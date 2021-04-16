@@ -5,7 +5,7 @@
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO");
 %>
-<%=empVO == null%>
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -101,9 +101,10 @@ th, td {
 			<tr>
 				<td>性別:</td>
 				<td><select size="1" name="gender">
-						<option value="M">男
-						<option value="W">女       
+						<option value="1" ${(empVO.gender==0)? 'selected':''}>男</option>
+						<option value="0" ${(empVO.gender==0)? 'selected':''}>女</option>       
 					</select></td>
+
 			</tr>
 			<tr>
 				<td>生日:</td>
@@ -113,6 +114,11 @@ th, td {
 				<td>地址:</td>
 				<td><input type="TEXT" name="addr" size="45"
 					value="<%=(empVO == null) ? "" : empVO.getAddr()%>" /></td>
+			</tr>
+			<tr>
+				<td>e-mail:</td>
+				<td><input type="TEXT" name="email" size="45"
+					value="<%=(empVO == null) ? "" : empVO.getEmail()%>" /></td>
 			</tr>
 			<tr>
 				<td>薪水:</td>
@@ -134,22 +140,22 @@ th, td {
 				<td><input name="hiredate" id="f_date1" type="text"></td>
 			</tr>
 
-			<tr>
-				<td>密碼:</td>
-				<td><input type="TEXT" name="emp_pwd" size="45"
-					value="<%=(empVO == null) ? "" : empVO.getEmp_pwd()%>" /></td>
-			</tr>
+<!-- 			<tr> -->
+<!-- 				<td>密碼:</td> -->
+<!-- 				<td><input type="TEXT" name="emp_pwd" size="45" -->
+<%-- 					value="<%=(empVO == null) ? "" : empVO.getEmp_pwd()%>" /></td> --%>
+<!-- 			</tr> -->
 
-			<%-- 	<jsp:useBean id="deptSvc" scope="page" class="pk1.model.DeptService" />
-	<tr>
-		<td>部門:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="deptno">
-			<c:forEach var="deptVO" items="${deptSvc.all}">
-				<option value="${deptVO.deptno}" ${(empVO.deptno==deptVO.deptno)? 'selected':'' } >${deptVO.dname}
-			</c:forEach>
-		</select></td>
-	</tr>
- --%>
+<%-- 			 	<jsp:useBean id="deptSvc" scope="page" class="pk1.model.DeptService" />
+<!-- 	<tr> -->
+<!-- 		<td>部門:<font color=red><b>*</b></font></td> -->
+<!-- 		<td><select size="1" name="deptno"> -->
+<%-- 			<c:forEach var="deptVO" items="${deptSvc.all}"> --%>
+<%-- 				<option value="${deptVO.deptno}" ${(empVO.deptno==deptVO.deptno)? 'selected':'' } >${deptVO.dname} --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</select></td> -->
+<!-- 	</tr> -->
+
 		</table>
 		<br> <input type="hidden" name="action" value="insert"> <input
 			type="submit" value="送出新增">

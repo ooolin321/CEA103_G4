@@ -24,11 +24,11 @@ public class FunDAO implements FunDAO_interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO FUN (FUN_NAME) VALUES (?)";
+	private static final String INSERT_STMT = "INSERT INTO FUN (FUN_NAME,STATE) VALUES (?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM FUN ORDER BY FUNNO";
 	private static final String GET_ONE_STMT = "SELECT * FROM FUN WHERE FUNNO = ?";
 	private static final String DELETE = "DELETE FROM FUN WHERE FUNNO = ?";
-	private static final String UPDATE = "UPDATE FUN SET FUN_NAME=? WHERE FUNNO = ?";
+	private static final String UPDATE = "UPDATE FUN SET FUN_NAME=? STATE=? WHERE FUNNO = ?";
 
 	@Override
 	public void insert(FunVO funVO) {

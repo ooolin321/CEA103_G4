@@ -206,21 +206,21 @@ public class ProductServlet extends HttpServlet {
 					errorMsgs.add("商品類別請填數字");
 				}
 				
-				Integer start_price = null;
-				try {
-					start_price = new Integer(req.getParameter("start_price").trim());
-				} catch (NumberFormatException e) {
-					start_price = 1;
-					errorMsgs.add("起標價請填數字");
-				}
-				
-				Integer live_no = null;
-				try {
-					live_no = new Integer(req.getParameter("live_no").trim());
-				} catch (NumberFormatException e) {
-					live_no = 1;
-					errorMsgs.add("直播編號請填寫");
-				}
+//				Integer start_price = null;
+//				try {
+//					start_price = new Integer(req.getParameter("start_price").trim());
+//				} catch (NumberFormatException e) {
+//					start_price = 1;
+//					errorMsgs.add("起標價請填數字");
+//				}
+//				
+//				Integer live_no = null;
+//				try {
+//					live_no = new Integer(req.getParameter("live_no").trim());
+//				} catch (NumberFormatException e) {
+//					live_no = 1;
+//					errorMsgs.add("直播編號請填寫");
+//				}
 
 				
 
@@ -236,8 +236,8 @@ public class ProductServlet extends HttpServlet {
 				productVO.setProduct_photo(product_photo);
 				productVO.setUser_id(user_id);
 				productVO.setPdtype_no(pdtype_no);
-				productVO.setStart_price(start_price);
-				productVO.setLive_no(live_no);
+//				productVO.setStart_price(start_price);
+//				productVO.setLive_no(live_no);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -251,7 +251,7 @@ public class ProductServlet extends HttpServlet {
 				/***************************2.開始修改資料*****************************************/
 				ProductService productSvc = new ProductService();
 				productVO = productSvc.updateProduct(product_no, product_name, product_info, product_price, product_quantity, product_remaining, product_state,
-						product_photo, user_id, pdtype_no, start_price, live_no);
+						product_photo, user_id, pdtype_no);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("productVO", productVO); // 資料庫update成功後,正確的的productVO物件,存入req
@@ -344,24 +344,7 @@ public class ProductServlet extends HttpServlet {
 				} catch (NumberFormatException e) {
 					pdtype_no = 1;
 					errorMsgs.add("商品類別請填數字");
-				}
-				
-				Integer start_price = null;
-				try {
-					start_price = new Integer(req.getParameter("start_price").trim());
-				} catch (NumberFormatException e) {
-					start_price = 1;
-					errorMsgs.add("起標價請填數字");
-				}
-				
-				Integer live_no = null;
-				try {
-					live_no = new Integer(req.getParameter("live_no").trim());
-				} catch (NumberFormatException e) {
-					live_no = 1;
-					errorMsgs.add("直播編號請填寫");
-				}
-
+				}				
 				
 
 				ProductVO productVO = new ProductVO();
@@ -375,8 +358,6 @@ public class ProductServlet extends HttpServlet {
 				productVO.setProduct_photo(product_photo);
 				productVO.setUser_id(user_id);
 				productVO.setPdtype_no(pdtype_no);
-				productVO.setStart_price(start_price);
-				productVO.setLive_no(live_no);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -390,7 +371,7 @@ public class ProductServlet extends HttpServlet {
 				/***************************2.開始新增資料*****************************************/
 				ProductService productSvc = new ProductService();
 				productVO = productSvc.addProduct(product_name, product_info, product_price, product_quantity, product_remaining, product_state,
-						product_photo, user_id, pdtype_no, start_price, live_no);
+						product_photo, user_id, pdtype_no);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)*************/
 				String url = "/back-end/product/listAllProduct.jsp";

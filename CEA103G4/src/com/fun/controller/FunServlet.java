@@ -118,9 +118,12 @@ public class FunServlet extends HttpServlet{
 				} else if (!funName.trim().matches(funNameReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 				}
+				Integer state = new Integer(req.getParameter("state"));
+				
 				FunVO funVO = new FunVO();
 				funVO.setFunno(funno);
 				funVO.setFunName(funName);
+				funVO.setState(state);
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("funVO", funVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -130,7 +133,7 @@ public class FunServlet extends HttpServlet{
 				}
 				/*************************** 2.開始修改資料 *****************************************/
 				FunService funSvc = new FunService();
-				funVO = funSvc.updateFun(funno, funName);
+				funVO = funSvc.updateFun(funno, funName,state);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("funVO", funVO); // 資料庫update成功後,正確的的funVO物件,存入req
@@ -158,8 +161,12 @@ public class FunServlet extends HttpServlet{
 				} else if (!funName.trim().matches(funNameReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("功能名稱: 只能是中文且長度必需在2到10之間");
 				}
+				Integer state = new Integer(req.getParameter("state"));
+				
 				FunVO funVO = new FunVO();
 				funVO.setFunName(funName);
+				funVO.setState(state);
+				
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("funVO", funVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -169,7 +176,7 @@ public class FunServlet extends HttpServlet{
 				}
 				/*************************** 2.開始新增資料 *****************************************/
 				FunService funSvc = new FunService();
-				funVO =funSvc.addFun(funName);
+				funVO =funSvc.addFun(funName,state);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/back-end/fun/listAllFun.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllFun.jsp

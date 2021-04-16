@@ -56,7 +56,7 @@
 <table id="table-1">
 	<tr><td>
 		 <h3>所有直播檢舉資料 - listAllLive_report.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+		 <h4><a href="select_page.jsp"><img src="${pageContext.request.contextPath}/images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -93,7 +93,7 @@
 			<td>${live_reportVO.user_id}</td>
 			<td>${live_reportVO.empno}</td> 
 			<td>${live_reportVO.live_report_state}</td> 
-			<td><fmt:formatDate value="${live_reportVO.report_date}" pattern="yyyy-MM-dd"/></td>
+			<td><fmt:formatDate value="${live_reportVO.report_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			<td><img src="${pageContext.request.contextPath}/live_report/DBGifReader.do?live_report_no=${live_reportVO.live_report_no}" width="250px"></td>
 			
 			<td>

@@ -118,11 +118,11 @@ public class Live_orderServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				java.sql.Date order_date = null;
+				java.sql.Timestamp order_date = null;
 				try {
-					order_date = java.sql.Date.valueOf(req.getParameter("order_date").trim());
+					order_date = java.sql.Timestamp.valueOf(req.getParameter("order_date").trim());
 				} catch (IllegalArgumentException e) {
-					order_date = new java.sql.Date(System.currentTimeMillis());
+					order_date = new java.sql.Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
 
@@ -130,11 +130,11 @@ public class Live_orderServlet extends HttpServlet {
 				Integer order_shipping = new Integer(req.getParameter("order_shipping").trim());
 				Integer order_price = new Integer(req.getParameter("order_price").trim());
 				Integer pay_method = new Integer(req.getParameter("pay_method").trim());
-				java.sql.Date pay_deadline = null;
+				java.sql.Timestamp pay_deadline = null;
 				try {
-					pay_deadline = java.sql.Date.valueOf(req.getParameter("pay_deadline").trim());
+					pay_deadline = java.sql.Timestamp.valueOf(req.getParameter("pay_deadline").trim());
 				} catch (IllegalArgumentException e) {
-					pay_deadline = new java.sql.Date(System.currentTimeMillis());
+					pay_deadline = new java.sql.Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
 
@@ -225,11 +225,11 @@ public class Live_orderServlet extends HttpServlet {
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-				java.sql.Date order_date = null;
+				java.sql.Timestamp order_date = null;
 				try {
-					order_date = java.sql.Date.valueOf(req.getParameter("order_date").trim());
+					order_date = java.sql.Timestamp.valueOf(req.getParameter("order_date").trim());
 				} catch (IllegalArgumentException e) {
-					order_date = new java.sql.Date(System.currentTimeMillis());
+					order_date = new java.sql.Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
 
@@ -237,11 +237,11 @@ public class Live_orderServlet extends HttpServlet {
 				Integer order_shipping = new Integer(req.getParameter("order_shipping").trim());
 				Integer order_price = new Integer(req.getParameter("order_price").trim());
 				Integer pay_method = new Integer(req.getParameter("pay_method").trim());
-				java.sql.Date pay_deadline = null;
+				java.sql.Timestamp pay_deadline = null;
 				try {
-					pay_deadline = java.sql.Date.valueOf(req.getParameter("pay_deadline").trim());
+					pay_deadline = java.sql.Timestamp.valueOf(req.getParameter("pay_deadline").trim());
 				} catch (IllegalArgumentException e) {
-					pay_deadline = new java.sql.Date(System.currentTimeMillis());
+					pay_deadline = new java.sql.Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
 

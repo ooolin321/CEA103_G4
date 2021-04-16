@@ -42,12 +42,12 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setDate(1, live_orderVO.getOrder_date());
+			pstmt.setTimestamp(1, live_orderVO.getOrder_date());
 			pstmt.setInt(2, live_orderVO.getOrder_state());
 			pstmt.setInt(3, live_orderVO.getOrder_shipping());
 			pstmt.setInt(4, live_orderVO.getOrder_price());
 			pstmt.setInt(5, live_orderVO.getPay_method());
-			pstmt.setDate(6, live_orderVO.getPay_deadline());
+			pstmt.setTimestamp(6, live_orderVO.getPay_deadline());
 			pstmt.setString(7, live_orderVO.getRec_name());
 			pstmt.setString(8, live_orderVO.getRec_addr());
 			pstmt.setInt(9, live_orderVO.getRec_phone());
@@ -95,12 +95,12 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setDate(1, live_orderVO.getOrder_date());
+			pstmt.setTimestamp(1, live_orderVO.getOrder_date());
 			pstmt.setInt(2, live_orderVO.getOrder_state());
 			pstmt.setInt(3, live_orderVO.getOrder_shipping());
 			pstmt.setInt(4, live_orderVO.getOrder_price());
 			pstmt.setInt(5, live_orderVO.getPay_method());
-			pstmt.setDate(6, live_orderVO.getPay_deadline());
+			pstmt.setTimestamp(6, live_orderVO.getPay_deadline());
 			pstmt.setString(7, live_orderVO.getRec_name());
 			pstmt.setString(8, live_orderVO.getRec_addr());
 			pstmt.setInt(9, live_orderVO.getRec_phone());
@@ -202,12 +202,12 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 				
 				live_orderVO = new Live_orderVO();
 				live_orderVO.setLive_order_no(rs.getInt("live_order_no"));
-				live_orderVO.setOrder_date(rs.getDate("order_date"));
+				live_orderVO.setOrder_date(rs.getTimestamp("order_date"));
 				live_orderVO.setOrder_state(rs.getInt("order_state"));
 				live_orderVO.setOrder_shipping(rs.getInt("order_shipping"));
 				live_orderVO.setOrder_price(rs.getInt("order_price"));
 				live_orderVO.setPay_method(rs.getInt("pay_method"));
-				live_orderVO.setPay_deadline(rs.getDate("pay_deadline"));
+				live_orderVO.setPay_deadline(rs.getTimestamp("pay_deadline"));
 				live_orderVO.setRec_name(rs.getString("rec_name"));
 				live_orderVO.setRec_addr(rs.getString("rec_addr"));
 				live_orderVO.setRec_phone(rs.getInt("rec_phone"));
@@ -274,12 +274,12 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 				
 				live_orderVO = new Live_orderVO();
 				live_orderVO.setLive_order_no(rs.getInt("live_order_no"));
-				live_orderVO.setOrder_date(rs.getDate("order_date"));
+				live_orderVO.setOrder_date(rs.getTimestamp("order_date"));
 				live_orderVO.setOrder_state(rs.getInt("order_state"));
 				live_orderVO.setOrder_shipping(rs.getInt("order_shipping"));
 				live_orderVO.setOrder_price(rs.getInt("order_price"));
 				live_orderVO.setPay_method(rs.getInt("pay_method"));
-				live_orderVO.setPay_deadline(rs.getDate("pay_deadline"));
+				live_orderVO.setPay_deadline(rs.getTimestamp("pay_deadline"));
 				live_orderVO.setRec_name(rs.getString("rec_name"));
 				live_orderVO.setRec_addr(rs.getString("rec_addr"));
 				live_orderVO.setRec_phone(rs.getInt("rec_phone"));

@@ -2,13 +2,13 @@ package com.live_report.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
+
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +17,7 @@ import javax.servlet.http.Part;
 import com.live_report.model.Live_reportService;
 import com.live_report.model.Live_reportVO;
 
+@MultipartConfig
 public class Live_reportServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -75,7 +76,7 @@ public class Live_reportServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("live_reportVO", live_reportVO); // 資料庫取出的live_reportVO物件,存入req
-				String url = "/back-end/live_report/listOneLive_order.jsp";
+				String url = "/back-end/live_report/listOneLive_report.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -104,14 +105,14 @@ public class Live_reportServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("live_reportVO", live_reportVO); // 資料庫取出的live_reportVO物件,存入req
-				String url = "/back-end/live_report/update_live_order_input.jsp";
+				String url = "/back-end/live_report/update_live_report_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/live_report/listAllLive_order.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/live_report/listAllLive_report.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -133,25 +134,6 @@ public class Live_reportServlet extends HttpServlet {
 				Integer empno = new Integer(req.getParameter("empno").trim());
 				Integer live_report_state = new Integer(req.getParameter("live_report_state").trim());
 
-				java.sql.Date report_date = null;
-				try {
-					report_date = java.sql.Date.valueOf(req.getParameter("report_date").trim());
-				} catch (IllegalArgumentException e) {
-					report_date = new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
-
-				Integer order_state = new Integer(req.getParameter("order_state").trim());
-				Integer order_shipping = new Integer(req.getParameter("order_shipping").trim());
-				Integer order_price = new Integer(req.getParameter("order_price").trim());
-				Integer pay_method = new Integer(req.getParameter("pay_method").trim());
-				java.sql.Date pay_deadline = null;
-				try {
-					pay_deadline = java.sql.Date.valueOf(req.getParameter("pay_deadline").trim());
-				} catch (IllegalArgumentException e) {
-					pay_deadline = new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
 
 				Part part = req.getPart("photo");
 				InputStream in = part.getInputStream();
@@ -178,7 +160,7 @@ public class Live_reportServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("live_reportVO", live_reportVO); // 含有輸入格式錯誤的live_reportVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/live_report/update_live_order_input.jsp");
+							.getRequestDispatcher("/back-end/live_report/update_live_report_input.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -186,11 +168,11 @@ public class Live_reportServlet extends HttpServlet {
 				/*************************** 2.開始修改資料 *****************************************/
 				Live_reportService live_reportSvc = new Live_reportService();
 				live_reportVO = live_reportSvc.updateLive_report(live_report_content, live_no, user_id, empno,
-						live_report_state, report_date, photo, live_report_no);
+						live_report_state, photo, live_report_no);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("live_reportVO", live_reportVO); // 資料庫update成功後,正確的的live_reportVO物件,存入req
-				String url = "/back-end/live_report/listOneLive_order.jsp";
+				String url = "/back-end/live_report/listOneLive_report.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -198,7 +180,7 @@ public class Live_reportServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/live_report/update_live_order_input.jsp");
+						.getRequestDispatcher("/back-end/live_report/update_live_report_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -217,26 +199,6 @@ public class Live_reportServlet extends HttpServlet {
 				String user_id = req.getParameter("user_id");
 				Integer empno = new Integer(req.getParameter("empno").trim());
 				Integer live_report_state = new Integer(req.getParameter("live_report_state").trim());
-
-				java.sql.Date report_date = null;
-				try {
-					report_date = java.sql.Date.valueOf(req.getParameter("report_date").trim());
-				} catch (IllegalArgumentException e) {
-					report_date = new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
-
-				Integer order_state = new Integer(req.getParameter("order_state").trim());
-				Integer order_shipping = new Integer(req.getParameter("order_shipping").trim());
-				Integer order_price = new Integer(req.getParameter("order_price").trim());
-				Integer pay_method = new Integer(req.getParameter("pay_method").trim());
-				java.sql.Date pay_deadline = null;
-				try {
-					pay_deadline = java.sql.Date.valueOf(req.getParameter("pay_deadline").trim());
-				} catch (IllegalArgumentException e) {
-					pay_deadline = new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
 
 				Part part = req.getPart("photo");
 				InputStream in = part.getInputStream();
@@ -257,7 +219,7 @@ public class Live_reportServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("live_reportVO", live_reportVO); // 含有輸入格式錯誤的live_reportVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/live_report/update_live_order_input.jsp");
+							.getRequestDispatcher("/back-end/live_report/update_live_report_input.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -265,17 +227,17 @@ public class Live_reportServlet extends HttpServlet {
 				/*************************** 2.開始新增資料 ***************************************/
 				Live_reportService live_reportSvc = new Live_reportService();
 				live_reportVO = live_reportSvc.addLive_report(live_report_content, live_no, user_id, empno,
-						live_report_state, report_date, photo);
+						live_report_state, photo);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/back-end/live_report/listAllLive_order.jsp";
+				String url = "/back-end/live_report/listAllLive_report.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/live_report/addLive_order.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/live_report/addLive_report.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -296,14 +258,14 @@ public class Live_reportServlet extends HttpServlet {
 				live_reportSvc.deleteLive_report(live_report_no);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/back-end/live_report/listAllLive_order.jsp";
+				String url = "/back-end/live_report/listAllLive_report.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/live_report/listAllLive_order.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/live_report/listAllLive_report.jsp");
 				failureView.forward(req, res);
 			}
 		}

@@ -8,7 +8,9 @@
 
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>直播檢舉資料新增 - addLive_report.jsp</title>
 
 <style>
@@ -57,7 +59,7 @@ th, td {
 			</td>
 			<td>
 				<h4>
-					<a href="select_page.jsp"><img src="images/tomcat.png"
+					<a href="select_page.jsp"><img src="${pageContext.request.contextPath}/images/tomcat.png"
 						width="100" height="100" border="0">回首頁</a>
 				</h4>
 			</td>
@@ -76,27 +78,32 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="live_report.do" name="form1">
+	<FORM METHOD="post" ACTION="live_report.do" name="form1" enctype = "multipart/form-data">
 		<table>
-
+			
 			<tr>
 				<td>直播檢舉內容:</td>
 				<td><input type="TEXT" name="live_report_content" size="45"
-					value="live_reportVO.getLive_report_content()%>" /></td>
+					value="" /></td>
 			</tr>
 
 			<tr>
 				<td>直播編號:</td>
 				<td><input type="TEXT" name="live_no" size="45"
-					value="<%=(live_reportVO == null) ? "8001" : live_reportVO.getLive_no()%>" /></td>
+					value="8001" /></td>
 			</tr>
 
 			<tr>
 				<td>檢舉者ID:</td>
 				<td><input type="TEXT" name="user_id" size="45"
-					value="<%=(live_reportVO == null) ? "abcd01" : live_reportVO.getUser_id()%>" /></td>
+					value="abcd01" /></td>
 			</tr>
-
+			
+			<tr>
+				<td>處理員工編號:</td>
+				<td><input type="TEXT" name="empno" size="45"
+					value="14001" /></td>
+			</tr>
 
 			<tr>
 				<td>檢舉處理狀態:</td>
@@ -109,7 +116,7 @@ th, td {
 
 			<tr>
 				<td>圖片上傳:</td>
-				<td><input type="FILE" name="photo" /></td>
+				<td><input type="file" name="photo"/></td>
 			</tr>
 
 		</table>

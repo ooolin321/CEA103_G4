@@ -29,8 +29,8 @@ public class ProductDAO implements ProductDAO_interface {
 	
 
 	private static final String INSERT_STMT = 
-			"INSERT INTO PRODUCT (product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO PRODUCT (product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no) "
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 		"SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no"
 		+ " FROM PRODUCT order by product_no";
@@ -40,7 +40,7 @@ public class ProductDAO implements ProductDAO_interface {
 	private static final String DELETE = 
 		"DELETE FROM PRODUCT where product_no = ?";
 	private static final String UPDATE = 
-		"UPDATE PRODUCT set product_name=?, product_info=?, product_price=?, product_quantity=?, product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=?, start_price=?, live_no=? where product_no = ?";
+		"UPDATE PRODUCT set product_name=?, product_info=?, product_price=?, product_quantity=?, product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=? where product_no = ?";
 
 	@Override
 	public void insert(ProductVO productVO){
@@ -62,8 +62,6 @@ public class ProductDAO implements ProductDAO_interface {
 			pstmt.setBytes(7, productVO.getProduct_photo());
 			pstmt.setString(8, productVO.getUser_id());
 			pstmt.setInt(9, productVO.getPdtype_no());
-			pstmt.setInt(10, productVO.getStart_price());
-			pstmt.setInt(11, productVO.getLive_no());
 
 			pstmt.executeUpdate();
 			
@@ -113,9 +111,7 @@ public class ProductDAO implements ProductDAO_interface {
 			pstmt.setBytes(7,productVO.getProduct_photo());
 			pstmt.setString(8,productVO.getUser_id());
 			pstmt.setInt(9, productVO.getPdtype_no());
-			pstmt.setInt(10, productVO.getStart_price());
-			pstmt.setInt(11, productVO.getLive_no());
-			pstmt.setInt(12, productVO.getProduct_no());
+			pstmt.setInt(10, productVO.getProduct_no());
 
 			pstmt.executeUpdate();
 			

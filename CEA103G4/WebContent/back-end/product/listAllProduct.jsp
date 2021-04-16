@@ -9,7 +9,7 @@
     List<ProductVO> list = dao.getAll();
     pageContext.setAttribute("list",list);
 %>
-
+<jsp:useBean id="product_typeSvc" scope="page" class="com.product_type.model.Product_TypeService" />
 
 <html>
 <head>
@@ -83,6 +83,8 @@
 		<th>商品類別編號</th>
 		<th>起標價</th>
 		<th>直播編號</th>
+		<th>修改</th>
+		<th>刪除</th>
 	</tr>
 	<%@ include file="page1.file" %> 
 	<c:forEach var="productVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -96,7 +98,7 @@
 			<td>${productVO.product_state}</td>
 			<td><img width="100px" height="100px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}"></td>
 			<td>${productVO.user_id}</td>
-			<td>${productVO.pdtype_no}</td>
+			<td>${product_typeSvc.getOneProduct_Type(productVO.pdtype_no).pdtype_name}</td>
 			<td>${productVO.start_price}</td>
 			<td>${productVO.live_no}</td>
 			<td>

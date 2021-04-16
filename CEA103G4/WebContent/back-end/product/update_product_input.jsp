@@ -109,14 +109,14 @@
 		<td>商品類別編號:</td>
 		<td><input type="TEXT" name="pdtype_no" size="45" value="<%=productVO.getPdtype_no()%>" /></td>
 	</tr>
-	<tr>
-		<td>商品起標價:</td>
-		<td><input type="TEXT" name="start_price" size="45" value="<%=productVO.getStart_price()%>" /></td>
-	</tr>
-	<tr>
-		<td>直播編號:</td>
-		<td><input type="TEXT" name="live_no" size="45" value="<%=productVO.getLive_no()%>" /></td>
-	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>商品起標價:</td> -->
+<%-- 		<td><input type="TEXT" name="start_price" size="45" value="<%=productVO.getStart_price()%>" /></td> --%>
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>直播編號:</td> -->
+<%-- 		<td><input type="TEXT" name="live_no" size="45" value="<%=productVO.getLive_no()%>" /></td> --%>
+<!-- 	</tr> -->
 	
 
 </table>

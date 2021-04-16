@@ -4,6 +4,7 @@
 <%
   ProductVO productVO = (ProductVO) request.getAttribute("productVO"); //ProductServlet.java(Controller), 存入req的productVO物件
 %>
+<jsp:useBean id="product_typeSvc" scope="page" class="com.product_type.model.Product_TypeService" />
 
 <html>
 <head>
@@ -77,7 +78,7 @@
 			<td>${productVO.product_state}</td>
 			<td><img width="100px" height="100px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}"></td>
 			<td>${productVO.user_id}</td>
-			<td>${productVO.pdtype_no}</td>
+			<td>${product_typeSvc.getOneProduct_Type(productVO.pdtype_no).pdtype_name}</td>
 			<td>${productVO.start_price}</td>
 			<td>${productVO.live_no}</td>
 	</tr>

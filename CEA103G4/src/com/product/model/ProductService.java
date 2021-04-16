@@ -1,5 +1,7 @@
 package com.product.model;
 import java.util.List;
+import java.util.Optional;
+
 
 public class ProductService {
 	
@@ -64,6 +66,9 @@ public class ProductService {
 
 	public List<ProductVO> getAll() {
 		return dao.getAll();
+	}
+	public Optional<ProductVO> getProductPic(Integer product_no){
+		return dao.findProductPic(product_no);
 	}
 }
 

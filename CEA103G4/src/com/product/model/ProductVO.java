@@ -3,6 +3,9 @@ import java.sql.Blob;
 import java.sql.Date;
 
 public class ProductVO implements java.io.Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
 	private Integer product_no;
 	private String product_name;
 	private String product_info;

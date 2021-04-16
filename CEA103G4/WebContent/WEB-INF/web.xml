@@ -17,14 +17,6 @@
 		<res-auth>Container</res-auth>
 	</resource-ref>
 
-	<!--localhotDB test 	 -->
-	<resource-ref>
-		<description>DB2 Connection</description>
-		<res-ref-name>jdbc/CEA103_G4</res-ref-name>
-		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
-	</resource-ref>
-
 	<servlet>
 		<servlet-name>ProductServlet</servlet-name>
 		<servlet-class>com.product.controller.ProductServlet</servlet-class>
@@ -93,6 +85,24 @@
 	<servlet-mapping>
 		<servlet-name>EmpServlet</servlet-name>
 		<url-pattern>/emp/emp.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Live_reportServlet</servlet-name>
+		<servlet-class>com.live_report.controller.Live_reportServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Live_reportServlet</servlet-name>
+		<url-pattern>/back-end/live_report/live_report.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>DBGifReader</servlet-name>
+		<servlet-class>com.live_report.controller.DBGifReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DBGifReader</servlet-name>
+		<url-pattern>/live_report/DBGifReader.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>FunServlet</servlet-name>

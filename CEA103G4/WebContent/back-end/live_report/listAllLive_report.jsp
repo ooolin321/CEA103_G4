@@ -94,7 +94,7 @@
 			<td>${live_reportVO.empno}</td> 
 			<td>${live_reportVO.live_report_state}</td> 
 			<td><fmt:formatDate value="${live_reportVO.report_date}" pattern="yyyy-MM-dd"/></td>
-			<td><img src="${pageContext.request.contextPath}/live_report/DBGifReader.do?live_report_no=${live_reportVO.live_report_no}" width="300px"></td>
+			<td><img src="${pageContext.request.contextPath}/live_report/DBGifReader.do?live_report_no=${live_reportVO.live_report_no}" width="250px"></td>
 			
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/live_report/live_report.do" style="margin-bottom: 0px;">

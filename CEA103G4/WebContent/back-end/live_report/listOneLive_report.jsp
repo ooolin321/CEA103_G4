@@ -57,7 +57,7 @@ th, td {
 			<td>
 				<h3>員工資料 - ListOneEmp.jsp</h3>
 				<h4>
-					<a href="select_page.jsp"><img src="images/back1.gif"
+					<a href="<%=request.getContextPath()%>/back-end/live_report/select_page.jsp"><img src="images/back1.gif"
 						width="100" height="32" border="0">回首頁</a>
 				</h4>
 			</td>
@@ -93,7 +93,7 @@ th, td {
 
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/back-end/live_report/live_report.do"
+					ACTION="<%=request.getContextPath()%>/live_report/live_report.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="修改"> <input type="hidden"
 						name="live_report_no" value="${live_reportVO.live_report_no}">
@@ -102,7 +102,7 @@ th, td {
 			</td>
 			<td>
 				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/back-end/live_report/live_report.do"
+					ACTION="<%=request.getContextPath()%>/live_report/live_report.do"
 					style="margin-bottom: 0px;">
 					<input type="submit" value="刪除"> <input type="hidden"
 						name="live_report_no" value="${live_reportVO.live_report_no}">

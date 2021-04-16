@@ -74,6 +74,8 @@
 	<tr>
 		<th>商品類別編號</th>
 		<th>商品類別名稱</th>
+		<th>修改</th>
+		<th>刪除</th>
 	</tr>
 	<%@ include file="product_typepage1.file" %> 
 	<c:forEach var="product_typeVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">

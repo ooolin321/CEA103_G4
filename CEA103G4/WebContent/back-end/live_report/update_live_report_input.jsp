@@ -74,24 +74,32 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="live_report.do" name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_report/live_report.do" name="form1" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td>直播檢舉編號:<font color=red><b>*</b></font></td>
-				<input type="hidden" name="live_report_no" value="<%=live_reportVO.getLive_report_no()%>">
 				<td><%=live_reportVO.getLive_report_no()%></td>
-			</tr>
-			<tr>
-				<td>直播檢舉日期:<font color=red><b>*</b></font></td>
-				<td><%=live_reportVO.getReport_date()%></td>
 			</tr>
 			<tr>
 				<td>直播檢舉內容:</td>
 				<td><input type="TEXT" name="live_report_content" size="45"
 					value="<%=live_reportVO.getLive_report_content()%>" /></td>
 			</tr>
-			
-			<tr>
+						<tr>
+				<td>直播編號:</td>
+				<td><input type="TEXT" name="live_no" size="45"
+					value="<%=live_reportVO.getLive_no()%>" /></td>
+			</tr>
+						<tr>
+				<td>直播檢舉者ID:<font color=red><b>*</b></font></td>
+				<td><input type="TEXT" name="user_id" size="45"
+					value="<%=live_reportVO.getUser_id()%>" /></td>
+			</tr>
+						<tr>
+				<td>員工編號:</td>
+				<td><input type="TEXT" name="empno" size="45" value="<%=live_reportVO.getEmpno()%>" /></td>
+			</tr>
+						<tr>
 				<td>直播檢舉處理狀態:</td>
 				<td><select name="live_report_state">
 						<option value="0" ${(live_reportVO.live_report_state==0)? 'selected':''}>未處理</option>
@@ -99,20 +107,10 @@ th, td {
 						<option value="2" ${(live_reportVO.live_report_state==1)? 'selected':''}>審核不通過</option>
 				</select></td>
 			</tr>
-			<tr>
-				<td>直播編號:</td>
-				<td><input type="TEXT" name="live_no" size="45"
-					value="<%=live_reportVO.getLive_no()%>" /></td>
-			</tr>
-			<tr>
-				<td>直播檢舉者ID:<font color=red><b>*</b></font></td>
-				<td><%=live_reportVO.getUser_id()%></td>
-			</tr>
-			<tr>
-				<td>員工編號:</td>
-				<td><input type="TEXT" name="empno" size="45" value="<%=live_reportVO.getEmpno()%>" /></td>
-			</tr>
-			
+<!-- 			<tr> -->
+<!-- 				<td>直播檢舉日期:<font color=red><b>*</b></font></td> -->
+<%-- 				<td><%=live_reportVO.getReport_date()%></td> --%>
+<!-- 			</tr>		 -->
 			<tr>
 				<td>檢舉截圖:</td>
 				<td><img src="${pageContext.request.contextPath}/live_report/DBGifReader.do?live_report_no=${live_reportVO.live_report_no}" width="250px"></td>
@@ -121,6 +119,7 @@ th, td {
 	
 		</table>
 		<br> <input type="hidden" name="action" value="update"> 
+		<input type="hidden" name="live_report_no" value="<%=live_reportVO.getLive_report_no()%>">
 			 <input type="submit" value="送出修改">
 	</FORM>
 </body>

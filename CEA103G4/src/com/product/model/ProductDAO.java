@@ -1,5 +1,6 @@
 package com.product.model;
 import java.util.*;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,6 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
 
 public class ProductDAO implements ProductDAO_interface {
 
@@ -28,7 +30,7 @@ public class ProductDAO implements ProductDAO_interface {
 
 	private static final String INSERT_STMT = 
 			"INSERT INTO PRODUCT (product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no) "
-			+ "VALUES (?, ?, ?, DEFAULT, ?, DEFAULT, ?, ?, ?, DEFAULT, DEFAULT)";
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 		"SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no"
 		+ " FROM PRODUCT order by product_no";
@@ -51,15 +53,13 @@ public class ProductDAO implements ProductDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-
-
 			pstmt.setString(1, productVO.getProduct_name());
 			pstmt.setString(2, productVO.getProduct_info());
 			pstmt.setInt(3, productVO.getProduct_price());
 			pstmt.setInt(4, productVO.getProduct_quantity());
 			pstmt.setInt(5, productVO.getProduct_remaining());
 			pstmt.setInt(6, productVO.getProduct_state());
-			pstmt.setBytes(7,  productVO.getProduct_photo());
+			pstmt.setBytes(7, productVO.getProduct_photo());
 			pstmt.setString(8, productVO.getUser_id());
 			pstmt.setInt(9, productVO.getPdtype_no());
 			pstmt.setInt(10, productVO.getStart_price());
@@ -103,19 +103,19 @@ public class ProductDAO implements ProductDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-
-			pstmt.setInt(1, productVO.getProduct_no());
-			pstmt.setString(2, productVO.getProduct_name());
-			pstmt.setString(3, productVO.getProduct_info());
-			pstmt.setInt(4, productVO.getProduct_price());
-			pstmt.setInt(5, productVO.getProduct_quantity());
-			pstmt.setInt(6, productVO.getProduct_remaining());
-			pstmt.setInt(7, productVO.getProduct_state());
-			pstmt.setBytes(8,  productVO.getProduct_photo());
-			pstmt.setString(9, productVO.getUser_id());
-			pstmt.setInt(10, productVO.getPdtype_no());
-			pstmt.setInt(11, productVO.getStart_price());
-			pstmt.setInt(12, productVO.getLive_no());
+	
+			pstmt.setString(1, productVO.getProduct_name());
+			pstmt.setString(2, productVO.getProduct_info());
+			pstmt.setInt(3, productVO.getProduct_price());
+			pstmt.setInt(4, productVO.getProduct_quantity());
+			pstmt.setInt(5, productVO.getProduct_remaining());
+			pstmt.setInt(6, productVO.getProduct_state());
+			pstmt.setBytes(7,productVO.getProduct_photo());
+			pstmt.setString(8,productVO.getUser_id());
+			pstmt.setInt(9, productVO.getPdtype_no());
+			pstmt.setInt(10, productVO.getStart_price());
+			pstmt.setInt(11, productVO.getLive_no());
+			pstmt.setInt(12, productVO.getProduct_no());
 
 			pstmt.executeUpdate();
 			
@@ -320,6 +320,55 @@ public class ProductDAO implements ProductDAO_interface {
 			}
 		}
 		return list;
+	}
+
+	//獲取某商品編號的圖片
+	@Override
+	public Optional<ProductVO> findProductPic(Integer product_no) {
+		ProductVO productVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+			pstmt.setInt(1, product_no);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				productVO = new ProductVO();
+				productVO.setProduct_photo(rs.getBytes("product_photo"));
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return Optional.ofNullable(productVO);
 	}
 	
 }

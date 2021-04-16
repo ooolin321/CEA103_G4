@@ -101,9 +101,11 @@ public class EmpServlet extends HttpServlet {
 			}
 		}
 		// =================================================================================================
+		
 		if ("update".equals(action)) {// 來自update_emp_input.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errMsgs", errorMsgs);
+			req.setAttribute("errorMsgs", errorMsgs);
+
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer empno = new Integer(req.getParameter("empno").trim());
@@ -121,13 +123,13 @@ public class EmpServlet extends HttpServlet {
 					errorMsgs.add("職位請勿空白");
 				}
 
-				String gender = req.getParameter("gender").trim();
+				Integer gender = new Integer(req.getParameter("gender"));
 				
 
 				String id = req.getParameter("id");
 				String idReg = "^[a-zA-Z]{1}[1-2]{1}[0-9]{8}$";
 				if (id == null || id.trim().length() == 0) {
-					errorMsgs.add("ID請勿空白");
+					errorMsgs.add("身份證字號請勿空白");
 				} else if (!id.trim().matches(idReg)) {
 					errorMsgs.add("身份證字號不正確");
 				}
@@ -140,9 +142,17 @@ public class EmpServlet extends HttpServlet {
 					errorMsgs.add("請輸入日期!");
 				}
 
-				String addr = req.getParameter("addr").trim();
+				String addr = req.getParameter("addr");
 				if (addr == null || addr.trim().length() == 0) {
 					errorMsgs.add("地址請勿空白");
+				}
+				
+				String email = req.getParameter("email");
+				String emailReg = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
+				if (email == null || email.trim().length() == 0) {
+					errorMsgs.add("email請勿空白");
+				}else if (!email.trim().matches(emailReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("email格式不正確");
 				}
 
 				Double sal = null;
@@ -153,7 +163,7 @@ public class EmpServlet extends HttpServlet {
 					errorMsgs.add("薪水請填數字.");
 				}
 
-				Integer state = new Integer(req.getParameter("state").trim());
+				Integer state = new Integer(req.getParameter("state"));
 
 				java.sql.Date hiredate = null;
 				try {
@@ -164,11 +174,11 @@ public class EmpServlet extends HttpServlet {
 				}
 
 
-				String empPwd = req.getParameter("emp_pwd").trim();
-				
+				String empPwd = req.getParameter("emp_pwd");
 				if (empPwd == null || empPwd.trim().length() == 0) {
-					errorMsgs.add("密碼請勿空白");
+					errorMsgs.add("身份證字號請勿空白");
 				}
+					
 
 				EmpVO empVO = new EmpVO();
 				empVO.setEmpno(empno);
@@ -178,6 +188,7 @@ public class EmpServlet extends HttpServlet {
 				empVO.setGender(gender);
 				empVO.setDob(dob);
 				empVO.setAddr(addr);
+				empVO.setEmail(email);
 				empVO.setSal(sal);
 				empVO.setState(state);
 				empVO.setHiredate(hiredate);
@@ -188,10 +199,10 @@ public class EmpServlet extends HttpServlet {
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/update_emp_input.jsp");
 					failureView.forward(req, res);
 					return;
-				}
+				}	
 				/*************************** 2.開始修改資料 *****************************************/
-				EmpService empSvc = new EmpService();
-				empVO = empSvc.updateEmp(empno, ename, job, id, gender, dob, addr, sal, state, hiredate, empPwd);
+				EmpService empSvc = new EmpService();			
+				empVO = empSvc.updateEmp(empno, ename, job, id, gender, dob, addr, email, sal, state, hiredate, empPwd);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
@@ -220,17 +231,17 @@ public class EmpServlet extends HttpServlet {
 					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 				}
 
-				String job = req.getParameter("job").trim();
+				String job = req.getParameter("job");
 				if (job == null || job.trim().length() == 0) {
 					errorMsgs.add("職位請勿空白");
 				}
 
-				String gender = req.getParameter("gender").trim();
+				Integer gender = new Integer(req.getParameter("gender").trim());
 
 				String id = req.getParameter("id");
 				String idReg = "^[a-zA-Z]{1}[1-2]{1}[0-9]{8}$";
 				if (id == null || id.trim().length() == 0) {
-					errorMsgs.add("ID請勿空白");
+					errorMsgs.add("身份證字號請勿空白");
 				} else if (!id.trim().matches(idReg)) {
 					errorMsgs.add("身份證字號不正確");
 				}
@@ -243,11 +254,19 @@ public class EmpServlet extends HttpServlet {
 					errorMsgs.add("請輸入日期!");
 				}
 
-				String addr = req.getParameter("addr").trim();
+				String addr = req.getParameter("addr");
 				if (addr == null || addr.trim().length() == 0) {
 					errorMsgs.add("地址請勿空白");
 				}
-
+				
+				String email = req.getParameter("email");
+				String emailReg = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
+				if (email == null || email.trim().length() == 0) {
+					errorMsgs.add("email請勿空白");
+				}else if (!email.trim().matches(emailReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("email格式不正確");
+				}
+				
 				Double sal = null;
 				try {
 					sal = new Double(req.getParameter("sal").trim());
@@ -265,10 +284,7 @@ public class EmpServlet extends HttpServlet {
 					hiredate = new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
-				String empPwd = req.getParameter("emp_pwd").trim();
-				if (empPwd == null || empPwd.trim().length() == 0) {
-					errorMsgs.add("密碼請勿空白");
-				}
+				
 
 				EmpVO empVO = new EmpVO();
 				
@@ -278,10 +294,11 @@ public class EmpServlet extends HttpServlet {
 				empVO.setGender(gender);
 				empVO.setDob(dob);
 				empVO.setAddr(addr);
+				empVO.setEmail(email);
 				empVO.setSal(sal);
 				empVO.setState(state);
 				empVO.setHiredate(hiredate);
-				empVO.setEmp_pwd(empPwd);
+				String empPwd = empVO.getGenAuthCode();
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -291,7 +308,7 @@ public class EmpServlet extends HttpServlet {
 				}
 				/*************************** 2.開始新增資料 *****************************************/
 				EmpService empSvc = new EmpService();
-				empVO = empSvc.addEmp(ename, job, id, gender, dob, addr, sal, state, hiredate, empPwd);
+				empVO = empSvc.addEmp(ename, job, id, gender, dob, addr,email, sal, state, hiredate, empPwd);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/back-end/emp/listAllEmp.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp

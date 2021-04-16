@@ -5,7 +5,16 @@ import java.io.Serializable;
 public class FunVO implements Serializable{
 	private Integer funno;
 	private String funName;
+	private Integer state;
 	
+	
+	
+	public Integer getState() {
+		return state;
+	}
+	public void setState(Integer state) {
+		this.state = state;
+	}
 	public Integer getFunno() {
 		return funno;
 	}

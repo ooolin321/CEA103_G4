@@ -10,21 +10,23 @@ public class FunService {
 		dao = new FunDAO();
 	}
 	
-	public FunVO addFun(String funName) {
+	public FunVO addFun(String funName,Integer state) {
 		FunVO funVO = new FunVO();
 		
 		funVO.setFunName(funName);	
+		funVO.setState(state);
 		dao.insert(funVO);
 		
 		return funVO;
 	}
 	
-	public FunVO updateFun(Integer funno,String funName) {
+	public FunVO updateFun(Integer funno,String funName,Integer state) {
 		
 		FunVO funVO = new FunVO();
 		
 		funVO.setFunno(funno);
 		funVO.setFunName(funName);
+		funVO.setState(state);
 		
 		dao.update(funVO);
 		

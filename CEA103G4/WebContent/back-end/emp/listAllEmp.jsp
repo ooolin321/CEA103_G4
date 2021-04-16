@@ -50,8 +50,8 @@ table, th, td {
 th, td {
 	padding: 5px;
 	text-align: center;
-	max-width: 92px;
-	min-width: 92px;
+	max-width: 150px;
+	min-width: 200px;
 }
 </style>
 
@@ -64,7 +64,8 @@ th, td {
 			<td>
 				<h3>所有員工資料 - listAllEmp.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/back-end/emp/selectEmp.jsp"><img src="<%=request.getContextPath()%>/images/back1.gif" width="100"
+					<a href="<%=request.getContextPath()%>/back-end/emp/selectEmp.jsp"><img
+						src="<%=request.getContextPath()%>/images/back1.gif" width="100"
 						height="32" border="0">回首頁</a>
 				</h4>
 			</td>
@@ -90,6 +91,7 @@ th, td {
 			<th>性別</th>
 			<th>生日</th>
 			<th>地址</th>
+			<th>email</th>
 			<th>薪水</th>
 			<th>狀態</th>
 			<th>到職日期</th>
@@ -106,15 +108,35 @@ th, td {
 				<td>${empVO.ename}</td>
 				<td>${empVO.job}</td>
 				<td>${empVO.id}</td>
-				<td>${empVO.gender}</td>
+				<c:choose>
+					<c:when test="${empVO.gender==0}">
+						<td>女</td>
+					</c:when>
+					<c:when test="${empVO.gender==1}">
+						<td>男</td>
+					</c:when>
+				</c:choose>
 				<td>${empVO.dob}</td>
 				<td>${empVO.addr}</td>
+				<td>${empVO.email}</td>
 				<td>${empVO.sal}</td>
-				<td>${empVO.state}</td>
-				<td><fmt:formatDate value="${empVO.hiredate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				<%-- <td>${empVO.state}</td> --%>
+					<c:choose>
+					<c:when test="${empVO.state==0}">
+						<td>離職</td>
+					</c:when>
+					<c:when test="${empVO.state==1}">
+						<td>在職</td>
+					</c:when>
+				</c:choose>
+				<td><fmt:formatDate value="${empVO.hiredate}"
+						pattern="yyyy-MM-dd" /></td>
 				<td>${empVO.emp_pwd}</td>
+
+
 				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do"
+					<FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/emp/emp.do"
 						style="margin-bottom: 0px;">
 						<input type="submit" value="修改"> <input type="hidden"
 							name="empno" value="${empVO.empno}"> <input type="hidden"
@@ -122,7 +144,8 @@ th, td {
 					</FORM>
 				</td>
 				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do"
+					<FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/emp/emp.do"
 						style="margin-bottom: 0px;">
 						<input type="submit" value="刪除"> <input type="hidden"
 							name="empno" value="${empVO.empno}"> <input type="hidden"

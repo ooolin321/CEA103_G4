@@ -1,4 +1,4 @@
-package com.emp.model;
+package com.customer_service.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,46 +12,46 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class EmpJNDIDAO implements EmpDAO_interface{
 
+
+public class CustomerDAO implements CustomerDAO_interface{
 	private static DataSource ds = null;
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/admin");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CEA103_G4");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = "INSERT INTO EMP (ENAME,JOB,ID,GENDER,DOB,ADDR,SAL,STATE,HIREDATE,EMP_PWD) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,ADDR,SAL,STATE,HIREDATE,EMP_PWD FROM EMP ORDER BY EMPNO";
-	private static final String GET_ONE_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,ADDR,SAL,STATE,HIREDATE,EMP_PWD  FROM EMP WHERE EMPNO = ?";
-	private static final String DELETE = "DELETE FROM EMP WHERE EMPNO = ?";
-	private static final String UPDATE = "UPDATE EMP SET ENAME=?, JOB=?, ID=?, GENDER=?, DOB=?, ADDR=?, SAL=?, STATE=?, HIREDATE=?, EMP_PWD=? WHERE EMPNO = ?";
-
+	
+	private static final String INSERT_STMT = 
+			"INSERT INTO CUSTOMER_SERVICE (USER_ID,CONTENT,CASE_STATE,EMPNO,EMP_RESPONSE,CASE_TMIE ) VALUES ( ?, ?, ?, ?, ?, ?)";
+	private static final String GET_ALL_STMT = 
+			"SELECT CASENO,USER_ID,CONTENT,CASE_STATE,EMPNO,EMP_RESPONSE,CASE_TMIE FROM CUSTOMER_SERVICE ORDER BY CASENO";
+	private static final String GET_ONE_STMT = 
+			"SELECT CASENO,USER_ID,CONTENT,CASE_STATE,EMPNO,EMP_RESPONSE,CASE_TMIE FROM CUSTOMER_SERVICE WHERE CASENO = ?";
+	private static final String DELETE = 
+			"DELETE FROM CUSTOMER_SERVICE WHERE CASENO = ?";
+	private static final String UPDATE = 
+			"UPDATE CUSTOMER_SERVICE SET USER_ID=?, CONTENT=?, CASE_STATE=?, EMPNO=?, EMP_RESPONSE=?, CASE_TMIE=? WHERE EMPNO = ?";
+	
 	@Override
-	public void insert(EmpVO empVO) {
-
+	public void insert(CustomerSerVO customerSerVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
-
-			pstmt.setString(1, empVO.getEname());
-			pstmt.setString(2, empVO.getJob());
-			pstmt.setString(3, empVO.getId());
-			pstmt.setString(4, empVO.getGender());
-			pstmt.setDate(5, empVO.getDob());
-			pstmt.setString(6, empVO.getAddr());
-			pstmt.setDouble(7, empVO.getSal());
-			pstmt.setInt(8, empVO.getState());
-			pstmt.setDate(9, empVO.getHiredate());
-			pstmt.setString(10, empVO.getEmp_pwd());
-
+		
+			pstmt.setString(1, customerSerVO.getUserid());
+			pstmt.setString(2, customerSerVO.getContent());
+			pstmt.setInt(3, customerSerVO.getCaseState());
+			pstmt.setInt(4, customerSerVO.getEmpno());
+			pstmt.setString(5, customerSerVO.getEmpResponse());
+			pstmt.setDate(6, customerSerVO.getCaseTime());
+		
 			pstmt.executeUpdate();
-
 		} catch (SQLException se) {
 			throw new RuntimeException("database發生錯誤." + se.getMessage());
 		} finally {
@@ -70,30 +70,24 @@ public class EmpJNDIDAO implements EmpDAO_interface{
 				}
 			}
 		}
+		
 	}
 
 	@Override
-	public void update(EmpVO empVO) {
+	public void update(CustomerSerVO customerSerVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+				
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
-
-			pstmt.setString(1, empVO.getEname());
-			pstmt.setString(2, empVO.getJob());
-			pstmt.setString(3, empVO.getId());
-			pstmt.setString(4, empVO.getGender());
-			pstmt.setDate(5, empVO.getDob());
-			pstmt.setString(6, empVO.getAddr());
-			pstmt.setDouble(7, empVO.getSal());
-			pstmt.setInt(8, empVO.getState());
-			pstmt.setDate(9, empVO.getHiredate());
-			pstmt.setString(10, empVO.getEmp_pwd());
-
-			pstmt.executeUpdate();
-
+			
+			pstmt.setString(1, customerSerVO.getUserid());
+			pstmt.setString(2, customerSerVO.getContent());
+			pstmt.setInt(3, customerSerVO.getCaseState());
+			pstmt.setInt(4, customerSerVO.getEmpno());
+			pstmt.setString(5, customerSerVO.getEmpResponse());
+			pstmt.setDate(6, customerSerVO.getCaseTime());
 		} catch (SQLException se) {
 			throw new RuntimeException("database發生錯誤." + se.getMessage());
 		} finally {
@@ -112,10 +106,11 @@ public class EmpJNDIDAO implements EmpDAO_interface{
 				}
 			}
 		}
+		
 	}
 
 	@Override
-	public void delete (Integer empno) {
+	public void delete(Integer caseno) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -123,7 +118,7 @@ public class EmpJNDIDAO implements EmpDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
-			pstmt.setInt(1, empno);
+			pstmt.setInt(1, caseno);
 
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
@@ -145,39 +140,35 @@ public class EmpJNDIDAO implements EmpDAO_interface{
 			}
 		}
 	}
-	
+
 	@Override
-	public EmpVO findByPrimaryKey(Integer empno) {
-		EmpVO empVO = null;
+	public CustomerSerVO findByPrimaryKey(Integer caseno) {
+		CustomerSerVO customerSerVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		
 		try {
-
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			pstmt.setInt(1, empno);
+			pstmt.setInt(1, caseno);
 
 			rs = pstmt.executeQuery();
-
+			
 			while (rs.next()) {
 				
-				empVO = new EmpVO();
-				empVO.setEmpno(rs.getInt("empno"));
-				empVO.setEname(rs.getString("ename"));
-				empVO.setJob(rs.getString("job"));
-				empVO.setId(rs.getString("id"));
-				empVO.setGender(rs.getString("gender"));
-				empVO.setDob(rs.getDate("dob"));
-				empVO.setAddr(rs.getString("addr"));
-				empVO.setSal(rs.getDouble("sal"));
-				empVO.setState(rs.getInt("state"));
-				empVO.setHiredate(rs.getDate("hiredate"));
-				empVO.setEmp_pwd(rs.getString("emp_pwd"));
+				customerSerVO = new CustomerSerVO();
+				customerSerVO.setCaseno(rs.getInt("caseno"));
+				customerSerVO.setUserid(rs.getString("userid"));
+				customerSerVO.setContent(rs.getString("content"));
+				customerSerVO.setCaseState(rs.getInt("caseState"));
+				customerSerVO.setEmpno(rs.getInt("empno"));
+				customerSerVO.setEmpResponse(rs.getString("empResponse"));
+				customerSerVO.setCaseTime(rs.getDate("caseTime"));
+				
 			}
-
-			// Handle any driver errors
+			
 		} catch (SQLException se) {
 			throw new RuntimeException("database發生錯誤."
 					+ se.getMessage());
@@ -205,41 +196,34 @@ public class EmpJNDIDAO implements EmpDAO_interface{
 				}
 			}
 		}
-		return empVO;
+		return customerSerVO;
+		
 	}
-	@Override
-	public List<EmpVO> getAll()  {
-		List<EmpVO> list = new ArrayList<EmpVO>();
-		EmpVO empVO = null;
 
+	@Override
+	public List<CustomerSerVO> getAll() {
+		List <CustomerSerVO> list = new ArrayList<CustomerSerVO>();
+		CustomerSerVO customerSerVO = null;
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
+		
 		try {
-
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
-
+			
 			while (rs.next()) {
-				
-				empVO = new EmpVO();
-				empVO.setEmpno(rs.getInt("empno"));
-				empVO.setEname(rs.getString("ename"));
-				empVO.setJob(rs.getString("job"));
-				empVO.setId(rs.getString("id"));
-				empVO.setGender(rs.getString("gender"));
-				empVO.setDob(rs.getDate("dob"));
-				empVO.setAddr(rs.getString("addr"));
-				empVO.setSal(rs.getDouble("sal"));
-				empVO.setState(rs.getInt("state"));
-				empVO.setHiredate(rs.getDate("hiredate"));
-				empVO.setEmp_pwd(rs.getString("emp_pwd"));
-				list.add(empVO); // Store the row in the list
+				customerSerVO = new CustomerSerVO();
+				customerSerVO.setCaseno(rs.getInt("caseno"));
+				customerSerVO.setUserid(rs.getString("userid"));
+				customerSerVO.setContent(rs.getString("content"));
+				customerSerVO.setCaseState(rs.getInt("caseState"));
+				customerSerVO.setEmpno(rs.getInt("empno"));
+				customerSerVO.setEmpResponse(rs.getString("empResponse"));
+				customerSerVO.setCaseTime(rs.getDate("caseTime"));
 			}
-
-			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("database發生錯誤."
 					+ se.getMessage());
@@ -269,4 +253,6 @@ public class EmpJNDIDAO implements EmpDAO_interface{
 		}
 		return list;
 	}
+
+
 }

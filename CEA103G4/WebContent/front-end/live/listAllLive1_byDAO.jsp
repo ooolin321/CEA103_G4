@@ -5,9 +5,9 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-	LiveJDBCDAO dao = new LiveJDBCDAO();
-    List<LiveVO> list = dao.getAll();
-    pageContext.setAttribute("list",list);
+	LiveService liveSvc = new LiveService();
+	List<LiveVO> list = liveSvc.getAll();
+	pageContext.setAttribute("list",list);
 %>
 
 

@@ -69,7 +69,7 @@
     </FORM>
   </li>
 
-  <jsp:useBean id="dao" scope="page" class="com.live.model.LiveJDBCDAO" />
+  <jsp:useBean id="dao" scope="page" class="com.live.model.LiveService" />
    
   <li>
      <FORM METHOD="post" ACTION="live.do" >

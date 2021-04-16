@@ -14,7 +14,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 
-public class LiveJDBCDAO implements LiveDAO_interface {
+public class LiveJNDIDAO implements LiveDAO_interface {
 	private static DataSource ds = null;
 	static {
 		try {
@@ -45,7 +45,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 			pstmt.setString(2, liveVO.getLive_type());
 			pstmt.setString(3, liveVO.getLive_name());
 			pstmt.setDate(4, liveVO.getLive_time());
-			pstmt.setString(5, liveVO.getLive_state());
+			pstmt.setInt(5, liveVO.getLive_state());
 			pstmt.setString(6, liveVO.getUser_id());
 			pstmt.setInt(7, liveVO.getEmpno());
 
@@ -85,7 +85,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 			pstmt.setString(1, liveVO.getLive_type());
 			pstmt.setString(2, liveVO.getLive_name());
 			pstmt.setDate(3, liveVO.getLive_time());
-			pstmt.setString(4, liveVO.getLive_state());
+			pstmt.setInt(4, liveVO.getLive_state());
 			pstmt.setInt(5, liveVO.getLive_no());
 
 			pstmt.executeUpdate();
@@ -177,7 +177,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 				liveVO.setLive_type(rs.getString("live_type"));
 				liveVO.setLive_name(rs.getString("live_name"));
 				liveVO.setLive_time(rs.getDate("live_time"));
-				liveVO.setLive_state(rs.getString("live_state"));
+				liveVO.setLive_state(rs.getInt("live_state"));
 				liveVO.setUser_id(rs.getString("user_id"));
 				liveVO.setEmpno(rs.getInt("empno"));
 			}
@@ -235,7 +235,7 @@ public class LiveJDBCDAO implements LiveDAO_interface {
 				liveVO.setLive_type(rs.getString("live_type"));
 				liveVO.setLive_name(rs.getString("live_name"));
 				liveVO.setLive_time(rs.getDate("live_time"));
-				liveVO.setLive_state(rs.getString("live_state"));
+				liveVO.setLive_state(rs.getInt("live_state"));
 				liveVO.setUser_id(rs.getString("user_id"));
 				liveVO.setEmpno(rs.getInt("empno"));
 				list.add(liveVO); // Store the row in the list

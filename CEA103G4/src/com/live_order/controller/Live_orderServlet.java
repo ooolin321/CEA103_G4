@@ -35,7 +35,7 @@ public class Live_orderServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/live_order/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/select_page.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -48,7 +48,7 @@ public class Live_orderServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/live_order/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/select_page.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -61,21 +61,21 @@ public class Live_orderServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/live_order/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/select_page.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("live_orderVO", live_orderVO); // 資料庫取出的live_orderVO物件,存入req
-				String url = "/live_order/listOneLive_order.jsp";
+				String url = "/front-end/live_order/listOneLive_order.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/live_order/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -97,14 +97,14 @@ public class Live_orderServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("live_orderVO", live_orderVO); // 資料庫取出的live_orderVO物件,存入req
-				String url = "/live_order/update_live_order_input.jsp";
+				String url = "/front-end/live_order/update_live_order_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/live_order/listAllLive_order.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/listAllLive_order.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -190,7 +190,7 @@ public class Live_orderServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("live_orderVO", live_orderVO); // 含有輸入格式錯誤的live_orderVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/live_order/update_live_order_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/update_live_order_input.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -204,14 +204,14 @@ public class Live_orderServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("live_orderVO", live_orderVO); // 資料庫update成功後,正確的的live_orderVO物件,存入req
-				String url = "/live_order/listOneLive_order.jsp";
+				String url = "/front-end/live_order/listOneLive_order.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/live_order/update_live_order_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/update_live_order_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -296,7 +296,7 @@ public class Live_orderServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("live_orderVO", live_orderVO); // 含有輸入格式錯誤的live_orderVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/live_order/addLive_order.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/addLive_order.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -308,14 +308,14 @@ public class Live_orderServlet extends HttpServlet {
 						logistics_state, discount, live_no, user_id, seller_id, srating, srating_content, point);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/live_order/listAllLive_order.jsp";
+				String url = "/front-end/live_order/listAllLive_order.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/live_order/addLive_order.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/addLive_order.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -336,14 +336,14 @@ public class Live_orderServlet extends HttpServlet {
 				live_orderSvc.deleteLive_order(live_order_no);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/live_order/listAllLive_order.jsp";
+				String url = "/front-end/live_order/listAllLive_order.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/live_order/listAllLive_order.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/listAllLive_order.jsp");
 				failureView.forward(req, res);
 			}
 		}

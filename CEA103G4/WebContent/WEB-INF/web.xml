@@ -92,7 +92,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Live_reportServlet</servlet-name>
-		<url-pattern>/back-end/live_report/live_report.do</url-pattern>
+		<url-pattern>/live_report/live_report.do</url-pattern>
 	</servlet-mapping>
 	
 	
@@ -128,7 +128,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>OrderServlet</servlet-name>
-		<url-pattern>/order/order.do</url-pattern>
+		<url-pattern>/front-end/order/order.do</url-pattern>
 	</servlet-mapping>
 
 	<filter>

@@ -9,8 +9,8 @@ public class Live_orderService {
 		dao = new Live_orderJNDIDAO();
 	}
 
-	public Live_orderVO addLive_order(java.sql.Date order_date, Integer order_state, Integer order_shipping,
-			Integer order_price, Integer pay_method, java.sql.Date pay_deadline, String rec_name, String rec_addr,
+	public Live_orderVO addLive_order(java.sql.Timestamp order_date, Integer order_state, Integer order_shipping,
+			Integer order_price, Integer pay_method, java.sql.Timestamp pay_deadline, String rec_name, String rec_addr,
 			Integer rec_phone, Integer rec_cellphone, Integer logistics, Integer logistics_state, Integer discount,
 			Integer live_no, String user_id, String seller_id, Integer srating, String srating_content, Integer point) {
 
@@ -42,8 +42,8 @@ public class Live_orderService {
 
 	}
 
-	public Live_orderVO updateLive_order(java.sql.Date order_date, Integer order_state, Integer order_shipping,
-			Integer order_price, Integer pay_method, java.sql.Date pay_deadline, String rec_name, String rec_addr,
+	public Live_orderVO updateLive_order(java.sql.Timestamp order_date, Integer order_state, Integer order_shipping,
+			Integer order_price, Integer pay_method, java.sql.Timestamp pay_deadline, String rec_name, String rec_addr,
 			Integer rec_phone, Integer rec_cellphone, Integer logistics, Integer logistics_state, Integer discount,
 			Integer live_no, String user_id, String seller_id, Integer srating, String srating_content, Integer point,
 			Integer live_order_no) {

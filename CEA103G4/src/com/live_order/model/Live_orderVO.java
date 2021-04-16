@@ -1,15 +1,15 @@
 package com.live_order.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Live_orderVO {
 	private Integer live_order_no;
-	private Date order_date;
+	private Timestamp order_date;
 	private Integer order_state;
 	private Integer order_shipping;
 	private Integer order_price;
 	private Integer pay_method;
-	private Date pay_deadline;
+	private Timestamp pay_deadline;
 	private String rec_name;
 	private String rec_addr;
 	private Integer rec_phone;
@@ -29,10 +29,10 @@ public class Live_orderVO {
 	public void setLive_order_no(Integer live_order_no) {
 		this.live_order_no = live_order_no;
 	}
-	public Date getOrder_date() {
+	public Timestamp getOrder_date() {
 		return order_date;
 	}
-	public void setOrder_date(Date order_date) {
+	public void setOrder_date(Timestamp order_date) {
 		this.order_date = order_date;
 	}
 	public Integer getOrder_state() {
@@ -59,10 +59,10 @@ public class Live_orderVO {
 	public void setPay_method(Integer pay_method) {
 		this.pay_method = pay_method;
 	}
-	public Date getPay_deadline() {
+	public Timestamp getPay_deadline() {
 		return pay_deadline;
 	}
-	public void setPay_deadline(Date pay_deadline) {
+	public void setPay_deadline(Timestamp pay_deadline) {
 		this.pay_deadline = pay_deadline;
 	}
 	public String getRec_name() {

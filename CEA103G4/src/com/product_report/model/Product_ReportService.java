@@ -2,6 +2,8 @@ package com.product_report.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.product_type.model.Product_TypeVO;
+
 public class Product_ReportService {
 
 	private Product_ReportDAO_interface dao;
@@ -26,7 +28,7 @@ public class Product_ReportService {
 	}
 
 	public Product_ReportVO updateProduct_Report(Integer pro_report_no, String pro_report_content, Integer product_no,
-			String user_id, java.sql.Date report_date, Integer empno, Integer proreport_state) {
+			String user_id, Integer empno, Integer proreport_state) {
 
 		Product_ReportVO product_reportVO = new Product_ReportVO();
 
@@ -34,7 +36,8 @@ public class Product_ReportService {
 		product_reportVO.setPro_report_content(pro_report_content);
 		product_reportVO.setProduct_no(product_no);
 		product_reportVO.setUser_id(user_id);
-		product_reportVO.setReport_date(report_date);
+		//檢舉時間自動預設當下時間
+//		product_reportVO.setReport_date(report_date);
 		product_reportVO.setEmpno(empno);
 		product_reportVO.setProreport_state(proreport_state);
 		dao.update(product_reportVO);
@@ -44,6 +47,10 @@ public class Product_ReportService {
 
 	public void deleteProduct_Report(Integer pro_report_no) {
 		dao.delete(pro_report_no);
+	}
+	
+	public Product_ReportVO getOneProduct_Report(Integer pro_report_no) {
+		return dao.findByPrimaryKey(pro_report_no);
 	}
 
 	public List<Product_ReportVO> getAll_Report_state() {

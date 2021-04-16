@@ -1,6 +1,6 @@
 package com.live_report.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Live_reportVO {
 	private Integer live_report_no;
@@ -9,7 +9,7 @@ public class Live_reportVO {
 	private String user_id;
 	private Integer empno;
 	private Integer live_report_state;
-	private Date report_date;
+	private Timestamp report_date;
 	private byte[] photo;
 	public Integer getLive_report_no() {
 		return live_report_no;
@@ -47,10 +47,10 @@ public class Live_reportVO {
 	public void setLive_report_state(Integer live_report_state) {
 		this.live_report_state = live_report_state;
 	}
-	public Date getReport_date() {
+	public Timestamp getReport_date() {
 		return report_date;
 	}
-	public void setReport_date(Date report_date) {
+	public void setReport_date(Timestamp report_date) {
 		this.report_date = report_date;
 	}
 	public byte[] getPhoto() {

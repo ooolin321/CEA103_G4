@@ -2,7 +2,7 @@ package com.product_report.model;
 
 import java.sql.Date;
 
-public class Product_ReportVO {
+public class Product_ReportVO implements java.io.Serializable{
 	private Integer pro_report_no;
 	private String pro_report_content;
 	private Integer product_no;

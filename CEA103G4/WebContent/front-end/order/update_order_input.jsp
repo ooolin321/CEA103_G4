@@ -77,7 +77,10 @@
 	</tr>
 	<tr>
 		<td>訂單狀態:</td>
-		<td><input type="TEXT" name="order_state" size="45"	value="<%=orderVO.getOrder_state()%>" /></td>
+		<td><select name="order_state">
+						<option value="0" ${(orderVO.order_state==0)? 'selected':''}>未付款</option>
+						<option value="1" ${(orderVO.order_state==1)? 'selected':''}>已付款</option>
+		</select></td>
 	</tr>
 	<tr>
 		<td>訂單運費:</td>
@@ -89,8 +92,10 @@
 	</tr>
 	<tr>
 		<td>付款方式:</td>
-		<td><input type="TEXT" name="pay_method" size="45"	value="<%=orderVO.getPay_method()%>" /></td>
-	</tr>
+		<td><select name="pay_method">
+						<option value="0" ${(orderVO.pay_method==0)? 'selected':''}>信用卡</option>
+						<option value="1" ${(orderVO.pay_method==1)? 'selected':''}>轉帳</option>
+		</select></td>	
 	<tr>
 		<td>付款截止時間:</td>
 		<td><input type="TEXT" name="pay_deadline" size="45"	value="<%=orderVO.getPay_deadline()%>" /></td>
@@ -113,12 +118,19 @@
 	</tr>
 	<tr>
 		<td>物流方式:</td>
-		<td><input type="TEXT" name="logistics" size="45"	value="<%=orderVO.getLogistics()%>" /></td>
-	</tr>
+		<td><select name="logistics">
+						<option value="0" ${(orderVO.logistics==0)? 'selected':''}>超商</option>
+						<option value="1" ${(orderVO.logistics==1)? 'selected':''}>宅配</option>
+		</select></td>	
+	<tr>
 	<tr>
 		<td>物流狀態:</td>
-		<td><input type="TEXT" name="logisticsstate" size="45"	value="<%=orderVO.getLogisticsstate()%>" /></td>
-	</tr>
+		<td><select name="logistics">
+						<option value="0" ${(orderVO.logisticsstate==0)? 'selected':''}>未出貨</option>
+						<option value="1" ${(orderVO.logisticsstate==1)? 'selected':''}>已出貨</option>
+						<option value="2" ${(orderVO.logisticsstate==2)? 'selected':''}>已取貨</option>
+		</select></td>	
+	<tr>
 	<tr>
 		<td>使用點數折抵:</td>
 		<td><input type="TEXT" name="discount" size="45"	value="<%=orderVO.getDiscount()%>" /></td>
@@ -143,23 +155,12 @@
 		<td>點數回饋:</td>
 		<td><input type="TEXT" name="point" size="45"	value="<%=orderVO.getPoint()%>" /></td>
 	</tr>
-	
-
-	<%-- <jsp:useBean id="orderSvc" scope="page" class="com.order.model.OrderService" /> --%>
-	<%-- <tr>
-		<td>訂單編號:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="order_no">
-			<c:forEach var="orderVO" items="${orderSvc.all}">
-				<option value="${orderVO.order_no}" ${(orderVO.order_no==orderVO.order_no)?'selected':'' } >${orderVO.order_no}
-			</c:forEach>
-		</select></td>
-	</tr> --%>
-
 </table>
 <br>
-<input type="hidden" name="action" value="update">
-<input type="hidden" name="order_no" value="<%=orderVO.getOrder_no()%>">
-<input type="submit" value="送出修改"></FORM>
+		<input type="hidden" name="action" value="update">
+ 		<input type="hidden" name="order_no" value="<%=orderVO.getOrder_no()%>">
+		<input type="submit" value="送出修改">
+	</FORM>
 </body>
 
 

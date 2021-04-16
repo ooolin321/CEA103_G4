@@ -118,13 +118,13 @@
 			<td>${orderVO.point}</td>
 			<td><fmt:formatDate value="${orderVO.order_date}" pattern="yyyy-MM-dd"/></td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order/order.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="­×§ï">
 			     <input type="hidden" name="order_no"  value="${orderVO.order_no}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/order/order.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="§R°£">
 			     <input type="hidden" name="order_no"  value="${orderVO.order_no}">
 			     <input type="hidden" name="action" value="delete"></FORM>

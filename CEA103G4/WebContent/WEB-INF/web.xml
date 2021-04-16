@@ -101,6 +101,13 @@
 		<servlet-name>FunServlet</servlet-name>
 		<url-pattern>/fun/fun.do</url-pattern>
 	</servlet-mapping>
-  
+  	<servlet>
+		<servlet-name>UserServlet</servlet-name>
+		<servlet-class>com.user.controller.UserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/front-end/user/user.do</url-pattern>
+	</servlet-mapping>
 
 </web-app>

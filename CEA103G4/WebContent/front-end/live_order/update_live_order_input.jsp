@@ -208,16 +208,12 @@ th, td {
 			</tr>
 
 		</table>
-		<br> <input type="hidden" name="action" value="update"> <input
-			type="hidden" name="live_order_no"
-			value="<%=live_orderVO.getLive_order_no()%>"> <input
-			type="hidden" name="order_date"
-			value="<%=live_orderVO.getOrder_date()%>"> <input
-			type="hidden" name="order_price"
-			value="<%=live_orderVO.getOrder_price()%>"> <input
-			type="hidden" name="pay_deadline"
-			value="<%=live_orderVO.getPay_deadline()%>"> <input
-			type="submit" value="送出修改">
+		<br> <input type="hidden" name="action" value="update"> 
+			<input  type="hidden" name="live_order_no" value="<%=live_orderVO.getLive_order_no()%>"> 
+			<input  type="hidden" name="order_date" value="<%=live_orderVO.getOrder_date()%>"> 
+			<input  type="hidden" name="order_price"value="<%=live_orderVO.getOrder_price()%>"> 
+			<input  type="hidden" name="pay_deadline" value="<%=live_orderVO.getPay_deadline()%>"> 
+			<input  type="submit" value="送出修改">
 	</FORM>
 </body>
 

@@ -48,7 +48,7 @@
 </c:if>
 
 <ul>
-  <li><a href='listAllProduct.jsp'>List</a> all Product    <br><br></li>
+  <li><a href='<%=request.getContextPath()%>/back-end/product/listAllProduct.jsp'>List</a> all Product    <br><br></li>
   
   
   <li>

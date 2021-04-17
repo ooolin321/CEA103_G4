@@ -1,13 +1,16 @@
 package com.product_report.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Product_ReportVO implements java.io.Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private Integer pro_report_no;
 	private String pro_report_content;
 	private Integer product_no;
 	private String user_id;
-	private Date report_date;
+	private Timestamp report_date;
 	private Integer empno;
 	private Integer proreport_state;
 	
@@ -35,10 +38,10 @@ public class Product_ReportVO implements java.io.Serializable{
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-	public Date getReport_date() {
+	public Timestamp getReport_date() {
 		return report_date;
 	}
-	public void setReport_date(Date report_date) {
+	public void setReport_date(Timestamp report_date) {
 		this.report_date = report_date;
 	}
 	public Integer getEmpno() {

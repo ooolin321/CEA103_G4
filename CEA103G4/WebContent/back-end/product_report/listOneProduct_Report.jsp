@@ -1,56 +1,55 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="java.util.*"%>
 <%@ page import="com.product_report.model.*"%>
 
 <%
-	Product_ReportDAO dao = new Product_ReportDAO();
-    List<Product_ReportVO> list = dao.getAll();
-    pageContext.setAttribute("list",list);
+	Product_ReportVO product_reportVO = (Product_ReportVO) request.getAttribute("product_reportVO"); //EmpServlet.java(Concroller), 存入req的product_reportVO物件
 %>
-
 
 <html>
 <head>
-<title>商品檢舉清單 </title>
+<title>商品檢舉資料 </title>
 
 <style>
-  table#table-1 {
+table#table-1 {
 	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
+	border: 2px solid black;
+	text-align: center;
+}
+
+table#table-1 h4 {
+	color: red;
+	display: block;
+	margin-bottom: 1px;
+}
+
+h4 {
+	color: blue;
+	display: inline;
+}
 </style>
 
 <style>
-  table {
-	width: 800px;
+table {
+	width: 600px;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
-  }
-  table, th, td {
-    border: 1px solid #CCCCFF;
-  }
-  th, td {
-    padding: 5px;
-    text-align: center;
-  }
+}
+
+table, th, td {
+	border: 1px solid #CCCCFF;
+}
+
+th, td {
+	padding: 5px;
+	text-align: center;
+}
 </style>
 
 </head>
 <body bgcolor='white'>
-
 
 <table id="table-1">
 	<tr><td>
@@ -81,8 +80,7 @@
 		<th>修改</th>
 		<th>刪除</th>
 	</tr>
-	<%@ include file="page1.file" %> 
-	<c:forEach var="product_reportVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+
 		<tr>
 			<td>${product_reportVO.pro_report_no}</td>
 			<td>${product_reportVO.pro_report_content}</td>
@@ -116,9 +114,8 @@
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
 		</tr>
-	</c:forEach>
-</table>
 
-<%@ include file="page2.file" %>
+	</table>
+
 </body>
 </html>

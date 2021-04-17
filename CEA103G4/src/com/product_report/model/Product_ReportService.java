@@ -1,8 +1,6 @@
 package com.product_report.model;
-import java.sql.Date;
 import java.util.List;
 
-import com.product_type.model.Product_TypeVO;
 
 public class Product_ReportService {
 

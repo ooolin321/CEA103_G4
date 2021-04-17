@@ -188,7 +188,7 @@ public class Product_ReportDAO implements Product_ReportDAO_interface {
 				product_reportVO.setPro_report_content(rs.getString("pro_report_content"));
 				product_reportVO.setProduct_no(rs.getInt("product_no"));
 				product_reportVO.setUser_id(rs.getString("user_id"));
-				product_reportVO.setReport_date(rs.getDate("report_date"));
+				product_reportVO.setReport_date(rs.getTimestamp("report_date"));
 				product_reportVO.setEmpno(rs.getInt("empno"));
 				product_reportVO.setProreport_state(rs.getInt("proreport_state"));
 				
@@ -248,7 +248,7 @@ public class Product_ReportDAO implements Product_ReportDAO_interface {
 				product_reportVO.setPro_report_content(rs.getString("pro_report_content"));
 				product_reportVO.setProduct_no(rs.getInt("product_no"));
 				product_reportVO.setUser_id(rs.getString("user_id"));
-				product_reportVO.setReport_date(rs.getDate("report_date"));
+				product_reportVO.setReport_date(rs.getTimestamp("report_date"));
 				product_reportVO.setEmpno(rs.getInt("empno"));
 				product_reportVO.setProreport_state(rs.getInt("proreport_state"));
 				list.add(product_reportVO); // Store the row in the list
@@ -307,7 +307,7 @@ public class Product_ReportDAO implements Product_ReportDAO_interface {
 				product_reportVO.setPro_report_content(rs.getString("pro_report_content"));
 				product_reportVO.setProduct_no(rs.getInt("product_no"));
 				product_reportVO.setUser_id(rs.getString("user_id"));
-				product_reportVO.setReport_date(rs.getDate("report_date"));
+				product_reportVO.setReport_date(rs.getTimestamp("report_date"));
 				product_reportVO.setEmpno(rs.getInt("empno"));
 				product_reportVO.setProreport_state(rs.getInt("proreport_state"));
 				list.add(product_reportVO); // Store the row in the list

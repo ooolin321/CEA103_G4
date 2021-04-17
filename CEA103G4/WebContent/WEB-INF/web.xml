@@ -62,14 +62,29 @@
 		<url-pattern>/front-end/live/live.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>MsgServlet</servlet-name>
-		<servlet-class>com.msg.controller.MsgServlet</servlet-class>
+		<servlet-name>MessageServlet</servlet-name>
+		<servlet-class>com.message.controller.MessageServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>MsgServlet</servlet-name>
-		<url-pattern>/msg/msg.do</url-pattern>
+		<servlet-name>MessageServlet</servlet-name>
+		<url-pattern>/front-end/message/message.do</url-pattern>
 	</servlet-mapping>
-
+	<servlet>
+		<servlet-name>NoticeServlet</servlet-name>
+		<servlet-class>com.notice.controller.NoticeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NoticeServlet</servlet-name>
+		<url-pattern>/front-end/notice/notice.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Order_detailServlet</servlet-name>
+		<servlet-class>com.order.controller.Order_detailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Order_detailServlet</servlet-name>
+		<url-pattern>/front-end/order_detail/order_detail.do</url-pattern>
+	</servlet-mapping>
 	<servlet>
 		<servlet-name>Live_orderServlet</servlet-name>
 		<servlet-class>com.live_order.controller.Live_orderServlet</servlet-class>

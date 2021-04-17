@@ -28,6 +28,8 @@ public class ProductShowPhoto extends HttpServlet {
 			if (productVO.isPresent()) {
 				OutputStream os = response.getOutputStream();
 				os.write(productVO.get().getProduct_photo());
+				os.flush();
+				os.close();
 			}
 		}
 	}

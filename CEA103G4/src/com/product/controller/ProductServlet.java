@@ -1,10 +1,14 @@
 package com.product.controller;
 import java.io.*;
 import java.util.*;
-
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.product.model.*;
 
@@ -23,6 +27,7 @@ public class ProductServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		
 
 		if ("getOne_For_Display".equals(action)) {
 
@@ -380,7 +385,7 @@ public class ProductServlet extends HttpServlet {
 
 				/***************************其他可能的錯誤處理*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:"+e.getMessage());
+				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/back-end/product/addProduct.jsp");
 				failureView.forward(req, res);
@@ -415,6 +420,6 @@ public class ProductServlet extends HttpServlet {
 						.getRequestDispatcher("/back-end/product/listAllProduct.jsp");
 				failureView.forward(req, res);
 			}
-		}
+		}       
 	}
 }

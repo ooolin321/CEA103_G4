@@ -318,6 +318,23 @@ public class ProductDAO implements ProductDAO_interface {
 		return list;
 	}
 
+	//照片
+//	public static byte[] getPictureByteArray(String path) throws IOException {
+//		File file = new File(path);
+//		FileInputStream fis = new FileInputStream(file);
+//		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//		byte[] buffer = new byte[8192];
+//		int i;
+//		while ((i = fis.read(buffer)) != -1) {
+//			bos.write(buffer, 0, i);
+//			bos.flush();
+//		}
+//		bos.close();
+//		fis.close();
+//
+//		return bos.toByteArray();
+//	}
+	
 	//獲取某商品編號的圖片
 	@Override
 	public Optional<ProductVO> findProductPic(Integer product_no) {

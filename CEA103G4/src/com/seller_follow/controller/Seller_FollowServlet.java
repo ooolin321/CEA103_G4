@@ -3,6 +3,8 @@ import java.io.*;
 import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import com.product_type.model.Product_TypeVO;
 import com.seller_follow.model.*;
 
 
@@ -29,49 +31,63 @@ public class Seller_FollowServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-		
+			
+			
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				
-				String product_name = req.getParameter("product_name");
+				String user_id = req.getParameter("user_id");
+				String seller_id = req.getParameter("seller_id");
+				
+				Seller_FollowVO seller_followVO = new Seller_FollowVO();
+				seller_followVO.setUser_id(user_id);
+				seller_followVO.setSeller_id(seller_id);
+
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("seller_followVO", seller_followVO); // 含有輸入格式錯誤的seller_followVO物件,也存入req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back-end/seller_follow/addSeller_Follow.jsp");
+					failureView.forward(req, res);
+					return; //程式中斷
+				}
+			
 				
 				/***************************2.開始新增資料*****************************************/
-				ProductService productSvc = new ProductService();
-				productVO = productSvc.addProduct(product_name, product_info, product_price, product_quantity, product_remaining, product_state,
-						product_photo, user_id, pdtype_no, start_price, live_no);
+				Seller_FollowService seller_followSvc = new Seller_FollowService();
+				seller_followVO = seller_followSvc.addSeller_Follow(user_id, seller_id);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)*************/
-				String url = "/product/listAllProduct.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listAllProduct.jsp
+				String url = "/back-end/seller_follow/listAllSeller_Follow.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listAllSeller_Follow.jsp
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理*************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/product/addProduct.jsp");
+						.getRequestDispatcher("/back-end/seller_follow/addSeller_Follow.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
 		
-		if ("delete".equals(action)) { // 來自listAllProduct.jsp
+		if ("delete".equals(action)) { // 來自istAllSeller_Follow.jsp
 
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
+
 			req.setAttribute("errorMsgs", errorMsgs);
 	
 			try {
 				/***************************1.接收請求參數***************************************/
-				Integer product_no = new Integer(req.getParameter("product_no"));
+				Integer tracer_no = new Integer(req.getParameter("tracer_no"));
 				
 				/***************************2.開始刪除資料***************************************/
-				ProductService productSvc = new ProductService();
-				productSvc.deleteProduct(product_no);
+				Seller_FollowService seller_followSvc = new Seller_FollowService();
+				seller_followSvc.deleteSeller_Follow(tracer_no);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/product/listAllProduct.jsp";
+				String url = "/back-end/seller_follow/listAllSeller_Follow.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -79,7 +95,7 @@ public class Seller_FollowServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/product/listAllProduct.jsp");
+						.getRequestDispatcher("/back-end/seller_follow/listAllSeller_Follow.jsp");
 				failureView.forward(req, res);
 			}
 		}

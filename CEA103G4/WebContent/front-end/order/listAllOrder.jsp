@@ -99,6 +99,7 @@
 		<tr>
 			<td>${orderVO.order_no}</td>
 			<td>${orderVO.order_date}</td>
+			
 			<td>${orderVO.order_state}</td>
 			<td>${orderVO.order_shipping}</td>
 			<td>${orderVO.order_price}</td>

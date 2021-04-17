@@ -104,7 +104,7 @@ th, td {
 				<td><select name="live_report_state">
 						<option value="0" ${(live_reportVO.live_report_state==0)? 'selected':''}>未處理</option>
 						<option value="1" ${(live_reportVO.live_report_state==1)? 'selected':''}>審核通過</option>
-						<option value="2" ${(live_reportVO.live_report_state==1)? 'selected':''}>審核不通過</option>
+						<option value="2" ${(live_reportVO.live_report_state==2)? 'selected':''}>審核不通過</option>
 				</select></td>
 			</tr>
 <!-- 			<tr> -->

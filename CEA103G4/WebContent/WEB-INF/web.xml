@@ -104,6 +104,8 @@
 		<servlet-name>DBGifReader</servlet-name>
 		<url-pattern>/live_report/DBGifReader.do</url-pattern>
 	</servlet-mapping>
+	
+	
 	<servlet>
 		<servlet-name>FunServlet</servlet-name>
 		<servlet-class>com.fun.controller.FunServlet</servlet-class>

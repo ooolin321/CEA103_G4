@@ -23,7 +23,7 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 		}
 	}
 	
-	private static final String INSERT_STMT = "INSERT INTO LIVE_ORDER (ORDER_DATE,ORDER_STATE,ORDER_SHIPPING,ORDER_PRICE,PAY_METHOD,PAY_DEADLINE,REC_NAME,REC_ADDR,REC_PHONE,REC_CELLPHONE,LOGISTICS,LOGISTICS_STATE,DISCOUNT,LIVE_NO,USER_ID,SELLER_ID,SRATING,SRATING_CONTENT,POINT) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? )";
+	private static final String INSERT_STMT = "INSERT INTO LIVE_ORDER (ORDER_STATE,ORDER_SHIPPING,ORDER_PRICE,PAY_METHOD,REC_NAME,REC_ADDR,REC_PHONE,REC_CELLPHONE,LOGISTICS,LOGISTICS_STATE,DISCOUNT,LIVE_NO,USER_ID,SELLER_ID,SRATING,SRATING_CONTENT,POINT,PAY_DEADLINE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,DATE_ADD(CURRENT_TIMESTAMP() , INTERVAL 3 HOUR))";
 	private static final String GET_ALL_STMT = "SELECT * FROM LIVE_ORDER order by LIVE_ORDER_NO";
 	private static final String GET_ONE_STMT = "SELECT * FROM LIVE_ORDER where LIVE_ORDER_NO = ?";
 	private static final String DELETE = "DELETE FROM LIVE_ORDER where LIVE_ORDER_NO = ?";
@@ -42,26 +42,25 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setTimestamp(1, live_orderVO.getOrder_date());
-			pstmt.setInt(2, live_orderVO.getOrder_state());
-			pstmt.setInt(3, live_orderVO.getOrder_shipping());
-			pstmt.setInt(4, live_orderVO.getOrder_price());
-			pstmt.setInt(5, live_orderVO.getPay_method());
-			pstmt.setTimestamp(6, live_orderVO.getPay_deadline());
-			pstmt.setString(7, live_orderVO.getRec_name());
-			pstmt.setString(8, live_orderVO.getRec_addr());
-			pstmt.setInt(9, live_orderVO.getRec_phone());
-			pstmt.setInt(10, live_orderVO.getRec_cellphone());
-			pstmt.setInt(11, live_orderVO.getLogistics());
-			pstmt.setInt(12, live_orderVO.getLogistics_state());
-			pstmt.setInt(13, live_orderVO.getDiscount());
-			pstmt.setInt(14, live_orderVO.getLive_no());
-			pstmt.setString(15, live_orderVO.getUser_id());
-			pstmt.setString(16, live_orderVO.getSeller_id());
-			pstmt.setInt(17, live_orderVO.getSrating());
-			pstmt.setString(18, live_orderVO.getSrating_content());
-			pstmt.setInt(19, live_orderVO.getPoint());
-			
+//			pstmt.setTimestamp(1, live_orderVO.getOrder_date());
+			pstmt.setInt(1, live_orderVO.getOrder_state());
+			pstmt.setInt(2, live_orderVO.getOrder_shipping());
+			pstmt.setInt(3, live_orderVO.getOrder_price());
+			pstmt.setInt(4, live_orderVO.getPay_method());
+//			pstmt.setTimestamp(6, live_orderVO.getPay_deadline());
+			pstmt.setString(5, live_orderVO.getRec_name());
+			pstmt.setString(6, live_orderVO.getRec_addr());
+			pstmt.setInt(7, live_orderVO.getRec_phone());
+			pstmt.setInt(8, live_orderVO.getRec_cellphone());
+			pstmt.setInt(9, live_orderVO.getLogistics());
+			pstmt.setInt(10, live_orderVO.getLogistics_state());
+			pstmt.setInt(11, live_orderVO.getDiscount());
+			pstmt.setInt(12, live_orderVO.getLive_no());
+			pstmt.setString(13, live_orderVO.getUser_id());
+			pstmt.setString(14, live_orderVO.getSeller_id());
+			pstmt.setInt(15, live_orderVO.getSrating());
+			pstmt.setString(16, live_orderVO.getSrating_content());
+			pstmt.setInt(17, live_orderVO.getPoint());
 			pstmt.executeUpdate();
 
 		

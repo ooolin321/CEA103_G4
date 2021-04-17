@@ -9,19 +9,19 @@ public class Live_orderService {
 		dao = new Live_orderJNDIDAO();
 	}
 
-	public Live_orderVO addLive_order(java.sql.Timestamp order_date, Integer order_state, Integer order_shipping,
-			Integer order_price, Integer pay_method, java.sql.Timestamp pay_deadline, String rec_name, String rec_addr,
+	public Live_orderVO addLive_order( Integer order_state, Integer order_shipping,
+			Integer order_price, Integer pay_method, String rec_name, String rec_addr,
 			Integer rec_phone, Integer rec_cellphone, Integer logistics, Integer logistics_state, Integer discount,
 			Integer live_no, String user_id, String seller_id, Integer srating, String srating_content, Integer point) {
 
 		Live_orderVO live_orderVO = new Live_orderVO();
 
-		live_orderVO.setOrder_date(order_date);
+//		live_orderVO.setOrder_date(order_date);
 		live_orderVO.setOrder_state(order_state);
 		live_orderVO.setOrder_shipping(order_shipping);
 		live_orderVO.setOrder_price(order_price);
 		live_orderVO.setPay_method(pay_method);
-		live_orderVO.setPay_deadline(pay_deadline);
+//		live_orderVO.setPay_deadline(pay_deadline);
 		live_orderVO.setRec_name(rec_name);
 		live_orderVO.setRec_addr(rec_addr);
 		live_orderVO.setRec_phone(rec_phone);

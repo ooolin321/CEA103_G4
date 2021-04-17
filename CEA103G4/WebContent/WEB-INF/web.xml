@@ -91,7 +91,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Live_orderServlet</servlet-name>
-		<url-pattern>/front-end/live_order/live_order.do</url-pattern>
+		<url-pattern>/live_order/live_order.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>EmpServlet</servlet-name>

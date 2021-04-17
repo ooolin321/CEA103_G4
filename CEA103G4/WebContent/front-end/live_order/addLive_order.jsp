@@ -56,7 +56,7 @@ th, td {
 			</td>
 			<td>
 				<h4>
-					<a href="select_page.jsp"><img src="images/tomcat.png"
+					<a href="<%=request.getContextPath()%>/front-end/live_order/select_page.jsp"><img src="${pageContext.request.contextPath}/images/tomcat.png"
 						width="100" height="100" border="0">回首頁</a>
 				</h4>
 			</td>
@@ -75,7 +75,7 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="live_order.do" name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_order/live_order.do" name="form1">
 		<table>
 			<tr>
 				<td>直播訂單日期:</td>

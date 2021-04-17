@@ -56,7 +56,7 @@
 <table id="table-1">
 	<tr><td>
 		 <h3>所有直播訂單資料 - listAllLive_order.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/front-end/live_order/select_page.jsp"><img src="${pageContext.request.contextPath}/images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -98,18 +98,30 @@
 		
 		<tr>
 			<td>${live_orderVO.live_order_no}</td>
-			<td><fmt:formatDate value="${live_orderVO.order_date}" pattern="yyyy-MM-dd"/></td>
-			<td>${live_orderVO.order_state}</td>
+			<td><fmt:formatDate value="${live_orderVO.order_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+			<td>${(live_orderVO.order_state==0)? '收到訂單':'完成訂單'}</td>
 			<td>${live_orderVO.order_shipping}</td>
 			<td>${live_orderVO.order_price}</td>
-			<td>${live_orderVO.pay_method}</td> 
-			<td><fmt:formatDate value="${live_orderVO.pay_deadline}" pattern="yyyy-MM-dd"/></td>
+			<td>
+			${(live_orderVO.pay_method==0)? '錢包':''}
+			${(live_orderVO.pay_method==1)? '信用卡':''}
+			${(live_orderVO.pay_method==2)? '轉帳':''}
+			</td> 
+			<td><fmt:formatDate value="${live_orderVO.pay_deadline}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			<td>${live_orderVO.rec_name}</td>
 			<td>${live_orderVO.rec_addr}</td>
 			<td>${live_orderVO.rec_phone}</td>
 			<td>${live_orderVO.rec_cellphone}</td>
-			<td>${live_orderVO.logistics}</td>
-			<td>${live_orderVO.logistics_state}</td>
+			<td>
+			${(live_orderVO.logistics==0)? '宅配':'超商取貨'}
+			</td>
+			
+			<td>
+			${(live_orderVO.logistics_state==0)? '未出貨':''}
+			${(live_orderVO.logistics_state==1)? '已出貨':''}
+			${(live_orderVO.logistics_state==2)? '買家已取貨':''}
+			</td>
+			
 			<td>${live_orderVO.discount}</td>
 			<td>${live_orderVO.live_no}</td>
 			<td>${live_orderVO.user_id}</td>
@@ -119,13 +131,13 @@
 			<td>${live_orderVO.point}</td>
 			
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/live_order/live_order.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_order/live_order.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="live_order_no"  value="${live_orderVO.live_order_no}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/live_order/live_order.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_order/live_order.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="live_order_no"  value="${live_orderVO.live_order_no}">
 			     <input type="hidden" name="action" value="delete"></FORM>

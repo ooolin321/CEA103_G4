@@ -288,6 +288,7 @@ ol {
   color: white;
   text-align: center;
   height: 100%;
+  line-height: 36px;
 }
 
 .inner-header .logo h2 small {
@@ -368,13 +369,14 @@ ol {
   margin-left: 15px;
 }
 
-.inner-header .nav-right li.heart-icon a {
+.inner-header .nav-right li.bell-icon a {
   color: white;
   position: relative;
   display: inline-block;
+  top: -2px;
 }
 
-.inner-header .nav-right li.heart-icon a span {
+.inner-header .nav-right li.bell-icon a span {
   position: absolute;
   right: -8px;
   top: -1px;
@@ -651,6 +653,7 @@ ol {
   display: -ms-inline-flexbox;
   display: inline-flex;
   position: relative;
+  margin-left: 20px;
 }
 
 .nav-item .nav-menu li {
@@ -659,10 +662,10 @@ ol {
   margin-left: -5px;
   position: relative;
 }
-
-.nav-item .nav-menu li.active a {
+/* 取消導覽列首頁固定亮黃色,變成動態 */
+/* .nav-item .nav-menu li.active a {
   background: #e7ab3c;
-}
+} */
 
 .nav-item .nav-menu li a {
   font-size: 14px;
@@ -689,9 +692,9 @@ ol {
 
 .nav-item .nav-menu li .dropdown {
   position: absolute;
-  right: 0;
+  right: 1px;
   top: 82px;
-  width: 200px;
+  width: 148px;
   z-index: 99;
   background: #252525;
   opacity: 0;

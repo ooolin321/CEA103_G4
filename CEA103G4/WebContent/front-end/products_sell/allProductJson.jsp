@@ -29,6 +29,6 @@
 
 					
 %>
-<!-- 照片會出現超多二元位數碼,未取。 -->
+<!-- 照片會出現超多位數碼,未取。 -->
 <!-- jsonformatter: https://jsonformatter.curiousconcept.com/# -->
 

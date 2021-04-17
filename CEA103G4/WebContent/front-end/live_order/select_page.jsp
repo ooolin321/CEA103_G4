@@ -52,7 +52,7 @@
   
   
   <li>
-    <FORM METHOD="post" ACTION="live_order.do" >
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_order/live_order.do" >
         <b>輸入直播訂單編號 (如9001):</b>
         <input type="text" name="live_order_no">
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -63,7 +63,7 @@
   <jsp:useBean id="live_orderSvc" scope="page" class="com.live_order.model.Live_orderService" />
    
   <li>
-     <FORM METHOD="post" ACTION="live_order.do" >
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_order/live_order.do" >
        <b>選擇直播訂單編號:</b>
        <select size="1" name="live_order_no">
          <c:forEach var="live_orderVO" items="${live_orderSvc.all}" > 

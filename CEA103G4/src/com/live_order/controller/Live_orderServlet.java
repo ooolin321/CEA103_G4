@@ -103,7 +103,7 @@ public class Live_orderServlet extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
-				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+ 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/listAllLive_order.jsp");
 				failureView.forward(req, res);
 			}
@@ -225,25 +225,25 @@ public class Live_orderServlet extends HttpServlet {
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-				java.sql.Timestamp order_date = null;
-				try {
-					order_date = java.sql.Timestamp.valueOf(req.getParameter("order_date").trim());
-				} catch (IllegalArgumentException e) {
-					order_date = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
+//				java.sql.Timestamp order_date = null;
+//				try {
+//					order_date = java.sql.Timestamp.valueOf(req.getParameter("order_date").trim());
+//				} catch (IllegalArgumentException e) {
+//					order_date = new java.sql.Timestamp(System.currentTimeMillis());
+//					errorMsgs.add("請輸入日期!");
+//				}
 
 				Integer order_state = new Integer(req.getParameter("order_state").trim());
 				Integer order_shipping = new Integer(req.getParameter("order_shipping").trim());
 				Integer order_price = new Integer(req.getParameter("order_price").trim());
 				Integer pay_method = new Integer(req.getParameter("pay_method").trim());
-				java.sql.Timestamp pay_deadline = null;
-				try {
-					pay_deadline = java.sql.Timestamp.valueOf(req.getParameter("pay_deadline").trim());
-				} catch (IllegalArgumentException e) {
-					pay_deadline = new java.sql.Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
+//				java.sql.Timestamp pay_deadline = null;
+//				try {
+//					pay_deadline = java.sql.Timestamp.valueOf(req.getParameter("pay_deadline").trim());
+//				} catch (IllegalArgumentException e) {
+//					pay_deadline = new java.sql.Timestamp(System.currentTimeMillis());
+//					errorMsgs.add("請輸入日期!");
+//				}
 
 				String rec_name = req.getParameter("rec_name");
 
@@ -273,12 +273,12 @@ public class Live_orderServlet extends HttpServlet {
 				
 				
 				Live_orderVO live_orderVO = new Live_orderVO();
-				live_orderVO.setOrder_date(order_date);
+//				live_orderVO.setOrder_date(order_date);
 				live_orderVO.setOrder_state(order_state);
 				live_orderVO.setOrder_shipping(order_shipping);
 				live_orderVO.setOrder_price(order_price);
 				live_orderVO.setPay_method(pay_method);
-				live_orderVO.setPay_deadline(pay_deadline);
+//				live_orderVO.setPay_deadline(pay_deadline);
 				live_orderVO.setRec_name(rec_name);
 				live_orderVO.setRec_addr(rec_addr);
 				live_orderVO.setRec_phone(rec_phone);
@@ -303,8 +303,8 @@ public class Live_orderServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 ***************************************/
 				Live_orderService live_orderSvc = new Live_orderService();
-				live_orderVO = live_orderSvc.addLive_order(order_date, order_state, order_shipping, order_price,
-						pay_method, pay_deadline, rec_name, rec_addr, rec_phone, rec_cellphone, logistics,
+				live_orderVO = live_orderSvc.addLive_order( order_state, order_shipping, order_price,
+						pay_method,  rec_name, rec_addr, rec_phone, rec_cellphone, logistics,
 						logistics_state, discount, live_no, user_id, seller_id, srating, srating_content, point);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/

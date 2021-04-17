@@ -29,7 +29,7 @@
 
 <style>
   table {
-	width: 600px;
+	width: auto;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -49,7 +49,7 @@
 <h4>此頁暫練習採用 Script 的寫法取值:</h4>
 <table id="table-1">
 	<tr><td>
-		 <h3>訊息資料 - ListOneOrder.jsp</h3>
+		 <h3>訂單資料 - ListOneOrder.jsp</h3>
 		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>

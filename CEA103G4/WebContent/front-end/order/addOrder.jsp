@@ -30,7 +30,7 @@
 
 <style>
   table {
-	width: 450px;
+	width: auto;
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
@@ -156,7 +156,6 @@
 			 value="<%= (orderVO==null)? "0" : orderVO.getPoint()%>" /></td>
 	</tr>
 
-	<%-- <jsp:useBean id="orderSvc" scope="page" class="com.order.model.OrderService" /> --%>
 </table>
 <br>
 <input type="hidden" name="action" value="insert">

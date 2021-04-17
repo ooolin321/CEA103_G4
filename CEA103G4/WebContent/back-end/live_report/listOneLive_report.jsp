@@ -55,9 +55,9 @@ th, td {
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>員工資料 - ListOneEmp.jsp</h3>
+				<h3>直播檢舉資料 - ListOneLive_report.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/back-end/live_report/select_page.jsp"><img src="images/back1.gif"
+					<a href="<%=request.getContextPath()%>/back-end/live_report/select_page.jsp"><img src="${pageContext.request.contextPath}/images/back1.gif"
 						width="100" height="32" border="0">回首頁</a>
 				</h4>
 			</td>

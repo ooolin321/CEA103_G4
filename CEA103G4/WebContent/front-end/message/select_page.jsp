@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>IBM Order: Home</title>
+<title>IBM Message: Home</title>
 
 <style>
   table#table-1 {
@@ -30,12 +30,12 @@
 <body bgcolor='white'>
 
 <table id="table-1">
-   <tr><td><h3>IBM Order: Home</h3><h4>( MVC )</h4></td></tr>
+   <tr><td><h3>IBM Message: Home</h3><h4>( MVC )</h4></td></tr>
 </table>
 
-<p>This is the Home page for IBM Order: Home</p>
+<p>This is the Home page for IBM Message: Home</p>
 
-<h3>訂單查詢:</h3>
+<h3>訊息查詢:</h3>
 	
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -48,26 +48,26 @@
 </c:if>
 
 <ul>
-  <li><a href='listAllOrder.jsp'>List</a> all Orders.  <br><br></li>
+  <li><a href='listAllMessage.jsp'>List</a> all Messages.  <br><br></li>
   
   
   <li>
-    <FORM METHOD="post" ACTION="order.do" >
-        <b>輸入訊息編號 (如6001):</b>
-        <input type="text" name="order_no">
+    <FORM METHOD="post" ACTION="message.do" >
+        <b>輸入訊息編號 (如2001):</b>
+        <input type="text" name="message_no">
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="submit" value="送出">
     </FORM>
   </li>
 
-  <jsp:useBean id="orderSvc" scope="page" class="com.order.model.OrderService" />
-   
+  <jsp:useBean id="messageSvc" scope="page" class="com.message.model.MessageService" />
+
   <li>
-     <FORM METHOD="post" ACTION="order.do" >
-       <b>選擇訂單編號:</b>
-       <select size="1" name="order_no">
-         <c:forEach var="orderVO" items="${orderSvc.all}" > 
-          <option value="${orderVO.order_no}">${orderVO.order_no}
+     <FORM METHOD="post" ACTION="message.do" >
+       <b>選擇訊息編號:</b>
+       <select size="1" name="message_no">
+         <c:forEach var="messageVO" items="${messageSvc.all}" > 
+          <option value="${messageVO.message_no}">${messageVO.message_no}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -76,11 +76,11 @@
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="order.do" >
-       <b>選擇訂單編號:</b>
-       <select size="1" name="order_no">
-         <c:forEach var="orderVO" items="${orderSvc.all}" > 
-          <option value="${orderVO.order_no}">${orderVO.user_id}
+     <FORM METHOD="post" ACTION="message.do" >
+       <b>選擇買家帳號:</b>
+       <select size="1" name="message_no">
+         <c:forEach var="messageVO" items="${messageSvc.all}" > 
+          <option value="${messageVO.message_no}">${messageVO.user_id}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -90,10 +90,10 @@
 </ul>
 
 
-<h3>訂單管理</h3>
+<h3>訊息管理</h3>
 
 <ul>
-  <li><a href='addOrder.jsp'>Add</a> a new Order.</li>
+  <li><a href='addMessage.jsp'>Add</a> a new Message.</li>
 </ul>
 
 </body>

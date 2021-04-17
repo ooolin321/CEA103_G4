@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.live_order.model.*"%>
 
 <%
@@ -55,7 +56,7 @@ th, td {
 			<td>
 				<h3>直播訂單資料修改 - update_live_order_input.jsp</h3>
 				<h4>
-					<a href="select_page.jsp"><img src="images/back1.gif"
+					<a href="<%=request.getContextPath()%>/front-end/live_order/select_page.jsp"><img src="<%=request.getContextPath()%>/images/back1.gif"
 						width="100" height="32" border="0">回首頁</a>
 				</h4>
 			</td>
@@ -79,10 +80,13 @@ th, td {
 			<tr>
 				<td>直播訂單編號:<font color=red><b>*</b></font></td>
 				<td><%=live_orderVO.getLive_order_no()%></td>
+			
 			</tr>
 			<tr>
 				<td>直播訂單日期:<font color=red><b>*</b></font></td>
-				<td><%=live_orderVO.getOrder_date()%></td>
+				<td><fmt:formatDate value="${live_orderVO.order_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+
+				
 			</tr>
 			<tr>
 				<td>直播訂單狀態:</td>
@@ -110,7 +114,8 @@ th, td {
 			</tr>
 			<tr>
 				<td>直播訂單付款到期日:<font color=red><b>*</b></font></td>
-				<td><%=live_orderVO.getPay_deadline()%></td>
+				<td><fmt:formatDate value="${live_orderVO.pay_deadline}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				
 			</tr>
 
 			<tr>
@@ -210,14 +215,20 @@ th, td {
 		</table>
 		<br> <input type="hidden" name="action" value="update"> <input
 			type="hidden" name="live_order_no"
-			value="<%=live_orderVO.getLive_order_no()%>"> <input
-			type="hidden" name="order_date"
-			value="<%=live_orderVO.getOrder_date()%>"> <input
+			value="<%=live_orderVO.getLive_order_no()%>"> 
+			<input	type="hidden" name="order_date"	value="<%=live_orderVO.getOrder_date()%> "> 
+			<input
 			type="hidden" name="order_price"
 			value="<%=live_orderVO.getOrder_price()%>"> <input
 			type="hidden" name="pay_deadline"
 			value="<%=live_orderVO.getPay_deadline()%>"> <input
 			type="submit" value="送出修改">
+		<br> <input type="hidden" name="action" value="update"> 
+			<input  type="hidden" name="live_order_no" value="<%=live_orderVO.getLive_order_no()%>"> 
+			<input  type="hidden" name="order_date" value="<%=live_orderVO.getOrder_date()%>"> 
+			<input  type="hidden" name="order_price"value="<%=live_orderVO.getOrder_price()%>"> 
+			<input  type="hidden" name="pay_deadline" value="<%=live_orderVO.getPay_deadline()%>"> 
+			<input  type="submit" value="送出修改">
 	</FORM>
 </body>
 

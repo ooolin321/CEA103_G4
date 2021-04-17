@@ -192,7 +192,7 @@ public class OrderServlet extends HttpServlet{
 	            }
 				
 				String rec_phone = req.getParameter("rec_phone");
-				String rec_phoneReg = "^[(0-9)]{10,11}$";
+				String rec_phoneReg = "^[(0-9)]{0,11}$";
 				if(!rec_phone.trim().matches(rec_phoneReg)) { //以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("電話號碼: 只能是中、英文字母、數字和- , 且長度必需在10到11之間");
 	            }
@@ -204,7 +204,7 @@ public class OrderServlet extends HttpServlet{
 				} else if(!rec_cellphone.trim().matches(rec_cellphoneReg)) { //以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("手機號碼: 只能是中、英文字母、數字和- , 且長度必需在10到11之間");
 	            }
-			
+				
 				Integer logistics = null;
 				try {
 					logistics = new Integer(req.getParameter("logistics").trim());
@@ -220,7 +220,7 @@ public class OrderServlet extends HttpServlet{
 					logisticsstate = 0;
 					errorMsgs.add("物流狀態請填數字.");
 				}
-
+				
 				Integer discount = null;
 				try {
 					discount = new Integer(req.getParameter("discount").trim());
@@ -232,6 +232,7 @@ public class OrderServlet extends HttpServlet{
 				String user_id = new String(req.getParameter("user_id").trim());
 				
 				String seller_id = new String(req.getParameter("seller_id").trim());
+				
 				Integer srating = null;
 				try {
 					srating = new Integer(req.getParameter("srating").trim());
@@ -239,7 +240,7 @@ public class OrderServlet extends HttpServlet{
 					srating = 0;
 					errorMsgs.add("評價分數請填數字.");
 				}
-				
+			
 				String srating_content = req.getParameter("srating_content");
 				String srating_contentReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,20}$";
 				if (srating_content == null || srating_content.trim().length() == 0) {
@@ -256,6 +257,7 @@ public class OrderServlet extends HttpServlet{
 					errorMsgs.add("點數請填數字.");
 				}
 				Integer order_no = new Integer(req.getParameter("order_no"));
+				
 
 				OrderVO orderVO = new OrderVO();
 				orderVO.setOrder_date(order_date);
@@ -277,7 +279,7 @@ public class OrderServlet extends HttpServlet{
 				orderVO.setSrating_content(srating_content);
 				orderVO.setPoint(point);
 				orderVO.setOrder_no(order_no);
-			
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("orderVO", orderVO); // 含有輸入格式錯誤的orderVO物件,也存入req

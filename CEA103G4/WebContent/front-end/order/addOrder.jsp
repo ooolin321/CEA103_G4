@@ -30,7 +30,7 @@
 
 <style>
   table {
-	width: 450px;
+	width: auto;
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;

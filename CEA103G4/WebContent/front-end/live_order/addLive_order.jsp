@@ -9,6 +9,8 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>直播訂單資料新增 - addLive_order.jsp</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 
 <style>
 table#table-1 {
@@ -77,10 +79,10 @@ th, td {
 
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_order/live_order.do" name="form1">
 		<table>
-			<tr>
-				<td>直播訂單日期:</td>
-				<td><input name="order_date" id="f_date1" type="DATE"></td>
-			</tr>
+<!-- 			<tr> -->
+<!-- 				<td>直播訂單日期:</td> -->
+<!-- 				<td><input name="order_date" id="f_date1" type="DATE"></td> -->
+<!-- 			</tr> -->
 
 			<tr>
 				<td>直播訂單狀態:</td>
@@ -92,14 +94,12 @@ th, td {
 
 			<tr>
 				<td>運費:</td>
-				<td><input type="TEXT" name="order_shipping" size="45"
-					value="<%=(live_orderVO == null) ? "30" : live_orderVO.getOrder_shipping()%>" /></td>
+				<td><input type="TEXT" name="order_shipping" size="45" value="30"/></td>
 			</tr>
 
 			<tr>
 				<td>直播訂單商品價格:</td>
-				<td><input type="TEXT" name="order_price" size="45"
-					value="<%=(live_orderVO == null) ? "0" : live_orderVO.getOrder_price()%>" /></td>
+				<td><input type="TEXT" name="order_price" size="45" value="0" /></td>
 			</tr>
 
 			<tr>
@@ -111,33 +111,35 @@ th, td {
 				</select>
 			</tr>
 
-			<tr>
-				<td>直播訂單付款到期日期:</td>
-				<td><input name="pay_deadline" id="f_date1" type="DATE"></td>
-			</tr>
+<!-- 			<tr> -->
+<!-- 				<td>直播訂單付款到期日期:</td> -->
+<!-- 				<td><input name="pay_deadline" id="f_date1" type="DATE"></td> -->
+<!-- 			</tr> -->
 
 			<tr>
 				<td>收件人姓名:</td>
-				<td><input type="TEXT" name="rec_name" size="45"
-					value="<%=(live_orderVO == null) ? "測試人員" : live_orderVO.getRec_name()%>" /></td>
+				<td><input type="TEXT" name="rec_name" size="45" value="測試人員" /></td>
 			</tr>
 
 			<tr>
 				<td>收件人地址:</td>
-				<td><input type="TEXT" name="rec_addr" size="45"
-					value="<%=(live_orderVO == null) ? "台灣" : live_orderVO.getRec_addr()%>" /></td>
+				<td>
+				<div id="twzipcode"></div>
+				<input name="rec_addr" type="text" size="45">
+				</td>
+				
+<!-- 				<td><input type="TEXT" name="rec_addr" size="45" -->
+<%-- 					value="<%=(live_orderVO == null) ? "台灣" : live_orderVO.getRec_addr()%>" /></td> --%>
 			</tr>
 
 			<tr>
 				<td>收件人電話:</td>
-				<td><input type="TEXT" name="rec_phone" size="45"
-					value="<%=(live_orderVO == null) ? "035123456" : live_orderVO.getRec_phone()%>" /></td>
+				<td><input type="TEXT" name="rec_phone" size="45" value="035123456"  /></td>
 			</tr>
 
 			<tr>
 				<td>收件人手機:</td>
-				<td><input type="TEXT" name="rec_cellphone" size="45"
-					value="<%=(live_orderVO == null) ? "0912345678" : live_orderVO.getRec_cellphone()%>" /></td>
+				<td><input type="TEXT" name="rec_cellphone" size="45" value="0912345678"/></td>
 			</tr>
 
 			<tr>
@@ -160,26 +162,22 @@ th, td {
 
 			<tr>
 				<td>點數折扣:</td>
-				<td><input type="TEXT" name="discount" size="45"
-					value="<%=(live_orderVO == null) ? "0" : live_orderVO.getDiscount()%>" /></td>
+				<td><input type="TEXT" name="discount" size="45" value="0" /></td>
 			</tr>
 
 			<tr>
 				<td>直播編號:</td>
-				<td><input type="TEXT" name="live_no" size="45"
-					value="<%=(live_orderVO == null) ? "8001" : live_orderVO.getLive_no()%>" /></td>
+				<td><input type="TEXT" name="live_no" size="45" value="8001"/></td>
 			</tr>
 
 			<tr>
 				<td>買家帳號:</td>
-				<td><input type="TEXT" name="user_id" size="45"
-					value="<%=(live_orderVO == null) ? "abcd01" : live_orderVO.getUser_id()%>" /></td>
+				<td><input type="TEXT" name="user_id" size="45" value="abcd01"/></td>
 			</tr>
 
 			<tr>
 				<td>賣家帳號:</td>
-				<td><input type="TEXT" name="seller_id" size="45"
-					value="<%=(live_orderVO == null) ? "abcd02" : live_orderVO.getSeller_id()%>" /></td>
+				<td><input type="TEXT" name="seller_id" size="45" value="abcd02" /></td>
 			</tr>
 
 			<tr>
@@ -199,19 +197,24 @@ th, td {
 
 			<tr>
 				<td>評價內容:</td>
-				<td><input type="TEXT" name="srating_content" size="45"
-					value="<%=(live_orderVO == null) ? "讚" : live_orderVO.getSrating_content()%>" /></td>
+				<td><input type="TEXT" name="srating_content" size="45" value="讚" /></td>
 			</tr>
 
 			<tr>
 				<td>回饋點數:</td>
-				<td><input type="TEXT" name="point" size="45"
-					value="<%=(live_orderVO == null) ? "0" : live_orderVO.getPoint()%>" /></td>
+				<td><input type="TEXT" name="point" size="45" value="0" /></td>
 			</tr>
 		</table>
 		<br> <input type="hidden" name="action" value="insert"> <input
 			type="submit" value="送出新增">
 	</FORM>
 </body>
-
+<script>
+$("#twzipcode").twzipcode({
+	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
+	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 
+	countyName: "city", // 自訂城市 select 標籤的 name 值
+	districtName: "town" // 自訂區別 select 標籤的 name 值
+	});
+</script>
 </html>

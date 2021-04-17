@@ -2,7 +2,7 @@ package com.live_order.model;
 
 import java.sql.Timestamp;
 
-public class Live_orderVO {
+public class Live_orderVO{
 	private Integer live_order_no;
 	private Timestamp order_date;
 	private Integer order_state;
@@ -12,8 +12,8 @@ public class Live_orderVO {
 	private Timestamp pay_deadline;
 	private String rec_name;
 	private String rec_addr;
-	private Integer rec_phone;
-	private Integer rec_cellphone;
+	private String rec_phone;
+	private String rec_cellphone;
 	private Integer logistics;
 	private Integer logistics_state;
 	private Integer discount;
@@ -23,6 +23,29 @@ public class Live_orderVO {
 	private Integer srating;
 	private String srating_content;
 	private Integer point;
+	private String city;
+	private String town;
+	private Integer zipcode;
+	
+	
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getTown() {
+		return town;
+	}
+	public void setTown(String town) {
+		this.town = town;
+	}
+	public Integer getZipcode() {
+		return zipcode;
+	}
+	public void setZipcode(Integer zipcode) {
+		this.zipcode = zipcode;
+	}
 	public Integer getLive_order_no() {
 		return live_order_no;
 	}
@@ -77,16 +100,16 @@ public class Live_orderVO {
 	public void setRec_addr(String rec_addr) {
 		this.rec_addr = rec_addr;
 	}
-	public Integer getRec_phone() {
+	public String getRec_phone() {
 		return rec_phone;
 	}
-	public void setRec_phone(Integer rec_phone) {
+	public void setRec_phone(String rec_phone) {
 		this.rec_phone = rec_phone;
 	}
-	public Integer getRec_cellphone() {
+	public String getRec_cellphone() {
 		return rec_cellphone;
 	}
-	public void setRec_cellphone(Integer rec_cellphone) {
+	public void setRec_cellphone(String rec_cellphone) {
 		this.rec_cellphone = rec_cellphone;
 	}
 	public Integer getLogistics() {
@@ -143,5 +166,8 @@ public class Live_orderVO {
 	public void setPoint(Integer point) {
 		this.point = point;
 	}
+
+	
+	
 	
 }

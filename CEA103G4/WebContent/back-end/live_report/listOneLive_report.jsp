@@ -84,7 +84,15 @@ th, td {
 			<td>${live_reportVO.live_no}</td>
 			<td>${live_reportVO.user_id}</td>
 			<td>${live_reportVO.empno}</td>
-			<td>${live_reportVO.live_report_state}</td>
+			
+			<td>
+			${(live_reportVO.live_report_state)==0? '未處理':''}
+			${(live_reportVO.live_report_state)==1? '審核通過':''}
+			${(live_reportVO.live_report_state)==2? '審核不通過':''}
+			
+			</td>
+			
+			
 			<td><fmt:formatDate value="${live_reportVO.report_date}"
 					pattern="yyyy-MM-dd HH:mm:ss" /></td>
 			<td><img

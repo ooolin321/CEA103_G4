@@ -17,7 +17,7 @@ public class Live_orderServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-		req.setCharacterEncoding("UTF-8");
+
 		String action = req.getParameter("action");
 
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
@@ -149,8 +149,15 @@ public class Live_orderServlet extends HttpServlet {
 
 				String rec_addr = req.getParameter("rec_addr");
 
-				Integer rec_phone = new Integer(req.getParameter("rec_phone").trim());
-				Integer rec_cellphone = new Integer(req.getParameter("rec_cellphone").trim());
+				String rec_phone = req.getParameter("rec_phone");
+				
+				String rec_cellphone = req.getParameter("rec_cellphone");
+				String rec_cellphoneReg = "^09[0-9]{8}$";
+				if (rec_cellphone == null || rec_cellphone.trim().length() == 0) {
+					errorMsgs.add("手機號碼: 請勿空白");
+				} else if (!rec_cellphone.trim().matches(rec_cellphoneReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("手機號碼格式不正確");
+				}
 
 				Integer logistics = new Integer(req.getParameter("logistics").trim());
 
@@ -163,6 +170,9 @@ public class Live_orderServlet extends HttpServlet {
 				Integer srating = new Integer(req.getParameter("srating").trim());
 				String srating_content = req.getParameter("srating_content");
 				Integer point = new Integer(req.getParameter("point").trim());
+				String city = req.getParameter("city");
+				String town = req.getParameter("town");
+				Integer zipcode = new Integer(req.getParameter("zipcode").trim());
 				Integer live_order_no = new Integer(req.getParameter("live_order_no").trim());
 
 				Live_orderVO live_orderVO = new Live_orderVO();
@@ -185,6 +195,9 @@ public class Live_orderServlet extends HttpServlet {
 				live_orderVO.setSrating(srating);
 				live_orderVO.setSrating_content(srating_content);
 				live_orderVO.setPoint(point);
+				live_orderVO.setCity(city);
+				live_orderVO.setTown(town);
+				live_orderVO.setZipcode(zipcode);
 				live_orderVO.setLive_order_no(live_order_no);
 
 				// Send the use back to the form, if there were errors
@@ -200,7 +213,7 @@ public class Live_orderServlet extends HttpServlet {
 				live_orderVO = live_orderSvc.updateLive_order(order_date, order_state, order_shipping, order_price,
 						pay_method, pay_deadline, rec_name, rec_addr, rec_phone, rec_cellphone, logistics,
 						logistics_state, discount, live_no, user_id, seller_id, srating, srating_content, point,
-						live_order_no);
+						city,town,zipcode,live_order_no);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("live_orderVO", live_orderVO); // 資料庫update成功後,正確的的live_orderVO物件,存入req
@@ -256,9 +269,17 @@ public class Live_orderServlet extends HttpServlet {
 
 				String rec_addr = req.getParameter("rec_addr");
 
-				Integer rec_phone = new Integer(req.getParameter("rec_phone").trim());
-				Integer rec_cellphone = new Integer(req.getParameter("rec_cellphone").trim());
-
+				String rec_phone = req.getParameter("rec_phone");
+				
+				String rec_cellphone = req.getParameter("rec_cellphone");
+				String rec_cellphoneReg = "^09[0-9]{8}$";
+				if (rec_cellphone == null || rec_cellphone.trim().length() == 0) {
+					errorMsgs.add("手機號碼: 請勿空白");
+				} else if (!rec_cellphone.trim().matches(rec_cellphoneReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("手機號碼格式不正確");
+				}
+				
+				
 				Integer logistics = new Integer(req.getParameter("logistics").trim());
 
 				Integer logistics_state = new Integer(req.getParameter("logistics_state").trim());
@@ -270,7 +291,9 @@ public class Live_orderServlet extends HttpServlet {
 				Integer srating = new Integer(req.getParameter("srating").trim());
 				String srating_content = req.getParameter("srating_content");
 				Integer point = new Integer(req.getParameter("point").trim());
-				
+				String city = req.getParameter("city");
+				String town = req.getParameter("town");
+				Integer zipcode = new Integer(req.getParameter("zipcode").trim());
 				
 				Live_orderVO live_orderVO = new Live_orderVO();
 //				live_orderVO.setOrder_date(order_date);
@@ -292,6 +315,9 @@ public class Live_orderServlet extends HttpServlet {
 				live_orderVO.setSrating(srating);
 				live_orderVO.setSrating_content(srating_content);
 				live_orderVO.setPoint(point);
+				live_orderVO.setCity(city);
+				live_orderVO.setTown(town);
+				live_orderVO.setZipcode(zipcode);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -305,7 +331,7 @@ public class Live_orderServlet extends HttpServlet {
 				Live_orderService live_orderSvc = new Live_orderService();
 				live_orderVO = live_orderSvc.addLive_order( order_state, order_shipping, order_price,
 						pay_method,  rec_name, rec_addr, rec_phone, rec_cellphone, logistics,
-						logistics_state, discount, live_no, user_id, seller_id, srating, srating_content, point);
+						logistics_state, discount, live_no, user_id, seller_id, srating, srating_content, point,city,town,zipcode);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/front-end/live_order/listAllLive_order.jsp";

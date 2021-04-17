@@ -23,11 +23,11 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 		}
 	}
 	
-	private static final String INSERT_STMT = "INSERT INTO LIVE_ORDER (ORDER_STATE,ORDER_SHIPPING,ORDER_PRICE,PAY_METHOD,REC_NAME,REC_ADDR,REC_PHONE,REC_CELLPHONE,LOGISTICS,LOGISTICS_STATE,DISCOUNT,LIVE_NO,USER_ID,SELLER_ID,SRATING,SRATING_CONTENT,POINT,PAY_DEADLINE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,DATE_ADD(CURRENT_TIMESTAMP() , INTERVAL 3 HOUR))";
+	private static final String INSERT_STMT = "INSERT INTO LIVE_ORDER (ORDER_STATE,ORDER_SHIPPING,ORDER_PRICE,PAY_METHOD,REC_NAME,REC_ADDR,REC_PHONE,REC_CELLPHONE,LOGISTICS,LOGISTICS_STATE,DISCOUNT,LIVE_NO,USER_ID,SELLER_ID,SRATING,SRATING_CONTENT,POINT,CITY,TOWN,ZIPCODE,PAY_DEADLINE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,?,?,?,DATE_ADD(CURRENT_TIMESTAMP() , INTERVAL 3 HOUR))";
 	private static final String GET_ALL_STMT = "SELECT * FROM LIVE_ORDER order by LIVE_ORDER_NO";
 	private static final String GET_ONE_STMT = "SELECT * FROM LIVE_ORDER where LIVE_ORDER_NO = ?";
 	private static final String DELETE = "DELETE FROM LIVE_ORDER where LIVE_ORDER_NO = ?";
-	private static final String UPDATE = "UPDATE LIVE_ORDER SET ORDER_DATE=?,ORDER_STATE=?,ORDER_SHIPPING=?,ORDER_PRICE=?,PAY_METHOD=?,PAY_DEADLINE=?,REC_NAME=?,REC_ADDR=?,REC_PHONE=?,REC_CELLPHONE=?,LOGISTICS=?,LOGISTICS_STATE=?,DISCOUNT=?,LIVE_NO=?,USER_ID=?,SELLER_ID=?,SRATING=?,SRATING_CONTENT=?,POINT=? WHERE LIVE_ORDER_NO = ?";
+	private static final String UPDATE = "UPDATE LIVE_ORDER SET ORDER_DATE=?,ORDER_STATE=?,ORDER_SHIPPING=?,ORDER_PRICE=?,PAY_METHOD=?,PAY_DEADLINE=?,REC_NAME=?,REC_ADDR=?,REC_PHONE=?,REC_CELLPHONE=?,LOGISTICS=?,LOGISTICS_STATE=?,DISCOUNT=?,LIVE_NO=?,USER_ID=?,SELLER_ID=?,SRATING=?,SRATING_CONTENT=?,POINT=? ,CITY=?,TOWN=?,ZIPCODE=? WHERE LIVE_ORDER_NO = ?";
 	
 	
 	
@@ -50,8 +50,8 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 //			pstmt.setTimestamp(6, live_orderVO.getPay_deadline());
 			pstmt.setString(5, live_orderVO.getRec_name());
 			pstmt.setString(6, live_orderVO.getRec_addr());
-			pstmt.setInt(7, live_orderVO.getRec_phone());
-			pstmt.setInt(8, live_orderVO.getRec_cellphone());
+			pstmt.setString(7, live_orderVO.getRec_phone());
+			pstmt.setString(8, live_orderVO.getRec_cellphone());
 			pstmt.setInt(9, live_orderVO.getLogistics());
 			pstmt.setInt(10, live_orderVO.getLogistics_state());
 			pstmt.setInt(11, live_orderVO.getDiscount());
@@ -61,6 +61,9 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 			pstmt.setInt(15, live_orderVO.getSrating());
 			pstmt.setString(16, live_orderVO.getSrating_content());
 			pstmt.setInt(17, live_orderVO.getPoint());
+			pstmt.setString(18, live_orderVO.getCity());
+			pstmt.setString(19, live_orderVO.getTown());
+			pstmt.setInt(20, live_orderVO.getZipcode());
 			pstmt.executeUpdate();
 
 		
@@ -102,8 +105,8 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 			pstmt.setTimestamp(6, live_orderVO.getPay_deadline());
 			pstmt.setString(7, live_orderVO.getRec_name());
 			pstmt.setString(8, live_orderVO.getRec_addr());
-			pstmt.setInt(9, live_orderVO.getRec_phone());
-			pstmt.setInt(10, live_orderVO.getRec_cellphone());
+			pstmt.setString(9, live_orderVO.getRec_phone());
+			pstmt.setString(10, live_orderVO.getRec_cellphone());
 			pstmt.setInt(11, live_orderVO.getLogistics());
 			pstmt.setInt(12, live_orderVO.getLogistics_state());
 			pstmt.setInt(13, live_orderVO.getDiscount());
@@ -113,7 +116,10 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 			pstmt.setInt(17, live_orderVO.getSrating());
 			pstmt.setString(18, live_orderVO.getSrating_content());
 			pstmt.setInt(19, live_orderVO.getPoint());
-			pstmt.setInt(20, live_orderVO.getLive_order_no());
+			pstmt.setString(20, live_orderVO.getCity());
+			pstmt.setString(21, live_orderVO.getTown());
+			pstmt.setInt(22, live_orderVO.getZipcode());
+			pstmt.setInt(23, live_orderVO.getLive_order_no());
 			
 			pstmt.executeUpdate();
 
@@ -209,8 +215,8 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 				live_orderVO.setPay_deadline(rs.getTimestamp("pay_deadline"));
 				live_orderVO.setRec_name(rs.getString("rec_name"));
 				live_orderVO.setRec_addr(rs.getString("rec_addr"));
-				live_orderVO.setRec_phone(rs.getInt("rec_phone"));
-				live_orderVO.setRec_cellphone(rs.getInt("rec_cellphone"));
+				live_orderVO.setRec_phone(rs.getString("rec_phone"));
+				live_orderVO.setRec_cellphone(rs.getString("rec_cellphone"));
 				live_orderVO.setLogistics(rs.getInt("logistics"));
 				live_orderVO.setLogistics_state(rs.getInt("logistics_state"));
 				live_orderVO.setDiscount(rs.getInt("discount"));
@@ -220,6 +226,9 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 				live_orderVO.setSrating(rs.getInt("srating"));
 				live_orderVO.setSrating_content(rs.getString("srating_content"));
 				live_orderVO.setPoint(rs.getInt("point"));
+				live_orderVO.setCity(rs.getString("City"));
+				live_orderVO.setTown(rs.getString("Town"));
+				live_orderVO.setZipcode(rs.getInt("zipcode"));
 				
 			}
 
@@ -281,8 +290,8 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 				live_orderVO.setPay_deadline(rs.getTimestamp("pay_deadline"));
 				live_orderVO.setRec_name(rs.getString("rec_name"));
 				live_orderVO.setRec_addr(rs.getString("rec_addr"));
-				live_orderVO.setRec_phone(rs.getInt("rec_phone"));
-				live_orderVO.setRec_cellphone(rs.getInt("rec_cellphone"));
+				live_orderVO.setRec_phone(rs.getString("rec_phone"));
+				live_orderVO.setRec_cellphone(rs.getString("rec_cellphone"));
 				live_orderVO.setLogistics(rs.getInt("logistics"));
 				live_orderVO.setLogistics_state(rs.getInt("logistics_state"));
 				live_orderVO.setDiscount(rs.getInt("discount"));
@@ -292,6 +301,9 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 				live_orderVO.setSrating(rs.getInt("srating"));
 				live_orderVO.setSrating_content(rs.getString("srating_content"));
 				live_orderVO.setPoint(rs.getInt("point"));
+				live_orderVO.setCity(rs.getString("City"));
+				live_orderVO.setTown(rs.getString("Town"));
+				live_orderVO.setZipcode(rs.getInt("zipcode"));
 				list.add(live_orderVO); // Store the row in the list
 			}
 

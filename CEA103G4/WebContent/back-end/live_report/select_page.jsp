@@ -48,7 +48,7 @@
 </c:if>
 
 <ul>
-  <li><a href='listAllLive_report.jsp'>List</a> all Live_reports.  <br><br></li>
+  <li><a href='<%=request.getContextPath()%>/back-end/live_report/listAllLive_report.jsp'>List</a> all Live_reports.  <br><br></li>
   
   
   <li>

@@ -12,6 +12,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>直播訂單修改 - update_live_order_input.jsp</title>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+
 <style>
 table#table-1 {
 	background-color: #CCCCFF;
@@ -123,11 +126,18 @@ th, td {
 				<td><input type="TEXT" name="rec_name" size="45"
 					value="<%=live_orderVO.getRec_name()%>" /></td>
 			</tr>
+			
+
 
 			<tr>
 				<td>收件人地址:</td>
-				<td><input type="TEXT" name="rec_addr" size="45"
+
+				
+				<td>
+				<div id="twzipcode"></div>
+				<input type="TEXT" name="rec_addr" size="45"
 					value="<%=live_orderVO.getRec_addr()%>" /></td>
+					
 			</tr>
 
 			<tr>
@@ -213,16 +223,7 @@ th, td {
 			</tr>
 
 		</table>
-		<br> <input type="hidden" name="action" value="update"> <input
-			type="hidden" name="live_order_no"
-			value="<%=live_orderVO.getLive_order_no()%>"> 
-			<input	type="hidden" name="order_date"	value="<%=live_orderVO.getOrder_date()%> "> 
-			<input
-			type="hidden" name="order_price"
-			value="<%=live_orderVO.getOrder_price()%>"> <input
-			type="hidden" name="pay_deadline"
-			value="<%=live_orderVO.getPay_deadline()%>"> <input
-			type="submit" value="送出修改">
+
 		<br> <input type="hidden" name="action" value="update"> 
 			<input  type="hidden" name="live_order_no" value="<%=live_orderVO.getLive_order_no()%>"> 
 			<input  type="hidden" name="order_date" value="<%=live_orderVO.getOrder_date()%>"> 
@@ -231,6 +232,16 @@ th, td {
 			<input  type="submit" value="送出修改">
 	</FORM>
 </body>
-
+<script>
+$("#twzipcode").twzipcode({
+	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
+	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 
+	countyName: "city", // 自訂城市 select 標籤的 name 值
+	districtName: "town", // 自訂區別 select 標籤的 name 值
+	countySel: "<%=live_orderVO.getCity()%>",
+	districtSel: "<%=live_orderVO.getTown()%>",
+	zipcodeSel: "<%=live_orderVO.getZipcode()%>"
+	});
+</script>
 
 </html>

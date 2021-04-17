@@ -11,8 +11,8 @@ public class Live_orderService {
 
 	public Live_orderVO addLive_order( Integer order_state, Integer order_shipping,
 			Integer order_price, Integer pay_method, String rec_name, String rec_addr,
-			Integer rec_phone, Integer rec_cellphone, Integer logistics, Integer logistics_state, Integer discount,
-			Integer live_no, String user_id, String seller_id, Integer srating, String srating_content, Integer point) {
+			String rec_phone, String rec_cellphone, Integer logistics, Integer logistics_state, Integer discount,
+			Integer live_no, String user_id, String seller_id, Integer srating, String srating_content, Integer point,String city,String town,Integer zipcode) {
 
 		Live_orderVO live_orderVO = new Live_orderVO();
 
@@ -35,6 +35,9 @@ public class Live_orderService {
 		live_orderVO.setSrating(srating);
 		live_orderVO.setSrating_content(srating_content);
 		live_orderVO.setPoint(point);
+		live_orderVO.setCity(city);
+		live_orderVO.setTown(town);
+		live_orderVO.setZipcode(zipcode);
 
 		dao.insert(live_orderVO);
 
@@ -44,9 +47,9 @@ public class Live_orderService {
 
 	public Live_orderVO updateLive_order(java.sql.Timestamp order_date, Integer order_state, Integer order_shipping,
 			Integer order_price, Integer pay_method, java.sql.Timestamp pay_deadline, String rec_name, String rec_addr,
-			Integer rec_phone, Integer rec_cellphone, Integer logistics, Integer logistics_state, Integer discount,
+			String rec_phone, String rec_cellphone, Integer logistics, Integer logistics_state, Integer discount,
 			Integer live_no, String user_id, String seller_id, Integer srating, String srating_content, Integer point,
-			Integer live_order_no) {
+			String city,String town,Integer zipcode,Integer live_order_no) {
 
 		Live_orderVO live_orderVO = new Live_orderVO();
 
@@ -69,6 +72,9 @@ public class Live_orderService {
 		live_orderVO.setSrating(srating);
 		live_orderVO.setSrating_content(srating_content);
 		live_orderVO.setPoint(point);
+		live_orderVO.setCity(city);
+		live_orderVO.setTown(town);
+		live_orderVO.setZipcode(zipcode);
 		live_orderVO.setLive_order_no(live_order_no);
 
 		dao.update(live_orderVO);

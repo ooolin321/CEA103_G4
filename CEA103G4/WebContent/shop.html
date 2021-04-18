@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Fashi Template" />
-    <meta name="keywords" content="Fashi, unica, creative, html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Fashi | Template</title>
+    <title>Modefemme</title>
 
     <!-- Google Font -->
     <link
@@ -46,10 +44,10 @@
             </div>
             <div class="col-lg-7 col-md-7">
               <div class="advanced-search">
-                <div class="input-group">
-                  <input type="text" placeholder="What do you need?" />
-                  <button type="button"><i class="ti-search"></i></button>
-                </div>
+                <form class="input-group" id="search">
+                  <input type="text" id="search-input" placeholder="What do you need?" />
+                  <button type="submit"><i class="ti-search"></i></button>
+                </form>
               </div>
             </div>
             <div class="col-lg-3 text-right col-md-3">
@@ -361,8 +359,10 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-lg-5 col-md-5 text-right">
-                  <p>Show 01- 09 Of 36 Product</p>
+                <div class="col-lg-5 col-md-5 text-right" id="productheart">
+                  <a href="productFavorite.html">
+                  <span><i class="icon_heart_alt"></i>收藏商品清單</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -382,6 +382,8 @@
         </li>
       </ul>
     </nav>
+    <!-- pagination END-->
+
     <!-- Partner Logo Section Begin -->
     <div class="partner-logo">
       <div class="container">
@@ -511,6 +513,7 @@
       integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
       crossorigin="anonymous"
     ></script>
+    
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>

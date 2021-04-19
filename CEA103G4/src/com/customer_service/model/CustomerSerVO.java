@@ -1,8 +1,9 @@
 package com.customer_service.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class CustomerSerVO {
+public class CustomerSerVO implements Serializable{
 	private Integer caseno;
 	private String	userid;
 	private String content;

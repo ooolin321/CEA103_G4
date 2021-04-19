@@ -6,12 +6,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+
 
 public class EmpDAO implements EmpDAO_interface {
 
@@ -24,16 +35,11 @@ public class EmpDAO implements EmpDAO_interface {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = 
-			"INSERT INTO EMP (ENAME,JOB,ID,GENDER,DOB,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = 
-			"SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP ORDER BY EMPNO";
-	private static final String GET_ONE_STMT = 
-			"SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP WHERE EMPNO = ?";
-	private static final String DELETE = 
-			"DELETE FROM EMP WHERE EMPNO = ?";
-	private static final String UPDATE = 
-			"UPDATE EMP SET ENAME=?, JOB=?, ID=?, GENDER=?, DOB=?, ADDR=?,EMAIL=?, SAL=?, STATE=?, HIREDATE=?, EMP_PWD=? WHERE EMPNO = ?";
+	private static final String INSERT_STMT = "INSERT INTO EMP (ENAME,JOB,ID,GENDER,DOB,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String GET_ALL_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP ORDER BY EMPNO";
+	private static final String GET_ONE_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP WHERE EMPNO = ?";
+	private static final String DELETE = "DELETE FROM EMP WHERE EMPNO = ?";
+	private static final String UPDATE = "UPDATE EMP SET ENAME=?, JOB=?, ID=?, GENDER=?, DOB=?, ADDR=?,EMAIL=?, SAL=?, STATE=?, HIREDATE=?, EMP_PWD=? WHERE EMPNO = ?";
 
 	@Override
 	public void insert(EmpVO empVO) {
@@ -50,13 +56,12 @@ public class EmpDAO implements EmpDAO_interface {
 			pstmt.setString(3, empVO.getId());
 			pstmt.setInt(4, empVO.getGender());
 			pstmt.setDate(5, empVO.getDob());
-			pstmt.setString(6, empVO.getAddr());
+			pstmt.setNString(6, empVO.getAddr());
 			pstmt.setString(7, empVO.getEmail());
 			pstmt.setDouble(8, empVO.getSal());
 			pstmt.setInt(9, empVO.getState());
 			pstmt.setDate(10, empVO.getHiredate());
 			pstmt.setString(11, empVO.getEmp_pwd());
-
 
 			pstmt.executeUpdate();
 
@@ -101,6 +106,7 @@ public class EmpDAO implements EmpDAO_interface {
 			pstmt.setDate(10, empVO.getHiredate());
 			pstmt.setString(11, empVO.getEmp_pwd());
 			pstmt.setInt(12, empVO.getEmpno());
+
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
@@ -124,7 +130,7 @@ public class EmpDAO implements EmpDAO_interface {
 	}
 
 	@Override
-	public void delete (Integer empno) {
+	public void delete(Integer empno) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -154,7 +160,7 @@ public class EmpDAO implements EmpDAO_interface {
 			}
 		}
 	}
-	
+
 	@Override
 	public EmpVO findByPrimaryKey(Integer empno) {
 		EmpVO empVO = null;
@@ -171,7 +177,7 @@ public class EmpDAO implements EmpDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				
+
 				empVO = new EmpVO();
 				empVO.setEmpno(rs.getInt("empno"));
 				empVO.setEname(rs.getString("ename"));
@@ -189,8 +195,7 @@ public class EmpDAO implements EmpDAO_interface {
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			throw new RuntimeException("database發生錯誤."
-					+ se.getMessage());
+			throw new RuntimeException("database發生錯誤." + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -217,8 +222,9 @@ public class EmpDAO implements EmpDAO_interface {
 		}
 		return empVO;
 	}
+
 	@Override
-	public List<EmpVO> getAll()  {
+	public List<EmpVO> getAll() {
 		List<EmpVO> list = new ArrayList<EmpVO>();
 		EmpVO empVO = null;
 
@@ -233,7 +239,7 @@ public class EmpDAO implements EmpDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				
+
 				empVO = new EmpVO();
 				empVO.setEmpno(rs.getInt("empno"));
 				empVO.setEname(rs.getString("ename"));
@@ -252,8 +258,7 @@ public class EmpDAO implements EmpDAO_interface {
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			throw new RuntimeException("database發生錯誤."
-					+ se.getMessage());
+			throw new RuntimeException("database發生錯誤." + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -280,17 +285,75 @@ public class EmpDAO implements EmpDAO_interface {
 		}
 		return list;
 	}
-	
-//	@Override
-//	public String GenAuthCode() {
-//		EmpVO empVO = new EmpVO();
-//		String empPwd = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";//儲存數字0-9 和 大小寫字母
-//		StringBuffer sb = new StringBuffer(); //宣告一個StringBuffer物件sb 儲存 驗證碼
-//		for (int i = 0; i < 8; i++) {
-//			Random random = new Random();//建立一個新的隨機數生成器
-//			int index = random.nextInt(empPwd.length());//返回[0,string.length)範圍的int值    作用：儲存下標
-//			char ch = empPwd.charAt(index);//charAt() : 返回指定索引處的 char 值   ==》賦值給char字元物件ch
-//		 sb.append(ch);// append(char c) :將 char 引數的字串表示形式追加到此序列  ==》即將每次獲取的ch值作拼接
-//		}return sb.toString();		
-//	}
+
+	@Override
+	public String genAuthCode() {
+		String empPwd = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";// 儲存數字0-9 和 大小寫字母
+		StringBuffer sb = new StringBuffer(); // 宣告一個StringBuffer物件sb 儲存 驗證碼
+		for (int i = 0; i < 8; i++) {
+			Random random = new Random();// 建立一個新的隨機數生成器
+			int index = random.nextInt(empPwd.length());// 返回[0,string.length)範圍的int值 作用：儲存下標
+			char ch = empPwd.charAt(index);// charAt() : 返回指定索引處的 char 值 ==》賦值給char字元物件ch
+			sb.append(ch);// append(char c) :將 char 引數的字串表示形式追加到此序列 ==》即將每次獲取的ch值作拼接
+		}
+		return sb.toString();
+	}
+
+	@Override
+	// 設定傳送郵件:至收信人的Email信箱,Email主旨,Email內容
+	public List<EmpVO> sendMail(EmpVO empVO) {
+
+		List<EmpVO> list = new ArrayList<EmpVO>();
+		String emailto = empVO.getEmail();
+
+		String subject = "密碼通知";
+
+		String ch_name = empVO.getEname();
+		String passRandom = empVO.getEmp_pwd();
+		String messageText = "Hello! " + ch_name + " 請謹記此密碼: " + passRandom + "\n" + " (已經啟用)";
+
+		try {
+
+			// 設定使用SSL連線至 Gmail smtp Server
+			Properties props = new Properties();
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.socketFactory.port", "465");
+			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.port", "465");
+
+			// ●設定 gmail 的帳號 & 密碼 (將藉由你的Gmail來傳送Email)
+			// ●須將myGmail的【安全性較低的應用程式存取權】打開
+			final String myGmail = "gea103g4@gmail.com";
+			final String myGmail_password = "gea103g4gea103g4";
+			Session session = Session.getInstance(props, new Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(myGmail, myGmail_password);
+				}
+			});
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(myGmail));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailto));
+
+//			MailService mailService = new MailService();
+//			mailService.sendMail(emailto, subject, messageText);
+
+			// 設定信中的主旨
+			message.setSubject(subject);
+			// 設定信中的內容
+			message.setText(messageText);
+
+			Transport.send(message);
+
+			System.out.println("傳送成功!");
+
+		} catch (MessagingException e) {
+			System.out.println("傳送失敗!");
+			e.printStackTrace();
+		}
+		return list;
+
+	}
+
 }

@@ -112,11 +112,11 @@ public class FunServlet extends HttpServlet{
 				Integer funno = new Integer(req.getParameter("funno").trim());
 
 				String funName = req.getParameter("fun_name");
-				String funNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+				String funNameReg = "^[(\u4e00-\u9fa5)]{2,10}$";
 				if (funName == null || funName.trim().length() == 0) {
-					errorMsgs.add("員工姓名: 請勿空白");
+					errorMsgs.add("功能名稱: 請勿空白");
 				} else if (!funName.trim().matches(funNameReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+					errorMsgs.add("功能名稱: 只能是中文且長度必需在2到10之間");
 				}
 				Integer state = new Integer(req.getParameter("state"));
 				

@@ -10,7 +10,8 @@
 <html>
 <head>
 <title>員工資料 - listOneEmp.jsp</title>
-
+ <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui/css/layui.css">
+ <link rel="stylesheet" href="<%=request.getContextPath()%>/static/admin/css/style.css">
 <style>
 table#table-1 {
 	background-color: #CCCCFF;

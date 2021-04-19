@@ -9,11 +9,11 @@ public class FunJDBCDAO implements FunDAO_interface {
 	String userid = "root";
 	String passwd = "771414";
 
-	private static final String INSERT_STMT = "INSERT INTO FUN (FUN_NAME) VALUES (?)";
+	private static final String INSERT_STMT = "INSERT INTO FUN (FUN_NAME,state) VALUES (?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM FUN ORDER BY FUNNO";
 	private static final String GET_ONE_STMT = "SELECT * FROM FUN WHERE FUNNO = ?";
 	private static final String DELETE = "DELETE FROM FUN WHERE FUNNO = ?";
-	private static final String UPDATE = "UPDATE FUN SET FUN_NAME=? WHERE FUNNO = ?";
+	private static final String UPDATE = "UPDATE FUN SET FUN_NAME=? state =? WHERE FUNNO = ?";
 
 
 	@Override

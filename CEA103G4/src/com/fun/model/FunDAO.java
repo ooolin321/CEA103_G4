@@ -144,6 +144,7 @@ public class FunDAO implements FunDAO_interface {
 				funVO = new FunVO();
 				funVO.setFunno(rs.getInt("funno"));
 				funVO.setFunName(rs.getString("fun_name"));
+				funVO.setState(rs.getInt("state"));
 							}
 		} catch (SQLException se) {
 			throw new RuntimeException("database發生錯誤."
@@ -192,6 +193,7 @@ public class FunDAO implements FunDAO_interface {
 			funVO = new FunVO();
 			funVO.setFunno(rs.getInt("funno"));
 			funVO.setFunName(rs.getString("fun_name"));
+			funVO.setState(rs.getInt("state"));
 			list.add(funVO);
 		}	
 		} catch (SQLException se) {

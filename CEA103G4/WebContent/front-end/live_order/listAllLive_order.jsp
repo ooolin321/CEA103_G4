@@ -99,7 +99,7 @@
 		<tr>
 			<td>${live_orderVO.live_order_no}</td>
 			<td><fmt:formatDate value="${live_orderVO.order_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-			<td>${(live_orderVO.order_state==0)? '收到訂單':'完成訂單'}</td>
+			<td>${(live_orderVO.order_state==0)? '未付款':'已付款'}</td>
 			<td>${live_orderVO.order_shipping}</td>
 			<td>${live_orderVO.order_price}</td>
 			<td>
@@ -109,17 +109,17 @@
 			</td> 
 			<td><fmt:formatDate value="${live_orderVO.pay_deadline}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			<td>${live_orderVO.rec_name}</td>
-			<td>${live_orderVO.rec_addr}</td>
+			<td>${live_orderVO.zipcode}${live_orderVO.city}${live_orderVO.town}${live_orderVO.rec_addr}</td>
 			<td>${live_orderVO.rec_phone}</td>
 			<td>${live_orderVO.rec_cellphone}</td>
 			<td>
-			${(live_orderVO.logistics==0)? '宅配':'超商取貨'}
+			${(live_orderVO.logistics==0)? '宅配':'超商'}
 			</td>
 			
 			<td>
 			${(live_orderVO.logistics_state==0)? '未出貨':''}
 			${(live_orderVO.logistics_state==1)? '已出貨':''}
-			${(live_orderVO.logistics_state==2)? '買家已取貨':''}
+			${(live_orderVO.logistics_state==2)? '已取貨':''}
 			</td>
 			
 			<td>${live_orderVO.discount}</td>

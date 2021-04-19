@@ -81,7 +81,7 @@
 <h3>直播訂單管理</h3>
 
 <ul>
-  <li><a href='addLive_order.jsp'>Add</a> a new Live_order.</li>
+  <li><a href='<%=request.getContextPath()%>/front-end/live_order/addLive_order.jsp'>Add</a> a new Live_order.</li>
 </ul>
 
 </body>

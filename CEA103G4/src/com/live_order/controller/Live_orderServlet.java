@@ -172,7 +172,15 @@ public class Live_orderServlet extends HttpServlet {
 				Integer point = new Integer(req.getParameter("point").trim());
 				String city = req.getParameter("city");
 				String town = req.getParameter("town");
-				Integer zipcode = new Integer(req.getParameter("zipcode").trim());
+				
+				Integer zipcode = null;
+				try {
+					zipcode = new Integer(req.getParameter("zipcode").trim());
+				} catch (NumberFormatException e) {
+					zipcode = 0;
+					errorMsgs.add("請選擇郵遞區號");
+				}
+				
 				Integer live_order_no = new Integer(req.getParameter("live_order_no").trim());
 
 				Live_orderVO live_orderVO = new Live_orderVO();
@@ -293,8 +301,14 @@ public class Live_orderServlet extends HttpServlet {
 				Integer point = new Integer(req.getParameter("point").trim());
 				String city = req.getParameter("city");
 				String town = req.getParameter("town");
-				Integer zipcode = new Integer(req.getParameter("zipcode").trim());
 				
+				Integer zipcode = null;
+				try {
+					zipcode = new Integer(req.getParameter("zipcode").trim());
+				} catch (NumberFormatException e) {
+					zipcode = 0;
+					errorMsgs.add("請選擇郵遞區號");
+				}
 				Live_orderVO live_orderVO = new Live_orderVO();
 //				live_orderVO.setOrder_date(order_date);
 				live_orderVO.setOrder_state(order_state);

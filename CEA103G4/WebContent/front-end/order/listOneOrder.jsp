@@ -79,17 +79,21 @@
 	<tr>
 		<td><%=orderVO.getOrder_no()%></td>
 		<td><%=orderVO.getOrder_date()%></td>
-		<td><%=orderVO.getOrder_state()%></td>
+		<td><%=(orderVO.getOrder_state()==0)? "未付款":"已付款"%></td>
 		<td><%=orderVO.getOrder_shipping()%></td>
 		<td><%=orderVO.getOrder_price()%></td>
-		<td><%=orderVO.getPay_method()%></td>
+		<td><%=(orderVO.getPay_method()==0)? "信用卡":"轉帳"%></td>
 		<td><%=orderVO.getPay_deadline()%></td>
 		<td><%=orderVO.getRec_name()%></td>
 		<td><%=orderVO.getRec_addr()%></td>
 		<td><%=orderVO.getRec_phone()%></td>
 		<td><%=orderVO.getRec_cellphone()%></td>
-		<td><%=orderVO.getLogistics()%></td>
-		<td><%=orderVO.getLogisticsstate()%></td>
+		<td><%=(orderVO.getLogistics()==0)? "超商":"宅配"%></td>
+		<td>
+		<%=(orderVO.getLogisticsstate()==0)? "未出貨":""%>
+		<%=(orderVO.getLogisticsstate()==0)? "已出貨":""%>
+		<%=(orderVO.getLogisticsstate()==0)? "已取貨":""%>
+		</td>
 		<td><%=orderVO.getDiscount()%></td>
 		<td><%=orderVO.getUser_id()%></td>
 		<td><%=orderVO.getSeller_id()%></td>

@@ -133,7 +133,7 @@
 	<tr>
 	<tr>
 		<td>使用點數折抵:</td>
-		<td><input type="TEXT" name="discount" size="45"	value="<%=orderVO.getDiscount()%>" /></td>
+		<td><input type="TEXT" name="discount" size="45" value="<%=orderVO.getDiscount()%>" /></td>
 	</tr>
 	<tr>
 		<td>買家帳號:</td>

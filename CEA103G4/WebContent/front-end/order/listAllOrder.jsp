@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
@@ -98,19 +97,26 @@
 		
 		<tr>
 			<td>${orderVO.order_no}</td>
-			<td>${orderVO.order_date}</td>
-			
-			<td>${orderVO.order_state}</td>
+			<td><fmt:formatDate value="${orderVO.order_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+			<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>
 			<td>${orderVO.order_shipping}</td>
 			<td>${orderVO.order_price}</td>
-			<td>${orderVO.pay_method}</td>
-			<td>${orderVO.pay_deadline}</td>
+			<td>
+				${(orderVO.pay_method==0)? '錢包':''}
+				${(orderVO.pay_method==0)? '信用卡':''}
+				${(orderVO.pay_method==0)? '轉帳':''}
+			</td>
+			<td><fmt:formatDate value="${orderVO.pay_deadline}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			<td>${orderVO.rec_name}</td>
 			<td>${orderVO.rec_addr}</td>
 			<td>${orderVO.rec_phone}</td>
 			<td>${orderVO.rec_cellphone}</td>
-			<td>${orderVO.logistics}</td>
-			<td>${orderVO.logisticsstate}</td>
+			<td>${(orderVO.logistics==0)? '超商':'宅配'}</td>
+			<td>
+			${(orderVO.logisticsstate==0)? '未出貨':''}
+			${(orderVO.logisticsstate==1)? '已出貨':''}
+			${(orderVO.logisticsstate==2)? '已取貨':''}
+			</td>
 			<td>${orderVO.discount}</td>
 			<td>${orderVO.user_id}</td>
 			<td>${orderVO.seller_id}</td>

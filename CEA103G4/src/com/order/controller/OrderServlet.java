@@ -316,14 +316,6 @@ public class OrderServlet extends HttpServlet{
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-				java.sql.Date order_date = null;
-				try {
-					order_date = java.sql.Date.valueOf(req.getParameter("order_date").trim());
-				} catch (IllegalArgumentException e) {
-					order_date=new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
-				
 				Integer order_state = null;
 				try {
 					order_state = new Integer(req.getParameter("order_state").trim());
@@ -356,14 +348,6 @@ public class OrderServlet extends HttpServlet{
 					errorMsgs.add("付款方式請填數字.");
 				}
 				
-				java.sql.Date pay_deadline = null;
-				try {
-					pay_deadline = java.sql.Date.valueOf(req.getParameter("pay_deadline").trim());
-				} catch (IllegalArgumentException e) {
-					pay_deadline=new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
-
 				String rec_name = req.getParameter("rec_name");
 				String rec_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (rec_name == null || rec_name.trim().length() == 0) {
@@ -447,12 +431,10 @@ public class OrderServlet extends HttpServlet{
 				}
 
 				OrderVO orderVO = new OrderVO();
-				orderVO.setOrder_date(order_date);
 				orderVO.setOrder_state(order_state);
 				orderVO.setOrder_shipping(order_shipping);
 				orderVO.setOrder_price(order_price);
 				orderVO.setPay_method(pay_method);
-				orderVO.setPay_deadline(pay_deadline);
 				orderVO.setRec_name(rec_name);
 				orderVO.setRec_addr(rec_addr);
 				orderVO.setRec_phone(rec_phone);
@@ -478,7 +460,7 @@ public class OrderServlet extends HttpServlet{
 				
 				/***************************2.開始修改資料***************************************/
 				OrderService orderSvc = new OrderService();
-				orderVO = orderSvc.addOrder(order_date, order_state, order_shipping, order_price, pay_method, pay_deadline, rec_name, rec_addr, rec_phone, rec_cellphone, logistics, logisticsstate, discount, user_id, seller_id, srating, srating_content, point);
+				orderVO = orderSvc.addOrder(order_state, order_shipping, order_price, pay_method, rec_name, rec_addr, rec_phone, rec_cellphone, logistics, logisticsstate, discount, user_id, seller_id, srating, srating_content, point);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)***********/
 				String url = "/front-end/order/listAllOrder.jsp";

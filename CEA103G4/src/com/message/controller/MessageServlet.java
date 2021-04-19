@@ -212,7 +212,7 @@ public class MessageServlet extends HttpServlet{
 				MessageService messageSvc = new MessageService();
 				messageVO = messageSvc.addMessage(user_id, content, seller_id, message_time);
 				
-				String url = "/message/listAllMessage.jsp";
+				String url = "/front-end/message/listAllMessage.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);				
 				

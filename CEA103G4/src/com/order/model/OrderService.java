@@ -11,16 +11,16 @@ public class OrderService {
 		dao = new OrderJNDIDAO();
 	}
 
-	public OrderVO addOrder(java.sql.Date order_date, Integer order_state, Integer order_shipping,  Integer order_price, Integer pay_method, java.sql.Date pay_deadline, String rec_name, String rec_addr, String rec_phone, String rec_cellphone, Integer logistics, Integer logisticsstate, Integer discount, String user_id, String seller_id, Integer srating, String srating_content, Integer point) {
+	public OrderVO addOrder(Integer order_state, Integer order_shipping,  Integer order_price, Integer pay_method, String rec_name, String rec_addr, String rec_phone, String rec_cellphone, Integer logistics, Integer logisticsstate, Integer discount, String user_id, String seller_id, Integer srating, String srating_content, Integer point) {
 
 		OrderVO orderVO = new OrderVO();
 
-		orderVO.setOrder_date(order_date);
+//		orderVO.setOrder_date(order_date);
 		orderVO.setOrder_state(order_state);
 		orderVO.setOrder_shipping(order_shipping);
 		orderVO.setOrder_price(order_price);
 		orderVO.setPay_method(pay_method);
-		orderVO.setPay_deadline(pay_deadline);
+//		orderVO.setPay_deadline(pay_deadline);
 		orderVO.setRec_name(rec_name);
 		orderVO.setRec_addr(rec_addr);
 		orderVO.setRec_phone(rec_phone);

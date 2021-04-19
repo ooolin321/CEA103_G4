@@ -10,7 +10,8 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>訂單資料新增 - addOrder.jsp</title>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 <style>
   table#table-1 {
 	background-color: #CCCCFF;
@@ -67,93 +68,97 @@
 
 <FORM METHOD="post" ACTION="order.do" name="form1">
 <table>
-	<tr>
+	<!-- <tr>
 		<td>訂單日期:</td>
 		<td><input name="order_date" id="f_date1" type="date"></td>
-	</tr>
+	</tr> -->
 	<tr>
 		<td>訂單狀態:</td>
-		<td><input type="TEXT" name="order_state" size="45" 
-			 value="<%= (orderVO==null)? "0" : orderVO.getOrder_state()%>" /></td>
+		<td><select name="order_state">
+			<option value="0">未付款</option>
+			<option value="1">已付款</option>
+		</select>
+		</td>
 	</tr>
 	<tr>
 		<td>訂單運費:</td>
-		<td><input type="TEXT" name="order_shipping" size="45" 
-			 value="<%= (orderVO==null)? "0" : orderVO.getOrder_shipping()%>" /></td>
+		<td><input type="TEXT" name="order_shipping" size="45" value="60" /></td>
 	</tr>
 	<tr>
 		<td>訂單金額:</td>
-		<td><input type="TEXT" name="order_price" size="45" 
-			 value="<%= (orderVO==null)? "0" : orderVO.getOrder_price()%>" /></td>
+		<td><input type="TEXT" name="order_price" size="45" value="" /></td>
 	</tr>
 	<tr>
 		<td>付款方式:</td>
-		<td><input type="TEXT" name="pay_method" size="45" 
-			 value="<%= (orderVO==null)? "0" : orderVO.getPay_method()%>" /></td>
+		<td><select name="pay_method">
+			<option value="0">信用卡</option>
+			<option value="1">轉帳</option>
+		</select>
+		</td>
 	</tr>
-	<tr>
+	<!-- <tr>
 		<td>付款截止日期:</td>
 		<td><input name="pay_deadline" id="f_date2" type="date"></td>
-	</tr>
+	</tr> -->
 	<tr>
 		<td>收件人姓名:</td>
-		<td><input type="TEXT" name="rec_name" size="45" 
-			 value="<%= (orderVO==null)? "xxx" : orderVO.getRec_name()%>" /></td>
+		<td><input type="TEXT" name="rec_name" size="45" /></td>
 	</tr>
 	<tr>
 		<td>收件人地址:</td>
-		<td><input type="TEXT" name="rec_addr" size="45" 
-			 value="<%= (orderVO==null)? "xxx" : orderVO.getRec_addr()%>" /></td>
+		<td>
+		<div id="twzipcode"></div>
+		<input type="TEXT" name="rec_addr" size="45"/>
+		</td>
 	</tr>
 	<tr>
 		<td>收件人電話:</td>
-		<td><input type="TEXT" name="rec_phone" size="45" 
-			 value="<%= (orderVO==null)? "" : orderVO.getRec_phone()%>" /></td>
+		<td><input type="TEXT" name="rec_phone" size="45"  /></td>
 	</tr>
 	<tr>
 		<td>收件人手機:</td>
-		<td><input type="TEXT" name="rec_cellphone" size="45" 
-			 value="<%= (orderVO==null)? "0900000000" : orderVO.getRec_cellphone()%>" /></td>
+		<td><input type="TEXT" name="rec_cellphone" size="45"  /></td>
 	</tr>
 	<tr>
 		<td>物流方式:</td>
-		<td><input type="TEXT" name="logistics" size="45" 
-			 value="<%= (orderVO==null)? "0" : orderVO.getLogistics()%>" /></td>
+		<td><select name="logistics">
+			<option value="0">超商</option>
+			<option value="1">宅配</option>
+		</select>
+		</td>
 	</tr>
 	<tr>
 		<td>物流狀態:</td>
-		<td><input type="TEXT" name="logisticsstate" size="45" 
-			 value="<%= (orderVO==null)? "0" : orderVO.getLogisticsstate()%>" /></td>
+		<td><select name="logisticsstate">
+			<option value="0">未出貨</option>
+			<option value="1">已出貨</option>
+			<option value="2">已取貨</option>
+		</select>
+		</td>
 	</tr>
 	<tr>
 		<td>使用點數折抵:</td>
-		<td><input type="TEXT" name="discount" size="45" 
-			 value="<%= (orderVO==null)? "0" : orderVO.getDiscount()%>" /></td>
+		<td><input type="TEXT" name="discount" size="45"  /></td>
 	</tr>
 	<tr>
 		<td>買家帳號:</td>
-		<td><input type="TEXT" name="user_id" size="45" 
-			 value="<%= (orderVO==null)? "abcd01" : orderVO.getUser_id()%>" /></td>
+		<td><input type="TEXT" name="user_id" size="45"  /></td>
 	</tr>
 	<tr>
 		<td>賣家帳號:</td>
-		<td><input type="TEXT" name="seller_id" size="45"
-			 value="<%= (orderVO==null)? "abcd03" : orderVO.getSeller_id()%>" /></td>
+		<td><input type="TEXT" name="seller_id" size="45"  /></td>
 	</tr>
 	<tr>
 		<td>賣家評價:</td>
-		<td><input type="TEXT" name="srating" size="45"
-			 value="<%= (orderVO==null)? "5" : orderVO.getSrating()%>" /></td>
+		<td><input type="TEXT" name="srating" size="45" /></td>
 	</tr>
 	<tr>
 		<td>賣家評價內容:</td>
-		<td><input type="TEXT" name="srating_content" size="45"
-			 value="<%= (orderVO==null)? "CONTENT" : orderVO.getSrating_content()%>" /></td>
+		<td><input type="TEXT" name="srating_content" size="45" /></td>
 	</tr>
 	<tr>
 		<td>點數回饋:</td>
-		<td><input type="TEXT" name="point" size="45"
-			 value="<%= (orderVO==null)? "0" : orderVO.getPoint()%>" /></td>
+		<td><input type="TEXT" name="point" size="45" /></td>
 	</tr>
 
 </table>
@@ -161,7 +166,14 @@
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
 </body>
-
+<script>
+		$("#twzipcode").twzipcode({
+		zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
+		css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 
+		countyName: "city", // 自訂城市 select 標籤的 name 值
+		districtName: "town" // 自訂區別 select 標籤的 name 值
+		}); 
+</script>
 
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
@@ -178,7 +190,6 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
 <style>
   .xdsoft_datetimepicker .xdsoft_datepicker {
            width:  300px;   /* width:  300px; */
@@ -187,8 +198,8 @@
            height: 151px;   /* height:  151px; */
   }
 </style>
-
 <script>
+		
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
 	       theme: '',              //theme: 'dark',

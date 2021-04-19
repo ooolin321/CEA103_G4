@@ -112,16 +112,12 @@
 			<td>${live_orderVO.rec_addr}</td>
 			<td>${live_orderVO.rec_phone}</td>
 			<td>${live_orderVO.rec_cellphone}</td>
-			<td>
-			${(live_orderVO.logistics==0)? '宅配':'超商取貨'}
-			</td>
-			
+			<td>${(live_orderVO.logistics==0)? '宅配':'超商取貨'}</td>
 			<td>
 			${(live_orderVO.logistics_state==0)? '未出貨':''}
 			${(live_orderVO.logistics_state==1)? '已出貨':''}
 			${(live_orderVO.logistics_state==2)? '買家已取貨':''}
 			</td>
-			
 			<td>${live_orderVO.discount}</td>
 			<td>${live_orderVO.live_no}</td>
 			<td>${live_orderVO.user_id}</td>

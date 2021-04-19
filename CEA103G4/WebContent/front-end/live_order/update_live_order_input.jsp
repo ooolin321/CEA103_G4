@@ -126,8 +126,6 @@ th, td {
 				<td><input type="TEXT" name="rec_name" size="45"
 					value="<%=live_orderVO.getRec_name()%>" /></td>
 			</tr>
-			
-
 
 			<tr>
 				<td>收件人地址:</td>

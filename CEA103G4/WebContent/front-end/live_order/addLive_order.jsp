@@ -126,6 +126,8 @@ th, td {
 				<td>收件人地址:</td>
 				<td>
 				<div id="twzipcode"></div>
+				
+				
 				<input name="rec_addr" type="text" size="45">
 				</td>
 				

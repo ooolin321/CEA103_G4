@@ -66,6 +66,19 @@ public class EmpService {
 	public List<EmpVO> getAll() {
 		return dao.getAll();
 	}
+	public String getPassword() {
+		return dao.genAuthCode();
+	}
 	
+	public EmpVO sendPwdMail(String ename,String email, String empPwd) {
+		EmpVO empVO = new EmpVO();
+		
+		empVO.setEname(ename);
+		empVO.setEmail(email);
+		empVO.setEmp_pwd(empPwd);
+		
+		dao.sendMail(empVO);
+		return empVO;
+	}
 
 }

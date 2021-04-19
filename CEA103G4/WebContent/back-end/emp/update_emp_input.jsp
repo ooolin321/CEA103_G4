@@ -56,8 +56,9 @@ th, td {
 			<td>
 				<h3>員工資料修改 - updateEmpInput.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/back-end/emp/selectEmp.jsp"><img src="<%=request.getContextPath()%>/images/back1.gif"
-						width="100" height="32" border="0">回首頁</a>
+					<a href="<%=request.getContextPath()%>/back-end/emp/selectEmp.jsp"><img
+						src="<%=request.getContextPath()%>/images/back1.gif" width="100"
+						height="32" border="0">回首頁</a>
 				</h4>
 			</td>
 		</tr>
@@ -75,7 +76,8 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do"
+		name="form1">
 		<table>
 			<tr>
 				<td>員工編號:<font color=red><b>*</b></font></td>
@@ -97,14 +99,14 @@ th, td {
 			<tr>
 				<td>身份證字號:</td>
 				<td><input type="TEXT" name="id" size="45"
-				value="<%=(empVO == null) ? "" : empVO.getId()%>" /></td>
+					value="<%=(empVO == null) ? "" : empVO.getId()%>" /></td>
 			</tr>
 			<tr>
 				<td>性別:</td>
 				<td><select size="1" name="gender">
 						<option value="1" ${(empVO.gender==0)? 'selected':''}>男</option>
-						<option value="0" ${(empVO.gender==0)? 'selected':''}>女</option>  
-					</select></td>
+						<option value="0" ${(empVO.gender==0)? 'selected':''}>女</option>
+				</select></td>
 			</tr>
 			<tr>
 				<td>生日:</td>
@@ -126,12 +128,11 @@ th, td {
 					value="<%=(empVO == null) ? "" : empVO.getSal()%>" /></td>
 			</tr>
 			<tr>
-			<td>狀態:</td>
+				<td>狀態:</td>
 				<td><select size="1" name="state">
 						<option value="1" ${(empVO.state==0)? 'selected':''}>在職</option>
-						<option value="0" ${(empVO.state==0)? 'selected':''}>離職</option>  
-					</select>
-				</td>
+						<option value="0" ${(empVO.state==0)? 'selected':''}>離職</option>
+				</select></td>
 			</tr>
 
 			<tr>
@@ -146,9 +147,11 @@ th, td {
 			</tr>
 
 		</table>
-		<br> <input type="hidden" name="action" value="update"> <input
-			type="hidden" name="empno" value="<%=empVO.getEmpno()%>"> <input
-			type="submit" value="送出修改">
+		<br> 
+		<input type="hidden" name="action" value="update"> 
+		<input type="hidden" name="empno" value="<%=empVO.getEmpno()%>">
+		<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
+		<input type="submit" value="送出修改">
 	</FORM>
 </body>
 
@@ -179,7 +182,7 @@ th, td {
  	       timepicker:false,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
- 	      value: '<%=empVO.getHiredate()%>', // value:   new Date(),
+ 	       value: '<%=empVO.getHiredate()%>', // value:   new Date(),
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前
@@ -191,7 +194,7 @@ th, td {
  	       timepicker:false,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
- 	      value: '<%=empVO.getDob()%>', // value:   new Date(),
+ 	       value: '<%=empVO.getDob()%>', // value:  new Date(),
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前

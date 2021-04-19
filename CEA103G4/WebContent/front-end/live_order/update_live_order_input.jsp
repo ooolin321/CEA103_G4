@@ -78,7 +78,7 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="live_order.do" name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_order/live_order.do" name="form1">
 		<table>
 			<tr>
 				<td>直播訂單編號:<font color=red><b>*</b></font></td>

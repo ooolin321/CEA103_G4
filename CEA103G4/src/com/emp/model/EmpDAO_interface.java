@@ -8,9 +8,9 @@ public interface EmpDAO_interface {
 	public void delete(Integer empno);
     public EmpVO findByPrimaryKey(Integer empno);
     public List<EmpVO> getAll();
-//	public String GenAuthCode(String empPwd);
-	
-
+    
+	public List<EmpVO> sendMail(EmpVO empVO);
+	public String genAuthCode();
 	
 
     

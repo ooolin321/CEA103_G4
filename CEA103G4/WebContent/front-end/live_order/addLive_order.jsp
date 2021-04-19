@@ -87,14 +87,15 @@ th, td {
 			<tr>
 				<td>直播訂單狀態:</td>
 				<td><select name="order_state">
-						<option value="0">收到訂單</option>
-						<option value="1">完成訂單</option>
+						<option value="0" ${(live_orderVO.order_state==0)? 'selected':'' }>收到訂單</option>
+						<option value="1" ${(live_orderVO.order_state==1)? 'selected':'' }>完成訂單</option>
 				</select></td>
 			</tr>
 
 			<tr>
 				<td>運費:</td>
-				<td><input type="TEXT" name="order_shipping" size="45" value="30"/></td>
+				<td><input type="TEXT" name="order_shipping" size="45" value="<%= (live_orderVO==null)? "30" : live_orderVO.getOrder_shipping()%>"/></td>
+				
 			</tr>
 
 			<tr>

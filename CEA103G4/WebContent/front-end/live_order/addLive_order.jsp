@@ -100,15 +100,15 @@ th, td {
 
 			<tr>
 				<td>直播訂單商品價格:</td>
-				<td><input type="TEXT" name="order_price" size="45" value="0" /></td>
+				<td><input type="TEXT" name="order_price" size="45" value="<%= (live_orderVO==null)? "0" : live_orderVO.getOrder_price()%>" /></td>
 			</tr>
 
 			<tr>
 				<td>付款方式:</td>
 				<td><select name="pay_method">
-						<option value="0">錢包</option>
-						<option value="1">信用卡</option>
-						<option value="2">轉帳</option>
+						<option value="0" ${(live_orderVO.pay_method==0)? 'selected':'' }>錢包</option>
+						<option value="1" ${(live_orderVO.pay_method==1)? 'selected':'' }>信用卡</option>
+						<option value="2" ${(live_orderVO.pay_method==2)? 'selected':'' }>轉帳</option>
 				</select>
 			</tr>
 
@@ -119,7 +119,7 @@ th, td {
 
 			<tr>
 				<td>收件人姓名:</td>
-				<td><input type="TEXT" name="rec_name" size="45" value="測試人員" /></td>
+				<td><input type="TEXT" name="rec_name" size="45" value="<%= (live_orderVO==null)? "測試人員" : live_orderVO.getRec_name()%>" /></td>
 			</tr>
 
 			<tr>
@@ -128,7 +128,7 @@ th, td {
 				<div id="twzipcode"></div>
 				
 				
-				<input name="rec_addr" type="text" size="45">
+				<input name="rec_addr" type="text" size="45" value="<%= (live_orderVO==null)? "XX路X段XXX巷XX號" : live_orderVO.getRec_addr()%>">
 				</td>
 				
 <!-- 				<td><input type="TEXT" name="rec_addr" size="45" -->
@@ -137,75 +137,72 @@ th, td {
 
 			<tr>
 				<td>收件人電話:</td>
-				<td><input type="TEXT" name="rec_phone" size="45" value="035123456"  /></td>
+				<td><input type="TEXT" name="rec_phone" size="45" value="<%= (live_orderVO==null)? "031234567" : live_orderVO.getRec_phone()%>"  /></td>
 			</tr>
 
 			<tr>
 				<td>收件人手機:</td>
-				<td><input type="TEXT" name="rec_cellphone" size="45" value="0912345678"/></td>
+				<td><input type="TEXT" name="rec_cellphone" size="45" value="<%= (live_orderVO==null)? "0912345678" : live_orderVO.getRec_cellphone()%>"/></td>
 			</tr>
 
 			<tr>
 				<td>物流方式:</td>
 				<td><select name="logistics">
-						<option value="0">宅配</option>
-						<option value="1">超商</option>
+						<option value="0" ${(live_orderVO.logistics==0)? 'selected':'' }>宅配</option>
+						<option value="1" ${(live_orderVO.logistics==1)? 'selected':'' }>超商</option>
 				</select></td>
 			</tr>
 
 			<tr>
 				<td>物流狀態:</td>
 				<td><select name="logistics_state">
-						<option value="0">未出貨</option>
-						<option value="1">已出貨</option>
-						<option value="2">買家已取貨</option>
+						<option value="0" ${(live_orderVO.logistics_state==0)? 'selected':'' }>未出貨</option>
+						<option value="1" ${(live_orderVO.logistics_state==1)? 'selected':'' }>已出貨</option>
+						<option value="2" ${(live_orderVO.logistics_state==2)? 'selected':'' }>買家已取貨</option>
 				</select></td>
 			</tr>
 
 
 			<tr>
 				<td>點數折扣:</td>
-				<td><input type="TEXT" name="discount" size="45" value="0" /></td>
+				<td><input type="TEXT" name="discount" size="45" value="<%= (live_orderVO==null)? "0" : live_orderVO.getDiscount()%>" /></td>
 			</tr>
 
 			<tr>
 				<td>直播編號:</td>
-				<td><input type="TEXT" name="live_no" size="45" value="8001"/></td>
+				<td><input type="TEXT" name="live_no" size="45" value="<%= (live_orderVO==null)? "8001" : live_orderVO.getLive_no()%>"/></td>
 			</tr>
 
 			<tr>
 				<td>買家帳號:</td>
-				<td><input type="TEXT" name="user_id" size="45" value="abcd01"/></td>
+				<td><input type="TEXT" name="user_id" size="45" value="<%= (live_orderVO==null)? "abcd01" : live_orderVO.getUser_id()%>"/></td>
 			</tr>
 
 			<tr>
 				<td>賣家帳號:</td>
-				<td><input type="TEXT" name="seller_id" size="45" value="abcd02" /></td>
+				<td><input type="TEXT" name="seller_id" size="45" value="<%= (live_orderVO==null)? "abcd02" : live_orderVO.getSeller_id()%>" /></td>
 			</tr>
 
 			<tr>
-				<td>評分:</td>
+				<td>評價分數:</td>
 				<td><select name="srating">
-						<%
-							for (int i = 5; i > 0; i--) {
-						%>
-						<option value=<%=i%>>
-							<%=i%></option>
-						<%
-							}
-						%>
+						<option value="5" ${(live_orderVO.srating==5)? 'selected':''}>5</option>
+						<option value="4" ${(live_orderVO.srating==4)? 'selected':''}>4</option>
+						<option value="3" ${(live_orderVO.srating==3)? 'selected':''}>3</option>
+						<option value="2" ${(live_orderVO.srating==2)? 'selected':''}>2</option>
+						<option value="1" ${(live_orderVO.srating==1)? 'selected':''}>1</option>
 				</select></td>
 
 			</tr>
 
 			<tr>
 				<td>評價內容:</td>
-				<td><input type="TEXT" name="srating_content" size="45" value="讚" /></td>
+				<td><input type="TEXT" name="srating_content" size="45" value="<%= (live_orderVO==null)? "讚" : live_orderVO.getSrating_content()%>" /></td>
 			</tr>
 
 			<tr>
 				<td>回饋點數:</td>
-				<td><input type="TEXT" name="point" size="45" value="0" /></td>
+				<td><input type="TEXT" name="point" size="45" value="<%= (live_orderVO==null)? "0" : live_orderVO.getPoint()%>" /></td>
 			</tr>
 		</table>
 		<br> <input type="hidden" name="action" value="insert"> <input
@@ -217,7 +214,10 @@ $("#twzipcode").twzipcode({
 	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
 	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 
 	countyName: "city", // 自訂城市 select 標籤的 name 值
-	districtName: "town" // 自訂區別 select 標籤的 name 值
+	districtName: "town", // 自訂區別 select 標籤的 name 值
+	countySel: "<%=(live_orderVO==null)? "" :live_orderVO.getCity()%>",
+	districtSel: "<%=(live_orderVO==null)? "" :live_orderVO.getTown()%>",
+	zipcodeSel: "<%=(live_orderVO==null)? "" :live_orderVO.getZipcode()%>"
 	});
 </script>
 </html>

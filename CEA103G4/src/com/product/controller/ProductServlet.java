@@ -332,11 +332,13 @@ public class ProductServlet extends HttpServlet {
 				Part part = req.getPart("product_photo");
 				if (part == null || part.getSize() == 0) {
 					errorMsgs.add("請上傳一張圖片");
+				} else {
+					InputStream in = part.getInputStream();
+					product_photo = new byte[in.available()];
+					in.read(product_photo);
+					in.close();
 				}
-				InputStream in = part.getInputStream();
-				product_photo = new byte[in.available()];
-				in.read(product_photo);
-				in.close();
+
 				
 				String user_id = req.getParameter("user_id").trim();
 				if (user_id == null || user_id.trim().length() == 0) {

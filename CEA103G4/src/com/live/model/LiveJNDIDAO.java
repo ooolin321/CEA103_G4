@@ -25,11 +25,11 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO LIVE (live_no,live_type,live_name,live_time,live_state,user_id,empno) VALUES (?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT * FROM LIVE order by live_no";
-	private static final String GET_ONE_STMT = "SELECT * FROM LIVE where live_no = ?";
-	private static final String DELETE = "DELETE FROM LIVE where live_no = ?";
-	private static final String UPDATE = "UPDATE LIVE set live_type=?, live_name=?, live_time=?, live_state=? where live_no = ?";
+	private static final String INSERT_STMT = "INSERT INTO LIVE (LIVE_TYPE,LIVE_NAME,LIVE_TIME,LIVE_STATE,USER_ID,EMPNO,LIVE_PHOTO) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String GET_ALL_STMT = "SELECT * FROM LIVE ORDER BY LIVE_NO";
+	private static final String GET_ONE_STMT = "SELECT * FROM LIVE WHERE LIVE_NO = ?";
+	private static final String DELETE = "DELETE FROM LIVE WHERE LIVE_NO = ?";
+	private static final String UPDATE = "UPDATE LIVE SET LIVE_TYPE=?, LIVE_NAME=?, LIVE_TIME=?, LIVE_STATE=? ,USER_ID=?,EMPNO=?,LIVE_PHOTO=? WHERE LIVE_NO = ?";
 
 	@Override
 	public void insert(LiveVO liveVO) {
@@ -41,14 +41,14 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, liveVO.getLive_no());
-			pstmt.setString(2, liveVO.getLive_type());
-			pstmt.setString(3, liveVO.getLive_name());
-			pstmt.setDate(4, liveVO.getLive_time());
-			pstmt.setInt(5, liveVO.getLive_state());
-			pstmt.setString(6, liveVO.getUser_id());
-			pstmt.setInt(7, liveVO.getEmpno());
-
+			
+			pstmt.setString(1, liveVO.getLive_type());
+			pstmt.setString(2, liveVO.getLive_name());
+			pstmt.setDate(3, liveVO.getLive_time());
+			pstmt.setInt(4, liveVO.getLive_state());
+			pstmt.setString(5, liveVO.getUser_id());
+			pstmt.setInt(6, liveVO.getEmpno());
+			pstmt.setBytes(7, liveVO.getLive_photo());
 			pstmt.executeUpdate();
 
 		
@@ -76,7 +76,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 	public void update(LiveVO liveVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		
 		try {
 
 			con = ds.getConnection();
@@ -86,7 +86,10 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 			pstmt.setString(2, liveVO.getLive_name());
 			pstmt.setDate(3, liveVO.getLive_time());
 			pstmt.setInt(4, liveVO.getLive_state());
-			pstmt.setInt(5, liveVO.getLive_no());
+			pstmt.setString(5, liveVO.getUser_id());
+			pstmt.setInt(6, liveVO.getEmpno());
+			pstmt.setBytes(7, liveVO.getLive_photo());
+			pstmt.setInt(8, liveVO.getLive_no());
 
 			pstmt.executeUpdate();
 
@@ -180,6 +183,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 				liveVO.setLive_state(rs.getInt("live_state"));
 				liveVO.setUser_id(rs.getString("user_id"));
 				liveVO.setEmpno(rs.getInt("empno"));
+				liveVO.setLive_photo(rs.getBytes("live_photo"));
 			}
 
 			// Handle any driver errors
@@ -238,6 +242,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 				liveVO.setLive_state(rs.getInt("live_state"));
 				liveVO.setUser_id(rs.getString("user_id"));
 				liveVO.setEmpno(rs.getInt("empno"));
+				liveVO.setLive_photo(rs.getBytes("live_photo"));
 				list.add(liveVO); // Store the row in the list
 			}
 

@@ -87,7 +87,7 @@
 		<th>物流狀態</th>
 		<th>使用點數折抵</th>
 		<th>直播編號</th>
-		<th>會員帳號</th>
+		<th>買家帳號</th>
 		<th>賣家帳號</th>
 		<th>賣家評價分數</th>
 		<th>賣家評價內容</th>
@@ -99,7 +99,11 @@
 		<tr>
 			<td>${live_orderVO.live_order_no}</td>
 			<td><fmt:formatDate value="${live_orderVO.order_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-			<td>${(live_orderVO.order_state==0)? '未付款':'已付款'}</td>
+			<td>
+			${(live_orderVO.order_state==0)? '未付款':''}
+			${(live_orderVO.order_state==1)? '已付款':''}
+			${(live_orderVO.order_state==2)? '棄單':''}
+			</td>
 			<td>${live_orderVO.order_shipping}</td>
 			<td>${live_orderVO.order_price}</td>
 			<td>

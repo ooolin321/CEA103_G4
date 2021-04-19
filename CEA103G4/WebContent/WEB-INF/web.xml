@@ -59,7 +59,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LiveServlet</servlet-name>
-		<url-pattern>/front-end/live/live.do</url-pattern>
+		<url-pattern>/live/live.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>MessageServlet</servlet-name>
@@ -118,6 +118,15 @@
 	<servlet-mapping>
 		<servlet-name>DBGifReader</servlet-name>
 		<url-pattern>/live_report/DBGifReader.do</url-pattern>
+	</servlet-mapping>
+	
+    <servlet>
+		<servlet-name>DBGifReader</servlet-name>
+		<servlet-class>com.live.controller.DBGifReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DBGifReader</servlet-name>
+		<url-pattern>/live/DBGifReader.do</url-pattern>
 	</servlet-mapping>
 	
 	

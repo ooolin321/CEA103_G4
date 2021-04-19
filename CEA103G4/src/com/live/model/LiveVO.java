@@ -3,6 +3,8 @@ package com.live.model;
 import java.sql.Date;
 
 public class LiveVO implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private Integer live_no;
 	private String live_type;
 	private String live_name;
@@ -10,6 +12,7 @@ public class LiveVO implements java.io.Serializable {
 	private Integer live_state;
 	private String user_id;
 	private Integer empno;
+	private byte[] live_photo;
 
 	public Integer getLive_no() {
 		return live_no;
@@ -65,6 +68,14 @@ public class LiveVO implements java.io.Serializable {
 
 	public void setEmpno(Integer empno) {
 		this.empno = empno;
+	}
+
+	public byte[] getLive_photo() {
+		return live_photo;
+	}
+
+	public void setLive_photo(byte[] live_photo) {
+		this.live_photo = live_photo;
 	}
 
 }

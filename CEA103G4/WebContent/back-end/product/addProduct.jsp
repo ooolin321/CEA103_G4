@@ -41,6 +41,13 @@
   th, td {
     padding: 1px;
   }
+  
+  #preview img{
+  	width: 100px;
+  	height: 100px;
+  
+  }
+  
 </style>
 
 </head>
@@ -94,7 +101,9 @@
 	</tr>
 	<tr>
 		<td>商品照片上傳:</td>
-		<td><input type="file" name="product_photo" size="45" value="<%= (productVO==null)? "" : productVO.getProduct_photo()%>" /></td>
+		<td><input type="file" name="product_photo" size="45" id="myFile" value="<%= (productVO==null)? "" : productVO.getProduct_photo()%>" />
+			<div id="preview"></div>
+		</td>
 	</tr>
 	<tr>
 		<td>會員帳號:</td>
@@ -118,6 +127,37 @@
 <br>
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
+
+<script>
+
+let myFile = document.getElementById("myFile");
+let preview = document.getElementById('preview');
+
+function init() {
+    myFile.addEventListener('change', function(e) {      
+        let files = e.target.files;     
+        if (files !== null) {          
+            let file = files[0];
+            if (file.type.indexOf('image') > -1) {
+                let reader = new FileReader();
+                reader.addEventListener('load', function(e) { 
+                    let result = e.target.result;
+                    let img = document.createElement('img');
+                    img.src = result;
+                    preview.append(img);
+                });
+                reader.readAsDataURL(file);
+            } else {
+            	alert('請上傳圖片！');
+            }
+        }
+    });
+}
+
+window.onload = init;
+
+</script>
+
 </body>
 
 </html>

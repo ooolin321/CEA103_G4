@@ -1128,7 +1128,7 @@ ol {
 .product-item .pi-pic ul {
   position: absolute;
   left: 0;
-  bottom: -52px;
+  bottom: -53px;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
@@ -2035,7 +2035,8 @@ ol {
 }
 
 .product-details .pd-desc {
-  margin-bottom: 24px;
+  margin-top: 20px;
+  margin-bottom: 25px;
 }
 
 .product-details .pd-desc p {
@@ -2176,6 +2177,7 @@ ol {
 
 .product-details .quantity .primary-btn.pd-cart {
   padding: 14px 70px 10px;
+  border-radius: 2px;
 }
 
 .product-details .pd-tags {
@@ -2199,12 +2201,6 @@ ol {
   overflow: hidden;
 }
 
-.product-details .pd-share .p-code {
-  font-size: 16px;
-  color: #252525;
-  float: left;
-}
-
 .product-details .pd-share .pd-social {
   float: right;
 }
@@ -2216,8 +2212,29 @@ ol {
   margin-left: 15px;
 }
 
-.product-details .pd-function {
-  padding-top: 50px;
+.product-details .pd-fungroup {
+  padding-top: 30px;
+}
+
+.product-details .pd-fungroup .primary-btn.pd-buy {
+  margin-bottom: 20px;
+  background: pink;
+  border-radius: 2px;
+}
+
+.product-details .pd-fungroup .pd-function {
+  display: inline-block;
+}
+
+.product-details .pd-fungroup .pd-function .primary-btn {
+  border-radius: 2px;
+}
+
+.product-details .pd-fungroup .p-code {
+  padding-top: 30px;
+  font-size: 12px;
+  color: #252525;
+  float: right;
 }
 
 .product-tab {
@@ -3817,7 +3834,7 @@ ol {
     right: -7px;
   }
   .product-shop .product-item .pi-pic ul li a {
-    padding: 16px 12px 12px 11px;
+    padding: 5px 12px 12px 11px;
   }
   .related-products .product-item .pi-pic ul li a {
     padding: 16px 12px 12px 11px;
@@ -3874,6 +3891,10 @@ ol {
   .product-shop.page-details .product-details {
     padding-top: 30px;
   }
+  .product-shop .product-item .pi-pic ul li a {
+    padding: 5px 12px 12px 11px;
+  }
+
   .inner-header .advanced-search .input-group button {
     right: -8px;
   }

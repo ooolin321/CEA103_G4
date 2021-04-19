@@ -30,16 +30,16 @@ public class EmpDAO implements EmpDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CEA103_G4");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/admin");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = "INSERT INTO EMP (ENAME,JOB,ID,GENDER,DOB,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP ORDER BY EMPNO";
-	private static final String GET_ONE_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP WHERE EMPNO = ?";
+	private static final String INSERT_STMT = "INSERT INTO EMP (ENAME,JOB,ID,GENDER,DOB,CITY,DIST,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+	private static final String GET_ALL_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,CITY,DIST,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP ORDER BY EMPNO";
+	private static final String GET_ONE_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,CITY,DIST,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP WHERE EMPNO = ?";
 	private static final String DELETE = "DELETE FROM EMP WHERE EMPNO = ?";
-	private static final String UPDATE = "UPDATE EMP SET ENAME=?, JOB=?, ID=?, GENDER=?, DOB=?, ADDR=?,EMAIL=?, SAL=?, STATE=?, HIREDATE=?, EMP_PWD=? WHERE EMPNO = ?";
+	private static final String UPDATE = "UPDATE EMP SET ENAME=?, JOB=?, ID=?, GENDER=?, DOB=?, CITY=?, DIST=?, ADDR=?,EMAIL=?, SAL=?, STATE=?, HIREDATE=?, EMP_PWD=? WHERE EMPNO = ?";
 
 	@Override
 	public void insert(EmpVO empVO) {
@@ -56,12 +56,15 @@ public class EmpDAO implements EmpDAO_interface {
 			pstmt.setString(3, empVO.getId());
 			pstmt.setInt(4, empVO.getGender());
 			pstmt.setDate(5, empVO.getDob());
-			pstmt.setNString(6, empVO.getAddr());
-			pstmt.setString(7, empVO.getEmail());
-			pstmt.setDouble(8, empVO.getSal());
-			pstmt.setInt(9, empVO.getState());
-			pstmt.setDate(10, empVO.getHiredate());
-			pstmt.setString(11, empVO.getEmp_pwd());
+			pstmt.setString(6, empVO.getCity());
+			pstmt.setString(7, empVO.getDist());
+			pstmt.setString(8, empVO.getAddr());
+			pstmt.setString(9, empVO.getEmail());
+			pstmt.setDouble(10, empVO.getSal());
+			pstmt.setInt(11, empVO.getState());
+			pstmt.setDate(12, empVO.getHiredate());
+			pstmt.setString(13, empVO.getEmp_pwd());
+
 
 			pstmt.executeUpdate();
 
@@ -99,13 +102,15 @@ public class EmpDAO implements EmpDAO_interface {
 			pstmt.setString(3, empVO.getId());
 			pstmt.setInt(4, empVO.getGender());
 			pstmt.setDate(5, empVO.getDob());
-			pstmt.setString(6, empVO.getAddr());
-			pstmt.setString(7, empVO.getEmail());
-			pstmt.setDouble(8, empVO.getSal());
-			pstmt.setInt(9, empVO.getState());
-			pstmt.setDate(10, empVO.getHiredate());
-			pstmt.setString(11, empVO.getEmp_pwd());
-			pstmt.setInt(12, empVO.getEmpno());
+			pstmt.setString(6, empVO.getCity());
+			pstmt.setString(7, empVO.getDist());
+			pstmt.setString(8, empVO.getAddr());
+			pstmt.setString(9, empVO.getEmail());
+			pstmt.setDouble(10, empVO.getSal());
+			pstmt.setInt(11, empVO.getState());
+			pstmt.setDate(12, empVO.getHiredate());
+			pstmt.setString(13, empVO.getEmp_pwd());
+			pstmt.setInt(14, empVO.getEmpno());
 
 			pstmt.executeUpdate();
 
@@ -185,6 +190,9 @@ public class EmpDAO implements EmpDAO_interface {
 				empVO.setId(rs.getString("id"));
 				empVO.setGender(rs.getInt("gender"));
 				empVO.setDob(rs.getDate("dob"));
+				empVO.setCity(rs.getString("city"));
+//				empVO.setZipcode(rs.getInt("zipcode"));
+				empVO.setDist(rs.getString("dist"));
 				empVO.setAddr(rs.getString("addr"));
 				empVO.setEmail(rs.getString("email"));
 				empVO.setSal(rs.getDouble("sal"));
@@ -247,6 +255,9 @@ public class EmpDAO implements EmpDAO_interface {
 				empVO.setId(rs.getString("id"));
 				empVO.setGender(rs.getInt("gender"));
 				empVO.setDob(rs.getDate("dob"));
+				empVO.setCity(rs.getString("city"));
+//				empVO.setZipcode(rs.getInt("zipcode"));
+				empVO.setDist(rs.getString("dist"));
 				empVO.setAddr(rs.getString("addr"));
 				empVO.setEmail(rs.getString("email"));
 				empVO.setSal(rs.getDouble("sal"));
@@ -337,7 +348,7 @@ public class EmpDAO implements EmpDAO_interface {
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailto));
 
 //			MailService mailService = new MailService();
-//			mailService.sendMail(emailto, subject, messageText);
+//			empVO.sendMail(emailto, subject, messageText);
 
 			// 設定信中的主旨
 			message.setSubject(subject);

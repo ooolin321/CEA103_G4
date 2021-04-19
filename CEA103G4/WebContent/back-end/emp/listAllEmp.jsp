@@ -118,7 +118,7 @@ th, td {
 					</c:when>
 				</c:choose>
 				<td>${empVO.dob}</td>
-				<td>${empVO.addr}</td>
+				<td>${empVO.city}${empVO.dist}${empVO.addr}</td>
 				<td>${empVO.email}</td>
 				<td>${empVO.sal}</td>
 				<%-- <td>${empVO.state}</td> --%>

@@ -83,7 +83,7 @@ th, td {
 		</ul>
 	</c:if>
 
-	<table>
+	<table  class="layui-table layui-form">
 		<tr>
 			<th>員工編號</th>
 			<th>員工姓名</th>
@@ -161,4 +161,6 @@ th, td {
 	<%@ include file="page2.file"%>
 
 </body>
+<script src="<%=request.getContextPath()%>/static/admin/js/config.js"></script>
+<script src="<%=request.getContextPath()%>/static/admin/js/script.js"></script>
 </html>

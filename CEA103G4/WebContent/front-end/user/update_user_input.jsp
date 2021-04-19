@@ -11,6 +11,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>會員資料修改 - update_user_input.jsp</title>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+
 <style>
   table#table-1 {
 	background-color: #CCCCFF;
@@ -80,8 +83,8 @@
 		<td><input type="TEXT" name="user_name" size="45"	value="<%=userVO.getUser_name()%>" /></td>
 	</tr>
 	<tr>
-		<td>身分証字號:</td>
-		<td><input type="TEXT" name="id_card" size="45"	value="<%=userVO.getId_card()%>" /></td>
+		<td>身分証字號:<font color=red><b>*</b></font></td>
+		<td><%=userVO.getId_card()%></td>
 	</tr>
 	<tr>
 		<td>性別:</td>
@@ -103,9 +106,17 @@
 		<td>手機號碼:</td>
 		<td><input type="TEXT" name="user_mobile" size="45" value="<%=userVO.getUser_mobile()%>" /></td>
 	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>地址:</td> -->
+<%-- 		<td><input type="TEXT" name="user_addr" size="45" value="<%=userVO.getUser_addr()%>" /></td> --%>
+<!-- 	</tr> -->
 	<tr>
-		<td>地址:</td>
-		<td><input type="TEXT" name="user_addr" size="45" value="<%=userVO.getUser_addr()%>" /></td>
+		<td>地址:</td>	
+		<td>
+		<div id="twzipcode"></div>
+		<input type="TEXT" name="user_addr" size="45"
+			value="<%=userVO.getUser_addr()%>" /></td>
+					
 	</tr>
 	<tr>
 		<td>註冊日期:</td>
@@ -150,10 +161,21 @@
 <br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="user_id" value="<%=userVO.getUser_id()%>">
+<input type="hidden" name="id_card" value="<%=userVO.getId_card()%>">
 <input type="submit" value="送出修改"></FORM>
 </body>
 
-
+<script>
+        $("#twzipcode").twzipcode({
+        	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
+        	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 
+        	countyName: "city", // 自訂城市 select 標籤的 name 值
+        	districtName: "town", // 自訂區別 select 標籤的 name 值
+        	countySel: "<%=userVO.getCity()%>",
+        	districtSel: "<%=userVO.getTown()%>",
+        	zipcodeSel: "<%=userVO.getZipcode()%>"
+        	});
+</script>
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
@@ -197,6 +219,7 @@
            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
         });
         
+
         
    
         // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------

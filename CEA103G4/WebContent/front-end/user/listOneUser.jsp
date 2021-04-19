@@ -65,6 +65,9 @@
 		<th>Email</th>
 		<th>電話</th>
 		<th>手機號碼</th>
+		<th>縣市</th>
+		<th>鄉鎮</th>
+		<th>郵遞區號</th>
 		<th>地址</th>
 		<th>註冊日期</th>
 		<th>點數</th>
@@ -84,7 +87,11 @@
 		<td><%=userVO.getUser_mail()%></td>
 		<td><%=userVO.getUser_phone()%></td>
 		<td><%=userVO.getUser_mobile()%></td>
+		<td><%=userVO.getCity()%></td>
+		<td><%=userVO.getTown()%></td>
+		<td><%=userVO.getZipcode()%></td>
 		<td><%=userVO.getUser_addr()%></td>
+<%-- 		<td>${userVO.zipcode}${userVO.city}${userVO.town}${userVO.user_addr}</td> --%>
 		<td><%=userVO.getRegdate()%></td>
 		<td><%=userVO.getUser_point()%></td>
 		<td><%=userVO.getViolation()%></td>

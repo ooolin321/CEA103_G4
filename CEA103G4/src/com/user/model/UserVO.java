@@ -13,6 +13,9 @@ public class UserVO implements Serializable{
 	private String user_mail;
 	private String user_phone;
 	private String user_mobile;
+	private String city;
+	private String town;
+	private Integer zipcode;
 	private String user_addr;
 	private Date regdate;
 	private Integer user_point;
@@ -75,6 +78,24 @@ public class UserVO implements Serializable{
 	}
 	public void setUser_mobile(String user_mobile) {
 		this.user_mobile = user_mobile;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getTown() {
+		return town;
+	}
+	public void setTown(String town) {
+		this.town = town;
+	}
+	public Integer getZipcode() {
+		return zipcode;
+	}
+	public void setZipcode(Integer zipcode) {
+		this.zipcode = zipcode;
 	}
 	public String getUser_addr() {
 		return user_addr;

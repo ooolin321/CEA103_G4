@@ -148,7 +148,17 @@ public class Live_orderServlet extends HttpServlet {
 				}
 
 				String rec_addr = req.getParameter("rec_addr");
-
+				String rec_addrReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{5,50}$";
+				if (rec_addr == null || rec_addr.trim().length() == 0) {
+					errorMsgs.add("地址: 請勿空白");
+				} else if (!rec_addr.trim().matches(rec_addrReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("地址格式不正確");
+				}
+				
+				
+				
+				
+				
 				String rec_phone = req.getParameter("rec_phone");
 				
 				String rec_cellphone = req.getParameter("rec_cellphone");
@@ -276,7 +286,13 @@ public class Live_orderServlet extends HttpServlet {
 				}
 
 				String rec_addr = req.getParameter("rec_addr");
-
+				String rec_addrReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{5,50}$";
+				if (rec_addr == null || rec_addr.trim().length() == 0) {
+					errorMsgs.add("地址: 請勿空白");
+				} else if (!rec_addr.trim().matches(rec_addrReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("地址格式不正確");
+				}
+				
 				String rec_phone = req.getParameter("rec_phone");
 				
 				String rec_cellphone = req.getParameter("rec_cellphone");

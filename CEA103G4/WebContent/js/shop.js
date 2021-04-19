@@ -100,8 +100,7 @@
                     <ul>
                         <li class="w-icon active">
                             <a href="#"><i class="icon_bag_alt"></i></a>
-                        </li>
-                        <li class="quick-view"><a href="#">+ Quick View</a></li>
+                        </li>   
                         <li class="w-heart" >
                             <i class="icon_heart_alt"  data-id="${item.id}"></i>
                         </li>

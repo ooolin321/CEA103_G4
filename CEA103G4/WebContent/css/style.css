@@ -1156,7 +1156,7 @@ ol {
   font-weight: 700;
   color: white;
   display: block;
-  padding: 19px 12px 17px 12px;
+  padding: 8px 12px 17px 12px;
   background: pink;
   cursor: pointer;
   border-top-left-radius: 6px;
@@ -1522,6 +1522,10 @@ ol {
 }
 
 .breadcrumb-text.product-more a:nth-child(1):after {
+  color: #252525;
+}
+
+.breadcrumb-text.product-favorite-more a:nth-child(1):after {
   color: #252525;
 }
 
@@ -2210,6 +2214,10 @@ ol {
   color: #252525;
   font-size: 14px;
   margin-left: 15px;
+}
+
+.product-details .pd-function {
+  padding-top: 50px;
 }
 
 .product-tab {
@@ -3765,7 +3773,7 @@ ol {
     right: -14px;
   }
   .product-item .pi-pic ul li a {
-    padding: 16px 12px 12px 11px;
+    padding: 5px 12px 12px 11px;
   }
   .nav-item .nav-menu li a {
     padding: 16px 45px 15px;

@@ -19,15 +19,15 @@ public class AdDAO implements AdDAO_interface {
 		}
 	}
 	private static final String INSERT_STMT = 
-			"INSERT INTO `AD` (`EMPNO`,`AD_CONTACT`,`AD_PHOTO`,`AD_STATE`,`AD_START_DATE`,`AD_END_DATE`,`AD_URL`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO `AD` (`EMPNO`,`AD_CONTENT`,`AD_PHOTO`,`AD_STATE`,`AD_START_DATE`,`AD_END_DATE`,`AD_URL`) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM `AD` ORDER BY `AD_NO`";
 	private static final String GET_ONE_STMT = 
-			"SELECT `AD_NO`,`EMPNO`,`AD_CONTACT`,`AD_PHOTO`,`AD_STATE`,`AD_START_DATE`,`AD_END_DATE`,`AD_URL` FROM AD WHERE `AD_NO` = ?";
+			"SELECT `AD_NO`,`EMPNO`,`AD_CONTENT`,`AD_PHOTO`,`AD_STATE`,`AD_START_DATE`,`AD_END_DATE`,`AD_URL` FROM AD WHERE `AD_NO` = ?";
 	private static final String DELETE = 
 			"DELETE FROM AD where AD_NO = ?";
 	private static final String UPDATE = 
-			"UPDATE `AD` SET `EMPNO`=?, `AD_CONTACT`=?, `AD_PHOTO`=?, `AD_STATE`=?, `AD_START_DATE`=?, `AD_END_DATE`=?, `AD_URL`=? WHERE `AD_NO` = ?";
+			"UPDATE `AD` SET `EMPNO`=?, `AD_CONTENT`=?, `AD_PHOTO`=?, `AD_STATE`=?, `AD_START_DATE`=?, `AD_END_DATE`=?, `AD_URL`=? WHERE `AD_NO` = ?";
 
 
 	@Override
@@ -41,7 +41,7 @@ public class AdDAO implements AdDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, adVO.getEmpno());
-			pstmt.setString(2, adVO.getAd_contact());
+			pstmt.setString(2, adVO.getAd_content());
 			pstmt.setBytes(3, adVO.getAd_photo());
 			pstmt.setInt(4, adVO.getAd_state());
 			pstmt.setDate(5, adVO.getAd_start_date());
@@ -87,7 +87,7 @@ public class AdDAO implements AdDAO_interface {
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, adVO.getEmpno());
-			pstmt.setString(2, adVO.getAd_contact());
+			pstmt.setString(2, adVO.getAd_content());
 			pstmt.setBytes(3, adVO.getAd_photo());
 			pstmt.setInt(4, adVO.getAd_state());
 			pstmt.setDate(5, adVO.getAd_start_date());
@@ -183,7 +183,7 @@ public class AdDAO implements AdDAO_interface {
 				
 				adVO.setAd_no(rs.getInt("ad_no"));
 				adVO.setEmpno(rs.getInt("empno"));
-				adVO.setAd_contact(rs.getString("ad_contact"));
+				adVO.setAd_content(rs.getString("ad_content"));
 				adVO.setAd_photo(rs.getBytes("ad_photo"));
 				adVO.setAd_state(rs.getInt("ad_state"));
 				adVO.setAd_start_date(rs.getDate("ad_start_date"));
@@ -244,7 +244,7 @@ public class AdDAO implements AdDAO_interface {
 				
 				adVO.setAd_no(rs.getInt("ad_no"));
 				adVO.setEmpno(rs.getInt("empno"));
-				adVO.setAd_contact(rs.getString("ad_contact"));
+				adVO.setAd_content(rs.getString("ad_content"));
 				adVO.setAd_photo(rs.getBytes("ad_photo"));
 				adVO.setAd_state(rs.getInt("ad_state"));
 				adVO.setAd_start_date(rs.getDate("ad_start_date"));

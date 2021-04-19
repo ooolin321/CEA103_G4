@@ -11,13 +11,12 @@ public class AdService {
 		dao = new AdDAO();
 	}
 
-	public AdVO addAd(Integer ad_no, Integer empno, String ad_contact, byte[] ad_photo, Integer ad_state, Date ad_start_date, Date ad_end_date, String ad_url) {
+	public AdVO addAd(Integer empno, String ad_content, byte[] ad_photo, Integer ad_state, Date ad_start_date, Date ad_end_date, String ad_url) {
 
 		AdVO adVO = new AdVO();
 
-		adVO.setAd_no(ad_no);
 		adVO.setEmpno(empno);
-		adVO.setAd_contact(ad_contact);
+		adVO.setAd_content(ad_content);
 		adVO.setAd_photo(ad_photo);
 		adVO.setAd_state(ad_state);
 		adVO.setAd_start_date(ad_start_date);
@@ -29,13 +28,13 @@ public class AdService {
 		return adVO;
 	}
 
-	public AdVO updateAd(Integer ad_no, Integer empno, String ad_contact, byte[] ad_photo, Integer ad_state, Date ad_start_date, Date ad_end_date, String ad_url) {
+	public AdVO updateAd(Integer ad_no, Integer empno, String ad_content, byte[] ad_photo, Integer ad_state, Date ad_start_date, Date ad_end_date, String ad_url) {
 		
 		AdVO adVO = new AdVO();
 
 		adVO.setAd_no(ad_no);
 		adVO.setEmpno(empno);
-		adVO.setAd_contact(ad_contact);
+		adVO.setAd_content(ad_content);
 		adVO.setAd_photo(ad_photo);
 		adVO.setAd_state(ad_state);
 		adVO.setAd_start_date(ad_start_date);
@@ -47,11 +46,11 @@ public class AdService {
 		return adVO;
 	}
 	
-	public void deleteUser(Integer ad_no) {
+	public void deleteAd(Integer ad_no) {
 		dao.delete(ad_no);
 	}
 
-	public AdVO getOneUser(Integer ad_no) {
+	public AdVO getOneAd(Integer ad_no) {
 		return dao.findByPrimaryKey(ad_no);
 	}
 

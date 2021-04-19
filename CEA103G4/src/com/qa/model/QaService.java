@@ -11,11 +11,10 @@ public class QaService {
 		dao = new QaDAO();
 	}
 
-	public QaVO addQa(Integer qa_no, Integer empno, Date qa_date, String qa_content) {
+	public QaVO addQa(Integer empno, Date qa_date, String qa_content) {
 
 		QaVO qaVO = new QaVO();
 
-		qaVO.setQa_no(qa_no);
 		qaVO.setEmpno(empno);
 		qaVO.setQa_date(qa_date);
 		qaVO.setQa_content(qa_content);
@@ -39,11 +38,11 @@ public class QaService {
 		return qaVO;
 	}
 	
-	public void deleteUser(Integer qa_no) {
+	public void deleteQa(Integer qa_no) {
 		dao.delete(qa_no);
 	}
 
-	public QaVO getOneUser(Integer qa_no) {
+	public QaVO getOneQa(Integer qa_no) {
 		return dao.findByPrimaryKey(qa_no);
 	}
 

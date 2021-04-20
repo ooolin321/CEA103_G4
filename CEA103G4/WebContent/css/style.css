@@ -1079,6 +1079,16 @@ ol {
   border-bottom-left-radius: 10px;
 }
 
+.pi-pic .pi-img {
+	width:auto;
+	height:200px;
+}
+
+.pi-pic img {
+	max-height: 100%;  
+    max-width: 100%; 
+}
+
 .product-item:hover .pi-pic .icon {
   top: 15px;
   opacity: 1;
@@ -1198,13 +1208,13 @@ ol {
   font-size: 20px;
   font-weight: 700;
 }
-
-.product-item .pi-text .product-price span {
-  font-size: 14px;
-  font-weight: 400;
-  color: #b2b2b2;
-  text-decoration: line-through;
-}
+/* 可以把價格符號劃掉,變有點促銷的概念,暫不用 */
+/* .product-item .pi-text .product-price span { */
+/*   font-size: 14px; */
+/*   font-weight: 400; */
+/*   color: #b2b2b2; */
+/*   text-decoration: line-through; */
+/* } */
 
 .pagination {
   margin-bottom: 30px;
@@ -1574,6 +1584,7 @@ ol {
 
 .filter-widget .filter-catagories li {
   list-style: none;
+  margin-left:30px;
 }
 
 .filter-widget .filter-catagories li a {
@@ -1581,6 +1592,7 @@ ol {
   color: #636363;
   font-size: 16px;
   line-height: 39px;
+  
 }
 
 .filter-widget .fw-brand-check .bc-item {

@@ -42,6 +42,10 @@ public class ProductDAO implements ProductDAO_interface {
 	private static final String UPDATE = 
 		"UPDATE PRODUCT set product_name=?, product_info=?, product_price=?, product_quantity=?, product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=? where product_no = ?";
 
+	private static final String GET_ALLJSON = 
+			"SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no"
+			+ " FROM PRODUCT order by product_no";
+	
 	@Override
 	public void insert(ProductVO productVO){
 
@@ -195,9 +199,6 @@ public class ProductDAO implements ProductDAO_interface {
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
-
-			
-
 			pstmt.setInt(1, product_no);
 
 			rs = pstmt.executeQuery();
@@ -220,7 +221,6 @@ public class ProductDAO implements ProductDAO_interface {
 				
 			}
 
-			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -260,9 +260,7 @@ public class ProductDAO implements ProductDAO_interface {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		try {
-
-			
+		try {	
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
@@ -284,10 +282,6 @@ public class ProductDAO implements ProductDAO_interface {
 				productVO.setLive_no(rs.getInt("live_no"));
 				list.add(productVO); // Store the row in the list
 			}
-			
-			
-
-			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -317,6 +311,69 @@ public class ProductDAO implements ProductDAO_interface {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<ProductVO> getAllWithoutPhoto(){
+		List<ProductVO> list = new ArrayList<ProductVO>();
+		ProductVO productVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+		
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALLJSON);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				
+				productVO = new ProductVO();
+				productVO.setProduct_no(rs.getInt("product_no"));
+				productVO.setProduct_name(rs.getString("product_name"));
+				productVO.setProduct_info(rs.getString("product_info"));
+				productVO.setProduct_price(rs.getInt("product_price"));
+				productVO.setProduct_quantity(rs.getInt("product_quantity"));
+				productVO.setProduct_remaining(rs.getInt("product_remaining"));
+				productVO.setProduct_state(rs.getInt("product_state"));
+				productVO.setUser_id(rs.getString("user_id"));
+				productVO.setPdtype_no(rs.getInt("pdtype_no"));
+				productVO.setStart_price(rs.getInt("start_price"));
+				productVO.setLive_no(rs.getInt("live_no"));
+				list.add(productVO); // Store the row in the list
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+
 
 	//照片
 //	public static byte[] getPictureByteArray(String path) throws IOException {

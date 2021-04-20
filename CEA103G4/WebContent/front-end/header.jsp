@@ -1,37 +1,8 @@
-<!DOCTYPE html>
-<html lang="zxx">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Fashi Template" />
-    <meta name="keywords" content="Fashi, unica, creative, html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Modefemme</title>
-    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-
-    <!-- Google Font -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/themify-icons.css" type="text/css" />
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css" />
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css" />
-    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
-  </head>
-  <body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <!-- Page Preloder -->
     <div id="preloder">
       <div class="loader"></div>
     </div>
-
     <!-- Header Section Begin -->
     <header class="header-section">
       <div class="container">
@@ -39,25 +10,25 @@
           <div class="row">
             <div class="col-lg-2 col-md-2">
               <div class="logo">
-                <a href="./index.html">
+                <a href="${pageContext.request.contextPath}/front-end/index.jsp">
                   <h2>Mode femme <br /><small>Second&nbsp;Hand </small></h2>
                 </a>
               </div>
             </div>
             <div class="col-lg-7 col-md-7">
               <div class="advanced-search">
-                <div class="input-group">
-                  <input type="text" placeholder="What do you need?" />
-                  <button type="button"><i class="ti-search"></i></button>
-                </div>
+                <form class="input-group" id="search">
+                  <input type="text" id="search-input" placeholder="What do you need?" />
+                  <button type="submit"><i class="ti-search"></i></button>
+                </form>
               </div>
             </div>
             <div class="col-lg-3 text-right col-md-3">
               <div class="header-right">
-                <a href="./register.html"
+                <a href="${pageContext.request.contextPath}/front-end/user/register.html"
                   ><button type="button" class="btn">註冊</button></a
                 >
-                <a href="./login.html"
+                <a href="${pageContext.request.contextPath}/front-end/user/login.html"
                   ><button type="button" class="btn">登入</button></a
                 >
               </div>
@@ -81,7 +52,7 @@
                   </a>
                 </li>
                 <li class="cart-icon">
-                  <a href="./shopping-cart.html">
+                  <a href="${pageContext.request.contextPath}/front-end/productsell/shopping-cart.html">
                     <i class="icon_bag_alt"></i>
                     <span>3</span>
                   </a>
@@ -91,7 +62,7 @@
                         <tbody>
                           <tr>
                             <td class="si-pic">
-                              <img src="img/select-product-1.jpg" alt="" />
+                              <img src="${pageContext.request.contextPath}/images/productsell/select-product-1.jpg" alt="" />
                             </td>
                             <td class="si-text">
                               <div class="product-selected">
@@ -105,7 +76,7 @@
                           </tr>
                           <tr>
                             <td class="si-pic">
-                              <img src="img/select-product-2.jpg" alt="" />
+                              <img src="${pageContext.request.contextPath}/images/productsell/select-product-2.jpg" alt="" />
                             </td>
                             <td class="si-text">
                               <div class="product-selected">
@@ -126,12 +97,12 @@
                     </div>
                     <div class="select-button">
                       <a
-                        href="./shopping-cart.html"
+                        href="${pageContext.request.contextPath}/front-end/productsell/shopping-cart.html"
                         class="primary-btn view-card"
                         >購物車清單</a
                       >
                       <a
-                        href="./check-out.html"
+                        href="${pageContext.request.contextPath}/front-end/productsell/check-out.html"
                         class="primary-btn checkout-btn"
                         >結帳</a
                       >
@@ -164,8 +135,8 @@
           </div>
           <nav class="nav-menu mobile-menu">
             <ul>
-              <li class="active"><a href="./index.html">首頁</a></li>
-              <li><a href="./shop.html">商品專區</a></li>
+              <li class="active"><a href="${pageContext.request.contextPath}/front-end/index.jsp">首頁</a></li>
+              <li><a href="${pageContext.request.contextPath}/front-end/productsell/shop.jsp">商品專區</a></li>
               <li>
                 <a href="#">直播專區</a>
                 <ul class="dropdown">
@@ -193,19 +164,3 @@
       </div>
     </header>
     <!-- Header End -->
-
-    <!-- 內容加這額 -->
-
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery.zoom.min.js"></script>
-    <script src="js/jquery.dd.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
-  </body>
-</html>

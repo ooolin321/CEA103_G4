@@ -213,9 +213,10 @@ public class ProductServlet extends HttpServlet {
 				Part part = req.getPart("product_photo");
 				if (part == null || part.getSize() == 0) {
 					req.setAttribute("productVO", productVO);
-					ProductService productSvc2 = new ProductService();
-					ProductVO productVO2 = productSvc2.getOneProduct(product_no);
-					product_photo = productVO2.getProduct_photo();
+					InputStream in = getServletContext().getResourceAsStream("/NoData/none2.jpg");
+					product_photo = new byte[in.available()];
+					in.read(product_photo);
+					in.close();
 				} else {
 					req.setAttribute("productVO", productVO);
 					InputStream in = part.getInputStream();

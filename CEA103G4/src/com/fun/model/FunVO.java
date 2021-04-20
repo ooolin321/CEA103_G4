@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class FunVO implements Serializable{
 	private Integer funno;
-	private String funName;
+	private String fun_name;
 	private Integer state;
 	
 	
@@ -22,10 +22,10 @@ public class FunVO implements Serializable{
 		this.funno = funno;
 	}
 	public String getFunName() {
-		return funName;
+		return fun_name;
 	}
 	public void setFunName(String funName) {
-		this.funName = funName;
+		this.fun_name = funName;
 	}
 	
 }

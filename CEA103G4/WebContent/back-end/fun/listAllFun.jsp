@@ -88,11 +88,10 @@ th, td {
 			<th>功能名稱</th>
 			<th>網站功能狀態</th>
 			<th>修改</th>
-			<th>刪除</th>
+<!-- 			<th>刪除</th> -->
 		</tr>
-		<%@ include file="page1.file"%>
-		<c:forEach var="funVO" items="${list}" begin="<%=pageIndex%>"
-			end="<%=pageIndex+rowsPerPage-1%>">
+<%-- 		<%@ include file="page1.file"%> --%>
+		<c:forEach var="funVO" items="${list}" >
 
 			<tr>
 				<td>${funVO.funno}</td>
@@ -105,27 +104,34 @@ th, td {
 						<td>開啟</td>
 					</c:when>
 				</c:choose>
+<!-- 				<td><select size="1" name="state"> -->
+<%-- 						<option value="1" ${(funVO.state==0)? 'selected':''}>開啟</option> --%>
+<%-- 						<option value="0" ${(funVO.state==0)? 'selected':''}>關閉</option> --%>
+<!-- 				</select></td> -->
 
 				<td>
 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/fun/fun.do"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="修改"> <input type="hidden"
-							name="funno" value="${funVO.funno}"> <input type="hidden"
-							name="action" value="getOne_For_Update">
+						<input type="submit" value="修改"> 
+						<input type="hidden" name="funno" value="${funVO.funno}"> 
+						<input type="hidden" name="action" value="getOne_For_Update">
+						<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">
+						
 					</FORM>
 				</td>
-				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/fun/fun.do"
-						style="margin-bottom: 0px;">
-						<input type="submit" value="刪除"> <input type="hidden"
-							name="funno" value="${funVO.funno}"> <input type="hidden"
-							name="action" value="delete">
-					</FORM>
-				</td>
+				
+<!-- 				<td> -->
+<%-- 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/fun/fun.do" --%>
+<!-- 						style="margin-bottom: 0px;"> -->
+<!-- 						<input type="submit" value="刪除"> <input type="hidden" -->
+<%-- 							name="funno" value="${funVO.funno}"> <input type="hidden" --%>
+<!-- 							name="action" value="delete"> -->
+<!-- 					</FORM> -->
+<!-- 				</td> -->
 			</tr>
 		</c:forEach>
 	</table>
-	<%@ include file="page2.file"%>
+<%-- 	<%@ include file="page2.file"%> --%>
 
 </body>
 </html>

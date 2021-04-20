@@ -20,12 +20,12 @@ public class FunService {
 		return funVO;
 	}
 	
-	public FunVO updateFun(Integer funno,String funName,Integer state) {
+	public FunVO updateFun(Integer funno,String fun_name,Integer state) {
 		
 		FunVO funVO = new FunVO();
 		
 		funVO.setFunno(funno);
-		funVO.setFunName(funName);
+		funVO.setFunName(fun_name);
 		funVO.setState(state);
 		
 		dao.update(funVO);

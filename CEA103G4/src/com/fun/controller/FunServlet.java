@@ -89,13 +89,12 @@ public class FunServlet extends HttpServlet{
 				/*************************** 2.開始查詢資料 ****************************************/
 				FunService funSvc = new FunService();
 				FunVO funVO = funSvc.getOneFun(funno);
-
+			
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("funVO", funVO);
 				String url = "/back-end/fun/update_fun_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
-
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
@@ -109,22 +108,15 @@ public class FunServlet extends HttpServlet{
 			req.setAttribute("errMsgs", errorMsgs);
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				Integer funno = new Integer(req.getParameter("funno").trim());
+				Integer funno = new Integer(req.getParameter("funno"));
 
 				String funName = req.getParameter("fun_name");
-				String funNameReg = "^[(\u4e00-\u9fa5)]{2,10}$";
-				if (funName == null || funName.trim().length() == 0) {
-					errorMsgs.add("功能名稱: 請勿空白");
-				} else if (!funName.trim().matches(funNameReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("功能名稱: 只能是中文且長度必需在2到10之間");
-				}
-				Integer state = new Integer(req.getParameter("state"));
 				
+				Integer state = new Integer(req.getParameter("state"));
 				FunVO funVO = new FunVO();
 				funVO.setFunno(funno);
 				funVO.setFunName(funName);
 				funVO.setState(state);
-
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("funVO", funVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/fun/update_fun_input.jsp");
@@ -133,7 +125,7 @@ public class FunServlet extends HttpServlet{
 				}
 				/*************************** 2.開始修改資料 *****************************************/
 				FunService funSvc = new FunService();
-				funVO = funSvc.updateFun(funno, funName,state);
+				funVO = funSvc.updateFun(funno, funName, state);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("funVO", funVO); // 資料庫update成功後,正確的的funVO物件,存入req

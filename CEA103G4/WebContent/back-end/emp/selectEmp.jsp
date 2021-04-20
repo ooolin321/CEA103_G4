@@ -48,9 +48,10 @@
 </c:if>
 
 <ul>
-  <li><a href='<%=request.getContextPath()%>/back-end/emp/listAllEmp.jsp'>List</a> all Emps.  <br><br></li>
-  
-  
+
+ 
+  <li><a href='<%=request.getContextPath()%>/back-end/emp/listAllEmp.jsp'>List</a> all Emps.  <br><br></li><p> 
+<li><a href='<%=request.getContextPath()%>/back-end/fun/listAllFun.jsp'>List</a> all Functions.  <br><br></li>
   <li>
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
         <b>輸入員工編號 (如14001):</b>
@@ -92,9 +93,8 @@
 
 <h3>員工管理</h3>
 
-<ul>
-  <li><a href='<%=request.getContextPath()%>/back-end/emp/addEmp.jsp'>Add</a> a new Emp.</li>
+<ul> 
+ <li><a href='<%=request.getContextPath()%>/back-end/emp/addEmp.jsp'>Add</a> a new Emp.</li>
 </ul>
-
 </body>
 </html>

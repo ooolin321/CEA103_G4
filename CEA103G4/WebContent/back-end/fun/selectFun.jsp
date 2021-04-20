@@ -90,11 +90,11 @@
 </ul>
 
 
-<h3>功能管理</h3>
+<!-- <h3>功能管理</h3> -->
 
-<ul>
-  <li><a href='<%=request.getContextPath()%>/back-end/fun/addFun.jsp'>Add</a> a new Fun.</li>
-</ul>
+<!-- <ul> -->
+<%--   <li><a href='<%=request.getContextPath()%>/back-end/fun/addFun.jsp'>Add</a> a new Fun.</li> --%>
+<!-- </ul> -->
 
 </body>
 </html>

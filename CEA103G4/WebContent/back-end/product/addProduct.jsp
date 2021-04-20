@@ -130,11 +130,14 @@
 
 <script>
 
+//實現上傳圖片可以預覽所上傳的圖片,若重新上傳其他圖片,可以移除舊的圖片預覽,只顯示最新的狀態
+
 let myFile = document.getElementById("myFile");
 let preview = document.getElementById('preview');
 
 function init() {
-    myFile.addEventListener('change', function(e) {      
+    myFile.addEventListener('change', function(e) {
+    	$("#preview").empty();
         let files = e.target.files;     
         if (files !== null) {          
             let file = files[0];
@@ -157,6 +160,12 @@ function init() {
 window.onload = init;
 
 </script>
+
+ <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
 
 </body>
 

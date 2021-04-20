@@ -139,7 +139,8 @@ let preview = document.getElementById('preview');
 let oldimg = document.getElementById('oldimg');
 
 function init() {
-    myFile.addEventListener('change', function(e) {      
+    myFile.addEventListener('change', function(e) {
+    	$("#preview").empty();
         let files = e.target.files;     
         if (files !== null) {          
             let file = files[0];
@@ -162,8 +163,14 @@ function init() {
 
 window.onload = init;
 
+
 </script>
 
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
 
 </body>
 

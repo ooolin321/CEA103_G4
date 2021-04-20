@@ -19,6 +19,33 @@ public class ProductServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
+		
+		//商品區點選商品格取得get資料,查詢一筆資料畫面(跳轉至商品頁)
+		List<String> errorMsgs = new LinkedList<String>();
+		req.setAttribute("errorMsgs", errorMsgs);
+	try {
+		String productURL = "/front-end/productsell/product.jsp";
+		Integer product_no = new Integer(req.getParameter("product_no"));
+		ProductService productSvc = new ProductService();
+		ProductVO productVO = productSvc.getOneProduct(product_no);
+		if (productVO == null) {
+			errorMsgs.add("查無資料");
+		}
+		if (!errorMsgs.isEmpty()) {
+			RequestDispatcher failureView = req
+					.getRequestDispatcher("/front-end/index.jsp");
+			failureView.forward(req, res);
+			return;//程式中斷
+		} 
+		req.setAttribute("productVO", productVO);
+		req.getRequestDispatcher(productURL).forward(req, res);
+		}catch (Exception e) {
+			errorMsgs.add("無法取得資料:" + e.getMessage());
+			RequestDispatcher failureView = req
+					.getRequestDispatcher("/front-end/index.jsp");
+			failureView.forward(req, res);
+		}
+		
 		doPost(req, res);
 	}
 
@@ -27,7 +54,6 @@ public class ProductServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
 
 		if ("getOne_For_Display".equals(action)) {
 

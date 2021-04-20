@@ -14,7 +14,7 @@
     List<Product_TypeVO> list2 = dao2.getAll();
     pageContext.setAttribute("list2",list2);
 %>
-
+<jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
    
 <!DOCTYPE html>
 <html>
@@ -221,23 +221,24 @@
           
           <div class="col-lg-4 col-sm-6">
         <div class="card mb-2 productcard">
-            <div class="product-item">
+            <div class="product-item" >
                 <div class="pi-pic">
                 <div class="pi-img">
-                <a href="#">
-                    <img class="card-img-top" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" alt="${productVO.product_name}"></a>
+                <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}">
+                    <img class="card-img-top"  src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" alt="${productVO.product_name}">           
+                    </a>      	
                   </div>
                     <ul>
                         <li class="w-icon active">
                             <a href="#"><i class="icon_bag_alt"></i></a>
                         </li>   
                         <li class="w-heart" >
-                            <i class="icon_heart_alt"  data-id="${productVO.product_no}"></i>
+                            <i class="icon_heart_alt"  data-no="${productVO.product_no}"></i>
                         </li>
                     </ul>
                 </div>
                 <div class="pi-text">
-                <a href="#">
+                <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}">
                    	 <div class="catagory-name">${productVO.pdtype_no}</div>                  
                         <h5>${productVO.product_name}</h5>    
                     	<div class="product-price"><span>$</span>
@@ -269,6 +270,8 @@
     <!-- Footer Section Begin -->
 	<%@include file="/front-end/footer.jsp"%>
     <!-- Footer Section End -->
+
+
 
     <!-- Js Plugins -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

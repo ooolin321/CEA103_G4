@@ -33,17 +33,27 @@
 </head>
 <body>
 	<div id="app">
-		<!--顶栏-->
-		<header>
-			<h1 v-text="webname"></h1>
-			<div class="breadcrumb">
-				<i class="layui-icon">&#xe715;</i>
-				<ul>
-					<li v-for="vo in address"><a v-text="vo.name" :href="vo.url"></a>
-						<span>/</span></li>
-				</ul>
-			</div>
-		</header>
+		    <!-- Header Begin -->
+
+    <header class="header-section">
+      <div class="container">
+        <div class="inner-header">
+          <div class="row">
+            <div class="col-lg-2 col-md-2">
+              <div class="logo">
+                <a href="./index.html">
+                  <h2>Mode femme <br /><small>Second&nbsp;Hand </small></h2>
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2">
+              <div class="product">商品管理</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Header END -->
 
 		<div class="main">
 			<!--左栏-->

@@ -200,7 +200,7 @@ ol {
 }
 
 /* Preloder */
-
+/* 網頁跳轉等候時,轉圈圈畫面以及背景顏色 */
 #preloder {
   position: fixed;
   width: 100%;
@@ -1938,11 +1938,11 @@ ol {
 .product-pic-zoom {
   margin-bottom: 10px;
   position: relative;
-  z-index: 1;
+  Z-INDEX: 1;
 }
 
 .product-pic-zoom img {
-  min-width: 100%;
+  width: 100%;
 }
 
 .product-pic-zoom .zoom-icon {
@@ -1960,22 +1960,6 @@ ol {
   text-align: center;
   border-radius: 50%;
   line-height: 37px;
-}
-
-.product-thumbs .pt {
-  cursor: pointer;
-  position: relative;
-}
-
-.product-thumbs .pt.active:after {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  border: 1px solid #e7ab3c;
-  z-index: 1;
 }
 
 .ps-slider .owl-nav button[type="button"] {
@@ -2059,15 +2043,15 @@ ol {
   color: #e7ab3c;
   font-weight: 700;
 }
-
-.product-details .pd-desc h4 span {
-  font-size: 18px;
-  font-weight: 400;
-  color: #b7b7b7;
-  text-decoration: line-through;
-  display: inline-block;
-  margin-left: 13px;
-}
+/* 錢錢刪除符號 */
+/* .product-details .pd-desc h4 span { */
+/*   font-size: 18px; */
+/*   font-weight: 400; */
+/*   color: #b7b7b7; */
+/*   text-decoration: line-through; */
+/*   display: inline-block; */
+/*   margin-left: 13px; */
+/* } */
 
 .product-details .pd-color {
   margin-bottom: 25px;

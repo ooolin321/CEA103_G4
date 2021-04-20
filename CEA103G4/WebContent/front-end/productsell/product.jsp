@@ -3,7 +3,17 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.product.model.*"%>
+<%@ page import="com.product_type.model.*"%>
 
+<%
+  ProductVO productVO = (ProductVO) request.getAttribute("productVO");
+
+	Product_TypeDAO dao2 = new Product_TypeDAO();
+	List<Product_TypeVO> list2 = dao2.getAll();
+	pageContext.setAttribute("list2",list2);
+%>
+<jsp:useBean id="product_typeSvc" scope="page" class="com.product_type.model.Product_TypeService" />
+<jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
 
 <!DOCTYPE html>
 <html>
@@ -62,9 +72,9 @@
             <div class="filter-widget">
               <h4 class="fw-title">Categories</h4>
               <ul class="filter-catagories">
-                <li><a href="#">Men</a></li>
-                <li><a href="#">Women</a></li>
-                <li><a href="#">Kids</a></li>
+				<c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()-1}">
+                <li><a href="#">${product_typeVO.pdtype_name}</a></li>
+                </c:forEach>
               </ul>
             </div>
             <div class="filter-widget">
@@ -198,8 +208,7 @@
                 <div class="product-pic-zoom">
                   <img
                     class="product-big-img"
-                    src="img/product-single/product-1.jpg"
-                    alt=""
+                    src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" alt="${productVO.product_name}"
                   />
                   <div class="zoom-icon">
                     <i class="fa fa-search-plus"></i>
@@ -210,7 +219,7 @@
                 <div class="product-details">
                   <div class="pd-title">
                     <!-- 動態串商品名 -->
-                    <h3>Pure Pineapple</h3>
+                    <h3>${productVO.product_name}</h3>
                     <a href="#" class="heart-icon"
                       ><i class="icon_heart_alt"></i
                     ></a>
@@ -221,7 +230,8 @@
                       eiusmod tempor sum dolor sit amet, consectetur adipisicing
                       elit, sed do mod tempor
                     </p> -->
-                    <h4>$495.00</h4>
+                    <h4><span>$</span>
+                        ${productVO.product_price}</h4>
                   </div>
                   <div class="quantity">
                     <div class="pro-qty">
@@ -232,7 +242,7 @@
                   <ul class="pd-tags">
                     <li>
                       <!-- 商品類別改動態 -->
-                      <span>CATEGORIES</span>: More Accessories, Wallets & Cases
+                      <span>${product_typeSvc.getOneProduct_Type(productVO.pdtype_no).pdtype_name}</span>: More Accessories, Wallets & Cases
                     </li>
                     <!-- <li><span>TAGS</span>: Clothing, T-shirt, Woman</li> -->
                   </ul>
@@ -252,7 +262,7 @@
                       <a href="#" class="primary-btn">關注賣家</a>
                       <a href="#" class="primary-btn">商品檢舉</a>
                     </div>
-                    <div class="p-code">Pno : 00012</div>
+                    <div class="p-code"><span>Pno : </span> ${productVO.product_no}</div>
                   </div>
                 </div>
               </div>
@@ -285,13 +295,9 @@
                     <div class="product-content">
                       <div class="row">
                         <div class="col-lg-7">
-                          <h5>Introduction</h5>
+                          <h5>商品說明</h5>
                           <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation ullamco laboris nisi ut aliquip
-                            ex ea commodo consequat. Duis aute irure dolor in
+							${productVO.product_info}
                           </p>
                           <h5>Features</h5>
                           <p>
@@ -303,7 +309,7 @@
                           </p>
                         </div>
                         <div class="col-lg-5">
-                          <img src="img/product-single/tab-desc.jpg" alt="" />
+                          <img src="${pageContext.request.contextPath}/images/productsell/tab-desc.jpg" alt="" />
                         </div>
                       </div>
                     </div>
@@ -314,7 +320,7 @@
                         <tr>
                           <td class="p-catagory">賣家帳號</td>
                           <td>
-                            <div class="p-price">$495.00</div>
+                            <div class="p-price">${productVO.user_id}</div>
                           </td>
                         </tr>
                         <tr>
@@ -374,7 +380,7 @@
                       <div class="comment-option">
                         <div class="co-item">
                           <div class="avatar-pic">
-                            <img src="img/product-single/avatar-1.png" alt="" />
+                            <img src="${pageContext.request.contextPath}/images/productsell/avatar-1.png" alt="" />
                           </div>
                           <div class="avatar-text">
                             <div class="at-rating">
@@ -390,7 +396,7 @@
                         </div>
                         <div class="co-item">
                           <div class="avatar-pic">
-                            <img src="img/product-single/avatar-2.png" alt="" />
+                            <img src="${pageContext.request.contextPath}/images/productsell/avatar-2.png" alt="" />
                           </div>
                           <div class="avatar-text">
                             <div class="at-rating">
@@ -459,7 +465,7 @@
           <div class="col-lg-3 col-sm-6">
             <div class="product-item">
               <div class="pi-pic">
-                <img src="img/products/women-1.jpg" alt="" />
+                <img src="${pageContext.request.contextPath}/images/productsell/women-1.jpg" alt="" />
                 <div class="sale">Sale</div>
                 <div class="icon">
                   <i class="icon_heart_alt"></i>
@@ -489,7 +495,7 @@
           <div class="col-lg-3 col-sm-6">
             <div class="product-item">
               <div class="pi-pic">
-                <img src="img/products/women-2.jpg" alt="" />
+                <img src="${pageContext.request.contextPath}/images/productsell/women-2.jpg" alt="" />
                 <div class="icon">
                   <i class="icon_heart_alt"></i>
                 </div>
@@ -515,7 +521,7 @@
           <div class="col-lg-3 col-sm-6">
             <div class="product-item">
               <div class="pi-pic">
-                <img src="img/products/women-3.jpg" alt="" />
+                <img src="${pageContext.request.contextPath}/images/productsell/women-3.jpg" alt="" />
                 <div class="icon">
                   <i class="icon_heart_alt"></i>
                 </div>
@@ -541,7 +547,7 @@
           <div class="col-lg-3 col-sm-6">
             <div class="product-item">
               <div class="pi-pic">
-                <img src="img/products/women-4.jpg" alt="" />
+                <img src="${pageContext.request.contextPath}/images/productsell/women-4.jpg" alt="" />
                 <div class="icon">
                   <i class="icon_heart_alt"></i>
                 </div>

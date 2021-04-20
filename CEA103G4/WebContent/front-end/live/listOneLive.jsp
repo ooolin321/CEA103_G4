@@ -73,7 +73,7 @@
 		<td><%=liveVO.getLive_state()%></td>
 		<td><%=liveVO.getUser_id()%></td>
 		<td><%=liveVO.getEmpno()%></td>
-		<td><img src="${pageContext.request.contextPath}/live/DBGifReader.do?live_no=${liveVO.live_no}" width="250px"></td>
+		<td><img src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}" width="250px"></td>
 			
 		<td>
 		  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live/live.do" style="margin-bottom: 0px;">

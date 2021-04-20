@@ -75,7 +75,7 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live/live.do" name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live/live.do" name="form1" enctype = "multipart/form-data">
 		<table>
 
 
@@ -140,13 +140,19 @@ th, td {
 				<td><input type="file" name="live_photo"/></td>
 			</tr>
 
+			<tr>
+				<td>前次上傳圖片:</td>
+				<td>
+				<img src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}" width="250px">
+				</td>
+			</tr>
 			
 			
 
 		</table>
 
 		<br> <input type="hidden" name="action" value="update"> 
-			<input  type="hidden" name="live_no" value="<%=liveVO.getLive_no()%>"> 
+			<input  type="hidden" name="live_no" value="<%=liveVO.getLive_no()%>">
 			<input  type="submit" value="送出修改">
 	</FORM>
 </body>

@@ -104,7 +104,7 @@ th, td {
 		<c:forEach var="empVO" items="${list}" begin="<%=pageIndex%>"
 			end="<%=pageIndex+rowsPerPage-1%>">
 
-			<tr>
+			<tr ${(empVO.empno==param.empno) ? 'bgcolor=#CCCCFF':''}>
 				<td>${empVO.empno}</td>
 				<td>${empVO.ename}</td>
 				<td>${empVO.job}</td>
@@ -141,7 +141,8 @@ th, td {
 						style="margin-bottom: 0px;">
 						<input type="submit" value="修改"> 
 						<input type="hidden" name="empno" value="${empVO.empno}">
-						<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller--> 
+			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+			     <input type="hidden" name="whichPage"	value="<%=whichPage%>">      
 						<input type="hidden" name="action" value="getOne_For_Update">
 					</FORM>
 				</td>
@@ -150,7 +151,8 @@ th, td {
 						ACTION="<%=request.getContextPath()%>/emp/emp.do"
 						style="margin-bottom: 0px;">
 						<input type="submit" value="刪除"> 
-						<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+						<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
+						<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>"> 
 						<input type="hidden" name="empno" value="${empVO.empno}"> 
 						<input type="hidden" name="action" value="delete">
 					</FORM>

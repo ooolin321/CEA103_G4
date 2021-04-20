@@ -4,7 +4,9 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.fun.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
-
+<%
+	FunVO funVO = (FunVO) request.getAttribute("funVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
+%>
 <%
 	FunService funSvc = new FunService();
 	List<FunVO> list = funSvc.getAll();
@@ -104,10 +106,10 @@ th, td {
 						<td>開啟</td>
 					</c:when>
 				</c:choose>
-<!-- 				<td><select size="1" name="state"> -->
-<%-- 						<option value="1" ${(funVO.state==0)? 'selected':''}>開啟</option> --%>
-<%-- 						<option value="0" ${(funVO.state==0)? 'selected':''}>關閉</option> --%>
-<!-- 				</select></td> -->
+				<td><select size="1" name="state">
+						<option value="1" ${(funVO.state==0)? 'selected':''}>開啟</option>
+						<option value="0" ${(funVO.state==0)? 'selected':''}>關閉</option>
+				</select></td>
 
 				<td>
 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/fun/fun.do"
@@ -115,7 +117,8 @@ th, td {
 						<input type="submit" value="修改"> 
 						<input type="hidden" name="funno" value="${funVO.funno}"> 
 						<input type="hidden" name="action" value="getOne_For_Update">
-						<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">
+						<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
+						<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>">  <!--只用於:istAllEmp.jsp-->
 						
 					</FORM>
 				</td>

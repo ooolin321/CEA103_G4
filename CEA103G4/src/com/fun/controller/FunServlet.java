@@ -81,7 +81,7 @@ public class FunServlet extends HttpServlet{
 		if ("getOne_For_Update".equals(action)) {// 來自listAllEmp.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			String requestURL = req.getParameter("requestURL");
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer funno = new Integer(req.getParameter("funno"));
@@ -106,6 +106,7 @@ public class FunServlet extends HttpServlet{
 		if ("update".equals(action)) {// 來自update_emp_input.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errMsgs", errorMsgs);
+			String requestURL = req.getParameter("requestURL");
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer funno = new Integer(req.getParameter("funno"));
@@ -113,6 +114,7 @@ public class FunServlet extends HttpServlet{
 				String funName = req.getParameter("fun_name");
 				
 				Integer state = new Integer(req.getParameter("state"));
+				
 				FunVO funVO = new FunVO();
 				funVO.setFunno(funno);
 				funVO.setFunName(funName);
@@ -128,8 +130,8 @@ public class FunServlet extends HttpServlet{
 				funVO = funSvc.updateFun(funno, funName, state);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("funVO", funVO); // 資料庫update成功後,正確的的funVO物件,存入req
-				String url = "/back-end/fun/listOneFun.jsp";
+//				req.setAttribute("funVO", funVO); // 資料庫update成功後,正確的的funVO物件,存入req
+				String url = requestURL;
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneFun.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 *************************************/

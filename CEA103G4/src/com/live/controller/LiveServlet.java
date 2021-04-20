@@ -134,11 +134,11 @@ public class LiveServlet extends HttpServlet {
 				String live_type = req.getParameter("live_type");
 				String live_name = req.getParameter("live_name");
 				
-				java.sql.Date live_time = null;
+				java.sql.Timestamp live_time = null;
 				try {
-					live_time = java.sql.Date.valueOf(req.getParameter("live_time").trim());
+					live_time = java.sql.Timestamp.valueOf(req.getParameter("live_time").trim());
 				} catch (IllegalArgumentException e) {
-					live_time = new java.sql.Date(System.currentTimeMillis());
+					live_time = new java.sql.Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
 				
@@ -216,12 +216,12 @@ public class LiveServlet extends HttpServlet {
 				String live_type = req.getParameter("live_type");
 				String live_name = req.getParameter("live_name");
 				
-				java.sql.Date live_time = null;
+				java.sql.Timestamp live_time = null;
 				try {
-					live_time = java.sql.Date.valueOf(req.getParameter("live_time").trim());
+					live_time = java.sql.Timestamp.valueOf(req.getParameter("live_time").trim());
 				} catch (IllegalArgumentException e) {
-					live_time = new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
+					live_time = new java.sql.Timestamp(System.currentTimeMillis());
+					errorMsgs.add("請輸入直播日期!");
 				}
 				
 				Integer live_state = new Integer(req.getParameter("live_state").trim());
@@ -247,7 +247,7 @@ public class LiveServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("liveVO", liveVO); // 含有輸入格式錯誤的liveVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/live/update_live_input.jsp");
+							.getRequestDispatcher("/front-end/live/addLive.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}

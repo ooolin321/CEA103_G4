@@ -1,6 +1,7 @@
 package com.live.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class LiveVO implements java.io.Serializable {
 
@@ -8,7 +9,7 @@ public class LiveVO implements java.io.Serializable {
 	private Integer live_no;
 	private String live_type;
 	private String live_name;
-	private Date live_time;
+	private Timestamp live_time;
 	private Integer live_state;
 	private String user_id;
 	private Integer empno;
@@ -38,11 +39,11 @@ public class LiveVO implements java.io.Serializable {
 		this.live_name = live_name;
 	}
 
-	public Date getLive_time() {
+	public Timestamp getLive_time() {
 		return live_time;
 	}
 
-	public void setLive_time(Date live_time) {
+	public void setLive_time(Timestamp live_time) {
 		this.live_time = live_time;
 	}
 

@@ -44,7 +44,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 			
 			pstmt.setString(1, liveVO.getLive_type());
 			pstmt.setString(2, liveVO.getLive_name());
-			pstmt.setDate(3, liveVO.getLive_time());
+			pstmt.setTimestamp(3, liveVO.getLive_time());
 			pstmt.setInt(4, liveVO.getLive_state());
 			pstmt.setString(5, liveVO.getUser_id());
 			pstmt.setInt(6, liveVO.getEmpno());
@@ -84,7 +84,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 
 			pstmt.setString(1, liveVO.getLive_type());
 			pstmt.setString(2, liveVO.getLive_name());
-			pstmt.setDate(3, liveVO.getLive_time());
+			pstmt.setTimestamp(3, liveVO.getLive_time());
 			pstmt.setInt(4, liveVO.getLive_state());
 			pstmt.setString(5, liveVO.getUser_id());
 			pstmt.setInt(6, liveVO.getEmpno());
@@ -179,7 +179,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 				liveVO.setLive_no(rs.getInt("live_no"));
 				liveVO.setLive_type(rs.getString("live_type"));
 				liveVO.setLive_name(rs.getString("live_name"));
-				liveVO.setLive_time(rs.getDate("live_time"));
+				liveVO.setLive_time(rs.getTimestamp("live_time"));
 				liveVO.setLive_state(rs.getInt("live_state"));
 				liveVO.setUser_id(rs.getString("user_id"));
 				liveVO.setEmpno(rs.getInt("empno"));
@@ -238,7 +238,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 				liveVO.setLive_no(rs.getInt("live_no"));
 				liveVO.setLive_type(rs.getString("live_type"));
 				liveVO.setLive_name(rs.getString("live_name"));
-				liveVO.setLive_time(rs.getDate("live_time"));
+				liveVO.setLive_time(rs.getTimestamp("live_time"));
 				liveVO.setLive_state(rs.getInt("live_state"));
 				liveVO.setUser_id(rs.getString("user_id"));
 				liveVO.setEmpno(rs.getInt("empno"));

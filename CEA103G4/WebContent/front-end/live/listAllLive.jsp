@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.live.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
@@ -86,11 +87,17 @@
 			<td>${liveVO.live_no}</td>
 			<td>${liveVO.live_type}</td>
 			<td>${liveVO.live_name}</td>
-			<td>${liveVO.live_time}</td>
-			<td>${liveVO.live_state}</td>
+
+			<td><fmt:formatDate value="${liveVO.live_time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+
+			<td>
+			${(liveVO.live_state==0)? '未直播':''}
+			${(liveVO.live_state==1)? '直播中':''}
+			${(liveVO.live_state==2)? '已直播':''}
+			</td>
 			<td>${liveVO.user_id}</td>
 			<td>${liveVO.empno}</td>
-			<td><img src="${pageContext.request.contextPath}/live/DBGifReader.do?live_no=${liveVO.live_no}" width="250px"></td>
+			<td><img src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}" width="250px"></td>
 			
 			
 			<td>

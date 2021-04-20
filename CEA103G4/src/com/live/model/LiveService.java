@@ -9,7 +9,7 @@ public class LiveService {
 		dao = new LiveJNDIDAO();
 	}
 	
-	public LiveVO addLive(String live_type,String live_name,java.sql.Date live_time,Integer live_state,String user_id,Integer empno,byte[] live_photo) {
+	public LiveVO addLive(String live_type,String live_name,java.sql.Timestamp live_time,Integer live_state,String user_id,Integer empno,byte[] live_photo) {
 		
 		LiveVO liveVO = new LiveVO();
 		
@@ -28,7 +28,7 @@ public class LiveService {
 		
 	}
 	
-	public LiveVO updateLive(String live_type,String live_name,java.sql.Date live_time,Integer live_state,String user_id,Integer empno,byte[] live_photo,Integer live_no) {
+	public LiveVO updateLive(String live_type,String live_name,java.sql.Timestamp live_time,Integer live_state,String user_id,Integer empno,byte[] live_photo,Integer live_no) {
 		
 		LiveVO liveVO = new LiveVO();
 		

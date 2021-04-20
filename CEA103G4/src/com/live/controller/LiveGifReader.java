@@ -9,7 +9,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.sql.DataSource;
 
-public class DBGifReader extends HttpServlet {
+public class LiveGifReader extends HttpServlet {
 
 	Connection con;
 

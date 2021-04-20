@@ -77,7 +77,7 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live/live.do" name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live/live.do" name="form1" enctype = "multipart/form-data">
 		<table>
 
 
@@ -98,7 +98,8 @@ th, td {
 
 			<tr>
 				<td>直播時間:<font color=red><b>*</b></font></td>
-				<td><input name="live_time" id="f_date1" type="DATE"></td>
+				<td><input name="live_time" id="f_date1" type="text"></td>
+
 			</tr>
 
 			<tr>
@@ -120,19 +121,16 @@ th, td {
 				</select></td>
 			</tr>
 			
-<%-- 			<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" /> --%>
-<!-- 			<tr> -->
-<!-- 				<td>管理員編號:<font color=red><b>*</b></font></td> -->
-<!-- 				<td><select size="1" name="empno"> -->
-<%-- 					<c:forEach var="empVO" items="${empSvc.all}"> --%>
-<%-- 						<option value="${empVO.empno}" ${(liveVO.empno==empVO.empno)? 'selected':'' } >${empVO.empno} --%>
-<%-- 					</c:forEach> --%>
-<!-- 				</select></td> -->
-<!-- 			</tr> -->
+			<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 			<tr>
 				<td>管理員編號:<font color=red><b>*</b></font></td>
-				<td><input type="TEXT" name="empno" size="45" value="<%= (liveVO==null)? "14001" : liveVO.getEmpno()%>" /></td>
+				<td><select size="1" name="empno">
+					<c:forEach var="empVO" items="${empSvc.all}">
+						<option value="${empVO.empno}" ${(liveVO.empno==empVO.empno)? 'selected':'' } >${empVO.empno}
+					</c:forEach>
+				</select></td>
 			</tr>
+
 			
 			<tr>
 				<td>圖片上傳:</td>
@@ -146,4 +144,41 @@ th, td {
 	</FORM>
 </body>
 
+
+<%
+	java.sql.Timestamp live_time = null;
+	try {
+		live_time = liveVO.getLive_time();
+	} catch (Exception e) {
+		live_time = new java.sql.Timestamp(System.currentTimeMillis());
+	}
+%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
+<style>
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
+</style>
+
+<script>
+        $.datetimepicker.setLocale('zh');
+        $('#f_date1').datetimepicker({
+	       theme: '',              //theme: 'dark',
+	       timepicker:true,       //timepicker:true,
+	       step: 30,                //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format:'Y-m-d H:i:s',         //format:'Y-m-d H:i:s',
+		   value: new Date(), //value:   new Date(),
+           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+           //startDate:	            '2017/07/10',  // 起始日
+           minDate:               '-1970-01-01' // 去除今日(不含)之前
+           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+        });
+</script>
 </html>

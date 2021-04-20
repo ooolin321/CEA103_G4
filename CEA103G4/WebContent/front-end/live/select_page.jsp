@@ -41,41 +41,32 @@
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
 	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
+	    <c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
 		</c:forEach>
 	</ul>
 </c:if>
 
 <ul>
-  <li><a href='listAllLive1_byDAO.jsp'>List</a> all Live    <h4>(byDAO).         </h4></li>
-  <li><a href='live.do?action=getAll'> List</a> all Live    <h4>(getFromSession).</h4> <br><br><br></li>
+  <li><a href='<%=request.getContextPath()%>/front-end/live/listAllLive.jsp'>List</a> all Live_orders.  <br><br></li>
+  
   
   <li>
-    <FORM METHOD="post" ACTION="live.do" >
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live/live.do" >
         <b>輸入直播編號 (如8001):</b>
         <input type="text" name="live_no">
         <input type="hidden" name="action" value="getOne_For_Display">
-        <input type="submit" value="送出">                   <h4>(資料格式驗證  by Controller ).</h4> 
-    </FORM>
-  </li>
-  
-  <li>
-    <FORM METHOD="post" ACTION="live.do" name="form1">
-        <b>輸入直播編號 (如8001):</b>
-        <input type="text" name="live_no">
-        <input type="hidden" name="action" value="getOne_For_Display">
-        <input type="button" value="送出" onclick="fun1()">  <h4>(資料格式驗證  by Java Script).</h4> 
+        <input type="submit" value="送出">
     </FORM>
   </li>
 
-  <jsp:useBean id="dao" scope="page" class="com.live.model.LiveService" />
+  <jsp:useBean id="liveSvc" scope="page" class="com.live.model.LiveService" />
    
   <li>
-     <FORM METHOD="post" ACTION="live.do" >
-       <b>請選擇直播編號:</b>
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live/live.do" >
+       <b>選擇直播編號:</b>
        <select size="1" name="live_no">
-         <c:forEach var="liveVO" items="${dao.all}" > 
+         <c:forEach var="liveVO" items="${liveSvc.all}" > 
           <option value="${liveVO.live_no}">${liveVO.live_no}
          </c:forEach>   
        </select>
@@ -84,21 +75,16 @@
     </FORM>
   </li>
   
+</ul>
 
-<script>    
-   function fun1(){
-      with(document.form1){
-         if (live_no.value=="") 
-             alert("請選擇直播編號!");
-         else if (isNaN(live_no.value)) 
-             alert("直播編號格式不正確!");
-         else if ((live_no.value < 8001) || (live_no.value > 8999)) 
-             alert("請填寫8001~8999之數字");
-         else
-             submit();
-      }
-   }
-</script>
+
+<h3>直播管理</h3>
+
+<ul>
+  <li><a href='<%=request.getContextPath()%>/front-end/live/addLive.jsp'>Add</a> a new Live_order.</li>
+</ul>
 
 </body>
+
+
 </html>

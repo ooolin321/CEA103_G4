@@ -1,6 +1,10 @@
 package com.product.model;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class ProductService {
@@ -66,6 +70,11 @@ public class ProductService {
 	public Optional<ProductVO> getProductPic(Integer product_no){
 		return dao.findProductPic(product_no);
 	}
+	
+	public List<ProductVO> getAllWithoutPhoto(){	
+		return dao.getAllWithoutPhoto();
+	}
+
 }
 
 

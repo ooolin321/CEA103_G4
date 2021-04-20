@@ -87,8 +87,9 @@ th, td {
 			<tr>
 				<td>直播訂單狀態:</td>
 				<td><select name="order_state">
-						<option value="0" ${(live_orderVO.order_state==0)? 'selected':'' }>收到訂單</option>
-						<option value="1" ${(live_orderVO.order_state==1)? 'selected':'' }>完成訂單</option>
+						<option value="0" ${(live_orderVO.order_state==0)? 'selected':'' }>未付款</option>
+						<option value="1" ${(live_orderVO.order_state==1)? 'selected':'' }>已付款</option>
+						<option value="2" ${(live_orderVO.order_state==2)? 'selected':'' }>棄單</option>
 				</select></td>
 			</tr>
 

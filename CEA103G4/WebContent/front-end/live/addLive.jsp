@@ -10,7 +10,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>直播資料新增 - addLive.jsp</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 
 <style>
 table#table-1 {
@@ -134,9 +133,16 @@ th, td {
 			
 			<tr>
 				<td>圖片上傳:</td>
-				<td><input type="file" name="live_photo"/></td>
+				<td><input name="live_photo" type="file" id="imgInp" accept="image/gif, image/jpeg, image/png" / ></td>
+				
 			</tr>
 			
+			<tr>
+				<td>圖片預覽:</td>
+			    <td>
+			    <img id="preview_img" src="#" style="display: none;" />
+			    </td>
+			</tr>
 			
 		</table>
 		<br> <input type="hidden" name="action" value="insert"> <input
@@ -144,6 +150,22 @@ th, td {
 	</FORM>
 </body>
 
+<script>
+function readURL(input){
+	  if(input.files && input.files[0]){
+	    var reader = new FileReader();
+	    reader.onload = function (e) {
+	       $("#preview_img").attr('src', e.target.result);
+	       $("#preview_img").attr('width', "250px");
+	       $("#preview_img").attr('style', "display:block");
+	    }
+	    reader.readAsDataURL(input.files[0]);
+	  }
+	}
+$("#imgInp").change(function() {
+	  readURL(this);
+	});
+</script>
 
 <%
 	java.sql.Timestamp live_time = null;

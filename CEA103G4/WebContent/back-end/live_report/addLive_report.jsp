@@ -12,6 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>直播檢舉資料新增 - addLive_report.jsp</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
 <style>
 table#table-1 {
@@ -87,22 +88,34 @@ th, td {
 					value="" /></td>
 			</tr>
 
+			<jsp:useBean id="liveSvc" scope="page" class="com.live.model.LiveService" />
 			<tr>
-				<td>直播編號:</td>
-				<td><input type="TEXT" name="live_no" size="45"
-					value="8001" /></td>
+				<td>直播編號:<font color=red><b>*</b></font></td>
+				<td><select size="1" name="live_no">
+					<c:forEach var="liveVO" items="${liveSvc.all}">
+						<option value="${liveVO.live_no}" ${(live_reportVO.live_no==liveVO.live_no)? 'selected':'' } >${liveVO.live_no}
+					</c:forEach>
+				</select></td>
 			</tr>
 
+			<jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
 			<tr>
-				<td>檢舉者ID:</td>
-				<td><input type="TEXT" name="user_id" size="45"
-					value="abcd01" /></td>
+				<td>檢舉者帳號:<font color=red><b>*</b></font></td>
+				<td><select size="1" name="user_id">
+					<c:forEach var="userVO" items="${userSvc.all}">
+						<option value="${userVO.user_id}" ${(live_reportVO.user_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
+					</c:forEach>
+				</select></td>
 			</tr>
 			
+			<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 			<tr>
-				<td>處理員工編號:</td>
-				<td><input type="TEXT" name="empno" size="45"
-					value="14001" /></td>
+				<td>管理員編號:<font color=red><b>*</b></font></td>
+				<td><select size="1" name="empno">
+					<c:forEach var="empVO" items="${empSvc.all}">
+						<option value="${empVO.empno}" ${(liveVO.empno==empVO.empno)? 'selected':'' } >${empVO.empno}
+					</c:forEach>
+				</select></td>
 			</tr>
 
 			<tr>
@@ -116,7 +129,15 @@ th, td {
 
 			<tr>
 				<td>圖片上傳:</td>
-				<td><input type="file" name="photo"/></td>
+				<td><input name="photo" type="file" id="imgInp" accept="image/gif, image/jpeg, image/png" / ></td>
+				
+			</tr>
+			
+			<tr>
+				<td>圖片預覽:</td>
+			    <td>
+			    <img id="preview_img" src="#" style="display: none;" />
+			    </td>
 			</tr>
 
 		</table>
@@ -124,5 +145,22 @@ th, td {
 			type="submit" value="送出新增">
 	</FORM>
 </body>
+
+<script>
+function readURL(input){
+	  if(input.files && input.files[0]){
+	    var reader = new FileReader();
+	    reader.onload = function (e) {
+	       $("#preview_img").attr('src', e.target.result);
+	       $("#preview_img").attr('width', "250px");
+	       $("#preview_img").attr('style', "display:block");
+	    }
+	    reader.readAsDataURL(input.files[0]);
+	  }
+	}
+$("#imgInp").change(function() {
+	  readURL(this);
+	});
+</script>
 
 </html>

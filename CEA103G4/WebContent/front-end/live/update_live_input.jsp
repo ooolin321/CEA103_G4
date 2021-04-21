@@ -11,6 +11,7 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>直播修改 - update_live_input.jsp</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
 <style>
 table#table-1 {
@@ -136,17 +137,23 @@ th, td {
 			</tr>
 			
 			<tr>
-				<td>圖片上傳:</td>
-				<td><input type="file" name="live_photo"/></td>
-			</tr>
-
-			<tr>
 				<td>前次上傳圖片:</td>
 				<td>
 				<img src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}" width="250px">
 				</td>
 			</tr>
 			
+			<tr>
+				<td>圖片上傳:</td>
+				<td><input name="live_photo" type="file" id="imgInp" accept="image/gif, image/jpeg, image/png" / ></td>
+			</tr>
+			
+			<tr>
+				<td>圖片預覽:</td>
+			    <td>
+			    <img id="preview_img" src="#" style="display: none;" />
+			    </td>
+			</tr>
 			
 
 		</table>
@@ -156,7 +163,22 @@ th, td {
 			<input  type="submit" value="送出修改">
 	</FORM>
 </body>
-
+<script>
+function readURL(input){
+	  if(input.files && input.files[0]){
+	    var reader = new FileReader();
+	    reader.onload = function (e) {
+	       $("#preview_img").attr('src', e.target.result);
+	       $("#preview_img").attr('width', "250px");
+	       $("#preview_img").attr('style', "display:block");
+	    }
+	    reader.readAsDataURL(input.files[0]);
+	  }
+	}
+$("#imgInp").change(function() {
+	  readURL(this);
+	});
+</script>
 
 
 <%

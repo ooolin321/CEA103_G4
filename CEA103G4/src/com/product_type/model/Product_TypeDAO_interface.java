@@ -1,6 +1,9 @@
 package com.product_type.model;
 
 import java.util.List;
+import java.util.Set;
+
+import com.product.model.ProductVO;
 
 public interface Product_TypeDAO_interface {
 
@@ -11,6 +14,7 @@ public interface Product_TypeDAO_interface {
     public List<Product_TypeVO> getAll();
     //萬用複合查詢(傳入參數型態Map)(回傳 List)
 //  public List<Product_TypeVO> getAll(Map<String, String[]> map); 
+	public Set<ProductVO> getProductsByPdtype_no(Integer pdtype_no);
 
 	
 }

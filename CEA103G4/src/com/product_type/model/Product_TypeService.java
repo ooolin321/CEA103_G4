@@ -1,6 +1,9 @@
 package com.product_type.model;
 
 import java.util.List;
+import java.util.Set;
+
+import com.product.model.ProductVO;
 
 public class Product_TypeService {
 	private Product_TypeDAO_interface dao;
@@ -40,5 +43,9 @@ public class Product_TypeService {
 
 	public List<Product_TypeVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public Set<ProductVO> getProductsByPdtype_no(Integer pdtype_no) {
+		return dao.getProductsByPdtype_no(pdtype_no);
 	}
 }

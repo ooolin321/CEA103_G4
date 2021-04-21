@@ -87,6 +87,21 @@
        <input type="submit" value="送出">
      </FORM>
   </li>
+     <jsp:useBean id="product_typeSvc" scope="page" class="com.product_type.model.Product_TypeService" />
+  
+  <li>
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product_type/product_type.do" >
+       <b><font color=orange>選擇商品類別:</font></b>
+       <select size="1" name="pdtype_no">
+         <c:forEach var="product_typeVO" items="${product_typeSvc.all}" > 
+          <option value="${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}
+         </c:forEach>   
+       </select>
+       <input type="submit" value="送出">
+       <input type="hidden" name="action" value="listProducts_ByPdtype_A">
+     </FORM>
+  </li>
+  
 </ul>
 
 
@@ -94,6 +109,12 @@
 
 <ul>
   <li><a href='addProduct.jsp'>Add</a> a new Product.</li>
+</ul>
+
+<h3><font color=orange>商品類別管理</font></h3>
+
+<ul>
+  <li><a href='<%=request.getContextPath()%>/product_type/listAllProduct_Type.jsp'>List</a> all Product_Type. </li>
 </ul>
 
 </body>

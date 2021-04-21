@@ -3,6 +3,7 @@ package com.product_type.controller;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.product.model.ProductVO;
 import com.product_type.model.Product_TypeService;
 import com.product_type.model.Product_TypeVO;
 
@@ -251,6 +253,34 @@ public class Product_TypeServlet  extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+	    // 來自product select_page.jsp的請求                                  
+			if ("listProducts_ByPdtype_A".equals(action)) {
+
+				List<String> errorMsgs = new LinkedList<String>();
+				req.setAttribute("errorMsgs", errorMsgs);
+
+				try {
+					/*************************** 1.接收請求參數 ****************************************/
+					Integer pdtype_no = new Integer(req.getParameter("pdtype_no"));
+
+					/*************************** 2.開始查詢資料 ****************************************/
+					Product_TypeService product_typeSvc = new Product_TypeService();
+					Set<ProductVO> set = product_typeSvc.getProductsByPdtype_no(pdtype_no);
+
+					/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+					req.setAttribute("listProducts_ByPdtype_no", set);    // 資料庫取出的set物件,存入request
+
+					String url = null;
+					url = "/back-end/product_type/listProducts_ByPdtype_no.jsp";
+					
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+
+					/*************************** 其他可能的錯誤處理 ***********************************/
+				} catch (Exception e) {
+					throw new ServletException(e);
+				}
+			}
 	}	
 	
 }

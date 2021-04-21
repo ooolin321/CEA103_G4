@@ -93,17 +93,18 @@ th, td {
 				</select></td>
 			</tr>
 
-			<tr>
-				<td>運費:</td>
-				<td><input type="TEXT" name="order_shipping" size="45" value="<%= (live_orderVO==null)? "30" : live_orderVO.getOrder_shipping()%>"/></td>
-				
-			</tr>
 
 			<tr>
 				<td>直播訂單商品價格:</td>
-				<td><input type="TEXT" name="order_price" size="45" value="<%= (live_orderVO==null)? "0" : live_orderVO.getOrder_price()%>" /></td>
+				<td><input type="TEXT" name="order_price" id="order_price" size="45" value="<%= (live_orderVO==null)? "0" : live_orderVO.getOrder_price()%>" /></td>
 			</tr>
 
+			<tr>
+				<td>回饋點數:</td>
+				<td>
+				<input type="TEXT" name="point" id="point" size="45" value="0" />
+				</td>
+			</tr>
 			<tr>
 				<td>付款方式:</td>
 				<td><select name="pay_method">
@@ -148,12 +149,20 @@ th, td {
 
 			<tr>
 				<td>物流方式:</td>
-				<td><select name="logistics">
+				<td><select name="logistics" id="logistics">
 						<option value="0" ${(live_orderVO.logistics==0)? 'selected':'' }>宅配</option>
 						<option value="1" ${(live_orderVO.logistics==1)? 'selected':'' }>超商</option>
 				</select></td>
 			</tr>
 
+			<tr>
+				<td>運費:</td>
+				<td>
+				<div id="showOrder_shipping">100</div>
+				<input type="HIDDEN" name="order_shipping" id="order_shipping" size="45" value="100" />
+				</td>
+				
+			</tr>
 			<tr>
 				<td>物流狀態:</td>
 				<td><select name="logistics_state">
@@ -176,7 +185,8 @@ th, td {
 			<jsp:useBean id="liveSvc" scope="page" class="com.live.model.LiveService" />
 			<tr>
 				<td>直播編號:<font color=red><b>*</b></font></td>
-				<td><select size="1" name="live_no">
+				<td><select size="1" name="live_no" id="live_no">
+					<option value=""  >
 					<c:forEach var="liveVO" items="${liveSvc.all}">
 						<option value="${liveVO.live_no}" ${(live_orderVO.live_no==liveVO.live_no)? 'selected':'' } >${liveVO.live_no}
 					</c:forEach>
@@ -184,6 +194,14 @@ th, td {
 			</tr>
 	
 			<jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
+			<tr>
+				<td>賣家帳號:<font color=red><b>*</b></font></td>
+				<td>
+				<div id="showSellerId"></div>
+				<input name="seller_id" id="seller_id" value="" type="HIDDEN" />
+				</td>
+			</tr>
+			
 			<tr>
 				<td>買家帳號:<font color=red><b>*</b></font></td>
 				<td><select size="1" name="user_id">
@@ -193,14 +211,6 @@ th, td {
 				</select></td>
 			</tr>
 
-			<tr>
-				<td>賣家帳號:<font color=red><b>*</b></font></td>
-				<td><select size="1" name="seller_id">
-					<c:forEach var="userVO" items="${userSvc.all}">
-						<option value="${userVO.user_id}" ${(live_orderVO.seller_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
-					</c:forEach>
-				</select></td>
-			</tr>
 
 			<tr>
 				<td>評價分數:</td>
@@ -219,10 +229,6 @@ th, td {
 				<td><input type="TEXT" name="srating_content" size="45" value="<%= (live_orderVO==null)? "讚" : live_orderVO.getSrating_content()%>" /></td>
 			</tr>
 
-			<tr>
-				<td>回饋點數:</td>
-				<td><input type="TEXT" name="point" size="45" value="<%= (live_orderVO==null)? "0" : live_orderVO.getPoint()%>" /></td>
-			</tr>
 		</table>
 		<br> <input type="hidden" name="action" value="insert"> <input
 			type="submit" value="送出新增">
@@ -237,6 +243,26 @@ $("#twzipcode").twzipcode({
 	countySel: "<%=(live_orderVO==null)? "" :live_orderVO.getCity()%>",
 	districtSel: "<%=(live_orderVO==null)? "" :live_orderVO.getTown()%>",
 	zipcodeSel: "<%=(live_orderVO==null)? "" :live_orderVO.getZipcode()%>"
+	});
+	
+
+$("#logistics").change(function(e) {
+	if($("#logistics").val() == '0'){
+		$("#order_shipping").attr('value', '100');
+		$("#showOrder_shipping").text("100");
+	}else{
+		$("#order_shipping").attr('value', '50');
+		$("#showOrder_shipping").text("50") ;
+	}
+	});
+	
+$("#live_no").change(function(e) {
+	<c:forEach var="liveVO" items="${liveSvc.all}">	
+	if($("#live_no").val()==${liveVO.live_no}){		
+		$("#seller_id").attr('value', '${liveVO.user_id}');
+		$("#showSellerId").text('${liveVO.user_id}');
+	}	
+	</c:forEach>
 	});
 </script>
 </html>

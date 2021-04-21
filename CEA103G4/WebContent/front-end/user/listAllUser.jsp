@@ -106,7 +106,8 @@
 			<td>${userVO.user_mail}</td>
 			<td>${userVO.user_phone}</td>
 			<td>${userVO.user_mobile}</td> 
-			<td>${userVO.user_addr}</td>
+<%-- 			<td>${userVO.user_addr}</td> --%>
+			<td>${userVO.zipcode}${userVO.city}${userVO.town}${userVO.user_addr}</td>
 			<td><fmt:formatDate value="${userVO.regdate}" pattern="yyyy-MM-dd"/></td>
 			<td>${userVO.user_point}</td>
 			<td>${userVO.violation}</td>

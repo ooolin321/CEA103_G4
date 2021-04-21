@@ -147,10 +147,9 @@ public class BidJNDIDAO implements BidDAO_interface {
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(DELETE);
-
-			pstmt.setString(1, bidVO.getUser_id());
-
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+			pstmt.setInt(1, bid_no);
+			
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -204,10 +203,7 @@ public class BidJNDIDAO implements BidDAO_interface {
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(DELETE);
-
-			pstmt.setString(1, bidVO.getUser_id());
-
+			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

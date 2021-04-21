@@ -76,7 +76,8 @@ public class EmpServlet extends HttpServlet {
 		if ("getOne_For_Update".equals(action)) {// 來自listAllEmp.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			
+			String requestURL = req.getParameter("requestURL");
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer empno = new Integer(req.getParameter("empno"));
@@ -94,7 +95,7 @@ public class EmpServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/listAllEmp.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
 				failureView.forward(req, res);
 
 			}
@@ -105,10 +106,8 @@ public class EmpServlet extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			String requestURL = req.getParameter("requestURL"); // 送出修改的來源網頁路徑: 可能為【/emp/listAllEmp.jsp】 或
-																// 【/dept/listEmps_ByDeptno.jsp】 或 【
-																// /dept/listAllDept.jsp】 或 【
-																// /emp/listEmps_ByCompositeQuery.jsp】
+			String requestURL = req.getParameter("requestURL");
+			
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer empno = new Integer(req.getParameter("empno").trim());
@@ -143,17 +142,22 @@ public class EmpServlet extends HttpServlet {
 					dob = new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.add("請輸入生日!");
 				}
-
-				String addr = "";
-
-				StringBuffer sb = new StringBuffer();
-				addr = sb.append(req.getParameter("city")).toString();
-				addr = sb.append(req.getParameter("dist")).toString();
-				addr = sb.append(req.getParameter("addr")).toString().trim();
-
+				String city = req.getParameter("city");
+				if (city == null || city.length() == 0) {
+					errorMsgs.add("請選擇縣市");
+				}
+				String dist = req.getParameter("dist");
+				if (dist == null || dist.length() == 0) {
+					errorMsgs.add("請選擇區域");
+				}
+				String addr = req.getParameter("addr").trim();
 				if (addr == null || addr.length() == 0) {
 					errorMsgs.add("地址請勿空白");
 				}
+//				StringBuffer sb = new StringBuffer();
+//				addr = sb.append(req.getParameter("city")).toString();
+//				addr = sb.append(req.getParameter("dist")).toString();
+//				addr = sb.append(req.getParameter("addr")).toString().trim();
 
 				String email = req.getParameter("email");
 				String emailReg = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
@@ -196,6 +200,8 @@ public class EmpServlet extends HttpServlet {
 				empVO.setId(id);
 				empVO.setGender(gender);
 				empVO.setDob(dob);
+				empVO.setCity(city);
+				empVO.setDist(dist);
 				empVO.setAddr(addr);
 				empVO.setEmail(email);
 				empVO.setSal(sal);
@@ -211,25 +217,18 @@ public class EmpServlet extends HttpServlet {
 				}
 				/*************************** 2.開始修改資料 *****************************************/
 				empVO = empSvc.sendPwdMail(ename, email, empPwd);// dao.service發送password email
-				empVO = empSvc.updateEmp(empno, ename, job, id, gender, dob, addr, email, sal, state, hiredate, empPwd);
+				empVO = empSvc.updateEmp(empno, ename, job, id, gender, dob, city, dist, addr, email, sal, state,
+						hiredate, empPwd);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 
-				if (requestURL.equals("/back-end/emp/listOneEmp.jsp") || requestURL.equals("/dept/listAllDept.jsp"))
-					req.setAttribute("listAllEmp", empSvc.getOneEmp(empno)); // 資料庫取出的list物件,存入request
+//				if (requestURL.equals("/back-end/emp/listOneEmp.jsp"))
+//					req.setAttribute("EmpVO", empVO); // 資料庫取出的list物件,存入request
 
-//				if(requestURL.equals("/emp/listEmps_ByCompositeQuery.jsp")){
-//					HttpSession session = req.getSession();
-//					Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
-//					List<EmpVO> list  = empSvc.getAll(map);
-//					req.setAttribute("listEmps_ByCompositeQuery",list); //  複合查詢, 資料庫取出的list物件,存入request
-//				}				
-
-//				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				
 				String url = requestURL;
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
+			
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
@@ -274,15 +273,27 @@ public class EmpServlet extends HttpServlet {
 					dob = new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.add("請輸入生日!");
 				}
-
-				String addr = "";
-				StringBuffer sb = new StringBuffer();
-				addr = sb.append(req.getParameter("city")).toString();
-				addr = sb.append(req.getParameter("dist")).toString();
-				addr = sb.append(req.getParameter("addr")).toString().trim();
+				String city = req.getParameter("city");
+				if (city == null || city.length() == 0) {
+					errorMsgs.add("請選擇縣市");
+				}
+				
+				String dist = req.getParameter("dist");
+				if (dist == null || dist.length() == 0) {
+					errorMsgs.add("請選擇區域");
+				}
+				String addr = req.getParameter("addr").trim();
 				if (addr == null || addr.length() == 0) {
 					errorMsgs.add("地址請勿空白");
 				}
+//				String addr = "";
+//				StringBuffer sb = new StringBuffer();
+//				addr = sb.append(req.getParameter("city")).toString();
+//				addr = sb.append(req.getParameter("dist")).toString();
+//				addr = sb.append(req.getParameter("addr")).toString().trim();
+//				if (addr == null || addr.length() == 0) {
+//					errorMsgs.add("地址請勿空白");
+//				}
 
 				String email = req.getParameter("email");
 				String emailReg = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
@@ -312,7 +323,7 @@ public class EmpServlet extends HttpServlet {
 				String empPwd = null;
 
 				EmpService empSvc = new EmpService();
-				
+
 				empPwd = empSvc.getPassword();// dao.service隨機密碼
 
 				EmpVO empVO = new EmpVO();
@@ -322,6 +333,8 @@ public class EmpServlet extends HttpServlet {
 				empVO.setId(id);
 				empVO.setGender(gender);
 				empVO.setDob(dob);
+				empVO.setCity(city);
+				empVO.setDist(dist);
 				empVO.setAddr(addr);
 				empVO.setEmail(email);
 				empVO.setSal(sal);
@@ -337,7 +350,9 @@ public class EmpServlet extends HttpServlet {
 				}
 				/*************************** 2.開始新增資料 *****************************************/
 				empVO = empSvc.sendPwdMail(ename, email, empPwd);// dao.service發送password email
-				empVO = empSvc.addEmp(ename, job, id, gender, dob, addr, email, sal, state, hiredate, empPwd);
+				empVO = empSvc.addEmp(ename, job, id, gender, dob, city, dist, addr, email, sal, state,
+						hiredate, empPwd);
+
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/back-end/emp/listAllEmp.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp

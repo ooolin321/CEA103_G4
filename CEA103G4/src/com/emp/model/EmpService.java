@@ -10,7 +10,8 @@ public class EmpService {
 		dao = new EmpDAO();
 	}
 
-	public EmpVO addEmp(String ename, String job, String id, Integer gender, java.sql.Date dob, String addr, String email,Double sal,
+	public EmpVO addEmp(String ename, String job, String id, Integer gender, java.sql.Date dob,String city,
+			String dist, String addr, String email,Double sal,
 			Integer state, java.sql.Date hiredate, String empPwd) {
 
 		EmpVO empVO = new EmpVO();
@@ -20,6 +21,8 @@ public class EmpService {
 		empVO.setId(id);
 		empVO.setGender(gender);
 		empVO.setDob(dob);
+		empVO.setCity(city);
+		empVO.setDist(dist);
 		empVO.setAddr(addr);
 		empVO.setEmail(email);
 		empVO.setSal(sal);
@@ -33,7 +36,8 @@ public class EmpService {
 	}
 
 	public EmpVO updateEmp(Integer empno, String ename, String job, String id, Integer gender, java.sql.Date dob,
-			String addr,String email, Double sal, Integer state, java.sql.Date hiredate, String empPwd) {
+			String city,String dist,String addr,String email, Double sal, Integer state, java.sql.Date hiredate, 
+			String empPwd) {
 
 		EmpVO empVO = new EmpVO();
 
@@ -43,6 +47,8 @@ public class EmpService {
 		empVO.setId(id);
 		empVO.setGender(gender);
 		empVO.setDob(dob);
+		empVO.setCity(city);
+		empVO.setDist(dist);
 		empVO.setAddr(addr);
 		empVO.setEmail(email);
 		empVO.setSal(sal);

@@ -19,6 +19,33 @@ public class ProductServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
+		
+		//商品區點選商品格取得get資料,查詢一筆資料畫面(跳轉至商品頁)
+		List<String> errorMsgs = new LinkedList<String>();
+		req.setAttribute("errorMsgs", errorMsgs);
+	try {
+		String productURL = "/front-end/productsell/product.jsp";
+		Integer product_no = new Integer(req.getParameter("product_no"));
+		ProductService productSvc = new ProductService();
+		ProductVO productVO = productSvc.getOneProduct(product_no);
+		if (productVO == null) {
+			errorMsgs.add("查無資料");
+		}
+		if (!errorMsgs.isEmpty()) {
+			RequestDispatcher failureView = req
+					.getRequestDispatcher("/front-end/index.jsp");
+			failureView.forward(req, res);
+			return;//程式中斷
+		} 
+		req.setAttribute("productVO", productVO);
+		req.getRequestDispatcher(productURL).forward(req, res);
+		}catch (Exception e) {
+			errorMsgs.add("無法取得資料:" + e.getMessage());
+			RequestDispatcher failureView = req
+					.getRequestDispatcher("/front-end/index.jsp");
+			failureView.forward(req, res);
+		}
+		
 		doPost(req, res);
 	}
 
@@ -27,7 +54,6 @@ public class ProductServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
 
 		if ("getOne_For_Display".equals(action)) {
 
@@ -187,9 +213,10 @@ public class ProductServlet extends HttpServlet {
 				Part part = req.getPart("product_photo");
 				if (part == null || part.getSize() == 0) {
 					req.setAttribute("productVO", productVO);
-					ProductService productSvc2 = new ProductService();
-					ProductVO productVO2 = productSvc2.getOneProduct(product_no);
-					product_photo = productVO2.getProduct_photo();
+					InputStream in = getServletContext().getResourceAsStream("/NoData/none2.jpg");
+					product_photo = new byte[in.available()];
+					in.read(product_photo);
+					in.close();
 				} else {
 					req.setAttribute("productVO", productVO);
 					InputStream in = part.getInputStream();
@@ -332,11 +359,13 @@ public class ProductServlet extends HttpServlet {
 				Part part = req.getPart("product_photo");
 				if (part == null || part.getSize() == 0) {
 					errorMsgs.add("請上傳一張圖片");
+				} else {
+					InputStream in = part.getInputStream();
+					product_photo = new byte[in.available()];
+					in.read(product_photo);
+					in.close();
 				}
-				InputStream in = part.getInputStream();
-				product_photo = new byte[in.available()];
-				in.read(product_photo);
-				in.close();
+
 				
 				String user_id = req.getParameter("user_id").trim();
 				if (user_id == null || user_id.trim().length() == 0) {
@@ -420,6 +449,26 @@ public class ProductServlet extends HttpServlet {
 						.getRequestDispatcher("/back-end/product/listAllProduct.jsp");
 				failureView.forward(req, res);
 			}
-		}       
+		}   
+		
+		if("getJson".equals(action)) {
+			ProductService productSvc = new ProductService();
+			List<ProductVO> list = productSvc.getAllWithoutPhoto();
+			JSONObject jsonObj = new JSONObject();
+			
+			try {
+				jsonObj.put("results", list);
+
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			res.setContentType("text/html; charset=UTF-8");
+		
+			PrintWriter out = res.getWriter();
+			
+			out.println(jsonObj.toString());
+		}
 	}
 }

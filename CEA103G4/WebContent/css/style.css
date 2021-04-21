@@ -200,7 +200,7 @@ ol {
 }
 
 /* Preloder */
-
+/* 網頁跳轉等候時,轉圈圈畫面以及背景顏色 */
 #preloder {
   position: fixed;
   width: 100%;
@@ -1079,6 +1079,16 @@ ol {
   border-bottom-left-radius: 10px;
 }
 
+.pi-pic .pi-img {
+	width:auto;
+	height:200px;
+}
+
+.pi-pic img {
+	max-height: 100%;  
+    max-width: 100%; 
+}
+
 .product-item:hover .pi-pic .icon {
   top: 15px;
   opacity: 1;
@@ -1128,7 +1138,7 @@ ol {
 .product-item .pi-pic ul {
   position: absolute;
   left: 0;
-  bottom: -52px;
+  bottom: -53px;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
@@ -1198,13 +1208,13 @@ ol {
   font-size: 20px;
   font-weight: 700;
 }
-
-.product-item .pi-text .product-price span {
-  font-size: 14px;
-  font-weight: 400;
-  color: #b2b2b2;
-  text-decoration: line-through;
-}
+/* 可以把價格符號劃掉,變有點促銷的概念,暫不用 */
+/* .product-item .pi-text .product-price span { */
+/*   font-size: 14px; */
+/*   font-weight: 400; */
+/*   color: #b2b2b2; */
+/*   text-decoration: line-through; */
+/* } */
 
 .pagination {
   margin-bottom: 30px;
@@ -1574,6 +1584,7 @@ ol {
 
 .filter-widget .filter-catagories li {
   list-style: none;
+  margin-left:30px;
 }
 
 .filter-widget .filter-catagories li a {
@@ -1581,6 +1592,7 @@ ol {
   color: #636363;
   font-size: 16px;
   line-height: 39px;
+  
 }
 
 .filter-widget .fw-brand-check .bc-item {
@@ -1926,11 +1938,11 @@ ol {
 .product-pic-zoom {
   margin-bottom: 10px;
   position: relative;
-  z-index: 1;
+  Z-INDEX: 1;
 }
 
 .product-pic-zoom img {
-  min-width: 100%;
+  width: 100%;
 }
 
 .product-pic-zoom .zoom-icon {
@@ -1948,22 +1960,6 @@ ol {
   text-align: center;
   border-radius: 50%;
   line-height: 37px;
-}
-
-.product-thumbs .pt {
-  cursor: pointer;
-  position: relative;
-}
-
-.product-thumbs .pt.active:after {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  border: 1px solid #e7ab3c;
-  z-index: 1;
 }
 
 .ps-slider .owl-nav button[type="button"] {
@@ -2035,7 +2031,8 @@ ol {
 }
 
 .product-details .pd-desc {
-  margin-bottom: 24px;
+  margin-top: 20px;
+  margin-bottom: 25px;
 }
 
 .product-details .pd-desc p {
@@ -2046,15 +2043,15 @@ ol {
   color: #e7ab3c;
   font-weight: 700;
 }
-
-.product-details .pd-desc h4 span {
-  font-size: 18px;
-  font-weight: 400;
-  color: #b7b7b7;
-  text-decoration: line-through;
-  display: inline-block;
-  margin-left: 13px;
-}
+/* 錢錢刪除符號 */
+/* .product-details .pd-desc h4 span { */
+/*   font-size: 18px; */
+/*   font-weight: 400; */
+/*   color: #b7b7b7; */
+/*   text-decoration: line-through; */
+/*   display: inline-block; */
+/*   margin-left: 13px; */
+/* } */
 
 .product-details .pd-color {
   margin-bottom: 25px;
@@ -2176,6 +2173,7 @@ ol {
 
 .product-details .quantity .primary-btn.pd-cart {
   padding: 14px 70px 10px;
+  border-radius: 2px;
 }
 
 .product-details .pd-tags {
@@ -2199,12 +2197,6 @@ ol {
   overflow: hidden;
 }
 
-.product-details .pd-share .p-code {
-  font-size: 16px;
-  color: #252525;
-  float: left;
-}
-
 .product-details .pd-share .pd-social {
   float: right;
 }
@@ -2216,8 +2208,29 @@ ol {
   margin-left: 15px;
 }
 
-.product-details .pd-function {
-  padding-top: 50px;
+.product-details .pd-fungroup {
+  padding-top: 30px;
+}
+
+.product-details .pd-fungroup .primary-btn.pd-buy {
+  margin-bottom: 20px;
+  background: pink;
+  border-radius: 2px;
+}
+
+.product-details .pd-fungroup .pd-function {
+  display: inline-block;
+}
+
+.product-details .pd-fungroup .pd-function .primary-btn {
+  border-radius: 2px;
+}
+
+.product-details .pd-fungroup .p-code {
+  padding-top: 30px;
+  font-size: 12px;
+  color: #252525;
+  float: right;
 }
 
 .product-tab {
@@ -3817,7 +3830,7 @@ ol {
     right: -7px;
   }
   .product-shop .product-item .pi-pic ul li a {
-    padding: 16px 12px 12px 11px;
+    padding: 5px 12px 12px 11px;
   }
   .related-products .product-item .pi-pic ul li a {
     padding: 16px 12px 12px 11px;
@@ -3874,6 +3887,10 @@ ol {
   .product-shop.page-details .product-details {
     padding-top: 30px;
   }
+  .product-shop .product-item .pi-pic ul li a {
+    padding: 5px 12px 12px 11px;
+  }
+
   .inner-header .advanced-search .input-group button {
     right: -8px;
   }

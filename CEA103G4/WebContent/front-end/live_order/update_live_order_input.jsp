@@ -94,8 +94,9 @@ th, td {
 			<tr>
 				<td>直播訂單狀態:</td>
 				<td><select name="order_state">
-						<option value="0" ${(live_orderVO.order_state==0)? 'selected':''}>收到訂單</option>
-						<option value="1" ${(live_orderVO.order_state==1)? 'selected':''}>完成訂單</option>
+						<option value="0" ${(live_orderVO.order_state==0)? 'selected':''}>未付款</option>
+						<option value="1" ${(live_orderVO.order_state==1)? 'selected':''}>已付款</option>
+						<option value="2" ${(live_orderVO.order_state==2)? 'selected':''}>棄單</option>
 				</select></td>
 			</tr>
 			<tr>
@@ -126,8 +127,6 @@ th, td {
 				<td><input type="TEXT" name="rec_name" size="45"
 					value="<%=live_orderVO.getRec_name()%>" /></td>
 			</tr>
-			
-
 
 			<tr>
 				<td>收件人地址:</td>
@@ -178,22 +177,33 @@ th, td {
 					value="<%=live_orderVO.getDiscount()%>" /></td>
 			</tr>
 
+			<jsp:useBean id="liveSvc" scope="page" class="com.live.model.LiveService" />
 			<tr>
-				<td>直播編號:</td>
-				<td><input type="TEXT" name="live_no" size="45"
-					value="<%=live_orderVO.getLive_no()%>" /></td>
+				<td>直播編號:<font color=red><b>*</b></font></td>
+				<td><select size="1" name="live_no">
+					<c:forEach var="liveVO" items="${liveSvc.all}">
+						<option value="${liveVO.live_no}" ${(live_orderVO.live_no==liveVO.live_no)? 'selected':'' } >${liveVO.live_no}
+					</c:forEach>
+				</select></td>
+			</tr>
+
+			<jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
+			<tr>
+				<td>買家帳號:<font color=red><b>*</b></font></td>
+				<td><select size="1" name="user_id">
+					<c:forEach var="userVO" items="${userSvc.all}">
+						<option value="${userVO.user_id}" ${(live_orderVO.user_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
+					</c:forEach>
+				</select></td>
 			</tr>
 
 			<tr>
-				<td>買家帳號:</td>
-				<td><input type="TEXT" name="user_id" size="45"
-					value="<%=live_orderVO.getUser_id()%>" /></td>
-			</tr>
-
-			<tr>
-				<td>賣家帳號:</td>
-				<td><input type="TEXT" name="seller_id" size="45"
-					value="<%=live_orderVO.getSeller_id()%>" /></td>
+				<td>賣家帳號:<font color=red><b>*</b></font></td>
+				<td><select size="1" name="seller_id">
+					<c:forEach var="userVO" items="${userSvc.all}">
+						<option value="${userVO.user_id}" ${(live_orderVO.seller_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
+					</c:forEach>
+				</select></td>
 			</tr>
 
 

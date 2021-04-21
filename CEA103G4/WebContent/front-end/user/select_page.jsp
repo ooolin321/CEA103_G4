@@ -76,7 +76,7 @@
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="user.do" >
+     <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/front-end/user/user.do" >
        <b>選擇會員姓名:</b>
        <select size="1" name="user_id">
          <c:forEach var="userVO" items="${userSvc.all}" > 

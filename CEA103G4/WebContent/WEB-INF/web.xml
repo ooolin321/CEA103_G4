@@ -59,7 +59,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LiveServlet</servlet-name>
-		<url-pattern>/front-end/live/live.do</url-pattern>
+		<url-pattern>/live/live.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>MessageServlet</servlet-name>
@@ -94,6 +94,14 @@
 		<url-pattern>/live_order/live_order.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>BidServlet</servlet-name>
+		<servlet-class>com.bid.controller.BidServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BidServlet</servlet-name>
+		<url-pattern>/bid/bid.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>EmpServlet</servlet-name>
 		<servlet-class>com.emp.controller.EmpServlet</servlet-class>
 	</servlet>
@@ -118,6 +126,15 @@
 	<servlet-mapping>
 		<servlet-name>DBGifReader</servlet-name>
 		<url-pattern>/live_report/DBGifReader.do</url-pattern>
+	</servlet-mapping>
+	
+    <servlet>
+		<servlet-name>LiveGifReader</servlet-name>
+		<servlet-class>com.live.controller.LiveGifReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LiveGifReader</servlet-name>
+		<url-pattern>/live/LiveGifReader.do</url-pattern>
 	</servlet-mapping>
 	
 	
@@ -146,6 +163,24 @@
 	<servlet-mapping>
 		<servlet-name>OrderServlet</servlet-name>
 		<url-pattern>/front-end/order/order.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AdServlet</servlet-name>
+		<servlet-class>com.ad.controller.AdServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdServlet</servlet-name>
+		<url-pattern>/back-end/ad/ad.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>DBGifReader_Ad</servlet-name>
+		<servlet-class>com.ad.controller.DBGifReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DBGifReader_Ad</servlet-name>
+		<url-pattern>/ad/DBGifReader.do</url-pattern>
 	</servlet-mapping>
 
 	<filter>

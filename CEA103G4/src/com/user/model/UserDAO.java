@@ -19,15 +19,15 @@ public class UserDAO implements UserDAO_interface {
 		}
 	}
 	private static final String INSERT_STMT = 
-			"INSERT INTO `USER` (`USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO `USER` (`USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM `USER` ORDER BY `USER_ID`";
 	private static final String GET_ONE_STMT = 
-			"SELECT `USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH` FROM USER WHERE `USER_ID` = ?";
+			"SELECT `USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH` FROM USER WHERE `USER_ID` = ?";
 	private static final String DELETE = 
 			"DELETE FROM USER where USER_ID = ?";
 	private static final String UPDATE = 
-			"UPDATE `USER` SET `USER_PWD`=?, `USER_NAME`=?, `ID_CARD`=?, `USER_GENDER`=?, `USER_DOB`=?, `USER_MAIL`=?, `USER_PHONE`=?, `USER_MOBILE`=?, `USER_ADDR`=?, `REGDATE`=?, `USER_POINT`=?, `VIOLATION`=?, `USER_STATE`=?, `USER_COMMENT`=?, `COMMENT_TOTAL`=?, `CASH`=? WHERE `USER_ID` = ?";
+			"UPDATE `USER` SET `USER_PWD`=?, `USER_NAME`=?, `ID_CARD`=?, `USER_GENDER`=?, `USER_DOB`=?, `USER_MAIL`=?, `USER_PHONE`=?, `USER_MOBILE`=?, `CITY`=?, `TOWN`=?, `ZIPCODE`=?, `USER_ADDR`=?, `REGDATE`=?, `USER_POINT`=?, `VIOLATION`=?, `USER_STATE`=?, `USER_COMMENT`=?, `COMMENT_TOTAL`=?, `CASH`=? WHERE `USER_ID` = ?";
 
 
 	@Override
@@ -49,14 +49,17 @@ public class UserDAO implements UserDAO_interface {
 			pstmt.setString(7, userVO.getUser_mail());
 			pstmt.setString(8, userVO.getUser_phone());
 			pstmt.setString(9, userVO.getUser_mobile());
-			pstmt.setString(10, userVO.getUser_addr());
-			pstmt.setDate(11, userVO.getRegdate());
-			pstmt.setInt(12, userVO.getUser_point());
-			pstmt.setInt(13, userVO.getViolation());
-			pstmt.setInt(14, userVO.getUser_state());
-			pstmt.setInt(15, userVO.getUser_comment());
-			pstmt.setInt(16, userVO.getComment_total());
-			pstmt.setInt(17, userVO.getCash());
+			pstmt.setString(10, userVO.getCity());
+			pstmt.setString(11, userVO.getTown());
+			pstmt.setInt(12, userVO.getZipcode());
+			pstmt.setString(13, userVO.getUser_addr());
+			pstmt.setDate(14, userVO.getRegdate());
+			pstmt.setInt(15, userVO.getUser_point());
+			pstmt.setInt(16, userVO.getViolation());
+			pstmt.setInt(17, userVO.getUser_state());
+			pstmt.setInt(18, userVO.getUser_comment());
+			pstmt.setInt(19, userVO.getComment_total());
+			pstmt.setInt(20, userVO.getCash());
 
 			pstmt.executeUpdate();
 
@@ -103,15 +106,18 @@ public class UserDAO implements UserDAO_interface {
 			pstmt.setString(6, userVO.getUser_mail());
 			pstmt.setString(7, userVO.getUser_phone());
 			pstmt.setString(8, userVO.getUser_mobile());
-			pstmt.setString(9, userVO.getUser_addr());
-			pstmt.setDate(10, userVO.getRegdate());
-			pstmt.setInt(11, userVO.getUser_point());
-			pstmt.setInt(12, userVO.getViolation());
-			pstmt.setInt(13, userVO.getUser_state());
-			pstmt.setInt(14, userVO.getUser_comment());
-			pstmt.setInt(15, userVO.getComment_total());
-			pstmt.setInt(16, userVO.getCash());
-			pstmt.setString(17, userVO.getUser_id());
+			pstmt.setString(9, userVO.getCity());
+			pstmt.setString(10, userVO.getTown());
+			pstmt.setInt(11, userVO.getZipcode());
+			pstmt.setString(12, userVO.getUser_addr());
+			pstmt.setDate(13, userVO.getRegdate());
+			pstmt.setInt(14, userVO.getUser_point());
+			pstmt.setInt(15, userVO.getViolation());
+			pstmt.setInt(16, userVO.getUser_state());
+			pstmt.setInt(17, userVO.getUser_comment());
+			pstmt.setInt(18, userVO.getComment_total());
+			pstmt.setInt(19, userVO.getCash());
+			pstmt.setString(20, userVO.getUser_id());
 
 			pstmt.executeUpdate();
 
@@ -198,6 +204,7 @@ public class UserDAO implements UserDAO_interface {
 			while (rs.next()) {
 				// userVo 也稱為 Domain objects
 				userVO = new UserVO();
+				
 				userVO.setUser_id(rs.getString("user_id"));
 				userVO.setUser_pwd(rs.getString("user_pwd"));
 				userVO.setUser_name(rs.getString("user_name"));
@@ -207,6 +214,9 @@ public class UserDAO implements UserDAO_interface {
 				userVO.setUser_mail(rs.getString("user_mail"));
 				userVO.setUser_phone(rs.getString("user_phone"));
 				userVO.setUser_mobile(rs.getString("user_mobile"));
+				userVO.setCity(rs.getString("city"));
+				userVO.setTown(rs.getString("town"));
+				userVO.setZipcode(rs.getInt("zipcode"));
 				userVO.setUser_addr(rs.getString("user_addr"));
 				userVO.setRegdate(rs.getDate("regdate"));
 				userVO.setUser_point(rs.getInt("user_point"));
@@ -275,6 +285,9 @@ public class UserDAO implements UserDAO_interface {
 				userVO.setUser_mail(rs.getString("user_mail"));
 				userVO.setUser_phone(rs.getString("user_phone"));
 				userVO.setUser_mobile(rs.getString("user_mobile"));
+				userVO.setCity(rs.getString("city"));
+				userVO.setTown(rs.getString("town"));
+				userVO.setZipcode(rs.getInt("zipcode"));
 				userVO.setUser_addr(rs.getString("user_addr"));
 				userVO.setRegdate(rs.getDate("regdate"));
 				userVO.setUser_point(rs.getInt("user_point"));

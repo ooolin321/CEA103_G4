@@ -91,7 +91,7 @@
 			</td> 
 			<td><fmt:formatDate value="${live_orderVO.pay_deadline}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			<td>${live_orderVO.rec_name}</td>
-			<td>${live_orderVO.rec_addr}</td>
+			<td>${live_orderVO.zipcode}${live_orderVO.city}${live_orderVO.town}${live_orderVO.rec_addr}</td>
 			<td>${live_orderVO.rec_phone}</td>
 			<td>${live_orderVO.rec_cellphone}</td>
 			<td>

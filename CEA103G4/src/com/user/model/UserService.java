@@ -12,7 +12,7 @@ public class UserService {
 	}
 
 	public UserVO addUser(String user_id, String user_pwd, String user_name, String id_card, String user_gender,
-			Date user_dob, String user_mail, String user_phone, String user_mobile, String user_addr, Date regdate,
+			Date user_dob, String user_mail, String user_phone, String user_mobile, String city, String town, Integer zipcode, String user_addr, Date regdate,
 			Integer user_point, Integer violation, Integer user_state, Integer user_comment, Integer comment_total,
 			Integer cash) {
 
@@ -27,6 +27,9 @@ public class UserService {
 		userVO.setUser_mail(user_mail);
 		userVO.setUser_phone(user_phone);
 		userVO.setUser_mobile(user_mobile);
+		userVO.setCity(city);
+		userVO.setTown(town);
+		userVO.setZipcode(zipcode);
 		userVO.setUser_addr(user_addr);
 		userVO.setRegdate(regdate);
 		userVO.setUser_point(user_point);
@@ -42,7 +45,7 @@ public class UserService {
 	}
 
 	public UserVO updateUser(String user_id, String user_pwd, String user_name, String id_card, String user_gender,
-			Date user_dob, String user_mail, String user_phone, String user_mobile, String user_addr, Date regdate,
+			Date user_dob, String user_mail, String user_phone, String user_mobile, String city, String town, Integer zipcode, String user_addr, Date regdate,
 			Integer user_point, Integer violation, Integer user_state, Integer user_comment, Integer comment_total,
 			Integer cash) {
 		
@@ -57,6 +60,9 @@ public class UserService {
 		userVO.setUser_mail(user_mail);
 		userVO.setUser_phone(user_phone);
 		userVO.setUser_mobile(user_mobile);
+		userVO.setCity(city);
+		userVO.setTown(town);
+		userVO.setZipcode(zipcode);
 		userVO.setUser_addr(user_addr);
 		userVO.setRegdate(regdate);
 		userVO.setUser_point(user_point);

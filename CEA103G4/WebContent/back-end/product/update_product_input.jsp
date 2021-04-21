@@ -41,6 +41,12 @@
   th, td {
     padding: 1px;
   }
+  
+  #preview img{
+  	width: 100px;
+  	height: 100px;
+  
+  }
 </style>
 
 </head>
@@ -98,8 +104,9 @@
 	<tr>
 		<td>商品照片:</td>
 		<td>
-		<input type="file" name="product_photo"  multiple>
-		<img width="100px" height="100px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}"></td>
+		<input type="file" name="product_photo" id="myFile" />
+		<img width="100px" height="100px" id="oldimg" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}">
+		<div id="preview"></div></td>
 	</tr>
 	<tr>
 		<td>會員帳號:</td>
@@ -124,6 +131,47 @@
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="product_no" value="<%=productVO.getProduct_no()%>">
 <input type="submit" value="送出修改"></FORM>
+
+<script>
+
+let myFile = document.getElementById("myFile");
+let preview = document.getElementById('preview');
+let oldimg = document.getElementById('oldimg');
+
+function init() {
+    myFile.addEventListener('change', function(e) {
+    	$("#preview").empty();
+        let files = e.target.files;     
+        if (files !== null) {          
+            let file = files[0];
+            if (file.type.indexOf('image') > -1) {
+                let reader = new FileReader();
+                reader.addEventListener('load', function(e) { 
+                    let result = e.target.result;
+                    let img = document.createElement('img');
+                    img.src = result;
+                    preview.append(img);
+                    oldimg.remove();
+                });
+                reader.readAsDataURL(file);
+            } else {
+            	alert('請上傳圖片！');
+            }
+        }
+    });
+}
+
+window.onload = init;
+
+
+</script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+
 </body>
 
 

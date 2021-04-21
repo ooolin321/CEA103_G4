@@ -5,11 +5,14 @@
 <%
   UserVO userVO = (UserVO) request.getAttribute("userVO");
 %>
-<%= userVO==null %>--${userVO.user_id}--
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>會員資料新增 - addUser.jsp</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 
 <style>
   table#table-1 {
@@ -80,7 +83,7 @@
 	<tr>
 		<td>姓名:</td>
 		<td><input type="TEXT" name="user_name" size="45" 
-			 value="<%= (userVO==null)? "林志玲" : userVO.getUser_name()%>" /></td>
+			 value="<%= (userVO==null)? "董月花" : userVO.getUser_name()%>" /></td>
 	</tr>
 	<tr>
 		<td>身分証字號:</td>
@@ -90,7 +93,7 @@
 	<tr>
 		<td>性別:</td>
 		<td><input type="TEXT" name="user_gender" size="45"
-			 value="<%= (userVO==null)? "M" : userVO.getUser_gender()%>" /></td>
+			 value="<%= (userVO==null)? "F" : userVO.getUser_gender()%>" /></td>
 	</tr>
 	<tr>
 		<td>生日:</td>
@@ -109,17 +112,23 @@
 	<tr>
 		<td>手機號碼:</td>
 		<td><input type="TEXT" name="user_mobile" size="45"
-			 value="<%= (userVO==null)? "0900000015" : userVO.getUser_mobile()%>" /></td>
+			 value="<%= (userVO==null)? "0988888888" : userVO.getUser_mobile()%>" /></td>
 	</tr>
 	<tr>
 		<td>地址:</td>
-		<td><input type="TEXT" name="user_addr" size="45"
-			 value="<%= (userVO==null)? "新竹市東區龍山東路15巷30號" : userVO.getUser_addr()%>" /></td>
+		<td>
+		<div id="twzipcode"></div>
+		<input type="TEXT" name="user_addr" size="45">
+		</td>
 	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>地址:</td> -->
+<!-- 		<td><input type="TEXT" name="user_addr" size="45" -->
+<%-- 			 value="<%= (userVO==null)? "新竹市東區龍山東路15巷30號" : userVO.getUser_addr()%>" /></td> --%>
+<!-- 	</tr> -->
 	<tr>
 		<td>註冊日期:</td>
-		<td><input type="TEXT" name="regdate" size="45"
-			 value="<%= (userVO==null)? "2021-04-16" : userVO.getRegdate()%>" /></td>
+		<td><input name="regdate" id="f_date2" type="text"></td>
 	</tr>
 	<tr>
 		<td>點數:</td>
@@ -168,7 +177,15 @@
 <input type="submit" value="送出新增"></FORM>
 </body>
 
+<script>
+    $("#twzipcode").twzipcode({
+    	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
+    	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 
+    	countyName: "city", // 自訂城市 select 標籤的 name 值
+    	districtName: "town" // 自訂區別 select 標籤的 name 值
+    	});
 
+</script>
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
@@ -207,7 +224,19 @@
            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
         });
         
+        $('#f_date2').datetimepicker({
+	       theme: '',              //theme: 'dark',
+	       timepicker:false,       //timepicker:true,
+	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+		   value: '<%=user_dob%>', // value:   new Date(),
+           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+           //startDate:	            '2017/07/10',  // 起始日
+           //minDate:               '-1970-01-01', // 去除今日(不含)之前
+           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+        });
         
+
    
         // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
 

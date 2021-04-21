@@ -11,7 +11,8 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>員工資料修改 - updateEmpInput.jsp</title>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 <style>
 table#table-1 {
 	background-color: #CCCCFF;
@@ -114,8 +115,10 @@ th, td {
 			</tr>
 			<tr>
 				<td>地址:</td>
-				<td><input type="TEXT" name="addr" size="45"
-					value="<%=(empVO == null) ? "" : empVO.getAddr()%>" /></td>
+				<td>
+				<div id="twzipcode"></div>
+				<input type="TEXT" name="addr" size="45"
+					value="<%=empVO.getAddr()%>" /></td>
 			</tr>
 			<tr>
 				<td>email:</td>
@@ -150,12 +153,22 @@ th, td {
 		<br> 
 		<input type="hidden" name="action" value="update"> 
 		<input type="hidden" name="empno" value="<%=empVO.getEmpno()%>">
-		<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
+<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
+<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>">  <!--只用於:istAllEmp.jsp-->
 		<input type="submit" value="送出修改">
 	</FORM>
 </body>
 
-
+<script>
+$("#twzipcode").twzipcode({
+	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
+	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 
+	countyName: "city", // 自訂城市 select 標籤的 name 值
+	districtName: "dist", // 自訂區別 select 標籤的 name 值
+	countySel: "<%=empVO.getCity()%>",
+	districtSel: "<%=empVO.getDist()%>"
+	});
+</script>
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
@@ -245,5 +258,6 @@ th, td {
 	//              }
 	//              return [true, ""];
 	//      }});
+
 </script>
 </html>

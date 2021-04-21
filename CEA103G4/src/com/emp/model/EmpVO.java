@@ -18,8 +18,24 @@ public class EmpVO implements Serializable{
 	private Integer state;
 	private Date hiredate;
 	private String emp_pwd;
+	private String city;
+	private String dist;
+	
 
 	
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getDist() {
+		return dist;
+	}
+	public void setDist(String dist) {
+		this.dist = dist;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -94,20 +110,6 @@ public class EmpVO implements Serializable{
 		this.emp_pwd = empPwd;		
 	}
 	
-//	public String getGenAuthCode() {
-//		String empPwd = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";//儲存數字0-9 和 大小寫字母
-//		StringBuffer sb = new StringBuffer(); //宣告一個StringBuffer物件sb 儲存 驗證碼
-//		for (int i = 0; i < 8; i++) {
-//			Random random = new Random();//建立一個新的隨機數生成器
-//			int index = random.nextInt(empPwd.length());//返回[0,string.length)範圍的int值    作用：儲存下標
-//			char ch = empPwd.charAt(index);//charAt() : 返回指定索引處的 char 值   ==》賦值給char字元物件ch
-//		 sb.append(ch);// append(char c) :將 char 引數的字串表示形式追加到此序列  ==》即將每次獲取的ch值作拼接
-//		}return sb.toString();		
-//	}
-//	
-//	public void setGenAuthCode(String genAuthCode) {
-//		this.genAuthCode = genAuthCode;
-//	}
-	
+
 	
 }

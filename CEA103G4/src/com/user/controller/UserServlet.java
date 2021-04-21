@@ -139,10 +139,37 @@ String user_name = req.getParameter("user_name");
 					errorMsgs.add("會員姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 	            }
 				
-String id_card = req.getParameter("id_card").trim();
-				if (id_card == null || id_card.trim().length() == 0) {
-					errorMsgs.add("身分証字號請勿空白");
-				}	
+				// 身分證驗證
+				String id_card = req.getParameter("id_card");
+				String input_id = id_card;
+				String checkLetter = "ABCDEFGHJKLMNPQRSTUVWXYZIO"; // 首字身分證英文字母代表之意義排序(小到大)
+				if (input_id.length() == 10){
+					char[] uc_id = input_id.toUpperCase().toCharArray();	
+					int[] idArray = new int [uc_id.length];		
+					if (checkLetter.indexOf(uc_id[0]) == -1 || (uc_id[1] != '1' && uc_id[1] != '2'))
+						errorMsgs.add("身分證格式不正確");
+					else{
+						int sum=0;
+						idArray[0] = checkLetter.indexOf(uc_id[0]) + 10;	// 第一個英文字運算
+						sum += idArray[0] / 10; // 將商數加總
+						idArray[0] %= 10; // 取餘數放回 idArray[0]
+						for (int i = 1; i < 10; i++) // 將身分證後9碼轉成整數(ASCII碼-48)
+							idArray[i] = (int)uc_id[i] - 48;
+						for (int i = 0; i < 9; i++){		
+							idArray[i] *= (9 - i); // 總和 sum += (idArray[0])*9...+ idArray[9]*1)
+							sum += idArray[i];
+						}
+						if ((10-sum%10)%10 != idArray[9]) // 檢查是否相等於檢查碼
+							errorMsgs.add("身分證不正確，請重新輸入！");
+					}
+				}
+				else
+					errorMsgs.add("身分證長度不正確！");
+				
+//				String id_card = req.getParameter("id_card").trim();
+//				if (id_card == null || id_card.trim().length() == 0) {
+//					errorMsgs.add("身分証字號請勿空白");
+//				}	
 				
 String user_gender = new String(req.getParameter("user_gender").trim());
 				
@@ -169,13 +196,22 @@ String user_mail = req.getParameter("user_mail").trim();
 					errorMsgs.add("手機號碼請勿空白");
 				}
 				
-				String user_addr = null;
+				String city = req.getParameter("city");
+				String town = req.getParameter("town");
+				
+				Integer zipcode = null;
 				try {
-user_addr = new String(req.getParameter("user_addr").trim());
+					zipcode = new Integer(req.getParameter("zipcode").trim());
 				} catch (NumberFormatException e) {
-					user_addr = "台北市中正區重慶南路一段122號";
-					errorMsgs.add("請填地址.");
+					zipcode = 0;
+					errorMsgs.add("請選擇郵遞區號");
 				}
+				
+				String user_addr = req.getParameter("user_addr").trim();
+				if (user_addr == null || user_addr.trim().length() == 0) {
+					errorMsgs.add("地址請勿空白");
+				}	
+				
 				
 				java.sql.Date regdate = null;
 				try {
@@ -244,6 +280,9 @@ cash = new Integer(req.getParameter("cash").trim());
 				userVO.setUser_mail(user_mail);
 				userVO.setUser_phone(user_phone);
 				userVO.setUser_mobile(user_mobile);
+				userVO.setCity(city);
+				userVO.setTown(town);
+				userVO.setZipcode(zipcode);
 				userVO.setUser_addr(user_addr);
 				userVO.setRegdate(regdate);
 				userVO.setUser_point(user_point);
@@ -268,7 +307,7 @@ cash = new Integer(req.getParameter("cash").trim());
 				/***************************2.開始修改資料*****************************************/
 				UserService userSvc = new UserService();
 				
-				userVO = userSvc.updateUser(user_id, user_pwd, user_name, id_card, user_gender,user_dob, user_mail, user_phone, user_mobile, user_addr, regdate, user_point, violation, user_state, user_comment, comment_total, cash);
+				userVO = userSvc.updateUser(user_id, user_pwd, user_name, id_card, user_gender,user_dob, user_mail, user_phone, user_mobile, city, town, zipcode, user_addr, regdate, user_point, violation, user_state, user_comment, comment_total, cash);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("userVO", userVO); // 資料庫update成功後,正確的的userVO物件,存入req
@@ -306,7 +345,40 @@ cash = new Integer(req.getParameter("cash").trim());
 					errorMsgs.add("會員姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 	            }
 				
+				// 身分證驗證
 				String id_card = req.getParameter("id_card");
+				String input_id = id_card;
+				String checkLetter = "ABCDEFGHJKLMNPQRSTUVWXYZIO"; // 首字身分證英文字母代表之意義排序(小到大)
+				if (input_id.length() == 10){
+					char[] uc_id = input_id.toUpperCase().toCharArray();	
+					int[] idArray = new int [uc_id.length];		
+					if (checkLetter.indexOf(uc_id[0]) == -1 || (uc_id[1] != '1' && uc_id[1] != '2'))
+						errorMsgs.add("身分證格式不正確");
+					else{
+						int sum=0;
+						idArray[0] = checkLetter.indexOf(uc_id[0]) + 10;	// 第一個英文字運算
+						sum += idArray[0] / 10; // 將商數加總
+						idArray[0] %= 10; // 取餘數放回 idArray[0]
+						for (int i = 1; i < 10; i++) // 將身分證後9碼轉成整數(ASCII碼-48)
+							idArray[i] = (int)uc_id[i] - 48;
+						for (int i = 0; i < 9; i++){		
+							idArray[i] *= (9 - i); // 總和 sum += (idArray[0])*9...+ idArray[9]*1)
+							sum += idArray[i];
+						}
+						if ((10-sum%10)%10 != idArray[9]) // 檢查是否相等於檢查碼
+							errorMsgs.add("身分證不正確，請重新輸入！");
+					}
+				}
+				else
+					errorMsgs.add("身分證長度不正確！");
+			
+//				String id_card = req.getParameter("id_card");
+//				String id_cardReg = "^[a-zA-Z]{1}[1-2]{1}[0-9]{8}$";
+//				if (id_card == null || id_card.trim().length() == 0) {
+//					errorMsgs.add("身份證字號請勿空白");
+//				} else if (!id_card.trim().matches(id_cardReg)) {
+//					errorMsgs.add("身份證字號不正確");
+//				}
 				
 				String user_gender = req.getParameter("user_gender").trim();
 				if (user_gender == null || user_gender.trim().length() == 0) {
@@ -337,6 +409,18 @@ cash = new Integer(req.getParameter("cash").trim());
 				} catch (NumberFormatException e) {
 					user_mobile = "0988888888";
 					errorMsgs.add("手機號碼請填數字.");
+				}
+				
+				String city = req.getParameter("city");
+				
+				String town = req.getParameter("town");
+				
+				Integer zipcode = null;
+				try {
+					zipcode = new Integer(req.getParameter("zipcode").trim());
+				} catch (NumberFormatException e) {
+					zipcode = 0;
+					errorMsgs.add("請選擇郵遞區號");
 				}
 				
 				String user_addr = req.getParameter("user_addr");
@@ -371,6 +455,9 @@ cash = new Integer(req.getParameter("cash").trim());
 				userVO.setUser_mail(user_mail);
 				userVO.setUser_phone(user_phone);
 				userVO.setUser_mobile(user_mobile);
+				userVO.setCity(city);
+				userVO.setTown(town);
+				userVO.setZipcode(zipcode);
 				userVO.setUser_addr(user_addr);
 				userVO.setRegdate(regdate);
 				userVO.setUser_point(user_point);
@@ -395,7 +482,7 @@ cash = new Integer(req.getParameter("cash").trim());
 //3. randomPassword -->password2
 		
 UserService userSvc = new UserService();
-userVO = userSvc.addUser(user_id, user_pwd, user_name, id_card, user_gender,user_dob, user_mail, user_phone, user_mobile, user_addr, regdate, user_point, violation, user_state, user_comment, comment_total, cash);
+userVO = userSvc.addUser(user_id, user_pwd, user_name, id_card, user_gender,user_dob, user_mail, user_phone, user_mobile, city, town, zipcode, user_addr, regdate, user_point, violation, user_state, user_comment, comment_total, cash);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/front-end/user/listAllUser.jsp";

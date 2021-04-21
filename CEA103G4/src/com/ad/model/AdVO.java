@@ -7,7 +7,7 @@ public class AdVO implements Serializable{
 	
 	private Integer ad_no;
 	private Integer empno;
-	private String ad_contact;
+	private String ad_content;
 	private byte[] ad_photo;
 	private Integer ad_state;
 	private Date ad_start_date;
@@ -26,11 +26,11 @@ public class AdVO implements Serializable{
 	public void setEmpno(Integer empno) {
 		this.empno = empno;
 	}
-	public String getAd_contact() {
-		return ad_contact;
+	public String getAd_content() {
+		return ad_content;
 	}
-	public void setAd_contact(String ad_contact) {
-		this.ad_contact = ad_contact;
+	public void setAd_content(String ad_content) {
+		this.ad_content = ad_content;
 	}
 	public byte[] getAd_photo() {
 		return ad_photo;

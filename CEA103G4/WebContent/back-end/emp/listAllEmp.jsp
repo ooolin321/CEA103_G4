@@ -83,7 +83,7 @@ th, td {
 		</ul>
 	</c:if>
 
-	<table>
+	<table  class="layui-table layui-form">
 		<tr>
 			<th>員工編號</th>
 			<th>員工姓名</th>
@@ -104,7 +104,7 @@ th, td {
 		<c:forEach var="empVO" items="${list}" begin="<%=pageIndex%>"
 			end="<%=pageIndex+rowsPerPage-1%>">
 
-			<tr>
+			<tr ${(empVO.empno==param.empno) ? 'bgcolor=#CCCCFF':''}>
 				<td>${empVO.empno}</td>
 				<td>${empVO.ename}</td>
 				<td>${empVO.job}</td>
@@ -118,7 +118,7 @@ th, td {
 					</c:when>
 				</c:choose>
 				<td>${empVO.dob}</td>
-				<td>${empVO.addr}</td>
+				<td>${empVO.city}${empVO.dist}${empVO.addr}</td>
 				<td>${empVO.email}</td>
 				<td>${empVO.sal}</td>
 				<%-- <td>${empVO.state}</td> --%>
@@ -141,7 +141,8 @@ th, td {
 						style="margin-bottom: 0px;">
 						<input type="submit" value="修改"> 
 						<input type="hidden" name="empno" value="${empVO.empno}">
-						<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller--> 
+			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+			     <input type="hidden" name="whichPage"	value="<%=whichPage%>">      
 						<input type="hidden" name="action" value="getOne_For_Update">
 					</FORM>
 				</td>
@@ -150,7 +151,8 @@ th, td {
 						ACTION="<%=request.getContextPath()%>/emp/emp.do"
 						style="margin-bottom: 0px;">
 						<input type="submit" value="刪除"> 
-						<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+						<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
+						<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>"> 
 						<input type="hidden" name="empno" value="${empVO.empno}"> 
 						<input type="hidden" name="action" value="delete">
 					</FORM>
@@ -161,4 +163,6 @@ th, td {
 	<%@ include file="page2.file"%>
 
 </body>
+<script src="<%=request.getContextPath()%>/static/admin/js/config.js"></script>
+<script src="<%=request.getContextPath()%>/static/admin/js/script.js"></script>
 </html>

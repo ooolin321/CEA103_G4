@@ -20,17 +20,17 @@ public class AuthDAO implements AuthDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CEA103_G4");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/admin");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = "insert into Auth (EMPNO,FUNNO) values (?, ?)";
-	private static final String UPDATE_STMT = "update Auth set STATE=? where EMPNO=? and FUNNO=?";
+	private static final String INSERT_STMT = "insert into Auth (FUNNO,EMPNO,AUTH_NO,STATE) values (?, ?, ?, ?)";
+	private static final String UPDATE_STMT = "update Auth set AUTH_NO, STATE=? where EMPNO=? and FUNNO=?";
 	private static final String DELETE_STMT = "delete from Auth where EMPNO=? and FUNNO=?";
 	private static final String GET_ONE_BY_EMPNO_STMT = "select * from Auth where EMPNO = ?";
 	private static final String GET_ALL_BY_EMPNO_STMT = "select * from Auth order by EMPNO";
-
+	private static final String GET_ALL_JOIN_EMP_STMT = "select * from AUTH join EMP where AUTH = ?";
 	@Override
 	public void insert(AuthVO authVO) {
 		Connection con = null;

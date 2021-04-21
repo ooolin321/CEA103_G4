@@ -20,19 +20,19 @@ public class ProductShowPhoto extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("image/*");
 		Integer product_no = new Integer(request.getParameter("product_no"));
-		
+	
 		if (product_no != null) {
-			ProductService productSvc = new ProductService();
-			Optional<ProductVO> productVO = productSvc.getProductPic(product_no);
-			
-			if (productVO.isPresent()) {
-				OutputStream os = response.getOutputStream();
-				os.write(productVO.get().getProduct_photo());
-				os.flush();
-				os.close();
-			}
+		ProductService productSvc = new ProductService();
+		Optional<ProductVO> productVO = productSvc.getProductPic(product_no);
+		
+		if (productVO.isPresent()) {
+			OutputStream out = response.getOutputStream();
+			out.write(productVO.get().getProduct_photo());
+			out.flush();
+			out.close();
 		}
-	}
+	} 
+}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

@@ -74,6 +74,15 @@ public class ProductService {
 	public List<ProductVO> getAllWithoutPhoto(){	
 		return dao.getAllWithoutPhoto();
 	}
+	
+	public List<ProductVO> getAllShop() {
+		return dao.getAllShop();
+	}
+	
+	
+	public List<String> findProductsBySearch(String product_name) {
+		return dao.findProductsBySearch(product_name);
+	}
 
 }
 

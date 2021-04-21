@@ -12,6 +12,7 @@
 <title>訂單資料新增 - addOrder.jsp</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+
 <style>
   table#table-1 {
 	background-color: #CCCCFF;
@@ -26,6 +27,9 @@
   h4 {
     color: blue;
     display: inline;
+  }
+  .fa-star {
+  	font-size:65px
   }
 </style>
 
@@ -42,8 +46,14 @@
   th, td {
     padding: 1px;
   }
+  .star {
+  	width: 20px;
+  	height: 20px;
+  }
+  textarea{
+  resize : none
+  }
 </style>
-
 </head>
 <body bgcolor='white'>
 
@@ -150,22 +160,61 @@
 	</tr>
 	<tr>
 		<td>賣家評價:</td>
-		<td><input type="TEXT" name="srating" size="45" /></td>
+		
+		<td>
+		<input type="hidden" name="srating" value="0" id="con"/>
+		<ion-icon name="star" class="star all-star" id="s1"></ion-icon>
+		<ion-icon name="star" class="star all-star" id="s2"></ion-icon>
+		<ion-icon name="star" class="star all-star" id="s3"></ion-icon>
+		<ion-icon name="star" class="star all-star" id="s4"></ion-icon>
+		<ion-icon name="star" class="star all-star" id="s5"></ion-icon>
+		</td>
 	</tr>
 	<tr>
 		<td>賣家評價內容:</td>
-		<td><input type="TEXT" name="srating_content" size="45" /></td>
+		<td><textarea ame="srating_content" rows="10" cols="43"></textarea></td>
+		<!-- <td><input type="TEXT" name="srating_content" size="45" /></td> -->
 	</tr>
 	<tr>
 		<td>點數回饋:</td>
 		<td><input type="TEXT" name="point" size="45" /></td>
 	</tr>
-
+	
 </table>
 <br>
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
+<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 </body>
+<script>
+	$(document).ready(function(){
+		$("#s1").click(function(){
+			$(".all-star").css("color","black");
+			$("#s1").css("color","yellow");
+			$("#con").val("1");
+		})
+		$("#s2").click(function(){
+			$(".all-star").css("color","black");
+			$("#s1,#s2").css("color","yellow");
+			$("#con").val("2");
+		})
+		$("#s3").click(function(){
+			$(".all-star").css("color","black");
+			$("#s1,#s2,#s3").css("color","yellow");
+			$("#con").val("3");
+		})
+		$("#s4").click(function(){
+			$(".all-star").css("color","black");
+			$("#s1,#s2,#s3,#s4").css("color","yellow");
+			$("#con").val("4");
+		})
+		$("#s5").click(function(){
+			$(".all-star").css("color","black");
+			$(".all-star").css("color","yellow");
+			$("#con").val("5");
+		})
+	})
+</script>
 <script>
 		$("#twzipcode").twzipcode({
 		zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中

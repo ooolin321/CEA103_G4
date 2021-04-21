@@ -91,6 +91,7 @@
 		<th>賣家評價分數</th>
 		<th>賣家評價內容</th>
 		<th>點數回饋</th>
+		
 	</tr>
 	<%@ include file="page1.file" %> 
 	<c:forEach var="orderVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -103,8 +104,8 @@
 			<td>${orderVO.order_price}</td>
 			<td>
 				${(orderVO.pay_method==0)? '錢包':''}
-				${(orderVO.pay_method==0)? '信用卡':''}
-				${(orderVO.pay_method==0)? '轉帳':''}
+				${(orderVO.pay_method==1)? '信用卡':''}
+				${(orderVO.pay_method==2)? '轉帳':''}
 			</td>
 			<td><fmt:formatDate value="${orderVO.pay_deadline}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			<td>${orderVO.rec_name}</td>
@@ -123,7 +124,6 @@
 			<td>${orderVO.srating}</td>
 			<td>${orderVO.srating_content}</td>
 			<td>${orderVO.point}</td>
-			<td><fmt:formatDate value="${orderVO.order_date}" pattern="yyyy-MM-dd"/></td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">

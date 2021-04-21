@@ -192,17 +192,13 @@ public class OrderServlet extends HttpServlet{
 	            }
 				
 				String rec_phone = req.getParameter("rec_phone");
-				String rec_phoneReg = "^[(0-9)]{0,11}$";
-				if(!rec_phone.trim().matches(rec_phoneReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("電話號碼: 只能是中、英文字母、數字和- , 且長度必需在10到11之間");
-	            }
 				
 				String rec_cellphone = req.getParameter("rec_cellphone");
-				String rec_cellphoneReg = "^[(0-9)]{10,11}$";
+				String rec_cellphoneReg = "^09[0-9]{8}$";
 				if (rec_cellphone == null || rec_cellphone.trim().length() == 0) {
 					errorMsgs.add("手機號碼: 請勿空白");
 				} else if(!rec_cellphone.trim().matches(rec_cellphoneReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("手機號碼: 只能是中、英文字母、數字和- , 且長度必需在10到11之間");
+					errorMsgs.add("手機號碼: 只能是數字 , 且長度是10");
 	            }
 				
 				Integer logistics = null;
@@ -365,17 +361,13 @@ public class OrderServlet extends HttpServlet{
 	            }
 				
 				String rec_phone = req.getParameter("rec_phone");
-				String rec_phoneReg = "^[(0-9)]{0,11}$";
-				if(!rec_phone.trim().matches(rec_phoneReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("電話號碼: 只能是中、英文字母、數字和- , 且長度必需在10到11之間");
-	            }
 				
 				String rec_cellphone = req.getParameter("rec_cellphone");
-				String rec_cellphoneReg = "^[(0-9)]{10,11}$";
+				String rec_cellphoneReg = "^09[0-9]{8}$";
 				if (rec_cellphone == null || rec_cellphone.trim().length() == 0) {
 					errorMsgs.add("手機號碼: 請勿空白");
 				} else if(!rec_cellphone.trim().matches(rec_cellphoneReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("手機號碼: 只能是中、英文字母、數字和- , 且長度必需在10到11之間");
+					errorMsgs.add("手機號碼: 只能是數字 , 且長度必需是10");
 	            }
 				
 				Integer logistics = null;

@@ -1,16 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.emp.model.*"%>
+<%@ page import="com.fun.model.*"%>
 
 <%
-	EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
+	FunVO funVO = (FunVO) request.getAttribute("funVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
 %>
-<%=empVO == null%>
+
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>員工資料修改 - updateEmpInput.jsp</title>
+<title>員工資料修改 - updateFunInput.jsp</title>
 
 <style>
 table#table-1 {
@@ -54,9 +54,9 @@ th, td {
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>員工資料修改 - updateEmpInput.jsp</h3>
+				<h3>功能資料修改 - updateFunInput.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/back-end/emp/selectEmp.jsp"><img src="<%=request.getContextPath()%>/images/back1.gif"
+					<a href="<%=request.getContextPath()%>/back-end/fun/selectFun.jsp"><img src="<%=request.getContextPath()%>/images/back1.gif"
 						width="100" height="32" border="0">回首頁</a>
 				</h4>
 			</td>
@@ -75,168 +75,35 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/fun/fun.do" name="form1">
 		<table>
 			<tr>
-				<td>員工編號:<font color=red><b>*</b></font></td>
-				<td><%=empVO.getEmpno()%></td>
+				<td> 功能編號:<font color=red><b>*</b></font></td>
+				<td><%=funVO.getFunno()%></td>
 			</tr>
 
 			<tr>
-				<td>員工姓名:</td>
-				<td><input type="TEXT" name="ename" size="45"
-					value="<%=(empVO == null) ? "" : empVO.getEname()%>" /></td>
+				<td>功能名稱:</td>
+				<td><input type="TEXT" name="fun_name" size="45"
+					value="<%=(funVO == null) ? "" : funVO.getFunName()%>" /></td>
 			</tr>
 
 			<tr>
-				<td>職位:</td>
-				<td><input type="TEXT" name="job" size="45"
-					value="<%=(empVO == null) ? "" : empVO.getJob()%>" /></td>
+				<td>狀態:</td>
+				<td><input type="TEXT" name="state" size="45"
+					value="<%=(funVO == null) ? "" : funVO.getState()%>" /></td>
 			</tr>
 
-			<tr>
-				<td>身份證字號:</td>
-				<td><input type="TEXT" name="id" size="45"
-				value="<%=(empVO == null) ? "" : empVO.getId()%>" /></td>
-			</tr>
-			<tr>
-				<td>性別:</td>
-				<td><select size="1" name="gender">
-						<option value="M">男
-						<option value="W">女
-					</select></td>
-			</tr>
-			<tr>
-				<td>生日:</td>
-				<td><input name="dob" id="f_date2" type="text"></td>
-			</tr>
-			<tr>
-				<td>地址:</td>
-				<td><input type="TEXT" name="addr" size="45"
-					value="<%=(empVO == null) ? "" : empVO.getAddr()%>" /></td>
-			</tr>
-			<tr>
-				<td>薪水:</td>
-				<td><input type="TEXT" name="sal" size="45"
-					value="<%=(empVO == null) ? "" : empVO.getSal()%>" /></td>
-			</tr>
-			<tr>
-			<td>狀態:</td>
-				<td><select size="1" name="state">
-						<option value="1">在職
-						<option value="0">離職
-					</select>
-				</td>
-			</tr>
-
-			<tr>
-				<td>到職日期:</td>
-				<td><input name="hiredate" id="f_date1" type="text"></td>
-			</tr>
-
-			<tr>
-				<td>員工密碼:</td>
-				<td><input type="TEXT" name="emp_pwd" size="45"
-					value="<%=(empVO == null) ? "" : empVO.getEmp_pwd()%>" /></td>
-			</tr>
+			
+			
 
 		</table>
 		<br> <input type="hidden" name="action" value="update"> 
-		<input type="hidden" name="empno" value="<%=empVO.getEmpno()%>"> 
-		<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">
+		<input type="hidden" name="funno" value="<%=funVO.getFunno()%>"> 
+<%-- 		<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> --%>
 		<input type="submit" value="送出修改">
 	</FORM>
 </body>
 
 
-
-<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
-
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script
-	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-<style>
-.xdsoft_datetimepicker .xdsoft_datepicker {
-	width: 300px; /* width:  300px; */
-}
-
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-	height: 151px; /* height:  151px; */
-}
-</style>
-
-<script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
-           theme: '',              //theme: 'dark',
- 	       timepicker:false,       //timepicker:true,
- 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
- 	      value: '<%=empVO.getHiredate()%>', // value:   new Date(),
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-	//startDate:	            '2017/07/10',  // 起始日
-	//minDate:               '-1970-01-01', // 去除今日(不含)之前
-	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-	});
-        $.datetimepicker.setLocale('zh');
-        $('#f_date2').datetimepicker({
-           theme: '',              //theme: 'dark',
- 	       timepicker:false,       //timepicker:true,
- 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
- 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
- 	      value: '<%=empVO.getDob()%>', // value:   new Date(),
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-	//startDate:	            '2017/07/10',  // 起始日
-	//minDate:               '-1970-01-01', // 去除今日(不含)之前
-	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-	});
-	// ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
-
-	//      1.以下為某一天之前的日期無法選擇
-	//      var somedate1 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() <  somedate1.getYear() || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-
-	//      2.以下為某一天之後的日期無法選擇
-	//      var somedate2 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-
-	//      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
-	//      var somedate1 = new Date('2017-06-15');
-	//      var somedate2 = new Date('2017-06-25');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() <  somedate1.getYear() || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() <  somedate1.getMonth()) || 
-	//		           (date.getYear() == somedate1.getYear() && date.getMonth() == somedate1.getMonth() && date.getDate() < somedate1.getDate())
-	//		             ||
-	//		            date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
-</script>
 </html>

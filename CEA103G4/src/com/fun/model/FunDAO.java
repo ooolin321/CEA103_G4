@@ -10,6 +10,7 @@ import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.sql.DataSource;
 
 public class FunDAO implements FunDAO_interface {
@@ -24,11 +25,11 @@ public class FunDAO implements FunDAO_interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO FUN (FUN_NAME,STATE) VALUES (?)";
+	private static final String INSERT_STMT = "INSERT INTO FUN (FUN_NAME,STATE) VALUES (?，?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM FUN ORDER BY FUNNO";
 	private static final String GET_ONE_STMT = "SELECT * FROM FUN WHERE FUNNO = ?";
 	private static final String DELETE = "DELETE FROM FUN WHERE FUNNO = ?";
-	private static final String UPDATE = "UPDATE FUN SET FUN_NAME=? STATE=? WHERE FUNNO = ?";
+	private static final String UPDATE = "UPDATE FUN SET FUN_NAME=? , STATE=? WHERE FUNNO = ?";
 
 	@Override
 	public void insert(FunVO funVO) {
@@ -70,11 +71,12 @@ public class FunDAO implements FunDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setString(1, funVO.getFunName());
-			
+			pstmt.setInt(2, funVO.getState());
+			pstmt.setInt(3, funVO.getFunno());
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("database發生錯誤." + se.getMessage());
-		}finally {
+		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -96,7 +98,7 @@ public class FunDAO implements FunDAO_interface {
 	public void delete(Integer funno) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
@@ -131,25 +133,24 @@ public class FunDAO implements FunDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
-			
+
 			pstmt.setInt(1, funno);
-			
+
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
 				funVO = new FunVO();
 				funVO.setFunno(rs.getInt("funno"));
 				funVO.setFunName(rs.getString("fun_name"));
 				funVO.setState(rs.getInt("state"));
-							}
+			}
 		} catch (SQLException se) {
-			throw new RuntimeException("database發生錯誤."
-					+ se.getMessage());
-		}	finally {
+			throw new RuntimeException("database發生錯誤." + se.getMessage());
+		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
@@ -179,27 +180,27 @@ public class FunDAO implements FunDAO_interface {
 	public List<FunVO> getAll() {
 		List<FunVO> list = new ArrayList<FunVO>();
 		FunVO funVO = null;
-		
-		Connection con =null;
+
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
-			
-			funVO = new FunVO();
-			funVO.setFunno(rs.getInt("funno"));
-			funVO.setFunName(rs.getString("fun_name"));
-			funVO.setState(rs.getInt("state"));
-			list.add(funVO);
-		}	
+
+				funVO = new FunVO();
+				funVO.setFunno(rs.getInt("funno"));
+				funVO.setFunName(rs.getString("fun_name"));
+				funVO.setState(rs.getInt("state"));
+				list.add(funVO);
+			}
 		} catch (SQLException se) {
-			throw new RuntimeException("database發生錯誤."
-					+ se.getMessage());
-		}if (rs != null) {
+			throw new RuntimeException("database發生錯誤." + se.getMessage());
+		}
+		if (rs != null) {
 			try {
 				rs.close();
 			} catch (SQLException se) {
@@ -220,7 +221,7 @@ public class FunDAO implements FunDAO_interface {
 				e.printStackTrace(System.err);
 			}
 		}
-	
+
 		return list;
 	}
 }

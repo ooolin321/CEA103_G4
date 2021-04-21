@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>IBM Emp: Home</title>
+<title>IBM Auth: Home</title>
 
 <style>
   table#table-1 {
@@ -30,10 +30,10 @@
 <body bgcolor='white'>
 
 <table id="table-1">
-   <tr><td><h3>IBM Emp: Home</h3><h4>( MVC )</h4></td></tr>
+   <tr><td><h3>IBM Auth: Home</h3><h4>( MVC )</h4></td></tr>
 </table>
 
-<p>This is the Home page for IBM Emp: Home</p>
+<p>This is the Home page for IBM Auth: Home</p>
 
 <h3>資料查詢:</h3>
 	
@@ -48,10 +48,7 @@
 </c:if>
 
 <ul>
-
- 
-  <li><a href='<%=request.getContextPath()%>/back-end/emp/listAllEmp.jsp'>List</a> all Emps.  <br><br></li><p> 
-<li><a href='<%=request.getContextPath()%>/back-end/fun/listAllFun.jsp'>List</a> all Functions.  <br><br></li>
+<li><a href='<%=request.getContextPath()%>/back-end/fun/listAllAuth.jsp'>List</a> all Functions.  <br><br></li>
   <li>
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
         <b>輸入員工編號 (如14001):</b>
@@ -64,11 +61,11 @@
   <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
    
   <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" >
        <b>選擇員工編號:</b>
        <select size="1" name="empno">
-         <c:forEach var="empVO" items="${empSvc.all}" > 
-          <option value="${empVO.empno}">${empVO.empno}
+         <c:forEach var="authVO" items="${authSvc.all}" > 
+          <option value="${authVO.empno}">${authVO.empno}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -77,11 +74,11 @@
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" >
        <b>選擇員工姓名:</b>
        <select size="1" name="empno">
-         <c:forEach var="empVO" items="${empSvc.all}" > 
-          <option value="${empVO.empno}">${empVO.ename}
+         <c:forEach var="authVO" items="${authSvc.all}" > 
+          <option value="${authVO.empno}">${authVO.ename}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
@@ -94,7 +91,7 @@
 <h3>員工管理</h3>
 
 <ul> 
- <li><a href='<%=request.getContextPath()%>/back-end/emp/addEmp.jsp'>Add</a> a new Emp.</li>
+ <li><a href='<%=request.getContextPath()%>/back-end/auth/addAuth.jsp'>Add</a> a new Emp.</li>
 </ul>
 </body>
 </html>

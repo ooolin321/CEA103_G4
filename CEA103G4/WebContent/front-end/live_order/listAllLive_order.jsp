@@ -116,14 +116,10 @@
 			<td>${live_orderVO.zipcode}${live_orderVO.city}${live_orderVO.town}${live_orderVO.rec_addr}</td>
 			<td>${live_orderVO.rec_phone}</td>
 			<td>${live_orderVO.rec_cellphone}</td>
-<<<<<<< HEAD
 			<td>${(live_orderVO.logistics==0)? '宅配':'超商取貨'}</td>
-=======
 			<td>
 			${(live_orderVO.logistics==0)? '宅配':'超商'}
 			</td>
-			
->>>>>>> 70fb49217ae6c69c80ae0397e2d68ac3093d7c96
 			<td>
 			${(live_orderVO.logistics_state==0)? '未出貨':''}
 			${(live_orderVO.logistics_state==1)? '已出貨':''}
@@ -149,10 +145,18 @@
 			     <input type="hidden" name="live_order_no"  value="${live_orderVO.live_order_no}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_order/live_order.do" style="margin-bottom: 0px;">
+			    <input type="submit" value="送出查詢"> 
+			    <input type="hidden" name="live_order_no" value="${live_orderVO.live_order_no}">
+			    <input type="hidden" name="action" value="listDetails_ByNo"></FORM>
+			</td>
 		</tr>
 	</c:forEach>
 </table>
 <%@ include file="page2.file" %>
-
+<%if (request.getAttribute("listDetails_ByNo")!=null){%>
+       <jsp:include page="listDetails_ByNo.jsp" />
+<%} %>
 </body>
 </html>

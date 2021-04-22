@@ -5,12 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.live_order_detail.model.Live_order_detailVO;
 
 public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 	private static DataSource ds = null;
@@ -28,7 +32,7 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 	private static final String GET_ONE_STMT = "SELECT * FROM LIVE_ORDER where LIVE_ORDER_NO = ?";
 	private static final String DELETE = "DELETE FROM LIVE_ORDER where LIVE_ORDER_NO = ?";
 	private static final String UPDATE = "UPDATE LIVE_ORDER SET ORDER_DATE=?,ORDER_STATE=?,ORDER_SHIPPING=?,ORDER_PRICE=?,PAY_METHOD=?,PAY_DEADLINE=?,REC_NAME=?,REC_ADDR=?,REC_PHONE=?,REC_CELLPHONE=?,LOGISTICS=?,LOGISTICS_STATE=?,DISCOUNT=?,LIVE_NO=?,USER_ID=?,SELLER_ID=?,SRATING=?,SRATING_CONTENT=?,POINT=? ,CITY=?,TOWN=?,ZIPCODE=? WHERE LIVE_ORDER_NO = ?";
-	
+	private static final String GET_Details_ByNo_STMT = "SELECT * FROM LIVE_ORDER_DETAIL WHERE LIVE_ORDER_NO = ? ORDER BY PRODUCT_NO";
 	
 	
 
@@ -337,6 +341,61 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public Set<Live_order_detailVO> getDetailsByNo(Integer live_order_no) {
+		Set<Live_order_detailVO> set = new LinkedHashSet<Live_order_detailVO>();
+		Live_order_detailVO live_order_detailVO = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+	
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_Details_ByNo_STMT);
+			pstmt.setInt(1, live_order_no);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				live_order_detailVO = new Live_order_detailVO();
+				live_order_detailVO.setLive_order_no(rs.getInt("live_order_no"));
+				live_order_detailVO.setProduct_no(rs.getInt("product_no"));
+				live_order_detailVO.setPrice(rs.getInt("price"));
+				live_order_detailVO.setProduct_num(rs.getInt("product_num"));
+				set.add(live_order_detailVO); // Store the row in the vector
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return set;
 	}
 
 }

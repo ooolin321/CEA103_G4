@@ -1,6 +1,9 @@
 package com.live_order.model;
 
 import java.util.List;
+import java.util.Set;
+
+import com.live_order_detail.model.Live_order_detailVO;
 
 public class Live_orderService {
 	private Live_orderDAO_interface dao;
@@ -93,6 +96,10 @@ public class Live_orderService {
 
 	public List<Live_orderVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public Set<Live_order_detailVO> getDetailsByNo(Integer live_order_no){
+		return dao.getDetailsByNo(live_order_no);
 	}
 
 }

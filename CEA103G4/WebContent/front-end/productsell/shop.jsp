@@ -17,7 +17,7 @@
 <jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
    
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -273,6 +273,19 @@
 
 
     <!-- Js Plugins -->
+    <script>
+    //取到搜尋框的值
+    let search = document.querySelector(".ti-search");
+    search.addEventListener('click', () => {
+    	event.preventDefault()
+    	alert($("#search-input").val());
+    });
+    	
+    
+    </script>
+    
+    
+    
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

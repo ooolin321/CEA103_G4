@@ -18,7 +18,7 @@
             <div class="col-lg-7 col-md-7">
               <div class="advanced-search">
                 <form class="input-group" id="search">
-                  <input type="text" id="search-input" placeholder="What do you need?" />
+                  <input type="text" id="search-input" value="" placeholder="What do you need?" />
                   <button type="submit"><i class="ti-search"></i></button>
                 </form>
               </div>

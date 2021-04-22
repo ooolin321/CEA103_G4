@@ -222,8 +222,8 @@
 			$('.zoomImg').attr({src: imgurl});
 		}
 	});
-
-    $('.product-pic-zoom').zoom();
+//商品圖片經過會有特效放大
+//    $('.product-pic').zoom();
     
     /*-------------------
 		Quantity change

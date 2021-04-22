@@ -88,8 +88,10 @@ th, td {
 			<tr>
 				<td>直播訂單日期:<font color=red><b>*</b></font></td>
 				<td><fmt:formatDate value="${live_orderVO.order_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-
-				
+			</tr>
+			<tr>
+				<td>直播訂單付款到期日:<font color=red><b>*</b></font></td>
+				<td><fmt:formatDate value="${live_orderVO.pay_deadline}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			</tr>
 			<tr>
 				<td>直播訂單狀態:</td>
@@ -100,13 +102,13 @@ th, td {
 				</select></td>
 			</tr>
 			<tr>
-				<td>直播訂單運費:</td>
-				<td><input type="TEXT" name="order_shipping" size="45"
-					value="<%=live_orderVO.getOrder_shipping()%>" /></td>
-			</tr>
-			<tr>
 				<td>直播訂單價格:<font color=red><b>*</b></font></td>
 				<td><%=live_orderVO.getOrder_price()%></td>
+			</tr>
+			<tr>
+				<td>回饋點數:</td>
+				<td><input type="TEXT" name="point" size="45"
+					value="<%=live_orderVO.getPoint()%>" /></td>
 			</tr>
 			<tr>
 				<td>直播訂單付款方式:</td>
@@ -115,11 +117,6 @@ th, td {
 						<option value="1" ${(live_orderVO.pay_method==1)? 'selected':''}>信用卡</option>
 						<option value="2" ${(live_orderVO.pay_method==2)? 'selected':''}>轉帳</option>
 				</select></td>
-			</tr>
-			<tr>
-				<td>直播訂單付款到期日:<font color=red><b>*</b></font></td>
-				<td><fmt:formatDate value="${live_orderVO.pay_deadline}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-				
 			</tr>
 
 			<tr>
@@ -153,10 +150,17 @@ th, td {
 
 			<tr>
 				<td>物流方式:</td>
-				<td><select name="logistics">
+				<td><select name="logistics" id="logistics">
 						<option value="0" ${(live_orderVO.logistics==0)? 'selected':''}>宅配</option>
 						<option value="1" ${(live_orderVO.logistics==1)? 'selected':''}>超商</option>
 				</select></td>
+			</tr>
+			<tr>
+				<td>運費:</td>
+				<td>
+				<div id="showOrder_shipping">${live_orderVO.order_shipping}</div>
+				<input type="HIDDEN" name="order_shipping" id="order_shipping" size="45" value="<%=live_orderVO.getOrder_shipping()%>" />
+				</td>
 			</tr>
 
 			<tr>
@@ -180,7 +184,7 @@ th, td {
 			<jsp:useBean id="liveSvc" scope="page" class="com.live.model.LiveService" />
 			<tr>
 				<td>直播編號:<font color=red><b>*</b></font></td>
-				<td><select size="1" name="live_no">
+				<td><select size="1" name="live_no" id="live_no">
 					<c:forEach var="liveVO" items="${liveSvc.all}">
 						<option value="${liveVO.live_no}" ${(live_orderVO.live_no==liveVO.live_no)? 'selected':'' } >${liveVO.live_no}
 					</c:forEach>
@@ -188,6 +192,13 @@ th, td {
 			</tr>
 
 			<jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
+			<tr>
+				<td>賣家帳號:<font color=red><b>*</b></font></td>
+				<td>
+				<div id="showSellerId">${live_orderVO.seller_id}</div>
+				<input name="seller_id" id="seller_id" value="<%=live_orderVO.getSeller_id()%>" type="HIDDEN" />
+				</td>
+			</tr>
 			<tr>
 				<td>買家帳號:<font color=red><b>*</b></font></td>
 				<td><select size="1" name="user_id">
@@ -197,14 +208,6 @@ th, td {
 				</select></td>
 			</tr>
 
-			<tr>
-				<td>賣家帳號:<font color=red><b>*</b></font></td>
-				<td><select size="1" name="seller_id">
-					<c:forEach var="userVO" items="${userSvc.all}">
-						<option value="${userVO.user_id}" ${(live_orderVO.seller_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
-					</c:forEach>
-				</select></td>
-			</tr>
 
 
 
@@ -226,11 +229,6 @@ th, td {
 			</tr>
 
 
-			<tr>
-				<td>回饋點數:</td>
-				<td><input type="TEXT" name="point" size="45"
-					value="<%=live_orderVO.getPoint()%>" /></td>
-			</tr>
 
 		</table>
 
@@ -251,6 +249,24 @@ $("#twzipcode").twzipcode({
 	countySel: "<%=live_orderVO.getCity()%>",
 	districtSel: "<%=live_orderVO.getTown()%>",
 	zipcodeSel: "<%=live_orderVO.getZipcode()%>"
+	});
+	
+$("#logistics").change(function(e) {
+	if($("#logistics").val() == '0'){
+		$("#order_shipping").attr('value', '100');
+		$("#showOrder_shipping").text("100");
+	}else{
+		$("#order_shipping").attr('value', '50');
+		$("#showOrder_shipping").text("50") ;
+	}
+	});
+$("#live_no").change(function(e) {
+	<c:forEach var="liveVO" items="${liveSvc.all}">	
+	if($("#live_no").val()==${liveVO.live_no}){		
+		$("#seller_id").attr('value', '${liveVO.user_id}');
+		$("#showSellerId").text('${liveVO.user_id}');
+	}	
+	</c:forEach>
 	});
 </script>
 

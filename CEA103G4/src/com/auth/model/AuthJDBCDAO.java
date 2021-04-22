@@ -1,47 +1,30 @@
 package com.auth.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.sql.*;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
+public class AuthJDBCDAO implements AuthDAO_interface {
 
+	String driver = "com.mysql.cj.jdbc.Driver";
+	String url = "jdbc:mysql://localhost:3306/CEA103_G4?serverTimezone=Asia/Taipei";
+	String userid = "root";
+	String passwd = "771414";
 
-
-public class AuthDAO implements AuthDAO_interface {
-
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CEA103_G4");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
-	private static final String INSERT_STMT = "insert into Auth (FUNNO,EMPNO,AUTH_NO) values (?, ?, ?)";
-	private static final String UPDATE_STMT = "update Auth set AUTH_NO=? where EMPNO=? and FUNNO=?";
+	private static final String INSERT_STMT = "insert into Auth (FUNNO,EMPNO,AUTH_NO,STATE) values (?, ?, ?, ?)";
+	private static final String UPDATE_STMT = "update Auth set AUTH_NO=?, STATE=? where EMPNO=? and FUNNO=?";
 	private static final String DELETE_STMT = "delete from Auth where EMPNO=? and FUNNO=?";
-	private static final String GET_ALL_FROM_EMP_JOIN_AUTH_STMT = "SELECT * FROM EMP JION CEA103G4.AUTH WHERE STATE = ?";
-//							select CEA103_G4.empno,CEA103_G4.ename from emp CEA103_G4 join auth where AUTH_NO = 1;
 	private static final String GET_ONE_BY_EMPNO_AND_FUNNO_STMT = "select * from Auth where EMPNO = ? and FUNNO=?";
 	private static final String GET_ALL_BY_EMPNO_STMT = "select * from Auth order by EMPNO";
-	
 
-	
 	@Override
 	public void insert(AuthVO authVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
-			con = ds.getConnection();
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, authVO.getFunno());
@@ -49,7 +32,10 @@ public class AuthDAO implements AuthDAO_interface {
 			pstmt.setInt(3, authVO.getAuth_no());
 			
 
-			pstmt.executeUpdate();
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -69,6 +55,7 @@ public class AuthDAO implements AuthDAO_interface {
 				}
 			}
 		}
+
 	}
 
 	@Override
@@ -76,15 +63,17 @@ public class AuthDAO implements AuthDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE_STMT);
 			pstmt.setInt(1, authVO.getAuth_no());
 			pstmt.setInt(2, authVO.getEmpno());
 			pstmt.setInt(3, authVO.getFunno());
-			
 
 			pstmt.executeUpdate();
-
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -111,13 +100,17 @@ public class AuthDAO implements AuthDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(DELETE_STMT);
 
 			pstmt.setInt(1, empno);
 			pstmt.setInt(2, funno);
 
 			pstmt.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -137,43 +130,42 @@ public class AuthDAO implements AuthDAO_interface {
 				}
 			}
 		}
+
 	}
 
 	@Override
-	public AuthVO findByPrimeKey(Integer empno,Integer funno) {
+	public AuthVO findByPrimeKey(Integer empno, Integer funno) {
 		AuthVO authVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
 		try {
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+
 			pstmt = con.prepareStatement(GET_ONE_BY_EMPNO_AND_FUNNO_STMT);
 
 			pstmt.setInt(1, empno);
 			pstmt.setInt(2, funno);
+			
 			rs = pstmt.executeQuery();
-
+			
 			while (rs.next()) {
 				// authorityVo 也稱為 Domain objects
 				authVO = new AuthVO();
+				authVO.setAuth_no(rs.getInt("AUTH_NO"));
 				authVO.setEmpno(rs.getInt("EMPNO"));
 				authVO.setFunno(rs.getInt("FUNNO"));
-				authVO.setAuth_no(rs.getInt("AUTH_NO"));
-				
 			}
-		}  catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			
+			
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -189,10 +181,10 @@ public class AuthDAO implements AuthDAO_interface {
 				}
 			}
 		}
+
 		return authVO;
 	}
-	
-	
+
 	@Override
 	public List<AuthVO> getAll() {
 		List<AuthVO> list = new ArrayList<AuthVO>();
@@ -201,33 +193,28 @@ public class AuthDAO implements AuthDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+
 		try {
-			con = ds.getConnection();
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ALL_BY_EMPNO_STMT);
 			rs = pstmt.executeQuery();
-			
-
 			while (rs.next()) {
 				// authorityVO 也稱為 Domain objects
 				authVO = new AuthVO();
-				authVO.setEmpno(rs.getInt("FUNNO"));
-				authVO.setFunno(rs.getInt("EMPNO"));
+				authVO.setEmpno(rs.getInt("EMPNO"));
+				authVO.setFunno(rs.getInt("FUNNO"));
 				authVO.setAuth_no(rs.getInt("AUTH_NO"));
-				
+
 				list.add(authVO); // Store the row in the list
 			}
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -243,8 +230,61 @@ public class AuthDAO implements AuthDAO_interface {
 				}
 			}
 		}
+
 		return list;
 	}
+	public static void main(String[] args) {
 
+		AuthJDBCDAO dao = new AuthJDBCDAO();
 
+//		// 新增
+//		AuthVO authVO1 = new AuthVO();
+//		authVO1.setAuth_no(1);;
+//		authVO1.setState(1);
+//		authVO1.setFunno(14001);
+//		authVO1.setEmpno(15001);
+//		dao.insert(authVO1);
+//
+//		 //修改
+//		AuthVO authVO2 = new AuthVO();
+//		authVO2.setAuth_no(1);;
+//		authVO2.setState(0);
+//		authVO2.setFunno(14001);
+//		authVO2.setEmpno(15001);
+//		dao.update(authVO2);
+
+		// 刪除
+//		dao.delete(14001,15001);
+
+//		// 查詢
+		AuthVO authVO3 = dao.findByPrimeKey(14001,15003);
+		System.out.println(authVO3.getFunno());
+		System.out.println(authVO3.getEmpno());
+		System.out.print(authVO3.getAuth_no() + ",");
+
+		
+	
+
+//		// 查詢部門
+//		List<DeptVO> list = dao.getAll();
+//		for (DeptVO aDept : list) {
+//			System.out.print(aDept.getDeptno() + ",");
+//			System.out.print(aDept.getDname() + ",");
+//			System.out.print(aDept.getLoc());
+//			System.out.println();
+//		}
+//		
+//		// 查詢某部門的員工
+//		Set<EmpVO> set = dao.getEmpsByDeptno(10);
+//		for (EmpVO aEmp : set) {
+//			System.out.print(aEmp.getEmpno() + ",");
+//			System.out.print(aEmp.getEname() + ",");
+//			System.out.print(aEmp.getJob() + ",");
+//			System.out.print(aEmp.getHiredate() + ",");
+//			System.out.print(aEmp.getSal() + ",");
+//			System.out.print(aEmp.getComm() + ",");
+//			System.out.print(aEmp.getDeptno());
+//			System.out.println();
+//		}
+	}
 }

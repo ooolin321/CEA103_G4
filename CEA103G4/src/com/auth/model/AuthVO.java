@@ -4,15 +4,7 @@ public class AuthVO {
 	private Integer funno;
 	private Integer empno;
 	private Integer auth_no;
-	private Integer state;
-
-	public Integer getState() {
-		return state;
-	}
-
-	public void setState(Integer state) {
-		this.state = state;
-	}
+	
 
 	public Integer getFunno() {
 		return funno;

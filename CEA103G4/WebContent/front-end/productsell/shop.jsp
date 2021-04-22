@@ -7,7 +7,7 @@
 
 <%
 	ProductDAO dao = new ProductDAO();
-    List<ProductVO> list = dao.getAll();
+    List<ProductVO> list = dao.getAllShop();
     pageContext.setAttribute("list",list);
     
 	Product_TypeDAO dao2 = new Product_TypeDAO();
@@ -238,8 +238,7 @@
                     </ul>
                 </div>
                 <div class="pi-text">
-                <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}">
-                   	 <div class="catagory-name">${productVO.pdtype_no}</div>                  
+                <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}">                  
                         <h5>${productVO.product_name}</h5>    
                     	<div class="product-price"><span>$</span>
                         ${productVO.product_price}

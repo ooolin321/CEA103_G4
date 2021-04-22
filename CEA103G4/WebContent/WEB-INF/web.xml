@@ -110,6 +110,14 @@
 		<url-pattern>/emp/emp.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>AuthServlet</servlet-name>
+		<servlet-class>com.auth.controller.AuthServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AuthServlet</servlet-name>
+		<url-pattern>/auth/auth.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>Live_reportServlet</servlet-name>
 		<servlet-class>com.live_report.controller.Live_reportServlet</servlet-class>
 	</servlet>

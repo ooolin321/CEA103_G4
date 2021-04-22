@@ -106,10 +106,10 @@ th, td {
 						<td>開啟</td>
 					</c:when>
 				</c:choose>
-				<td><select size="1" name="state">
-						<option value="1" ${(funVO.state==0)? 'selected':''}>開啟</option>
-						<option value="0" ${(funVO.state==0)? 'selected':''}>關閉</option>
-				</select></td>
+<!-- 				<td><select size="1" name="state"> -->
+<%-- 						<option value="1" ${(funVO.state==0)? 'selected':''}>開啟</option> --%>
+<%-- 						<option value="0" ${(funVO.state==0)? 'selected':''}>關閉</option> --%>
+<!-- 				</select></td> -->
 
 				<td>
 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/fun/fun.do"
@@ -122,7 +122,8 @@ th, td {
 						
 					</FORM>
 				</td>
-				
+
+
 <!-- 				<td> -->
 <%-- 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/fun/fun.do" --%>
 <!-- 						style="margin-bottom: 0px;"> -->
@@ -134,6 +135,7 @@ th, td {
 			</tr>
 		</c:forEach>
 	</table>
+
 <%-- 	<%@ include file="page2.file"%> --%>
 
 </body>

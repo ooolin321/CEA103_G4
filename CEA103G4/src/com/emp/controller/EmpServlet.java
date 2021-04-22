@@ -193,7 +193,6 @@ public class EmpServlet extends HttpServlet {
 				EmpService empSvc = new EmpService();
 
 				EmpVO empVO = new EmpVO();
-
 				empVO.setEmpno(empno);
 				empVO.setEname(ename);
 				empVO.setJob(job);

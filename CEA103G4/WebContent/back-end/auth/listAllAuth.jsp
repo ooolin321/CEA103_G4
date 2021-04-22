@@ -1,20 +1,19 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.emp.model.*"%>
+<%@ page import="com.auth.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-	EmpService empSvc = new EmpService();
-	List<EmpVO> list = empSvc.getAll();
+	AuthService authSvc = new AuthService();
+	List<AuthVO> list = authSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
 
-
+<jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
 <html>
 <head>
-<title>所有員工資料 - listAllEmp.jsp</title>
+<title>所有權限資料 - listAllAuth.jsp</title>
  <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui/css/layui.css">
  <link rel="stylesheet" href="<%=request.getContextPath()%>/static/admin/css/style.css">
 <style>
@@ -62,9 +61,9 @@ th, td {
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>所有員工資料 - listAllEmp.jsp</h3>
+				<h3>所有權限資料 - listAllAuth.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/back-end/emp/selectEmp.jsp"><img
+					<a href="<%=request.getContextPath()%>/back-end/auth/selectAuth.jsp"><img
 						src="<%=request.getContextPath()%>/images/back1.gif" width="100"
 						height="32" border="0">回首頁</a>
 				</h4>
@@ -84,62 +83,33 @@ th, td {
 
 	<table  class="layui-table layui-form">
 		<tr>
+			<th>功能編號</th>
 			<th>員工編號</th>
-			<th>員工姓名</th>
-			<th>職位</th>
-			<th>身分證字號</th>
-			<th>性別</th>
-			<th>生日</th>
-			<th>地址</th>
-			<th>email</th>
-			<th>薪水</th>
 			<th>狀態</th>
-			<th>到職日期</th>
-			<th>員工密碼</th>
-			<th>修改</th>
-			<th>刪除</th>
 		</tr>
 		<%@ include file="page1.file"%>
-		<c:forEach var="empVO" items="${list}" begin="<%=pageIndex%>"
+		<c:forEach var="authVO" items="${list}" begin="<%=pageIndex%>"
 			end="<%=pageIndex+rowsPerPage-1%>">
 
-			<tr ${(empVO.empno==param.empno) ? 'bgcolor=#CCCCFF':''}>
-				<td>${empVO.empno}</td>
-				<td>${empVO.ename}</td>
-				<td>${empVO.job}</td>
-				<td>${empVO.id}</td>
-				<c:choose>
-					<c:when test="${empVO.gender==0}">
-						<td>女</td>
-					</c:when>
-					<c:when test="${empVO.gender==1}">
-						<td>男</td>
-					</c:when>
-				</c:choose>
-				<td>${empVO.dob}</td>
-				<td>${empVO.city}${empVO.dist}${empVO.addr}</td>
-				<td>${empVO.email}</td>
-				<td>${empVO.sal}</td>
-				<%-- <td>${empVO.state}</td> --%>
-					<c:choose>
-					<c:when test="${empVO.state==0}">
-						<td>離職</td>
-					</c:when>
-					<c:when test="${empVO.state==1}">
-						<td>在職</td>
-					</c:when>
-				</c:choose>
-				<td><fmt:formatDate value="${empVO.hiredate}"
-						pattern="yyyy-MM-dd" /></td>
-				<td>${empVO.emp_pwd}</td>
+			<tr ${(authVO.empno==param.empno) ? 'bgcolor=#CCCCFF':''}>
+				<td>${authVO.empno}</td>
+				<td>${authVO.funno}</td>
+				<td>${authVO.auth_no}</td>
+				
+<%-- 			<td><c:forEach var="deptVO" items="${deptSvc.all}"> --%>
+<%--                     <c:if test="${empVO.deptno==deptVO.deptno}"> --%>
+<%-- 	                    ${deptVO.deptno}【${deptVO.dname} - ${deptVO.loc}】 --%>
+<%--                     </c:if> --%>
+<%--                 </c:forEach> --%>
+<!-- 			</td> -->
 
-
+<%-- ${deptSvc.getOneDept(empVO.deptno).dname} --%>
 				<td>
 					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/emp/emp.do"
+						ACTION="<%=request.getContextPath()%>/auth/auth.do"
 						style="margin-bottom: 0px;">
 						<input type="submit" value="修改"> 
-						<input type="hidden" name="empno" value="${empVO.empno}">
+						<input type="hidden" name="authno" value="${authVO.auth_no}">
 			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			     <input type="hidden" name="whichPage"	value="<%=whichPage%>">      
 						<input type="hidden" name="action" value="getOne_For_Update">
@@ -147,12 +117,12 @@ th, td {
 				</td>
 				<td>
 					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/emp/emp.do"
+						ACTION="<%=request.getContextPath()%>/auth/auth.do"
 						style="margin-bottom: 0px;">
 						<input type="submit" value="刪除"> 
 						<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
 						<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>"> 
-						<input type="hidden" name="empno" value="${empVO.empno}"> 
+						<input type="hidden" name="empno" value="${authVO.empno}"> 
 						<input type="hidden" name="action" value="delete">
 					</FORM>
 				</td>

@@ -48,9 +48,9 @@
 </c:if>
 
 <ul>
-<li><a href='<%=request.getContextPath()%>/back-end/fun/listAllAuth.jsp'>List</a> all Functions.  <br><br></li>
+<li><a href='<%=request.getContextPath()%>/back-end/auth/listAllAuth.jsp'>List</a> all Functions.  <br><br></li>
   <li>
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" >
         <b>輸入員工編號 (如14001):</b>
         <input type="text" name="empno">
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -58,7 +58,7 @@
     </FORM>
   </li>
 
-  <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
+  <jsp:useBean id="authSvc" scope="page" class="com.auth.model.AuthService" />
    
   <li>
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" >
@@ -68,6 +68,7 @@
           <option value="${authVO.empno}">${authVO.empno}
          </c:forEach>   
        </select>
+       
        <input type="hidden" name="action" value="getOne_For_Display">
        <input type="submit" value="送出">
     </FORM>
@@ -75,12 +76,13 @@
   
   <li>
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" >
-       <b>選擇員工姓名:</b>
-       <select size="1" name="empno">
+       <b>選擇功能編號:</b>
+       <select size="1" name="funno">
          <c:forEach var="authVO" items="${authSvc.all}" > 
-          <option value="${authVO.empno}">${authVO.ename}
+          <option value="${authVO.funno}">${authVO.funno}
          </c:forEach>   
        </select>
+       
        <input type="hidden" name="action" value="getOne_For_Display">
        <input type="submit" value="送出">
      </FORM>
@@ -91,7 +93,7 @@
 <h3>員工管理</h3>
 
 <ul> 
- <li><a href='<%=request.getContextPath()%>/back-end/auth/addAuth.jsp'>Add</a> a new Emp.</li>
+ <li><a href='<%=request.getContextPath()%>/back-end/auth/addAuth.jsp'>Add</a> a new Auth.</li>
 </ul>
 </body>
 </html>

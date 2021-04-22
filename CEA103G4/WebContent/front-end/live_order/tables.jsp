@@ -35,6 +35,7 @@
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <!-- END Custom CSS-->
+
   </head>
   <body class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue" data-col="2-columns">
 
@@ -286,14 +287,13 @@
 							<tr>
 								<th scope="col">#</th>
 								<th scope="col">訂單時間</th>
-								<th scope="col">訂單狀態</th>
-								<th scope="col">訂單運費</th>
-								<th scope="col">訂單金額</th>
+								<th scope="col">狀態</th>
+								<th scope="col">運費</th>
+								<th scope="col">金額</th>
 								<th scope="col">付款方式</th>
 								<th scope="col">付款截止時間</th>
 								<th scope="col">收件人姓名</th>
 								<th scope="col">收件人地址</th>
-								<th scope="col"></th>
 								<th scope="col">收件人電話</th>
 								<th scope="col">收件人手機</th>
 								<th scope="col">物流方式</th>
@@ -314,36 +314,36 @@
 	<c:forEach var="live_orderVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 		
 						<tbody>
-			<td scope="row">${live_orderVO.live_order_no}</td>
-			<td scope="row"><fmt:formatDate value="${live_orderVO.order_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-			<td scope="row">${(live_orderVO.order_state==0)? '未付款':''}${(live_orderVO.order_state==1)? '已付款':''}${(live_orderVO.order_state==2)? '棄單':''}</td>
-			<td scope="row">${live_orderVO.order_shipping}</td>
-			<td scope="row">${live_orderVO.order_price}</td>
-			<td scope="row">${(live_orderVO.pay_method==0)? '錢包':''}${(live_orderVO.pay_method==1)? '信用卡':''}${(live_orderVO.pay_method==2)? '轉帳':''}</td> 
-			<td scope="row"><fmt:formatDate value="${live_orderVO.pay_deadline}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-			<td scope="row">${live_orderVO.rec_name}</td>
-			<td scope="row">${live_orderVO.zipcode}${live_orderVO.city}${live_orderVO.town}${live_orderVO.rec_addr}</td>
-			<td scope="row">${live_orderVO.rec_phone}</td>
-			<td scope="row">${live_orderVO.rec_cellphone}</td>
-			<td scope="row">${(live_orderVO.logistics==0)? '宅配':'超商'}</td>
-			<td scope="row">${(live_orderVO.logistics_state==0)? '未出貨':''}${(live_orderVO.logistics_state==1)? '已出貨':''}${(live_orderVO.logistics_state==2)? '已取貨':''}</td>
-			<td scope="row">${live_orderVO.discount}</td>
-			<td scope="row">${live_orderVO.live_no}</td>
-			<td scope="row">${live_orderVO.user_id}</td>
-			<td scope="row">${live_orderVO.seller_id}</td>
-			<td scope="row">${live_orderVO.srating}</td>
-			<td scope="row">${live_orderVO.srating_content}</td>
-			<td scope="row">${live_orderVO.point}</td>
+			<td >${live_orderVO.live_order_no}</td>
+			<td ><fmt:formatDate value="${live_orderVO.order_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+			<td >${(live_orderVO.order_state==0)? '未付款':''}${(live_orderVO.order_state==1)? '已付款':''}${(live_orderVO.order_state==2)? '棄單':''}</td>
+			<td >${live_orderVO.order_shipping}</td>
+			<td >${live_orderVO.order_price}</td>
+			<td >${(live_orderVO.pay_method==0)? '錢包':''}${(live_orderVO.pay_method==1)? '信用卡':''}${(live_orderVO.pay_method==2)? '轉帳':''}</td> 
+			<td ><fmt:formatDate value="${live_orderVO.pay_deadline}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+			<td >${live_orderVO.rec_name}</td>
+			<td >${live_orderVO.zipcode}${live_orderVO.city}${live_orderVO.town}${live_orderVO.rec_addr}</td>
+			<td >${live_orderVO.rec_phone}</td>
+			<td >${live_orderVO.rec_cellphone}</td>
+			<td >${(live_orderVO.logistics==0)? '宅配':'超商'}</td>
+			<td >${(live_orderVO.logistics_state==0)? '未出貨':''}${(live_orderVO.logistics_state==1)? '已出貨':''}${(live_orderVO.logistics_state==2)? '已取貨':''}</td>
+			<td >${live_orderVO.discount}</td>
+			<td >${live_orderVO.live_no}</td>
+			<td >${live_orderVO.user_id}</td>
+			<td >${live_orderVO.seller_id}</td>
+			<td >${live_orderVO.srating}</td>
+			<td >${live_orderVO.srating_content}</td>
+			<td >${live_orderVO.point}</td>
 			
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_order/live_order.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
+			     <input type="submit" class="btn btn-warning btn-min-width mr-1 mb-1" value="修改">
 			     <input type="hidden" name="live_order_no"  value="${live_orderVO.live_order_no}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/live_order/live_order.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="刪除">
+			     <input type="submit" class="btn btn-danger btn-min-width mr-1 mb-1" value="刪除">
 			     <input type="hidden" name="live_order_no"  value="${live_orderVO.live_order_no}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>

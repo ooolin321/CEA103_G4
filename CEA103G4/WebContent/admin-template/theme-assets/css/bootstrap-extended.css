@@ -347,6 +347,7 @@ pre code
 .table td
 {
     padding: .75rem 2rem;
+    white-space:nowrap;
 }
 
 .table.table-xl th,

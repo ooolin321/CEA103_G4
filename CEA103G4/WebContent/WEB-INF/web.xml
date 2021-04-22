@@ -173,15 +173,6 @@
 		<servlet-name>AdServlet</servlet-name>
 		<url-pattern>/back-end/ad/ad.do</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>DBGifReader_Ad</servlet-name>
-		<servlet-class>com.ad.controller.DBGifReader</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DBGifReader_Ad</servlet-name>
-		<url-pattern>/ad/DBGifReader.do</url-pattern>
-	</servlet-mapping>
 
 	<filter>
 		<filter-name>setCharacterEncoding</filter-name>

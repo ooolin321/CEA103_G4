@@ -7,6 +7,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.ad.model.AdVO;
+
 public class AdDAO implements AdDAO_interface {
 	
 	private static DataSource ds = null;
@@ -283,5 +285,53 @@ public class AdDAO implements AdDAO_interface {
 			}
 		}
 		return list;
+	}
+	
+	@Override
+	public Optional<AdVO> findAdPic(Integer ad_no) {
+		AdVO adVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+			pstmt.setInt(1, ad_no);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				adVO = new AdVO();
+				adVO.setAd_photo(rs.getBytes("ad_photo"));
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return Optional.ofNullable(adVO);
 	}
 }

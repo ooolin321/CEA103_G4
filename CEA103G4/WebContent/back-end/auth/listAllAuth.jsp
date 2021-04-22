@@ -9,7 +9,7 @@
 	List<AuthVO> list = authSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
-
+<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 <jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
 <html>
 <head>
@@ -84,26 +84,30 @@ th, td {
 	<table  class="layui-table layui-form">
 		<tr>
 			<th>功能編號</th>
+			<th>功能名稱</th>
 			<th>員工編號</th>
+			<th>員工姓名</th>
 			<th>狀態</th>
 		</tr>
 		<%@ include file="page1.file"%>
 		<c:forEach var="authVO" items="${list}" begin="<%=pageIndex%>"
 			end="<%=pageIndex+rowsPerPage-1%>">
 
-			<tr ${(authVO.empno==param.empno) ? 'bgcolor=#CCCCFF':''}>
-				<td>${authVO.empno}</td>
+			<tr>
 				<td>${authVO.funno}</td>
-				<td>${authVO.auth_no}</td>
+				<td>${funSvc.getOneFun(authVO.funno).funName}</td>
+				<td>${authVO.empno}</td>
+				<td>${empSvc.getOneEmp(authVO.empno).ename}</td>
+				<c:choose>
+					<c:when test="${authVO.auth_no==0}">
+						<td>無權限</td>
+					</c:when>
+					<c:when test="${authVO.auth_no==1}">
+						<td>正常</td>
+					</c:when>
+				</c:choose>
 				
-<%-- 			<td><c:forEach var="deptVO" items="${deptSvc.all}"> --%>
-<%--                     <c:if test="${empVO.deptno==deptVO.deptno}"> --%>
-<%-- 	                    ${deptVO.deptno}【${deptVO.dname} - ${deptVO.loc}】 --%>
-<%--                     </c:if> --%>
-<%--                 </c:forEach> --%>
-<!-- 			</td> -->
 
-<%-- ${deptSvc.getOneDept(empVO.deptno).dname} --%>
 				<td>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/auth/auth.do"

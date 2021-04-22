@@ -89,8 +89,57 @@
   </li>
 </ul>
 
+<%--  <jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" /> --%>
+  
+<!--   <li> -->
+<%--      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/dept/dept.do" > --%>
+<!--        <b><font color=orange>選擇部門:</font></b> -->
+<!--        <select size="1" name="deptno"> -->
+<%--          <c:forEach var="deptVO" items="${deptSvc.all}" >  --%>
+<%--           <option value="${deptVO.deptno}">${deptVO.dname} --%>
+<%--          </c:forEach>    --%>
+<!--        </select> -->
+<!--        <input type="submit" value="送出"> -->
+<!--        <input type="hidden" name="action" value="listEmps_ByDeptno_A"> -->
+<!--      </FORM> -->
+<!--   </li> -->
+<!-- </ul> -->
 
-<h3>員工管理</h3>
+<%-- 萬用複合查詢-以下欄位-可隨意增減 --%>
+<!-- <ul>   -->
+<!--   <li>    -->
+<%--     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" name="form1"> --%>
+<!--         <b><font color=blue>萬用複合查詢:</font></b> <br> -->
+<!--         <b>輸入員工編號:</b> -->
+<!--         <input type="text" name="empno" value="7001"><br> -->
+           
+<!--        <b>輸入員工姓名:</b> -->
+<!--        <input type="text" name="ename" value="KING"><br> -->
+       
+<!--        <b>輸入員工職位:</b> -->
+<!--        <input type="text" name="job" value="PRESIDENT"><br> -->
+    
+<!--        <b>選擇部門:</b> -->
+<!--        <select size="1" name="deptno" > -->
+<!--           <option value=""> -->
+<%--          <c:forEach var="deptVO" items="${deptSvc.all}" >  --%>
+<%--           <option value="${deptVO.deptno}">${deptVO.dname} --%>
+<%--          </c:forEach>    --%>
+<!--        </select><br> -->
+           
+<!--        <b>雇用日期:</b> -->
+<!-- 	   <input name="hiredate" id="f_date1" type="text"> -->
+		        
+<!--         <input type="submit" value="送出"> -->
+<!--         <input type="hidden" name="action" value="listEmps_ByCompositeQuery"> -->
+<!--      </FORM> -->
+<!--   </li> -->
+<!-- </ul> -->
+
+
+
+
+<h3>權限管理</h3>
 
 <ul> 
  <li><a href='<%=request.getContextPath()%>/back-end/auth/addAuth.jsp'>Add</a> a new Auth.</li>

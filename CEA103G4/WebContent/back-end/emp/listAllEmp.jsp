@@ -11,7 +11,7 @@
 	pageContext.setAttribute("list", list);
 %>
 
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <html>
 <head>
 <title>所有員工資料 - listAllEmp.jsp</title>

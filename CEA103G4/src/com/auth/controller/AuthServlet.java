@@ -30,31 +30,18 @@ public class AuthServlet extends HttpServlet{
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			try {
 
-				String str = req.getParameter("empno");
-				String str2 = req.getParameter("funno");
+				Integer funno = new Integer(req.getParameter("funno"));
+				Integer empno = new Integer(req.getParameter("empno"));
 
-				Integer empno = null;
-				try {
-					empno = new Integer(str);
-				} catch (Exception e) {
-					errorMsgs.add("員工編號格式不正確");
-				}
-				
-				Integer funno = null;
-				try {
-					funno = new Integer(str);
-				} catch (Exception e) {
-					errorMsgs.add("功能編號格式不正確");
-				}
-				
+			
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/selectEmp.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/selectAuth.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				/*************************** 2.開始查詢資料 *****************************************/
 				AuthService authSvc = new AuthService();
-				AuthVO authVO = authSvc.getOneAuth(empno,funno);
+				AuthVO authVO = authSvc.getOneAuth(funno,empno);
 				if (authVO == null) {
 					errorMsgs.add("查無資料");
 				}
@@ -84,8 +71,8 @@ public class AuthServlet extends HttpServlet{
 			String requestURL = req.getParameter("requestURL");
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				Integer empno = new Integer(req.getParameter("empno"));
 				Integer funno = new Integer(req.getParameter("funno"));
+				Integer empno = new Integer(req.getParameter("empno"));
 				/*************************** 2.開始查詢資料 ****************************************/
 				AuthService authSvc = new AuthService();
 				AuthVO authVO = authSvc.getOneAuth(empno, funno);

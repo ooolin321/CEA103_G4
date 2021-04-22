@@ -13,8 +13,8 @@ public class AuthService {
 	public AuthVO addAuth(Integer empno,Integer funno,Integer auth_no) {
 		AuthVO authVO = new AuthVO();
 		
-		authVO.setEmpno(empno);
 		authVO.setFunno(funno);
+		authVO.setEmpno(empno);
 		authVO.setAuth_no(auth_no);
 
 				
@@ -23,7 +23,7 @@ public class AuthService {
 		return authVO;
 	}
 	
-	public AuthVO updateAuth(Integer empno, Integer funno, Integer auth_no) {
+	public AuthVO updateAuth(Integer funno,Integer empno , Integer auth_no) {
 
 		AuthVO authVO = new AuthVO();
 
@@ -36,11 +36,11 @@ public class AuthService {
 		return authVO;
 	}
 	public void deleteAuth(Integer empno,Integer funno) {
-		dao.delete(empno,funno);
+		dao.delete(funno,empno);
 	}
 
 	public AuthVO getOneAuth(Integer empno,Integer funno) {
-		return dao.findByPrimeKey(empno,funno);
+		return dao.findByPrimeKey(funno,empno);
 	}
 
 	public List<AuthVO> getAll() {

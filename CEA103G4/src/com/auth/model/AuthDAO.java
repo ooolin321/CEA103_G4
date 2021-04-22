@@ -28,10 +28,8 @@ public class AuthDAO implements AuthDAO_interface {
 	private static final String INSERT_STMT = "insert into Auth (FUNNO,EMPNO,AUTH_NO) values (?, ?, ?)";
 	private static final String UPDATE_STMT = "update Auth set AUTH_NO=? where EMPNO=? and FUNNO=?";
 	private static final String DELETE_STMT = "delete from Auth where EMPNO=? and FUNNO=?";
-	private static final String GET_ALL_FROM_EMP_JOIN_AUTH_STMT = "SELECT * FROM EMP JION CEA103G4.AUTH WHERE STATE = ?";
-//							select CEA103_G4.empno,CEA103_G4.ename from emp CEA103_G4 join auth where AUTH_NO = 1;
-	private static final String GET_ONE_BY_EMPNO_AND_FUNNO_STMT = "select * from Auth where EMPNO = ? and FUNNO=?";
-	private static final String GET_ALL_BY_EMPNO_STMT = "select * from Auth order by EMPNO";
+	private static final String GET_ONE_BY_EMPNO_AND_FUNNO_STMT = "select funno,empno,auty_no from Auth where FUNNO=? and EMPNO = ? ";
+	private static final String GET_ALL_BY_EMPNO_STMT = "select funno,empno,auth_no from Auth order by EMPNO";
 	
 
 	
@@ -140,7 +138,7 @@ public class AuthDAO implements AuthDAO_interface {
 	}
 
 	@Override
-	public AuthVO findByPrimeKey(Integer empno,Integer funno) {
+	public AuthVO findByPrimeKey(Integer funno,Integer empno) {
 		AuthVO authVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -150,15 +148,15 @@ public class AuthDAO implements AuthDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_BY_EMPNO_AND_FUNNO_STMT);
 
-			pstmt.setInt(1, empno);
-			pstmt.setInt(2, funno);
+			pstmt.setInt(1, funno);
+			pstmt.setInt(2, empno);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				// authorityVo 也稱為 Domain objects
 				authVO = new AuthVO();
-				authVO.setEmpno(rs.getInt("EMPNO"));
 				authVO.setFunno(rs.getInt("FUNNO"));
+				authVO.setEmpno(rs.getInt("EMPNO"));
 				authVO.setAuth_no(rs.getInt("AUTH_NO"));
 				
 			}
@@ -210,14 +208,14 @@ public class AuthDAO implements AuthDAO_interface {
 			while (rs.next()) {
 				// authorityVO 也稱為 Domain objects
 				authVO = new AuthVO();
-				authVO.setEmpno(rs.getInt("FUNNO"));
-				authVO.setFunno(rs.getInt("EMPNO"));
+				authVO.setFunno(rs.getInt("FUNNO"));
+				authVO.setEmpno(rs.getInt("EMPNO"));
 				authVO.setAuth_no(rs.getInt("AUTH_NO"));
 				
 				list.add(authVO); // Store the row in the list
 			}
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
+			throw new RuntimeException("A database erro	r occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {

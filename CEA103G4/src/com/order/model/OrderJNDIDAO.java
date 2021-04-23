@@ -21,7 +21,7 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 		}
 	}
 	private static final String INSERT_STMT = 
-			"INSERT INTO `ORDER` (`ORDER_DATE`,`ORDER_STATE`,`ORDER_SHIPPING`,`ORDER_PRICE`,`PAY_METHOD`,`PAY_DEADLINE`,`REC_NAME`,`REC_ADDR`,`REC_PHONE`,`REC_CELLPHONE`,`LOGISTICS`,`LOGISTICSSTATE`,`DISCOUNT`,`USER_ID`,`SELLER_ID`,`SRATING`,`SRATING_CONTENT`,`POINT`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO `ORDER` (`ORDER_STATE`,`ORDER_SHIPPING`,`ORDER_PRICE`,`PAY_METHOD`,`PAY_DEADLINE`,`REC_NAME`,`REC_ADDR`,`REC_PHONE`,`REC_CELLPHONE`,`LOGISTICS`,`LOGISTICSSTATE`,`DISCOUNT`,`USER_ID`,`SELLER_ID`,`SRATING`,`SRATING_CONTENT`,`POINT`) VALUES (?, ?, ?, ?, DATE_ADD(CURRENT_TIMESTAMP() , INTERVAL 3 HOUR), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT `ORDER_NO`,`ORDER_DATE`,`ORDER_STATE`,`ORDER_SHIPPING`,`ORDER_PRICE`,`PAY_METHOD`,`PAY_DEADLINE`,`REC_NAME`,`REC_ADDR`,`REC_PHONE`,`REC_CELLPHONE`,`LOGISTICS`,`LOGISTICSSTATE`,`DISCOUNT`,`USER_ID`,`SELLER_ID`,`SRATING`,`SRATING_CONTENT`,`POINT` FROM `ORDER` ORDER BY `ORDER_NO`";
 	private static final String GET_ONE_STMT = 
@@ -43,25 +43,25 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setDate(1, orderVO.getOrder_date());
-			pstmt.setInt(2, orderVO.getOrder_state());
-			pstmt.setInt(3, orderVO.getOrder_shipping());			
-			pstmt.setInt(4, orderVO.getOrder_price());
-			pstmt.setInt(5, orderVO.getPay_method());
-			pstmt.setDate(6, orderVO.getPay_deadline());
-			pstmt.setString(7, orderVO.getRec_name());
-			pstmt.setString(8, orderVO.getRec_addr());
-			pstmt.setString(9, orderVO.getRec_phone());
-			pstmt.setString(10, orderVO.getRec_cellphone());
-			pstmt.setInt(11, orderVO.getLogistics());
-			pstmt.setInt(12, orderVO.getLogisticsstate());
-			pstmt.setInt(13, orderVO.getDiscount());
-			pstmt.setString(14, orderVO.getUser_id());
-			pstmt.setString(15, orderVO.getSeller_id());
-			pstmt.setInt(16, orderVO.getSrating());
-			pstmt.setString(17, orderVO.getSrating_content());
-			pstmt.setInt(18, orderVO.getPoint());
-
+//			pstmt.setDate(1, orderVO.getOrder_date());
+			pstmt.setInt(1, orderVO.getOrder_state());
+			pstmt.setInt(2, orderVO.getOrder_shipping());			
+			pstmt.setInt(3, orderVO.getOrder_price());
+			pstmt.setInt(4, orderVO.getPay_method());
+//			pstmt.setTimestamp(5, orderVO.getPay_deadline());
+			pstmt.setString(5, orderVO.getRec_name());
+			pstmt.setString(6, orderVO.getRec_addr());
+			pstmt.setString(7, orderVO.getRec_phone());
+			pstmt.setString(8, orderVO.getRec_cellphone());
+			pstmt.setInt(9, orderVO.getLogistics());
+			pstmt.setInt(10, orderVO.getLogisticsstate());
+			pstmt.setInt(11, orderVO.getDiscount());
+			pstmt.setString(12, orderVO.getUser_id());
+			pstmt.setString(13, orderVO.getSeller_id());
+			pstmt.setInt(14, orderVO.getSrating());
+			pstmt.setString(15, orderVO.getSrating_content());
+			pstmt.setInt(16, orderVO.getPoint());
+		
 			pstmt.executeUpdate();
 
 			// Handle any SQL errors
@@ -96,12 +96,12 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setDate(1, orderVO.getOrder_date());
+			pstmt.setTimestamp(1, orderVO.getOrder_date());
 			pstmt.setInt(2, orderVO.getOrder_state());
 			pstmt.setInt(3, orderVO.getOrder_shipping());			
 			pstmt.setInt(4, orderVO.getOrder_price());
 			pstmt.setInt(5, orderVO.getPay_method());
-			pstmt.setDate(6, orderVO.getPay_deadline());
+			pstmt.setTimestamp(6, orderVO.getPay_deadline());
 			pstmt.setString(7, orderVO.getRec_name());
 			pstmt.setString(8, orderVO.getRec_addr());
 			pstmt.setString(9, orderVO.getRec_phone());
@@ -198,12 +198,12 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 				//
 				orderVO = new OrderVO();
 				orderVO.setOrder_no(rs.getInt("order_no"));
-				orderVO.setOrder_date(rs.getDate("order_date"));
+				orderVO.setOrder_date(rs.getTimestamp("order_date"));
 				orderVO.setOrder_state(rs.getInt("order_state"));
 				orderVO.setOrder_shipping(rs.getInt("order_shipping"));
 				orderVO.setOrder_price(rs.getInt("order_price"));
 				orderVO.setPay_method(rs.getInt("pay_method"));
-				orderVO.setPay_deadline(rs.getDate("pay_deadline"));
+				orderVO.setPay_deadline(rs.getTimestamp("pay_deadline"));
 				orderVO.setRec_name(rs.getString("rec_name"));
 				orderVO.setRec_addr(rs.getString("rec_addr"));
 				orderVO.setRec_phone(rs.getString("rec_phone"));
@@ -265,12 +265,12 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 				
 				orderVO = new OrderVO();
 				orderVO.setOrder_no(rs.getInt("order_no"));
-				orderVO.setOrder_date(rs.getDate("order_date"));
+				orderVO.setOrder_date(rs.getTimestamp("order_date"));
 				orderVO.setOrder_state(rs.getInt("order_state"));
 				orderVO.setOrder_shipping(rs.getInt("order_shipping"));
 				orderVO.setOrder_price(rs.getInt("order_price"));
 				orderVO.setPay_method(rs.getInt("pay_method"));
-				orderVO.setPay_deadline(rs.getDate("pay_deadline"));
+				orderVO.setPay_deadline(rs.getTimestamp("pay_deadline"));
 				orderVO.setRec_name(rs.getString("rec_name"));
 				orderVO.setRec_addr(rs.getString("rec_addr"));
 				orderVO.setRec_phone(rs.getString("rec_phone"));

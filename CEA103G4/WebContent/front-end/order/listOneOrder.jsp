@@ -58,11 +58,11 @@
 	<tr>
 		<th>訂單編號</th>
 		<th>訂單日期</th>
+		<th>s</th>
 		<th>訂單狀態</th>
 		<th>訂單運費</th>
 		<th>訂單價格</th>
 		<th>付款方式</th>
-		<th>付款截止期限</th>
 		<th>收件人姓名</th>
 		<th>收件人地址</th>
 		<th>收件人電話</th>
@@ -77,29 +77,29 @@
 		<th>點數回饋</th>
 	</tr>
 	<tr>
-		<td><%=orderVO.getOrder_no()%></td>
-		<td><%=orderVO.getOrder_date()%></td>
-		<td><%=(orderVO.getOrder_state()==0)? "未付款":"已付款"%></td>
-		<td><%=orderVO.getOrder_shipping()%></td>
-		<td><%=orderVO.getOrder_price()%></td>
-		<td><%=(orderVO.getPay_method()==0)? "信用卡":"轉帳"%></td>
-		<td><%=orderVO.getPay_deadline()%></td>
-		<td><%=orderVO.getRec_name()%></td>
-		<td><%=orderVO.getRec_addr()%></td>
-		<td><%=orderVO.getRec_phone()%></td>
-		<td><%=orderVO.getRec_cellphone()%></td>
-		<td><%=(orderVO.getLogistics()==0)? "超商":"宅配"%></td>
+		<td>${orderVO.order_no}</td>
+		<td>${orderVO.order_date}</td>
+		<td>${orderVO.pay_deadline}</td>
+		<td>${(orderVO.order_state==0)? "未付款":"已付款"}</td>
+		<td>${orderVO.order_shipping}</td>
+		<td>${orderVO.order_price}</td>
+		<td>${(orderVO.pay_method==0)? "信用卡":"轉帳"}</td>
+		<td>${orderVO.rec_name}</td>
+		<td>${orderVO.rec_addr}</td>
+		<td>${orderVO.rec_phone}</td>
+		<td>${orderVO.rec_cellphone}</td>
+		<td>${(orderVO.logistics==0)? "超商":"宅配"}</td>
 		<td>
-		<%=(orderVO.getLogisticsstate()==0)? "未出貨":""%>
-		<%=(orderVO.getLogisticsstate()==0)? "已出貨":""%>
-		<%=(orderVO.getLogisticsstate()==0)? "已取貨":""%>
+		${(orderVO.logisticsstate==0)? "未出貨":""}
+		${(orderVO.logisticsstate==1)? "已出貨":""}
+		${(orderVO.logisticsstate==2)? "已取貨":""}
 		</td>
-		<td><%=orderVO.getDiscount()%></td>
-		<td><%=orderVO.getUser_id()%></td>
-		<td><%=orderVO.getSeller_id()%></td>
-		<td><%=orderVO.getSrating()%></td>
-		<td><%=orderVO.getSrating_content()%></td>
-		<td><%=orderVO.getPoint()%></td>
+		<td>${orderVO.discount}</td>
+		<td>${orderVO.user_id}</td>
+		<td>${orderVO.seller_id}</td>
+		<td>${orderVO.srating}</td>
+		<td>${orderVO.srating_content}</td>
+		<td>${orderVO.point}</td>
 	</tr>
 </table>
 

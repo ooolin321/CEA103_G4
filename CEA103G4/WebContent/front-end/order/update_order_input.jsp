@@ -1,11 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.order.model.*"%>
 
 <%
   OrderVO orderVO = (OrderVO) request.getAttribute("orderVO"); //OrderServlet.java (Concroller) 存入req的orderVO物件 (包括幫忙取出的orderVO, 也包括輸入資料錯誤時的orderVO物件)
 %>
-<%= orderVO == null %>
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -68,13 +69,20 @@
 <FORM METHOD="post" ACTION="order.do" name="form1">
 <table>
 	<tr>
-		<td>訂單編號:<font color=red><b>*</b></font></td>
-		<td><%=orderVO.getOrder_no()%></td>
+		<td>訂單編號:</td>
+		<td>${orderVO.order_no}</td>
+		<td><input type="hidden" name="order_no" value="${orderVO.order_no}"></td>
 	</tr>
 	<tr>
-		<td>訂單日期:</td>
-		<td><input name="order_date" id="f_date1" type="text" ></td>
+		<td>訂單時間:</td>
+		<td><fmt:formatDate value="${orderVO.order_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+		<td><input type="hidden" name="order_date" value="${orderVO.order_date}"></td>
 	</tr>
+	<tr>
+		<td>付款截止期限:</td>
+		<td><fmt:formatDate value="${orderVO.pay_deadline}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+		<td><input type="hidden" name="pay_deadline" value="${orderVO.pay_deadline}"></td>
+	</tr> 
 	<tr>
 		<td>訂單狀態:</td>
 		<td><select name="order_state">
@@ -84,37 +92,34 @@
 	</tr>
 	<tr>
 		<td>訂單運費:</td>
-		<td><input type="TEXT" name="order_shipping" size="45"	value="<%=orderVO.getOrder_shipping()%>" /></td>
+		<td><input type="TEXT" name="order_shipping" size="45"	value="${orderVO.order_shipping}" /></td>
 	</tr>
 	<tr>
 		<td>訂單金額:</td>
-		<td><input type="TEXT" name="order_price" size="45"	value="<%=orderVO.getOrder_price()%>" /></td>
+		<td><input type="TEXT" name="order_price" size="45"	value="${orderVO.order_price}" /></td>
 	</tr>
 	<tr>
 		<td>付款方式:</td>
 		<td><select name="pay_method">
-						<option value="0" ${(orderVO.pay_method==0)? 'selected':''}>信用卡</option>
-						<option value="1" ${(orderVO.pay_method==1)? 'selected':''}>轉帳</option>
+						<option value="0" ${(orderVO.pay_method==0)? 'selected':''}>錢包</option>
+						<option value="0" ${(orderVO.pay_method==1)? 'selected':''}>信用卡</option>
+						<option value="1" ${(orderVO.pay_method==2)? 'selected':''}>轉帳</option>
 		</select></td>	
 	<tr>
-		<td>付款截止時間:</td>
-		<td><input type="TEXT" name="pay_deadline" size="45"	value="<%=orderVO.getPay_deadline()%>" /></td>
-	</tr>
-	<tr>
 		<td>收件人姓名:</td>
-		<td><input type="TEXT" name="rec_name" size="45"	value="<%=orderVO.getRec_name()%>" /></td>
+		<td><input type="TEXT" name="rec_name" size="45"	value="${orderVO.rec_name}" /></td>
 	</tr>
 	<tr>
 		<td>收件人地址:</td>
-		<td><input type="TEXT" name="rec_addr" size="45"	value="<%=orderVO.getRec_addr()%>" /></td>
+		<td><input type="TEXT" name="rec_addr" size="45"	value="${orderVO.rec_addr}" /></td>
 	</tr>
 	<tr>
 		<td>收件人電話:</td>
-		<td><input type="TEXT" name="rec_phone" size="45"	value="<%=orderVO.getRec_phone()%>" /></td>
+		<td><input type="TEXT" name="rec_phone" size="45"	value="${orderVO.rec_phone}" /></td>
 	</tr>
 	<tr>
 		<td>收件人手機:</td>
-		<td><input type="TEXT" name="rec_cellphone" size="45"	value="<%=orderVO.getRec_cellphone()%>" /></td>
+		<td><input type="TEXT" name="rec_cellphone" size="45"	value="${orderVO.rec_cellphone}" /></td>
 	</tr>
 	<tr>
 		<td>物流方式:</td>
@@ -133,32 +138,31 @@
 	<tr>
 	<tr>
 		<td>使用點數折抵:</td>
-		<td><input type="TEXT" name="discount" size="45" value="<%=orderVO.getDiscount()%>" /></td>
+		<td><input type="TEXT" name="discount" size="45" value="${orderVO.discount}" /></td>
 	</tr>
 	<tr>
 		<td>買家帳號:</td>
-		<td><input type="TEXT" name="user_id" size="45"	value="<%=orderVO.getUser_id()%>" /></td>
+		<td><input type="TEXT" name="user_id" size="45"	value="${orderVO.user_id}" /></td>
 	</tr>
 	<tr>
 		<td>賣家帳號:</td>
-		<td><input type="TEXT" name="seller_id" size="45"	value="<%=orderVO.getSeller_id()%>" /></td>
+		<td><input type="TEXT" name="seller_id" size="45"	value="${orderVO.seller_id}" /></td>
 	</tr>
 	<tr>
 		<td>賣家評價分數:</td>
-		<td><input type="TEXT" name="srating" size="45"	value="<%=orderVO.getSrating()%>" /></td>
+		<td><input type="TEXT" name="srating" size="45"	value="${orderVO.srating}" /></td>
 	</tr>
 	<tr>
 		<td>賣家評價內容:</td>
-		<td><input type="TEXT" name="srating_content" size="45"	value="<%=orderVO.getSrating_content()%>" /></td>
+		<td><input type="TEXT" name="srating_content" size="45"	value="${orderVO.srating_content}" /></td>
 	</tr>
 	<tr>
 		<td>點數回饋:</td>
-		<td><input type="TEXT" name="point" size="45"	value="<%=orderVO.getPoint()%>" /></td>
+		<td><input type="TEXT" name="point" size="45"	value="${orderVO.point}" /></td>
 	</tr>
 </table>
 <br>
 		<input type="hidden" name="action" value="update">
- 		<input type="hidden" name="order_no" value="<%=orderVO.getOrder_no()%>">
 		<input type="submit" value="送出修改">
 	</FORM>
 </body>
@@ -194,7 +198,18 @@
            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
         });
         
-        
+        $.datetimepicker.setLocale('zh');
+        $('#f_date2').datetimepicker({
+           theme: '',              //theme: 'dark',
+ 	       timepicker:false,       //timepicker:true,
+ 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+ 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+ 		   value: '<%=orderVO.getOrder_date()%>',  // value:   new Date(),
+           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+           //startDate:	            '2017/07/10',  // 起始日
+           //minDate:               '-1970-01-01', // 去除今日(不含)之前
+           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+        });
    
         // ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
 

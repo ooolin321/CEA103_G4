@@ -124,14 +124,14 @@ public class OrderServlet extends HttpServlet{
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				java.sql.Date order_date = null;
+				java.sql.Timestamp order_date = null;
 				try {
-					order_date = java.sql.Date.valueOf(req.getParameter("order_date").trim());
+					order_date = java.sql.Timestamp.valueOf(req.getParameter("order_date").trim());
 				} catch (IllegalArgumentException e) {
-					order_date=new java.sql.Date(System.currentTimeMillis());
+					order_date=new java.sql.Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
 				
@@ -142,7 +142,7 @@ public class OrderServlet extends HttpServlet{
 					order_state = 0;
 					errorMsgs.add("狀態請填數字.");
 				}
-
+				
 				Integer order_shipping = null;
 				try {
 					order_shipping = new Integer(req.getParameter("order_shipping").trim());
@@ -167,11 +167,11 @@ public class OrderServlet extends HttpServlet{
 					errorMsgs.add("付款方式請填數字.");
 				}
 				
-				java.sql.Date pay_deadline = null;
+				java.sql.Timestamp pay_deadline = null;
 				try {
-					pay_deadline = java.sql.Date.valueOf(req.getParameter("pay_deadline").trim());
+					pay_deadline = java.sql.Timestamp.valueOf(req.getParameter("pay_deadline").trim());
 				} catch (IllegalArgumentException e) {
-					pay_deadline=new java.sql.Date(System.currentTimeMillis());
+					pay_deadline=new java.sql.Timestamp(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
 				
@@ -190,7 +190,7 @@ public class OrderServlet extends HttpServlet{
 				} else if(!rec_addr.trim().matches(rec_addrReg)) { //以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("收件人地址: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 	            }
-				
+
 				String rec_phone = req.getParameter("rec_phone");
 				
 				String rec_cellphone = req.getParameter("rec_cellphone");
@@ -208,7 +208,7 @@ public class OrderServlet extends HttpServlet{
 					logistics = 0;
 					errorMsgs.add("物流方式請填數字.");
 				}
-				
+
 				Integer logisticsstate = null;
 				try {
 					logisticsstate = new Integer(req.getParameter("logisticsstate").trim());
@@ -236,7 +236,7 @@ public class OrderServlet extends HttpServlet{
 					srating = 0;
 					errorMsgs.add("評價分數請填數字.");
 				}
-			
+
 				String srating_content = req.getParameter("srating_content");
 				String srating_contentReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,20}$";
 				if (srating_content == null || srating_content.trim().length() == 0) {
@@ -253,8 +253,8 @@ public class OrderServlet extends HttpServlet{
 					errorMsgs.add("點數請填數字.");
 				}
 				Integer order_no = new Integer(req.getParameter("order_no"));
-				
 
+				
 				OrderVO orderVO = new OrderVO();
 				orderVO.setOrder_date(order_date);
 				orderVO.setOrder_state(order_state);
@@ -419,7 +419,7 @@ public class OrderServlet extends HttpServlet{
 					point = new Integer(req.getParameter("point").trim());
 				} catch (NumberFormatException e) {
 					point = 0;
-					errorMsgs.add("請填數字.");
+					errorMsgs.add("點數請填數字.");
 				}
 
 				OrderVO orderVO = new OrderVO();
@@ -439,7 +439,6 @@ public class OrderServlet extends HttpServlet{
 				orderVO.setSrating(srating);
 				orderVO.setSrating_content(srating_content);
 				orderVO.setPoint(point);
-		
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {

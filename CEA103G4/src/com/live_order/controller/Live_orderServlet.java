@@ -139,7 +139,6 @@ public class Live_orderServlet extends HttpServlet {
 				}
 
 				String rec_name = req.getParameter("rec_name");
-
 				String rec_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (rec_name == null || rec_name.trim().length() == 0) {
 					errorMsgs.add("收件人姓名: 請勿空白");

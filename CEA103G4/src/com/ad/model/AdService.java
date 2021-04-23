@@ -2,6 +2,9 @@ package com.ad.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
+
+import com.ad.model.AdVO;
 
 public class AdService {
 
@@ -56,5 +59,9 @@ public class AdService {
 
 	public List<AdVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public Optional<AdVO> getAdPic(Integer ad_no){
+		return dao.findAdPic(ad_no);
 	}
 }

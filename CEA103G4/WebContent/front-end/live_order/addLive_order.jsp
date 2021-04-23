@@ -173,10 +173,6 @@ th, td {
 			</tr>
 
 
-			<tr>
-				<td>點數折扣:</td>
-				<td><input type="TEXT" name="discount" size="45" value="<%= (live_orderVO==null)? "0" : live_orderVO.getDiscount()%>" /></td>
-			</tr>
 
 <!-- 			<tr> -->
 <!-- 				<td>直播編號:</td> -->
@@ -204,11 +200,20 @@ th, td {
 			
 			<tr>
 				<td>買家帳號:<font color=red><b>*</b></font></td>
-				<td><select size="1" name="user_id">
+				<td><select size="1" name="user_id" id="user_id">
+					<option value=""  >
 					<c:forEach var="userVO" items="${userSvc.all}">
 						<option value="${userVO.user_id}" ${(live_orderVO.user_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
 					</c:forEach>
 				</select></td>
+			</tr>
+			<tr>
+				<td>最大可用點數:</td>
+				<td><div id="showPoint"></div></td>
+			</tr>
+			<tr>
+				<td>使用點數折抵:</td>
+				<td><input type="TEXT" name="discount" size="45" value="<%= (live_orderVO==null)? "0" : live_orderVO.getDiscount()%>" /></td>
 			</tr>
 
 
@@ -254,15 +259,23 @@ $("#logistics").change(function(e) {
 		$("#order_shipping").attr('value', '50');
 		$("#showOrder_shipping").text("50") ;
 	}
-	});
+});
 	
 $("#live_no").change(function(e) {
 	<c:forEach var="liveVO" items="${liveSvc.all}">	
 	if($("#live_no").val()==${liveVO.live_no}){		
 		$("#seller_id").attr('value', '${liveVO.user_id}');
 		$("#showSellerId").text('${liveVO.user_id}');
-	}	
+	}		
 	</c:forEach>
-	});
+});
+$("#user_id").change(function(e){
+	<c:forEach var="userVO" items="${userSvc.all}">	
+	if($("#user_id").val()=='${userVO.user_id}'){
+		$("#showPoint").text('${userVO.user_point}');
+	}
+	</c:forEach>
+});
+	
 </script>
 </html>

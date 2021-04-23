@@ -7,8 +7,9 @@
 
 <%
 	ProductDAO dao = new ProductDAO();
-    List<ProductVO> list = dao.getAll();
+    List<ProductVO> list = dao.getAllShop();
     pageContext.setAttribute("list",list);
+        
     
 	Product_TypeDAO dao2 = new Product_TypeDAO();
     List<Product_TypeVO> list2 = dao2.getAll();
@@ -17,13 +18,13 @@
 <jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
    
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Modefemme</title>
-    <link rel="icon" href="${pageContext.request.contextPath}/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
 
     <!-- Google Font -->
     <link
@@ -32,15 +33,15 @@
     />
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/themify-icons.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/elegant-icons.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/owl.carousel.min.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/nice-select.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui.min.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/slicknav.min.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css" />
+     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/themify-icons.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/elegant-icons.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/owl.carousel.min.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/nice-select.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/jquery-ui.min.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/slicknav.min.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/style.css" type="text/css" />
   </head>
 
   <body>
@@ -73,7 +74,6 @@
             <div class="filter-widget">
               <h4 class="fw-title">商品分類</h4>
               <ul class="filter-catagories">
- 
               <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()-1}">
                 <li><a href="#">${product_typeVO.pdtype_name}</a></li>
                 </c:forEach>
@@ -238,8 +238,7 @@
                     </ul>
                 </div>
                 <div class="pi-text">
-                <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}">
-                   	 <div class="catagory-name">${productVO.pdtype_no}</div>                  
+                <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}">                  
                         <h5>${productVO.product_name}</h5>    
                     	<div class="product-price"><span>$</span>
                         ${productVO.product_price}
@@ -274,6 +273,21 @@
 
 
     <!-- Js Plugins -->
+    <script>
+    
+
+    //取到搜尋框的值
+//     let search = document.querySelector(".ti-search");
+//     search.addEventListener('click', () => {
+//     	event.preventDefault()
+//     	alert($("#search-input").val());
+//     });
+    	
+    
+    </script>
+    
+    
+    
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -286,15 +300,17 @@
       crossorigin="anonymous"
     ></script>
     
-    <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.countdown.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.nice-select.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.zoom.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.dd.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.slicknav.js"></script>
-    <script src="${pageContext.request.contextPath}/js/owl.carousel.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery-3.3.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery-ui.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.countdown.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.nice-select.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.zoom.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.dd.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/shop.js"></script>
+    
   </body>
 </html>

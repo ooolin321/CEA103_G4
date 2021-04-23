@@ -433,24 +433,24 @@ public class ProductServlet extends HttpServlet {
 			}
 		}   
 		
-		if("getJson".equals(action)) {
-			ProductService productSvc = new ProductService();
-			List<ProductVO> list = productSvc.getAllWithoutPhoto();
-			JSONObject jsonObj = new JSONObject();
-			
-			try {
-				jsonObj.put("results", list);
-
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			res.setContentType("text/html; charset=UTF-8");
-		
-			PrintWriter out = res.getWriter();
-			
-			out.println(jsonObj.toString());
-		}
+//		if("getJson".equals(action)) {
+//			ProductService productSvc = new ProductService();
+//			List<ProductVO> list = productSvc.getAllWithoutPhoto();
+//			JSONObject jsonObj = new JSONObject();
+//			
+//			try {
+//				jsonObj.put("results", list);
+//
+//			} catch (JSONException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//			res.setContentType("text/html; charset=UTF-8");
+//		
+//			PrintWriter out = res.getWriter();
+//			
+//			out.println(jsonObj.toString());
+//		}
 	}
 }

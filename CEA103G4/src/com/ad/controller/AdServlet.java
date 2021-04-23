@@ -5,10 +5,12 @@ import java.sql.Date;
 import java.util.*;
 
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.ad.model.*;
 
+@MultipartConfig
 public class AdServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)

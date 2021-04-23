@@ -175,12 +175,6 @@ th, td {
 				</select></td>
 			</tr>
 
-			<tr>
-				<td>折扣:</td>
-				<td><input type="TEXT" name="discount" size="45"
-					value="<%=live_orderVO.getDiscount()%>" /></td>
-			</tr>
-
 			<jsp:useBean id="liveSvc" scope="page" class="com.live.model.LiveService" />
 			<tr>
 				<td>直播編號:<font color=red><b>*</b></font></td>
@@ -199,16 +193,25 @@ th, td {
 				<input name="seller_id" id="seller_id" value="<%=live_orderVO.getSeller_id()%>" type="HIDDEN" />
 				</td>
 			</tr>
+			
 			<tr>
 				<td>買家帳號:<font color=red><b>*</b></font></td>
-				<td><select size="1" name="user_id">
+				<td><select size="1" name="user_id" id="user_id">
 					<c:forEach var="userVO" items="${userSvc.all}">
 						<option value="${userVO.user_id}" ${(live_orderVO.user_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
 					</c:forEach>
 				</select></td>
 			</tr>
-
-
+			
+			<tr>
+				<td>最大可用點數:</td>
+				<td><div id="showPoint">${userVO.user_point}</div></td>
+			</tr>
+			<tr>
+				<td>折扣:</td>
+				<td><input type="TEXT" name="discount" size="45"
+					value="<%=live_orderVO.getDiscount()%>" /></td>
+			</tr>
 
 
 			<tr>
@@ -228,8 +231,6 @@ th, td {
 					value="<%=live_orderVO.getSrating_content()%>" /></td>
 			</tr>
 
-
-
 		</table>
 
 		<br> <input type="hidden" name="action" value="update"> 
@@ -241,6 +242,7 @@ th, td {
 	</FORM>
 </body>
 <script>
+
 $("#twzipcode").twzipcode({
 	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
 	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 
@@ -268,6 +270,14 @@ $("#live_no").change(function(e) {
 	}	
 	</c:forEach>
 	});
+$()
+$("#user_id").change(function(e){
+	<c:forEach var="userVO" items="${userSvc.all}">	
+	if($("#user_id").val()=='${userVO.user_id}'){
+		$("#showPoint").text('${userVO.user_point}');
+	}
+	</c:forEach>
+});
 </script>
 
 </html>

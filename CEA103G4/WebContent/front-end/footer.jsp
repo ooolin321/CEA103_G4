@@ -7,7 +7,7 @@
           <div class="col-lg-3">
             <div class="footer-left">
               <div class="footer-logo">
-                <a href="#"><img src="${pageContext.request.contextPath}/images/favicon.ico" alt="" /></a>
+                <a href="#"><img src="${pageContext.request.contextPath}/front-template/images/favicon.ico" alt="" /></a>
               </div>
               <ul>
                 <li>Address: 60-49 Road 11378 New York</li>
@@ -73,7 +73,7 @@
                 <a href="https://colorlib.com" target="_blank">Colorlib</a>
               </div>
               <div class="payment-pic">
-                <img src="${pageContext.request.contextPath}/images/productsell/payment-method.png" alt="" />
+                <img src="${pageContext.request.contextPath}/front-template/images/productsell/payment-method.png" alt="" />
               </div>
             </div>
           </div>

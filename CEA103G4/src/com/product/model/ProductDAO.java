@@ -27,24 +27,20 @@ public class ProductDAO implements ProductDAO_interface {
 		}
 	}
 	
-
-	private static final String INSERT_STMT = 
-			"INSERT INTO PRODUCT (product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = 
-		"SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no"
-		+ " FROM PRODUCT order by product_no";
-	private static final String GET_ONE_STMT = 
-		"SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no"
-		+ " FROM PRODUCT where product_no = ?";
-	private static final String DELETE = 
-		"DELETE FROM PRODUCT where product_no = ?";
-	private static final String UPDATE = 
-		"UPDATE PRODUCT set product_name=?, product_info=?, product_price=?, product_quantity=?, product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=? where product_no = ?";
-
-	private static final String GET_ALLJSON = 
-			"SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no"
-			+ " FROM PRODUCT order by product_no";
+	//新增商品 賣家上架功能
+	private static final String INSERT_STMT = "INSERT INTO PRODUCT (product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	//查詢所有商品(後台/賣家查詢使用)
+	private static final String GET_ALL_STMT = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";	
+	private static final String GET_ONE_STMT = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no FROM PRODUCT where product_no = ?";
+	//刪除商品 賣家使用
+	private static final String DELETE = "DELETE FROM PRODUCT where product_no = ?";
+	//修改商品 賣家使用
+	private static final String UPDATE = "UPDATE PRODUCT set product_name=?, product_info=?, product_price=?, product_quantity=?, product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=? where product_no = ?";
+	private static final String GET_ALLJSON = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";
+	//查詢所有商品狀態為直售的商品
+	private static final String GET_ALL_SHOP = "SELECT * FROM PRODUCT where product_state = 1 AND product_photo IS NOT NULL order by rand()";	
+	//關鍵字搜尋
+	private static final String GET_PRODUCTS_SEARCH = "SELECT * FROM PRODUCT where product_state = 1 AND product_photo IS NOT NULL AND product_name LIKE ?"; 
 	
 	@Override
 	public void insert(ProductVO productVO){
@@ -372,6 +368,111 @@ public class ProductDAO implements ProductDAO_interface {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<ProductVO> getAllShop(){
+		List<ProductVO> list = new ArrayList<ProductVO>();
+		ProductVO productVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {	
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_SHOP);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				
+				productVO = new ProductVO();
+				productVO.setProduct_no(rs.getInt("product_no"));
+				productVO.setProduct_name(rs.getString("product_name"));
+				productVO.setProduct_info(rs.getString("product_info"));
+				productVO.setProduct_price(rs.getInt("product_price"));
+				productVO.setProduct_quantity(rs.getInt("product_quantity"));
+				productVO.setProduct_remaining(rs.getInt("product_remaining"));
+				productVO.setProduct_state(rs.getInt("product_state"));
+				productVO.setProduct_photo(rs.getBytes("product_photo"));
+				productVO.setUser_id(rs.getString("user_id"));
+				productVO.setPdtype_no(rs.getInt("pdtype_no"));
+				productVO.setStart_price(rs.getInt("start_price"));
+				productVO.setLive_no(rs.getInt("live_no"));
+				list.add(productVO); // Store the row in the list
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<String> findProductsBySearch(String product_name) {
+		List<String> product_names = new ArrayList<String>();
+		
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_PRODUCTS_SEARCH);
+			pstmt.setString(1, product_name);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				
+				product_names.add("%" + product_name + "%");
+			}
+
+		} catch (
+
+		SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return product_names;
+	}
+
 	
 
 

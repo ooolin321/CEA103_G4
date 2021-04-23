@@ -20,17 +20,19 @@ public class AuthDAO implements AuthDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/admin");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CEA103_G4");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = "insert into Auth (FUNNO,EMPNO,AUTH_NO,STATE) values (?, ?, ?, ?)";
-	private static final String UPDATE_STMT = "update Auth set AUTH_NO, STATE=? where EMPNO=? and FUNNO=?";
+	private static final String INSERT_STMT = "insert into Auth (FUNNO,EMPNO,AUTH_NO) values (?, ?, ?)";
+	private static final String UPDATE_STMT = "update Auth set AUTH_NO=? where EMPNO=? and FUNNO=?";
 	private static final String DELETE_STMT = "delete from Auth where EMPNO=? and FUNNO=?";
-	private static final String GET_ONE_BY_EMPNO_STMT = "select * from Auth where EMPNO = ?";
-	private static final String GET_ALL_BY_EMPNO_STMT = "select * from Auth order by EMPNO";
-	private static final String GET_ALL_JOIN_EMP_STMT = "select * from AUTH join EMP where AUTH = ?";
+	private static final String GET_ONE_BY_EMPNO_AND_FUNNO_STMT = "select funno,empno,auty_no from Auth where FUNNO=? and EMPNO = ? ";
+	private static final String GET_ALL_BY_EMPNO_STMT = "select funno,empno,auth_no from Auth order by EMPNO";
+	
+
+	
 	@Override
 	public void insert(AuthVO authVO) {
 		Connection con = null;
@@ -40,8 +42,10 @@ public class AuthDAO implements AuthDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, authVO.getEmpno());
-			pstmt.setInt(2, authVO.getFunno());
+			pstmt.setInt(1, authVO.getFunno());
+			pstmt.setInt(2, authVO.getEmpno());
+			pstmt.setInt(3, authVO.getAuth_no());
+			
 
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
@@ -72,10 +76,10 @@ public class AuthDAO implements AuthDAO_interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STMT);
-
-			pstmt.setInt(1, authVO.getState());
+			pstmt.setInt(1, authVO.getAuth_no());
 			pstmt.setInt(2, authVO.getEmpno());
 			pstmt.setInt(3, authVO.getFunno());
+			
 
 			pstmt.executeUpdate();
 
@@ -134,7 +138,7 @@ public class AuthDAO implements AuthDAO_interface {
 	}
 
 	@Override
-	public AuthVO findByEmpNo(Integer empno) {
+	public AuthVO findByPrimeKey(Integer funno,Integer empno) {
 		AuthVO authVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -142,18 +146,19 @@ public class AuthDAO implements AuthDAO_interface {
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ONE_BY_EMPNO_STMT);
+			pstmt = con.prepareStatement(GET_ONE_BY_EMPNO_AND_FUNNO_STMT);
 
-			pstmt.setInt(1, empno);
-
+			pstmt.setInt(1, funno);
+			pstmt.setInt(2, empno);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				// authorityVo 也稱為 Domain objects
 				authVO = new AuthVO();
+				authVO.setFunno(rs.getInt("FUNNO"));
 				authVO.setEmpno(rs.getInt("EMPNO"));
-				authVO.setFunno(rs.getInt("FUNCTION_NO"));
-				authVO.setState(rs.getInt("STATE"));
+				authVO.setAuth_no(rs.getInt("AUTH_NO"));
+				
 			}
 		}  catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -184,7 +189,8 @@ public class AuthDAO implements AuthDAO_interface {
 		}
 		return authVO;
 	}
-
+	
+	
 	@Override
 	public List<AuthVO> getAll() {
 		List<AuthVO> list = new ArrayList<AuthVO>();
@@ -202,15 +208,41 @@ public class AuthDAO implements AuthDAO_interface {
 			while (rs.next()) {
 				// authorityVO 也稱為 Domain objects
 				authVO = new AuthVO();
-				authVO.setEmpno(rs.getInt("EMPNO"));
 				authVO.setFunno(rs.getInt("FUNNO"));
-				authVO.setState(rs.getInt("STATE"));
+				authVO.setEmpno(rs.getInt("EMPNO"));
+				authVO.setAuth_no(rs.getInt("AUTH_NO"));
+				
 				list.add(authVO); // Store the row in the list
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (SQLException se) {
+			throw new RuntimeException("A database erro	r occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 		return list;
 	}
+
 
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.*;
 
 import com.live_order.model.Live_orderService;
 import com.live_order.model.Live_orderVO;
+import com.live_order_detail.model.Live_order_detailVO;
 
 public class Live_orderServlet extends HttpServlet {
 
@@ -172,8 +173,18 @@ public class Live_orderServlet extends HttpServlet {
 
 				Integer logistics_state = new Integer(req.getParameter("logistics_state").trim());
 				Integer discount = new Integer(req.getParameter("discount").trim());
-				Integer live_no = new Integer(req.getParameter("live_no").trim());
+				
+				Integer live_no = null;
+				try {
+					live_no = new Integer(req.getParameter("live_no").trim());
+				} catch (NumberFormatException e) {
+					errorMsgs.add("請選擇直播編號");
+				}
 				String user_id = req.getParameter("user_id");
+				if (user_id == null || user_id.trim().length() == 0) {
+					errorMsgs.add("請選擇買家帳號");
+				}
+				
 				String seller_id = req.getParameter("seller_id");
 
 				Integer srating = new Integer(req.getParameter("srating").trim());
@@ -307,8 +318,20 @@ public class Live_orderServlet extends HttpServlet {
 
 				Integer logistics_state = new Integer(req.getParameter("logistics_state").trim());
 				Integer discount = new Integer(req.getParameter("discount").trim());
-				Integer live_no = new Integer(req.getParameter("live_no").trim());
+				
+				Integer live_no = null;
+				try {
+					live_no = new Integer(req.getParameter("live_no").trim());
+				} catch (NumberFormatException e) {
+					errorMsgs.add("請選擇直播編號");
+				}
+				
+				
 				String user_id = req.getParameter("user_id");
+				if (user_id == null || user_id.trim().length() == 0) {
+					errorMsgs.add("請選擇買家帳號");
+				}
+				
 				String seller_id = req.getParameter("seller_id");
 
 				Integer srating = new Integer(req.getParameter("srating").trim());
@@ -324,6 +347,7 @@ public class Live_orderServlet extends HttpServlet {
 					zipcode = 0;
 					errorMsgs.add("請選擇郵遞區號");
 				}
+				
 				Live_orderVO live_orderVO = new Live_orderVO();
 //				live_orderVO.setOrder_date(order_date);
 				live_orderVO.setOrder_state(order_state);
@@ -400,6 +424,37 @@ public class Live_orderServlet extends HttpServlet {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/listAllLive_order.jsp");
 				failureView.forward(req, res);
+			}
+		}
+		
+		if ("listDetails_ByNo".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer live_order_no = new Integer(req.getParameter("live_order_no"));
+
+				/*************************** 2.開始查詢資料 ****************************************/
+				Live_orderService deptSvc = new Live_orderService();
+				Set<Live_order_detailVO> set = deptSvc.getDetailsByNo(live_order_no);
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("listDetails_ByNo", set);    // 資料庫取出的list物件,存入request
+
+				String url = null;
+//				if ("listDetails_ByNo".equals(action))
+//					url = "/front-end/live_order/listDetails_ByNo.jsp";        // 成功轉交 dept/listEmps_ByDeptno.jsp
+				if ("listDetails_ByNo".equals(action))
+					url = "/front-end/live_order/listAllLive_order.jsp";              // 成功轉交 dept/listAllDept.jsp
+
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 ***********************************/
+			} catch (Exception e) {
+				throw new ServletException(e);
 			}
 		}
 	}

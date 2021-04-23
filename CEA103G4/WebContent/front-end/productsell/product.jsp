@@ -22,7 +22,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Modefemme</title>
-    <link rel="icon" href="${pageContext.request.contextPath}/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
 
     <!-- Google Font -->
     <link
@@ -31,15 +31,15 @@
     />
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/themify-icons.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/elegant-icons.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/owl.carousel.min.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/nice-select.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/jquery-ui.min.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/slicknav.min.css" type="text/css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/themify-icons.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/elegant-icons.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/owl.carousel.min.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/nice-select.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/jquery-ui.min.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/slicknav.min.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/style.css" type="text/css" />
   </head>
 
   <body>
@@ -309,7 +309,7 @@
                           </p>
                         </div>
                         <div class="col-lg-5">
-                          <img src="${pageContext.request.contextPath}/images/productsell/tab-desc.jpg" alt="" />
+                          <img src="${pageContext.request.contextPath}/front-template/images/productsell/tab-desc.jpg" alt="" />
                         </div>
                       </div>
                     </div>
@@ -380,7 +380,7 @@
                       <div class="comment-option">
                         <div class="co-item">
                           <div class="avatar-pic">
-                            <img src="${pageContext.request.contextPath}/images/productsell/avatar-1.png" alt="" />
+                            <img src="${pageContext.request.contextPath}/front-template/images/productsell/avatar-1.png" alt="" />
                           </div>
                           <div class="avatar-text">
                             <div class="at-rating">
@@ -396,7 +396,7 @@
                         </div>
                         <div class="co-item">
                           <div class="avatar-pic">
-                            <img src="${pageContext.request.contextPath}/images/productsell/avatar-2.png" alt="" />
+                            <img src="${pageContext.request.contextPath}/front-template/images/productsell/avatar-2.png" alt="" />
                           </div>
                           <div class="avatar-text">
                             <div class="at-rating">
@@ -465,7 +465,7 @@
           <div class="col-lg-3 col-sm-6">
             <div class="product-item">
               <div class="pi-pic">
-                <img src="${pageContext.request.contextPath}/images/productsell/women-1.jpg" alt="" />
+                <img src="${pageContext.request.contextPath}/front-template/images/productsell/women-1.jpg" alt="" />
                 <div class="sale">Sale</div>
                 <div class="icon">
                   <i class="icon_heart_alt"></i>
@@ -495,7 +495,7 @@
           <div class="col-lg-3 col-sm-6">
             <div class="product-item">
               <div class="pi-pic">
-                <img src="${pageContext.request.contextPath}/images/productsell/women-2.jpg" alt="" />
+                <img src="${pageContext.request.contextPath}/front-template/images/productsell/women-2.jpg" alt="" />
                 <div class="icon">
                   <i class="icon_heart_alt"></i>
                 </div>
@@ -521,7 +521,7 @@
           <div class="col-lg-3 col-sm-6">
             <div class="product-item">
               <div class="pi-pic">
-                <img src="${pageContext.request.contextPath}/images/productsell/women-3.jpg" alt="" />
+                <img src="${pageContext.request.contextPath}/front-template/images/productsell/women-3.jpg" alt="" />
                 <div class="icon">
                   <i class="icon_heart_alt"></i>
                 </div>
@@ -547,7 +547,7 @@
           <div class="col-lg-3 col-sm-6">
             <div class="product-item">
               <div class="pi-pic">
-                <img src="${pageContext.request.contextPath}/images/productsell/women-4.jpg" alt="" />
+                <img src="${pageContext.request.contextPath}/front-template/images/productsell/women-4.jpg" alt="" />
                 <div class="icon">
                   <i class="icon_heart_alt"></i>
                 </div>
@@ -581,15 +581,15 @@
     <!-- Footer Section End -->
     
     <!-- Js Plugins -->
-    <script src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery-ui.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.countdown.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.nice-select.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.zoom.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.dd.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery.slicknav.js"></script>
-    <script src="${pageContext.request.contextPath}/js/owl.carousel.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery-3.3.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery-ui.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.countdown.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.nice-select.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.zoom.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.dd.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
   </body>
 </html>

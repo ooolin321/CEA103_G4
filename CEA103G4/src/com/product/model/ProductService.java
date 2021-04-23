@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+
 public class ProductService {
 	
 	private ProductDAO_interface dao;
@@ -71,18 +72,23 @@ public class ProductService {
 		return dao.findProductPic(product_no);
 	}
 	
-	public List<ProductVO> getAllWithoutPhoto(){	
-		return dao.getAllWithoutPhoto();
-	}
-	
 	public List<ProductVO> getAllShop() {
 		return dao.getAllShop();
 	}
 	
+	public List<ProductVO> getAllShopWithoutPhoto(){
+		List<ProductVO> productList = dao.getAllShop();
+		for( ProductVO product:productList) {
+			product.setProduct_photo(null);
+		}
+		
+		return productList;
+	}
 	
 	public List<String> findProductsBySearch(String product_name) {
 		return dao.findProductsBySearch(product_name);
 	}
+
 
 }
 

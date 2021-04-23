@@ -28,32 +28,19 @@ public class ProductDAO implements ProductDAO_interface {
 	}
 	
 	//新增商品 賣家上架功能
-	private static final String INSERT_STMT = 
-			"INSERT INTO PRODUCT (product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no) "
-			+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO PRODUCT (product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	//查詢所有商品(後台/賣家查詢使用)
-	private static final String GET_ALL_STMT = 
-		"SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no"
-		+ " FROM PRODUCT order by product_no";
-	//查詢所有商品狀態為直售的商品
-	private static final String GET_ALL_SHOP = 
-			"SELECT * FROM PRODUCT where product_state = 1 AND product_photo IS NOT NULL order by rand()";
-	
-	private static final String GET_ONE_STMT = 
-		"SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no"
-		+ " FROM PRODUCT where product_no = ?";
+	private static final String GET_ALL_STMT = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";	
+	private static final String GET_ONE_STMT = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no FROM PRODUCT where product_no = ?";
 	//刪除商品 賣家使用
-	private static final String DELETE = 
-		"DELETE FROM PRODUCT where product_no = ?";
+	private static final String DELETE = "DELETE FROM PRODUCT where product_no = ?";
 	//修改商品 賣家使用
-	private static final String UPDATE = 
-		"UPDATE PRODUCT set product_name=?, product_info=?, product_price=?, product_quantity=?, product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=? where product_no = ?";
-
-	private static final String GET_ALLJSON = 
-			"SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no"
-			+ " FROM PRODUCT order by product_no";
-	
-	private static final String GET_PRODUCTS_SEARCH = "SELECT * FROM PRODUCT where product_name LIKE ?"; 
+	private static final String UPDATE = "UPDATE PRODUCT set product_name=?, product_info=?, product_price=?, product_quantity=?, product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=? where product_no = ?";
+	private static final String GET_ALLJSON = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";
+	//查詢所有商品狀態為直售的商品
+	private static final String GET_ALL_SHOP = "SELECT * FROM PRODUCT where product_state = 1 AND product_photo IS NOT NULL order by rand()";	
+	//關鍵字搜尋
+	private static final String GET_PRODUCTS_SEARCH = "SELECT * FROM PRODUCT where product_state = 1 AND product_photo IS NOT NULL AND product_name LIKE ?"; 
 	
 	@Override
 	public void insert(ProductVO productVO){
@@ -447,6 +434,7 @@ public class ProductDAO implements ProductDAO_interface {
 	public List<String> findProductsBySearch(String product_name) {
 		List<String> product_names = new ArrayList<String>();
 		
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -457,7 +445,8 @@ public class ProductDAO implements ProductDAO_interface {
 			pstmt.setString(1, product_name);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				product_names.add(rs.getString(1));
+				
+				product_names.add("%" + product_name + "%");
 			}
 
 		} catch (

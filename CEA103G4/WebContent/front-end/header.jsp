@@ -18,7 +18,8 @@
             <div class="col-lg-7 col-md-7">
               <div class="advanced-search">
                 <form class="input-group" id="search">
-                  <input type="text" id="search-input" value="" placeholder="What do you need?" />
+                  <input type="text" id="search-input" name="product_name" placeholder="What do you need?" />
+<!--                   <input type="hidden" name="action" value="search"> -->
                   <button type="submit"><i class="ti-search"></i></button>
                 </form>
               </div>
@@ -62,7 +63,7 @@
                         <tbody>
                           <tr>
                             <td class="si-pic">
-                              <img src="${pageContext.request.contextPath}/images/productsell/select-product-1.jpg" alt="" />
+                              <img src="${pageContext.request.contextPath}/front-template/images/productsell/select-product-1.jpg" alt="" />
                             </td>
                             <td class="si-text">
                               <div class="product-selected">
@@ -76,7 +77,7 @@
                           </tr>
                           <tr>
                             <td class="si-pic">
-                              <img src="${pageContext.request.contextPath}/images/productsell/select-product-2.jpg" alt="" />
+                              <img src="${pageContext.request.contextPath}/front-template/images/productsell/select-product-2.jpg" alt="" />
                             </td>
                             <td class="si-text">
                               <div class="product-selected">

@@ -1,6 +1,7 @@
 package com.product.model;
 import java.sql.Blob;
 import java.sql.Date;
+import java.util.Arrays;
 
 public class ProductVO implements java.io.Serializable{
 
@@ -18,6 +19,10 @@ public class ProductVO implements java.io.Serializable{
 	private Integer pdtype_no;
 	private Integer start_price;
 	private Integer live_no;
+	
+	public ProductVO() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public Integer getProduct_no() {
 		return product_no;
@@ -91,4 +96,24 @@ public class ProductVO implements java.io.Serializable{
 	public void setLive_no(Integer live_no) {
 		this.live_no = live_no;
 	}
+	
+	public ProductVO(Integer product_no, String product_name, String product_info, Integer product_price,
+			Integer product_quantity, Integer product_remaining, Integer product_state, byte[] product_photo,
+			String user_id, Integer pdtype_no, Integer start_price, Integer live_no) {
+		
+		this.product_no = product_no;
+		this.product_name = product_name;
+		this.product_info = product_info;
+		this.product_price = product_price;
+		this.product_quantity = product_quantity;
+		this.product_remaining = product_remaining;
+		this.product_state = product_state;
+		this.product_photo = product_photo;
+		this.user_id = user_id;
+		this.pdtype_no = pdtype_no;
+		this.start_price = start_price;
+		this.live_no = live_no;
+	}
+
+	
 }

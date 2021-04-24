@@ -2,25 +2,26 @@
 
   <%if (rowsPerPage<rowNumber) {%>
     <%if(pageIndex>=rowsPerPage){%>
-        <A href="<%=request.getRequestURI()%>?whichPage=1">至第一頁</A>&nbsp;
-        <A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage-1%>">上一頁 </A>&nbsp;
+        <A href="<%=request.getContextPath()%>/ProductSearch?whichPage=1&action=shop">至第一頁</A>&nbsp;
+        <A href="<%=request.getContextPath()%>/ProductSearch?whichPage=<%=whichPage-1%>&action=shop">上一頁 </A>
     <%}%>
   
     <%if(pageIndex<pageIndexArray[pageNumber-1]){%>
-        <A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一頁 </A>&nbsp;
-        <A href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>">至最後一頁</A>&nbsp;
+        <td><A href="<%=request.getContextPath()%>/ProductSearch?whichPage=<%=whichPage+1%>&action=shop">下一頁 </A>&nbsp;
+        <td><A href="<%=request.getContextPath()%>/ProductSearch?whichPage=<%=pageNumber%>&action=shop">至最後一頁</A>&nbsp;
     <%}%>
   <%}%>  
-
+ 
 <br><br>
 
-  <%if (pageNumber>1) {%>
-    <FORM METHOD="post" ACTION="<%=request.getRequestURI()%>">   
+  <%if ( pageNumber > 1) {%>
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ProductSearch">   
        <select size="1" name="whichPage">
          <%for (int i=1; i<=pageNumber; i++){%>
             <option value="<%=i%>">跳至第<%=i%>頁
          <%}%> 
        </select>
-       <input type="submit" value="確定" >  
+       <input type="submit" value="確定" >
+       <input type="hidden" name="action" value="shop">  
     </FORM>
   <%}%>

@@ -17,9 +17,9 @@
             </div>
             <div class="col-lg-7 col-md-7">
               <div class="advanced-search">
-                <form class="input-group" id="search">
-                  <input type="text" id="search-input" name="product_name" placeholder="What do you need?" />
-<!--                   <input type="hidden" name="action" value="search"> -->
+                <form class="input-group" id="search" METHOD="post" ACTION="<%=request.getContextPath()%>/ProductSearch">
+                  <input type="text" id="search-input" name="product_name" value="" placeholder="What do you need?" />
+                  <input type="hidden" name="action" value="search">
                   <button type="submit"><i class="ti-search"></i></button>
                 </form>
               </div>
@@ -137,7 +137,11 @@
           <nav class="nav-menu mobile-menu">
             <ul>
               <li class="active"><a href="${pageContext.request.contextPath}/front-end/index.jsp">首頁</a></li>
+              <form style="display:inline-block" METHOD="post" ACTION="<%=request.getContextPath()%>/ProductSearch">
               <li><a href="${pageContext.request.contextPath}/front-end/productsell/shop.jsp">商品專區</a></li>
+              <input type="hidden" name="product_state" value="1">
+              <input type="hidden" name="action" value="shop">
+              </form>
               <li>
                 <a href="#">直播專區</a>
                 <ul class="dropdown">
@@ -146,7 +150,7 @@
                   <!-- <li><a href="#">Kid's</a></li> -->
                 </ul>
               </li>
-              <li><a href="./contact.html">線上客服</a></li>
+              <li><a href="#">會員專區</a></li>
               <!-- <li>
                 <a href="#">Pages</a>
                 <ul class="dropdown">

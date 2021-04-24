@@ -4,19 +4,29 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.product.model.*"%>
 <%@ page import="com.product_type.model.*"%>
+<%@ page import="com.product.controller.*"%>
 
 <%
-	ProductDAO dao = new ProductDAO();
-    List<ProductVO> list = dao.getAllShop();
-    pageContext.setAttribute("list",list);
-        
+
+	//全部資料
+// 	ProductDAO dao = new ProductDAO();
+//     List<ProductVO> list = dao.getAllShop();
+//     pageContext.setAttribute("list",list);
+    //搜尋結果
+//     List<ProductVO> findProductsBySearch = (ArrayList<ProductVO>) request.getAttribute("findProductsBySearch");
+//     pageContext.setAttribute("findProductsBySearch",findProductsBySearch); 
+
+// 	ProductVO products = (ProductVO) request.getAttribute("products");
+// 	pageContext.setAttribute("products",products);
     
 	Product_TypeDAO dao2 = new Product_TypeDAO();
     List<Product_TypeVO> list2 = dao2.getAll();
     pageContext.setAttribute("list2",list2);
 %>
+<jsp:useBean id="products" scope="request" type="java.util.List<ProductVO>" /> <!-- 於EL此行可省略 -->
 <jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
-   
+
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -216,9 +226,10 @@
             </div>
             <!-- <div class="row"> -->
             <div class="row" id="product-list">
-            <%@ include file="page1.file" %> 
-            <c:forEach var="productVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-          
+<%--             <%@ include file="page1products.file" %>  --%>
+
+            <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()-1}">
+
           <div class="col-lg-4 col-sm-6">
         <div class="card mb-2 productcard">
             <div class="product-item" >
@@ -249,7 +260,8 @@
         </div>
     </div>
           </c:forEach>
-          <%@ include file="page2.file" %>
+<%--           <%@ include file="page2.file" %> --%>
+
           </div>
         </div>
       </div>
@@ -310,7 +322,7 @@
     <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
-    <script src="${pageContext.request.contextPath}/front-template/js/shop.js"></script>
+<%--     <script src="${pageContext.request.contextPath}/front-template/js/shop.js"></script> --%>
     
   </body>
 </html>

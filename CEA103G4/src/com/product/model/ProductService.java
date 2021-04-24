@@ -1,6 +1,7 @@
 package com.product.model;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.json.JSONException;
@@ -85,10 +86,13 @@ public class ProductService {
 		return productList;
 	}
 	
-	public List<String> findProductsBySearch(String product_name) {
+	public List<ProductVO> findProductsBySearch(String product_name) {
 		return dao.findProductsBySearch(product_name);
 	}
-
+	
+	public List<ProductVO> getAllShop(Map<String, String[]> map) {
+		return dao.getAllShop(map);
+	}
 
 }
 

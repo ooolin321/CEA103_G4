@@ -276,11 +276,11 @@ ol {
   box-sizing: border-box;
 }
 
-@font-face {
-  /* 嵌入字體 */
-  src: url("font/crazy_rich/_CRAZY_RICH_.otf");
-  font-family: webfont;
-}
+/* @font-face { */
+/*   嵌入字體 */
+/*   src: url("/font/crazy_rich/_CRAZY_RICH_.otf"); */
+/*   font-family: webfont; */
+/* } */
 
 .inner-header .logo h2 {
   font-family: webfont;

@@ -499,7 +499,7 @@ public class ProductDAO implements ProductDAO_interface {
 		try {
 			
 			con = ds.getConnection();
-			String finalSQL = "select * from product where product_photo IS NOT NULL "
+			String finalSQL = "select * from PRODUCT where product_photo IS NOT NULL AND product_state = 1 "
 		          + CompositeQuery_Product.get_WhereCondition(map)
 		          + "order by rand()";
 			pstmt = con.prepareStatement(finalSQL);
@@ -507,6 +507,7 @@ public class ProductDAO implements ProductDAO_interface {
 			rs = pstmt.executeQuery();
 	
 			while (rs.next()) {
+				productVO = new ProductVO();	
 				productVO.setProduct_no(rs.getInt("product_no"));
 				productVO.setProduct_name(rs.getString("product_name"));
 				productVO.setProduct_info(rs.getString("product_info"));
@@ -517,6 +518,8 @@ public class ProductDAO implements ProductDAO_interface {
 				productVO.setProduct_photo(rs.getBytes("product_photo"));
 				productVO.setUser_id(rs.getString("user_id"));
 				productVO.setPdtype_no(rs.getInt("pdtype_no"));
+				productVO.setStart_price(rs.getInt("start_price"));
+				productVO.setLive_no(rs.getInt("live_no"));
 				list.add(productVO); // Store the row in the List
 			}
 	

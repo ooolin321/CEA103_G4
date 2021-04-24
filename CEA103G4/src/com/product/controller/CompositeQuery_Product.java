@@ -14,9 +14,7 @@ public class CompositeQuery_Product {
 
 		String aCondition = null;
 
-		if ("product_state".equals(columnName)) 
-			aCondition = columnName + "=" + value;
-		else if ("product_name".equals(columnName)) // 用於varchar
+		if ("product_name".equals(columnName)) // 用於varchar
 			aCondition = columnName + " like '%" + value + "%'";
 		
 		
@@ -49,7 +47,7 @@ public class CompositeQuery_Product {
 		// 配合 req.getParameterMap()方法 回傳 java.util.Map<java.lang.String,java.lang.String[]> 之測試
 		Map<String, String[]> map = new TreeMap<String, String[]>();
 		map.put("product_state", new String[] { "1" });
-//		map.put("ename", new String[] { "KING" });
+		map.put("product_name", new String[] { "測" });
 //		map.put("job", new String[] { "PRESIDENT" });
 //		map.put("hiredate", new String[] { "1981-11-17" });
 //		map.put("sal", new String[] { "5000.5" });
@@ -57,7 +55,7 @@ public class CompositeQuery_Product {
 //		map.put("deptno", new String[] { "10" });
 		map.put("action", new String[] { "getXXX" }); // 注意Map裡面會含有action的key
 
-		String finalSQL = "select * from product where product_photo IS NOT NULL"
+		String finalSQL = "select * from PRODUCT where product_photo IS NOT NULL"
 				          + CompositeQuery_Product.get_WhereCondition(map)
 				          + "order by rand()";
 		System.out.println("●●finalSQL = " + finalSQL);

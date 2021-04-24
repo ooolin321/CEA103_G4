@@ -7,23 +7,12 @@
 <%@ page import="com.product.controller.*"%>
 
 <%
-
-	//全部資料
-// 	ProductDAO dao = new ProductDAO();
-//     List<ProductVO> list = dao.getAllShop();
-//     pageContext.setAttribute("list",list);
-    //搜尋結果
-//     List<ProductVO> findProductsBySearch = (ArrayList<ProductVO>) request.getAttribute("findProductsBySearch");
-//     pageContext.setAttribute("findProductsBySearch",findProductsBySearch); 
-
-// 	ProductVO products = (ProductVO) request.getAttribute("products");
-// 	pageContext.setAttribute("products",products);
     
 	Product_TypeDAO dao2 = new Product_TypeDAO();
     List<Product_TypeVO> list2 = dao2.getAll();
     pageContext.setAttribute("list2",list2);
 %>
-<jsp:useBean id="products" scope="request" type="java.util.List<ProductVO>" /> <!-- 於EL此行可省略 -->
+<%-- <jsp:useBean id="products" scope="request" type="java.util.List<ProductVO>" /> <!-- 於EL此行可省略 --> --%>
 <jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
 
 

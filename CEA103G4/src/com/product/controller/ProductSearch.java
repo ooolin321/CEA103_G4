@@ -74,10 +74,13 @@ public class ProductSearch extends HttpServlet {
 		String action = req.getParameter("action");
 		
 		// 使用一般搜尋
-		if ("shop".equals(action))  {
+		if (("shop".equals(action)) || ("search".equals(action)))  {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			System.out.println("A");
+			System.out.println("shop");
 
 			try {
 				/*************************** 1.接收請求參數 ****************************************/

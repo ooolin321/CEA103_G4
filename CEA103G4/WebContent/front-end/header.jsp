@@ -136,12 +136,10 @@
           </div>
           <nav class="nav-menu mobile-menu">
             <ul>
-              <li class="active"><a href="${pageContext.request.contextPath}/front-end/index.jsp">首頁</a></li>
-              <form style="display:inline-block" METHOD="post" ACTION="<%=request.getContextPath()%>/ProductSearch">
-              <li><a href="${pageContext.request.contextPath}/front-end/productsell/shop.jsp">商品專區</a></li>
-              <input type="hidden" name="product_state" value="1">
-              <input type="hidden" name="action" value="shop">
-              </form>
+              <li class="active"><a href="${pageContext.request.contextPath}/front-end/index.jsp">首頁</a></li>             
+              <li><a href="<%=request.getContextPath()%>/ProductSearch?action=shop">商品專區</a></li>
+<!--               <input type="hidden" name="product_state" value="1"> -->
+
               <li>
                 <a href="#">直播專區</a>
                 <ul class="dropdown">

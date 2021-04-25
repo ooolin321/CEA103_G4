@@ -199,8 +199,8 @@
     /*-------------------
 		Radio Btn
 	--------------------- */
-    $(".fw-size-choose .sc-item label, .pd-size-choose .sc-item label").on('click', function () {
-        $(".fw-size-choose .sc-item label, .pd-size-choose .sc-item label").removeClass('active');
+    $(".fw-price .sc-item label, .pd-size-choose .sc-item label").on('click', function () {
+        $(".fw-price .sc-item label, .pd-size-choose .sc-item label").removeClass('active');
         $(this).addClass('active');
     });
     

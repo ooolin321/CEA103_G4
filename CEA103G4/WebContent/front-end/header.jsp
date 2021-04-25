@@ -17,9 +17,9 @@
             </div>
             <div class="col-lg-7 col-md-7">
               <div class="advanced-search">
-                <form class="input-group" id="search">
-                  <input type="text" id="search-input" name="product_name" placeholder="What do you need?" />
-<!--                   <input type="hidden" name="action" value="search"> -->
+                <form class="input-group" id="search" METHOD="post" ACTION="<%=request.getContextPath()%>/ProductSearch">
+                  <input type="text" id="search-input" name="product_name" value="" placeholder="What do you need?" />
+                  <input type="hidden" name="action" value="search">
                   <button type="submit"><i class="ti-search"></i></button>
                 </form>
               </div>
@@ -122,6 +122,7 @@
             <div class="depart-btn">
               <i class="ti-menu"></i>
               <span>商品分類</span>
+              <i class="fa fa-hand-o-down" id="ti-fa-hand"></i>
               <ul class="depart-hover">
                 <li class="active"><a href="#">Women’s Clothing</a></li>
                 <li><a href="#">Men’s Clothing</a></li>
@@ -136,17 +137,19 @@
           </div>
           <nav class="nav-menu mobile-menu">
             <ul>
-              <li class="active"><a href="${pageContext.request.contextPath}/front-end/index.jsp">首頁</a></li>
-              <li><a href="${pageContext.request.contextPath}/front-end/productsell/shop.jsp">商品專區</a></li>
+              <li class="active" id="nav-index"><a href="${pageContext.request.contextPath}/front-end/index.jsp">首頁</a></li>             
+              <li><a href="<%=request.getContextPath()%>/ProductSearch?action=shop">商品專區</a></li>
+<!--               <input type="hidden" name="product_state" value="1"> -->
+
               <li>
-                <a href="#">直播專區</a>
+                <a href="#" >直播專區</a>
                 <ul class="dropdown">
                   <li><a href="#">直播牆</a></li>
                   <li><a href="#">直播預告</a></li>
                   <!-- <li><a href="#">Kid's</a></li> -->
                 </ul>
               </li>
-              <li><a href="./contact.html">線上客服</a></li>
+              <li><a href="#">會員專區<i class="icon_profile" style="color:white; padding-left:5px;" ></i></a></li>
               <!-- <li>
                 <a href="#">Pages</a>
                 <ul class="dropdown">

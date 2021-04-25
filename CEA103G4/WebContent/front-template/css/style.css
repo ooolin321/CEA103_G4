@@ -101,6 +101,11 @@ a:focus {
   color: #fff;
 }
 
+/* a { */
+/*  text-decoration: none; */
+/*  outline: none; */
+/* } */
+
 ul,
 ol {
   padding: 0;
@@ -276,11 +281,11 @@ ol {
   box-sizing: border-box;
 }
 
-@font-face {
-  /* 嵌入字體 */
-  src: url("font/crazy_rich/_CRAZY_RICH_.otf");
-  font-family: webfont;
-}
+/* @font-face { */
+/*   嵌入字體 */
+/*   src: url("/font/crazy_rich/_CRAZY_RICH_.otf"); */
+/*   font-family: webfont; */
+/* } */
 
 .inner-header .logo h2 {
   font-family: webfont;
@@ -563,7 +568,7 @@ ol {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding-left: 120px;
+  padding-left: 200px;
 }
 
 .nav-item .nav-depart {
@@ -574,10 +579,11 @@ ol {
 .nav-item .nav-depart .depart-btn {
   background: #3b3b3b;
   color: #ffffff;
-  padding: 14px 84px 14px 18px;
+  padding: 14px 60px 14px 18px;
   cursor: pointer;
   position: relative;
 }
+
 
 .nav-item .nav-depart .depart-btn:hover .depart-hover {
   top: 52px;
@@ -585,21 +591,28 @@ ol {
   visibility: visible;
   z-index: 99;
 }
-
-.nav-item .nav-depart .depart-btn:before {
-  position: absolute;
-  color: #ffffff;
-  right: 20px;
-  top: 13px;
-  content: "";
-  font-family: FontAwesome;
-  font-size: 18px;
-}
+/* 導覽列商品分類的下拉箭頭 */
+/* .nav-item .nav-depart .depart-btn:before { */
+/*   position: absolute; */
+/*   color: #ffffff; */
+/*   right: 20px; */
+/*   top: 13px; */
+/*   content: ""; */
+/*   font-family: FontAwesome; */
+/*   font-size: 18px; */
+/* } */
 
 .nav-item .nav-depart .depart-btn i {
   color: #ffffff;
   font-size: 16px;
 }
+
+.nav-item .nav-depart .depart-btn #ti-fa-hand {
+  position: absolute;
+  right: 37px;
+  top: 19px;
+
+ }
 
 .nav-item .nav-depart .depart-btn span {
   font-size: 14px;
@@ -653,7 +666,7 @@ ol {
   display: -ms-inline-flexbox;
   display: inline-flex;
   position: relative;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 .nav-item .nav-menu li {
@@ -1729,76 +1742,73 @@ border:1px block solid;
   text-transform: uppercase;
 }
 
-.filter-widget .fw-color-choose .cs-item {
-  width: 50%;
-  float: left;
-  margin-bottom: 4px;
+
+.filter-widget .fw-all-choose .cs-item {
+  margin-bottom: 3px;
 }
 
-.filter-widget .fw-color-choose .cs-item input {
+.filter-widget .fw-all-choose .cs-item label {
+  position: relative;
+  cursor: pointer;
+  padding-left: 28px;
+}
+
+.filter-widget .fw-all-choose .cs-item label input {
   position: absolute;
   visibility: hidden;
 }
 
-.filter-widget .fw-color-choose .cs-item label {
-  cursor: pointer;
-  position: relative;
-  padding-left: 33px;
-  font-size: 16px;
-  color: #636363;
+.filter-widget .fw-all-choose .cs-item label input:checked ~ span {
+  background: #e7ab3c;
+  border-color: #e7ab3c;
 }
 
-.filter-widget .fw-color-choose .cs-item label.cs-violet:before {
-  background: #8230e3;
-}
-
-.filter-widget .fw-color-choose .cs-item label.cs-blue:before {
-  background: #2773be;
-}
-
-.filter-widget .fw-color-choose .cs-item label.cs-yellow:before {
-  background: #eeee21;
-}
-
-.filter-widget .fw-color-choose .cs-item label.cs-red:before {
-  background: #dc3232;
-}
-
-.filter-widget .fw-color-choose .cs-item label.cs-green:before {
-  background: #81d742;
-}
-
-.filter-widget .fw-color-choose .cs-item label:before {
+.filter-widget .fw-all-choose .cs-item label .checkmark {
   position: absolute;
   left: 0;
-  top: 4px;
-  height: 18px;
-  width: 18px;
-  background: #252525;
-  border-radius: 50%;
-  content: "";
+  top: 5px;
+  height: 15px;
+  width: 15px;
+  border: 2px solid #ebebeb;
+  border-radius: 2px;
 }
 
-.filter-widget .fw-size-choose .sc-item {
+.filter-widget .fw-all-choose .cs-item label .checkmark:after {
+  left: 0;
+  top: 0;
+  width: 10px;
+  height: 8px;
+  border: solid white;
+  border-width: 3px 3px 0px 0px;
+  -webkit-transform: rotate(127deg);
+  -ms-transform: rotate(127deg);
+  transform: rotate(127deg);
+}
+
+.filter-widget .fw-all-choose .fw-price {
+	margin-top:10px;
+}
+
+.filter-widget .fw-all-choose .fw-price .sc-item {
   display: inline-block;
   margin-right: 5px;
 }
 
-.filter-widget .fw-size-choose .sc-item:last-child {
+.filter-widget .fw-all-choose .fw-price .sc-item:last-child {
   margin-right: 0;
 }
 
-.filter-widget .fw-size-choose .sc-item input {
+.filter-widget .fw-all-choose .fw-price .sc-item input {
   position: absolute;
   visibility: hidden;
 }
 
-.filter-widget .fw-size-choose .sc-item label {
+.filter-widget .fw-all-choose .fw-price .sc-item label {
   font-size: 16px;
   color: #252525;
   font-weight: 700;
   height: 40px;
-  width: 47px;
+  width: 110px;
   border: 1px solid #ebebeb;
   text-align: center;
   line-height: 40px;
@@ -1806,7 +1816,7 @@ border:1px block solid;
   cursor: pointer;
 }
 
-.filter-widget .fw-size-choose .sc-item label.active {
+.filter-widget .fw-all-choose .fw-price .sc-item label.active {
   background: #252525;
   color: #ffffff;
 }
@@ -1846,7 +1856,7 @@ border:1px block solid;
 
 .product-show-option .select-option .nice-select .list {
   margin-top: 0;
-  border-radius: 0;
+  border-radius: 2px;
   width: 100%;
 }
 
@@ -1873,18 +1883,48 @@ border:1px block solid;
   padding-right: 70px;
 }
 
-.product-show-option .select-option .p-show.nice-select {
-  padding-right: 105px;
+.product-show-option .select-option .newproduct-btn , .allproduct-btn {
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 700;
+  background: #e7ab3c;
+  padding: 10px 20px 10px;
+  border-radius: 2px;
+  display: inline-block;
+  text-transform: uppercase;
+  margin-right:20px;
+  
 }
 
-.product-show-option .select-option .p-show.nice-select:before {
-  position: absolute;
-  right: 48px;
-  top: 0;
-  content: "09";
-  font-size: 16px;
-  color: #252525;
+.product-show-option .select-option .p-show {
+  	box-shadow: 0 1px 1px 0 rgb(0 0 0 / 2%);
+    height: 2.125rem;
+    line-height: 2.125rem;
+    border-radius: 2px;
+    border: 1;
+    background:#fff;
+    width: 8rem;
+    border-radius: 5px;
+    margin-top: 3px;
+    
 }
+
+
+.select-option span i{
+    font-size:16px;
+    color:#e7ab3c;
+    font-weight:700;
+}
+
+
+/* .product-show-option .select-option .p-show.nice-select:before { */
+/*   position: absolute; */
+/*   right: 48px; */
+/*   top: 0; */
+/*   content: "09"; */
+/*   font-size: 16px; */
+/*   color: #252525; */
+/* } */
 
 #productheart a {
   color: pink;

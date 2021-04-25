@@ -4,19 +4,21 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.product.model.*"%>
 <%@ page import="com.product_type.model.*"%>
+<%@ page import="com.product.controller.*"%>
 
 <%
-	ProductDAO dao = new ProductDAO();
-    List<ProductVO> list = dao.getAllShop();
-    pageContext.setAttribute("list",list);
-        
-    
+// 	ProductDAO dao = new ProductDAO();
+// 	List<ProductVO> products = dao.getAllShop();
+// 	pageContext.setAttribute("products",products);
+
 	Product_TypeDAO dao2 = new Product_TypeDAO();
     List<Product_TypeVO> list2 = dao2.getAll();
     pageContext.setAttribute("list2",list2);
 %>
+<%-- <jsp:useBean id="products" scope="page" type="java.util.List<ProductVO>" /> <!-- 於EL此行可省略 --> --%>
 <jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
-   
+
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -33,7 +35,7 @@
     />
 
     <!-- Css Styles -->
-     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/font-awesome.min.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/themify-icons.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/elegant-icons.css" type="text/css" />
@@ -42,6 +44,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/jquery-ui.min.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/slicknav.min.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/style.css" type="text/css" />
+    
   </head>
 
   <body>
@@ -64,7 +67,8 @@
     </div>
     <!-- Breadcrumb Section Begin -->
 
-    <!-- Product Shop Section Begin -->
+
+<!-- Product Shop Section Begin -->
     <section class="product-shop spad">
       <div class="container">
         <div class="row">
@@ -78,39 +82,6 @@
                 <li><a href="#">${product_typeVO.pdtype_name}</a></li>
                 </c:forEach>
               </ul>
-            </div>
-            <div class="filter-widget">
-              <h4 class="fw-title">Brand</h4>
-              <div class="fw-brand-check">
-                <div class="bc-item">
-                  <label for="bc-calvin">
-                    Calvin Klein
-                    <input type="checkbox" id="bc-calvin" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="bc-item">
-                  <label for="bc-diesel">
-                    Diesel
-                    <input type="checkbox" id="bc-diesel" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="bc-item">
-                  <label for="bc-polo">
-                    Polo
-                    <input type="checkbox" id="bc-polo" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-                <div class="bc-item">
-                  <label for="bc-tommy">
-                    Tommy Hilfiger
-                    <input type="checkbox" id="bc-tommy" />
-                    <span class="checkmark"></span>
-                  </label>
-                </div>
-              </div>
             </div>
             <div class="filter-widget">
               <h4 class="fw-title">Price</h4>
@@ -139,71 +110,53 @@
                   ></span>
                 </div>
               </div>
-              <a href="#" class="filter-btn">Filter</a>
+              <a href="#" class="filter-btn">價格篩選</a>
+
             </div>
             <div class="filter-widget">
-              <h4 class="fw-title">Color</h4>
-              <div class="fw-color-choose">
+              <h4 class="fw-title">進階查詢</h4>
+              <div class="fw-all-choose">
+               <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()-1}">
                 <div class="cs-item">
-                  <input type="radio" id="cs-black" />
-                  <label class="cs-black" for="cs-black">Black</label>
-                </div>
-                <div class="cs-item">
-                  <input type="radio" id="cs-violet" />
-                  <label class="cs-violet" for="cs-violet">Violet</label>
-                </div>
-                <div class="cs-item">
-                  <input type="radio" id="cs-blue" />
-                  <label class="cs-blue" for="cs-blue">Blue</label>
-                </div>
-                <div class="cs-item">
-                  <input type="radio" id="cs-yellow" />
-                  <label class="cs-yellow" for="cs-yellow">Yellow</label>
-                </div>
-                <div class="cs-item">
-                  <input type="radio" id="cs-red" />
-                  <label class="cs-red" for="cs-red">Red</label>
-                </div>
-                <div class="cs-item">
-                  <input type="radio" id="cs-green" />
-                  <label class="cs-green" for="cs-green">Green</label>
-                </div>
-              </div>
-            </div>
-            <div class="filter-widget">
-              <h4 class="fw-title">Size</h4>
-              <div class="fw-size-choose">
+                 <label for="${product_typeVO.pdtype_name}">
+                    ${product_typeVO.pdtype_name}
+                   <input type="checkbox" id="${product_typeVO.pdtype_name}" />
+                   <span class="checkmark"></span>
+                  </label>
+                 </div>
+                </c:forEach>
+                <div class="fw-price">
                 <div class="sc-item">
                   <input type="radio" id="s-size" />
-                  <label for="s-size">s</label>
+                  <label for="s-size">$300<i class="fa fa-arrow-circle-down"></i></label>
                 </div>
                 <div class="sc-item">
                   <input type="radio" id="m-size" />
-                  <label for="m-size">m</label>
+                  <label for="m-size">$301~$500</label>
                 </div>
                 <div class="sc-item">
                   <input type="radio" id="l-size" />
-                  <label for="l-size">l</label>
+                  <label for="l-size">$501~$1000</label>
                 </div>
                 <div class="sc-item">
                   <input type="radio" id="xs-size" />
-                  <label for="xs-size">xs</label>
+                  <label for="xs-size">$1001<i class="fa fa-arrow-circle-up"></i></label>
                 </div>
-              </div>
-            </div>
-            <div class="filter-widget">
-            </div>
+                </div>
+             </div>
+          </div>
           </div>
           <div class="col-lg-9 order-1 order-lg-2">
             <div class="product-show-option">
               <div class="row">
                 <div class="col-lg-7 col-md-7">
                   <div class="select-option">
-                    <select class="sorting">
-                      <option value="">Default Sorting</option>
-                    </select>
+                  	<a href="#" class="allproduct-btn">全部商品</a>
+ 					<a href="#" class="newproduct-btn">最新商品</a>
                     <select class="p-show">
-                      <option value="">Show:</option>
+                      <option value="">價格</option>
+                      <option value="">價格：低到高</option>
+                      <option value="">價格：高到低</option>
                     </select>
                   </div>
                 </div>
@@ -214,11 +167,9 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="row"> -->
-            <div class="row" id="product-list">
-            <%@ include file="page1.file" %> 
-            <c:forEach var="productVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-          
+           <div class="product-list">
+            <div class="row">
+            <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()-1}">
           <div class="col-lg-4 col-sm-6">
         <div class="card mb-2 productcard">
             <div class="product-item" >
@@ -238,10 +189,10 @@
                     </ul>
                 </div>
                 <div class="pi-text">
-                <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}">                  
+                  <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}">                  
                         <h5>${productVO.product_name}</h5>    
-                    	<div class="product-price"><span>$</span>
-                        ${productVO.product_price}
+                    	 <div class="product-price"><span>$</span>
+                          ${productVO.product_price}
                     	</div>
                     </a>
                 </div>
@@ -249,12 +200,15 @@
         </div>
     </div>
           </c:forEach>
-          <%@ include file="page2.file" %>
           </div>
-        </div>
-      </div>
-    </section>
+       </div>
+     </div>
+     </div>
+     </div>
+     </div>
+   </section>
     <!-- Product Shop Section End -->
+
 <!--     分頁樣式待跟老師的分頁檔案結合 -->
  <!-- pagination -->
     <nav aria-label="Page navigation">
@@ -310,7 +264,7 @@
     <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
-    <script src="${pageContext.request.contextPath}/front-template/js/shop.js"></script>
+<%--     <script src="${pageContext.request.contextPath}/front-template/js/shop.js"></script> --%>
     
   </body>
 </html>

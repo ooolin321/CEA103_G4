@@ -424,7 +424,7 @@ public class EmpServlet extends HttpServlet {
 				
 				// 取出的empVO送給listOneEmp.jsp
 				RequestDispatcher successView = req
-						.getRequestDispatcher("/back-end/emp/listOenEmp.jsp");
+						.getRequestDispatcher("/back-end/emp/listOneEmp.jsp");
 				successView.forward(req, res);
 				return;
 

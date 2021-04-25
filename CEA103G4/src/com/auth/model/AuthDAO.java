@@ -26,6 +26,7 @@ public class AuthDAO implements AuthDAO_interface {
 		}
 	}
 	private static final String INSERT_STMT = "insert into Auth (FUNNO,EMPNO,AUTH_NO) values (?, ?, ?)";
+//	private static final String INSERT_STMT = "update Auth set AUTH_NO=? where EMPNO=? and FUNNO=?";
 	private static final String UPDATE_STMT = "update Auth set AUTH_NO=? where EMPNO=? and FUNNO=?";
 	private static final String DELETE_STMT = "delete from Auth where EMPNO=? and FUNNO=?";
 	private static final String GET_ONE_BY_EMPNO_AND_FUNNO_STMT = "select funno,empno,auty_no from Auth where FUNNO=? and EMPNO = ? ";
@@ -42,9 +43,12 @@ public class AuthDAO implements AuthDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, authVO.getFunno());
+//			pstmt.setInt(1, authVO.getFunno());
+//			pstmt.setInt(2, authVO.getEmpno());
+//			pstmt.setInt(3, authVO.getAuth_no());
+			pstmt.setInt(3, authVO.getFunno());
 			pstmt.setInt(2, authVO.getEmpno());
-			pstmt.setInt(3, authVO.getAuth_no());
+			pstmt.setInt(1, authVO.getAuth_no());
 			
 
 			pstmt.executeUpdate();

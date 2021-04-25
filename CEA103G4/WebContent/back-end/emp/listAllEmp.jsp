@@ -15,8 +15,12 @@
 <html>
 <head>
 <title>所有員工資料 - listAllEmp.jsp</title>
- <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui/css/layui.css">
- <link rel="stylesheet" href="<%=request.getContextPath()%>/static/admin/css/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back-template/docs/css/main.css">
+  <!-- Font-icon css-->
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
 <style>
 table#table-1 {
 	background-color: #CCCCFF;
@@ -57,14 +61,12 @@ th, td {
 
 </head>
 <body bgcolor='white'>
-
-	<h4>此頁練習採用 EL 的寫法取值:</h4>
 	<table id="table-1">
 		<tr>
 			<td>
 				<h3>所有員工資料 - listAllEmp.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/back-end/emp/selectEmp.jsp"><img
+					<a href="<%=request.getContextPath()%>/back-end/backendIndex.jsp"><img
 						src="<%=request.getContextPath()%>/images/back1.gif" width="100"
 						height="32" border="0">回首頁</a>
 				</h4>
@@ -81,21 +83,21 @@ th, td {
 			</c:forEach>
 		</ul>
 	</c:if>
-
-	<table  class="layui-table layui-form">
-		<tr>
+<div class="row"	>
+	<table class="table">
+		<tr class="table-info">
 			<th>員工編號</th>
 			<th>員工姓名</th>
 			<th>職位</th>
-			<th>身分證字號</th>
+<!-- 			<th>身分證字號</th> -->
 			<th>性別</th>
-			<th>生日</th>
-			<th>地址</th>
+<!-- 			<th>生日</th> -->
+<!-- 			<th>地址</th> -->
 			<th>email</th>
 			<th>薪水</th>
 			<th>狀態</th>
 			<th>到職日期</th>
-			<th>員工密碼</th>
+<!-- 			<th>員工密碼</th> -->
 			<th>修改</th>
 			<th>刪除</th>
 		</tr>
@@ -104,41 +106,41 @@ th, td {
 			end="<%=pageIndex+rowsPerPage-1%>">
 
 			<tr ${(empVO.empno==param.empno) ? 'bgcolor=#CCCCFF':''}>
-				<td>${empVO.empno}</td>
-				<td>${empVO.ename}</td>
-				<td>${empVO.job}</td>
-				<td>${empVO.id}</td>
+				<td class="table-success"><A href="<%=request.getContextPath()%>/emp/emp.do?empno=${empVO.empno}&action=getOne_From">${empVO.empno}</A></td>
+				<td class="table-danger">${empVO.ename}</td>
+				<td class="table-warning">${empVO.job}</td>
+<%-- 				<td >${empVO.id}</td>	 --%>
 				<c:choose>
 					<c:when test="${empVO.gender==0}">
-						<td>女</td>
+						<td class="table-success">女</td>
 					</c:when>
 					<c:when test="${empVO.gender==1}">
-						<td>男</td>
+						<td class="table-success">男</td>
 					</c:when>
 				</c:choose>
-				<td>${empVO.dob}</td>
-				<td>${empVO.city}${empVO.dist}${empVO.addr}</td>
-				<td>${empVO.email}</td>
-				<td>${empVO.sal}</td>
-				<%-- <td>${empVO.state}</td> --%>
+<%-- 				<td class="table-danger">${empVO.dob}</td> --%>
+<%-- 				<td class="table-warning">${empVO.city}${empVO.dist}${empVO.addr}</td> --%>
+				<td >${empVO.email}</td>
+				<td class="table-success">${empVO.sal}</td>
+				
 					<c:choose>
 					<c:when test="${empVO.state==0}">
-						<td>離職</td>
+						<td class="table-danger">離職</td>
 					</c:when>
 					<c:when test="${empVO.state==1}">
-						<td>在職</td>
+						<td class="table-danger">在職</td>
 					</c:when>
 				</c:choose>
-				<td><fmt:formatDate value="${empVO.hiredate}"
+				<td class="table-warning"><fmt:formatDate value="${empVO.hiredate}"
 						pattern="yyyy-MM-dd" /></td>
-				<td>${empVO.emp_pwd}</td>
+<%-- 				<td>${empVO.emp_pwd}</td> --%>
 
 
 				<td>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/emp/emp.do"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="修改"> 
+						<input class="btn btn-primary" type="submit" value="修改"> 
 						<input type="hidden" name="empno" value="${empVO.empno}">
 			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			     <input type="hidden" name="whichPage"	value="<%=whichPage%>">      
@@ -149,7 +151,7 @@ th, td {
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/emp/emp.do"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="刪除"> 
+						<input class="btn btn-warning" type="submit" value="刪除"> 
 						<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
 						<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>"> 
 						<input type="hidden" name="empno" value="${empVO.empno}"> 
@@ -159,7 +161,106 @@ th, td {
 			</tr>
 		</c:forEach>
 	</table>
+</div>
 	<%@ include file="page2.file"%>
+	
+	<c:if test="${openModal_Group!=null}">
+
+  The Modal
+    <div class="modal" id="myModal">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                Modal Header
+                <div class="modal-header">
+                    <h4 class="modal-title">員工資料</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                Modal body
+                <div class="modal-body">
+=========================================以下為原listOneEmp.jsp的內容==========================================
+               <jsp:include page="listOneEmp.jsp" />
+=========================================以上為原listOneEmp.jsp的內容==========================================
+	Modal footer
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    	</div>
+    </div>
+     <script>
+  		 $("#myModal").modal('show');
+     </script>
+ </c:if>
+
+
+	          <script src="<%=request.getContextPath()%>/back-template/docs/js/jquery-3.2.1.min.js"></script>
+              <script src="<%=request.getContextPath()%>/back-template/docs/js/popper.min.js"></script>
+              <script src="<%=request.getContextPath()%>/back-template/docs/js/bootstrap.min.js"></script>
+              <script src="<%=request.getContextPath()%>/back-template/docs/js/main.js"></script>
+              <!-- The javascript plugin to display page loading on top-->
+              <script src="js/plugins/pace.min.js"></script>
+              <!-- Page specific javascripts-->
+              <script type="text/javascript" src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
+              <script type="text/javascript">
+                var data = {
+                 labels: ["January", "February", "March", "April", "May"],
+                 datasets: [
+                 {
+                   label: "My First dataset",
+                   fillColor: "rgba(220,220,220,0.2)",
+                   strokeColor: "rgba(220,220,220,1)",
+                   pointColor: "rgba(220,220,220,1)",
+                   pointStrokeColor: "#fff",
+                   pointHighlightFill: "#fff",
+                   pointHighlightStroke: "rgba(220,220,220,1)",
+                   data: [65, 59, 80, 81, 56]
+                 },
+                 {
+                   label: "My Second dataset",
+                   fillColor: "rgba(151,187,205,0.2)",
+                   strokeColor: "rgba(151,187,205,1)",
+                   pointColor: "rgba(151,187,205,1)",
+                   pointStrokeColor: "#fff",
+                   pointHighlightFill: "#fff",
+                   pointHighlightStroke: "rgba(151,187,205,1)",
+                   data: [28, 48, 40, 19, 86]
+                 }
+                 ]
+               };
+               var pdata = [
+               {
+                value: 300,
+                color: "#46BFBD",
+                highlight: "#5AD3D1",
+                label: "Complete"
+              },
+              {
+                value: 50,
+                color:"#F7464A",
+                highlight: "#FF5A5E",
+                label: "In-Progress"
+              }
+              ]
+              
+              var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+              var lineChart = new Chart(ctxl).Line(data);
+              
+              var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+              var pieChart = new Chart(ctxp).Pie(pdata);
+            </script>
+            <!-- Google analytics script-->
+            <script type="text/javascript">
+              if(document.location.hostname == 'pratikborsadiya.in') {
+               (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+               })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+               ga('create', 'UA-72504830-1', 'auto');
+               ga('send', 'pageview');
+             }
+           </script>
+	
 
 </body>
 <script src="<%=request.getContextPath()%>/static/admin/js/config.js"></script>

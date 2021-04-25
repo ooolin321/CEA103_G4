@@ -86,5 +86,10 @@ public class EmpService {
 		dao.sendMail(empVO);
 		return empVO;
 	}
+	
+	public EmpVO selectEmp(Integer empno, String empPwd) {
+
+		return dao.login(empno, empPwd);
+	}
 
 }

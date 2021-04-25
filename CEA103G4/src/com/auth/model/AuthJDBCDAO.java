@@ -1,6 +1,10 @@
 package com.auth.model;
 
 import java.util.*;
+
+import com.emp.model.EmpDAO;
+import com.emp.model.EmpVO;
+
 import java.sql.*;
 
 public class AuthJDBCDAO implements AuthDAO_interface {
@@ -257,14 +261,19 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 //		dao.delete(14001,15001);
 
 //		// 查詢
-		AuthVO authVO3 = dao.findByPrimeKey(14001,15003);
-		System.out.println(authVO3.getFunno());
-		System.out.println(authVO3.getEmpno());
-		System.out.print(authVO3.getAuth_no() + ",");
+//		AuthVO authVO3 = dao.findByPrimeKey(14001,15003);
+//		System.out.println(authVO3.getFunno());
+//		System.out.println(authVO3.getEmpno());
+//		System.out.print(authVO3.getAuth_no() + ",");
 
+			EmpDAO dao2 = new EmpDAO();
+			EmpVO empVO = dao2.login(14001, "a1111111");
+			System.out.println(empVO.getEname());
 		
 	
+	
 
+		
 //		// 查詢部門
 //		List<DeptVO> list = dao.getAll();
 //		for (DeptVO aDept : list) {
@@ -287,4 +296,6 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 //			System.out.println();
 //		}
 	}
+
+
 }

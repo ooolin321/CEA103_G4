@@ -180,6 +180,9 @@ public class EmpServlet extends HttpServlet {
 				java.sql.Date hiredate = null;
 				try {
 					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
+					if(hiredate.before(dob)) {
+						errorMsgs.add("日期格式錯誤，到職日期小於生日，請重新輸入");
+					}
 				} catch (IllegalArgumentException e) {
 					hiredate = new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.add("請輸入到職日!");
@@ -315,6 +318,9 @@ public class EmpServlet extends HttpServlet {
 				java.sql.Date hiredate = null;
 				try {
 					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
+					if(hiredate.before(dob)) {
+						errorMsgs.add("日期格式錯誤，到職日期小於生日，請重新輸入");
+					}
 				} catch (IllegalArgumentException e) {
 					hiredate = new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.add("請輸入到職日!");
@@ -389,14 +395,7 @@ public class EmpServlet extends HttpServlet {
 				if (requestURL.equals("/back-end/emp/listOneEmp.jsp") || requestURL.equals("/dept/listAllDept.jsp"))
 					req.setAttribute("listAllEmp", empSvc.getOneEmp(empno)); // 資料庫取出的list物件,存入request
 
-//				if(requestURL.equals("/emp/listEmps_ByCompositeQuery.jsp")){
-//					HttpSession session = req.getSession();
-//					Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
-//					List<EmpVO> list  = empSvc.getAll(map);
-//					req.setAttribute("listEmps_ByCompositeQuery",list); //  複合查詢, 資料庫取出的list物件,存入request
-//				}				
 
-//				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = requestURL;
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
@@ -406,6 +405,32 @@ public class EmpServlet extends HttpServlet {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/listAllEmp.jsp");
 				failureView.forward(req, res);
+			}
+		}
+		if ("getOne_From".equals(action)) {
+
+			try {
+				// Retrieve form parameters.
+				Integer empno = new Integer(req.getParameter("empno"));
+
+				EmpDAO dao = new EmpDAO();
+				EmpVO empVO = dao.findByPrimaryKey(empno);
+
+				req.setAttribute("empVO", empVO); // 資料庫取出的empVO物件,存入req
+				
+				//Bootstrap_modal
+				boolean openModal=true;
+				req.setAttribute("openModal",openModal );
+				
+				// 取出的empVO送給listOneEmp.jsp
+				RequestDispatcher successView = req
+						.getRequestDispatcher("/back-end/emp/listOenEmp.jsp");
+				successView.forward(req, res);
+				return;
+
+				// Handle any unusual exceptions
+			} catch (Exception e) {
+				throw new ServletException(e);
 			}
 		}
 

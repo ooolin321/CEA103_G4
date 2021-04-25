@@ -57,7 +57,7 @@ th, td {
 			<td>
 				<h3>員工資料修改 - updateEmpInput.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/back-end/emp/selectEmp.jsp"><img
+					<a href="<%=request.getContextPath()%>/back-end/backendIndex.jsp"><img
 						src="<%=request.getContextPath()%>/images/back1.gif" width="100"
 						height="32" border="0">回首頁</a>
 				</h4>

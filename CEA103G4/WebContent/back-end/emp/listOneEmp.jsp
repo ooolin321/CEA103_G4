@@ -12,6 +12,12 @@
 <title>員工資料 - listOneEmp.jsp</title>
  <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui/css/layui.css">
  <link rel="stylesheet" href="<%=request.getContextPath()%>/static/admin/css/style.css">
+
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back-template/docs/css/main.css">
+  <!-- Font-icon css-->
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
 table#table-1 {
 	background-color: #CCCCFF;
@@ -45,8 +51,7 @@ table, th, td {
 th, td {
 	padding: 5px;
 	text-align: center;
-	max-width: 150px;
-	min-width: 200px;
+
 }
 
 table th .AutoNewline {
@@ -63,15 +68,15 @@ table th .AutoNewline {
 			<td>
 				<h3>員工資料 - ListOneEmp.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/back-end/emp/selectEmp.jsp"><img
+					<a href="<%=request.getContextPath()%>/back-end/backendIndex.jsp"><img
 						src="<%=request.getContextPath()%>/images/back1.gif" width="100" height="32" border="0">回首頁</a>
 				</h4>
 			</td>
 		</tr>
 	</table>
 
-	<table>
-		<tr>
+	<table class="table">
+		<tr class="table-info">
 			<th>員工編號</th>
 			<th>員工姓名</th>
 			<th>職位</th>
@@ -84,12 +89,15 @@ table th .AutoNewline {
 			<th>狀態</th>
 			<th>到職日期</th>
 			<th>員工密碼</th>
+			<th>修改</th>
+
 		</tr>
-		<tr>
-		<td>${empVO.empno}</td>
+
+			<tr>
+				<td><A href="<%=request.getContextPath()%>/emp/emp.do?empno=${empVO.empno}&action=getOne_From">${empVO.empno}</A></td>
 				<td>${empVO.ename}</td>
 				<td>${empVO.job}</td>
-				<td>${empVO.id}</td>
+				<td >${empVO.id}</td>	
 				<c:choose>
 					<c:when test="${empVO.gender==0}">
 						<td>女</td>
@@ -99,10 +107,10 @@ table th .AutoNewline {
 					</c:when>
 				</c:choose>
 				<td>${empVO.dob}</td>
-				<td>${empVO.addr}</td>
-				<td>${empVO.email}</td>
+				<td>${empVO.city}${empVO.dist}${empVO.addr}</td>
+				<td >${empVO.email}</td>
 				<td>${empVO.sal}</td>
-				<%-- <td>${empVO.state}</td> --%>
+				
 					<c:choose>
 					<c:when test="${empVO.state==0}">
 						<td>離職</td>
@@ -114,7 +122,22 @@ table th .AutoNewline {
 				<td><fmt:formatDate value="${empVO.hiredate}"
 						pattern="yyyy-MM-dd" /></td>
 				<td>${empVO.emp_pwd}</td>
-		</tr>
+
+
+				<td>
+					<FORM METHOD="post"
+						ACTION="<%=request.getContextPath()%>/emp/emp.do"
+						style="margin-bottom: 0px;">
+						<input class="btn btn-primary" type="submit" value="修改"> 
+						<input type="hidden" name="empno" value="${empVO.empno}">
+			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+
+						<input type="hidden" name="action" value="getOne_For_Update">
+					</FORM>
+				</td>
+
+			</tr>
+
 	</table>
 
 </body>

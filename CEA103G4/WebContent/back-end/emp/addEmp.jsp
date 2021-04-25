@@ -58,7 +58,7 @@ th, td {
 			</td>
 			<td>
 				<h4>
-					<a href="<%=request.getContextPath()%>/back-end/emp/selectEmp.jsp"><img
+					<a href="<%=request.getContextPath()%>/back-end/backendIndex.jsp"><img
 						src="<%=request.getContextPath()%>/images/tomcat.png" width="100"
 						height="100" border="0">回首頁</a>
 				</h4>

@@ -1,7 +1,7 @@
-package com.auth.controller;
+package com.customer_service.controller;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,20 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.taglibs.standard.extra.spath.SPathFilter;
-
-import com.auth.model.AuthService;
-import com.auth.model.AuthVO;
+import com.customer_service.model.CustomerSerService;
+import com.customer_service.model.CustomerSerVO;
+import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
 
-public class AuthServlet extends HttpServlet {
+public class CustomerServiceServlet extends HttpServlet{
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
 
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+
 		if ("getOne_For_Display".equals(action)) {// 來自selectEmp.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -33,37 +33,48 @@ public class AuthServlet extends HttpServlet {
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			try {
-
-				Integer funno = new Integer(req.getParameter("funno"));
-				Integer empno = new Integer(req.getParameter("empno"));
-
-			
+				String str = req.getParameter("caseno");
+				if (str == null || (str.trim().length() == 0)) {
+					errorMsgs.add("請輸入客服編號");
+				} // 錯誤發生時將內容發送回表單
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/selectAuth.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/customer/selectCustomer.jsp");
+					failureView.forward(req, res);
+					return;
+				} // 程式中斷，回傳當傳頁面
+
+				Integer caseno = null;
+				try {
+					caseno = new Integer(str);
+				} catch (Exception e) {
+					errorMsgs.add("客服編號格式不正確");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/customer/selectCustomer.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				/*************************** 2.開始查詢資料 *****************************************/
-				AuthService authSvc = new AuthService();
-				AuthVO authVO = authSvc.getOneAuth(funno,empno);
-				if (authVO == null) {
+				CustomerSerService cusSvc = new CustomerSerService();
+				CustomerSerVO cusVO = cusSvc.getOneCus(caseno);
+				if (cusVO == null) {
 					errorMsgs.add("查無資料");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/selectAuth.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/customer/selectCustomer.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("authVO", authVO); // 資料庫取出的empVO物件,存入req
-				String url = "/back-end/auth/listOneAuth.jsp";
+				req.setAttribute("cusVO", cusVO); // 資料庫取出的cusVO物件,存入req
+				String url = "/back-end/customer/listOneCustomer.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/selectAuth.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/customer/selectCustomer.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -75,14 +86,15 @@ public class AuthServlet extends HttpServlet {
 			String requestURL = req.getParameter("requestURL");
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				Integer funno = new Integer(req.getParameter("funno"));
-				Integer empno = new Integer(req.getParameter("empno"));
+				Integer caseno = new Integer(req.getParameter("caseno"));
+
 				/*************************** 2.開始查詢資料 ****************************************/
-				AuthService authSvc = new AuthService();
-				AuthVO authVO = authSvc.getOneAuth(empno, funno);
+				CustomerSerService cusSvc = new CustomerSerService();
+				CustomerSerVO cusVO = cusSvc.getOneCus(caseno);
+
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("auth", authVO);
-				String url = "/back-end/auth/update_auth_input.jsp";
+				req.setAttribute("cusVO", cusVO);
+				String url = "/back-end/costomer/update_cus_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -94,7 +106,7 @@ public class AuthServlet extends HttpServlet {
 
 			}
 		}
-		// 修改===========================================================================================
+		// 修改EMP===========================================================================================
 
 		if ("update".equals(action)) {// 來自update_emp_input.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
@@ -104,46 +116,54 @@ public class AuthServlet extends HttpServlet {
 			
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				Integer empno = new Integer(req.getParameter("empno"));
-				
-				String a[] = req.getParameterValues("auth_no");
-				String f[]= req.getParameterValues("funno");
-				
-System.out.println(a[1]);
-System.out.println(f[1]);				
-System.out.println(a.length);
-System.out.println(f.length);
+				Integer caseno = new Integer(req.getParameter("caseno").trim());
 
-				for(int i = 0; i < a.length; i++) {
-					int auth_no = new Integer(a[i]);
-					int funno = new Integer(f[i]);
-					System.out.println(auth_no + "" + funno);
-					AuthVO authVO = new AuthVO();
-					
-					authVO.setEmpno(empno);
-					authVO.setFunno(funno);
-					authVO.setAuth_no(auth_no);
-					
-					AuthService authSvc = new AuthService();
-					authVO = authSvc.updateAuth(empno, funno, auth_no);
+				String userid = req.getParameter("userid");
+				
 
-					
+				String content = req.getParameter("content").trim();
+			
+
+				Integer caseState = new Integer(req.getParameter("caseState"));
+
+				Integer empno = new Integer(req.getParameter("empno").trim());
+				
+				
+				String empResponse = req.getParameter("empResponse").trim();
+				
+				java.sql.Date caseTime = null;
+				try {
+					caseTime = java.sql.Date.valueOf(req.getParameter("caseTime").trim());
+				} catch (IllegalArgumentException e) {
+					caseTime = new java.sql.Date(System.currentTimeMillis());
+					errorMsgs.add("請輸入日期!");
 				}
+				
 
-//				if (!errorMsgs.isEmpty()) {
-//					req.setAttribute("authVO", authVO); // 含有輸入格式錯誤的empVO物件,也存入req
-//					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/update_auth_input.jsp");
-//					failureView.forward(req, res);
-//					return;
-//				}
+				CustomerSerVO cusVO = new CustomerSerVO();
+				cusVO.setEmpno(caseno);
+				cusVO.setUserid(userid);
+				cusVO.setContent(content);
+				cusVO.setCaseState(caseState);
+				cusVO.setEmpno(empno);
+				cusVO.setEmpResponse(empResponse);
+				cusVO.setCaseTime(caseTime);
+
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("cusVO", cusVO); // 含有輸入格式錯誤的cusVO物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/costomer/update_cus_input.jsp");
+					failureView.forward(req, res);
+					return;
+				}
 				/*************************** 2.開始修改資料 *****************************************/
-//				AuthService authSvc = new AuthService();
-//				authVO = authSvc.updateAuth(empno, funno, auth_no);
+				CustomerSerService cusSvc = new CustomerSerService();
+				cusVO = cusSvc.updateCus(caseno, userid, content, caseState, empno, empResponse, caseTime);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 
-//				if (requestURL.equals("/back-end/emp/listOneEmp.jsp"))
-//					req.setAttribute("EmpVO", empVO); // 資料庫取出的list物件,存入request
+//				if (requestURL.equals("/back-end/customer/listOneCustomer.jsp"))
+//					req.setAttribute("CustomerSerVO", cusVO); // 資料庫取出的list物件,存入request
 
 				String url = requestURL;
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
@@ -152,70 +172,68 @@ System.out.println(f.length);
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/update_auth_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/costomer/update_cus_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
-		// ===============================================================================================
+		// 新增EMP===============================================================================================
 		if (("insert").equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				Integer empno = new Integer(req.getParameter("empno"));
-//System.out.println(empno);
-				
-//				Integer funno= new Integer(req.getParameter("funno"));
-				
-				String a[] = req.getParameterValues("auth_no");
-				String f[]= req.getParameterValues("funno");
-System.out.println(a[1]);
-System.out.println(f[1]);				
-System.out.println(a.length);
-System.out.println(f.length);
-				for(int i = 0; i < a.length; i++) {
-					int auth_no = new Integer(a[i]);
-					int funno = new Integer(f[i]);
-					System.out.println(auth_no + "" + funno);
-					AuthVO authVO = new AuthVO();
-					authVO.setEmpno(empno);
-					authVO.setFunno(funno);
-					authVO.setAuth_no(auth_no);
-					AuthService authSvc = new AuthService();
-					authVO = authSvc.addAuth(empno, funno, auth_no);
+				Integer caseno = new Integer(req.getParameter("caseno").trim());
 
-					
+				String userid = req.getParameter("userid");
+				
+
+				String content = req.getParameter("content").trim();
+			
+
+				Integer caseState = new Integer(req.getParameter("caseState"));
+
+				Integer empno = new Integer(req.getParameter("empno").trim());
+				
+				
+				String empResponse = req.getParameter("empResponse").trim();
+				
+				java.sql.Date caseTime = null;
+				try {
+					caseTime = java.sql.Date.valueOf(req.getParameter("caseTime").trim());
+				} catch (IllegalArgumentException e) {
+					caseTime = new java.sql.Date(System.currentTimeMillis());
+					errorMsgs.add("請輸入日期!");
 				}
 				
-//				List <String>authNOList = Arrays.asList<String>(checkbox);
-//				List<Integer> newList = list.stream()
-//                        .map(s -> Integer.parseInt(s))
-//                        .collect(Collectors.toList());
-//				req.setAttribute("authNo", funnoList);
-				
-//				AuthVO authVO = new AuthVO();
-//				authVO.setEmpno(empno);
-//				authVO.setFunno(funno);
-//				authVO.setAuth_no(auth_no);
-//			if (!errorMsgs.isEmpty()) {
-//				req.setAttribute("authVO", authVO); // 含有輸入格式錯誤的empVO物件,也存入req
-//				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/addAuth.jsp");
-//				failureView.forward(req, res);
-//				return;
-//			}
+
+				CustomerSerVO cusVO = new CustomerSerVO();
+				cusVO.setEmpno(caseno);
+				cusVO.setUserid(userid);
+				cusVO.setContent(content);
+				cusVO.setCaseState(caseState);
+				cusVO.setEmpno(empno);
+				cusVO.setEmpResponse(empResponse);
+				cusVO.setCaseTime(caseTime);
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("cusVO", cusVO); // 含有輸入格式錯誤的cusVO物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/costomer/addCustomer.jsp");
+					failureView.forward(req, res);
+					return;
+				}
 				/*************************** 2.開始新增資料 *****************************************/
-//				AuthService authSvc = new AuthService();
-//				authVO = authSvc.addAuth(empno, funno, auth_no);
+				CustomerSerService cusSvc = new CustomerSerService();
+				cusVO = cusSvc.addCus(userid, content, caseState, empno, empResponse, caseTime);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/back-end/auth/listAllAuth.jsp";
+				String url = "/back-end/customer/listAllCustomer";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/addAuth.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/costomer/addCustomer.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -228,31 +246,31 @@ System.out.println(f.length);
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			String requestURL = req.getParameter("requestURL"); // 送出刪除的來源網頁路徑: 可能為【/emp/listAllEmp.jsp】 或
+			String requestURL = req.getParameter("requestURL"); // 送出刪除的來源網頁路徑: 可能為【/customer/listAllCustomer】 或
 																// 【/dept/listEmps_ByDeptno.jsp】 或 【
 																// /dept/listAllDept.jsp】 或 【
 																// /emp/listEmps_ByCompositeQuery.jsp】
 
 			try {
 				/*************************** 1.接收請求參數 ***************************************/
-				Integer empno = new Integer(req.getParameter("empno"));
-				Integer funno = new Integer(req.getParameter("funno"));
+				Integer caseno = new Integer(req.getParameter("caseno"));
+
 				/*************************** 2.開始刪除資料 ***************************************/
-				AuthService authSvc = new AuthService();
-				authSvc.deleteAuth(empno,funno);
+				CustomerSerService cusSvc = new CustomerSerService();
+				cusSvc.deleteCus(caseno);;
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				if (requestURL.equals("/back-end/auth/listOneAuth.jsp"))
-					req.setAttribute("listAllAuth", authSvc.getOneAuth(empno, funno)); // 資料庫取出的list物件,存入request
+				if (requestURL.equals("/back-end/customer/listOneCustomer.jsp") || requestURL.equals("/dept/listAllDept.jsp"))
+					req.setAttribute("listAllCustomer", cusSvc.getOneCus(caseno)); // 資料庫取出的list物件,存入request
 
 //				if(requestURL.equals("/emp/listEmps_ByCompositeQuery.jsp")){
 //					HttpSession session = req.getSession();
 //					Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
-//					List<EmpVO> list  = empSvc.getAll(map);
+//					List<CustomerSerVO> list  = cusSvc.getAll(map);
 //					req.setAttribute("listEmps_ByCompositeQuery",list); //  複合查詢, 資料庫取出的list物件,存入request
 //				}				
 
-//				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
+//				req.setAttribute("cusVO", cusVO); // 資料庫update成功後,正確的的cusVO物件,存入req
 				String url = requestURL;
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
@@ -260,7 +278,7 @@ System.out.println(f.length);
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/listAllAuth.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/customer/listAllCustomer");
 				failureView.forward(req, res);
 			}
 		}
@@ -268,3 +286,4 @@ System.out.println(f.length);
 	}
 
 }
+

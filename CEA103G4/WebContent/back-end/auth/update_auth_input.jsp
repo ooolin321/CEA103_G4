@@ -13,7 +13,11 @@
 <%
 	FunVO funVO = (FunVO) request.getAttribute("funVO");
 %>
-
+<%
+	AuthService authSvc = new AuthService();
+	List<AuthVO> list = authSvc.getAll();
+	pageContext.setAttribute("list", list);
+%>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -120,17 +124,17 @@ th, td {
 				<td>選擇功能名稱:<font color=red><b>*</b></td>
 				<td>
 					<ul>
-						<li>員工帳號管理: <input type="checkbox" name="auth_no" value=15001> </li>
-						<li>員工權限管理: <input type="checkbox" name="auth_no" value=15002> </li>
-						<li>會員資料管理: <input type="checkbox" name="auth_no" value=15003> </li>
-						<li>直售商品管理: <input type="checkbox" name="auth_no" value=15004> </li>
-						<li>直售檢舉管理: <input type="checkbox" name="auth_no" value=15005> </li>
-						<li>直撥檢舉管理: <input type="checkbox" name="auth_no" value=15006> </li>
-						<li>直售訂單管理: <input type="checkbox" name="auth_no" value=15007> </li>
-						<li>直播訂單管理: <input type="checkbox" name="auth_no" value=15008> </li>
-						<li>廣告管理&emsp;&emsp;: <input type="checkbox" name="auth_no" value=15009> </li>
-						<li>Q&A管理&emsp;&emsp;: <input type="checkbox" name="auth_no" value=15010> </li>
-						<li>線上客服&emsp;&emsp;: <input type="checkbox" name="auth_no" value=15011> </li>
+						<li>員工帳號管理: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15001 ></li>
+						<li>員工權限管理: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15002 ></li>
+						<li>會員資料管理: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15003 ></li>
+						<li>直售商品管理: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15004 ></li>
+						<li>直售檢舉管理: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15005 ></li>
+						<li>直撥檢舉管理: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15006 ></li>
+						<li>直售訂單管理: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15007 ></li>
+						<li>直播訂單管理: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15008 ></li>
+						<li>廣告管理&emsp;&emsp;: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15009 ></li>
+						<li>Q&A管理&emsp;&emsp;: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15010 ></li>
+						<li>線上客服&emsp;&emsp;: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15011 ></li>
 					</ul>
 				</td>
 			</tr>

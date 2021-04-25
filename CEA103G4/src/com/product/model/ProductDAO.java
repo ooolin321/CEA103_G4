@@ -503,7 +503,7 @@ public class ProductDAO implements ProductDAO_interface {
 		          + CompositeQuery_Product.get_WhereCondition(map)
 		          + "order by rand()";
 			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("●●finalSQL(by DAO) = "+finalSQL);
+//			System.out.println("●●finalSQL(by DAO) = "+finalSQL);  有執行到會印出
 			rs = pstmt.executeQuery();
 	
 			while (rs.next()) {

@@ -79,8 +79,7 @@ public class ProductSearch extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			System.out.println("A");
-			System.out.println("shop");
+
 
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
@@ -108,7 +107,7 @@ public class ProductSearch extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-end/productsell/shop.jsp");
+						.getRequestDispatcher("/front-end/index.jsp");
 				failureView.forward(req, res);
 			}	
 		} 

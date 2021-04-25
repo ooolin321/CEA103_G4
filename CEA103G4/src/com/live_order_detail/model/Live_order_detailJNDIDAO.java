@@ -25,7 +25,7 @@ public class Live_order_detailJNDIDAO implements Live_order_detailDAO_interface 
 
 	private static final String INSERT_STMT = "INSERT INTO LIVE_ORDER_DETAIL (LIVE_ORDER_NO,PRODUCT_NO,PRICE,PRODUCT_NUM) VALUES (?,?,?,?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM LIVE_ORDER_DETAIL ORDER BY LIVE_ORDER_NO AND PRODUCT_NO";
-	private static final String GET_ONE_STMT = "SELECT * FROM LIVE_ORDER_DETAIL WHERE LIVE_ORDER_NO = ?";
+	private static final String GET_ONE_STMT = "SELECT * FROM LIVE_ORDER_DETAIL WHERE LIVE_ORDER_NO = ? AND PRODUCT_NO = ?";
 	private static final String DELETE = "DELETE FROM LIVE_ORDER_DETAIL WHERE LIVE_ORDER_NO = ? AND PRODUCT_NO=?";
 	private static final String UPDATE = "UPDATE LIVE_ORDER_DETAIL SET PRICE=?,PRODUCT_NUM=? WHERE LIVE_ORDER_NO=? AND PRODUCT_NO=?";
 

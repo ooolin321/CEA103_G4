@@ -93,6 +93,16 @@
 		<servlet-name>Live_orderServlet</servlet-name>
 		<url-pattern>/live_order/live_order.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Live_order_detailServlet</servlet-name>
+		<servlet-class>com.live_order_detail.controller.Live_order_detailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Live_order_detailServlet</servlet-name>
+		<url-pattern>/live_order_detail/live_order_detail.do</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>BidServlet</servlet-name>
 		<servlet-class>com.bid.controller.BidServlet</servlet-class>

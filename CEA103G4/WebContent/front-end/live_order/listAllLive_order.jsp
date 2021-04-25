@@ -39,6 +39,7 @@
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	
   }
   table, th, td {
     border: 1px solid #CCCCFF;
@@ -46,6 +47,7 @@
   th, td {
     padding: 5px;
     text-align: center;
+    white-space: nowrap;
   }
 </style>
 
@@ -56,7 +58,8 @@
 <table id="table-1">
 	<tr><td>
 		 <h3>所有直播訂單資料 - listAllLive_order.jsp</h3>
-		 <h4><a href="<%=request.getContextPath()%>/front-end/live_order/select_page.jsp"><img src="${pageContext.request.contextPath}/images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/front-end/live_order/select_page.jsp"><img src="${pageContext.request.contextPath}/images/back1.gif" width="100" height="32" border="0">回live_order首頁</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/front-end/live_order_detail/select_page.jsp"><img src="${pageContext.request.contextPath}/images/back1.gif" width="100" height="32" border="0">回detail首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -116,7 +119,6 @@
 			<td>${live_orderVO.zipcode}${live_orderVO.city}${live_orderVO.town}${live_orderVO.rec_addr}</td>
 			<td>${live_orderVO.rec_phone}</td>
 			<td>${live_orderVO.rec_cellphone}</td>
-			<td>${(live_orderVO.logistics==0)? '宅配':'超商取貨'}</td>
 			<td>
 			${(live_orderVO.logistics==0)? '宅配':'超商'}
 			</td>

@@ -212,7 +212,7 @@
   
   <filter-mapping>
     <filter-name>loginFilter</filter-name>
-    <url-pattern>/backendIndex.jsp</url-pattern>
+    <url-pattern>/back-end/backendIndex.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>

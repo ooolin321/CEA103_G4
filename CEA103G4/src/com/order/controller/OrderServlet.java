@@ -175,6 +175,9 @@ public class OrderServlet extends HttpServlet{
 					errorMsgs.add("請輸入日期!");
 				}
 				
+
+
+
 				String rec_name = req.getParameter("rec_name");
 				String rec_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (rec_name == null || rec_name.trim().length() == 0) {
@@ -182,7 +185,13 @@ public class OrderServlet extends HttpServlet{
 				} else if(!rec_name.trim().matches(rec_nameReg)) { //以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("收件人姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 	            }
-				
+				String zipcode = req.getParameter("zipcode");
+				if (zipcode == null || zipcode.trim().length() == 0) {
+					errorMsgs.add("請選擇郵遞區號");
+				}
+				String city = req.getParameter("city");
+				String town = req.getParameter("town");
+
 				String rec_addr = req.getParameter("rec_addr");
 				String rec_addrReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,30}$";
 				if (rec_addr == null || rec_addr.trim().length() == 0) {
@@ -224,7 +233,6 @@ public class OrderServlet extends HttpServlet{
 					discount = 0;
 					errorMsgs.add("點數折抵請填數字.");
 				}
-				
 				String user_id = new String(req.getParameter("user_id").trim());
 				
 				String seller_id = new String(req.getParameter("seller_id").trim());
@@ -236,6 +244,7 @@ public class OrderServlet extends HttpServlet{
 					srating = 0;
 					errorMsgs.add("評價分數請填數字.");
 				}
+				
 
 				String srating_content = req.getParameter("srating_content");
 				String srating_contentReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,20}$";
@@ -254,7 +263,6 @@ public class OrderServlet extends HttpServlet{
 				}
 				Integer order_no = new Integer(req.getParameter("order_no"));
 
-				
 				OrderVO orderVO = new OrderVO();
 				orderVO.setOrder_date(order_date);
 				orderVO.setOrder_state(order_state);
@@ -263,6 +271,9 @@ public class OrderServlet extends HttpServlet{
 				orderVO.setPay_method(pay_method);
 				orderVO.setPay_deadline(pay_deadline);
 				orderVO.setRec_name(rec_name);
+				orderVO.setZipcode(zipcode);
+				orderVO.setCity(city);
+				orderVO.setTown(town);
 				orderVO.setRec_addr(rec_addr);
 				orderVO.setRec_phone(rec_phone);
 				orderVO.setRec_cellphone(rec_cellphone);
@@ -275,7 +286,7 @@ public class OrderServlet extends HttpServlet{
 				orderVO.setSrating_content(srating_content);
 				orderVO.setPoint(point);
 				orderVO.setOrder_no(order_no);
-				
+
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("orderVO", orderVO); // 含有輸入格式錯誤的orderVO物件,也存入req
@@ -284,14 +295,14 @@ public class OrderServlet extends HttpServlet{
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
-				
+
 				/***************************2.開始修改資料*****************************************/
 				OrderService orderSvc = new OrderService();
-				orderVO = orderSvc.updateOrder(order_date, order_state, order_shipping, order_price, pay_method, pay_deadline, rec_name, rec_addr, rec_phone, rec_cellphone, logistics, logisticsstate, discount, user_id, seller_id, srating, srating_content, point, order_no);
+				orderVO = orderSvc.updateOrder(order_date, order_state, order_shipping, order_price, pay_method, pay_deadline, rec_name, zipcode, city, town, rec_addr, rec_phone, rec_cellphone, logistics, logisticsstate, discount, user_id, seller_id, srating, srating_content, point, order_no);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("orderVO", orderVO); //資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/front-end/order/listOneOrder.jsp";
+				req.setAttribute("orderVO", orderVO); //資料庫update成功後,正確的的orderVO物件,存入req
+				String url = "/front-end/order/listAllOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); //修改成功後,轉交listOneOrder.jsp
 				successView.forward(req, res);
 
@@ -351,7 +362,10 @@ public class OrderServlet extends HttpServlet{
 				} else if(!rec_name.trim().matches(rec_nameReg)) { //以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("收件人姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 	            }
-				
+				String zipcode = req.getParameter("zipcode");
+				String city = req.getParameter("city");
+				String town = req.getParameter("town");
+
 				String rec_addr = req.getParameter("rec_addr");
 				String rec_addrReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,30}$";
 				if (rec_addr == null || rec_addr.trim().length() == 0) {
@@ -428,6 +442,9 @@ public class OrderServlet extends HttpServlet{
 				orderVO.setOrder_price(order_price);
 				orderVO.setPay_method(pay_method);
 				orderVO.setRec_name(rec_name);
+				orderVO.setZipcode(zipcode);
+				orderVO.setCity(city);
+				orderVO.setTown(town);
 				orderVO.setRec_addr(rec_addr);
 				orderVO.setRec_phone(rec_phone);
 				orderVO.setRec_cellphone(rec_cellphone);
@@ -451,7 +468,7 @@ public class OrderServlet extends HttpServlet{
 				
 				/***************************2.開始修改資料***************************************/
 				OrderService orderSvc = new OrderService();
-				orderVO = orderSvc.addOrder(order_state, order_shipping, order_price, pay_method, rec_name, rec_addr, rec_phone, rec_cellphone, logistics, logisticsstate, discount, user_id, seller_id, srating, srating_content, point);
+				orderVO = orderSvc.addOrder(order_state, order_shipping, order_price, pay_method, rec_name, zipcode, city, town, rec_addr, rec_phone, rec_cellphone, logistics, logisticsstate, discount, user_id, seller_id, srating, srating_content, point);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)***********/
 				String url = "/front-end/order/listAllOrder.jsp";

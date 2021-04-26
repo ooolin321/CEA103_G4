@@ -58,7 +58,7 @@
 	<tr>
 		<th>訂單編號</th>
 		<th>訂單日期</th>
-		<th>s</th>
+		<th>付款截止時間</th>
 		<th>訂單狀態</th>
 		<th>訂單運費</th>
 		<th>訂單價格</th>
@@ -85,7 +85,7 @@
 		<td>${orderVO.order_price}</td>
 		<td>${(orderVO.pay_method==0)? "信用卡":"轉帳"}</td>
 		<td>${orderVO.rec_name}</td>
-		<td>${orderVO.rec_addr}</td>
+		<td>${orderVO.zipcode}${orderVO.city}${orderVO.town}${orderVO.rec_addr}</td>
 		<td>${orderVO.rec_phone}</td>
 		<td>${orderVO.rec_cellphone}</td>
 		<td>${(orderVO.logistics==0)? "超商":"宅配"}</td>

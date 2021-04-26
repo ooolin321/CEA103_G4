@@ -8,5 +8,5 @@ public interface OrderDAO_interface {
 	public void delete(Integer order_no);
 	public OrderVO findByPrimaryKey(Integer order_no);
 	public List<OrderVO> getAll();
-	
+	public List<OrderVO> getAll(Map<String, String[]> map);
 }

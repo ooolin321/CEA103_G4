@@ -2,6 +2,7 @@ package com.order.model;
 
 //import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 public class OrderService {
 
@@ -11,7 +12,7 @@ public class OrderService {
 		dao = new OrderJNDIDAO();
 	}
 
-	public OrderVO addOrder(Integer order_state, Integer order_shipping,  Integer order_price, Integer pay_method, String rec_name, String rec_addr, String rec_phone, String rec_cellphone, Integer logistics, Integer logisticsstate, Integer discount, String user_id, String seller_id, Integer srating, String srating_content, Integer point) {
+	public OrderVO addOrder(Integer order_state, Integer order_shipping,  Integer order_price, Integer pay_method, String rec_name, String rec_addr, String zipcode, String city, String town, String rec_phone, String rec_cellphone, Integer logistics, Integer logisticsstate, Integer discount, String user_id, String seller_id, Integer srating, String srating_content, Integer point) {
 
 		OrderVO orderVO = new OrderVO();
 
@@ -22,6 +23,9 @@ public class OrderService {
 		orderVO.setPay_method(pay_method);
 //		orderVO.setPay_deadline(pay_deadline);
 		orderVO.setRec_name(rec_name);
+		orderVO.setZipcode(zipcode);
+		orderVO.setCity(city);
+		orderVO.setTown(town);
 		orderVO.setRec_addr(rec_addr);
 		orderVO.setRec_phone(rec_phone);
 		orderVO.setRec_cellphone(rec_cellphone);
@@ -39,10 +43,10 @@ public class OrderService {
 		return orderVO;
 	}
 
-	public OrderVO updateOrder(java.sql.Timestamp order_date, Integer order_state, Integer order_shipping,  Integer order_price, Integer pay_method, java.sql.Timestamp pay_deadline, String rec_name, String rec_addr, String rec_phone, String rec_cellphone, Integer logistics, Integer logisticsstate, Integer discount, String user_id, String seller_id, Integer srating, String srating_content, Integer point, Integer order_no) 
+	public OrderVO updateOrder(java.sql.Timestamp order_date, Integer order_state, Integer order_shipping,  Integer order_price, Integer pay_method, java.sql.Timestamp pay_deadline, String rec_name, String zipcode, String city, String town, String rec_addr, String rec_phone, String rec_cellphone, Integer logistics, Integer logisticsstate, Integer discount, String user_id, String seller_id, Integer srating, String srating_content, Integer point, Integer order_no) 
 	{
 		OrderVO orderVO = new OrderVO();
-
+		
 		orderVO.setOrder_date(order_date);
 		orderVO.setOrder_state(order_state);
 		orderVO.setOrder_shipping(order_shipping);
@@ -50,6 +54,9 @@ public class OrderService {
 		orderVO.setPay_method(pay_method);
 		orderVO.setPay_deadline(pay_deadline);
 		orderVO.setRec_name(rec_name);
+		orderVO.setZipcode(zipcode);
+		orderVO.setCity(city);
+		orderVO.setTown(town);
 		orderVO.setRec_addr(rec_addr);
 		orderVO.setRec_phone(rec_phone);
 		orderVO.setRec_cellphone(rec_cellphone);
@@ -77,5 +84,8 @@ public class OrderService {
 
 	public List<OrderVO> getAll() {
 		return dao.getAll();
+	}
+	public List<OrderVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
 	}
 }

@@ -93,7 +93,7 @@
 	</tr>
 	
 	<tr>
-		<td>商品價格:</td>
+		<td>訂單金額:</td>
 		<td><input type="TEXT" name="order_price" size="45" id="order_price" value="${param.order_price}"/></td>
 	</tr>
 	<tr>
@@ -106,10 +106,6 @@
 		</select>
 		</td>
 	</tr>
-	<!-- <tr>
-		<td>付款截止日期:</td>
-		<td><input name="pay_deadline" id="f_date2" type="date"></td>
-	</tr> -->
 	<tr>
 		<td>收件人姓名:</td>
 		<td><input type="TEXT" name="rec_name" size="45" value="${param.rec_name}"/></td>
@@ -138,7 +134,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>運費:</td>
+		<td>訂單運費:</td>
 		<td>
 			<div id="showOrder_shipping">100</div>
 			<input type="hidden" name="order_shipping" id="order_shipping" size="45" value="100"/>
@@ -154,13 +150,12 @@
 		</td>
 	</tr>
 	<tr>
-		<td>點數折抵:</td>
+		<td>使用點數折抵:</td>
 		<td>
 		<div>可用點數:${userVO.user_point}</div>
 		<input type="TEXT" name="discount" size="45" value="0"/>
 		</td>
 	</tr>
-	
 	<tr>
 		<td>買家帳號:<font color=red><b>*</b></font></td>
 		<td><select size="1" name="user_id">
@@ -246,18 +241,18 @@
 	});
 	
 	$("#order_price").change(function(e) {
-		if(Math.floor($("#order_price").val()/100)){
-			$("#point").attr('value', Math.floor($("#order_price").val()/100));
-			$("#showOrder_point").text(Math.floor($("#order_price").val()/100));
-		}
-		}); //尚未修改好
+			let point = Math.floor($("#order_price").val()/100);
+			$("#point").attr('value', point);
+			$("#showOrder_point").text(point);
+		});
 	
 	$("#twzipcode").twzipcode({
 		zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
 		css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 
 		countyName: "city", // 自訂城市 select 標籤的 name 值
 		districtName: "town" // 自訂區別 select 標籤的 name 值
-		}); 
+		});
+		
 		
 </script>
 </html>

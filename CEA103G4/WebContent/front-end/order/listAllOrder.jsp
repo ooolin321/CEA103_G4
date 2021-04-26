@@ -109,7 +109,7 @@
 			</td>
 			<td><fmt:formatDate value="${orderVO.pay_deadline}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			<td>${orderVO.rec_name}</td>
-			<td>${orderVO.rec_addr}</td>
+			<td>${orderVO.zipcode}${orderVO.city}${orderVO.town}${orderVO.rec_addr}</td>
 			<td>${orderVO.rec_phone}</td>
 			<td>${orderVO.rec_cellphone}</td>
 			<td>${(orderVO.logistics==0)? '¶W°Ó':'¦v°t'}</td>

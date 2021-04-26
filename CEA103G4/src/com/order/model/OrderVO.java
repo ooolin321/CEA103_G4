@@ -11,6 +11,9 @@ public class OrderVO implements java.io.Serializable{
 	private Integer pay_method;
 	private Timestamp pay_deadline;
 	private String rec_name;
+	private String zipcode;
+	private String city;
+	private String town;
 	private String rec_addr;
 	private String rec_phone;
 	private String rec_cellphone;
@@ -70,6 +73,24 @@ public class OrderVO implements java.io.Serializable{
 	}
 	public void setRec_name(String rec_name) {
 		this.rec_name = rec_name;
+	}
+	public String getZipcode() {
+		return zipcode;
+	}
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getTown() {
+		return town;
+	}
+	public void setTown(String town) {
+		this.town = town;
 	}
 	public String getRec_addr() {
 		return rec_addr;

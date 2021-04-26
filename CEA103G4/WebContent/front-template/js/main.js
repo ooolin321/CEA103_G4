@@ -248,3 +248,15 @@
 	});
 
 })(jQuery);
+
+
+ 					/*自寫js
+					shop.jsp*/
+
+	$("#clearallbtn").on('click', function () {
+        $(".fw-cs label, .fw-price label").removeClass('checked');
+    });
+
+
+
+

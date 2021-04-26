@@ -40,7 +40,7 @@ public class ProductDAO implements ProductDAO_interface {
 	private static final String UPDATE = "UPDATE PRODUCT set product_name=?, product_info=?, product_price=?, product_quantity=?, product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=? where product_no = ?";
 	private static final String GET_ALLJSON = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";
 	//查詢所有商品狀態為直售的商品
-	private static final String GET_ALL_SHOP = "SELECT * FROM PRODUCT where product_state = 1 AND product_photo IS NOT NULL order by rand()";	
+	private static final String GET_ALL_SHOP = "SELECT product_no, product_name, product_info,product_price, product_quantity,product_remaining,product_state,user_id,pdtype_no FROM PRODUCT where product_state = 1 AND product_photo IS NOT NULL order by rand()";	
 	//關鍵字搜尋
 	private static final String GET_PRODUCTS_SEARCH = "SELECT * FROM PRODUCT where product_state = 1 AND product_photo IS NOT NULL AND product_name LIKE ?"; 
 	
@@ -395,11 +395,8 @@ public class ProductDAO implements ProductDAO_interface {
 				productVO.setProduct_quantity(rs.getInt("product_quantity"));
 				productVO.setProduct_remaining(rs.getInt("product_remaining"));
 				productVO.setProduct_state(rs.getInt("product_state"));
-				productVO.setProduct_photo(rs.getBytes("product_photo"));
 				productVO.setUser_id(rs.getString("user_id"));
 				productVO.setPdtype_no(rs.getInt("pdtype_no"));
-				productVO.setStart_price(rs.getInt("start_price"));
-				productVO.setLive_no(rs.getInt("live_no"));
 				list.add(productVO); // Store the row in the list
 			}
 		} catch (SQLException se) {
@@ -499,7 +496,7 @@ public class ProductDAO implements ProductDAO_interface {
 		try {
 			
 			con = ds.getConnection();
-			String finalSQL = "select * from PRODUCT where product_photo IS NOT NULL AND product_state = 1 "
+			String finalSQL = "select product_no, product_name, product_info,product_price, product_quantity,product_remaining,product_state,user_id,pdtype_no from PRODUCT where product_photo IS NOT NULL AND product_state = 1 "
 		          + CompositeQuery_Product.get_WhereCondition(map)
 		          + "order by rand()";
 			pstmt = con.prepareStatement(finalSQL);
@@ -515,11 +512,8 @@ public class ProductDAO implements ProductDAO_interface {
 				productVO.setProduct_quantity(rs.getInt("product_quantity"));
 				productVO.setProduct_remaining(rs.getInt("product_remaining"));
 				productVO.setProduct_state(rs.getInt("product_state"));
-				productVO.setProduct_photo(rs.getBytes("product_photo"));
 				productVO.setUser_id(rs.getString("user_id"));
 				productVO.setPdtype_no(rs.getInt("pdtype_no"));
-				productVO.setStart_price(rs.getInt("start_price"));
-				productVO.setLive_no(rs.getInt("live_no"));
 				list.add(productVO); // Store the row in the List
 			}
 	

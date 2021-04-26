@@ -93,6 +93,7 @@ public class ProductService {
 	public List<ProductVO> getAllShop(Map<String, String[]> map) {
 		return dao.getAllShop(map);
 	}
+	
 
 }
 

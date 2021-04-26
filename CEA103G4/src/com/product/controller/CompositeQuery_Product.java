@@ -16,6 +16,8 @@ public class CompositeQuery_Product {
 
 		if ("product_name".equals(columnName)) // 用於varchar
 			aCondition = columnName + " like '%" + value + "%'";
+		else if ("pdtype_no".equals(columnName))
+			aCondition = columnName + "=" + value;
 		
 		
 		return aCondition + " ";

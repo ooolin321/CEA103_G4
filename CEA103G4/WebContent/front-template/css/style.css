@@ -635,10 +635,12 @@ ol {
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
+  border-radius: 3px;
 }
 
 .nav-item .nav-depart .depart-btn .depart-hover li {
   list-style: none;
+  font-weight: 700;
 }
 
 .nav-item .nav-depart .depart-btn .depart-hover li.active a {
@@ -655,6 +657,8 @@ ol {
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
+  
+  
 }
 
 .nav-item .nav-depart .depart-btn .depart-hover li a:hover {
@@ -715,6 +719,7 @@ ol {
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
+  border-radius: 3px;
 }
 
 .nav-item .nav-menu li .dropdown li {
@@ -735,6 +740,11 @@ ol {
 
 .slicknav_menu {
   display: none;
+}
+
+.nav-menu .icon_profile {
+	color: white;
+	padding-left: 5px;
 }
 
 /*---------------------
@@ -1611,7 +1621,13 @@ border:1px block solid;
   color: #636363;
   font-size: 16px;
   line-height: 39px;
+  font-weight: 700;
   
+}
+
+.filter-widget .filter-catagories li a:hover {
+  font-weight: 700;
+  color: #e7ab3c;
 }
 
 .filter-widget .fw-brand-check .bc-item {
@@ -1814,11 +1830,20 @@ border:1px block solid;
   line-height: 40px;
   text-transform: uppercase;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .filter-widget .fw-all-choose .fw-price .sc-item label.active {
-  background: #252525;
+  background: #e7ab3c;
   color: #ffffff;
+}
+
+.filter-widget .fw-all-choose .fw-price .sc-item i {
+	padding-left:2px;
+}
+
+.filter-widget .fw-all-choose .fw-all-btn {
+	padding-top:10px;
 }
 
 .filter-widget .fw-tags a {

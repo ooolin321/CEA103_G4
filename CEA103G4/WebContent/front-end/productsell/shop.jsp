@@ -7,9 +7,10 @@
 <%@ page import="com.product.controller.*"%>
 
 <%
-// 	ProductDAO dao = new ProductDAO();
-// 	List<ProductVO> products = dao.getAllShop();
-// 	pageContext.setAttribute("products",products);
+	ProductDAO dao = new ProductDAO();
+	Object prouducts = request.getAttribute("products")==null? dao.getAllShop():request.getAttribute("products");
+	pageContext.setAttribute("products",prouducts);
+	
 
 	Product_TypeDAO dao2 = new Product_TypeDAO();
     List<Product_TypeVO> list2 = dao2.getAll();
@@ -79,7 +80,7 @@
               <h4 class="fw-title">商品分類</h4>
               <ul class="filter-catagories">
               <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()-1}">
-                <li><a href="#">${product_typeVO.pdtype_name}</a></li>
+                <li><a href="<%=request.getContextPath()%>/ProductSearch?action=s_catagories&pdtype_no=${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}</a></li>
                 </c:forEach>
               </ul>
             </div>
@@ -116,6 +117,7 @@
             <div class="filter-widget">
               <h4 class="fw-title">進階查詢</h4>
               <div class="fw-all-choose">
+              <div class="fw-cs">
                <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()-1}">
                 <div class="cs-item">
                  <label for="${product_typeVO.pdtype_name}">
@@ -125,6 +127,7 @@
                   </label>
                  </div>
                 </c:forEach>
+                </div>
                 <div class="fw-price">
                 <div class="sc-item">
                   <input type="radio" id="s-size" />
@@ -143,6 +146,10 @@
                   <label for="xs-size">$1001<i class="fa fa-arrow-circle-up"></i></label>
                 </div>
                 </div>
+                <div class="fw-all-btn">
+                <a href="#" class="filter-btn">送出查詢</a>
+                <a href="" class="filter-btn" id="clearallbtn">清空全部</a>
+                </div>
              </div>
           </div>
           </div>
@@ -151,7 +158,7 @@
               <div class="row">
                 <div class="col-lg-7 col-md-7">
                   <div class="select-option">
-                  	<a href="#" class="allproduct-btn">全部商品</a>
+                  	<a href="${pageContext.request.contextPath}/front-end/productsell/shop.jsp" class="allproduct-btn">全部商品</a>
  					<a href="#" class="newproduct-btn">最新商品</a>
                     <select class="p-show">
                       <option value="">價格</option>
@@ -168,7 +175,8 @@
               </div>
             </div>
            <div class="product-list">
-            <div class="row">
+            <div class="row" id="products">
+            
             <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()-1}">
           <div class="col-lg-4 col-sm-6">
         <div class="card mb-2 productcard">
@@ -205,7 +213,6 @@
      </div>
      </div>
      </div>
-     </div>
    </section>
     <!-- Product Shop Section End -->
 
@@ -227,20 +234,7 @@
 
 
     <!-- Js Plugins -->
-    <script>
-    
-
-    //取到搜尋框的值
-//     let search = document.querySelector(".ti-search");
-//     search.addEventListener('click', () => {
-//     	event.preventDefault()
-//     	alert($("#search-input").val());
-//     });
-    	
-    
-    </script>
-    
-    
+  
     
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script
@@ -253,7 +247,7 @@
       integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
       crossorigin="anonymous"
     ></script>
-    
+
     <script src="${pageContext.request.contextPath}/front-template/js/jquery-3.3.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/jquery-ui.min.js"></script>
@@ -265,6 +259,35 @@
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
 <%--     <script src="${pageContext.request.contextPath}/front-template/js/shop.js"></script> --%>
-    
+<%--     <script src="${pageContext.request.contextPath}/front-end/productsell/element.js" ></script>  --%>
+
+     
+<!--          <script> -->
+<!--          ajax取值 先不用 -->
+         
+<!-- //    $("#sendQuery").on('click', () => { -->
+<!-- // 	   sendQuery(); -->
+<!-- //    }); -->
+      
+<!-- //       	function sendQuery(){ -->
+<!-- //       		const data = { -->
+<!-- //       				"product_name":$("#product_name").val(), -->
+<!-- //       				"action":"search_ajax" -->
+<!-- //       		}; -->
+      		
+<!-- //       		$.ajax({ -->
+<%-- <%--       		  url:"<%=request.getContextPath()%>/ProductSearch", --%> 
+<!-- //       		  type:"POST", -->
+<!-- //       		  success: function(result) { -->
+<!-- //       			console.log(result) -->
+   
+<%-- <%--       		   	const str=cardContent(result, "<%=request.getContextPath() %>"); --%> 
+<!-- //       			$("#products").html(str); -->
+<!-- //       		  }, -->
+<!-- // 				data:data -->
+<!-- //       		 }) -->
+<!-- //       	}	 -->
+      
+<!-- <!--     </script> --> 
   </body>
 </html>

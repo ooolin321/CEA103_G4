@@ -2,11 +2,6 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.emp.model.*"%>
 
-<%
-	EmpService empSvc = new EmpService();
-	List<EmpVO> list = empSvc.getAll();
-	pageContext.setAttribute("list", list);
-%>
 
 <!DOCTYPE html>
 <html lang="zh-tw">
@@ -152,7 +147,7 @@
                     <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                   </ul>
                 </div>
-                
+                <jsp:include page="emp/selectEmp.jsp" />
                 
                 
 <!--                 <div class="row"> -->

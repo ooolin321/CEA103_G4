@@ -20,7 +20,7 @@
 	  });  
 
 		</script>
-    <title>Login - Vali Admin</title>
+    <title>Login - Mode Femme Admin</title>
   </head>
   <body>
   	<c:if test="${not empty errorMsgs}">
@@ -36,7 +36,7 @@
     </section>
     <section class="login-content">
       <div class="logo">
-        <h1>Vali</h1>
+        <h1>Mode Femme</h1>
       </div>
       <div class="login-box">
         <form METHOD="post" class="login-form" action="<%=request.getContextPath()%>/loginhandler">

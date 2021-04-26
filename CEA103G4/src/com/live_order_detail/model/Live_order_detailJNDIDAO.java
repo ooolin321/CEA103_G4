@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -249,5 +250,50 @@ public class Live_order_detailJNDIDAO implements Live_order_detailDAO_interface 
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public void insert2(Live_order_detailVO live_order_detailVO, Connection con) {
+		PreparedStatement pstmt = null;
+
+		try {
+
+     		pstmt = con.prepareStatement(INSERT_STMT);
+
+			pstmt.setInt(1, live_order_detailVO.getLive_order_no());
+			pstmt.setInt(2, live_order_detailVO.getProduct_no());
+			pstmt.setInt(3, live_order_detailVO.getPrice());
+			pstmt.setInt(4, live_order_detailVO.getProduct_num());
+
+			Statement stmt=	con.createStatement();
+			//stmt.executeUpdate("set auto_increment_offset=7001;"); //自增主鍵-初始值
+			stmt.executeUpdate("set auto_increment_increment=1;");   //自增主鍵-遞增
+			pstmt.executeUpdate();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-emp");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
 	}
 }

@@ -16,4 +16,6 @@ public interface Live_orderDAO_interface {
 	public List<Live_orderVO> getAll();
 	
 	public Set<Live_order_detailVO> getDetailsByNo(Integer live_order_no);
+	
+	public void insertWithDetails (Live_orderVO live_orderVO,List<Live_order_detailVO> list);
 }

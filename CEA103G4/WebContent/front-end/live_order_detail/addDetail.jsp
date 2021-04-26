@@ -84,7 +84,7 @@
 			<td>商品編號:<font color=red><b>*</b></font></td>
 			<td><select size="1" name="product_no" id="product_no">
 				<option value=""  >
-				<c:forEach var="productVO" items="${productSvc.all}">
+				<c:forEach var="productVO" items="${productSvc.getAll()}">
 					<option value="${productVO.product_no}" ${(live_order_detailVO.product_no==productVO.product_no)? 'selected':'' } >${productVO.product_no}
 				</c:forEach>
 			</select></td>

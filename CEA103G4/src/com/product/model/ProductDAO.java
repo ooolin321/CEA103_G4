@@ -39,10 +39,10 @@ public class ProductDAO implements ProductDAO_interface {
 	//修改商品 賣家使用
 	private static final String UPDATE = "UPDATE PRODUCT set product_name=?, product_info=?, product_price=?, product_quantity=?, product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=? where product_no = ?";
 	private static final String GET_ALLJSON = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";
-	//查詢所有商品狀態為直售的商品
+	/*--------------shop.jsp商品區------------*/
+	//查詢所有商品狀態為直售的商品 (隨機排序)
 	private static final String GET_ALL_SHOP = "SELECT product_no, product_name, product_info,product_price, product_quantity,product_remaining,product_state,user_id,pdtype_no FROM PRODUCT where product_state = 1 AND product_photo IS NOT NULL order by rand()";	
-	//關鍵字搜尋
-	private static final String GET_PRODUCTS_SEARCH = "SELECT * FROM PRODUCT where product_state = 1 AND product_photo IS NOT NULL AND product_name LIKE ?"; 
+	
 	
 	@Override
 	public void insert(ProductVO productVO){
@@ -429,60 +429,6 @@ public class ProductDAO implements ProductDAO_interface {
 		return list;
 	}
 	
-	@Override
-	public List<ProductVO> findProductsBySearch(String product_name) {
-		List<ProductVO> list = new ArrayList<ProductVO>();
-		ProductVO productVO = null;
-		
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_PRODUCTS_SEARCH);
-			pstmt.setString(1, product_name);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				productVO = new ProductVO();
-	
-				productVO.setProduct_no(rs.getInt("product_no"));
-				productVO.setProduct_name(rs.getString("product_name"));
-				productVO.setProduct_info(rs.getString("product_info"));
-				productVO.setProduct_price(rs.getInt("product_price"));
-				productVO.setProduct_quantity(rs.getInt("product_quantity"));
-				productVO.setProduct_remaining(rs.getInt("product_remaining"));
-				productVO.setProduct_state(rs.getInt("product_state"));
-				productVO.setProduct_photo(rs.getBytes("product_photo"));
-				productVO.setUser_id(rs.getString("user_id"));
-				productVO.setPdtype_no(rs.getInt("pdtype_no"));
-				productVO.setStart_price(rs.getInt("start_price"));
-				productVO.setLive_no(rs.getInt("live_no"));
-
-				list.add(productVO); // Store the row in the vector
-			}
-
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return list;
-	}
 	
 	@Override
 	public List<ProductVO> getAllShop(Map<String, String[]> map) {
@@ -497,8 +443,8 @@ public class ProductDAO implements ProductDAO_interface {
 			
 			con = ds.getConnection();
 			String finalSQL = "select product_no, product_name, product_info,product_price, product_quantity,product_remaining,product_state,user_id,pdtype_no from PRODUCT where product_photo IS NOT NULL AND product_state = 1 "
-		          + CompositeQuery_Product.get_WhereCondition(map)
-		          + "order by rand()";
+		          + CompositeQuery_Product.get_WhereCondition(map);
+
 			pstmt = con.prepareStatement(finalSQL);
 //			System.out.println("●●finalSQL(by DAO) = "+finalSQL);  有執行到會印出
 			rs = pstmt.executeQuery();
@@ -546,6 +492,64 @@ public class ProductDAO implements ProductDAO_interface {
 		}
 		return list;
 	}
+	
+//	@Override
+//	public List<ProductVO> getNewShop() {
+//		List<ProductVO> list = new ArrayList<ProductVO>();
+//		ProductVO productVO = null;
+//
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//
+//		try {	
+//			con = ds.getConnection();
+//			pstmt = con.prepareStatement(GET_PRODUCTS_NEW);
+//			rs = pstmt.executeQuery();
+//
+//			while (rs.next()) {
+//				
+//				productVO = new ProductVO();
+//				productVO.setProduct_no(rs.getInt("product_no"));
+//				productVO.setProduct_name(rs.getString("product_name"));
+//				productVO.setProduct_info(rs.getString("product_info"));
+//				productVO.setProduct_price(rs.getInt("product_price"));
+//				productVO.setProduct_quantity(rs.getInt("product_quantity"));
+//				productVO.setProduct_remaining(rs.getInt("product_remaining"));
+//				productVO.setProduct_state(rs.getInt("product_state"));
+//				productVO.setUser_id(rs.getString("user_id"));
+//				productVO.setPdtype_no(rs.getInt("pdtype_no"));
+//				list.add(productVO); // Store the row in the list
+//			}
+//	
+//		} catch (SQLException se) {
+//			throw new RuntimeException("A database error occured. "
+//					+ se.getMessage());
+//		} finally {
+//			if (rs != null) {
+//				try {
+//					rs.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (pstmt != null) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
+//		return list;
+//	}
 
 	
 

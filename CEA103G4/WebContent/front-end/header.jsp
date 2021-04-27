@@ -20,27 +20,27 @@
 						</a>
 					</div>
 				</div>
-				<div class="col-lg-7 col-md-7">
-					<div class="advanced-search">
-						<form class="input-group" id="search" METHOD="post" ACTION="<%=request.getContextPath()%>/ProductSearch">
-							<input type="text" id="search-input" name="product_name" placeholder="What do you need?" /> 
-							<input type="hidden" name="action" value="search" />
-							<button type="submit"><i class="ti-search"></i></button>
-						</form>
-					</div>
-				</div>
-<!-- ------------ajax先不用------------ -->
 <!-- 				<div class="col-lg-7 col-md-7"> -->
 <!-- 					<div class="advanced-search"> -->
-<!-- 						<form class="input-group" id="search"> -->
-<!-- 							<input type="text" id="product_name" name="product_name" value="" -->
-<!-- 								placeholder="What do you need?" /> -->
-<!-- 							<button type="button" id="sendQuery" onclick="sendQuery"> -->
-<!-- 								<i class="ti-search"></i> -->
-<!-- 							</button> -->
+<%-- 						<form class="input-group" id="search" METHOD="post" ACTION="<%=request.getContextPath()%>/ProductSearch"> --%>
+<!-- 							<input type="text" id="search-input" name="product_name" placeholder="What do you need?" />  -->
+<!-- 							<input type="hidden" name="action" value="search" /> -->
+<!-- 							<button type="submit"><i class="ti-search"></i></button> -->
 <!-- 						</form> -->
 <!-- 					</div> -->
 <!-- 				</div> -->
+<!-- ------------ajax先不用------------ -->
+				<div class="col-lg-7 col-md-7">
+					<div class="advanced-search">
+						<form class="input-group" id="search">
+							<input type="text" id="product_name" name="product_name" value=""
+								placeholder="What do you need?" />
+							<button type="button" id="sendQuery" onclick="sendQuery">
+								<i class="ti-search"></i>
+							</button>
+						</form>
+					</div>
+				</div>
 				<div class="col-lg-3 text-right col-md-3">
 					<div class="header-right">
 						<a
@@ -120,7 +120,7 @@
 						class="fa fa-hand-o-down" id="ti-fa-hand"></i>
 					<ul class="depart-hover">
 						<c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()}">
-                		<li><a href="<%=request.getContextPath()%>/ProductSearch?action=s_catagories&pdtype_no=${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}</a></li>
+						<li><div class="catagoriesQuery" value="${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}</div></li>
                			 </c:forEach>
 					</ul>
 				</div>

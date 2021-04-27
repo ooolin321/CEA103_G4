@@ -80,7 +80,7 @@
               <h4 class="fw-title">商品分類</h4>
               <ul class="filter-catagories">
               <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()-1}">
-                <li><a href="<%=request.getContextPath()%>/ProductSearch?action=s_catagories&pdtype_no=${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}</a></li>
+              <li><div class="catagoriesQuery" value="${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}</div></li>
                 </c:forEach>
               </ul>
             </div>
@@ -116,13 +116,14 @@
             </div>
             <div class="filter-widget">
               <h4 class="fw-title">進階查詢</h4>
-              <div class="fw-all-choose">
-              <div class="fw-cs">
+              <form METHOD="post" ACTION="<%=request.getContextPath()%>/ProductSearch">
+              <div class="fw-all-choose" id="fw-all-choose">
+              <div class="fw-cs" id="fw-cs">
                <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()-1}">
                 <div class="cs-item">
                  <label for="${product_typeVO.pdtype_name}">
                     ${product_typeVO.pdtype_name}
-                   <input type="checkbox" id="${product_typeVO.pdtype_name}" />
+                   <input type="checkbox"  id="${product_typeVO.pdtype_name}" name="pdtype_no" value="${product_typeVO.pdtype_no}" />
                    <span class="checkmark"></span>
                   </label>
                  </div>
@@ -130,27 +131,28 @@
                 </div>
                 <div class="fw-price">
                 <div class="sc-item">
-                  <input type="radio" id="s-size" />
-                  <label for="s-size">$300<i class="fa fa-arrow-circle-down"></i></label>
+                  <input type="radio" id="a-price" name="product_price"/>
+                  <label for="a-price">$300<i class="fa fa-arrow-circle-down"></i></label>
                 </div>
                 <div class="sc-item">
-                  <input type="radio" id="m-size" />
-                  <label for="m-size">$301~$500</label>
+                  <input type="radio" id="b-price"name="product_price" />
+                  <label for="b-price">$301~$500</label>
                 </div>
                 <div class="sc-item">
-                  <input type="radio" id="l-size" />
-                  <label for="l-size">$501~$1000</label>
+                  <input type="radio" id="c-price" name="product_price"/>
+                  <label for="c-price">$501~$1000</label>
                 </div>
                 <div class="sc-item">
-                  <input type="radio" id="xs-size" />
-                  <label for="xs-size">$1001<i class="fa fa-arrow-circle-up"></i></label>
+                  <input type="radio" id="d-price" name="product_price"/>
+                  <label for="d-price">$1001<i class="fa fa-arrow-circle-up"></i></label>
                 </div>
                 </div>
                 <div class="fw-all-btn">
-                <a href="#" class="filter-btn">送出查詢</a>
-                <a href="" class="filter-btn" id="clearallbtn">清空全部</a>
+                <a href="<%=request.getContextPath()%>/ProductSearch?action=fw-all-choose" class="filter-btn" id="fw-all-btn">送出查詢</a>
+                <div  class="filter-btn" id="clearallbtn">清除全部</div>
                 </div>
              </div>
+             </form>
           </div>
           </div>
           <div class="col-lg-9 order-1 order-lg-2">
@@ -158,12 +160,12 @@
               <div class="row">
                 <div class="col-lg-7 col-md-7">
                   <div class="select-option">
-                  	<a href="${pageContext.request.contextPath}/front-end/productsell/shop.jsp" class="allproduct-btn">全部商品</a>
- 					<a href="#" class="newproduct-btn">最新商品</a>
-                    <select class="p-show">
+ 					<div  id="allProductsQuery" class="allproduct-btn">全部商品</div>
+ 					<div  id="newProductsQuery" class="newproduct-btn">最新商品</div>
+                    <select class="p-show"  id="p-show">
                       <option value="">價格</option>
-                      <option value="">價格：低到高</option>
-                      <option value="">價格：高到低</option>
+                      <option value="1" >價格：低到高</option>
+                      <option value="2">價格：高到低</option>
                     </select>
                   </div>
                 </div>
@@ -175,8 +177,7 @@
               </div>
             </div>
            <div class="product-list">
-            <div class="row" id="products">
-            
+            <div class="row" id="products">            
             <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()-1}">
           <div class="col-lg-4 col-sm-6">
         <div class="card mb-2 productcard">
@@ -248,6 +249,7 @@
       crossorigin="anonymous"
     ></script>
 
+
     <script src="${pageContext.request.contextPath}/front-template/js/jquery-3.3.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/jquery-ui.min.js"></script>
@@ -258,36 +260,107 @@
     <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
-<%--     <script src="${pageContext.request.contextPath}/front-template/js/shop.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/front-end/productsell/element.js" ></script>  --%>
+    <script src="${pageContext.request.contextPath}/front-template/js/products-search.js" ></script> 
+	
+	<script>
 
-     
-<!--          <script> -->
-<!--          ajax取值 先不用 -->
-         
-<!-- //    $("#sendQuery").on('click', () => { -->
-<!-- // 	   sendQuery(); -->
-<!-- //    }); -->
-      
-<!-- //       	function sendQuery(){ -->
-<!-- //       		const data = { -->
-<!-- //       				"product_name":$("#product_name").val(), -->
-<!-- //       				"action":"search_ajax" -->
-<!-- //       		}; -->
-      		
-<!-- //       		$.ajax({ -->
-<%-- <%--       		  url:"<%=request.getContextPath()%>/ProductSearch", --%> 
-<!-- //       		  type:"POST", -->
-<!-- //       		  success: function(result) { -->
-<!-- //       			console.log(result) -->
-   
-<%-- <%--       		   	const str=cardContent(result, "<%=request.getContextPath() %>"); --%> 
-<!-- //       			$("#products").html(str); -->
-<!-- //       		  }, -->
-<!-- // 				data:data -->
-<!-- //       		 }) -->
-<!-- //       	}	 -->
-      
-<!-- <!--     </script> --> 
+	//ajax header搜尋框	
+	
+    $("#sendQuery").on('click', () => { 
+		var datas = {
+		  "product_name":$("#product_name").val(),      				
+		  "action":"search_ajax" 
+		}; 
+	  sendQuery(datas); 
+  }); 
+	$("#search").on('submit',(event) => { 
+	  event.preventDefault()
+	  	var datas = {
+		  "product_name":$("#product_name").val(),      				
+		  "action":"search_ajax" 
+		};
+	  sendQuery(datas); 
+  }); 
+	//nav 全部商品(舊到新)
+	$("#allProductsQuery").on('click',() => { 
+		  	var datas = {      				
+			  "action":"search_ajax" 
+			};
+		  sendQuery(datas); 
+	  });
+	//最新商品
+	$("#newProductsQuery").on('click',() => { 
+	  	var datas = {
+	  	  "product_no":"product_no",			
+		  "action":"search_ajax" 
+		};
+	  	sendQuery(datas);
+  });
+	
+	//價格低到高+高到低
+	$("#p-show").change(function() { 
+		var pricevalue = $("#p-show option:selected").val();
+		if (pricevalue == 1){
+	  	var datas = {
+	  	  "product_price":"product_price",			
+		  "action":"search_ajax" 
+		 };
+		} else if (pricevalue == 2) {
+		  var datas = {
+		  	"product_price2":"product_price2",			
+		    "action":"search_ajax" 
+		  };
+		};
+	  	sendQuery(datas);
+  });
+	
+	//功能列 分類
+		$(".catagoriesQuery").click(function() {
+			var datas = { 
+	 		  	"pdtype_no":$(this).attr("value"),
+	 			  "action":"search_ajax" 
+	 			}; 
+	 		  sendQuery(datas); 
+	 	  });
+	
+	//進階查詢ajax 尚無法使用4/27 2100
+// 	$("#fw-all-btn").click(function(){
+// 		var allQuery = '';
+// 		var pdtypeNo = '';
+// 		$('input[name="pdtype_no"]:checked').each(function(i) {
+// 			if(i <= 1){
+//                 	pdtypeNo += "pdtype_no=" + $(this).attr("value");
+// 			} else if (i > 1){
+// 				pdtypeNo += "pdtype_no=" + $(this).attr("value")+" OR";
+// 			}    	
+
+// 		});
+// 		alert(pdtypeNo);
+// 	})
+	
+	
+	
+		
+
+	function sendQuery(datas){ 
+		
+		$.ajax({ 
+		  url:"<%=request.getContextPath()%>/ProductSearch",  
+		  type:"POST", 
+		  success: function(result) { 
+// 			console.log(result) 
+		   	const str=cardContent(result, "<%=request.getContextPath()%>"); 
+			$("#products").html(str); 
+			
+			if(str.length === 0){
+				alert('很抱歉,查無此商品');
+            }
+
+		  }, 
+			data:datas 
+		 }) 
+	}
+	
+       	</script>	
   </body>
 </html>

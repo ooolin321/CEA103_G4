@@ -16,7 +16,7 @@
     --------------------*/
     $(window).on('load', function () {
         $(".loader").fadeOut();
-        $("#preloder").delay(200).fadeOut("slow");
+        $("#preloder").fadeOut("slow");
     });
 
     /*------------------
@@ -252,10 +252,16 @@
 
  					/*自寫js
 					shop.jsp*/
+//進階查詢全部清除
 
-	$("#clearallbtn").on('click', function () {
-        $(".fw-cs label, .fw-price label").removeClass('checked');
-    });
+	$("#clearallbtn").click(function () {
+		$(".fw-cs input").prop("checked",false);
+		$(".fw-price label").removeClass('active');
+	});
+	
+	$(".product-list").change(function(){
+		$("#p-show").empty()
+	})
 
 
 

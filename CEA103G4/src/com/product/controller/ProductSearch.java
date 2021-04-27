@@ -38,35 +38,7 @@ public class ProductSearch extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		
-		doPost(req, res);
-		
-//		String action = req.getParameter("action");
-//		List<String> errorMsgs = new ArrayList<String>();
-//		req.setAttribute("errorMsgs", errorMsgs);
-//		String url = "/front-end/productsell/shop.jsp";
-//		
-		
-//		if("getJson".equals(action)) {
-//		ProductService productSvc = new ProductService();
-//		List<ProductVO> list = productSvc.getAllShopWithoutPhoto();
-//		JSONObject jsonObj = new JSONObject();
-//		
-//		try {
-//			jsonObj.put("results", list);
-//
-//		} catch (JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		res.setContentType("text/html; charset=UTF-8");
-//	
-//		PrintWriter out = res.getWriter();
-//		
-//		out.println(jsonObj.toString());
-//	}
-		
-		
+		doPost(req, res);		
 
 	}
 	
@@ -79,12 +51,92 @@ public class ProductSearch extends HttpServlet {
 
 		
 		// 使用一般搜尋
-		if (("s_catagories".equals(action)) || ("search".equals(action)))  {
+//		if (("s_catagories".equals(action)) || ("search".equals(action)))  {
+//
+//			List<String> errorMsgs = new LinkedList<String>();
+//			req.setAttribute("errorMsgs", errorMsgs);
+//			
+//
+//
+//			try {
+//				/*************************** 1.接收請求參數 ****************************************/
+//				HttpSession session = req.getSession();
+//				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+//				
+//				// 以下的 if 區塊只對第一次執行時有效
+//				if (req.getParameter("whichPage") == null){
+//					Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+//					session.setAttribute("map",map1);
+//					map = map1;
+//				} 
+//
+//				/*************************** 2.開始查詢資料 ****************************************/
+//				ProductService productSvc = new ProductService();
+//				List<ProductVO> list  = productSvc.getAllShop(map);
+//				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+//				req.setAttribute("products", list); // 資料庫取出的list物件,存入request
+//				
+//
+//				RequestDispatcher successView = req.getRequestDispatcher(SUCESS_URL);
+//				successView.forward(req, res);
+//				
+//				/***************************其他可能的錯誤處理**********************************/
+//			} catch (Exception e) { //錯誤訊息有問題待修
+//				errorMsgs.add("目前無此商品,請重新查詢" + e.getMessage());
+//				req.getRequestDispatcher(ERROR_URL).forward(req, res);
+//				return;
+//			}	
+//		} 
+		
+//		商品區ajax查詢
+		if (("search_ajax".equals(action)))  {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			
 
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				HttpSession session = req.getSession();
+				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+				
+				// 以下的 if 區塊只對第一次執行時有效
+				if (req.getParameter("whichPage") == null){
+					Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+					session.setAttribute("map",map1);
+					map = map1;
+				} 
+
+				/*************************** 2.開始查詢資料 ****************************************/
+				ProductService productSvc = new ProductService();
+				List<ProductVO> list  = productSvc.getAllShop(map);
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				
+				res.setContentType("text/html; charset=utf-8");
+				PrintWriter out = res.getWriter();
+				
+				JSONObject jsonObj = new JSONObject();
+				
+				try {
+					jsonObj.put("results", list);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				
+				out.println(jsonObj.toString());
+				
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher(ERROR_URL);
+				failureView.forward(req, res);
+			}	
+		} 
+		//進階查詢 待改 4/27 2100
+		if (("fw-all-choose".equals(action)))  {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
@@ -115,51 +167,6 @@ public class ProductSearch extends HttpServlet {
 				return;
 			}	
 		} 
-		
-//		ajax方法先不用
-//		if (("search_ajax".equals(action)))  {
-//
-//			List<String> errorMsgs = new LinkedList<String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//
-//			try {
-//				/*************************** 1.接收請求參數 ****************************************/
-//				HttpSession session = req.getSession();
-//				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
-//				
-//				// 以下的 if 區塊只對第一次執行時有效
-//				if (req.getParameter("whichPage") == null){
-//					Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
-//					session.setAttribute("map",map1);
-//					map = map1;
-//				} 
-//
-//				/*************************** 2.開始查詢資料 ****************************************/
-//				ProductService productSvc = new ProductService();
-//				List<ProductVO> list  = productSvc.getAllShop(map);
-//				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-//				
-//				res.setContentType("text/html; charset=utf-8");
-//				PrintWriter out = res.getWriter();
-//				
-//				JSONObject jsonObj = new JSONObject();
-//				
-//				try {
-//					jsonObj.put("results", list);
-//				} catch (JSONException e) {
-//					e.printStackTrace();
-//				}
-//				
-//				out.println(jsonObj.toString());
-//				
-//				/***************************其他可能的錯誤處理**********************************/
-//			} catch (Exception e) {
-//				errorMsgs.add(e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/front-end/index.jsp");
-//				failureView.forward(req, res);
-//			}	
-//		} 
 }			
 }
 

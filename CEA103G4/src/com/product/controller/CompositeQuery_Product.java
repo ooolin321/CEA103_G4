@@ -15,10 +15,18 @@ public class CompositeQuery_Product {
 		String aCondition = null;
 
 		if ("product_name".equals(columnName)) // 用於varchar
-			aCondition = columnName + " like '%" + value + "%'";
+			aCondition = columnName + " like '%" + value + "%'" + " order by rand()" ;
 		else if ("pdtype_no".equals(columnName))
-			aCondition = columnName + "=" + value;
-		
+			aCondition = columnName + "=" + value + " order by rand()" ;
+		else if ("product_no".equals(columnName))
+			aCondition = columnName + "=" + value + " order by product_no desc";
+		else if ("product_price".equals(columnName))
+			aCondition = columnName + "=" + value + " order by product_price";
+		else if ("product_price2".equals("product_price2"))
+			aCondition = "product_price" + "=" + "product_price" + " order by product_price desc";
+		//進階查詢待改4/27 2100
+		else if ("pdtype_no".equals(columnName))
+			aCondition = columnName + "=" + value + " order by product_price";
 		
 		return aCondition + " ";
 	}
@@ -37,7 +45,7 @@ public class CompositeQuery_Product {
 
 					whereCondition.append(" and " + aCondition);
 
-				System.out.println("有送出查詢資料的欄位數count = " + count);
+//				System.out.println("有送出查詢資料的欄位數count = " + count);
 			}
 		}
 		

@@ -13,6 +13,6 @@ public interface ProductDAO_interface {
 //        public List<ProductVO> getAll(Map<String, String[]> map); 
           public List<ProductVO> getAllWithoutPhoto();
           public List<ProductVO> getAllShop();
-          public List<ProductVO> findProductsBySearch(String product_name);
           public List<ProductVO> getAllShop(Map<String, String[]> map);
+//          public List<ProductVO> getNewShop();
 }

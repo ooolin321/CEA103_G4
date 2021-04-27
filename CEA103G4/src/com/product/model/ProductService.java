@@ -85,14 +85,12 @@ public class ProductService {
 		
 		return productList;
 	}
-	
-	public List<ProductVO> findProductsBySearch(String product_name) {
-		return dao.findProductsBySearch(product_name);
-	}
+
 	
 	public List<ProductVO> getAllShop(Map<String, String[]> map) {
 		return dao.getAllShop(map);
 	}
+
 	
 
 }

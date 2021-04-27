@@ -608,10 +608,7 @@ ol {
 }
 
 .nav-item .nav-depart .depart-btn #ti-fa-hand {
-  position: absolute;
-  right: 37px;
-  top: 19px;
-
+  padding-left:3px;
  }
 
 .nav-item .nav-depart .depart-btn span {
@@ -643,11 +640,11 @@ ol {
   font-weight: 700;
 }
 
-.nav-item .nav-depart .depart-btn .depart-hover li.active a {
+.nav-item .nav-depart .depart-btn .depart-hover li.active div {
   color: #e7ab3c;
 }
 
-.nav-item .nav-depart .depart-btn .depart-hover li a {
+.nav-item .nav-depart .depart-btn .depart-hover li div {
   display: block;
   font-size: 16px;
   color: #000000;
@@ -661,7 +658,7 @@ ol {
   
 }
 
-.nav-item .nav-depart .depart-btn .depart-hover li a:hover {
+.nav-item .nav-depart .depart-btn .depart-hover li div:hover {
   color: #e7ab3c;
 }
 
@@ -1616,16 +1613,17 @@ border:1px block solid;
   margin-left:30px;
 }
 
-.filter-widget .filter-catagories li a {
+.filter-widget .filter-catagories li div {
   display: inline-block;
   color: #636363;
   font-size: 16px;
   line-height: 39px;
   font-weight: 700;
+  cursor: pointer;
   
 }
 
-.filter-widget .filter-catagories li a:hover {
+.filter-widget .filter-catagories li div:hover {
   font-weight: 700;
   color: #e7ab3c;
 }
@@ -1918,6 +1916,7 @@ border:1px block solid;
   display: inline-block;
   text-transform: uppercase;
   margin-right:20px;
+  cursor:pointer;
   
 }
 
@@ -1928,7 +1927,7 @@ border:1px block solid;
     border-radius: 2px;
     border: 1;
     background:#fff;
-    width: 8rem;
+    width: 10rem;
     border-radius: 5px;
     margin-top: 3px;
     

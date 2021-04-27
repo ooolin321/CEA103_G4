@@ -2,6 +2,10 @@ package com.user.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
+
+import com.emp.model.EmpVO;
+import com.live_report.model.*;
 
 public class UserService {
 
@@ -87,5 +91,14 @@ public class UserService {
 
 	public List<UserVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public Set<Live_reportVO> getLive_reportByUser_id(String user_id) {
+		return dao.getLive_reportByUser_id(user_id);
+	}
+	
+	public UserVO selectUser(String user_id, String user_pwd) {
+
+		return dao.login(user_id, user_pwd);
 	}
 }

@@ -7,6 +7,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.live_report.model.Live_reportVO;
+
 public class UserDAO implements UserDAO_interface {
 	
 	private static DataSource ds = null;
@@ -28,8 +30,11 @@ public class UserDAO implements UserDAO_interface {
 			"DELETE FROM USER where USER_ID = ?";
 	private static final String UPDATE = 
 			"UPDATE `USER` SET `USER_PWD`=?, `USER_NAME`=?, `ID_CARD`=?, `USER_GENDER`=?, `USER_DOB`=?, `USER_MAIL`=?, `USER_PHONE`=?, `USER_MOBILE`=?, `CITY`=?, `TOWN`=?, `ZIPCODE`=?, `USER_ADDR`=?, `REGDATE`=?, `USER_POINT`=?, `VIOLATION`=?, `USER_STATE`=?, `USER_COMMENT`=?, `COMMENT_TOTAL`=?, `CASH`=? WHERE `USER_ID` = ?";
-
-
+	private static final String GET_Live_reportByUser_id_STMT = 
+			"SELECT LIVE_REPORT_NO,LIVE_REPORT_CONTENT,LIVE_NO,USER_ID,EMPNO,LIVE_REPORT_STATE,REPORT_DATE,PHOTO FROM LIVE_REPORT where USER_ID = ? ORDER BY LIVE_REPORT_NO";
+	private static final String SIGN_IN = 
+			"SELECT USER_ID,USER_PWD,USER_NAME FROM USER where USER_ID=? AND USER_PWD=?";
+	
 	@Override
 	public void insert(UserVO userVO) {
 		Connection con = null;
@@ -328,5 +333,118 @@ public class UserDAO implements UserDAO_interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public Set<Live_reportVO> getLive_reportByUser_id(String user_id) {
+		Set<Live_reportVO> set = new LinkedHashSet<Live_reportVO>();
+		Live_reportVO live_reportVO = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+	
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_Live_reportByUser_id_STMT);
+			pstmt.setString(1, user_id);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				live_reportVO = new Live_reportVO();
+				live_reportVO.setLive_report_no(rs.getInt("live_report_no"));
+				live_reportVO.setLive_report_content(rs.getString("live_report_content"));
+				live_reportVO.setLive_no(rs.getInt("live_no"));
+				live_reportVO.setUser_id(rs.getString("User_id"));
+				live_reportVO.setEmpno(rs.getInt("user_id"));
+				live_reportVO.setLive_report_state(rs.getInt("live_report_state"));
+				live_reportVO.setReport_date(rs.getTimestamp("report_date"));
+				live_reportVO.setPhoto(rs.getBytes("photo"));
+				set.add(live_reportVO); // Store the row in the vector
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return set;
+	}
+
+	@Override
+	public UserVO login(String user_id, String user_pwd) {
+		
+		UserVO userVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(SIGN_IN);
+				
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, user_pwd);	
+			
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+
+				userVO = new UserVO();
+				userVO.setUser_id(rs.getString("user_id"));
+				userVO.setUser_pwd(rs.getString("user_pwd"));
+				userVO.setUser_name(rs.getString("user_name"));
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("database發生錯誤." + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return userVO;
+		
 	}
 }

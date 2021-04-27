@@ -48,7 +48,7 @@
 </c:if>
 
 <ul>
-  <li><a href='listAllUser.jsp'>List</a> all Users.  <br><br></li>
+  <li><a href='<%=request.getContextPath() %>/front-end/user/listAllUser.jsp'>List</a> all Users.  <br><br></li>
   
   
   <li>

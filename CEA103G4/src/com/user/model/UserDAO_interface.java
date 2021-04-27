@@ -1,6 +1,10 @@
 package com.user.model;
 
 import java.util.List;
+import java.util.Set;
+
+import com.emp.model.EmpVO;
+import com.live_report.model.*;
 
 public interface UserDAO_interface {
 	public void insert(UserVO userVO);
@@ -14,5 +18,8 @@ public interface UserDAO_interface {
 	public List<UserVO> getAll();
 	// 萬用複合查詢(傳入參數型態Map)(回傳 List)
 //  public List<EmpVO> getAll(Map<String, String[]> map); 
-
+	
+	public Set<Live_reportVO> getLive_reportByUser_id(String user_id);
+	
+	public UserVO login(String user_id, String user_pwd);
 }

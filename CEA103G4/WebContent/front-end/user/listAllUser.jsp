@@ -91,6 +91,7 @@
 		<th>錢包</th>
 		<th>修改</th>
 		<th>刪除</th>
+		<th>直播檢舉查詢</th>
 	</tr>
 	<%@ include file="page1.file" %> 
 	<c:forEach var="userVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -111,7 +112,10 @@
 			<td><fmt:formatDate value="${userVO.regdate}" pattern="yyyy-MM-dd"/></td>
 			<td>${userVO.user_point}</td>
 			<td>${userVO.violation}</td>
-			<td>${userVO.user_state}</td>
+			<td>			
+			${(userVO.user_state==0)? '停權':''}
+			${(userVO.user_state==1)? '正常':''}
+			</td>
 			<td>${userVO.user_comment}</td>
 			<td>${userVO.comment_total}</td>
 			<td>${userVO.cash}</td>
@@ -127,10 +131,18 @@
 			     <input type="hidden" name="user_id"  value="${userVO.user_id}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/user/user.do" style="margin-bottom: 0px;">
+			    <input type="submit" value="送出查詢"> 
+			    <input type="hidden" name="user_id" value="${userVO.user_id}">
+			    <input type="hidden" name="action" value="listLive_report_ByUser_id_A"></FORM>
+			</td>
 		</tr>
 	</c:forEach>
 </table>
 <%@ include file="page2.file" %>
-
+<%if (request.getAttribute("listLive_report_ByUser_id")!=null){%>
+       <jsp:include page="listLive_report_ByUser_id.jsp" />
+<%} %>
 </body>
 </html>

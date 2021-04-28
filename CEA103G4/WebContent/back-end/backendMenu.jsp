@@ -1,4 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.emp.model.*"%>
+<%
+	EmpVO empVO = (EmpVO)session.getAttribute("account");
+	session.setAttribute("empVO", empVO);
+%>
 <!-- Navbar-->
   <header class="app-header"><a class="app-header__logo" href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">Mode Femme</a>
     <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
@@ -74,67 +80,69 @@
 			src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"
 			alt="User Image">
 		<div>
-			<p class="app-sidebar__user-name">John Doe</p>
+			<p class="app-sidebar__user-name">${empVO.ename}</p>
 			<p class="app-sidebar__user-designation">Frontend Developer</p>
 		</div>
 	</div>
 	<ul class="app-menu">
 		<li><a class="app-menu__item active"
-			href="<%=request.getContextPath()%>/back-end/emp/listAllEmp.jsp"><i
+			href="<%=request.getContextPath()%>/back-end/backendIndex.jsp""><i
 				class="app-menu__icon fa fa-dashboard"></i><span
-				class="app-menu__label">員工管理</span></a></li>
+				class="app-menu__label">後台首頁</span></a></li>
 		<li class="treeview"><a class="app-menu__item" href="#"
 			data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span
 				class="app-menu__label">後台管理</span><i
 				class="treeview-indicator fa fa-angle-right"></i></a>
 			<ul class="treeview-menu">
 				<li><a class="treeview-item"
-					href="<%=request.getContextPath()%>/back-end/emp/addEmp.jsp"><i
-						class="icon fa fa-circle-o"></i>新增員工</a></li>
+					href="<%=request.getContextPath()%>/back-end/emp/listAllEmp.jsp"><i
+						class="icon fa fa-circle-o"></i>員工管理</a></li>
 				<li><a class="treeview-item"
-					href="https://fontawesome.com/v4.7.0/icons/" target="_blank"
-					rel="noopener"><i class="icon fa fa-circle-o"></i> Font Icons</a></li>
-				<li><a class="treeview-item" href="ui-cards.html"><i
-						class="icon fa fa-circle-o"></i> Cards</a></li>
-				<li><a class="treeview-item" href="widgets.html"><i
-						class="icon fa fa-circle-o"></i> Widgets</a></li>
-			</ul></li>
-		<li><a class="app-menu__item" href="charts.html"><i
-				class="app-menu__icon fa fa-pie-chart"></i><span
-				class="app-menu__label">Charts</span></a></li>
+					href="<%=request.getContextPath()%>/back-end/emp/addEmp.jsp" target="_blank"
+					rel="noopener"><i class="icon fa fa-circle-o"></i>新增員工</a></li>
+				<li><a class="treeview-item"
+					href="<%=request.getContextPath()%>/back-end/fun/listAllFun.jsp"><i
+						class="icon fa fa-circle-o"></i>功能管理</a></li>
+			</ul>
+			</li>
+
 		<li class="treeview"><a class="app-menu__item" href="#"
 			data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span
-				class="app-menu__label">Forms</span><i
+				class="app-menu__label">商品管理</span><i
 				class="treeview-indicator fa fa-angle-right"></i></a>
 			<ul class="treeview-menu">
-				<li><a class="treeview-item" href="form-components.html"><i
-						class="icon fa fa-circle-o"></i> Form Components</a></li>
-				<li><a class="treeview-item" href="form-custom.html"><i
-						class="icon fa fa-circle-o"></i> Custom Components</a></li>
-				<li><a class="treeview-item" href="form-samples.html"><i
-						class="icon fa fa-circle-o"></i> Form Samples</a></li>
-				<li><a class="treeview-item" href="form-notifications.html"><i
-						class="icon fa fa-circle-o"></i> Form Notifications</a></li>
+				<li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/product_type/listAllProduct_Type.jsp"><i
+						class="icon fa fa-circle-o"></i>商品類別管理</a></li>
+				<li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/product_type/addProduct_Type.jsp"><i
+						class="icon fa fa-circle-o"></i> 新增商品類別</a></li>
+				<li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/product/listAllProduct.jsp"><i
+						class="icon fa fa-circle-o"></i>直售商品管理</a></li>
+				<li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/product/addProduct.jsp"><i
+						class="icon fa fa-circle-o"></i> 新增直售商品</a></li>
+				<li><a class="treeview-item" href="#"><i
+						class="icon fa fa-circle-o"></i>直撥商品管理(none)</a></li>
+				<li><a class="treeview-item" href="#"><i
+						class="icon fa fa-circle-o"></i> 新增直撥商品(none)</a></li>
 			</ul></li>
 		<li class="treeview"><a class="app-menu__item" href="#"
 			data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span
-				class="app-menu__label">Tables</span><i
+				class="app-menu__label">檢舉管理</span><i
 				class="treeview-indicator fa fa-angle-right"></i></a>
 			<ul class="treeview-menu">
-				<li><a class="treeview-item" href="table-basic.html"><i
-						class="icon fa fa-circle-o"></i> Basic Tables</a></li>
-				<li><a class="treeview-item" href="table-data-table.html"><i
-						class="icon fa fa-circle-o"></i> Data Tables</a></li>
+				<li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/product_report/listAllProduct_Report.jsp"><i
+						class="icon fa fa-circle-o"></i> 商品檢舉管理</a></li>
+				<li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/live_report/listAllLive_report.jsp"><i
+						class="icon fa fa-circle-o"></i> 直撥檢舉管理</a></li>
 			</ul></li>
 		<li class="treeview"><a class="app-menu__item" href="#"
 			data-toggle="treeview"><i class="app-menu__icon fa fa-file-text"></i><span
-				class="app-menu__label">Pages</span><i
+				class="app-menu__label">廣告管理</span><i
 				class="treeview-indicator fa fa-angle-right"></i></a>
 			<ul class="treeview-menu">
-				<li><a class="treeview-item" href="blank-page.html"><i
-						class="icon fa fa-circle-o"></i> Blank Page</a></li>
-				<li><a class="treeview-item" href="page-login.html"><i
-						class="icon fa fa-circle-o"></i> Login Page</a></li>
+				<li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/ad/listAllAd.jsp"><i
+						class="icon fa fa-circle-o"></i> 所有廣告</a></li>
+				<li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/ad/addAd.jsp"><i
+						class="icon fa fa-circle-o"></i> 新增廣告</a></li>
 				<li><a class="treeview-item" href="page-lockscreen.html"><i
 						class="icon fa fa-circle-o"></i> Lockscreen Page</a></li>
 				<li><a class="treeview-item" href="page-user.html"><i
@@ -148,6 +156,9 @@
 				<li><a class="treeview-item" href="page-error.html"><i
 						class="icon fa fa-circle-o"></i> Error Page</a></li>
 			</ul></li>
+					<li><a class="app-menu__item" href="charts.html"><i
+				class="app-menu__icon fa fa-pie-chart"></i><span
+				class="app-menu__label">Charts</span></a></li>
 	</ul>
 </aside>
 <main class="app-content">

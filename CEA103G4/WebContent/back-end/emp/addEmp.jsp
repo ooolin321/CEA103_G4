@@ -10,20 +10,17 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>員工資料新增 - addEmp.jsp</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 <!-- Main CSS-->
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/back-template/docs/css/main.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back-template/docs/css/main.css">
 <!-- Font-icon css-->
-<link rel="stylesheet" type="text/css"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<jsp:include page="/back-end/backendMenu.jsp" />
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 
 </head>
+<jsp:include page="/back-end/backendMenu.jsp" />
+
 <body bgcolor='white' class="app sidebar-mini rtl">
 	<div class="row">
 		<div class="col-md-12">
@@ -43,8 +40,6 @@
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/emp/emp.do" name="form1">
 							<table>
-
-
 								<tr>
 									<td>員工姓名:</td>
 									<td><input class="form-control" type="TEXT" name="ename"
@@ -108,21 +103,17 @@
 									<td><input class="form-control" name="hiredate"
 										id="f_date1" type="text"></td>
 								</tr>
-
-
 							</table>
-							<br> <input type="hidden" name="action" value="insert">
-
+							<br> <input type="hidden" name="action" value="insert">	
+													
+							<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">
+							
 							<input class="btn btn-primary" type="submit" value="送出新增">
 						</form>
 							</div>
 					</div>
 				</div>
 			</div>
-
-	
-
-
 
 <script>
 $("#twzipcode").twzipcode({
@@ -149,8 +140,7 @@ $("#twzipcode").twzipcode({
 		dob = new java.sql.Date(System.currentTimeMillis());
 	}
 %>
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script
 	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
@@ -236,6 +226,8 @@ $("#twzipcode").twzipcode({
 	//              return [true, ""];
 	//      }});
 </script>
+
 	<jsp:include page="/back-end/backendfooter.jsp" />
+	
 </body>	
 </html>

@@ -42,7 +42,7 @@ public class EmpDAO implements EmpDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,CITY,DIST,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP WHERE EMPNO = ?";
 	private static final String DELETE = "DELETE FROM EMP WHERE EMPNO = ?";
 	private static final String UPDATE = "UPDATE EMP SET ENAME=?, JOB=?, ID=?, GENDER=?, DOB=?, CITY=?, DIST=?, ADDR=?,EMAIL=?, SAL=?, STATE=?, HIREDATE=?, EMP_PWD=? WHERE EMPNO = ?";
-	private static final String SIGN_IN = "SELECT EMPNO,EMP_PWD,ENAME FROM EMP where EMPNO=? AND EMP_PWD=?";
+	private static final String SIGN_IN = "SELECT EMPNO,EMP_PWD,ENAME FROM EMP  where BINARY EMPNO=? AND BINARY EMP_PWD=?";
 
 	@Override
 	public void insert(EmpVO empVO) {
@@ -193,7 +193,6 @@ public class EmpDAO implements EmpDAO_interface {
 				empVO.setGender(rs.getInt("gender"));
 				empVO.setDob(rs.getDate("dob"));
 				empVO.setCity(rs.getString("city"));
-//				empVO.setZipcode(rs.getInt("zipcode"));
 				empVO.setDist(rs.getString("dist"));
 				empVO.setAddr(rs.getString("addr"));
 				empVO.setEmail(rs.getString("email"));

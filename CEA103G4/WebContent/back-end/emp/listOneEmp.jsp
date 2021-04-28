@@ -52,13 +52,12 @@
 								<th>狀態</th>
 								<th>到職日期</th>
 								<th>員工密碼</th>
-								<th>修改</th>
+<!-- 								<th>修改</th> -->
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td><A
-									href="<%=request.getContextPath()%>/emp/emp.do?empno=${empVO.empno}&action=getOne_From">${empVO.empno}</A></td>
+								<td>${empVO.empno}</A></td>
 								<td>${empVO.ename}</td>
 								<td>${empVO.job}</td>
 								<td>${empVO.id}</td>
@@ -88,19 +87,19 @@
 								<td>${empVO.emp_pwd}</td>
 
 
-								<td>
-									<FORM METHOD="post"
-										ACTION="<%=request.getContextPath()%>/emp/emp.do"
-										style="margin-bottom: 0px;">
-										<input class="btn btn-primary" type="submit" value="修改">
-										<input type="hidden" name="empno" value="${empVO.empno}">
-										<input type="hidden" name="requestURL"
-											value="<%=request.getServletPath()%>">
-										<!--送出本網頁的路徑給Controller-->
+<!-- 								<td> -->
+<!-- 									<FORM METHOD="post" -->
+<%-- 										ACTION="<%=request.getContextPath()%>/emp/emp.do" --%>
+<!-- 										style="margin-bottom: 0px;"> -->
+<!-- 										<input class="btn btn-primary" type="submit" value="修改"> -->
+<%-- 										<input type="hidden" name="empno" value="${empVO.empno}"> --%>
+<!-- 										<input type="hidden" name="requestURL" -->
+<%-- 											value="<%=request.getServletPath()%>"> --%>
+<!-- 										送出本網頁的路徑給Controller -->
 
-										<input type="hidden" name="action" value="getOne_For_Update">
-									</FORM>
-								</td>
+<!-- 										<input type="hidden" name="action" value="getOne_For_Update"> -->
+<!-- 									</FORM> -->
+<!-- 								</td> -->
 
 							</tr>
 
@@ -110,6 +109,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<jsp:include page="/back-end/backendfooter.jsp" />
 
 

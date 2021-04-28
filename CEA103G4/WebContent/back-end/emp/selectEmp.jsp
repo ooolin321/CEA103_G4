@@ -11,7 +11,7 @@
 <body bgcolor='white'>
 
 <h3>資料查詢:</h3>
-	
+<jsp:include page="/back-end/backendIndex.jsp" />	
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>

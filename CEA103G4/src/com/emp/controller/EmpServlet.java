@@ -422,9 +422,9 @@ public class EmpServlet extends HttpServlet {
 				boolean openModal=true;
 				req.setAttribute("openModal",openModal );
 				
-				// 取出的empVO送給listOneEmp.jsp
-				RequestDispatcher successView = req
-						.getRequestDispatcher("/back-end/emp/listOneEmp.jsp");
+				// 取出的empVO送給listAllEmp.jsp
+				String url = ("/back-end/emp/listAllEmp.jsp");
+				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				return;
 

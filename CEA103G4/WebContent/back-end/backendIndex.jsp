@@ -91,7 +91,7 @@
               <!-- Sidebar menu-->
               <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
               <aside class="app-sidebar">
-                <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
+                <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/1.jpg" alt="User Image">
                   <div>
                     <p class="app-sidebar__user-name">John Doe</p>
                     <p class="app-sidebar__user-designation">Frontend Developer</p>
@@ -147,7 +147,7 @@
                     <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                   </ul>
                 </div>
-                <jsp:include page="emp/selectEmp.jsp" />
+             
                 
                 
 <!--                 <div class="row"> -->
@@ -282,11 +282,11 @@
               }
               ]
               
-              var ctxl = $("#lineChartDemo").get(0).getContext("2d");
-              var lineChart = new Chart(ctxl).Line(data);
+//               var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+//               var lineChart = new Chart(ctxl).Line(data);
               
-              var ctxp = $("#pieChartDemo").get(0).getContext("2d");
-              var pieChart = new Chart(ctxp).Pie(pdata);
+//               var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+//               var pieChart = new Chart(ctxp).Pie(pdata);
             </script>
             <!-- Google analytics script-->
             <script type="text/javascript">

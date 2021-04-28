@@ -9,7 +9,7 @@ package jdbc.util.CompositeQuery;
 
 import java.util.*;
 
-public class jbbcUtil_CompositeQueryEmp_Fun {
+public class jdbcUtil_CompositeQueryEmp_Fun {
 
 	public static String get_aCondition_For_myDB(String columnName, String value) {
 
@@ -62,7 +62,7 @@ public class jbbcUtil_CompositeQueryEmp_Fun {
 //		map.put("action", new String[] { "getXXX" }); // 注意Map裡面會含有action的key
 
 		String finalSQL = "select * from emp "
-				          + jbbcUtil_CompositeQueryEmp_Fun.get_WhereCondition(map)
+				          + jdbcUtil_CompositeQueryEmp_Fun.get_WhereCondition(map)
 				          + "order by empno";
 		System.out.println("●●finalSQL = " + finalSQL);
 

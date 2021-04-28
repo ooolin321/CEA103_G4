@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
@@ -355,8 +357,12 @@ public class EmpDAO implements EmpDAO_interface {
 			message.setText(messageText);
 
 			Transport.send(message);
+			
+			SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+			Date date = new Date();
+			String strDate = sdFormat.format(date);
 
-			System.out.println("傳送成功!");
+			System.out.println(strDate+" 傳送成功!");
 
 		} catch (MessagingException e) {
 			System.out.println("傳送失敗!");

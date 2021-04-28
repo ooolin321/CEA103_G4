@@ -48,7 +48,7 @@
 </c:if>
 
 <ul>
-<li><a href='<%=request.getContextPath()%>/back-end/auth/listAllAuth.jsp'>List</a> all Functions.  <br><br></li>
+<li><a href='<%=request.getContextPath()%>/back-end/auth/listAllAuth.jsp'>List</a> all Auth.  <br><br></li>
   <li>
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" >
         <b>輸入員工編號 (如14001):</b>

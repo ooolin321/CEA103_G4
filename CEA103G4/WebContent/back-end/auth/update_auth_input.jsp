@@ -140,10 +140,23 @@ th, td {
 			</tr>
 		</table>
 		<br> <input type="hidden" name="action" value="update"> <input
-			type="submit" value="送出新增">
+			type="submit" id = "submit" value="送出新增">
 	</FORM>
 </body>
+<script>
+	let sub = document.getElementById("submit");
+ 	sub.addEventListener(type, callback, capture)
 
+			sub.addEventListener("onclick", function(){
+		let chx = document.getElementsByName("auth_no");
+		for(let i = 0; i < chx.length; i++){
+			let checkbox = chx[i];
+			checkbox.checked = true;
+	}
+	},false);
+
+
+</script>
 
 
 </html>

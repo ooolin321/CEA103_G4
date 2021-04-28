@@ -10,7 +10,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Fashi | Template</title>
+    <title>Login - Mode Femme</title>
     <!-- Google Font -->
     <link
       href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
@@ -34,14 +34,14 @@
 	<!-- Header End -->
 	
 	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
+<%-- 	<c:if test="${not empty errorMsgs}"> --%>
+<!-- 		<font style="color: red">請修正以下錯誤:</font> -->
+<!-- 		<ul> -->
+<%-- 			<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 				<li style="color: red">${message}</li> --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</ul> -->
+<%-- 	</c:if> --%>
 
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
@@ -67,11 +67,11 @@
               <form METHOD="post" class="login-form" action="<%=request.getContextPath()%>/FrondEnd_LoginHandler">
                 <div class="group-input">
                   <label for="user_id">UserID *</label>
-                  <input type="text" name="account" placeholder="UserID" autofocus/>
+                  <input type="text" name="account" placeholder="UserID" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></td>
                 </div>
                 <div class="group-input">
                   <label for="user_pwd">Password *</label>
-                  <input type="password" name="password" placeholder="Password"/>
+                  <input type="password" name="password" placeholder="Password"/><td><font color=red><b>${errorMsgs.user_pwd}</b></td>
                 </div>
                 <div class="group-input gi-check">
                   <div class="gi-more">

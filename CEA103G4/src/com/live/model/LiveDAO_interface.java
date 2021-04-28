@@ -12,4 +12,6 @@ public interface LiveDAO_interface {
 	public LiveVO findByPrimaryKey(Integer live_id);
 
 	public List<LiveVO> getAll();
+	
+	public List<LiveVO> getAll1();
 }

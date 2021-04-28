@@ -1,8 +1,8 @@
 package login;
 
 import java.io.*;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -24,7 +24,7 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 		String action = req.getParameter("action");
 		PrintWriter out = res.getWriter();
 		
-		List<String> errorMsgs = new LinkedList<String>();
+		Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 		
 		if ("signIn".equals(action))
@@ -33,9 +33,9 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 			String str = req.getParameter("account");
 			String str2 = req.getParameter("password");
 			if (str == null || (str.trim().length() == 0)) {
-				errorMsgs.add("請輸入會員帳號");
+				errorMsgs.put("user_id","請輸入會員帳號");
 			}if(str2 == null || (str2.trim().length() == 0)) {
-				errorMsgs.add("請輸入會員密碼");
+				errorMsgs.put("user_pwd","請輸入會員密碼");
 			}
 			
 			// 錯誤發生時將內容發送回表單
@@ -44,6 +44,15 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 				failureView.forward(req, res);
 				return;
 			} // 程式中斷，回傳當前頁面
+			
+			//會員帳號密碼已是String不需此步驟
+//			Integer empno = null;
+//			try {
+//				empno = new Integer(str);
+//			} catch (Exception e) {
+//				errorMsgs.put("empno","員工帳號格式不正確");
+//			}
+//			empno = new Integer(req.getParameter("account").trim());
 			
 			String user_id = str;
 			

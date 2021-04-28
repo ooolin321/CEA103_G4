@@ -3,12 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.live_report.model.*"%>
 
-<%-- <jsp:useBean id="listLive_report_ByUser_id" scope="request" type="java.util.Set<Live_reportVO>" /> <!-- 於EL此行可省略 --> --%>
+<jsp:useBean id="listLive_report_ByUser_id" scope="request" type="java.util.Set<Live_reportVO>" /> <!-- 於EL此行可省略 -->
 <jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
 
-
 <html>
-<head><title>會員檢舉 - listLive_report_ByUser_id.jsp</title>
+<head><title>會員直播檢舉 - listLive_report_ByUser_id.jsp</title>
 
 <style>
   table#table-2 {
@@ -66,23 +65,22 @@
 
 <table>
 	<tr>
+		<th>檢舉者帳號</th>
 		<th>直播檢舉編號</th>
 		<th>直播檢舉內容</th>
 		<th>直播編號</th>
-		<th>檢舉者帳號</th>
 		<th>員工編號</th>
 		<th>檢舉處理狀態</th>
 		<th>檢舉日期</th>
 		<th>截圖</th>
 	</tr>
 	
-	<c:forEach var="Live_reportVO" items="${listLive_report_ByUser_id}" >
-		<tr ${(Live_reportVO.live_report_no==param.live_report_no) ? 'bgcolor=#CCCCFF':''}><!--將修改的那一筆加入對比色-->
+	<c:forEach var="live_reportVO" items="${listLive_report_ByUser_id}" >
+		<tr ${(live_reportVO.live_report_no==param.live_report_no) ? 'bgcolor=#CCCCFF':''}><!--將修改的那一筆加入對比色-->
+			<td>${live_reportVO.user_id}</td>
 			<td>${live_reportVO.live_report_no}</td>
-
 			<td>${live_reportVO.live_report_content}</td>
 			<td>${live_reportVO.live_no}</td>
-			<td>${live_reportVO.user_id}</td>
 			<td>${live_reportVO.empno}</td> 
 			<td>
 			${(live_reportVO.live_report_state)==0? '未處理':''}

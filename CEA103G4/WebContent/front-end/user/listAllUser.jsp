@@ -91,7 +91,7 @@
 		<th>錢包</th>
 		<th>修改</th>
 		<th>刪除</th>
-		<th>直播檢舉查詢</th>
+		<th>曾經檢舉過的直播</th>
 	</tr>
 	<%@ include file="page1.file" %> 
 	<c:forEach var="userVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -101,7 +101,10 @@
 			<td>${userVO.user_pwd}</td>
 			<td>${userVO.user_name}</td>
 			<td>${userVO.id_card}</td>
-			<td>${userVO.user_gender}</td>
+			<td>			
+			${(userVO.user_gender=='M')? '男':''}
+			${(userVO.user_gender=='F')? '女':''}
+			</td>
 			<td><fmt:formatDate value="${userVO.user_dob}" pattern="yyyy-MM-dd"/></td>
 <%-- 		                       <td>${userVO.user_dob}</td> --%>
 			<td>${userVO.user_mail}</td>

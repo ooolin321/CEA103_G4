@@ -27,7 +27,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Main CSS-->
-  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back-template/docs/css/main.css">
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-template/css/usermain.css">
   <!-- Font-icon css-->
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -106,7 +106,7 @@
                   <li><a class="app-menu__item active" href="<%=request.getContextPath()%>/front-end/user/select_page.jsp"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">會員首頁</span></a></li>
                   <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">會員資料管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
-                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/update_user_input.jsp"><i class="icon fa fa-circle-o"></i>資料修改</a></li>
+                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/user.do?action=getOne_For_Update&user_id=${userVO.user_id}"><i class="icon fa fa-circle-o"></i>資料修改</a></li>
                       <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Font Icons</a></li>
                       <li><a class="treeview-item" href="ui-cards.html"><i class="icon fa fa-circle-o"></i> Cards</a></li>
                       <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-circle-o"></i> Widgets</a></li>

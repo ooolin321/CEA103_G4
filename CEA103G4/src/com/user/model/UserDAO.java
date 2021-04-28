@@ -356,8 +356,8 @@ public class UserDAO implements UserDAO_interface {
 				live_reportVO.setLive_report_no(rs.getInt("live_report_no"));
 				live_reportVO.setLive_report_content(rs.getString("live_report_content"));
 				live_reportVO.setLive_no(rs.getInt("live_no"));
-				live_reportVO.setUser_id(rs.getString("User_id"));
-				live_reportVO.setEmpno(rs.getInt("user_id"));
+				live_reportVO.setUser_id(rs.getString("user_id"));
+				live_reportVO.setEmpno(rs.getInt("empno"));
 				live_reportVO.setLive_report_state(rs.getInt("live_report_state"));
 				live_reportVO.setReport_date(rs.getTimestamp("report_date"));
 				live_reportVO.setPhoto(rs.getBytes("photo"));

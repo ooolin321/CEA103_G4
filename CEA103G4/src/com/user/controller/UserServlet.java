@@ -6,6 +6,7 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import com.live_report.model.*;
 import com.user.model.*;
 
 public class UserServlet extends HttpServlet {
@@ -21,6 +22,33 @@ public class UserServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
+		if ("listLive_report_ByUser_id_A".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				String user_id = new String(req.getParameter("user_id"));
+
+				/*************************** 2.開始查詢資料 ****************************************/
+				UserService userSvc = new UserService();
+				Set<Live_reportVO> set = userSvc.getLive_reportByUser_id(user_id);
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("listLive_report_ByUser_id", set);    // 資料庫取出的set物件,存入request
+
+				String url = null;
+				url = "/front-end/user/listAllUser.jsp";        // 成功轉交/front-end/user/listLive_reportByUser_id.jsp
+//listLive_report_ByUser_id
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 ***********************************/
+			} catch (Exception e) {
+				throw new ServletException(e);
+			}
+		}
 		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
@@ -268,7 +296,7 @@ cash = new Integer(req.getParameter("cash").trim());
 					cash = 0;
 					errorMsgs.add("會員錢包請填數字.");
 				}
-//Integer deptno = new Integer(req.getParameter("deptno").trim());
+//Integer user_id = new Integer(req.getParameter("user_id").trim());
 				
 				UserVO userVO = new UserVO();
 				userVO.setUser_id(user_id);

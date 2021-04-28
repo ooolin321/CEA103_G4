@@ -33,7 +33,7 @@ public class UserDAO implements UserDAO_interface {
 	private static final String GET_Live_reportByUser_id_STMT = 
 			"SELECT LIVE_REPORT_NO,LIVE_REPORT_CONTENT,LIVE_NO,USER_ID,EMPNO,LIVE_REPORT_STATE,REPORT_DATE,PHOTO FROM LIVE_REPORT where USER_ID = ? ORDER BY LIVE_REPORT_NO";
 	private static final String SIGN_IN = 
-			"SELECT USER_ID,USER_PWD,USER_NAME FROM USER where USER_ID=? AND USER_PWD=?";
+			"SELECT USER_ID,USER_PWD,USER_NAME FROM USER where BINARY USER_ID=? AND BINARY USER_PWD=?";
 	
 	@Override
 	public void insert(UserVO userVO) {

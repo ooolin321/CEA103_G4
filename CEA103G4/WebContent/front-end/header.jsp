@@ -137,7 +137,7 @@
 							<li><a href="#">直播預告</a></li>
 							<!-- <li><a href="#">Kid's</a></li> -->
 						</ul></li>
-					<li><a href="#">會員專區<i class="icon_profile"></i></a></li>
+					<li><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i class="icon_profile"></i></a></li>
 					<!-- <li>
                 <a href="#">Pages</a>
                 <ul class="dropdown">

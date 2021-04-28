@@ -16,13 +16,24 @@ import javax.servlet.http.Part;
 
 import com.live.model.LiveService;
 import com.live.model.LiveVO;
-import com.product.model.ProductService;
-import com.product.model.ProductVO;
+
 
 @MultipartConfig
 public class LiveServlet extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		String liveURL = "/front-end/live/liveRoom.jsp";
+		Integer live_no = new Integer(req.getParameter("live_no"));
+		LiveService liveSvc = new LiveService();
+		LiveVO liveVO = liveSvc.getOneLive(live_no);
+		req.setAttribute("liveVO", liveVO);
+		req.getRequestDispatcher(liveURL).forward(req, res);
+
 		doPost(req, res);
 	}
 

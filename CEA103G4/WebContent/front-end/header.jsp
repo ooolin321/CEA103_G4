@@ -29,7 +29,7 @@
 <!-- 						</form> -->
 <!-- 					</div> -->
 <!-- 				</div> -->
-<!-- ------------ajax先不用------------ -->
+<!-- ------------JSP先不用↑------------ -->
 				<div class="col-lg-7 col-md-7">
 					<div class="advanced-search">
 						<form class="input-group" id="search">

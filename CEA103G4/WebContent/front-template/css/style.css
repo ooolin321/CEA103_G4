@@ -94,6 +94,10 @@ textarea:focus {
   outline: none;
 }
 
+select {
+	outline: none;
+}
+
 a:hover,
 a:focus {
   text-decoration: none;
@@ -1089,8 +1093,8 @@ ol {
 }
 
 .productcard {
-/*   border-style: none; */
-border:1px block solid;
+  border-style: none;
+/* border:1px block solid; */
 }
 
 .card-img-top {
@@ -1684,7 +1688,7 @@ border:1px block solid;
 
 .filter-widget .filter-range-wrap .range-slider .price-input:after {
   position: absolute;
-  left: 58px;
+  left: 63px;
   top: 13px;
   height: 1px;
   width: 17px;
@@ -1695,10 +1699,10 @@ border:1px block solid;
 .filter-widget .filter-range-wrap .range-slider .price-input input {
   font-size: 16px;
   color: #252525;
-  max-width: 20%;
+  max-width: 21%;
   text-align: center;
   border: 1px solid #ebebeb;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 .filter-widget
@@ -1719,7 +1723,7 @@ border:1px block solid;
   height: 3px;
 }
 
-.filter-widget
+  .filter-widget
   .filter-range-wrap
   .price-range.ui-widget-content
   .ui-slider-handle {
@@ -1754,6 +1758,30 @@ border:1px block solid;
   border-radius: 2px;
   display: inline-block;
   text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  position: relative;
+}
+ .filter-widget .filter-btn::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    border: inherit;
+    border-color: #000;
+    border-radius: inherit;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    content: " ";
+      }
+.filter-widget .filter-btn:active::before {
+        opacity: 0.1;
+      }
+      
+.filter-widget .filter-btn:hover {
+	background: #FFAA33;
 }
 
 
@@ -1870,32 +1898,13 @@ border:1px block solid;
   display: flex;
 }
 
-.product-show-option .select-option .nice-select {
-  border-radius: 0;
-  border: 1px solid #ecedee;
-  height: 40px;
-  line-height: 35px;
-}
-
-.product-show-option .select-option .nice-select .list {
+.product-show-option .select-option .p-show option {
   margin-top: 0;
   border-radius: 2px;
   width: 100%;
-}
-
-.product-show-option .select-option .nice-select:after {
-  border-bottom: 2px solid #4c4c4c;
-  border-right: 2px solid #4c4c4c;
-  height: 7px;
-  right: 22px;
-  top: 47%;
-  width: 7px;
-  opacity: 0.7;
-}
-
-.product-show-option .select-option .nice-select span {
   font-size: 16px;
   color: #4c4c4c;
+  font-weight:700;
 }
 
 .product-show-option .select-option .sorting {
@@ -1917,20 +1926,86 @@ border:1px block solid;
   text-transform: uppercase;
   margin-right:20px;
   cursor:pointer;
-  
+  transition: opacity 0.2s;
+  position: relative;
+}
+ .product-show-option .select-option .newproduct-btn::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    border: inherit;
+    border-color: #000;
+    border-radius: inherit;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    content: " ";
+  }
+.product-show-option .select-option .newproduct-btn:active::before {
+        opacity: 0.1;
+      }
+      
+.product-show-option .select-option .newproduct-btn:hover {
+	background: #FFAA33;
+}
+
+ .product-show-option .select-option .allproduct-btn::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    border: inherit;
+    border-color: #000;
+    border-radius: inherit;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    content: " ";
+  }
+.product-show-option .select-option .allproduct-btn:active::before {
+        opacity: 0.1;
+      }
+      
+.product-show-option .select-option .allproduct-btn:hover {
+	background: #FFAA33;
 }
 
 .product-show-option .select-option .p-show {
   	box-shadow: 0 1px 1px 0 rgb(0 0 0 / 2%);
     height: 2.125rem;
     line-height: 2.125rem;
-    border-radius: 2px;
-    border: 1;
-    background:#fff;
-    width: 10rem;
     border-radius: 5px;
+    background:#fff;
+    width: 9rem;
     margin-top: 3px;
-    
+    padding-left: 12px;
+    border: 1px solid #ecedee;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 15px;   
+}
+/* 下面這個沒起作用 待改 */
+.product-show-option .select-option .p-show select{
+	border-bottom: 2px solid #4c4c4c;
+    border-right: 2px solid #4c4c4c;
+    height: 7px;
+    right: 22px;
+    top: 47%;
+    width: 7px;
+    opacity: 0.7;
+    content: '';
+    display: block;
+    margin-top: -4px;
+    pointer-events: none;
+    position: absolute;
+    transform-origin: 66% 66%;
+    transform: rotate(45deg);
+    transition: all 0.15s ease-in-out;
+    padding-right: 2em;
+    outline: none;
 }
 
 
@@ -1940,15 +2015,6 @@ border:1px block solid;
     font-weight:700;
 }
 
-
-/* .product-show-option .select-option .p-show.nice-select:before { */
-/*   position: absolute; */
-/*   right: 48px; */
-/*   top: 0; */
-/*   content: "09"; */
-/*   font-size: 16px; */
-/*   color: #252525; */
-/* } */
 
 #productheart a {
   color: pink;
@@ -3910,6 +3976,19 @@ border:1px block solid;
   .related-products .product-item .pi-pic ul li a {
     padding: 16px 12px 12px 11px;
   }
+  .product-show-option .select-option .newproduct-btn , .allproduct-btn {
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 700;
+  background: #e7ab3c;
+  padding: 10px 19px 10px;
+  border-radius: 2px;
+  display: inline-block;
+  text-transform: uppercase;
+  margin-right:20px;
+  cursor:pointer;
+  
+}
 }
 
 @media only screen and (max-width: 991px) {
@@ -4115,6 +4194,8 @@ border:1px block solid;
   }
   .slicknav_nav {
     background: #333;
+    border-radius: 5px;
+    font-weight: 700;
   }
   .slicknav_nav ul {
     margin: 0;
@@ -4131,7 +4212,7 @@ border:1px block solid;
     display: none;
   }
   .slicknav_btn {
-    border-radius: 0;
+    border-radius: 5px;
     background-color: #e7ab3c;
     display: inline-block;
     right: -16px;
@@ -4223,9 +4304,24 @@ border:1px block solid;
   }
 }
 
+@media only screen and (max-width: 576px) {
+	.pi-pic .pi-img {
+	width:auto;
+	height:auto;	
+}
+	
+}
+
 /* Small Device: 320px */
 
 @media only screen and (max-width: 479px) {
+	.inner-header .advanced-search {
+    height: 50px;
+    margin-top: 30px;
+    margin-left: 10px;
+    margin-right: 15px;
+}
+	
   .instagram-photo .insta-item {
     width: 100%;
   }
@@ -4239,6 +4335,14 @@ border:1px block solid;
     width: 270px;
     padding: 20px;
   }
+  .inner-header .logo h2 {
+    font-family: webfont;
+    padding-top: 22px;
+    color: white;
+    text-align: center;
+    height: 100%;
+    line-height: 36px;
+}
   .countdown-timer .cd-item {
     margin-right: 5px;
     padding: 10px 6px;

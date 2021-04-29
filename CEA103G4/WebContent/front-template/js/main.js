@@ -207,7 +207,7 @@
     /*-------------------
 		Nice Select
     --------------------- */
-    $('.sorting, .p-show').niceSelect();
+//    $('.sorting, .p-show').niceSelect();
 
     /*------------------
 		Single Product
@@ -252,17 +252,49 @@
 
  					/*自寫js
 					shop.jsp*/
-//進階查詢全部清除
 
-	$("#clearallbtn").click(function () {
+//進階查詢全部清除(點選清除按鈕或當產生其他事件)
+	$("#clearallbtn, .catagoriesQuery, .fw-all-btn, #moneyRange, .allproduct-btn, .newproduct-btn, #sendQuery").click(function () {
 		$(".fw-cs input").prop("checked",false);
 		$(".fw-price label").removeClass('active');
+		$(".fw-price input").prop("checked",false);
 	});
 	
-	$(".product-list").change(function(){
-		$("#p-show").empty()
+	$("#p-show").change(function() {
+	    $(".fw-cs input").prop("checked",false);
+	    $(".fw-price label").removeClass('active');
+		$(".fw-price input").prop("checked",false);
 	})
+	
+	$("#search").on('submit',function(){
+		$(".fw-cs input").prop("checked",false);
+	    $(".fw-price label").removeClass('active');
+		$(".fw-price input").prop("checked",false);
+	});
+	
+	//當有選擇價格篩選時,做其他篩選後,價格篩選會跳回預設值(價格)
+	$(".catagoriesQuery, .fw-all-btn, #moneyRange, .allproduct-btn, .newproduct-btn, #sendQuery").on('click',function(){
+		$("#p-show").val("0");
+	});
+	
+	$("#search").on('submit',function(){
+		$("#p-show").val("0");
+	});
+	
 
+	
+	//當產生其他行為時,價格區間條應該恢復原狀,待調整4/29 1245
+//	$(".catagoriesQuery, .fw-all-btn, .allproduct-btn, .newproduct-btn, #sendQuery").on('click',function(){
+//		$("#minamount").val("$0");
+//		$("#maxamount").val("$2000");
+//	});
+	
+//    $("#p-show").on('click', function () {
+//        $("#p-show").slideUp("slow");
+//    });
+	
+	
+	
 
 
 

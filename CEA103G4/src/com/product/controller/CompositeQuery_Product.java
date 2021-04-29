@@ -24,10 +24,7 @@ public class CompositeQuery_Product {
 			aCondition = columnName + "=" + value + " order by product_price";
 		else if ("product_price2".equals("product_price2"))
 			aCondition = "product_price" + "=" + "product_price" + " order by product_price desc";
-		//進階查詢待改4/27 2100
-		else if ("pdtype_no".equals(columnName))
-			aCondition = columnName + "=" + value + " order by product_price";
-		
+
 		return aCondition + " ";
 	}
 
@@ -68,7 +65,7 @@ public class CompositeQuery_Product {
 		String finalSQL = "select * from PRODUCT where product_photo IS NOT NULL"
 				          + CompositeQuery_Product.get_WhereCondition(map)
 				          + "order by rand()";
-		System.out.println("●●finalSQL = " + finalSQL);
+//		System.out.println("●●finalSQL = " + finalSQL);
 
 	}
 }

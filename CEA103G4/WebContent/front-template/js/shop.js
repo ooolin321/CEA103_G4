@@ -1,7 +1,7 @@
 (function () { 
 	const INDEX_URL = "http://localhost:8081/CEA103G4/ProductSearch?action=getJson";
 	const data = [];
-    const productlist = document.getElementById('product-list');
+    const products = document.getElementById('products');
 
     const searchForm = document.getElementById('search');
     const searchInput = document.getElementById('search-input');
@@ -28,26 +28,13 @@
 
 
 // listen to data panel
-    productlist.addEventListener('click', (event) => {
+    products.addEventListener('click', (event) => {
      if (event.target.matches('.icon_heart_alt')) {
         // console.log(event.target.dataset.id) //每次設定事件時,可以先用console.log確認是否有抓到東西
         addFavoriteItem(event.target.dataset.id)
     }
 })
-//搜尋關鍵字屆時要改商品名稱
-// listen to search form submit event
-	searchForm.addEventListener('submit', event => {
-		let results = []
-		event.preventDefault()
-		const regex = new RegExp(searchInput.value, 'i')
-		results = data.filter(movie => movie.product_name.match(regex))
-		console.log(results)
-		displayDataList(results)
-		getTotalPages(results)
-		getPageData(1, results)
-		nowData = results;
-})
-
+/*
 		//如果點擊到 a 標籤，則透過將頁碼傳入 getPageData 來切換分頁。
 		// listen to pagination click event
 		pagination.addEventListener('click', event => {
@@ -76,7 +63,7 @@
         let pageData = paginationData.slice(offset, offset + ITEM_PER_PAGE);
     }
 
-
+*/
 
     //撰寫新的 addFavoriteItem()，將使用者想收藏的電影送進 local storage 儲存起來
     function addFavoriteItem(id) {

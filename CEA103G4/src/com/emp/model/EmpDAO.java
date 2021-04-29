@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
@@ -40,7 +42,7 @@ public class EmpDAO implements EmpDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,CITY,DIST,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP WHERE EMPNO = ?";
 	private static final String DELETE = "DELETE FROM EMP WHERE EMPNO = ?";
 	private static final String UPDATE = "UPDATE EMP SET ENAME=?, JOB=?, ID=?, GENDER=?, DOB=?, CITY=?, DIST=?, ADDR=?,EMAIL=?, SAL=?, STATE=?, HIREDATE=?, EMP_PWD=? WHERE EMPNO = ?";
-	private static final String SIGN_IN = "SELECT EMPNO,EMP_PWD,ENAME FROM EMP where EMPNO=? AND EMP_PWD=?";
+	private static final String SIGN_IN = "SELECT EMPNO,EMP_PWD,ENAME FROM EMP  where BINARY EMPNO=? AND BINARY EMP_PWD=?";
 
 	@Override
 	public void insert(EmpVO empVO) {
@@ -191,7 +193,6 @@ public class EmpDAO implements EmpDAO_interface {
 				empVO.setGender(rs.getInt("gender"));
 				empVO.setDob(rs.getDate("dob"));
 				empVO.setCity(rs.getString("city"));
-//				empVO.setZipcode(rs.getInt("zipcode"));
 				empVO.setDist(rs.getString("dist"));
 				empVO.setAddr(rs.getString("addr"));
 				empVO.setEmail(rs.getString("email"));
@@ -355,8 +356,12 @@ public class EmpDAO implements EmpDAO_interface {
 			message.setText(messageText);
 
 			Transport.send(message);
+			
+			SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+			Date date = new Date();
+			String strDate = sdFormat.format(date);
 
-			System.out.println("傳送成功!");
+			System.out.println(strDate+" 傳送成功!");
 
 		} catch (MessagingException e) {
 			System.out.println("傳送失敗!");

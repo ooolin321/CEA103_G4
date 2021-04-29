@@ -218,9 +218,9 @@ public class EmpServlet extends HttpServlet {
 					return;
 				}
 				/*************************** 2.開始修改資料 *****************************************/
-				empVO = empSvc.sendPwdMail(ename, email, empPwd);// dao.service發送password email
 				empVO = empSvc.updateEmp(empno, ename, job, id, gender, dob, city, dist, addr, email, sal, state,
 						hiredate, empPwd);
+				empVO = empSvc.sendPwdMail(ename, email, empPwd);// dao.service發送password email
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 
@@ -230,6 +230,7 @@ public class EmpServlet extends HttpServlet {
 				String url = requestURL;
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
+				
 			
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
@@ -242,7 +243,9 @@ public class EmpServlet extends HttpServlet {
 		if (("insert").equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			
+			String requestURL = req.getParameter("requestURL");
+			
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String ename = req.getParameter("ename");
@@ -354,18 +357,20 @@ public class EmpServlet extends HttpServlet {
 					return;
 				}
 				/*************************** 2.開始新增資料 *****************************************/
-				empVO = empSvc.sendPwdMail(ename, email, empPwd);// dao.service發送password email
 				empVO = empSvc.addEmp(ename, job, id, gender, dob, city, dist, addr, email, sal, state,
 						hiredate, empPwd);
+				
+//				empVO = empSvc.sendPwdMail(ename, email, empPwd);// dao.service發送password email
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/back-end/emp/listAllEmp.jsp";
+				
+				String url = requestURL;
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/addEmp.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher(requestURL);
 				failureView.forward(req, res);
 			}
 		}
@@ -379,9 +384,7 @@ public class EmpServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			String requestURL = req.getParameter("requestURL"); // 送出刪除的來源網頁路徑: 可能為【/emp/listAllEmp.jsp】 或
-																// 【/dept/listEmps_ByDeptno.jsp】 或 【
-																// /dept/listAllDept.jsp】 或 【
-																// /emp/listEmps_ByCompositeQuery.jsp】
+
 
 			try {
 				/*************************** 1.接收請求參數 ***************************************/
@@ -392,7 +395,7 @@ public class EmpServlet extends HttpServlet {
 				empSvc.deleteEmp(empno);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				if (requestURL.equals("/back-end/emp/listOneEmp.jsp") || requestURL.equals("/dept/listAllDept.jsp"))
+				if (requestURL.equals("/back-end/emp/listOneEmp.jsp"))
 					req.setAttribute("listAllEmp", empSvc.getOneEmp(empno)); // 資料庫取出的list物件,存入request
 
 

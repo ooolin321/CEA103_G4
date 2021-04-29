@@ -12,156 +12,108 @@
 <title>員工資料新增 - addEmp.jsp</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
-<style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-</style>
-
-<style>
-table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-}
-
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
-
-th, td {
-	padding: 1px;
-}
-</style>
+<!-- Main CSS-->
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back-template/docs/css/main.css">
+<!-- Font-icon css-->
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 
 </head>
-<body bgcolor='white'>
+<jsp:include page="/back-end/backendMenu.jsp" />
 
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>員工資料新增 - addEmp.jsp</h3>
-			</td>
-			<td>
-				<h4>
-					<a href="<%=request.getContextPath()%>/back-end/backendIndex.jsp"><img
-						src="<%=request.getContextPath()%>/images/tomcat.png" width="100"
-						height="100" border="0">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
+<body bgcolor='white' class="app sidebar-mini rtl">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="tile">
+						<h3 class="tile-title">資料新增:</h3>
+							<div class="tile-body">
+						<%-- 錯誤表列 --%>
+						<c:if test="${not empty errorMsgs}">
+							<font style="color: red">請修正以下錯誤:</font>
+							<ul>
+								<c:forEach var="message" items="${errorMsgs}">
+									<li style="color: red">${message}</li>
+								</c:forEach>
+							</ul>
+						</c:if>
 
-	<h3>資料新增:</h3>
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/emp/emp.do" name="form1">
+							<table>
+								<tr>
+									<td>員工姓名:</td>
+									<td><input class="form-control" type="TEXT" name="ename"
+										size="45" value="<%=(empVO == null) ? "" : empVO.getEname()%>" /></td>
+								</tr>
 
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
+								<tr>
+									<td>職位:</td>
+									<td><input class="form-control" type="TEXT" name="job"
+										size="45" value="<%=(empVO == null) ? "" : empVO.getJob()%>" /></td>
+								</tr>
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" name="form1">
-		<table>
+								<tr>
+									<td>身份證字號:</td>
+									<td><input class="form-control" type="TEXT" name="id"
+										size="45"
+										value="<%=(empVO == null) ? "A123456789" : empVO.getId()%>" /></td>
+								</tr>
+								<tr>
+									<td>性別:</td>
+									<td><select class="form-control" size="1" name="gender">
+											<option value="1" ${(empVO.gender==0)? 'selected':''}>男</option>
+											<option value="0" ${(empVO.gender==0)? 'selected':''}>女</option>
+									</select></td>
 
+								</tr>
+								<tr>
+									<td>生日:</td>
+									<td><input class="form-control" name="dob" id="f_date2"
+										type="text"></td>
+								</tr>
+								<tr>
+									<td>地址:</td>
+									<td>
+										<div id="twzipcode"></div> <input class="form-control"
+										type="TEXT" name="addr" size="45"
+										value="<%=(empVO == null) ? "" : empVO.getAddr()%>" />
+									</td>
+								</tr>
+								<tr>
+									<td class="form-group">e-mail:</td>
+									<td><input class="form-control" type="email" name="email"
+										value="<%=(empVO == null) ? "" : empVO.getEmail()%>" /></td>
+								</tr>
+								<tr>
+									<td>薪水:</td>
+									<td><input class="form-control" type="TEXT" name="sal"
+										size="45" value="<%=(empVO == null) ? "" : empVO.getSal()%>" /></td>
+								</tr>
 
-			<tr>
-				<td>員工姓名:</td>
-				<td><input type="TEXT" name="ename" size="45"
-					value="<%=(empVO == null) ? "" : empVO.getEname()%>" /></td>
-			</tr>
+								<tr>
+									<td>狀態:</td>
+									<td><select class="form-control" size="1" name="state">
+											<option value="1" ${(empVO.state==1)? 'selected':''}>在職</option>
+											<option value="0" ${(empVO.state==0)? 'selected':''}>離職</option>
+									</select></td>
+								</tr>
 
-			<tr>
-				<td>職位:</td>
-				<td><input type="TEXT" name="job" size="45"
-					value="<%=(empVO == null) ? "" : empVO.getJob()%>" /></td>
-			</tr>
-
-			<tr>
-				<td>身份證字號:</td>
-				<td><input type="TEXT" name="id" size="45"
-					value="<%=(empVO == null) ? "A123456789" : empVO.getId()%>" /></td>
-			</tr>
-			<tr>
-				<td>性別:</td>
-				<td><select size="1" name="gender">
-						<option value="1" ${(empVO.gender==0)? 'selected':''}>男</option>
-						<option value="0" ${(empVO.gender==0)? 'selected':''}>女</option>       
-					</select></td>
-
-			</tr>
-			<tr>
-				<td>生日:</td>
-				<td><input name="dob" id="f_date2" type="text"></td>
-			</tr>
-			<tr>
-				<td>地址:</td>
-				<td>
-				<div id="twzipcode"></div>
-			
-				<input type="TEXT" name="addr" size="45"
-					value="<%=(empVO==null) ? "" : empVO.getAddr()%>" /></td>
-			</tr>
-			<tr>
-				<td>e-mail:</td>
-				<td><input type="TEXT" name="email" size="45"
-					value="<%=(empVO == null) ? "" : empVO.getEmail()%>" /></td>
-			</tr>
-			<tr>
-				<td>薪水:</td>
-				<td><input type="TEXT" name="sal" size="45"
-					value="<%=(empVO == null) ? "" : empVO.getSal()%>" /></td>
-			</tr>
-
-			<tr>
-				<td>狀態:</td>
-				<td><select size="1" name="state">
-						<option value="1" ${(empVO.state==1)? 'selected':''}>在職</option>
-						<option value="0" ${(empVO.state==0)? 'selected':''}>離職</option>
-					</select>
-				</td>
-			</tr>
-
-			<tr>
-				<td>到職日期:</td>
-				<td><input name="hiredate" id="f_date1" type="text"></td>
-			</tr>
-
-
-
-<%-- 			 	<jsp:useBean id="deptSvc" scope="page" class="pk1.model.DeptService" />
-<!-- 	<tr> -->
-<!-- 		<td>部門:<font color=red><b>*</b></font></td> -->
-<!-- 		<td><select size="1" name="deptno"> -->
-<%-- 			<c:forEach var="deptVO" items="${deptSvc.all}"> --%>
-<%-- 				<option value="${deptVO.deptno}" ${(empVO.deptno==deptVO.deptno)? 'selected':'' } >${deptVO.dname} --%>
-<%-- 			</c:forEach> --%>
-<!-- 		</select></td> -->
-<!-- 	</tr> -->
-
-		</table>
-		<br> <input type="hidden" name="action" value="insert">
-		
-			<input type="submit" value="送出新增">
-	</FORM>
-</body>
+								<tr>
+									<td>到職日期:</td>
+									<td><input class="form-control" name="hiredate"
+										id="f_date1" type="text"></td>
+								</tr>
+							</table>
+							<br> <input type="hidden" name="action" value="insert">	
+													
+							<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">
+							
+							<input class="btn btn-primary" type="submit" value="送出新增">
+						</form>
+							</div>
+					</div>
+				</div>
+			</div>
 
 <script>
 $("#twzipcode").twzipcode({
@@ -188,8 +140,7 @@ $("#twzipcode").twzipcode({
 		dob = new java.sql.Date(System.currentTimeMillis());
 	}
 %>
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script
 	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
@@ -222,7 +173,7 @@ $("#twzipcode").twzipcode({
  	       timepicker:false,       //timepicker:true,
  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
  	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
- 		   value: '<%=dob%>', // value:   new Date(),
+ 		   value: '<%=dob%> ', // value:   new Date(),
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前
@@ -274,7 +225,9 @@ $("#twzipcode").twzipcode({
 	//              }
 	//              return [true, ""];
 	//      }});
-	
-
 </script>
+
+	<jsp:include page="/back-end/backendfooter.jsp" />
+	
+</body>	
 </html>

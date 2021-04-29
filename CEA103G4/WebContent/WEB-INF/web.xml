@@ -219,4 +219,19 @@
     <dispatcher>ERROR</dispatcher>
     <dispatcher>ASYNC</dispatcher>
   </filter-mapping>
+  
+  <filter>
+    <filter-name>userLoginFilter</filter-name>
+    <filter-class>filters.UserLoginFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+    <filter-name>userLoginFilter</filter-name>
+    <url-pattern>/front-end/protected/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
 </web-app>

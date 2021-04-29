@@ -1,8 +1,10 @@
 package login;
 
 import java.io.*;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -22,10 +24,11 @@ public class LoginHandler extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("text/html; charset=utf-8");
 		String action = req.getParameter("action");
-		PrintWriter out = res.getWriter();
 		
-		List<String> errorMsgs = new LinkedList<String>();
+		Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 		req.setAttribute("errorMsgs", errorMsgs);
+		
+		String requestURL = req.getParameter("requestURL");
 		
 		if ("signIn".equals(action))
 		// 【取得使用者 帳號(account) 密碼(password)】
@@ -33,9 +36,9 @@ public class LoginHandler extends HttpServlet {
 			String str = req.getParameter("account");
 			String str2 = req.getParameter("password");
 			if (str == null || (str.trim().length() == 0)) {
-				errorMsgs.add("請輸入帳號");
+				errorMsgs.put("empno","請輸入員工帳號");
 			}if(str2 == null || (str2.trim().length() == 0)) {
-				errorMsgs.add("請輸入密碼");
+				errorMsgs.put("empPwd","請輸入密碼");
 			}
 			// 錯誤發生時將內容發送回表單
 			if (!errorMsgs.isEmpty()) {
@@ -49,7 +52,7 @@ public class LoginHandler extends HttpServlet {
 			try {
 				empno = new Integer(str);
 			} catch (Exception e) {
-				errorMsgs.add("員工帳號格式不正確");
+				errorMsgs.put("empno","員工帳號格式不正確");
 			}
 			
 			empno = new Integer(req.getParameter("account").trim());
@@ -66,8 +69,14 @@ public class LoginHandler extends HttpServlet {
 			EmpService empSvc = new EmpService();
 			EmpVO empVO = empSvc.selectEmp(empno, empPwd);
 			
+			if(empVO == null) {
+				errorMsgs.put("empno","帳號密碼不正確，請重新輸入");
+				String url = "/back-end/backendLogin.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
+			}
 			
-			if(empVO != null) {
+			else if(empVO != null) {
 				HttpSession session = req.getSession();
 				session.setAttribute("account", empVO); // *工作1: 才在session內做已經登入過的標識
 				try {
@@ -88,9 +97,7 @@ public class LoginHandler extends HttpServlet {
 			}
 			}catch (Exception e) {
 				
-			}out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-				out.println("<BODY>你的帳號 , 密碼無效!<BR>");
-				out.println("請按此重新登入 <A HREF=" + req.getContextPath() + "/back-end/backendLogin.jsp>重新登入</A>");
-				out.println("</BODY></HTML>");
+			}
+		
 	}
 }

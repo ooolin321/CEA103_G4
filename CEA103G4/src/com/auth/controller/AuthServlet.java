@@ -168,22 +168,22 @@ System.out.println(f.length);
 				
 //				Integer funno= new Integer(req.getParameter("funno"));
 				
-				String a[] = req.getParameterValues("auth_no");
+//				String a[] = req.getParameterValues("auth_no");
 				String f[]= req.getParameterValues("funno");
-System.out.println(a[1]);
+//System.out.println(a[1]);
 System.out.println(f[1]);				
-System.out.println(a.length);
+//System.out.println(a.length);
 System.out.println(f.length);
-				for(int i = 0; i < a.length; i++) {
-					int auth_no = new Integer(a[i]);
+				for(int i = 0; i < f.length; i++) {
+//					int auth_no = new Integer(a[i]);
 					int funno = new Integer(f[i]);
-					System.out.println(auth_no + "" + funno);
+//					System.out.println(auth_no + "" + funno);
 					AuthVO authVO = new AuthVO();
 					authVO.setEmpno(empno);
 					authVO.setFunno(funno);
-					authVO.setAuth_no(auth_no);
+					authVO.setAuth_no(0);
 					AuthService authSvc = new AuthService();
-					authVO = authSvc.addAuth(empno, funno, auth_no);
+					authVO = authSvc.addAuth(empno, funno, 0);
 
 					
 				}

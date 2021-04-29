@@ -33,7 +33,7 @@ public class UserDAO implements UserDAO_interface {
 	private static final String GET_Live_reportByUser_id_STMT = 
 			"SELECT LIVE_REPORT_NO,LIVE_REPORT_CONTENT,LIVE_NO,USER_ID,EMPNO,LIVE_REPORT_STATE,REPORT_DATE,PHOTO FROM LIVE_REPORT where USER_ID = ? ORDER BY LIVE_REPORT_NO";
 	private static final String SIGN_IN = 
-			"SELECT USER_ID,USER_PWD,USER_NAME FROM USER where USER_ID=? AND USER_PWD=?";
+			"SELECT USER_ID,USER_PWD,USER_NAME FROM USER where BINARY USER_ID=? AND BINARY USER_PWD=?";
 	
 	@Override
 	public void insert(UserVO userVO) {
@@ -356,8 +356,8 @@ public class UserDAO implements UserDAO_interface {
 				live_reportVO.setLive_report_no(rs.getInt("live_report_no"));
 				live_reportVO.setLive_report_content(rs.getString("live_report_content"));
 				live_reportVO.setLive_no(rs.getInt("live_no"));
-				live_reportVO.setUser_id(rs.getString("User_id"));
-				live_reportVO.setEmpno(rs.getInt("user_id"));
+				live_reportVO.setUser_id(rs.getString("user_id"));
+				live_reportVO.setEmpno(rs.getInt("empno"));
 				live_reportVO.setLive_report_state(rs.getInt("live_report_state"));
 				live_reportVO.setReport_date(rs.getTimestamp("report_date"));
 				live_reportVO.setPhoto(rs.getBytes("photo"));

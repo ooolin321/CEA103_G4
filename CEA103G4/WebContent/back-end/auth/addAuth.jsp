@@ -14,6 +14,24 @@
 	FunVO funVO = (FunVO) request.getAttribute("funVO");
 %>
 
+<%-- <%  --%>
+<!-- // 	EmpService empSvc1 = new EmpService(); -->
+<!-- // 	List<EmpVO> list = empSvc1.getAll(); -->
+	
+<!-- // 	AuthService authSvc = new AuthService(); -->
+<!-- // 	List<AuthVO> list1 = authSvc.getAll(); -->
+	
+<!-- // 	for(int i = 0; i < list.size(); i++){ -->
+<!-- // 			EmpVO empVO1 = list.get(i); -->
+<!-- // 		for(int j = 0; j < list1.size(); j++){ -->
+<!-- // 			AuthVO authVO2 = list1.get(j);  -->
+<!-- // 			if(empVO1.getEmpno() == authVO2.getEmpno()){ -->
+<!-- // 				list.remove(i); -->
+<!-- // 			} -->
+<!-- // 		} -->
+<!-- // 	} -->
+<%-- %> --%>
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />

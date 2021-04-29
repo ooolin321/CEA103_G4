@@ -14,65 +14,30 @@
 %>
 
 
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <html>
 <head>
-<title>所有網站功能 - listAllFun.jsp</title>
- <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui/css/layui.css">
- <link rel="stylesheet" href="<%=request.getContextPath()%>/static/admin/css/style.css">
-<style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
+<title>所有員工資料 - listAllEmp.jsp</title>
 
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
 
-h4 {
-	color: blue;
-	display: inline;
-}
-</style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+	crossorigin="anonymous"></script>
 
-<style>
-table {
-	width: 800px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
 
-table, th, td {
-	border: 1px solid #CCCCFF;
-}
 
-th, td {
-	padding: 5px;
-	text-align: center;
-	max-width: 92px;
-	min-width: 92px;
-}
-</style>
+<!-- Font-icon css-->
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/back-template/docs/css/main.css">
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
-<body bgcolor='white'>
-
-	<h4>此頁練習採用 EL 的寫法取值:</h4>
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>所有功能名稱 - listAllFun.jsp</h3>
-				<h4>
-					<a href="<%=request.getContextPath()%>/back-end/fun/selectFun.jsp"><img src="<%=request.getContextPath()%>/images/back1.gif" width="100"
-						height="32" border="0">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
+<jsp:include page="/back-end/backendMenu.jsp" />
+<body bgcolor='white' class="app sidebar-mini rtl">
 
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
@@ -83,60 +48,76 @@ th, td {
 			</c:forEach>
 		</ul>
 	</c:if>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="tile">
+				<div class="tile-body">
+					<table class="col-md-12" id="sampleTable">
+						<thead>
+							<tr role="row" class="table-info">
+								<th>網站功能編號</th>
+								<th>功能名稱</th>
+								<th>網站功能狀態</th>
+<!-- 								<th>修改</th> -->
+								<!-- 			<th>刪除</th> -->
+							</tr>
+						</thead>
+						<tbody>
+							<%-- 		<%@ include file="page1.file"%> --%>
+							<c:forEach var="funVO" items="${list}">
 
-	<table>
-		<tr>
-			<th>網站功能編號</th>
-			<th>功能名稱</th>
-			<th>網站功能狀態</th>
-			<th>修改</th>
-<!-- 			<th>刪除</th> -->
-		</tr>
-<%-- 		<%@ include file="page1.file"%> --%>
-		<c:forEach var="funVO" items="${list}" >
+								<tr>
+									<td>${funVO.funno}</td>
+									<td>${funVO.funName}</td>
+									<c:choose>
+										<c:when test="${funVO.state==0}">
+											<td>關閉</td>
+										</c:when>
+										<c:when test="${funVO.state==1}">
+											<td>開啟</td>
+										</c:when>
+									</c:choose>
+									<!-- 				<td><select size="1" name="state"> -->
+									<%-- 						<option value="1" ${(funVO.state==0)? 'selected':''}>開啟</option> --%>
+									<%-- 						<option value="0" ${(funVO.state==0)? 'selected':''}>關閉</option> --%>
+									<!-- 				</select></td> -->
 
-			<tr>
-				<td>${funVO.funno}</td>
-				<td>${funVO.funName}</td>
-				<c:choose>
-					<c:when test="${funVO.state==0}">
-						<td>關閉</td>
-					</c:when>
-					<c:when test="${funVO.state==1}">
-						<td>開啟</td>
-					</c:when>
-				</c:choose>
-<!-- 				<td><select size="1" name="state"> -->
-<%-- 						<option value="1" ${(funVO.state==0)? 'selected':''}>開啟</option> --%>
-<%-- 						<option value="0" ${(funVO.state==0)? 'selected':''}>關閉</option> --%>
-<!-- 				</select></td> -->
+									<td>
+										<FORM METHOD="post"
+											ACTION="<%=request.getContextPath()%>/fun/fun.do"
+											style="margin-bottom: 0px;">
+											<input type="submit" value="修改"> <input type="hidden"
+												name="funno" value="${funVO.funno}"> <input
+												type="hidden" name="action" value="getOne_For_Update">
+											<input type="hidden" name="requestURL"
+												value="<%=request.getParameter("requestURL")%>">
+											<!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
+											<input type="hidden" name="whichPage"
+												value="<%=request.getParameter("whichPage")%>">
+											<!--只用於:istAllEmp.jsp-->
 
-				<td>
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/fun/fun.do"
-						style="margin-bottom: 0px;">
-						<input type="submit" value="修改"> 
-						<input type="hidden" name="funno" value="${funVO.funno}"> 
-						<input type="hidden" name="action" value="getOne_For_Update">
-						<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
-						<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>">  <!--只用於:istAllEmp.jsp-->
-						
-					</FORM>
-				</td>
+										</FORM>
+									</td>
 
 
-<!-- 				<td> -->
-<%-- 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/fun/fun.do" --%>
-<!-- 						style="margin-bottom: 0px;"> -->
-<!-- 						<input type="submit" value="刪除"> <input type="hidden" -->
-<%-- 							name="funno" value="${funVO.funno}"> <input type="hidden" --%>
-<!-- 							name="action" value="delete"> -->
-<!-- 					</FORM> -->
-<!-- 				</td> -->
-			</tr>
-		</c:forEach>
-	</table>
+									<!-- 				<td> -->
+									<%-- 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/fun/fun.do" --%>
+									<!-- 						style="margin-bottom: 0px;"> -->
+									<!-- 						<input type="submit" value="刪除"> <input type="hidden" -->
+									<%-- 							name="funno" value="${funVO.funno}"> <input type="hidden" --%>
+									<!-- 							name="action" value="delete"> -->
+									<!-- 					</FORM> -->
+									<!-- 				</td> -->
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<%-- 	<%@ include file="page2.file"%> --%>
+	<jsp:include page="/back-end/backendfooter.jsp" />
 
 </body>
 </html>

@@ -21,7 +21,8 @@ public class UserDAO implements UserDAO_interface {
 		}
 	}
 	private static final String INSERT_STMT = 
-			"INSERT INTO `USER` (`USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//			"INSERT INTO `USER` (`USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO `USER` (`USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), 0, 0, 1, 0, 0, 0)";
 	private static final String GET_ALL_STMT = 
 			"SELECT * FROM `USER` ORDER BY `USER_ID`";
 	private static final String GET_ONE_STMT = 
@@ -58,14 +59,13 @@ public class UserDAO implements UserDAO_interface {
 			pstmt.setString(11, userVO.getTown());
 			pstmt.setInt(12, userVO.getZipcode());
 			pstmt.setString(13, userVO.getUser_addr());
-			pstmt.setDate(14, userVO.getRegdate());
-			pstmt.setInt(15, userVO.getUser_point());
-			pstmt.setInt(16, userVO.getViolation());
-			pstmt.setInt(17, userVO.getUser_state());
-			pstmt.setInt(18, userVO.getUser_comment());
-			pstmt.setInt(19, userVO.getComment_total());
-			pstmt.setInt(20, userVO.getCash());
-
+//			pstmt.setDate(14, userVO.getRegdate());
+//			pstmt.setInt(15, userVO.getUser_point());
+//			pstmt.setInt(16, userVO.getViolation());
+//			pstmt.setInt(17, userVO.getUser_state());
+//			pstmt.setInt(18, userVO.getUser_comment());
+//			pstmt.setInt(19, userVO.getComment_total());
+//			pstmt.setInt(20, userVO.getCash());
 			pstmt.executeUpdate();
 
 			// Handle any SQL errors

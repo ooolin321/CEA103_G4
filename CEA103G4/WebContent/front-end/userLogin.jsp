@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.user.model.*"%>
+
+<%
+	UserVO userVO = (UserVO) request.getAttribute("userVO");
+%>
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -26,6 +31,11 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/jquery-ui.min.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/slicknav.min.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/style.css" type="text/css" />
+  	<style type="text/css">
+  	.register-login-section {
+    padding-top: 0px;
+	}
+  	</style>
   </head>
 
   <body>
@@ -49,7 +59,7 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="breadcrumb-text">
-              <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+              <a href="<%=request.getContextPath()%>/front-end/index.jsp"><i class="fa fa-home"></i> Home</a>
               <span>Login</span>
             </div>
           </div>
@@ -67,7 +77,7 @@
               <form METHOD="post" class="login-form" action="<%=request.getContextPath()%>/FrondEnd_LoginHandler">
                 <div class="group-input">
                   <label for="user_id">UserID *</label>
-                  <input type="text" name="account" placeholder="UserID" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></td>
+                  <input type="text" name="account" value="<%= (userVO==null)? "" : userVO.getUser_id()%>" placeholder="UserID" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></td>
                 </div>
                 <div class="group-input">
                   <label for="user_pwd">Password *</label>
@@ -80,7 +90,7 @@
                       <input type="checkbox" id="save-pass" />
                       <span class="checkmark"></span>
                     </label>
-                    <a href="#" class="forget-pass">Forget your Password</a>
+                    <a href="<%=request.getContextPath()%>/front-end/user/forgetPassword.jsp" class="forget-pass">Forget your Password</a>
                   </div>
                 </div>
                 
@@ -91,8 +101,8 @@
                 </button>
               </form>
               <div class="switch-login">
-                <a href="./register.html" class="or-login"
-                  >Or Create An Account</a
+                <a href="<%=request.getContextPath()%>/front-end/user/register.jsp" class="or-login"
+                  >新朋友嗎?來註冊吧！</a
                 >
               </div>
             </div>

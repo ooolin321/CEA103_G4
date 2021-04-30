@@ -229,8 +229,8 @@
 		Quantity change
 	--------------------- */
     var proQty = $('.pro-qty');
-	proQty.prepend('<span class="dec qtybtn">-</span>');
-	proQty.append('<span class="inc qtybtn">+</span>');
+//	proQty.prepend('<span class="dec qtybtn">-</span>');
+//	proQty.append('<span class="inc qtybtn">+</span>');
 	proQty.on('click', '.qtybtn', function () {
 		var $button = $(this);
 		var oldValue = $button.parent().find('input').val();
@@ -248,7 +248,25 @@
 	});
 
 })(jQuery);
+	//數量按鈕前端控制不可大於商品數量
+	$('#addProduct').on('click', function () {
+    	var Count = $('input[name="proqty"]').val();
+    	var maxRemaining = $("#maxRemaining").attr("value");
+    	if (Count == maxRemaining) {
+    		$('#addProduct').prop('disabled',true);
+    		alert("商品數量只剩下"+ maxRemaining +"個");	
+    	} 
+    	if (Count < maxRemaining) {
+    		$('#addProduct').prop('disabled',false);
+    	}
 
+	});
+	
+	$('.pro-qty').change(function() {
+		var maxRemaining = $("#maxRemaining").attr("value");
+		alert("商品數量只剩下"+ maxRemaining +"個");
+		$('input[name="proqty"]').val(maxRemaining);
+	});
 
  					/*自寫js
 					shop.jsp*/

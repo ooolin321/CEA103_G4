@@ -153,6 +153,9 @@
              </div>
           </div>
           </div>
+          <!-- 左邊功能列結束 -->
+          
+          
           <div class="col-lg-9 order-1 order-lg-2">
             <div class="product-show-option">
               <div class="row">
@@ -261,6 +264,8 @@
     <script src="${pageContext.request.contextPath}/front-template/js/products-search.js" ></script>
 <%--     <script src="${pageContext.request.contextPath}/front-template/js/shop.js" ></script>   --%>
 <%--     <script src="${pageContext.request.contextPath}/front-template/js/productFavorite.js" ></script>   --%>
+	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+	<script src="http://code.changer.hk/jquery/plugins/jquery.cookie.js"></script>
 	
 	<script>
 
@@ -386,18 +391,14 @@
 // // 		 		  sendQuery(datas); 
 // 		}
 		
-	
-	
-	
-	
-	
 		
 
 	function sendQuery(datas){ 
 		
 		$.ajax({ 
 		  url:"<%=request.getContextPath()%>/ProductSearch",  
-		  type:"POST", 
+		  type:"POST",
+		  data:datas, 
 		  success: function(result) { 
 // 			console.log(result) 
 		   	const str=cardContent(result, "<%=request.getContextPath()%>"); 
@@ -407,10 +408,27 @@
 				alert('很抱歉,查無此商品');
             }
 
-		  }, 
-			data:datas 
+		  },
+		  error:function () {
+			  alert('很抱歉,查無此商品');
+		  },
+			
 		 }) 
-	}
+	}	
+		
+
+		if(window.location.href){
+			var url = decodeURIComponent(window.location.search);
+			var str = url.split('?')[1]
+			var json = str.split('=')[1]
+			var result =JSON.parse(json);
+			const fromProduct =cardContent(result, "<%=request.getContextPath()%>"); 
+			$("#products").html(fromProduct); 
+			
+			if(fromProduct.length === 0){
+				alert('很抱歉,查無此商品');
+            }
+		};
 	
        	</script>	
   </body>

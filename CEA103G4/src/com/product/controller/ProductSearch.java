@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,6 +27,7 @@ import com.product.model.ProductDAO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 import com.product_type.model.Product_TypeService;
+
 
 
 
@@ -47,6 +50,7 @@ public class ProductSearch extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		
 		
 
 		
@@ -71,6 +75,7 @@ public class ProductSearch extends HttpServlet {
 				/*************************** 2.開始查詢資料 ****************************************/
 				ProductService productSvc = new ProductService();
 				List<ProductVO> list  = productSvc.getAllShop(map);
+//				session.setAttribute("products", list);
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				
 				res.setContentType("text/html; charset=utf-8");
@@ -119,6 +124,7 @@ public class ProductSearch extends HttpServlet {
 				/*************************** 2.開始查詢資料 ****************************************/
 				ProductService productSvc = new ProductService();
 				List<ProductVO> list  = productSvc.getMoneyRangeShop(minPrice, maxPrice);
+//				session.setAttribute("products", list);
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				
 				res.setContentType("text/html; charset=utf-8");
@@ -151,7 +157,7 @@ public class ProductSearch extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-//			try {
+			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				HttpSession session = req.getSession();
 				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
@@ -168,6 +174,7 @@ public class ProductSearch extends HttpServlet {
 				/*************************** 2.開始查詢資料 ****************************************/
 				ProductService productSvc = new ProductService();
 				List<ProductVO> list  = productSvc.getAdvSearchShop(pdtypeNo, priceType);
+//				session.setAttribute("products", list);
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				res.setContentType("text/html; charset=utf-8");
 				PrintWriter out = res.getWriter();
@@ -182,10 +189,38 @@ public class ProductSearch extends HttpServlet {
 				out.flush();
 				out.close();
 				/***************************其他可能的錯誤處理**********************************/
-//			} catch (Exception e) { 
-//				return;
-//			}	
-		} 
+			} catch (Exception e) { 
+				return;
+			}	
+		}
+		
+		
+//		if (("productToShop".equals(action)))  {
+//
+//			List<String> errorMsgs = new LinkedList<String>();
+//			req.setAttribute("errorMsgs", errorMsgs);
+//
+//			try {
+//				/*************************** 1.接收請求參數 ****************************************/
+//				HttpSession session = req.getSession();
+//				ProductVO products = (ProductVO) session.getAttribute("products");
+//				
+//				/*************************** 2.開始查詢資料 ****************************************/
+//
+//				/***************************3.查詢完成,準備轉交(Send the Success view)************/	
+//				
+//				req.setAttribute("products", products);
+//				RequestDispatcher successView = req.getRequestDispatcher(SUCESS_URL); 
+//				successView.forward(req, res);
+//
+//				/***************************其他可能的錯誤處理*************************************/
+//			} catch (Exception e) {
+//				errorMsgs.add("無法取得資料:" + e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher(ERROR_URL);
+//				failureView.forward(req, res);
+//			}
+//		}
 }			
 }
 

@@ -2074,7 +2074,7 @@ ol {
 .product-pic-zoom {
   margin-bottom: 10px;
   position: relative;
-  Z-INDEX: 1;
+/*   Z-INDEX: 1; */
 }
 
 .product-pic-zoom img {
@@ -2306,6 +2306,7 @@ ol {
   line-height: 40px;
   float: left;
 }
+
 
 .product-details .quantity .primary-btn.pd-cart {
   padding: 14px 70px 10px;
@@ -4408,3 +4409,139 @@ ol {
     padding-right: 15px;
   }
 }
+
+/* 自寫CSS */
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
+-webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+/* product.jsp */
+
+
+      .report {
+        display: none;
+        width: 500px;
+        height: 245px;
+        position: fixed;
+        border: #ebebeb solid 1px;
+        left: 50%;
+        top: 50%;
+        background: #ffffff;
+        box-shadow: 0px 0px 20px #ddd;
+        z-index: 999;
+        transform: translate(-50%, -50%);
+        border-radius: 10px;
+      }
+
+      .report-title {
+        width: 100%;
+        margin: 20px 0px 0px 0px;
+        text-align: center;
+        line-height: 40px;
+        height: 40px;
+        font-size: 18px;
+        position: relative;
+        cursor: move;
+        font-weight: 700;
+      }
+
+      .report-input-content {
+        margin-top: 20px;
+      }
+
+      .report-button a,
+      .report-title a {
+        text-decoration: none;
+        color: #ffffff;
+        display: block;
+      }
+
+      .report #closeBtn {
+        color: #e7ab3c;
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .report-button {
+        width: 50%;
+        margin: 30px auto 0px auto;
+        line-height: 40px;
+        font-size: 14px;
+        border: #ebebeb 1px solid;
+        text-align: center;
+        color: #ffffff;
+        font-weight: 700;
+        background: #e7ab3c;
+        border-radius: 2px;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        position: relative;
+        border-radius: 5px;
+      }
+
+      .report-button::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        border: inherit;
+        border-color: #000;
+        border-radius: inherit;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        content: " ";
+      }
+      .report-button:active::before {
+        opacity: 0.1;
+      }
+
+      .report-input input {
+        float: left;
+        line-height: 35px;
+        height: 35px;
+        width: 367px;
+        border: #e7ab3c 1.5px solid;
+        text-indent: 5px;
+        border-radius: 5px;
+        margin-left: 5px;
+      }
+
+      .report-input {
+        overflow: hidden;
+        margin: 0px 0px 20px 0px;
+      }
+
+      .report-input label {
+        float: left;
+        width: 90px;
+        padding-right: 10px;
+        text-align: right;
+        line-height: 35px;
+        height: 35px;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .report-title span {
+        position: absolute;
+        font-size: 12px;
+        right: -20px;
+        top: -30px;
+        background: #ffffff;
+        border: #ebebeb solid 1px;
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+      }
+      .report-bg {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background: rgba(0, 0, 0, 0.3);
+      }

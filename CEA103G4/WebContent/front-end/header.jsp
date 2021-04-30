@@ -116,8 +116,8 @@
 		<div class="container">
 			<div class="nav-depart">
 				<div class="depart-btn">
-					<i class="ti-menu"></i> <span>商品分類</span> <i
-						class="fa fa-hand-o-down" id="ti-fa-hand"></i>
+					<i class="ti-menu"></i> <span>商品分類</span> 
+<!-- 					<i class="fa fa-hand-o-down" id="ti-fa-hand"></i> -->
 					<ul class="depart-hover">
 						<c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()}">
 						<li><div class="catagoriesQuery" value="${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}</div></li>
@@ -131,7 +131,7 @@
 						href="${pageContext.request.contextPath}/front-end/index.jsp">首頁</a></li>
 					<li><a
 						href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp">商品專區</a></li>
-					<li><a href="#">直播專區</a>
+					<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播專區</a>
 						<ul class="dropdown">
 							<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播牆</a></li>
 							<li><a href="#">直播預告</a></li>

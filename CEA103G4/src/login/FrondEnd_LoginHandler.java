@@ -61,8 +61,12 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 			UserService userSvc = new UserService();
 			UserVO userVO = userSvc.selectUser(user_id, user_pwd);
 			
-			
-			if(userVO != null) {
+			if(userVO == null) {
+				errorMsgs.put("user_id","帳號或密碼不正確，請重新輸入！");
+				String url = "/front-end/userLogin.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
+			}else if(userVO != null) {
 				HttpSession session = req.getSession();
 				session.setAttribute("account", userVO); // *工作1: 才在session內做已經登入過的標識
 				try {
@@ -84,9 +88,6 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 			}
 			}catch (Exception e) {
 				
-			}out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-				out.println("<BODY>你的帳號 , 密碼無效!<BR>");
-				out.println("請按此重新登入 <A HREF=" + req.getContextPath() + "/front-end/userLogin.jsp>重新登入</A>");
-				out.println("</BODY></HTML>");
+			}
 	}
 }

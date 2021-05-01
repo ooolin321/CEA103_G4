@@ -167,7 +167,7 @@
 							<ul class="dropdown">
 								<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播牆</a></li>
 								<li><a href="#">直播預告</a></li>
-								<!-- <li><a href="#">Kid's</a></li> -->
+
 							</ul></li>
 						<li><a href="#">會員專區<i class="icon_profile"></i></a></li>
 					</ul>
@@ -221,15 +221,19 @@
 												<h5>${liveVO.live_name}</h5>
 												<div class="product-price">
 													<span></span>
-													${(liveVO.live_state==0)? '未直播':''}
-													${(liveVO.live_state==1)? '直播中':''}
-													${(liveVO.live_state==2)? '已直播':''}
+													${(liveVO.live_state==0)? '直播結束':''}
+													${(liveVO.live_state==1)? '未直播':''}
+													${(liveVO.live_state==2)? '直播中':''}
+													<br><span>-${liveVO.live_type}-</span>
 												</div>
 												<div>
 												<fmt:formatDate value="${liveVO.live_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
 												</div>
+												
 											</a>
+											
 										</div>
+										
 									</div>
 								</div>
 							</div>

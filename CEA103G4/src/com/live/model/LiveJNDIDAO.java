@@ -30,7 +30,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT * FROM LIVE WHERE LIVE_NO = ?";
 	private static final String DELETE = "DELETE FROM LIVE WHERE LIVE_NO = ?";
 	private static final String UPDATE = "UPDATE LIVE SET LIVE_TYPE=?, LIVE_NAME=?, LIVE_TIME=?, LIVE_STATE=? ,USER_ID=?,EMPNO=?,LIVE_PHOTO=? WHERE LIVE_NO = ?";
-	private static final String GET_ALL_STATE1 = "SELECT * FROM LIVE ORDER BY LIVE_STATE AND LIVE_TIME DESC";
+	private static final String GET_ALL_STATE1 = "SELECT * FROM LIVE ORDER BY LIVE_STATE DESC, LIVE_TIME DESC";
 	@Override
 	public void insert(LiveVO liveVO) {
 		Connection con = null;

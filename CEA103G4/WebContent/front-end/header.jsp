@@ -131,7 +131,7 @@
 						href="${pageContext.request.contextPath}/front-end/index.jsp">首頁</a></li>
 					<li><a
 						href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp">商品專區</a></li>
-					<li><a href="#">直播專區</a>
+					<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播專區</a>
 						<ul class="dropdown">
 							<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播牆</a></li>
 							<li><a href="#">直播預告</a></li>

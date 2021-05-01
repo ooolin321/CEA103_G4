@@ -129,9 +129,9 @@
 	<tr>
 		<td>地址 *</td>
 		<td>
-		<div id="twzipcode"></div>
+		<div id="twzipcode"></div><font color=red><b>${errorMsgs.city}</b>
 		<input type="TEXT" name="user_addr" size="45" value="<%= (userVO==null)? "XX路X段XXX巷XX號" : userVO.getUser_addr()%>"></td>
-		</td><tr><td></td><td><font color=red><b>${errorMsgs.zipcode}${errorMsgs.user_addr}</b></td></tr>
+		</td><tr><td></td><td><font color=red><b>${errorMsgs.user_addr}</b></td></tr>
 	</tr>
 </table>
 				<input type="hidden" name="action" value="insert">
@@ -139,9 +139,14 @@
                   	加入會員
                 </button>
               </FORM>
-              <div class="switch-login">
-                <a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp" class="or-login">已經有帳號了嗎?請直接登入</a>
-              </div>
+            <div _ngcontent-sc209="" class="card-body px-5 py-4">
+				<div _ngcontent-sc209="" class="small text-center">
+					已經有帳號了嗎? <a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">請直接登入 !</a>
+				</div>
+			</div>
+<!--               <div class="switch-login"> -->
+<%--                 <a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp" class="or-login">已經有帳號了嗎?請直接登入</a> --%>
+<!--               </div> -->
             </div>
           </div>
         </div>

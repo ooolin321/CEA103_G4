@@ -100,11 +100,15 @@
                   Sign In
                 </button>
               </form>
-              <div class="switch-login">
-                <a href="<%=request.getContextPath()%>/front-end/user/register.jsp" class="or-login"
-                  >新朋友嗎?來註冊吧！</a
-                >
-              </div>
+	        <div _ngcontent-sc209="" class="card-body px-5 py-4">
+				<div _ngcontent-sc209="" class="small text-center">
+					新朋友嗎? <a href="<%=request.getContextPath()%>/front-end/user/register.jsp">來註冊吧 !</a>
+				</div>
+			</div>
+<!--               <div class="switch-login"> -->
+<%--                 <a href="<%=request.getContextPath()%>/front-end/user/register.jsp" class="or-login" --%>
+<!--                   >新朋友嗎?來註冊吧！</a> -->
+<!--               </div> -->
             </div>
           </div>
         </div>

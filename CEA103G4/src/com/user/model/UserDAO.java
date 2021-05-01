@@ -1,16 +1,28 @@
 package com.user.model;
 
 import java.util.*;
+import java.util.Date;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.emp.model.EmpVO;
 import com.live_report.model.Live_reportVO;
 
 public class UserDAO implements UserDAO_interface {
-	
+
 	private static DataSource ds = null;
 	static {
 		try {
@@ -20,22 +32,17 @@ public class UserDAO implements UserDAO_interface {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = 
+	private static final String INSERT_STMT =
 //			"INSERT INTO `USER` (`USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			"INSERT INTO `USER` (`USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), 0, 0, 1, 0, 0, 0)";
-	private static final String GET_ALL_STMT = 
-			"SELECT * FROM `USER` ORDER BY `USER_ID`";
-	private static final String GET_ONE_STMT = 
-			"SELECT `USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH` FROM USER WHERE `USER_ID` = ?";
-	private static final String DELETE = 
-			"DELETE FROM USER where USER_ID = ?";
-	private static final String UPDATE = 
-			"UPDATE `USER` SET `USER_PWD`=?, `USER_NAME`=?, `ID_CARD`=?, `USER_GENDER`=?, `USER_DOB`=?, `USER_MAIL`=?, `USER_PHONE`=?, `USER_MOBILE`=?, `CITY`=?, `TOWN`=?, `ZIPCODE`=?, `USER_ADDR`=?, `REGDATE`=?, `USER_POINT`=?, `VIOLATION`=?, `USER_STATE`=?, `USER_COMMENT`=?, `COMMENT_TOTAL`=?, `CASH`=? WHERE `USER_ID` = ?";
-	private static final String GET_Live_reportByUser_id_STMT = 
-			"SELECT LIVE_REPORT_NO,LIVE_REPORT_CONTENT,LIVE_NO,USER_ID,EMPNO,LIVE_REPORT_STATE,REPORT_DATE,PHOTO FROM LIVE_REPORT where USER_ID = ? ORDER BY LIVE_REPORT_NO";
-	private static final String SIGN_IN = 
-			"SELECT USER_ID,USER_PWD,USER_NAME FROM USER where BINARY USER_ID=? AND BINARY USER_PWD=?";
-	
+	private static final String GET_ALL_STMT = "SELECT * FROM `USER` ORDER BY `USER_ID`";
+	private static final String GET_ONE_STMT = "SELECT `USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH` FROM USER WHERE `USER_ID` = ?";
+	private static final String DELETE = "DELETE FROM USER where USER_ID = ?";
+	private static final String UPDATE = "UPDATE `USER` SET `USER_PWD`=?, `USER_NAME`=?, `ID_CARD`=?, `USER_GENDER`=?, `USER_DOB`=?, `USER_MAIL`=?, `USER_PHONE`=?, `USER_MOBILE`=?, `CITY`=?, `TOWN`=?, `ZIPCODE`=?, `USER_ADDR`=?, `REGDATE`=?, `USER_POINT`=?, `VIOLATION`=?, `USER_STATE`=?, `USER_COMMENT`=?, `COMMENT_TOTAL`=?, `CASH`=? WHERE `USER_ID` = ?";
+	private static final String UPDATE_PSW = "UPDATE `USER` SET USER_PWD=? WHERE `USER_ID`=?";
+	private static final String GET_Live_reportByUser_id_STMT = "SELECT LIVE_REPORT_NO,LIVE_REPORT_CONTENT,LIVE_NO,USER_ID,EMPNO,LIVE_REPORT_STATE,REPORT_DATE,PHOTO FROM LIVE_REPORT where USER_ID = ? ORDER BY LIVE_REPORT_NO";
+	private static final String SIGN_IN = "SELECT USER_ID,USER_PWD,USER_NAME FROM USER where BINARY USER_ID=? AND BINARY USER_PWD=?";
+
 	@Override
 	public void insert(UserVO userVO) {
 		Connection con = null;
@@ -70,8 +77,7 @@ public class UserDAO implements UserDAO_interface {
 
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -88,13 +94,13 @@ public class UserDAO implements UserDAO_interface {
 					e.printStackTrace(System.err);
 				}
 			}
-		}	
-		
+		}
+
 	}
 
 	@Override
 	public void update(UserVO userVO) {
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -128,8 +134,7 @@ public class UserDAO implements UserDAO_interface {
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -148,9 +153,8 @@ public class UserDAO implements UserDAO_interface {
 			}
 		}
 
-		
 	}
-	
+
 	@Override
 	public void delete(String user_id) {
 
@@ -168,8 +172,7 @@ public class UserDAO implements UserDAO_interface {
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -209,7 +212,7 @@ public class UserDAO implements UserDAO_interface {
 			while (rs.next()) {
 				// userVo 也稱為 Domain objects
 				userVO = new UserVO();
-				
+
 				userVO.setUser_id(rs.getString("user_id"));
 				userVO.setUser_pwd(rs.getString("user_pwd"));
 				userVO.setUser_name(rs.getString("user_name"));
@@ -234,8 +237,7 @@ public class UserDAO implements UserDAO_interface {
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -306,8 +308,7 @@ public class UserDAO implements UserDAO_interface {
 
 			// Handle any driver errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -339,18 +340,18 @@ public class UserDAO implements UserDAO_interface {
 	public Set<Live_reportVO> getLive_reportByUser_id(String user_id) {
 		Set<Live_reportVO> set = new LinkedHashSet<Live_reportVO>();
 		Live_reportVO live_reportVO = null;
-	
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-	
+
 		try {
-	
+
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_Live_reportByUser_id_STMT);
 			pstmt.setString(1, user_id);
 			rs = pstmt.executeQuery();
-	
+
 			while (rs.next()) {
 				live_reportVO = new Live_reportVO();
 				live_reportVO.setLive_report_no(rs.getInt("live_report_no"));
@@ -363,11 +364,10 @@ public class UserDAO implements UserDAO_interface {
 				live_reportVO.setPhoto(rs.getBytes("photo"));
 				set.add(live_reportVO); // Store the row in the vector
 			}
-	
+
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (rs != null) {
 				try {
@@ -396,19 +396,19 @@ public class UserDAO implements UserDAO_interface {
 
 	@Override
 	public UserVO login(String user_id, String user_pwd) {
-		
+
 		UserVO userVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-	
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(SIGN_IN);
-				
+
 			pstmt.setString(1, user_id);
-			pstmt.setString(2, user_pwd);	
-			
+			pstmt.setString(2, user_pwd);
+
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 
@@ -445,6 +445,150 @@ public class UserDAO implements UserDAO_interface {
 			}
 		}
 		return userVO;
-		
+
 	}
+
+	@Override
+	public void getPassword_Update(UserVO userVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_PSW);
+
+			pstmt.setString(1, userVO.getUser_pwd());
+			pstmt.setString(2, userVO.getUser_id());
+
+			int a = pstmt.executeUpdate();
+			System.out.println("a = " + a);
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	@Override
+	// 設定傳送郵件:至收信人的Email信箱,Email主旨,Email內容
+	public List<UserVO> sendMail(UserVO userVO) {
+		List<UserVO> list = new ArrayList<UserVO>();
+		String emailto = userVO.getUser_mail();
+
+		String subject = "新密碼通知";
+
+		String GET_ONE_USER = "SELECT `USER_NAME` FROM USER WHERE `USER_ID` = ?";
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_USER);
+
+			pstmt.setString(1, userVO.getUser_id());
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// userVo 也稱為 Domain objects
+				userVO.setUser_name(rs.getString("user_name"));
+			}
+		
+		String ch_id = userVO.getUser_name();
+		String passRandom = userVO.getUser_pwd();
+		String messageText = "Hello! " + ch_id + "\n" + "請改用此密碼登入: " + passRandom + "\n" + "並於登入後自行修改密碼！";
+
+		
+
+			// 設定使用SSL連線至 Gmail smtp Server
+			Properties props = new Properties();
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.socketFactory.port", "465");
+			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.port", "465");
+
+			// ●設定 gmail 的帳號 & 密碼 (將藉由你的Gmail來傳送Email)
+			// ●須將myGmail的【安全性較低的應用程式存取權】打開
+			final String myGmail = "gea103g4@gmail.com";
+			final String myGmail_password = "gea103g4gea103g4";
+			Session session = Session.getInstance(props, new Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(myGmail, myGmail_password);
+				}
+			});
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(myGmail));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailto));
+
+//			MailService mailService = new MailService();
+//			userVO.sendMail(emailto, subject, messageText);
+
+			// 設定信中的主旨
+			message.setSubject(subject);
+			// 設定信中的內容
+			message.setText(messageText);
+
+			Transport.send(message);
+
+			SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+			Date date = new Date();
+			String strDate = sdFormat.format(date);
+
+			System.out.println(strDate + " 傳送成功!");
+
+		} catch (MessagingException e) {
+			System.out.println("傳送失敗!");
+			e.printStackTrace();
+		}catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+
 }

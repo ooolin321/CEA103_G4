@@ -351,7 +351,74 @@ cash = new Integer(req.getParameter("cash").trim());
 				failureView.forward(req, res);
 			}
 		}
+		
+		// 忘記密碼
+		if ("getPassword".equals(action)) { // 來自forgetPassword.jsp的請求 
+			
+        	Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+				String user_id = req.getParameter("user_id");
+				if (user_id == null || user_id.trim().length() == 0) {
+					errorMsgs.put("user_id","*帳號請勿空白");
+				}
+				
+				String user_mail = req.getParameter("user_mail");
+				String user_mailReg = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
+				if (user_mail == null || user_mail.trim().length() == 0) {
+					errorMsgs.put("user_mail","*Email請勿空白");
+				} else if (!user_mail.trim().matches(user_mailReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("user_mail","Email格式不正確");
+				}
+				
+				// 產生隨機8碼數字
+				String userPwd = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";// 儲存數字0-9 和 大小寫字母
+				StringBuffer sb = new StringBuffer(); // 宣告一個StringBuffer物件sb 儲存 驗證碼
+				for (int i = 0; i < 8; i++) {
+					Random random = new Random();// 建立一個新的隨機數生成器
+					int index = random.nextInt(userPwd.length());// 返回[0,string.length)範圍的int值 作用：儲存下標
+					char ch = userPwd.charAt(index);// charAt() : 返回指定索引處的 char 值 ==》賦值給char字元物件ch
+					sb.append(ch);// append(char c) :將 char 引數的字串表示形式追加到此序列 ==》即將每次獲取的ch值作拼接
+				}
+				String user_newpwd = sb.toString();
+				
+				UserVO userVO = new UserVO();
+				
+				userVO.setUser_id(user_id);
+				userVO.setUser_pwd(user_newpwd);
+				userVO.setUser_mail(user_mail);
+				
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/user/forgetPassword.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+				
+				/***************************2.開始修改資料***************************************/
+				UserService userSvc = new UserService();
+				userVO = userSvc.getPassword_Update(user_id,user_newpwd,user_mail);// dao.service隨機密碼並修改資料庫密碼
+				userVO = userSvc.sendPwdMail(userVO);
+				
 
+				/***************************3.修改完成,準備轉交(Send the Success view)***********/
+				req.setAttribute("userVO", userVO);// 資料庫update成功後,正確的的userVO物件,存入req
+				String url = "/front-end/userLogin.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交userLogin.jsp
+				successView.forward(req, res);				
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				errorMsgs.put("Exception",e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/user/forgetPassword.jsp");
+				failureView.forward(req, res);
+			}
+		}
+				
+				
         if ("insert".equals(action)) { // 來自register.jsp的請求 (會員註冊)
 			
         	Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
@@ -414,10 +481,12 @@ cash = new Integer(req.getParameter("cash").trim());
 					errorMsgs.put("user_dob","*請輸入生日!");
 				}
 				
-				// Email未寫判斷式
 				String user_mail = req.getParameter("user_mail");
+				String user_mailReg = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
 				if (user_mail == null || user_mail.trim().length() == 0) {
 					errorMsgs.put("user_mail","*Email請勿空白");
+				} else if (!user_mail.trim().matches(user_mailReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("user_mail","Email格式不正確");
 				}
 				
 				String user_phone = req.getParameter("user_phone");
@@ -430,15 +499,24 @@ cash = new Integer(req.getParameter("cash").trim());
 					errorMsgs.put("user_mobile","*手機請勿空白");
 				}
 				
+//				String city = req.getParameter("city");
+//				String town = req.getParameter("town");
+				
 				String city = req.getParameter("city");
+				if (city == null || city.length() == 0) {
+					errorMsgs.put("city","請選擇縣市及鄉鎮市");
+				}
 				
 				String town = req.getParameter("town");
+				if (town == null || town.length() == 0) {
+					errorMsgs.put("town","請選擇鄉鎮市");
+				}
 				
 				Integer zipcode = null;
 				try {
 					zipcode = new Integer(req.getParameter("zipcode").trim());
 				} catch (NumberFormatException e) {
-					errorMsgs.put("zipcode","*請選擇縣市及郵遞區號");
+					errorMsgs.put("zipcode","*請選擇郵遞區號");
 				}
 				
 				String user_addr = req.getParameter("user_addr");
@@ -495,6 +573,7 @@ UserService userSvc = new UserService();
 userVO = userSvc.addUser(user_id, user_pwd, user_name, id_card, user_gender,user_dob, user_mail, user_phone, user_mobile, city, town, zipcode, user_addr, regdate, user_point, violation, user_state, user_comment, comment_total, cash);
 
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
+				req.setAttribute("userVO", userVO);// 資料庫update成功後,正確的的userVO物件,存入req
 				String url = "/front-end/userLogin.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交userLogin.jsp
 				successView.forward(req, res);				

@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.user.model.*"%>
+
+<%
+	UserVO userVO = (UserVO) request.getAttribute("userVO");
+%>
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -51,20 +56,28 @@
 			<div _ngcontent-sc209="" class="row justify-content-center">
 				<div _ngcontent-sc209="" class="col-xl-8 col-lg-9">
 					<form _ngcontent-sc209="" novalidate=""
-						class="ng-untouched ng-pristine ng-invalid">
+						class="ng-untouched ng-pristine ng-invalid" METHOD="post" action="<%=request.getContextPath()%>/front-end/user/user.do">
 						<div _ngcontent-sc209="" class="form-group">
-							<p>請輸入註冊時的信箱</p>
+							<p>請輸入註冊時的UserID及GMAIL信箱</p>
+							<label _ngcontent-sc209="" for=""
+								class="text-gray-600 small">UserID *</label><input
+								_ngcontent-sc209="" id="user_id" data-cy="emailInput"
+								type="text" aria-describedby="emailHelp" name="user_id"
+								formcontrolname=""
+								class="form-control form-control-solid ng-untouched ng-pristine ng-invalid"
+								value="<%= (userVO==null)? "" : userVO.getUser_id()%>" placeholder="UserID" autofocus><td><font color=red><b>${errorMsgs.user_id}</b><br>
 							<label _ngcontent-sc209="" for="emailInput"
-								class="text-gray-600 small">Email address</label><input
+								class="text-gray-600 small">Email address *</label><input
 								_ngcontent-sc209="" id="emailInput" data-cy="emailInput"
-								type="email" aria-describedby="emailHelp"
+								type="email" aria-describedby="emailHelp" name="user_mail"
 								formcontrolname="email"
 								class="form-control form-control-solid ng-untouched ng-pristine ng-invalid"
-								value="">
+								value="<%= (userVO==null)? "" : userVO.getUser_mail()%>" placeholder="XXXX@gmail.com"><td><font color=red><b>${errorMsgs.user_mail}</b>
 						</div>
 						<div _ngcontent-sc209="" class="text-right">
+						 	<input type="hidden" name="action" value="getPassword">
 							<button _ngcontent-sc209="" data-cy="requestPasswordResetButton"
-								type="submit" class="btn btn-primary" disabled="">寄送密碼修改信
+								type="submit" class="btn btn-primary">寄送密碼修改信
 							</button>
 						</div>
 					</form>
@@ -74,8 +87,8 @@
 		<hr _ngcontent-sc209="" class="my-0">
 		<div _ngcontent-sc209="" class="card-body px-5 py-4">
 			<div _ngcontent-sc209="" class="small text-center">
-				New user? <a _ngcontent-sc209="" routerlink="../register"
-					href="/auth/register">Create an account!</a>
+				新朋友嗎? <a _ngcontent-sc209="" routerlink="../register"
+					href="/auth/register">來註冊吧 !</a>
 			</div>
 		</div>
 	</main>

@@ -23,7 +23,7 @@ public class Product_ReportDAO implements Product_ReportDAO_interface {
 	}
 	//前台會員新增商品檢舉(時間sql已預設當下時間,檢舉狀態已預設未處理,故新增資料時不需再填寫)
 	private static final String INSERT_STMT = 
-		"INSERT INTO PRODUCT_REPORT (pro_report_content,product_no,user_id,empno) VALUES (?, ?, ?, ?)";
+		"INSERT INTO PRODUCT_REPORT (pro_report_content,product_no,user_id) VALUES (?, ?, ?)";
 	//後台查詢所有商品檢舉資料
 	private static final String GET_ALL_STMT = 
 		"SELECT * FROM PRODUCT_REPORT order by pro_report_no";
@@ -54,7 +54,7 @@ public class Product_ReportDAO implements Product_ReportDAO_interface {
 			pstmt.setString(1, product_reportVO.getPro_report_content());
 			pstmt.setInt(2, product_reportVO.getProduct_no());
 			pstmt.setString(3, product_reportVO.getUser_id());
-			pstmt.setInt(4, product_reportVO.getEmpno());
+//			pstmt.setInt(4, product_reportVO.getEmpno());
 
 			pstmt.executeUpdate();
 

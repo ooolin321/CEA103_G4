@@ -3,7 +3,6 @@ package com.user.model;
 import java.util.List;
 import java.util.Set;
 
-import com.emp.model.EmpVO;
 import com.live_report.model.*;
 
 public interface UserDAO_interface {
@@ -22,4 +21,8 @@ public interface UserDAO_interface {
 	public Set<Live_reportVO> getLive_reportByUser_id(String user_id);
 	
 	public UserVO login(String user_id, String user_pwd);
+	
+	public List<UserVO> sendMail(UserVO userVO);
+	
+	public void getPassword_Update(UserVO userVO);
 }

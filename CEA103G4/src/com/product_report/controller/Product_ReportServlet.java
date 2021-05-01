@@ -184,7 +184,7 @@ public class Product_ReportServlet extends HttpServlet{
 				failureView.forward(req, res);
 			}
 		}
-
+		//product.jsp提交商品檢舉進來,員工預設14002
         if ("insert".equals(action)) { // 來自addProduct_Report.jsp的請求  
 			
 			List<String> errorMsgs = new LinkedList<String>();
@@ -205,37 +205,39 @@ public class Product_ReportServlet extends HttpServlet{
 				//*需更改 檢舉者帳號 動態抓取自動帶入
 				String user_id = req.getParameter("user_id");
 				//empno預設
-				Integer empno = new Integer(req.getParameter("empno").trim());;
+//				Integer empno = new Integer(req.getParameter("empno").trim());
 				
 				Product_ReportVO product_reportVO = new Product_ReportVO();
 				product_reportVO.setPro_report_content(pro_report_content);
 				product_reportVO.setProduct_no(product_no);
 				product_reportVO.setUser_id(user_id);
-				product_reportVO.setEmpno(empno);
+//				product_reportVO.setEmpno(empno);
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("product_reportVO", product_reportVO); // 含有輸入格式錯誤的product_reportVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/product_report/addProduct_Report.jsp");
+							.getRequestDispatcher("/front-end/productsell/shop.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
-				
+//				System.out.println("pro_report_content="+pro_report_content);
+//				System.out.println("product_no="+product_no);
+//				System.out.println("user_id="+user_id);
 				/***************************2.開始新增資料*****************************************/
 				Product_ReportService product_reportSvc = new Product_ReportService();
-				product_reportVO = product_reportSvc.addProduct_Report(pro_report_content, product_no,user_id,empno);
+				product_reportVO = product_reportSvc.addProduct_Report(pro_report_content, product_no,user_id);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)*************/
-				String url = "/back-end/product_report/listAllProduct_Report.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後,轉交listAllProduct_Report.jsp
-				successView.forward(req, res);
+//				String url = "/back-end/product_report/listAllProduct_Report.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後,轉交listAllProduct_Report.jsp
+//				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理*************************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/product_report/addProduct_Report.jsp");
+						.getRequestDispatcher("/front-end/productsell/shop.jsp");
 				failureView.forward(req, res);
 			}
 		}

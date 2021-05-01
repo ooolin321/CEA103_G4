@@ -29,7 +29,7 @@
 <!-- 						</form> -->
 <!-- 					</div> -->
 <!-- 				</div> -->
-<!-- ------------ajax先不用------------ -->
+<!-- ------------JSP先不用↑------------ -->
 				<div class="col-lg-7 col-md-7">
 					<div class="advanced-search">
 						<form class="input-group" id="search">
@@ -44,9 +44,9 @@
 				<div class="col-lg-3 text-right col-md-3">
 					<div class="header-right">
 						<a
-							href="${pageContext.request.contextPath}/front-end/user/register.html"><button
+							href="${pageContext.request.contextPath}/front-end/user/register.jsp"><button
 								type="button" class="btn">註冊</button></a> <a
-							href="${pageContext.request.contextPath}/front-end/user/login.html"><button
+							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><button
 								type="button" class="btn">登入</button></a>
 					</div>
 					<!-- 鈴鐺/購物車顯示的數字+購物車預覽圖要改 -->
@@ -116,8 +116,8 @@
 		<div class="container">
 			<div class="nav-depart">
 				<div class="depart-btn">
-					<i class="ti-menu"></i> <span>商品分類</span> <i
-						class="fa fa-hand-o-down" id="ti-fa-hand"></i>
+					<i class="ti-menu"></i> <span>商品分類</span> 
+<!-- 					<i class="fa fa-hand-o-down" id="ti-fa-hand"></i> -->
 					<ul class="depart-hover">
 						<c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()}">
 						<li><div class="catagoriesQuery" value="${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}</div></li>
@@ -137,7 +137,7 @@
 							<li><a href="#">直播預告</a></li>
 							<!-- <li><a href="#">Kid's</a></li> -->
 						</ul></li>
-					<li><a href="#">會員專區<i class="icon_profile"></i></a></li>
+					<li><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i class="icon_profile"></i></a></li>
 					<!-- <li>
                 <a href="#">Pages</a>
                 <ul class="dropdown">

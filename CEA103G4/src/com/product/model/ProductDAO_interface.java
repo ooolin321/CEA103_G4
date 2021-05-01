@@ -14,5 +14,7 @@ public interface ProductDAO_interface {
           public List<ProductVO> getAllWithoutPhoto();
           public List<ProductVO> getAllShop();
           public List<ProductVO> getAllShop(Map<String, String[]> map);
-//          public List<ProductVO> getNewShop();
+          public List<ProductVO> getAdvSearchShop(String[] pdtypeNo, String priceType);
+          public List<ProductVO> getMoneyRangeShop(String minPrice, String maxPrice);
+
 }

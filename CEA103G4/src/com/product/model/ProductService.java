@@ -90,6 +90,14 @@ public class ProductService {
 	public List<ProductVO> getAllShop(Map<String, String[]> map) {
 		return dao.getAllShop(map);
 	}
+	
+	public List<ProductVO> getAdvSearchShop(String[] pdtypeNo, String priceType) {
+		return dao.getAdvSearchShop(pdtypeNo, priceType);
+	}
+	
+	public List<ProductVO> getMoneyRangeShop(String minPrice, String maxPrice) {
+		return dao.getMoneyRangeShop(minPrice, maxPrice);
+	}
 
 	
 

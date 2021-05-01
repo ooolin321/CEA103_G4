@@ -10,15 +10,14 @@ public class Product_ReportService {
 		dao = new Product_ReportDAO();
 	}
 
-	public Product_ReportVO addProduct_Report(String pro_report_content, Integer product_no, String user_id,
-			Integer empno) {
+	public Product_ReportVO addProduct_Report(String pro_report_content, Integer product_no, String user_id) {
 
 		Product_ReportVO product_reportVO = new Product_ReportVO();
 
 		product_reportVO.setPro_report_content(pro_report_content);
 		product_reportVO.setProduct_no(product_no);
 		product_reportVO.setUser_id(user_id);
-		product_reportVO.setEmpno(empno);
+//		product_reportVO.setEmpno(empno);
 
 		dao.insert(product_reportVO);
 

@@ -95,8 +95,8 @@
                 </div>
                 <div
                   class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                  data-min="33"
-                  data-max="98"
+                  data-min="0"
+                  data-max="2000"
                 >
                   <div
                     class="ui-slider-range ui-corner-all ui-widget-header"
@@ -111,19 +111,18 @@
                   ></span>
                 </div>
               </div>
-              <a href="#" class="filter-btn">價格篩選</a>
+              <div id="moneyRange" class="filter-btn">價格篩選</div>
 
             </div>
             <div class="filter-widget">
               <h4 class="fw-title">進階查詢</h4>
-              <form METHOD="post" ACTION="<%=request.getContextPath()%>/ProductSearch">
               <div class="fw-all-choose" id="fw-all-choose">
               <div class="fw-cs" id="fw-cs">
                <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()-1}">
                 <div class="cs-item">
                  <label for="${product_typeVO.pdtype_name}">
                     ${product_typeVO.pdtype_name}
-                   <input type="checkbox"  id="${product_typeVO.pdtype_name}" name="pdtype_no" value="${product_typeVO.pdtype_no}" />
+                   <input type="checkbox"  id="${product_typeVO.pdtype_name}" name="pdtypeNo" value="${product_typeVO.pdtype_no}" />
                    <span class="checkmark"></span>
                   </label>
                  </div>
@@ -131,30 +130,32 @@
                 </div>
                 <div class="fw-price">
                 <div class="sc-item">
-                  <input type="radio" id="a-price" name="product_price"/>
+                  <input type="radio" id="a-price" name="productPrice" value="A"/>
                   <label for="a-price">$300<i class="fa fa-arrow-circle-down"></i></label>
                 </div>
                 <div class="sc-item">
-                  <input type="radio" id="b-price"name="product_price" />
+                  <input type="radio" id="b-price"name="productPrice" value="B"/>
                   <label for="b-price">$301~$500</label>
                 </div>
                 <div class="sc-item">
-                  <input type="radio" id="c-price" name="product_price"/>
+                  <input type="radio" id="c-price" name="productPrice" value="C"/>
                   <label for="c-price">$501~$1000</label>
                 </div>
                 <div class="sc-item">
-                  <input type="radio" id="d-price" name="product_price"/>
+                  <input type="radio" id="d-price" name="productPrice" value="D"/>
                   <label for="d-price">$1001<i class="fa fa-arrow-circle-up"></i></label>
                 </div>
                 </div>
                 <div class="fw-all-btn">
-                <a href="<%=request.getContextPath()%>/ProductSearch?action=fw-all-choose" class="filter-btn" id="fw-all-btn">送出查詢</a>
+                <div class="filter-btn" id="fw-all-btn">送出查詢</div>
                 <div  class="filter-btn" id="clearallbtn">清除全部</div>
                 </div>
              </div>
-             </form>
           </div>
           </div>
+          <!-- 左邊功能列結束 -->
+          
+          
           <div class="col-lg-9 order-1 order-lg-2">
             <div class="product-show-option">
               <div class="row">
@@ -163,14 +164,14 @@
  					<div  id="allProductsQuery" class="allproduct-btn">全部商品</div>
  					<div  id="newProductsQuery" class="newproduct-btn">最新商品</div>
                     <select class="p-show"  id="p-show">
-                      <option value="">價格</option>
+                      <option value="0">價格</option>
                       <option value="1" >價格：低到高</option>
                       <option value="2">價格：高到低</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-lg-5 col-md-5 text-right" id="productheart">
-                  <a href="${pageContext.request.contextPath}/front-end/productsell/productFavorite.html">
+                  <a href="${pageContext.request.contextPath}/front-end/productsell/productFavorite.jsp">
                   <span><i class="icon_heart_alt"></i>收藏商品清單</span>
                   </a>
                 </div>
@@ -260,7 +261,11 @@
     <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
-    <script src="${pageContext.request.contextPath}/front-template/js/products-search.js" ></script> 
+    <script src="${pageContext.request.contextPath}/front-template/js/products-search.js" ></script>
+<%--     <script src="${pageContext.request.contextPath}/front-template/js/shop.js" ></script>   --%>
+<%--     <script src="${pageContext.request.contextPath}/front-template/js/productFavorite.js" ></script>   --%>
+	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+	<script src="http://code.changer.hk/jquery/plugins/jquery.cookie.js"></script>
 	
 	<script>
 
@@ -323,30 +328,77 @@
 	 		  sendQuery(datas); 
 	 	  });
 	
-	//進階查詢ajax 尚無法使用4/27 2100
-// 	$("#fw-all-btn").click(function(){
-// 		var allQuery = '';
-// 		var pdtypeNo = '';
-// 		$('input[name="pdtype_no"]:checked').each(function(i) {
-// 			if(i <= 1){
-//                 	pdtypeNo += "pdtype_no=" + $(this).attr("value");
-// 			} else if (i > 1){
-// 				pdtypeNo += "pdtype_no=" + $(this).attr("value")+" OR";
-// 			}    	
-
+	//價格篩選
+	$("#moneyRange").click(function(){
+	  var min = $("#minamount").val();
+	  var max = $("#maxamount").val();
+	  min = min.substring(min.indexOf("$")+1);
+	  max = max.substring(max.indexOf("$")+1);
+	  var datas = {
+			  minPrice: min,
+			  maxPrice: max,
+			  action: 'moneyRange'
+			}
+			sendQuery(datas);
+	})
+	
+	
+	//進階查詢ajax
+	$("#fw-all-btn").click(function(){
+		var arr = [];
+		$('input[name="pdtypeNo"]:checked').each(function(i) {
+	     	arr.push($(this).attr("value"));
+		});
+		var type = $('input[name="productPrice"]:checked').val();
+		var datas = {
+			pdtypeNo: arr,
+			productPrice: type,
+			action: 'fw-all-choose'
+		}
+		sendQuery(datas);
+	});
+		
+	//前端取值+串接字串,不使用
+// 		$('input[name="pdtypeNo"]:checked').each(function(i) {
+//            pdtypeNo += $(this).attr("value") + " OR ";		
 // 		});
-// 		alert(pdtypeNo);
-// 	})
-	
-	
-	
+// 		$('input[name="productPrice"]:checked').each(function(i) {
+// 			productPrice += $(this).attr("value");
+				
+// 			});
+
+// 		pdtypeNo = pdtypeNo.substring(0,pdtypeNo.lastIndexOf("OR"))
+// 		if (productPrice.length === 0 && pdtypeNo.length > 0){
+// 			var datas = { 
+// 		 		  	 "fw-all-choose":"("+pdtypeNo+")",
+// 		 			  "action":"fw-all-choose" 
+// 		 			}; 
+// 		 		  sendQuery(datas); 
+// 		}else if (productPrice.length > 0 && pdtypeNo.length > 0) {
+// 			alert("("+pdtypeNo+")" + " AND " + productPrice);
+// // 			var datas = { 
+// // 		 		  	 "fw-all-choose":"("+pdtypeNo+")" + " AND " + productPrice,
+// // 		 			  "action":"fw-all-choose" 
+// // 		 			}; 
+// // 		 		  sendQuery(datas); 
+		 		  
+// 		}else if (productPrice.length > 0 && pdtypeNo.length === 0){
+// 			alert(productPrice);
+// // 			var datas = { 
+// // 		 		  	 "fw-all-choose":productPrice,
+// // 		 			  "action":"fw-all-choose" 
+// // 		 			}; 
+// // 		 		  sendQuery(datas); 
+// 		}
+		
 		
 
 	function sendQuery(datas){ 
 		
 		$.ajax({ 
 		  url:"<%=request.getContextPath()%>/ProductSearch",  
-		  type:"POST", 
+		  type:"POST",
+		  data:datas, 
 		  success: function(result) { 
 // 			console.log(result) 
 		   	const str=cardContent(result, "<%=request.getContextPath()%>"); 
@@ -356,10 +408,27 @@
 				alert('很抱歉,查無此商品');
             }
 
-		  }, 
-			data:datas 
+		  },
+		  error:function () {
+			  alert('很抱歉,查無此商品');
+		  },
+			
 		 }) 
-	}
+	}	
+		
+
+		if(window.location.href){
+			var url = decodeURIComponent(window.location.search);
+			var str = url.split('?')[1]
+			var json = str.split('=')[1]
+			var result =JSON.parse(json);
+			const fromProduct =cardContent(result, "<%=request.getContextPath()%>"); 
+			$("#products").html(fromProduct); 
+			
+			if(fromProduct.length === 0){
+				alert('很抱歉,查無此商品');
+            }
+		};
 	
        	</script>	
   </body>

@@ -1968,12 +1968,12 @@ pre code {
   display: block;
   width: 100%;
   padding: 0.375rem 0.75rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 1.5;
   color: #495057;
   background-color: #FFF;
   background-clip: padding-box;
-  border: 2px solid #ced4da;
+  border: 1.5px solid #ced4da;
   border-radius: 4px;
   -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
@@ -3855,7 +3855,7 @@ input[type="button"].btn-block {
   vertical-align: middle;
   background: #FFF url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
   background-size: 8px 10px;
-  border: 2px solid #ced4da;
+  border: 1.5px solid #ced4da;
   border-radius: 0.25rem;
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -13498,7 +13498,7 @@ be a descendant of the grid when it is being dragged.
   min-height: calc(100vh - 50px);
   margin-top: 50px;
   padding: 30px;
-  background-color: #E5E5E5;
+  background-color: white;
   -webkit-transition: margin-left 0.3s ease;
   -o-transition: margin-left 0.3s ease;
   transition: margin-left 0.3s ease;
@@ -15228,3 +15228,85 @@ be a descendant of the grid when it is being dragged.
 .user .user-settings label {
   color: #666;
 }
+
+/* 自寫css */
+
+.productsAdd input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
+-webkit-box-shadow: 0 0 0px 1000px white inset;
+}  
+
+							/*productAdd*/
+
+.productsAdd #upload-img{
+position: relative;
+width: 300px;
+height: 300px;
+text-align: center;
+cursor: pointer;
+border: 2px dashed #e7ab3c;
+margin-top:10px;
+}
+.productsAdd #product_photo {
+	display:none;
+}
+
+.productsAdd #upload-img .fa.fa-camera {
+font-weight: bold;
+font-size: 450%;
+position: absolute;
+left: 0;
+width: 100%;
+top: 36%;
+}
+
+.productsAdd .delAvatar {
+position: absolute;
+right: 3px;
+top: -8px;
+
+}
+
+.productsAdd i.delAvatar.fa.fa-times-circle-o {
+    font-size: 150%;
+     cursor: pointer;
+}
+
+.productsAdd #upload-img img{
+max-width:100%;
+max-height:100%;
+  }
+  
+.productsAdd, .productsAdd select, .productsAdd option {
+	font-weight:700;
+	font-size: 1rem;
+}
+.productsAdd .col-form-label, .productsAdd label{
+	font-size: 1rem;
+}
+
+.productsAdd #words{
+	float:right;
+}
+
+.productsAdd .productInfoGroup {
+	padding-top: 20px;
+	padding-left: 12px;
+	box-sizing: border-box;
+}
+
+.productsAdd .productAddimg {
+	margin-top:10px;
+	margin-left: 20px;
+}
+.productsAdd .btn.btn-warning {
+	color:white;
+}
+.productsAdd .productAddBtn {
+	text-align:center;
+}
+.productsAdd {
+	margin-left:70px;
+	box-sizing: border-box;
+}
+
+								/*productAddFinsh*/

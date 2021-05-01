@@ -292,7 +292,7 @@ ol {
 /* } */
 
 .inner-header .logo h2 {
-  font-family: webfont;
+/*   font-family: webfont; */
   padding-top: 6px;
   color: white;
   text-align: center;
@@ -301,7 +301,7 @@ ol {
 }
 
 .inner-header .logo h2 small {
-  font-family: webfont;
+/*   font-family: webfont; */
   margin-top: -2px;
   text-indent: 4em;
   color: white;

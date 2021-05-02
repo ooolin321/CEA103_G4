@@ -2,6 +2,7 @@
 	pageEncoding="utf-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.emp.model.*"%>
+
 <%
 	EmpVO empVO = (EmpVO)session.getAttribute("account");
 	session.setAttribute("empVO", empVO);
@@ -189,9 +190,9 @@
 						href="<%=request.getContextPath()%>/back-end/product/addProduct.jsp"><i
 							class="icon fa fa-circle-o"></i> 新增直售商品</a></li>
 					<li><a class="treeview-item" href="#"><i
-							class="icon fa fa-circle-o"></i>直撥商品管理(none)</a></li>
+							class="icon fa fa-circle-o"></i>直播商品管理(none)</a></li>
 					<li><a class="treeview-item" href="#"><i
-							class="icon fa fa-circle-o"></i> 新增直撥商品(none)</a></li>
+							class="icon fa fa-circle-o"></i> 新增直播商品(none)</a></li>
 				</ul></li>
 			<li class="treeview"><a class="app-menu__item" href="#"
 				data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span
@@ -203,7 +204,7 @@
 							class="icon fa fa-circle-o"></i> 商品檢舉管理</a></li>
 					<li><a class="treeview-item"
 						href="<%=request.getContextPath()%>/back-end/live_report/listAllLive_report.jsp"><i
-							class="icon fa fa-circle-o"></i> 直撥檢舉管理</a></li>
+							class="icon fa fa-circle-o"></i> 直播檢舉管理</a></li>
 				</ul></li>
 			<li class="treeview"><a class="app-menu__item" href="#"
 				data-toggle="treeview"><i class="app-menu__icon fa fa-file-text"></i><span

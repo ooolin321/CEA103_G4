@@ -39,8 +39,8 @@ public class AuthService {
 		dao.delete(funno,empno);
 	}
 
-	public AuthVO getOneAuth(Integer empno,Integer funno) {
-		return dao.findByPrimeKey(funno,empno);
+	public AuthVO getOneAuth(Integer empno) {
+		return dao.findAuthByEmpno(empno);
 	}
 
 	public List<AuthVO> getAll() {

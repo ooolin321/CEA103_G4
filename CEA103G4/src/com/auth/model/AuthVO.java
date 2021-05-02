@@ -1,6 +1,6 @@
 package com.auth.model;
 
-public class AuthVO {
+public class AuthVO	implements java.io.Serializable {
 	private Integer funno;
 	private Integer empno;
 	private Integer auth_no;

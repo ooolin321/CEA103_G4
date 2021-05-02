@@ -16,6 +16,7 @@ import org.apache.taglibs.standard.extra.spath.SPathFilter;
 import com.auth.model.AuthService;
 import com.auth.model.AuthVO;
 import com.emp.model.EmpVO;
+import com.fun.model.FunVO;
 
 public class AuthServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -105,40 +106,49 @@ public class AuthServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer empno = new Integer(req.getParameter("empno"));
+				System.out.println(empno);
+				Integer funno = new Integer(req.getParameter("funno"));
+				System.out.println(funno);
+				Integer auth_no = new Integer(req.getParameter("auth_no"));
+				System.out.println(auth_no);
 				
-				String a[] = req.getParameterValues("auth_no");
-				String f[]= req.getParameterValues("funno");
-				
-System.out.println(a[1]);
-System.out.println(f[1]);				
-System.out.println(a.length);
-System.out.println(f.length);
+				AuthVO authVO = new AuthVO();
+				authVO.setEmpno(empno);
+				authVO.setFunno(funno);
+				authVO.setAuth_no(auth_no);
+//				String a[] = req.getParameterValues("auth_no");
+//				String f[]= req.getParameterValues("funno");
+//				
+//System.out.println(a[1]);
+//System.out.println(f[1]);				
+//System.out.println(a.length);
+//System.out.println(f.length);
 
-				for(int i = 0; i < a.length; i++) {
-					int auth_no = new Integer(a[i]);
-					int funno = new Integer(f[i]);
-					System.out.println(auth_no + "" + funno);
-					AuthVO authVO = new AuthVO();
-					
-					authVO.setEmpno(empno);
-					authVO.setFunno(funno);
-					authVO.setAuth_no(auth_no);
-					
-					AuthService authSvc = new AuthService();
-					authVO = authSvc.updateAuth(empno, funno, auth_no);
-
-					
-				}
-
-//				if (!errorMsgs.isEmpty()) {
-//					req.setAttribute("authVO", authVO); // 含有輸入格式錯誤的empVO物件,也存入req
-//					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/update_auth_input.jsp");
-//					failureView.forward(req, res);
-//					return;
+//				for(int i = 0; i < a.length; i++) {
+//					int auth_no = new Integer(a[i]);
+//					int funno = new Integer(f[i]);
+////					System.out.println(auth_no + "" + funno);
+//					AuthVO authVO = new AuthVO();
+//					
+//					authVO.setEmpno(empno);
+//					authVO.setFunno(funno);
+//					authVO.setAuth_no(auth_no);
+//					
+//					AuthService authSvc = new AuthService();
+//					authVO = authSvc.updateAuth(empno, funno, auth_no);
+//
+//					
 //				}
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("authVO", authVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/update_auth_input.jsp");
+					failureView.forward(req, res);
+					return;
+				}
 				/*************************** 2.開始修改資料 *****************************************/
-//				AuthService authSvc = new AuthService();
-//				authVO = authSvc.updateAuth(empno, funno, auth_no);
+				AuthService authSvc = new AuthService();
+				authVO = authSvc.updateAuth(empno, funno, auth_no);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 
@@ -163,29 +173,43 @@ System.out.println(f.length);
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				Integer empno = new Integer(req.getParameter("empno"));
-//System.out.println(empno);
-				
-//				Integer funno= new Integer(req.getParameter("funno"));
-				
-//				String a[] = req.getParameterValues("auth_no");
-				String f[]= req.getParameterValues("funno");
-//System.out.println(a[1]);
-System.out.println(f[1]);				
-//System.out.println(a.length);
-System.out.println(f.length);
-				for(int i = 0; i < f.length; i++) {
-//					int auth_no = new Integer(a[i]);
-					int funno = new Integer(f[i]);
-//					System.out.println(auth_no + "" + funno);
-					AuthVO authVO = new AuthVO();
-					authVO.setEmpno(empno);
-					authVO.setFunno(funno);
-					authVO.setAuth_no(0);
-					AuthService authSvc = new AuthService();
-					authVO = authSvc.addAuth(empno, funno, 0);
+//				Integer empno = new Integer(req.getParameter("empno"));
 
-					
+//				Integer funno = new Integer(req.getParameter("funno"));
+//				System.out.println(funno);
+				
+//				Integer auth_no = new Integer(req.getParameter("auth_no"));
+//				System.out.println(auth_no);
+				
+				
+//				AuthVO authVO = new AuthVO();
+//				authVO.setEmpno(empno);
+//				authVO.setFunno(funno);
+//				authVO.setAuth_no(auth_no);
+//				Integer empno = new Integer(req.getParameter("empno"));
+//System.out.println(empno);
+//				
+				try {
+					Integer empno = new Integer(req.getParameter("empno"));	
+					String authno[] = req.getParameterValues("auth_no");
+					String funno1[]= req.getParameterValues("funno");
+					System.out.println(authno[1]);
+					System.out.println(funno1[1]);				
+					System.out.println(authno.length);
+					System.out.println(funno1.length);
+					for(int i = 0; i < funno1.length; i++) {
+						int auth_no = new Integer(authno[i]);
+						int funno = new Integer(funno1[i]);
+						System.out.println(auth_no + "" + funno);
+						AuthVO authVO = new AuthVO();
+						authVO.setEmpno(empno);
+						authVO.setFunno(funno);
+						authVO.setAuth_no(auth_no);
+						AuthService authSvc = new AuthService();
+						authVO = authSvc.addAuth(empno, funno, auth_no);
+					} 
+				}catch (Exception e) {
+					errorMsgs.add("此員工已有資料，故只能修改權限");
 				}
 				
 //				List <String>authNOList = Arrays.asList<String>(checkbox);
@@ -193,17 +217,17 @@ System.out.println(f.length);
 //                        .map(s -> Integer.parseInt(s))
 //                        .collect(Collectors.toList());
 //				req.setAttribute("authNo", funnoList);
-				
+//				
 //				AuthVO authVO = new AuthVO();
 //				authVO.setEmpno(empno);
 //				authVO.setFunno(funno);
 //				authVO.setAuth_no(auth_no);
-//			if (!errorMsgs.isEmpty()) {
+			if (!errorMsgs.isEmpty()) {
 //				req.setAttribute("authVO", authVO); // 含有輸入格式錯誤的empVO物件,也存入req
-//				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/addAuth.jsp");
-//				failureView.forward(req, res);
-//				return;
-//			}
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/addAuth.jsp");
+				failureView.forward(req, res);
+				return;
+			}
 				/*************************** 2.開始新增資料 *****************************************/
 //				AuthService authSvc = new AuthService();
 //				authVO = authSvc.addAuth(empno, funno, auth_no);
@@ -228,22 +252,21 @@ System.out.println(f.length);
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			String requestURL = req.getParameter("requestURL"); // 送出刪除的來源網頁路徑: 可能為【/emp/listAllEmp.jsp】 或
-																// 【/dept/listEmps_ByDeptno.jsp】 或 【
-																// /dept/listAllDept.jsp】 或 【
-																// /emp/listEmps_ByCompositeQuery.jsp】
+			String requestURL = req.getParameter("requestURL"); 
 
 			try {
 				/*************************** 1.接收請求參數 ***************************************/
 				Integer empno = new Integer(req.getParameter("empno"));
+				System.out.println(empno);
 				Integer funno = new Integer(req.getParameter("funno"));
+				System.out.println(funno);
 				/*************************** 2.開始刪除資料 ***************************************/
 				AuthService authSvc = new AuthService();
 				authSvc.deleteAuth(empno,funno);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				if (requestURL.equals("/back-end/auth/listOneAuth.jsp"))
-					req.setAttribute("listAllAuth", authSvc.getOneAuth(empno, funno)); // 資料庫取出的list物件,存入request
+//				if (requestURL.equals("/back-end/auth/listOneAuth.jsp"))
+//					req.setAttribute("listAllAuth", authSvc.getOneAuth(empno, funno)); // 資料庫取出的list物件,存入request
 
 //				if(requestURL.equals("/emp/listEmps_ByCompositeQuery.jsp")){
 //					HttpSession session = req.getSession();

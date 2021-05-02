@@ -6,7 +6,11 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import com.auth.model.AuthService;
+import com.auth.model.AuthVO;
 import com.emp.model.*;
+import com.fun.model.FunService;
+import com.fun.model.FunVO;
 
 public class EmpServlet extends HttpServlet {
 
@@ -349,22 +353,79 @@ public class EmpServlet extends HttpServlet {
 				empVO.setState(state);
 				empVO.setHiredate(hiredate);
 				empVO.setEmp_pwd(empPwd);
-
+				
+			
+				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/addEmp.jsp");
 					failureView.forward(req, res);
 					return;
 				}
+				
+
 				/*************************** 2.開始新增資料 *****************************************/
 				empVO = empSvc.addEmp(ename, job, id, gender, dob, city, dist, addr, email, sal, state,
-						hiredate, empPwd);
+						hiredate, empPwd);	
+				
+			
+//			 	List<EmpVO> list = empSvc.getAll(); 				
+//			 	AuthService authSvc = new AuthService(); 
+//			 	List<AuthVO> list1 = authSvc.getAll(); 
+//				
+//			 	for(int i = 0; i < list.size(); i++){ 
+//			 		for(int j = 0; j < list1.size(); j++){ 
+//						if((list.get(i).getEmpno().intValue()==list1.get(j).getEmpno().intValue())){ 	
+//							list.remove(i);
+//							i--;
+//							break;
+//						} 
+//					} 
+//				} 
+//			 	req.setAttribute("list", list);
+			 	
+//		
+//				AuthVO authVO = new AuthVO();
+//				authVO.setEmpno(empno);
+//				System.out.println(empno);
+//				FunService funSvc = new FunService();
+//				List <EmpVO> listEmp = empSvc.getAll();
+//				List <FunVO> list = funSvc.getAll();
+//				for (int i = 0; i <= list.size(); i++) {
+//					
+//					authVO.setEmpno(empno);
+//					authVO.setAuth_no(auth_no);
+//					authVO.setFunno(i);
+//					
+//				}req.setAttribute("list", list);
+//				
+//				AuthService authSvc = new AuthService();
+//				authVO = authSvc.addAuth(authVO);
+				
+				
+//				Integer empno = empVO.getEmpno();
+
+//				AuthVO authVO = new AuthVO();
+//			String[] funnos = req.getParameterValues("funno");			
+//				for (int i = 0; i < funno.length; i++) {
+////					authVO.setFunno(funno[i]);
+//
+//					authVO.setEmpno(empno);
+//System.out.println("empno = " + empno);
+//					authVO.setAuth_no(i);
+//System.out.println("auth_no = "+i);
+//					AuthService authSvc = new AuthService();
+//				for (int j = 0; j < funno.length; j++) {
+////					authVO = authSvc.addAuth(funno,empno,i);
+//					}
+//				}
+//				List <AuthVO> list = new AuthService().getOneAuth(empno, funno);
+				
 				
 //				empVO = empSvc.sendPwdMail(ename, email, empPwd);// dao.service發送password email
-
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				
-				String url = requestURL;
+				String url = "/back-end/emp/listAllEmp.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
@@ -395,8 +456,8 @@ public class EmpServlet extends HttpServlet {
 				empSvc.deleteEmp(empno);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				if (requestURL.equals("/back-end/emp/listOneEmp.jsp"))
-					req.setAttribute("listAllEmp", empSvc.getOneEmp(empno)); // 資料庫取出的list物件,存入request
+//				if (requestURL.equals("/back-end/emp/listOneEmp.jsp"))
+//					req.setAttribute("listAllEmp", empSvc.getOneEmp(empno)); // 資料庫取出的list物件,存入request
 
 
 				String url = requestURL;

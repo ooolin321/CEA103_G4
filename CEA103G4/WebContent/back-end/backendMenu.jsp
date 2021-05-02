@@ -77,7 +77,7 @@
 <aside class="app-sidebar">
 	<div class="app-sidebar__user">
 		<img class="app-sidebar__user-avatar"
-			src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"
+			src="#"
 			alt="User Image">
 		<div>
 			<p class="app-sidebar__user-name">${empVO.ename}</p>

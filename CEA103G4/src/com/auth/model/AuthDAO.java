@@ -20,17 +20,18 @@ public class AuthDAO implements AuthDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CEA103_G4");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/admin");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = "insert into Auth (FUNNO,EMPNO,AUTH_NO) values (?, ?, ?)";
+	private static final String INSERT_STMT = "insert into AUTH (FUNNO,EMPNO,AUTH_NO) values (?, ?, ?)";
 //	private static final String INSERT_STMT = "update Auth set AUTH_NO=? where EMPNO=? and FUNNO=?";
 	private static final String UPDATE_STMT = "update Auth set AUTH_NO=? where EMPNO=? and FUNNO=?";
-	private static final String DELETE_STMT = "delete from Auth where EMPNO=? and FUNNO=?";
-	private static final String GET_ONE_BY_EMPNO_AND_FUNNO_STMT = "select funno,empno,auty_no from Auth where FUNNO=? and EMPNO = ? ";
-	private static final String GET_ALL_BY_EMPNO_STMT = "select funno,empno,auth_no from Auth order by EMPNO";
+	private static final String DELETE_STMT = "delete from AUTH where EMPNO=? and FUNNO=?";
+	private static final String GET_ONE_BY_EMPNO_AND_FUNNO_STMT = "select funno,empno,auty_no from AUTH where FUNNO=? and EMPNO = ? ";
+//	private static final String GET_ALL_BY_EMPNO_STMT = "select funno,empno,auth_no from AUTH order by EMPNO and FUNNO";
+	private static final String GET_ALL_BY_EMPNO_STMT = "select funno,empno,auth_no from AUTH order by EMPNO";
 	
 
 	
@@ -43,12 +44,12 @@ public class AuthDAO implements AuthDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-//			pstmt.setInt(1, authVO.getFunno());
-//			pstmt.setInt(2, authVO.getEmpno());
-//			pstmt.setInt(3, authVO.getAuth_no());
-			pstmt.setInt(3, authVO.getFunno());
+			pstmt.setInt(1, authVO.getFunno());
 			pstmt.setInt(2, authVO.getEmpno());
-			pstmt.setInt(1, authVO.getAuth_no());
+			pstmt.setInt(3, authVO.getAuth_no());
+//			pstmt.setInt(3, authVO.getFunno());
+//			pstmt.setInt(2, authVO.getEmpno());
+//			pstmt.setInt(1, authVO.getAuth_no());
 			
 
 			pstmt.executeUpdate();
@@ -219,7 +220,7 @@ public class AuthDAO implements AuthDAO_interface {
 				list.add(authVO); // Store the row in the list
 			}
 		} catch (SQLException se) {
-			throw new RuntimeException("A database erro	r occured. "
+			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {

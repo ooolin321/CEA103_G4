@@ -127,6 +127,7 @@ th, td {
 						<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
 						<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>"> 
 						<input type="hidden" name="empno" value="${authVO.empno}"> 
+						<input type="hidden" name="funno" value="${authVO.funno}">
 						<input type="hidden" name="action" value="delete">
 					</FORM>
 				</td>

@@ -20,9 +20,29 @@ public class EmpVO implements Serializable{
 	private String emp_pwd;
 	private String city;
 	private String dist;
-	
 
+	public EmpVO() {
+		super();
 	
+	}
+	public EmpVO(Integer empno, String ename, String job, String id, Integer gender, Date dob, String addr,
+			String email, Double sal, Integer state, Date hiredate, String emp_pwd, String city, String dist) {
+		super();
+		this.empno = empno;
+		this.ename = ename;
+		this.job = job;
+		this.id = id;
+		this.gender = gender;
+		this.dob = dob;
+		this.addr = addr;
+		this.email = email;
+		this.sal = sal;
+		this.state = state;
+		this.hiredate = hiredate;
+		this.emp_pwd = emp_pwd;
+		this.city = city;
+		this.dist = dist;
+	}
 	public String getCity() {
 		return city;
 	}

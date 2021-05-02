@@ -10,27 +10,31 @@
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO");
 %>
-<%
-	FunVO funVO = (FunVO) request.getAttribute("funVO");
-%>
 
-<%-- <%  --%>
-<!-- // 	EmpService empSvc1 = new EmpService(); -->
-<!-- // 	List<EmpVO> list = empSvc1.getAll(); -->
+
+<% 
+	EmpService empSvc = new EmpService(); 
+ 	List<EmpVO> list = empSvc.getAll(); 
 	
-<!-- // 	AuthService authSvc = new AuthService(); -->
-<!-- // 	List<AuthVO> list1 = authSvc.getAll(); -->
+ 	AuthService authSvc = new AuthService(); 
+ 	List<AuthVO> list1 = authSvc.getAll(); 
 	
-<!-- // 	for(int i = 0; i < list.size(); i++){ -->
-<!-- // 			EmpVO empVO1 = list.get(i); -->
-<!-- // 		for(int j = 0; j < list1.size(); j++){ -->
-<!-- // 			AuthVO authVO2 = list1.get(j);  -->
-<!-- // 			if(empVO1.getEmpno() == authVO2.getEmpno()){ -->
-<!-- // 				list.remove(i); -->
-<!-- // 			} -->
-<!-- // 		} -->
-<!-- // 	} -->
-<%-- %> --%>
+ 	for(int i = 0; i < list.size(); i++){ 
+ 		for(int j = 0; j < list1.size(); j++){ 
+			if((list.get(i).getEmpno().intValue()==list1.get(j).getEmpno().intValue())){ 	
+				list.remove(i);
+				i--;
+				break;
+			} 
+		} 
+ 		
+	} 
+ 	
+ 	request.setAttribute("list", list);
+ %> 
+ 
+ <%=list.size() %>
+
 
 <html>
 <head>
@@ -76,7 +80,7 @@ th, td {
 }
 </style>
 
-<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
+<%-- <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" /> --%>
 <jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
 
 
@@ -118,42 +122,28 @@ th, td {
 				<td>選擇員工姓名:<font color=red><b>*</b></font>
 				</td>
 				<td><select size="1" name="empno">
-						<c:forEach var="empVO" items="${empSvc.all}">
+						<c:forEach var="empVO" items="${list}">
 							<option value="${empVO.empno}">${empVO.ename}</option>
 						</c:forEach>
 				</select></td>
 			</tr>
-			<!-- 			<tr> -->
-			<!-- 				<td>選擇功能名稱:<font color=red><b>*</b></td> -->
-			<!-- 				<td><select size="1" name="funno"> -->
-			<%-- 						<c:forEach var="funVO" items="${funSvc.all}"> --%>
-			<%-- 							<option value="${authVO.funno}" --%>
-			<%-- 								${(authVO.funno==funVO.funno)? 'selected':'' }>${funVO.funName} --%>
-			<%-- 						</c:forEach> --%>
-			<!-- 				</select> -->
-			<!-- 						</td> -->
-			<!-- 			</tr> -->
-			
+		
 			<tr>
-				<td>選擇功能名稱:<font color=red><b>*</b></td>
+				<td>選擇功能名稱:<font color=red><b>*</b></font></td>
 				<td>
 					<ul>
-						<li>員工帳號管理: <input type="checkbox" name="auth_no" value=15001> </li>
-						<li>員工權限管理: <input type="checkbox" name="auth_no" value=15002> </li>
-						<li>會員資料管理: <input type="checkbox" name="auth_no" value=15003> </li>
-						<li>直售商品管理: <input type="checkbox" name="auth_no" value=15004> </li>
-						<li>直售檢舉管理: <input type="checkbox" name="auth_no" value=15005> </li>
-						<li>直撥檢舉管理: <input type="checkbox" name="auth_no" value=15006> </li>
-						<li>直售訂單管理: <input type="checkbox" name="auth_no" value=15007> </li>
-						<li>直播訂單管理: <input type="checkbox" name="auth_no" value=15008> </li>
-						<li>廣告管理&emsp;&emsp;: <input type="checkbox" name="auth_no" value=15009> </li>
-						<li>Q&A管理&emsp;&emsp;: <input type="checkbox" name="auth_no" value=15010> </li>
-						<li>線上客服&emsp;&emsp;: <input type="checkbox" name="auth_no" value=15011> </li>
-					</ul>
+					<c:forEach var="funVO" items="${funSvc.all}">
+							<li><input name = "funno" value="${funVO.funno}" type="hidden"></input>${funVO.funName}
+							<select size="1" name="auth_no">
+										<option value="1" ${(authVO.auth_no==1)? 'selected':''}>開</option>
+										<option value="0" ${(authVO.auth_no==0)? 'selected':''}>關</option>
+									</select></li>
+						</c:forEach>
+					
 				</td>
 			</tr>
 		</table>
-		<br> <input type="hidden" name="action" value="update"> <input
+		<br> <input type="hidden" name="action" value="insert"> <input
 			type="submit" value="送出新增">
 	</FORM>
 </body>

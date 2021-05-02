@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,8 +13,8 @@
 <!-- Font-icon css-->
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
 <title>Login - Mode Femme Admin</title>
+
 </head>
 <body>
 	<section class="material-half-bg">
@@ -50,13 +50,11 @@
 							</label>
 						</div>
 						<p class="semibold-text mb-2">
-							<a href="#" data-toggle="flip">Forgot Password ?</a>
+							<a href="<%=request.getContextPath()%>/back-end/backendIndex.jsp" data-toggle="flip">Forgot Password ?</a>
 						</p>
 					</div>
 				</div>
 				<div class="form-group btn-container">
-				
-					<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">
 					<input type="hidden" name="action" value="signIn">
 
 					<button class="btn btn-primary btn-block">
@@ -64,7 +62,7 @@
 					</button>
 				</div>
 			</form>
-			<form class="forget-form" action="index.html">
+			<form class="forget-form" action="/CEA103G4/loginhandler">
 				<h3 class="login-head">
 					<i class="fa fa-lg fa-fw fa-lock"></i>Forgot Password ?
 				</h3>
@@ -79,7 +77,7 @@
 				</div>
 				<div class="form-group mt-3">
 					<p class="semibold-text mb-0">
-						<a href="#" data-toggle="flip"><i
+						<a href="<%=request.getContextPath()%>/back-end/backendIndex.jsp" data-toggle="flip"><i
 							class="fa fa-angle-left fa-fw"></i> Back to Login</a>
 					</p>
 				</div>
@@ -98,7 +96,7 @@
 	<!-- The javascript plugin to display page loading on top-->
 	<script
 		src="<%=request.getContextPath()%>/back-template/docs/js/plugins/pace.min.js"></script>
-	<script type="text/javascript">
+	<script>
 		// Login Page Flipbox control
 		$('.login-content [data-toggle="flip"]').click(function() {
 			$('.login-box').toggleClass('flipped');

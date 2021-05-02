@@ -49,44 +49,44 @@
 
 <ul>
 <li><a href='<%=request.getContextPath()%>/back-end/auth/listAllAuth.jsp'>List</a> all Auth.  <br><br></li>
-  <li>
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" >
-        <b>輸入員工編號 (如14001):</b>
-        <input type="text" name="empno">
-        <input type="hidden" name="action" value="getOne_For_Display">
-        <input type="submit" value="送出">
-    </FORM>
-  </li>
+<!--   <li> -->
+<%--     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" > --%>
+<!--         <b>輸入員工編號 (如14001):</b> -->
+<!--         <input type="text" name="empno"> -->
+<!--         <input type="hidden" name="action" value="getOne_For_Display"> -->
+<!--         <input type="submit" value="送出"> -->
+<!--     </FORM> -->
+<!--   </li> -->
 
   <jsp:useBean id="authSvc" scope="page" class="com.auth.model.AuthService" />
    
-  <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" >
-       <b>選擇員工編號:</b>
-       <select size="1" name="empno">
-         <c:forEach var="authVO" items="${authSvc.all}" > 
-          <option value="${authVO.empno}">${authVO.empno}
-         </c:forEach>   
-       </select>
+<!--   <li> -->
+<%--      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" > --%>
+<!--        <b>選擇員工編號:</b> -->
+<!--        <select size="1" name="empno"> -->
+<%--          <c:forEach var="authVO" items="${authSvc.all}" >  --%>
+<%--           <option value="${authVO.empno}">${authVO.empno} --%>
+<%--          </c:forEach>    --%>
+<!--        </select> -->
        
-       <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出">
-    </FORM>
-  </li>
+<!--        <input type="hidden" name="action" value="getOne_For_Display"> -->
+<!--        <input type="submit" value="送出"> -->
+<!--     </FORM> -->
+<!--   </li> -->
   
-  <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" >
-       <b>選擇功能編號:</b>
-       <select size="1" name="funno">
-         <c:forEach var="authVO" items="${authSvc.all}" > 
-          <option value="${authVO.funno}">${authVO.funno}
-         </c:forEach>   
-       </select>
+<!--   <li> -->
+<%--      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" > --%>
+<!--        <b>選擇功能編號:</b> -->
+<!--        <select size="1" name="funno"> -->
+<%--          <c:forEach var="authVO" items="${authSvc.all}" >  --%>
+<%--           <option value="${authVO.funno}">${authVO.funno} --%>
+<%--          </c:forEach>    --%>
+<!--        </select> -->
        
-       <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出">
-     </FORM>
-  </li>
+<!--        <input type="hidden" name="action" value="getOne_For_Display"> -->
+<!--        <input type="submit" value="送出"> -->
+<!--      </FORM> -->
+<!--   </li> -->
 </ul>
 
 <%--  <jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" /> --%>

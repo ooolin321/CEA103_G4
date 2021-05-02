@@ -24,80 +24,78 @@ public class LoginHandler extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		res.setContentType("text/html; charset=utf-8");
 		String action = req.getParameter("action");
-		
-		Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
-		req.setAttribute("errorMsgs", errorMsgs);
-		
-		String requestURL = req.getParameter("requestURL");
-		
-		if ("signIn".equals(action))
-		// 【取得使用者 帳號(account) 密碼(password)】
-		try {
-			String str = req.getParameter("account");
-			String str2 = req.getParameter("password");
-			if (str == null || (str.trim().length() == 0)) {
-				errorMsgs.put("empno","請輸入員工帳號");
-			}if(str2 == null || (str2.trim().length() == 0)) {
-				errorMsgs.put("empPwd","請輸入密碼");
-			}
-			// 錯誤發生時將內容發送回表單
-			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
-				failureView.forward(req, res);
-				return;
-			} // 程式中斷，回傳當傳頁面
-			
-			Integer empno = null;
-			
-			try {
-				empno = new Integer(str);
-			} catch (Exception e) {
-				errorMsgs.put("empno","員工帳號格式不正確");
-			}
-			
-			empno = new Integer(req.getParameter("account").trim());
-			
-			String empPwd = req.getParameter("password");
-			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
-				failureView.forward(req, res);
-				return;
-			}
-			
 
-			
-			EmpService empSvc = new EmpService();
-			EmpVO empVO = empSvc.selectEmp(empno, empPwd);
-			
-			if(empVO == null) {
-				errorMsgs.put("empno","帳號密碼不正確，請重新輸入");
-				String url = "/back-end/backendLogin.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); 
-				successView.forward(req, res);
-			}
-			
-			else if(empVO != null) {
-				HttpSession session = req.getSession();
-				session.setAttribute("account", empVO); // *工作1: 才在session內做已經登入過的標識
-				try {
-					String location = (String) session.getAttribute("location");
-					if (location != null) {
-						session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
-						res.sendRedirect(location);
-						return;
-					}
-				} catch (Exception ignored) {
+		Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+		req.setAttribute("errorMsgs", errorMsgs);
+
+		if ("signIn".equals(action))
+			// 【取得使用者 帳號(account) 密碼(password)】
+			try {
+				String str = req.getParameter("account");
+				String str2 = req.getParameter("password");
+				if (str == null || (str.trim().length() == 0)) {
+					errorMsgs.put("empno", "請輸入員工帳號");
 				}
-				res.sendRedirect(req.getContextPath() + "/back-end/backendIndex.jsp"); // *工作3:
-				// (-->如無來源網頁:則重導至login_success.jsp)
-			}if(!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
-				failureView.forward(req, res);
-				return;
-			}
-			}catch (Exception e) {
+				if (str2 == null || (str2.trim().length() == 0)) {
+					errorMsgs.put("empPwd", "請輸入密碼");
+				}
+				// 錯誤發生時將內容發送回表單
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
+					failureView.forward(req, res);
+					return;
+				} // 程式中斷，回傳當傳頁面
+
+				Integer empno = null;
+
+				try {
+					empno = new Integer(str);
+				} catch (Exception e) {
+					errorMsgs.put("empno", "員工帳號格式不正確");
+				}
+
+				empno = new Integer(req.getParameter("account").trim());
+
+				String empPwd = req.getParameter("password");
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
+					failureView.forward(req, res);
+					return;
+				}
 				
+				EmpService empSvc = new EmpService();
+				EmpVO empVO = empSvc.selectEmp(empno, empPwd);
+				if (empVO == null) {
+					errorMsgs.put("empno", "帳號密碼不正確，請重新輸入");
+					String url = "/back-end/backendLogin.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+				}else if (empVO != null) {
+					HttpSession session = req.getSession();
+					session.setAttribute("account", empVO); // *工作1: 才在session內做已經登入過的標識
+					try {
+						String location = (String) session.getAttribute("location");
+						if (location != null) {
+							session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+							res.sendRedirect(location);
+							return;
+						}
+					} catch (Exception ignored) {
+						
+					}
+					res.sendRedirect(req.getContextPath() + "/back-end/backendIndex.jsp"); // *工作3:
+					// (-->如無來源網頁:則重導至login_success.jsp)
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+			} catch (Exception e) {
+				errorMsgs.put("Exception",e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back-end/backendLogin.jsp");
+				failureView.forward(req, res);
 			}
-		
 	}
 }

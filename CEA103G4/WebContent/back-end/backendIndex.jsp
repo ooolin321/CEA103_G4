@@ -129,7 +129,7 @@
 					<li><a class="dropdown-item" href="page-user.html"><i
 							class="fa fa-cog fa-lg"></i> Settings</a></li>
 					<li><a class="dropdown-item"
-						href="<%=request.getContextPath()%>/emp/emp.do?empno=${empVO.empno}&action=getOne_From">${empVO.empno}<i
+						href="<%=request.getContextPath()%>/emp/emp.do?empno=${empVO.empno}&action=getOne_For_Display">${empVO.empno}<i
 							class="fa fa-user fa-lg"></i> Profile
 					</a></li>
 					<li><a class="dropdown-item"
@@ -142,9 +142,9 @@
 	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 	<aside class="app-sidebar">
 		<div class="app-sidebar__user">
-			<img class="app-sidebar__user-avatar"
-				src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg"
-				alt="User Image">
+<!-- 			<img class="app-sidebar__user-avatar" -->
+<!-- 				src="#" -->
+<!-- 				alt="User Image"> -->
 			<div>
 				<p class="app-sidebar__user-name">${empVO.ename}</p>
 				<p class="app-sidebar__user-designation">Frontend Developer</p>

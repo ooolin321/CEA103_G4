@@ -121,9 +121,19 @@ th, td {
 			<!-- 			</tr> -->
 			
 			<tr>
-				<td>選擇功能名稱:<font color=red><b>*</b></td>
+				
+				<td>
+					<td>選擇功能名稱:<font color=red><b>*</b></font></td>
 				<td>
 					<ul>
+					<c:forEach var="funVO" items="${funSvc.all}">
+							<li><input name = "funno" value="${funVO.funno}" type="hidden"></input>${funVO.funName}
+							<select size="1" name="auth_no">
+										<option value="1" ${(authVO.auth_no==1)? 'selected':''}>開</option>
+										<option value="0" ${(authVO.auth_no==0)? 'selected':''}>關</option>
+									</select></li>
+						</c:forEach>
+					<!-- <ul>
 						<li>員工帳號管理: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15001 ></li>
 						<li>員工權限管理: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15002 ></li>
 						<li>會員資料管理: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15003 ></li>
@@ -134,8 +144,8 @@ th, td {
 						<li>直播訂單管理: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15008 ></li>
 						<li>廣告管理&emsp;&emsp;: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15009 ></li>
 						<li>Q&A管理&emsp;&emsp;: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15010 ></li>
-						<li>線上客服&emsp;&emsp;: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15011 ></li>
-					</ul>
+						<li>線上客服&emsp;&emsp;: <input type="checkbox" name="auth_no" value=1> <input type="hidden" name="funno" value=15011 ></li>-->
+					</ul> 
 				</td>
 			</tr>
 		</table>

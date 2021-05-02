@@ -82,22 +82,21 @@
 									<%-- 						<option value="0" ${(funVO.state==0)? 'selected':''}>關閉</option> --%>
 									<!-- 				</select></td> -->
 
-									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/fun/fun.do"
-											style="margin-bottom: 0px;">
-											<input type="submit" value="修改"> <input type="hidden"
-												name="funno" value="${funVO.funno}"> <input
-												type="hidden" name="action" value="getOne_For_Update">
-											<input type="hidden" name="requestURL"
-												value="<%=request.getParameter("requestURL")%>">
-											<!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
-											<input type="hidden" name="whichPage"
-												value="<%=request.getParameter("whichPage")%>">
-											<!--只用於:istAllEmp.jsp-->
-
+<!-- 									<td> -->
+<!-- 										<FORM METHOD="post" -->
+<%-- 											ACTION="<%=request.getContextPath()%>/fun/fun.do" --%>
+<!-- 											style="margin-bottom: 0px;"> -->
+<!-- 											<input type="submit" value="修改"> <input type="hidden" -->
+<%-- 												name="funno" value="${funVO.funno}"> <input --%>
+<!-- 												type="hidden" name="action" value="getOne_For_Update"> -->
+<!-- 											<input type="hidden" name="requestURL" -->
+<%-- 												value="<%=request.getParameter("requestURL")%>"> --%>
+<!-- 											接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用 -->
+<!-- 											<input type="hidden" name="whichPage" -->
+<%-- 												value="<%=request.getParameter("whichPage")%>"> --%>
+<!-- 											只用於:istAllEmp.jsp -->
+<!-- 									</td> -->
 										</FORM>
-									</td>
 
 
 									<!-- 				<td> -->

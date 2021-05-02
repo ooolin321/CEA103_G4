@@ -121,8 +121,8 @@
 						ACTION="<%=request.getContextPath()%>/emp/emp.do"
 						style="margin-bottom: 0px;">
 						<input class="btn btn-warning" type="submit" value="刪除"> 
-						<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
-						<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>"> 
+						<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+			     		<input type="hidden" name="whichPage"	value="<%=whichPage%>"> 
 						<input type="hidden" name="empno" value="${empVO.empno}"> 
 						<input type="hidden" name="action" value="delete">
 					</FORM>
@@ -138,36 +138,6 @@
 
 	<%@ include file="page2.file"%>
 	
-<c:if test="${openModal_Group!=null}">
-
-  <!-- The Modal-->
-    <div class="modal" id="myModal">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                Modal Header
-                <div class="modal-header">
-                    <h4 class="modal-title">揪團成員</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                Modal body
-                <div class="modal-body">
-<!-- =========================================以下為原listOneEmp.jsp的內容========================================== -->
-               <jsp:include page="/back-end/emp/listOneEmp.jsp" />
-<!-- =========================================以上為原listOneEmp.jsp的內容========================================== -->
-	<!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    	</div>
-    </div>
-     <script>
-  		 $("#myModal").modal('show');
-     </script>
- </c:if>
-
-
 	<jsp:include page="/back-end/backendfooter.jsp" />
 
 </body>

@@ -209,7 +209,7 @@ ol {
 }
 
 /* Preloder */
-/* 網頁跳轉等候時,轉圈圈畫面以及背景顏色 */
+/* 蝬脤�歲頧����,頧���隞亙��憿 */
 #preloder {
   position: fixed;
   width: 100%;
@@ -286,7 +286,7 @@ ol {
 }
 
 /* @font-face { */
-/*   嵌入字體 */
+/*   撋摮�� */
 /*   src: url("/font/crazy_rich/_CRAZY_RICH_.otf"); */
 /*   font-family: webfont; */
 /* } */
@@ -595,13 +595,13 @@ ol {
   visibility: visible;
   z-index: 99;
 }
-/* 導覽列商品分類的下拉箭頭 */
+/* 撠汗���������悌� */
 /* .nav-item .nav-depart .depart-btn:before { */
 /*   position: absolute; */
 /*   color: #ffffff; */
 /*   right: 20px; */
 /*   top: 13px; */
-/*   content: ""; */
+/*   content: "���"; */
 /*   font-family: FontAwesome; */
 /*   font-size: 18px; */
 /* } */
@@ -680,7 +680,7 @@ ol {
   margin-left: -5px;
   position: relative;
 }
-/* 取消導覽列首頁固定亮黃色,變成動態 */
+/* ����汗����摰漁暺,霈���� */
 /* .nav-item .nav-menu li.active a {
   background: #e7ab3c;
 } */
@@ -1238,7 +1238,7 @@ ol {
   font-size: 20px;
   font-weight: 700;
 }
-/* 可以把價格符號劃掉,變有點促銷的概念,暫不用 */
+/* �隞交��蝚西����,霈������艙,�銝 */
 /* .product-item .pi-text .product-price span { */
 /*   font-size: 14px; */
 /*   font-weight: 400; */
@@ -1576,12 +1576,12 @@ ol {
   margin-right: 28px;
   position: relative;
 }
-/* 在a標籤之後的格式都會是灰色字體,並自動加上>箭頭 */
+/* �a璅惜銋��撘����摮��,銝西�����>蝞剝 */
 .breadcrumb-text a:after {
   position: absolute;
   right: -18px;
   top: 0px;
-  content: "";
+  content: "���";
   font-family: "FontAwesome";
   font-size: 16px;
   color: #b2b2b2;
@@ -1987,7 +1987,7 @@ ol {
     font-family: inherit;
     font-size: 15px;   
 }
-/* 下面這個沒起作用 待改 */
+/* 銝���絲雿 敺 */
 .product-show-option .select-option .p-show select{
 	border-bottom: 2px solid #4c4c4c;
     border-right: 2px solid #4c4c4c;
@@ -2179,7 +2179,7 @@ ol {
   color: #e7ab3c;
   font-weight: 700;
 }
-/* 錢錢刪除符號 */
+/* ����蝚西�� */
 /* .product-details .pd-desc h4 span { */
 /*   font-size: 18px; */
 /*   font-weight: 400; */
@@ -3757,7 +3757,7 @@ ol {
 
 .faq-accordin .card-heading a:after,
 .faq-accordin .card-heading > a.active[aria-expanded="false"]:after {
-  content: "";
+  content: "�";
   font-family: "FontAwesome";
   font-size: 14px;
   color: #404040;
@@ -3774,7 +3774,7 @@ ol {
 
 .faq-accordin .card-heading a[aria-expanded="true"]:after,
 .faq-accordin .card-heading > a.active:after {
-  content: "";
+  content: "�";
   font-family: "FontAwesome";
   float: left;
   font-size: 13px;
@@ -4410,7 +4410,7 @@ ol {
   }
 }
 
-/* 自寫CSS */
+/* �撖青SS */
 
 input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
 -webkit-box-shadow: 0 0 0px 1000px white inset;

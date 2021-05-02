@@ -37,9 +37,13 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 			}if(str2 == null || (str2.trim().length() == 0)) {
 				errorMsgs.put("user_pwd","請輸入會員密碼");
 			}
+			UserVO userVO = new UserVO();
+			userVO.setUser_id(str);
+			userVO.setUser_pwd(str2);
 			
 			// 錯誤發生時將內容發送回表單
 			if (!errorMsgs.isEmpty()) {
+				req.setAttribute("userVO", userVO); // 含有輸入格式錯誤的userVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/userLogin.jsp");
 				failureView.forward(req, res);
 				return;
@@ -59,7 +63,7 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 			String user_pwd = str2;
 			
 			UserService userSvc = new UserService();
-			UserVO userVO = userSvc.selectUser(user_id, user_pwd);
+			userVO = userSvc.selectUser(user_id, user_pwd);
 			
 			if(userVO == null) {
 				errorMsgs.put("user_id","帳號或密碼不正確，請重新輸入！");

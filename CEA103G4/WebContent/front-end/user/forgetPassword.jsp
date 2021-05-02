@@ -88,7 +88,7 @@
 		<div _ngcontent-sc209="" class="card-body px-5 py-4">
 			<div _ngcontent-sc209="" class="small text-center">
 				新朋友嗎? <a _ngcontent-sc209="" routerlink="../register"
-					href="/auth/register">來註冊吧 !</a>
+					href="<%=request.getContextPath()%>/front-end/user/register.jsp">來註冊吧 !</a>
 			</div>
 		</div>
 	</main>

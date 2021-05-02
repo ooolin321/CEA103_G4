@@ -77,7 +77,7 @@
               <form METHOD="post" class="login-form" action="<%=request.getContextPath()%>/FrondEnd_LoginHandler">
                 <div class="group-input">
                   <label for="user_id">UserID *</label>
-                  <input type="text" name="account" value="<%= (userVO==null)? "" : userVO.getUser_id()%>" placeholder="UserID" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></td>
+                  <input type="text" name="account" value="${(userVO==null)? '' : userVO.user_id}" placeholder="UserID" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></td>
                 </div>
                 <div class="group-input">
                   <label for="user_pwd">Password *</label>
@@ -105,12 +105,13 @@
 					新朋友嗎? <a href="<%=request.getContextPath()%>/front-end/user/register.jsp">來註冊吧 !</a>
 				</div>
 			</div>
+			 </div>
+          </div>
 <!--               <div class="switch-login"> -->
 <%--                 <a href="<%=request.getContextPath()%>/front-end/user/register.jsp" class="or-login" --%>
 <!--                   >新朋友嗎?來註冊吧！</a> -->
 <!--               </div> -->
-            </div>
-          </div>
+           
         </div>
       </div>
     </div>

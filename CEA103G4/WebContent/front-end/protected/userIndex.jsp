@@ -38,8 +38,8 @@
                     <h1><i class="fa fa-drivers-license-o"></i> 會員首頁</h1>
                   </div>
                   <ul class="app-breadcrumb breadcrumb">
-                    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                    <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員首頁</a></li>
+                    <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><i class="fa fa-home fa-lg"></i></a></li>
+                    <li class="breadcrumb-item">會員首頁</li>
                   </ul>
                 </div>
                 <div class="row">

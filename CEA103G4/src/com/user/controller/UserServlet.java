@@ -50,7 +50,7 @@ public class UserServlet extends HttpServlet {
 			}
 		}
 		
-		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
+		if ("getOne_For_Display".equals(action)) { // 來自userIndex.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -66,7 +66,7 @@ public class UserServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/user/select_page.jsp");
+							.getRequestDispatcher("/front-end/protected/userIndex.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -80,7 +80,7 @@ public class UserServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/user/select_page.jsp");
+							.getRequestDispatcher("/front-end/protected/userIndex.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -94,7 +94,7 @@ public class UserServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/user/select_page.jsp");
+							.getRequestDispatcher("/front-end/protected/userIndex.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
@@ -109,13 +109,13 @@ public class UserServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-end/user/select_page.jsp");
+						.getRequestDispatcher("/front-end/protected/userIndex.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
 		
-		if ("getOne_For_Update".equals(action)) { // 來自listAllUser.jsp的請求
+		if ("getOne_For_Update".equals(action)) { // 來自會員專區"修改我的資料"的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -155,9 +155,9 @@ public class UserServlet extends HttpServlet {
 		
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-String user_id = new String(req.getParameter("user_id").trim());
+				String user_id = new String(req.getParameter("user_id").trim());
 
-String user_pwd = new String(req.getParameter("user_pwd").trim());
+				String user_pwd = new String(req.getParameter("user_pwd").trim());
 				
 String user_name = req.getParameter("user_name");
 				String user_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
@@ -392,6 +392,7 @@ cash = new Integer(req.getParameter("cash").trim());
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("userVO", userVO);// 含有輸入格式錯誤的userVO物件,也存入req
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/front-end/user/forgetPassword.jsp");
 					failureView.forward(req, res);
@@ -405,7 +406,7 @@ cash = new Integer(req.getParameter("cash").trim());
 				
 
 				/***************************3.修改完成,準備轉交(Send the Success view)***********/
-				req.setAttribute("userVO", userVO);// 資料庫update成功後,正確的的userVO物件,存入req
+//				req.setAttribute("userVO", userVO);// 資料庫update成功後,正確的的userVO物件,存入req
 				String url = "/front-end/userLogin.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交userLogin.jsp
 				successView.forward(req, res);				
@@ -562,6 +563,7 @@ cash = new Integer(req.getParameter("cash").trim());
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("userVO", userVO); // 含有輸入格式錯誤的userVO物件,也存入req
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/front-end/user/register.jsp");
 					failureView.forward(req, res);
@@ -573,7 +575,7 @@ UserService userSvc = new UserService();
 userVO = userSvc.addUser(user_id, user_pwd, user_name, id_card, user_gender,user_dob, user_mail, user_phone, user_mobile, city, town, zipcode, user_addr, regdate, user_point, violation, user_state, user_comment, comment_total, cash);
 
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				req.setAttribute("userVO", userVO);// 資料庫update成功後,正確的的userVO物件,存入req
+				req.setAttribute("userVO", userVO);// 資料庫insert成功後,正確的userVO物件,存入req
 				String url = "/front-end/userLogin.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交userLogin.jsp
 				successView.forward(req, res);				

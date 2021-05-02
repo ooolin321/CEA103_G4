@@ -30,6 +30,12 @@
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-template/css/usermain.css">
   <!-- Font-icon css-->
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+th {
+padding: 15px;
+}
+</style>
+
 </head>
 <body class="app sidebar-mini rtl">
 <body bgcolor='white' class="app sidebar-mini rtl">
@@ -37,59 +43,77 @@
 <main class="app-content">
                 <div class="app-title">
                   <div>
-                    <h1><i class="fa fa-user fa-lg"></i> 會員資料查詢</h1>
+                    <h1><i class="fa fa-user fa-lg"></i> 基本資料查詢</h1>
                   </div>
                   <ul class="app-breadcrumb breadcrumb">
-                    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                    <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員資料查詢</a></li>
+                    <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><i class="fa fa-home fa-lg"></i></a></li>
+                    <li class="breadcrumb-item">基本資料查詢</li>
                   </ul>
                 </div>
 <table>
 	<tr>
-		<th>帳號</th>
-		<th>密碼</th>
-		<th>姓名</th>
-		<th>身分証字號</th>
-		<th>性別</th>
-		<th>生日</th>
-		<th>Email</th>
-		<th>電話</th>
-		<th>手機號碼</th>
-		<th>縣市</th>
-		<th>鄉鎮</th>
-		<th>郵遞區號</th>
-		<th>地址</th>
-		<th>註冊日期</th>
-		<th>點數</th>
-		<th>違約次數</th>
-		<th>狀態</th>
-		<th>賣家評價</th>
-		<th>評價人數</th>
-		<th>錢包</th>
+		<th>帳號:</th>
+		<td><%=userVO.getUser_id()%></td>
+<!-- 		<th>密碼</th> -->
 	</tr>
 	<tr>
-		<td><%=userVO.getUser_id()%></td>
-		<td><%=userVO.getUser_pwd()%></td>
+		<th>姓名:</th>
 		<td><%=userVO.getUser_name()%></td>
+	</tr>	
+	<tr>
+		<th>身分証字號:</th>
 		<td><%=userVO.getId_card()%></td>
-		<td><%=userVO.getUser_gender()%></td>
+	</tr>	
+	<tr>
+		<th>性別:</th>
+		<td>${(userVO.user_gender==0)? '女':''}${(userVO.user_gender==1)? '男':''}</td>
+	</tr>	
+	<tr>
+		<th>生日:</th>
 		<td><%=userVO.getUser_dob()%></td>
+	</tr>	
+	<tr>
+		<th>Email:</th>
 		<td><%=userVO.getUser_mail()%></td>
-		<td><%=userVO.getUser_phone()%></td>
+	</tr>	
+	<tr>
+		<th>手機號碼:</th>
 		<td><%=userVO.getUser_mobile()%></td>
-		<td><%=userVO.getCity()%></td>
-		<td><%=userVO.getTown()%></td>
-		<td><%=userVO.getZipcode()%></td>
-		<td><%=userVO.getUser_addr()%></td>
-<%-- 		<td>${userVO.zipcode}${userVO.city}${userVO.town}${userVO.user_addr}</td> --%>
-		<td><%=userVO.getRegdate()%></td>
-		<td><%=userVO.getUser_point()%></td>
-		<td><%=userVO.getViolation()%></td>
-		<td><%=userVO.getUser_state()%></td>
-		<td><%=userVO.getUser_comment()%></td>
-		<td><%=userVO.getComment_total()%></td>
-		<td><%=userVO.getCash()%></td>
-	</tr>
+	</tr>	
+	<tr>
+		<th>地址:</th>
+		<td>${userVO.city}${userVO.town}${userVO.user_addr}</td>
+	</tr>	
+<!-- 	<tr> -->
+<!-- 		<th>狀態</th> -->
+<%-- 		<td>${(userVO.user_state==0)? '停權':''}${(userVO.user_state==1)? '正常':''}</td> --%>
+<!-- 	</tr>	 -->
+<!-- 	<tr> -->
+<!-- 		<th>評價人數</th> -->
+<%-- 		<td><%=userVO.getComment_total()%></td> --%>
+<!-- 	</tr>	 -->
+
+<!-- 		<th>電話</th> -->
+<!-- 		<th>縣市</th> -->
+<!-- 		<th>鄉鎮</th> -->
+<!-- 		<th>郵遞區號</th> -->
+<!-- 		<th>註冊日期</th> -->
+<!-- 		<th>點數</th> -->
+<!-- 		<th>違約次數</th> -->
+<!-- 		<th>賣家評價</th> -->
+<!-- 		<th>錢包</th> -->
+<%-- 		<td><%=userVO.getUser_pwd()%></td> --%>
+<%-- 		<td><%=userVO.getUser_gender()%></td> --%>
+<%-- 		<td><%=userVO.getCity()%></td> --%>
+<%-- 		<td><%=userVO.getTown()%></td> --%>
+<%-- 		<td><%=userVO.getZipcode()%></td> --%>
+<%-- 		<td><%=userVO.getUser_addr()%></td> --%>
+<%-- 		<td><%=userVO.getRegdate()%></td> --%>
+<%-- 		<td><%=userVO.getUser_point()%></td> --%>
+<%-- 		<td><%=userVO.getViolation()%></td> --%>
+<%-- 		<td><%=userVO.getUser_state()%></td> --%>
+<%-- 		<td><%=userVO.getUser_comment()%></td> --%>
+<%-- 		<td><%=userVO.getCash()%></td> --%>
 </table>
 <jsp:include page="/front-end/protected/userIndex_footer.jsp" />
 </body>

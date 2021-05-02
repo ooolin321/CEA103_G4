@@ -1,14 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-  
-  <header class="app-header"><a class="app-header__logo" href="<%=request.getContextPath()%>/front-end/index.jsp">Mode Femme</a>
-    <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
-    <!-- Navbar Right Menu-->
-    <ul class="app-nav">
-      <li class="app-search">
-        <input class="app-search__input" type="search" placeholder="Search">
-        <button class="app-search__button"><i class="fa fa-search"></i></button>
-      </li>
+	pageEncoding="UTF-8"%>
+	
+<!-- Page Preloder -->
+<div id="preloder">
+	<div class="loader"></div>
+</div>
+<!-- Header Section Begin -->
+<header class="header-section">
+	<div class="container">
+		<div class="inner-header">
+			<div class="row">
+				<div class="col-lg-2 col-md-2">
+					<div class="logo">
+						<a href="${pageContext.request.contextPath}/front-end/index.jsp">
+							<h2>
+								Mode femme <br />
+								<small>Second&nbsp;Hand </small>
+							</h2>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-7 col-md-7">
+					<!-- Sidebar toggle button-->
+					<a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+				</div>
+				<div class="col-lg-3 text-right col-md-3">
+					<div class="header-right">
       <!--Notification Menu-->
       <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications"><i class="fa fa-bell-o fa-lg"></i></a>
         <ul class="app-notification dropdown-menu dropdown-menu-right">
@@ -89,28 +106,66 @@
                   </li>
                   <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">直播訂單管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
-                      <li><a class="treeview-item" href="table-basic.html"><i class="icon fa fa-circle-o"></i>我的購買訂單</a></li>
-                      <li><a class="treeview-item" href="table-basic.html"><i class="icon fa fa-circle-o"></i>我的販賣訂單</a></li>
+                      <li><a class="treeview-item" href="table-basic.html"><i class="icon fa fa-circle-o"></i> Basic Tables</a></li>
+                      <li><a class="treeview-item" href="table-data-table.html"><i class="icon fa fa-circle-o"></i> Data Tables</a></li>
                     </ul>
                   </li>
                   <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">直播專案管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
-                      <li><a class="treeview-item" href='<%=request.getContextPath()%>/front-end/liveManagement/liveList.jsp'><i class="icon fa fa-circle-o"></i>我的直播專案</a></li>
-                      <li>
-                      <FORM id="add_live" METHOD="post" ACTION="<%=request.getContextPath()%>/live/live.do" style="margin-bottom: 0px;">
-					     <input type="hidden" name="user_id"  value="${userVO.user_id}">
-					     <input type="hidden" name="action"	value="insert">
-                      <a class="treeview-item" href="#" onclick="document.getElementById('add_live').submit();"><i class="icon fa fa-circle-o"></i>新增直播專案</a>
-                      </FORM>
-<!--                       <li> -->
-<%--                    	  <FORM id="update_live" METHOD="post" ACTION="<%=request.getContextPath()%>/live/live.do" style="margin-bottom: 0px;"> --%>
-<%-- 					     <input type="hidden" name="user_id"  value="${userVO.user_id}"> --%>
-<!-- 					     <input type="hidden" name="action"	value="getOne_For_Update"> -->
-<!--                       <a class="treeview-item" href="#" onclick="document.getElementById('update_live').submit();"><i class="icon fa fa-circle-o"></i>修改直播專案</a> -->
-<!--                       </FORM> -->
-<!--                       </li> -->
+                      <li><a class="treeview-item" href="blank-page.html"><i class="icon fa fa-circle-o"></i> Blank Page</a></li>
+                      <li><a class="treeview-item" href="page-login.html"><i class="icon fa fa-circle-o"></i> Login Page</a></li>
+                      <li><a class="treeview-item" href="page-lockscreen.html"><i class="icon fa fa-circle-o"></i> Lockscreen Page</a></li>
+                      <li><a class="treeview-item" href="page-user.html"><i class="icon fa fa-circle-o"></i> User Page</a></li>
+                      <li><a class="treeview-item" href="page-invoice.html"><i class="icon fa fa-circle-o"></i> Invoice Page</a></li>
+                      <li><a class="treeview-item" href="page-calendar.html"><i class="icon fa fa-circle-o"></i> Calendar Page</a></li>
+                      <li><a class="treeview-item" href="page-mailbox.html"><i class="icon fa fa-circle-o"></i> Mailbox</a></li>
+                      <li><a class="treeview-item" href="page-error.html"><i class="icon fa fa-circle-o"></i> Error Page</a></li>
                     </ul>
                   </li>
                 </ul>
               </aside>
-               
+	<div class="nav-item">
+		<div class="container">
+			<div class="nav-depart">
+				<div class="depart-btn">
+					<i class="ti-menu"></i> <span>商品分類</span> 
+<!-- 					<i class="fa fa-hand-o-down" id="ti-fa-hand"></i> -->
+					<ul class="depart-hover">
+						<c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()}">
+						<li><div class="catagoriesQuery" value="${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}</div></li>
+               			 </c:forEach>
+					</ul>
+				</div>
+			</div>
+			<nav class="nav-menu mobile-menu">
+				<ul>
+					<li class="active" id="nav-index"><a
+						href="${pageContext.request.contextPath}/front-end/index.jsp">首頁</a></li>
+					<li><a
+						href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp">商品專區</a></li>
+					<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播專區</a>
+						<ul class="dropdown">
+							<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播牆</a></li>
+							<li><a href="#">直播預告</a></li>
+							<!-- <li><a href="#">Kid's</a></li> -->
+						</ul></li>
+					<li><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i class="icon_profile"></i></a></li>
+					<!-- <li>
+                <a href="#">Pages</a>
+                <ul class="dropdown">
+                  <li><a href="./blog-details.html">Blog Details</a></li>
+                  <li><a href="./shopping-cart.html">Shopping Cart</a></li>
+                  <li><a href="./check-out.html">Checkout</a></li>
+                  <li><a href="./faq.html">Faq</a></li>
+                  <li><a href="./register.html">Register</a></li>
+                  <li><a href="./login.html">Login</a></li>
+                </ul>
+              </li> -->
+				</ul>
+			</nav>
+			<div id="mobile-menu-wrap"></div>
+		</div>
+	</div>
+	
+</header>
+<!-- Header End -->

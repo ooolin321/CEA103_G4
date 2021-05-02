@@ -422,7 +422,7 @@ public class EmpServlet extends HttpServlet {
 //				List <AuthVO> list = new AuthService().getOneAuth(empno, funno);
 				
 				
-//				empVO = empSvc.sendPwdMail(ename, email, empPwd);// dao.service發送password email
+				empVO = empSvc.sendPwdMail(ename, email, empPwd);// dao.service發送password email
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				
 				String url = "/back-end/emp/listAllEmp.jsp";

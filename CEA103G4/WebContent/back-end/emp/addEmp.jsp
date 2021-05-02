@@ -6,26 +6,11 @@
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO");
 %>
-<% 
-	EmpService empSvc = new EmpService(); 
- 	List<EmpVO> list = empSvc.getAll(); 
-	
- 	AuthService authSvc = new AuthService(); 
- 	List<AuthVO> list1 = authSvc.getAll(); 
-	
- 	for(int i = 0; i < list.size(); i++){ 
- 		for(int j = 0; j < list1.size(); j++){ 
-			if((list.get(i).getEmpno().intValue()==list1.get(j).getEmpno().intValue())){ 	
-				list.remove(i);
-				i--;
-				break;
-			} 
-		} 
- 		
-	} 
- 	
- 	request.setAttribute("list", list);
- %> 
+
+<%
+	EmpVO empVO2 = (EmpVO)session.getAttribute("account");
+	session.setAttribute("empVO", empVO2);
+%> 
  
 
 <html>
@@ -55,7 +40,7 @@
 				<div class="pd-20 card-box mb-30">
 					<div class="clearfix">
 						<h2 class="text-dark h2">
-							<i class="fas fa-user-plus"></i>&nbsp;新增員工資料  <%=list.size() %>
+							<i class="fas fa-user-plus"></i>&nbsp;新增員工資料  <%=empVO2.getEmpno() %>
 						</h2>
 					</div>
 					<div class="tile-body">

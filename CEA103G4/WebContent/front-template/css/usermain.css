@@ -15243,7 +15243,7 @@ width: 300px;
 height: 300px;
 text-align: center;
 cursor: pointer;
-border: 2px dashed #e7ab3c;
+border: 1px dashed #e7ab3c;
 margin-top:10px;
 }
 .productsAdd #product_photo {
@@ -15261,8 +15261,8 @@ top: 36%;
 
 .productsAdd .delAvatar {
 position: absolute;
-right: 3px;
-top: -8px;
+right: -14px;
+top: -21px;
 
 }
 
@@ -15308,5 +15308,9 @@ max-height:100%;
 	margin-left:70px;
 	box-sizing: border-box;
 }
+/* .productsAdd label#upload-img { */
+/*     border-style: none; */
+/* } */
+
 
 								/*productAddFinsh*/

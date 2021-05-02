@@ -36,7 +36,10 @@ public class AuthServlet extends HttpServlet {
 			try {
 
 				Integer funno = new Integer(req.getParameter("funno"));
+System.out.println("funno = "+funno);
+			
 				Integer empno = new Integer(req.getParameter("empno"));
+System.out.println("empno = "+empno);
 
 			
 				if (!errorMsgs.isEmpty()) {
@@ -46,10 +49,12 @@ public class AuthServlet extends HttpServlet {
 				}
 				/*************************** 2.開始查詢資料 *****************************************/
 				AuthService authSvc = new AuthService();
-				AuthVO authVO = authSvc.getOneAuth(funno,empno);
+				AuthVO authVO = authSvc.getOneAuth(empno);
+				
 				if (authVO == null) {
 					errorMsgs.add("查無資料");
 				}
+				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/selectAuth.jsp");
 					failureView.forward(req, res);
@@ -76,13 +81,12 @@ public class AuthServlet extends HttpServlet {
 			String requestURL = req.getParameter("requestURL");
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				Integer funno = new Integer(req.getParameter("funno"));
 				Integer empno = new Integer(req.getParameter("empno"));
 				/*************************** 2.開始查詢資料 ****************************************/
 				AuthService authSvc = new AuthService();
-				AuthVO authVO = authSvc.getOneAuth(empno, funno);
+				AuthVO authVO = authSvc.getOneAuth(empno);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("auth", authVO);
+				req.setAttribute("authVO", authVO);
 				String url = "/back-end/auth/update_auth_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
@@ -105,50 +109,29 @@ public class AuthServlet extends HttpServlet {
 			
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				Integer empno = new Integer(req.getParameter("empno"));
-				System.out.println(empno);
-				Integer funno = new Integer(req.getParameter("funno"));
-				System.out.println(funno);
-				Integer auth_no = new Integer(req.getParameter("auth_no"));
-				System.out.println(auth_no);
+				Integer empno = new Integer(req.getParameter("empno"));	
+System.out.println(empno);
+				String auth_nos[] = req.getParameterValues("auth_no");
+
+				String funnos[]= req.getParameterValues("funno");
+		
+					for(int i = 0; i < funnos.length; i++) {
+						int auth_no = new Integer(auth_nos[i]);
+System.out.println(auth_nos[i]);
+						int funno = new Integer(funnos[i]);
+System.out.println(funnos[i]);
+System.out.println(auth_no + "" + funno);
+						AuthVO authVO = new AuthVO();
+						authVO.setEmpno(empno);
+						authVO.setFunno(funno);
+						authVO.setAuth_no(auth_no);
+						AuthService authSvc = new AuthService();
+						authVO = authSvc.addAuth(empno, funno, auth_no);
+					} 
 				
-				AuthVO authVO = new AuthVO();
-				authVO.setEmpno(empno);
-				authVO.setFunno(funno);
-				authVO.setAuth_no(auth_no);
-//				String a[] = req.getParameterValues("auth_no");
-//				String f[]= req.getParameterValues("funno");
-//				
-//System.out.println(a[1]);
-//System.out.println(f[1]);				
-//System.out.println(a.length);
-//System.out.println(f.length);
-
-//				for(int i = 0; i < a.length; i++) {
-//					int auth_no = new Integer(a[i]);
-//					int funno = new Integer(f[i]);
-////					System.out.println(auth_no + "" + funno);
-//					AuthVO authVO = new AuthVO();
-//					
-//					authVO.setEmpno(empno);
-//					authVO.setFunno(funno);
-//					authVO.setAuth_no(auth_no);
-//					
-//					AuthService authSvc = new AuthService();
-//					authVO = authSvc.updateAuth(empno, funno, auth_no);
-//
-//					
-//				}
-
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("authVO", authVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/auth/update_auth_input.jsp");
-					failureView.forward(req, res);
-					return;
-				}
 				/*************************** 2.開始修改資料 *****************************************/
-				AuthService authSvc = new AuthService();
-				authVO = authSvc.updateAuth(empno, funno, auth_no);
+//				AuthService authSvc = new AuthService();
+//				authVO = authSvc.updateAuth(empno, funno, auth_no);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 
@@ -188,19 +171,15 @@ public class AuthServlet extends HttpServlet {
 //				authVO.setAuth_no(auth_no);
 //				Integer empno = new Integer(req.getParameter("empno"));
 //System.out.println(empno);
-//				
+//					
+				Integer empno = new Integer(req.getParameter("empno"));	
+				String authno[] = req.getParameterValues("auth_no");
+				String funno1[]= req.getParameterValues("funno");
 				try {
-					Integer empno = new Integer(req.getParameter("empno"));	
-					String authno[] = req.getParameterValues("auth_no");
-					String funno1[]= req.getParameterValues("funno");
-					System.out.println(authno[1]);
-					System.out.println(funno1[1]);				
-					System.out.println(authno.length);
-					System.out.println(funno1.length);
 					for(int i = 0; i < funno1.length; i++) {
 						int auth_no = new Integer(authno[i]);
 						int funno = new Integer(funno1[i]);
-						System.out.println(auth_no + "" + funno);
+
 						AuthVO authVO = new AuthVO();
 						authVO.setEmpno(empno);
 						authVO.setFunno(funno);
@@ -257,25 +236,14 @@ public class AuthServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ***************************************/
 				Integer empno = new Integer(req.getParameter("empno"));
-				System.out.println(empno);
+
 				Integer funno = new Integer(req.getParameter("funno"));
-				System.out.println(funno);
+	
 				/*************************** 2.開始刪除資料 ***************************************/
 				AuthService authSvc = new AuthService();
-				authSvc.deleteAuth(empno,funno);
+				authSvc.deleteAuth(funno,empno);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-//				if (requestURL.equals("/back-end/auth/listOneAuth.jsp"))
-//					req.setAttribute("listAllAuth", authSvc.getOneAuth(empno, funno)); // 資料庫取出的list物件,存入request
-
-//				if(requestURL.equals("/emp/listEmps_ByCompositeQuery.jsp")){
-//					HttpSession session = req.getSession();
-//					Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
-//					List<EmpVO> list  = empSvc.getAll(map);
-//					req.setAttribute("listEmps_ByCompositeQuery",list); //  複合查詢, 資料庫取出的list物件,存入request
-//				}				
-
-//				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = requestURL;
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);

@@ -9,13 +9,16 @@
 	List<AuthVO> list = authSvc.getAll();
 	pageContext.setAttribute("list", list);
 %>
+
+<%
+	AuthVO authVO = (AuthVO) request.getAttribute("authVO");
+%>
 <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 <jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
 <html>
 <head>
 <title>所有權限資料 - listAllAuth.jsp</title>
- <link rel="stylesheet" href="<%=request.getContextPath()%>/static/layui/css/layui.css">
- <link rel="stylesheet" href="<%=request.getContextPath()%>/static/admin/css/style.css">
+
 <style>
 table#table-1 {
 	background-color: #CCCCFF;
@@ -113,7 +116,9 @@ th, td {
 						ACTION="<%=request.getContextPath()%>/auth/auth.do"
 						style="margin-bottom: 0px;">
 						<input type="submit" value="修改"> 
-						<input type="hidden" name="authno" value="${authVO.auth_no}">
+
+						<input type="hidden" name="empno" value="${authVO.empno}"> 
+<%-- 						<input type="hidden" name="auth_no" value="${authVO.auth_no}"> --%>
 			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			     <input type="hidden" name="whichPage"	value="<%=whichPage%>">      
 						<input type="hidden" name="action" value="getOne_For_Update">
@@ -124,10 +129,10 @@ th, td {
 						ACTION="<%=request.getContextPath()%>/auth/auth.do"
 						style="margin-bottom: 0px;">
 						<input type="submit" value="刪除"> 
-						<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>"> <!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
-						<input type="hidden" name="whichPage"  value="<%=request.getParameter("whichPage")%>"> 
-						<input type="hidden" name="empno" value="${authVO.empno}"> 
+			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+			     <input type="hidden" name="whichPage"	value="<%=whichPage%>"> 
 						<input type="hidden" name="funno" value="${authVO.funno}">
+						<input type="hidden" name="empno" value="${authVO.empno}"> 
 						<input type="hidden" name="action" value="delete">
 					</FORM>
 				</td>
@@ -137,6 +142,5 @@ th, td {
 	<%@ include file="page2.file"%>
 
 </body>
-<script src="<%=request.getContextPath()%>/static/admin/js/config.js"></script>
-<script src="<%=request.getContextPath()%>/static/admin/js/script.js"></script>
+
 </html>

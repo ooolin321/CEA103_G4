@@ -57,7 +57,7 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td>${empVO.empno}</A></td>
+								<td>${empVO.empno}</td>
 								<td>${empVO.ename}</td>
 								<td>${empVO.job}</td>
 								<td>${empVO.id}</td>

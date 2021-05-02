@@ -1,14 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
   
-  <header class="app-header"><a class="app-header__logo" href="<%=request.getContextPath()%>/front-end/index.jsp">Mode Femme</a>
+  <header class="header-section">
+<!-- 			<div class="row"> -->
+<!-- 				<div class="col-lg-2 col-md-2"> -->
+					<div class="logo">
+					<div class="logoName">
+						<a href="${pageContext.request.contextPath}/front-end/index.jsp">
+							<h2>
+								Mode femme <br />
+								<small>Second&nbsp;Hand </small>
+							</h2>
+						</a>
+						</div>
+					</div>
+<!-- 				</div> -->
+<!-- 				<div class="col-lg-7 col-md-7"> -->
     <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+<!--    			 </div> -->
+<!--     <div class="col-lg-3 text-right col-md-3"> -->
     <!-- Navbar Right Menu-->
     <ul class="app-nav">
-      <li class="app-search">
-        <input class="app-search__input" type="search" placeholder="Search">
-        <button class="app-search__button"><i class="fa fa-search"></i></button>
-      </li>
       <!--Notification Menu-->
       <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications"><i class="fa fa-bell-o fa-lg"></i></a>
         <ul class="app-notification dropdown-menu dropdown-menu-right">
@@ -63,7 +75,11 @@
                     </ul>
                   </li>
                 </ul>
+<!--                 </div> -->
+<!--                 </div> -->
               </header>
+              
+              
               <!-- Sidebar menu-->
               <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
               <aside class="app-sidebar">

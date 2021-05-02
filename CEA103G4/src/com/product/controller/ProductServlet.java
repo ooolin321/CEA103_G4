@@ -300,11 +300,17 @@ public class ProductServlet extends HttpServlet {
 					errorMsgs.add("商品名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
 	            }
 				
-				String product_info = req.getParameter("product_info").trim();
+				String product_info = req.getParameter("product_info");
 				if (product_info == null || product_info.trim().length() == 0) {
 					errorMsgs.add("商品說明請勿空白");
 				}
-				
+				while (product_info.indexOf("\n") != -1) {
+					product_info = product_info.replace("\n","<br>");
+				}
+				while (product_info.indexOf(" ") != -1) {
+					product_info = product_info.replace(" ","&nbsp;");
+				}
+
 				Integer product_price = null;
 				try {
 					product_price = new Integer(req.getParameter("product_price").trim());

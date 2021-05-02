@@ -34,13 +34,13 @@
 					<label class="control-label">員工編號：</label> <input
 						class="form-control" type="username" name="account"
 						placeholder="Empno" autofocus>
-					<td><font color=red><b>${errorMsgs.empno}</b></td>
+					<td><font color=red><b>${errorMsgs.empno}</b></font></td>
 				</div>
 				<div class="form-group">
 					<label class="control-label">密碼：</label> <input
 						class="form-control" type="password" name="password"
 						placeholder="Password" autofocus>
-					<td><font color=red><b>${errorMsgs.empPwd}</b></td>
+					<td><font color=red><b>${errorMsgs.empPwd}</b></font></td>
 				</div>
 				<div class="form-group">
 					<div class="utility">
@@ -62,7 +62,7 @@
 					</button>
 				</div>
 			</form>
-			<form class="forget-form" action="/CEA103G4/loginhandler">
+			<form class="forget-form" action="<%=request.getContextPath()%>/loginhandler">
 				<h3 class="login-head">
 					<i class="fa fa-lg fa-fw fa-lock"></i>Forgot Password ?
 				</h3>

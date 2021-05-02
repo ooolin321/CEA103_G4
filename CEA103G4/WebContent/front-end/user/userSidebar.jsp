@@ -74,8 +74,8 @@
                   <li class="treeview"><a class="app-menu__item" href="<%=request.getContextPath()%>/front-end/user/user.do?user_id=${userVO.user_id}&action=getOne_For_Update" data-toggle="treeview"><i class="app-menu__icon fa fa-gear"></i><span class="app-menu__label">會員資料管理</span></a></li>                  
                    <li class="treeview"><a class="app-menu__item" href="<%=request.getContextPath()%>/front-end/seller/productList.jsp" data-toggle="treeview"><i class="app-menu__icon fa fa-shopping-bag"></i><span class="app-menu__label">商品管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
-                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/productMangement/productList.jsp"><i class="icon fa fa-archive"></i>我的商品</a></li>
-                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/productMangement/productAdd.jsp"><i class="icon fa fa-edit"></i>新增商品</a></li>
+                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/productManagement/productList.jsp"><i class="icon fa fa-archive"></i>我的商品</a></li>
+                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/productManagement/productAdd.jsp"><i class="icon fa fa-edit"></i>新增商品</a></li>
                     </ul>
                   </li>
                   

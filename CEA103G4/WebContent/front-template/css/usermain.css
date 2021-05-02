@@ -15261,8 +15261,8 @@ top: 36%;
 
 .productsAdd .delAvatar {
 position: absolute;
-right: 3px;
-top: -8px;
+right: -14px;
+top: -21px;
 
 }
 
@@ -15308,5 +15308,6 @@ max-height:100%;
 	margin-left:70px;
 	box-sizing: border-box;
 }
+
 
 								/*productAddFinsh*/

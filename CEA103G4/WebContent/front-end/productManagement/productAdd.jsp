@@ -3,6 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.product.model.*"%>
 <%@ page import="com.product_type.model.*"%>
+<%@ page import="com.user.model.*"%>
 
 <%
 	ProductVO productVO = (ProductVO) request.getAttribute("productVO");
@@ -10,6 +11,9 @@
 	Product_TypeDAO dao2 = new Product_TypeDAO();
 	List<Product_TypeVO> list2 = dao2.getAll();
 	pageContext.setAttribute("list2",list2);
+	
+	UserVO userVO = (UserVO) session.getAttribute("account"); 
+	session.setAttribute("userVO", userVO);
 	
 %>
 
@@ -84,22 +88,15 @@
      			 <input type="text" class="form-control" id="product_price" name="product_price" placeholder="請輸入商品價格" value="<%=(productVO == null) ? "" : productVO.getProduct_price()%>" required>
    			 </div>
    			 	<div class="col-md-4 mb-3">
-  				<label for="product_quantity">商品數量</label>
-             	<select class="custom-select form-control" id="product_quantity" required>
-               		<option selected>請選擇商品數量</option>
-               		<option value="1">1</option>
-               		<option value="2">2</option>
-               		<option value="2">3</option>
-               		<option value="2">4</option>
-               		<option value="2">5</option>
-              </select>
+  				<label for="product_remaining">商品數量</label>
+  				  <input type="text" class="form-control" id="product_remaining" name="product_remaining" placeholder="請輸入商品數量" value="<%=(productVO == null) ? "" : productVO.getProduct_remaining()%>" required>
    		     </div>
    		       <div class="col-md-4 mb-3">
-  				<label for="product_quantity">商品類別</label>
-             	<select class="custom-select form-control" id="product_quantity" required>
+  				<label for="pdtype_no">商品類別</label>
+             	<select class="custom-select form-control" id="pdtype_no" name="pdtype_no" required>
                		<option selected>請選擇商品類別</option>
                		<c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()-1}">
-               		<option value="${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}</option>
+               		<option value="${product_typeVO.pdtype_no}" ${(productVO==null)?'selected':'' }>${product_typeVO.pdtype_name}</option>
                    </c:forEach>
               </select>
    		     </div>
@@ -111,16 +108,26 @@
 				<label for="product_photo" id="upload-img" class="card mb-2 productcard">
 				<input class="form-control" id="product_photo" type="file" name="product_photo"  value="<%= (productVO==null)? "" : productVO.getProduct_photo()%>" required>
 				<i class="fa fa-camera" id="iconcamera"></i>
-				</label>
 				<i class="delAvatar fa fa-times-circle-o" title="移除圖片"></i>
+				</label>
 			</div>
+			<%-- 錯誤表列 --%>
+			<c:if test="${not empty errorMsgs}">
+			<font style="color:red">請修正以下錯誤:</font>
+			<ul>
+			<c:forEach var="message" items="${errorMsgs}">
+				<li style="color:red">${message}</li>
+			</c:forEach>
+			</ul>
+			</c:if>
 		  </div>
 		  </div>
 		  <div class="productAddBtn">
-			<br> <input type="hidden" name="action" value="insert">
+			<input type="hidden" name="action" value="insert">
+			<input type="hidden" name="user_id" value="<%=userVO.getUser_id()%>">
 			<button type="button" class="btn btn-danger">取消</button>
-			<button type="submit" class="btn btn-info">儲存商品</button>
-			<button type="submit" class="btn btn-warning">儲存並上架</button>
+			<button type="submit" class="btn btn-info" name="product_state" value="<%= (productVO==null)? "0" : productVO.getProduct_state()%>">儲存商品</button>
+			<button type="submit" class="btn btn-warning" name="product_state" value="<%= (productVO==null)? "1" : productVO.getProduct_state()%>">儲存並上架</button>
 			</div>
 		
 </form>

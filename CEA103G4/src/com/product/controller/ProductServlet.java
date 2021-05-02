@@ -313,29 +313,24 @@ public class ProductServlet extends HttpServlet {
 					errorMsgs.add("商品價格請填數字");
 				}
 				
-				Integer product_quantity = null;
-				try {
-					product_quantity = new Integer(req.getParameter("product_quantity").trim());
-				} catch (NumberFormatException e) {
-					product_quantity = 1;
-					errorMsgs.add("商品數量請填數字");
-				}
+//				Integer product_quantity = null;
+//				try {
+//					product_quantity = new Integer(req.getParameter("product_quantity").trim());
+//				} catch (NumberFormatException e) {
+//					product_quantity = 1;
+//					errorMsgs.add("商品數量請填數字");
+//				}
 				
 				Integer product_remaining = null;
 				try {
 					product_remaining = new Integer(req.getParameter("product_remaining").trim());
 				} catch (NumberFormatException e) {
 					product_remaining = 1;
-					errorMsgs.add("商品剩餘數量請填數字");
+					errorMsgs.add("商品數量請填數字");
 				}
+
 				
-				Integer product_state = null;
-				try {
-					product_state = new Integer(req.getParameter("product_state").trim());
-				} catch (NumberFormatException e) {
-					product_state = 0;
-					errorMsgs.add("商品狀態請填數字");
-				}
+				Integer product_state = new Integer(req.getParameter("product_state").trim());
 				
 				byte[] product_photo = null;
 				Part part = req.getPart("product_photo");
@@ -350,16 +345,13 @@ public class ProductServlet extends HttpServlet {
 
 				
 				String user_id = req.getParameter("user_id").trim();
-				if (user_id == null || user_id.trim().length() == 0) {
-					errorMsgs.add("會員帳號請勿空白");
-				}
+
 				
 				Integer pdtype_no = null;
 				try {
 					pdtype_no = new Integer(req.getParameter("pdtype_no").trim());
 				} catch (NumberFormatException e) {
-					pdtype_no = 1;
-					errorMsgs.add("商品類別請填數字");
+					errorMsgs.add("商品類別請勿空白");
 				}				
 				
 
@@ -368,7 +360,7 @@ public class ProductServlet extends HttpServlet {
 				productVO.setProduct_name(product_name);
 				productVO.setProduct_info(product_info);
 				productVO.setProduct_price(product_price);
-				productVO.setProduct_quantity(product_quantity);
+//				productVO.setProduct_quantity(product_quantity);
 				productVO.setProduct_remaining(product_remaining);
 				productVO.setProduct_state(product_state);
 				productVO.setProduct_photo(product_photo);
@@ -379,14 +371,21 @@ public class ProductServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("productVO", productVO); // 含有輸入格式錯誤的productVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/product/addProduct.jsp");
+							.getRequestDispatcher("/front-end/productManagement/productAdd.jsp");
 					failureView.forward(req, res);
 					return; 
 				}
+				System.out.println(product_name);
+				System.out.println(product_info);
+				System.out.println(product_price);
+				System.out.println(product_remaining);
+				System.out.println(product_state);
+				System.out.println(user_id);
+				System.out.println(pdtype_no);
 				
 				/***************************2.開始新增資料*****************************************/
 				ProductService productSvc = new ProductService();
-				productVO = productSvc.addProduct(product_name, product_info, product_price, product_quantity, product_remaining, product_state,
+				productVO = productSvc.addProduct(product_name, product_info, product_price,product_remaining, product_state,
 						product_photo, user_id, pdtype_no);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)*************/
@@ -398,7 +397,7 @@ public class ProductServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/product/addProduct.jsp");
+						.getRequestDispatcher("/front-end/productManagement/productAdd.jsp");
 				failureView.forward(req, res);
 			}
 		}

@@ -30,7 +30,7 @@ public class ProductDAO implements ProductDAO_interface {
 	}
 	
 	//新增商品 賣家上架功能
-	private static final String INSERT_STMT = "INSERT INTO PRODUCT (product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO PRODUCT (product_name,product_info,product_price,product_remaining,product_state,product_photo,user_id,pdtype_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	//查詢所有商品(後台/賣家查詢使用)
 	private static final String GET_ALL_STMT = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";	
 	private static final String GET_ONE_STMT = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no FROM PRODUCT where product_no = ?";
@@ -60,12 +60,11 @@ public class ProductDAO implements ProductDAO_interface {
 			pstmt.setString(1, productVO.getProduct_name());
 			pstmt.setString(2, productVO.getProduct_info());
 			pstmt.setInt(3, productVO.getProduct_price());
-			pstmt.setInt(4, productVO.getProduct_quantity());
-			pstmt.setInt(5, productVO.getProduct_remaining());
-			pstmt.setInt(6, productVO.getProduct_state());
-			pstmt.setBytes(7, productVO.getProduct_photo());
-			pstmt.setString(8, productVO.getUser_id());
-			pstmt.setInt(9, productVO.getPdtype_no());
+			pstmt.setInt(4, productVO.getProduct_remaining());
+			pstmt.setInt(5, productVO.getProduct_state());
+			pstmt.setBytes(6, productVO.getProduct_photo());
+			pstmt.setString(7, productVO.getUser_id());
+			pstmt.setInt(8, productVO.getPdtype_no());
 
 			pstmt.executeUpdate();
 			

@@ -47,17 +47,15 @@ public class UserService {
 		return userVO;
 	}
 
-	public UserVO updateUser(String user_id, String user_pwd, String user_name, String id_card, String user_gender,
-			Date user_dob, String user_mail, String user_phone, String user_mobile, String city, String town, Integer zipcode, String user_addr, Date regdate,
-			Integer user_point, Integer violation, Integer user_state, Integer user_comment, Integer comment_total,
-			Integer cash) {
+	public UserVO updateUser(String user_id, String user_name, String user_gender, Date user_dob, String user_mail, String user_phone, 
+			String user_mobile, String city, String town, Integer zipcode, String user_addr) {
 		
 		UserVO userVO = new UserVO();
 
 		userVO.setUser_id(user_id);
-		userVO.setUser_pwd(user_pwd);
+//		userVO.setUser_pwd(user_pwd);
 		userVO.setUser_name(user_name);
-		userVO.setId_card(id_card);
+//		userVO.setId_card(id_card);
 		userVO.setUser_gender(user_gender);
 		userVO.setUser_dob(user_dob);
 		userVO.setUser_mail(user_mail);
@@ -67,13 +65,13 @@ public class UserService {
 		userVO.setTown(town);
 		userVO.setZipcode(zipcode);
 		userVO.setUser_addr(user_addr);
-		userVO.setRegdate(regdate);
-		userVO.setUser_point(user_point);
-		userVO.setViolation(violation);
-		userVO.setUser_state(user_state);
-		userVO.setUser_comment(user_comment);
-		userVO.setComment_total(comment_total);
-		userVO.setCash(cash);
+//		userVO.setRegdate(regdate);
+//		userVO.setUser_point(user_point);
+//		userVO.setViolation(violation);
+//		userVO.setUser_state(user_state);
+//		userVO.setUser_comment(user_comment);
+//		userVO.setComment_total(comment_total);
+//		userVO.setCash(cash);
 		
 		dao.update(userVO);
 		

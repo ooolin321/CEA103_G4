@@ -80,12 +80,12 @@
                     <FORM id="getOneUser" METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/user/user.do">
 				     <input type="hidden" name="user_id"  value="${userVO.user_id}">
 				     <input type="hidden" name="action"	value="getOne_For_Display">
-				     <li><a class="treeview-item" href="#" onclick="document.getElementById('getOneUser').submit();"><i class="icon fa fa-circle-o"></i> 查詢我的資料</a></li>
+				     <li><a class="treeview-item" href="#" onclick="document.getElementById('getOneUser').submit();"><i class="icon fa fa-circle-o"></i> 個人檔案</a></li>
 				     </FORM>
                      <FORM id="getOneUpdate" METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/user/user.do">
                      <input type="hidden" name="user_id"  value="${userVO.user_id}">
 				     <input type="hidden" name="action"	value="getOne_For_Update">
-                     <li><a class="treeview-item" href="#" onclick="document.getElementById('getOneUpdate').submit();"><i class="icon fa fa-circle-o"></i> 修改我的資料</a></li>        
+                     <li><a class="treeview-item" href="#" onclick="document.getElementById('getOneUpdate').submit();"><i class="icon fa fa-circle-o"></i> 更改密碼</a></li>        
                    	</FORM>
                     </ul>     
                   </li>       

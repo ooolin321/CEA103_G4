@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.user.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="com.user.model.*"%>
+
 <%
   UserVO userVO = (UserVO) request.getAttribute("userVO"); //UserServlet.java (Controller) 存入req的userVO物件 (包括幫忙取出的userVO, 也包括輸入資料錯誤時的userVO物件)
 %>
@@ -35,17 +36,17 @@
 </head>
 <body bgcolor='white'>
 <jsp:include page="/front-end/user/userSidebar.jsp" />
-<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/front-end/user/user.do" name="form1">
 <main class="app-content">
                 <div class="app-title">
                   <div>
-                    <h1><i class="fa fa-user fa-lg"></i> 基本資料查詢</h1>
+                    <h1><i class="fa fa-user fa-lg"></i> 修改我的資料</h1>
                   </div>
                   <ul class="app-breadcrumb breadcrumb">
                     <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><i class="fa fa-home fa-lg"></i></a></li>
-                    <li class="breadcrumb-item">基本資料查詢</li>
+                    <li class="breadcrumb-item">修改我的資料</li>
                   </ul>
                 </div>
+<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/front-end/user/user.do" name="form1">
 <table>
 	<tr>
 		<td>帳號:<font color=red><b>*</b></font></td>
@@ -63,13 +64,21 @@
 		<td>身分証字號:</td>
 		<td><%=userVO.getId_card()%></td>
 	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>性別:</td> -->
+<!-- 		<td><select name="user_gender"> -->
+<%-- 					<option value="0" ${(userVO.user_gender==0)? 'selected':'' }>女</option> --%>
+<%-- 					<option value="1" ${(userVO.user_gender==1)? 'selected':'' }>男</option> --%>
+<!-- 			</select></td>  -->
+<%-- 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_gender}</b></td></tr> --%>
 	<tr>
-		<td>性別:</td>
-		<td><select name="user_gender">
-					<option value="0" ${(userVO.user_gender==0)? 'selected':'' }>女</option>
-					<option value="1" ${(userVO.user_gender==1)? 'selected':'' }>男</option>
-			</select></td> 
+	<td>性別 *</td>
+	<td><input type="radio" id="user_gender" name="user_gender" value="1" ${(userVO.user_gender==1)? 'checked':'' }>
+	<label for="male">男</label>
+	<input type="radio" id="user_gender" name="user_gender" value="0" ${(userVO.user_gender==0)? 'checked':'' }>
+	<label for="female">女</label></td> 
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_gender}</b></td></tr>
+	
 	<tr>
 		<td>生日:</td>
 		<td><input name="user_dob" size="45" id="f_date1" type="text" ></td>

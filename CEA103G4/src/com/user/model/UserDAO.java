@@ -38,7 +38,7 @@ public class UserDAO implements UserDAO_interface {
 	private static final String GET_ALL_STMT = "SELECT * FROM `USER` ORDER BY `USER_ID`";
 	private static final String GET_ONE_STMT = "SELECT `USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH` FROM USER WHERE `USER_ID` = ?";
 	private static final String DELETE = "DELETE FROM USER where USER_ID = ?";
-	private static final String UPDATE = "UPDATE `USER` SET `USER_PWD`=?, `USER_NAME`=?, `ID_CARD`=?, `USER_GENDER`=?, `USER_DOB`=?, `USER_MAIL`=?, `USER_PHONE`=?, `USER_MOBILE`=?, `CITY`=?, `TOWN`=?, `ZIPCODE`=?, `USER_ADDR`=?, `REGDATE`=?, `USER_POINT`=?, `VIOLATION`=?, `USER_STATE`=?, `USER_COMMENT`=?, `COMMENT_TOTAL`=?, `CASH`=? WHERE `USER_ID` = ?";
+	private static final String UPDATE = "UPDATE `USER` SET `USER_NAME`=?, `USER_GENDER`=?, `USER_DOB`=?, `USER_MAIL`=?, `USER_PHONE`=?, `USER_MOBILE`=?, `CITY`=?, `TOWN`=?, `ZIPCODE`=?, `USER_ADDR`=? WHERE `USER_ID` = ?";
 	private static final String UPDATE_PSW = "UPDATE `USER` SET USER_PWD=? WHERE `USER_ID`=?";
 	private static final String GET_Live_reportByUser_id_STMT = "SELECT LIVE_REPORT_NO,LIVE_REPORT_CONTENT,LIVE_NO,USER_ID,EMPNO,LIVE_REPORT_STATE,REPORT_DATE,PHOTO FROM LIVE_REPORT where USER_ID = ? ORDER BY LIVE_REPORT_NO";
 	private static final String SIGN_IN = "SELECT USER_ID,USER_PWD,USER_NAME FROM USER where BINARY USER_ID=? AND BINARY USER_PWD=?";
@@ -109,26 +109,17 @@ public class UserDAO implements UserDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, userVO.getUser_pwd());
-			pstmt.setString(2, userVO.getUser_name());
-			pstmt.setString(3, userVO.getId_card());
-			pstmt.setString(4, userVO.getUser_gender());
-			pstmt.setDate(5, userVO.getUser_dob());
-			pstmt.setString(6, userVO.getUser_mail());
-			pstmt.setString(7, userVO.getUser_phone());
-			pstmt.setString(8, userVO.getUser_mobile());
-			pstmt.setString(9, userVO.getCity());
-			pstmt.setString(10, userVO.getTown());
-			pstmt.setInt(11, userVO.getZipcode());
-			pstmt.setString(12, userVO.getUser_addr());
-			pstmt.setDate(13, userVO.getRegdate());
-			pstmt.setInt(14, userVO.getUser_point());
-			pstmt.setInt(15, userVO.getViolation());
-			pstmt.setInt(16, userVO.getUser_state());
-			pstmt.setInt(17, userVO.getUser_comment());
-			pstmt.setInt(18, userVO.getComment_total());
-			pstmt.setInt(19, userVO.getCash());
-			pstmt.setString(20, userVO.getUser_id());
+			pstmt.setString(1, userVO.getUser_name());
+			pstmt.setString(2, userVO.getUser_gender());
+			pstmt.setDate(3, userVO.getUser_dob());
+			pstmt.setString(4, userVO.getUser_mail());
+			pstmt.setString(5, userVO.getUser_phone());
+			pstmt.setString(6, userVO.getUser_mobile());
+			pstmt.setString(7, userVO.getCity());
+			pstmt.setString(8, userVO.getTown());
+			pstmt.setInt(9, userVO.getZipcode());
+			pstmt.setString(10, userVO.getUser_addr());
+			pstmt.setString(11, userVO.getUser_id());
 
 			pstmt.executeUpdate();
 

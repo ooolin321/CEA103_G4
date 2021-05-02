@@ -101,13 +101,22 @@
 		<td><input type="TEXT" name="id_card" size="45"
 			 value="<%= (userVO==null)? "A123456789" : userVO.getId_card()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.id_card}</b></td></tr>
+<!-- 	<tr> -->
+<!-- 		<td>性別 *</td> -->
+<!-- 		<td><select name="user_gender"> -->
+<%-- 					<option value="0" ${(userVO.user_gender==0)? 'selected':'' }>女</option> --%>
+<%-- 					<option value="1" ${(userVO.user_gender==1)? 'selected':'' }>男</option> --%>
+<!-- 			</select></td>  -->
+<%-- 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_gender}</b></td></tr> --%>
+	
 	<tr>
-		<td>性別 *</td>
-		<td><select name="user_gender">
-					<option value="0" ${(userVO.user_gender==0)? 'selected':'' }>女</option>
-					<option value="1" ${(userVO.user_gender==1)? 'selected':'' }>男</option>
-			</select></td> 
+	<td>性別 *</td>
+	<td><input type="radio" id="user_gender" name="user_gender" value="1" ${(userVO.user_gender==1)? 'checked':'' }>
+	<label for="male">男</label>
+	<input type="radio" id="user_gender" name="user_gender" value="0" ${(userVO.user_gender==0)? 'checked':'' }>
+	<label for="female">女</label></td> 
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_gender}</b></td></tr>
+	
 	<tr>
 		<td>生日 *</td>
 		<td><input name="user_dob" size="45" id="f_date1" type="text"></td>

@@ -135,12 +135,12 @@ public class UserServlet extends HttpServlet {
 				String url = "/front-end/user/update_user_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_user_input.jsp
 				successView.forward(req, res);
-
+				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-end/user/listAllUser.jsp");
+						.getRequestDispatcher("/front-end/protected/userIndex.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -148,161 +148,166 @@ public class UserServlet extends HttpServlet {
 		
 		if ("update".equals(action)) { // 來自update_user_input.jsp的請求
 			
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 		
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String user_id = new String(req.getParameter("user_id").trim());
 
-				String user_pwd = new String(req.getParameter("user_pwd").trim());
+//				String user_pwd = new String(req.getParameter("user_pwd").trim());
 				
-String user_name = req.getParameter("user_name");
+				String user_name = req.getParameter("user_name");
 				String user_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (user_name == null || user_name.trim().length() == 0) {
-					errorMsgs.add("會員姓名: 請勿空白");
+					errorMsgs.put("user_name","*姓名請勿空白");
 				} else if(!user_name.trim().matches(user_nameReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("會員姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+					errorMsgs.put("user_name","姓名只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 	            }
 				
 				// 身分證驗證
-				String id_card = req.getParameter("id_card");
-				String input_id = id_card;
-				String checkLetter = "ABCDEFGHJKLMNPQRSTUVWXYZIO"; // 首字身分證英文字母代表之意義排序(小到大)
-				if (input_id.length() == 10){
-					char[] uc_id = input_id.toUpperCase().toCharArray();	
-					int[] idArray = new int [uc_id.length];		
-					if (checkLetter.indexOf(uc_id[0]) == -1 || (uc_id[1] != '1' && uc_id[1] != '2'))
-						errorMsgs.add("身分證格式不正確");
-					else{
-						int sum=0;
-						idArray[0] = checkLetter.indexOf(uc_id[0]) + 10;	// 第一個英文字運算
-						sum += idArray[0] / 10; // 將商數加總
-						idArray[0] %= 10; // 取餘數放回 idArray[0]
-						for (int i = 1; i < 10; i++) // 將身分證後9碼轉成整數(ASCII碼-48)
-							idArray[i] = (int)uc_id[i] - 48;
-						for (int i = 0; i < 9; i++){		
-							idArray[i] *= (9 - i); // 總和 sum += (idArray[0])*9...+ idArray[9]*1)
-							sum += idArray[i];
-						}
-						if ((10-sum%10)%10 != idArray[9]) // 檢查是否相等於檢查碼
-							errorMsgs.add("身分證不正確，請重新輸入！");
-					}
+//				String id_card = req.getParameter("id_card");
+//				String input_id = id_card;
+//				String checkLetter = "ABCDEFGHJKLMNPQRSTUVWXYZIO"; // 首字身分證英文字母代表之意義排序(小到大)
+//				if (input_id.length() == 10){
+//					char[] uc_id = input_id.toUpperCase().toCharArray();	
+//					int[] idArray = new int [uc_id.length];		
+//					if (checkLetter.indexOf(uc_id[0]) == -1 || (uc_id[1] != '1' && uc_id[1] != '2'))
+//						errorMsgs.put("id_card","身分證格式不正確");
+//					else{
+//						int sum=0;
+//						idArray[0] = checkLetter.indexOf(uc_id[0]) + 10;	// 第一個英文字運算
+//						sum += idArray[0] / 10; // 將商數加總
+//						idArray[0] %= 10; // 取餘數放回 idArray[0]
+//						for (int i = 1; i < 10; i++) // 將身分證後9碼轉成整數(ASCII碼-48)
+//							idArray[i] = (int)uc_id[i] - 48;
+//						for (int i = 0; i < 9; i++){		
+//							idArray[i] *= (9 - i); // 總和 sum += (idArray[0])*9...+ idArray[9]*1)
+//							sum += idArray[i];
+//						}
+//						if ((10-sum%10)%10 != idArray[9]) // 檢查是否相等於檢查碼
+//							errorMsgs.put("id_card","身分證不正確，請重新輸入！");
+//					}
+//				}
+//				else
+//					errorMsgs.put("id_card","身分證長度不正確！");
+				
+				String user_gender = req.getParameter("user_gender").trim();
+				if (user_gender == null || user_gender.trim().length() == 0) {
+					errorMsgs.put("user_gender","*性別請勿空白");
 				}
-				else
-					errorMsgs.add("身分證長度不正確！");
-				
-//				String id_card = req.getParameter("id_card").trim();
-//				if (id_card == null || id_card.trim().length() == 0) {
-//					errorMsgs.add("身分証字號請勿空白");
-//				}	
-				
-String user_gender = new String(req.getParameter("user_gender").trim());
 				
 				java.sql.Date user_dob = null;
 				try {
 user_dob = java.sql.Date.valueOf(req.getParameter("user_dob").trim());
 				} catch (IllegalArgumentException e) {
 					user_dob =new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
+					errorMsgs.put("user_dob","*請輸入日期!");
 				}
 
-String user_mail = req.getParameter("user_mail").trim();
+				String user_mail = req.getParameter("user_mail");
+				String user_mailReg = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
 				if (user_mail == null || user_mail.trim().length() == 0) {
-					errorMsgs.add("Email請勿空白");
-				}			
-				
-				String user_phone = req.getParameter("user_phone").trim();
-				if (user_phone == null || user_phone.trim().length() == 0) {
-					errorMsgs.add("電話請勿空白");
+					errorMsgs.put("user_mail","*Email請勿空白");
+				} else if (!user_mail.trim().matches(user_mailReg)) { // 以下練習正則(規)表示式(regular-expression)
+					errorMsgs.put("user_mail","*Email格式不正確");
 				}
 				
-				String user_mobile = req.getParameter("user_mobile").trim();
+				String user_phone = req.getParameter("user_phone");
+				if (user_phone == null || user_phone.trim().length() == 0) {
+					errorMsgs.put("user_phone","*電話請勿空白");
+				}
+				
+				String user_mobile = req.getParameter("user_mobile");
 				if (user_mobile == null || user_mobile.trim().length() == 0) {
-					errorMsgs.add("手機號碼請勿空白");
+					errorMsgs.put("user_mobile","*手機請勿空白");
 				}
 				
 				String city = req.getParameter("city");
+				if (city == null || city.length() == 0) {
+					errorMsgs.put("city","*請選擇縣市及鄉鎮市");
+				}
+				
 				String town = req.getParameter("town");
+				if (town == null || town.length() == 0) {
+					errorMsgs.put("town","*請選擇鄉鎮市");
+				}
 				
 				Integer zipcode = null;
 				try {
 					zipcode = new Integer(req.getParameter("zipcode").trim());
 				} catch (NumberFormatException e) {
-					zipcode = 0;
-					errorMsgs.add("請選擇郵遞區號");
+					errorMsgs.put("zipcode","*請選擇郵遞區號");
 				}
 				
-				String user_addr = req.getParameter("user_addr").trim();
+				String user_addr = req.getParameter("user_addr");
 				if (user_addr == null || user_addr.trim().length() == 0) {
-					errorMsgs.add("地址請勿空白");
+					errorMsgs.put("user_addr","*地址請勿空白");
 				}	
 				
 				
-				java.sql.Date regdate = null;
-				try {
-regdate = java.sql.Date.valueOf(req.getParameter("regdate").trim());
-				} catch (IllegalArgumentException e) {
-					regdate =new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
+//				java.sql.Date regdate = null;
+//				try {
+//				regdate = java.sql.Date.valueOf(req.getParameter("regdate").trim());
+//				} catch (IllegalArgumentException e) {
+//					regdate =new java.sql.Date(System.currentTimeMillis());
+//					errorMsgs.put("regdate","請輸入日期!");
+//				}
 				
-				Integer user_point = null;
-				try {
-user_point = new Integer(req.getParameter("user_point").trim());
-				} catch (NumberFormatException e) {
-					user_point = 0;
-					errorMsgs.add("會員點數請填數字.");
-				}
+//				Integer user_point = null;
+//				try {
+//				user_point = new Integer(req.getParameter("user_point").trim());
+//				} catch (NumberFormatException e) {
+//					user_point = 0;
+//					errorMsgs.put("user_point","會員點數請填數字.");
+//				}
 							
-				Integer violation = null;
-				try {
-violation = new Integer(req.getParameter("violation").trim());
-				} catch (NumberFormatException e) {
-					violation = 0;
-					errorMsgs.add("會員違約次數請填數字.");
-				}
+//				Integer violation = null;
+//				try {
+//				violation = new Integer(req.getParameter("violation").trim());
+//				} catch (NumberFormatException e) {
+//					violation = 0;
+//					errorMsgs.put("violation","會員違約次數請填數字.");
+//				}
 				
-				Integer user_state = null;
-				try {
-user_state = new Integer(req.getParameter("user_state").trim());
-				} catch (NumberFormatException e) {
-					user_state = 0;
-					errorMsgs.add("會員狀態請填數字.");
-				}
+//				Integer user_state = null;
+//				try {
+//				user_state = new Integer(req.getParameter("user_state").trim());
+//				} catch (NumberFormatException e) {
+//					user_state = 0;
+//					errorMsgs.put("user_state","會員狀態請填數字.");
+//				}
 				
-				Integer user_comment = null;
-				try {
-user_comment = new Integer(req.getParameter("user_comment").trim());
-				} catch (NumberFormatException e) {
-					user_comment = 0;
-					errorMsgs.add("賣家評價請填數字.");
-				}
+//				Integer user_comment = null;
+//				try {
+//				user_comment = new Integer(req.getParameter("user_comment").trim());
+//				} catch (NumberFormatException e) {
+//					user_comment = 0;
+//					errorMsgs.put("user_comment","賣家評價請填數字.");
+//				}
 				
-				Integer comment_total = null;
-				try {
-comment_total = new Integer(req.getParameter("comment_total").trim());
-				} catch (NumberFormatException e) {
-					comment_total = 0;
-					errorMsgs.add("評價人數請填數字.");
-				}
+//				Integer comment_total = null;
+//				try {
+//				comment_total = new Integer(req.getParameter("comment_total").trim());
+//				} catch (NumberFormatException e) {
+//					comment_total = 0;
+//					errorMsgs.put("comment_total","評價人數請填數字.");
+//				}
 				
-				Integer cash = null;
-				try {
-cash = new Integer(req.getParameter("cash").trim());
-				} catch (NumberFormatException e) {
-					cash = 0;
-					errorMsgs.add("會員錢包請填數字.");
-				}
-//Integer user_id = new Integer(req.getParameter("user_id").trim());
+//				Integer cash = null;
+//				try {
+//				cash = new Integer(req.getParameter("cash").trim());
+//				} catch (NumberFormatException e) {
+//					cash = 0;
+//					errorMsgs.put("cash","會員錢包請填數字.");
+//				}
 				
 				UserVO userVO = new UserVO();
-				userVO.setUser_id(user_id);
-				userVO.setUser_pwd(user_pwd);
+				
+//				userVO.setUser_id(user_id);
+//				userVO.setUser_pwd(user_pwd);
 				userVO.setUser_name(user_name);
-				userVO.setId_card(id_card);
+//				userVO.setId_card(id_card);
 				userVO.setUser_gender(user_gender);
 				userVO.setUser_dob(user_dob);
 				userVO.setUser_mail(user_mail);
@@ -312,16 +317,13 @@ cash = new Integer(req.getParameter("cash").trim());
 				userVO.setTown(town);
 				userVO.setZipcode(zipcode);
 				userVO.setUser_addr(user_addr);
-				userVO.setRegdate(regdate);
-				userVO.setUser_point(user_point);
-				userVO.setViolation(violation);
-				userVO.setUser_state(user_state);
-				userVO.setUser_comment(user_comment);
-				userVO.setComment_total(comment_total);
-				userVO.setCash(cash);
-				
-//				System.out.println(user_id + user_pwd + user_name + id_card + user_gender + user_dob + user_mail + user_phone + user_mobile + user_addr + regdate + user_point + violation + user_state + user_comment + comment_total + cash);
-
+//				userVO.setRegdate(regdate);
+//				userVO.setUser_point(user_point);
+//				userVO.setViolation(violation);
+//				userVO.setUser_state(user_state);
+//				userVO.setUser_comment(user_comment);
+//				userVO.setComment_total(comment_total);
+//				userVO.setCash(cash);
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -335,7 +337,7 @@ cash = new Integer(req.getParameter("cash").trim());
 				/***************************2.開始修改資料*****************************************/
 				UserService userSvc = new UserService();
 				
-				userVO = userSvc.updateUser(user_id, user_pwd, user_name, id_card, user_gender,user_dob, user_mail, user_phone, user_mobile, city, town, zipcode, user_addr, regdate, user_point, violation, user_state, user_comment, comment_total, cash);
+				userVO = userSvc.updateUser(user_id, user_name, user_gender,user_dob, user_mail, user_phone, user_mobile, city, town, zipcode, user_addr);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("userVO", userVO); // 資料庫update成功後,正確的的userVO物件,存入req
@@ -345,7 +347,7 @@ cash = new Integer(req.getParameter("cash").trim());
 				
 				/***************************其他可能的錯誤處理*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:"+e.getMessage());
+				errorMsgs.put("Exception",e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/front-end/user/update_user_input.jsp");
 				failureView.forward(req, res);
@@ -487,7 +489,7 @@ cash = new Integer(req.getParameter("cash").trim());
 				if (user_mail == null || user_mail.trim().length() == 0) {
 					errorMsgs.put("user_mail","*Email請勿空白");
 				} else if (!user_mail.trim().matches(user_mailReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.put("user_mail","Email格式不正確");
+					errorMsgs.put("user_mail","*Email格式不正確");
 				}
 				
 				String user_phone = req.getParameter("user_phone");
@@ -505,12 +507,12 @@ cash = new Integer(req.getParameter("cash").trim());
 				
 				String city = req.getParameter("city");
 				if (city == null || city.length() == 0) {
-					errorMsgs.put("city","請選擇縣市及鄉鎮市");
+					errorMsgs.put("city","*請選擇縣市及鄉鎮市");
 				}
 				
 				String town = req.getParameter("town");
 				if (town == null || town.length() == 0) {
-					errorMsgs.put("town","請選擇鄉鎮市");
+					errorMsgs.put("town","*請選擇鄉鎮市");
 				}
 				
 				Integer zipcode = null;

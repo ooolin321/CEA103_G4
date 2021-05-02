@@ -43,11 +43,11 @@ padding: 15px;
 <main class="app-content">
                 <div class="app-title">
                   <div>
-                    <h1><i class="fa fa-user fa-lg"></i> 基本資料查詢</h1>
+                    <h1><i class="fa fa-user fa-lg"></i> 我的基本資料</h1>
                   </div>
                   <ul class="app-breadcrumb breadcrumb">
                     <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><i class="fa fa-home fa-lg"></i></a></li>
-                    <li class="breadcrumb-item">基本資料查詢</li>
+                    <li class="breadcrumb-item">我的基本資料</li>
                   </ul>
                 </div>
 <table>
@@ -77,6 +77,10 @@ padding: 15px;
 		<td><%=userVO.getUser_mail()%></td>
 	</tr>	
 	<tr>
+		<th>電話:</th>
+		<td><%=userVO.getUser_phone()%></td>
+	</tr>	
+	<tr>
 		<th>手機號碼:</th>
 		<td><%=userVO.getUser_mobile()%></td>
 	</tr>	
@@ -93,7 +97,6 @@ padding: 15px;
 <%-- 		<td><%=userVO.getComment_total()%></td> --%>
 <!-- 	</tr>	 -->
 
-<!-- 		<th>電話</th> -->
 <!-- 		<th>縣市</th> -->
 <!-- 		<th>鄉鎮</th> -->
 <!-- 		<th>郵遞區號</th> -->
@@ -115,6 +118,12 @@ padding: 15px;
 <%-- 		<td><%=userVO.getUser_comment()%></td> --%>
 <%-- 		<td><%=userVO.getCash()%></td> --%>
 </table>
+
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/user/user.do">
+	<input type="submit" value="修改我的資料">
+	<input type="hidden" name="user_id"  value="${userVO.user_id}">
+	<input type="hidden" name="action"	value="getOne_For_Update">       
+</FORM>
 <jsp:include page="/front-end/protected/userIndex_footer.jsp" />
 </body>
 </html>

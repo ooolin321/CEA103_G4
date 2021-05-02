@@ -60,4 +60,8 @@ public class LiveService {
 	public List<LiveVO> getAll(){
 		return dao.getAll();
 	}
+	
+	public List<LiveVO> getAllByID(String user_id){
+		return dao.getAllByID(user_id);
+	}
 }

@@ -89,20 +89,26 @@
                   </li>
                   <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">直播訂單管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
-                      <li><a class="treeview-item" href="table-basic.html"><i class="icon fa fa-circle-o"></i> Basic Tables</a></li>
-                      <li><a class="treeview-item" href="table-data-table.html"><i class="icon fa fa-circle-o"></i> Data Tables</a></li>
+                      <li><a class="treeview-item" href="table-basic.html"><i class="icon fa fa-circle-o"></i>我的購買訂單</a></li>
+                      <li><a class="treeview-item" href="table-basic.html"><i class="icon fa fa-circle-o"></i>我的販賣訂單</a></li>
                     </ul>
                   </li>
                   <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">直播專案管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
-                      <li><a class="treeview-item" href="blank-page.html"><i class="icon fa fa-circle-o"></i> Blank Page</a></li>
-                      <li><a class="treeview-item" href="page-login.html"><i class="icon fa fa-circle-o"></i> Login Page</a></li>
-                      <li><a class="treeview-item" href="page-lockscreen.html"><i class="icon fa fa-circle-o"></i> Lockscreen Page</a></li>
-                      <li><a class="treeview-item" href="page-user.html"><i class="icon fa fa-circle-o"></i> User Page</a></li>
-                      <li><a class="treeview-item" href="page-invoice.html"><i class="icon fa fa-circle-o"></i> Invoice Page</a></li>
-                      <li><a class="treeview-item" href="page-calendar.html"><i class="icon fa fa-circle-o"></i> Calendar Page</a></li>
-                      <li><a class="treeview-item" href="page-mailbox.html"><i class="icon fa fa-circle-o"></i> Mailbox</a></li>
-                      <li><a class="treeview-item" href="page-error.html"><i class="icon fa fa-circle-o"></i> Error Page</a></li>
+                      <li><a class="treeview-item" href='<%=request.getContextPath()%>/front-end/liveManagement/liveList.jsp'><i class="icon fa fa-circle-o"></i>我的直播專案</a></li>
+                      <li>
+                      <FORM id="add_live" METHOD="post" ACTION="<%=request.getContextPath()%>/live/live.do" style="margin-bottom: 0px;">
+					     <input type="hidden" name="user_id"  value="${userVO.user_id}">
+					     <input type="hidden" name="action"	value="insert">
+                      <a class="treeview-item" href="#" onclick="document.getElementById('add_live').submit();"><i class="icon fa fa-circle-o"></i>新增直播專案</a>
+                      </FORM>
+<!--                       <li> -->
+<%--                    	  <FORM id="update_live" METHOD="post" ACTION="<%=request.getContextPath()%>/live/live.do" style="margin-bottom: 0px;"> --%>
+<%-- 					     <input type="hidden" name="user_id"  value="${userVO.user_id}"> --%>
+<!-- 					     <input type="hidden" name="action"	value="getOne_For_Update"> -->
+<!--                       <a class="treeview-item" href="#" onclick="document.getElementById('update_live').submit();"><i class="icon fa fa-circle-o"></i>修改直播專案</a> -->
+<!--                       </FORM> -->
+<!--                       </li> -->
                     </ul>
                   </li>
                 </ul>

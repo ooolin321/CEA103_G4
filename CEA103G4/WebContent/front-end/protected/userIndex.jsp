@@ -31,7 +31,7 @@
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="app sidebar-mini rtl">
-<jsp:include page="/front-end/user/userSidebar.jsp" />
+ <%@include file="/front-end/user/userSidebar.jsp"%>
               <main class="app-content">
                 <div class="app-title">
                   <div>

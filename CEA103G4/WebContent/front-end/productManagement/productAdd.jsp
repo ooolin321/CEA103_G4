@@ -52,7 +52,7 @@
 <body class="app sidebar-mini rtl">
 
 	<!-- Navbar_siderbar start-->
-	<%@include file="/front-end/header.jsp"%>
+	<%@include file="/front-end/user/userSidebar.jsp"%>
 	<!-- Navbar_siderbar finish-->
 
 

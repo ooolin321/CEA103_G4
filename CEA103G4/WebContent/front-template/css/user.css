@@ -3,33 +3,9 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100px;
+  height: 70px;
   background-color: pink;
   z-index: 999;
-}
-
-@font-face {
-  /* 嵌入字體 */
-  src: url("font/crazy_rich/_CRAZY_RICH_.otf");
-  font-family: webfont;
-}
-
-.inner-header .logo h2 {
-  font-family: webfont;
-  padding-top: 10px;
-  color: white;
-  text-align: center;
-  height: 100%;
-  line-height: 30px;
-}
-
-.inner-header .logo h2 small {
-  font-family: webfont;
-  margin-top: -2px;
-  text-indent: 4em;
-  color: white;
-  display: block;
-  font-size: 0.4em;
 }
 
 .header-section .logo a {
@@ -40,35 +16,32 @@
   float: left;
   width: 25%;
   height: 100%;
-  padding: 0px 7%;
+  padding: 0px 10%;
   box-sizing: border-box;
   font-size: 700;
+  display:block;
 }
 
 .logo a {
   text-decoration: none;
 }
 
-@font-face {
-  /* 嵌入字體 */
-  src: url("font/crazy_rich/_CRAZY_RICH_.otf");
-  font-family: webfont;
-}
-
 .logo h2 {
-  font-family: webfont;
-  padding-top: 6px;
+  font-family: "Muli", sans-serif;
+  padding-top: 4px;
   color: white;
   text-align: center;
   height: 100%;
+  font-size:20px;
+  display: inline-block;
 }
 
 .logo h2 small {
-  font-family: webfont;
+  font-family: "Muli", sans-serif;
   text-indent: 4em;
   color: white;
   display: block;
-  font-size: 0.4em;
+  font-size: 0.6em;
 }
 
 .product {

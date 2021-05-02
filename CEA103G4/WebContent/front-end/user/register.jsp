@@ -5,6 +5,7 @@
 
 <%
 	UserVO userVO = (UserVO) request.getAttribute("userVO");
+	request.setAttribute("userVO", userVO);
 %>
 
 <!DOCTYPE html>
@@ -133,6 +134,7 @@
 		<input type="TEXT" name="user_addr" size="45" value="<%= (userVO==null)? "XX路X段XXX巷XX號" : userVO.getUser_addr()%>"></td>
 		</td><tr><td></td><td><font color=red><b>${errorMsgs.user_addr}</b></td></tr>
 	</tr>
+<%-- 	<jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" /> --%>
 </table>
 				<input type="hidden" name="action" value="insert">
                 <button type="submit" class="site-btn register-btn">

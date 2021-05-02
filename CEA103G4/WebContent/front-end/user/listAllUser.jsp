@@ -102,8 +102,8 @@
 			<td>${userVO.user_name}</td>
 			<td>${userVO.id_card}</td>
 			<td>			
-			${(userVO.user_gender=='M')? '男':''}
-			${(userVO.user_gender=='F')? '女':''}
+			${(userVO.user_gender=='1')? '男':''}
+			${(userVO.user_gender=='0')? '女':''}
 			</td>
 			<td><fmt:formatDate value="${userVO.user_dob}" pattern="yyyy-MM-dd"/></td>
 <%-- 		                       <td>${userVO.user_dob}</td> --%>

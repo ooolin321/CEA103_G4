@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.user.model.*"%>
-<%-- 此頁暫練習採用 Script 的寫法取值 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
   UserVO userVO = (UserVO) request.getAttribute("userVO"); //UserServlet.java(Controller), 存入req的userVO物件
@@ -8,52 +9,41 @@
 
 <html>
 <head>
-<title>會員資料 - listOneUser.jsp</title>
+<title>會員個人資料</title>
+ <meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
+  <!-- Twitter meta-->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:site" content="@pratikborsadiya">
+  <meta property="twitter:creator" content="@pratikborsadiya">
+  <!-- Open Graph Meta-->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Vali Admin">
+  <meta property="og:title" content="Vali - Free Bootstrap 4 admin theme">
+  <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
+  <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
+  <meta property="og:description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
 
-<style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
-
-<style>
-  table {
-	width: 600px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-  }
-  table, th, td {
-    border: 1px solid #CCCCFF;
-  }
-  th, td {
-    padding: 5px;
-    text-align: center;
-  }
-</style>
-
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Main CSS-->
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-template/css/usermain.css">
+  <!-- Font-icon css-->
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body bgcolor='white'>
-
-<h4>此頁暫練習採用 Script 的寫法取值:</h4>
-<table id="table-1">
-	<tr><td>
-		 <h3>會員資料 - ListOneUser.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
-	</td></tr>
-</table>
-
+<body class="app sidebar-mini rtl">
+<body bgcolor='white' class="app sidebar-mini rtl">
+<jsp:include page="/front-end/user/userSidebar.jsp" />
+<main class="app-content">
+                <div class="app-title">
+                  <div>
+                    <h1><i class="fa fa-user fa-lg"></i> 會員資料查詢</h1>
+                  </div>
+                  <ul class="app-breadcrumb breadcrumb">
+                    <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+                    <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員資料查詢</a></li>
+                  </ul>
+                </div>
 <table>
 	<tr>
 		<th>帳號</th>
@@ -101,6 +91,6 @@
 		<td><%=userVO.getCash()%></td>
 	</tr>
 </table>
-
+<jsp:include page="/front-end/protected/userIndex_footer.jsp" />
 </body>
 </html>

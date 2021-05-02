@@ -54,7 +54,7 @@
                   <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
                     <ul class="dropdown-menu settings-menu dropdown-menu-right">
                       <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-cog fa-lg"></i> Settings</a></li>
- <li><a class="dropdown-item" href="<%=request.getContextPath()%>/user/user.do?user_id=${userVO.user_id}&action=getOne_From"><i class="fa fa-user fa-lg"></i> Profile</a></li>
+ <li><a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/user/user.do?user_id=${userVO.user_id}&action=getOne_For_Display"><i class="fa fa-user fa-lg"></i> Profile</a></li>
                       <li><a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/userLogin.jsp"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
                     </ul>
                   </li>
@@ -70,15 +70,8 @@
                   </div>
                 </div>
                 <ul class="app-menu">
-                  <li><a class="app-menu__item" href="<%=request.getContextPath()%>/front-end/protected/userindex.jsp"><i class="app-menu__icon fa fa-drivers-license-o"></i><span class="app-menu__label">會員首頁</span></a></li>
-                  <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-gear"></i><span class="app-menu__label">會員資料管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-                    <ul class="treeview-menu">
-                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/user.do?action=getOne_For_Update&user_id=${userVO.user_id}"><i class="icon fa fa-circle-o"></i>資料修改</a></li>
-                      <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Font Icons</a></li>
-                      <li><a class="treeview-item" href="ui-cards.html"><i class="icon fa fa-circle-o"></i> Cards</a></li>
-                      <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-circle-o"></i> Widgets</a></li>
-                    </ul>
-                  </li>                  
+                  <li><a class="app-menu__item" href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><i class="app-menu__icon fa fa-drivers-license-o"></i><span class="app-menu__label">會員首頁</span></a></li>
+                  <li class="treeview"><a class="app-menu__item" href="<%=request.getContextPath()%>/front-end/user/user.do?user_id=${userVO.user_id}&action=getOne_For_Update" data-toggle="treeview"><i class="app-menu__icon fa fa-gear"></i><span class="app-menu__label">會員資料管理</span></a></li>                  
                    <li class="treeview"><a class="app-menu__item" href="<%=request.getContextPath()%>/front-end/seller/productList.jsp" data-toggle="treeview"><i class="app-menu__icon fa fa-shopping-bag"></i><span class="app-menu__label">商品管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
                       <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/productMangement/productList.jsp"><i class="icon fa fa-archive"></i>我的商品</a></li>

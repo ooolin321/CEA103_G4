@@ -26,12 +26,10 @@ public class AuthDAO implements AuthDAO_interface {
 		}
 	}
 	private static final String INSERT_STMT = "insert into AUTH (FUNNO,EMPNO,AUTH_NO) values (?, ?, ?)";
-//	private static final String INSERT_STMT = "update Auth set AUTH_NO=? where EMPNO=? and FUNNO=?";
 	private static final String UPDATE_STMT = "update Auth set AUTH_NO=? where EMPNO=? and FUNNO=?";
 	private static final String DELETE_STMT = "delete from AUTH where EMPNO=? and FUNNO=?";
-	private static final String GET_ONE_BY_EMPNO_AND_FUNNO_STMT = "select funno,empno,auty_no from AUTH where FUNNO=? and EMPNO = ? ";
-//	private static final String GET_ALL_BY_EMPNO_STMT = "select funno,empno,auth_no from AUTH order by EMPNO and FUNNO";
-	private static final String GET_ALL_BY_EMPNO_STMT = "select funno,empno,auth_no from AUTH order by EMPNO";
+	private static final String GET_ONE_BY_EMPNO_AND_FUNNO_STMT = "select FUNNO,EMPNO,AUTH_NO from AUTH where EMPNO = ? ";
+	private static final String GET_ALL_BY_EMPNO_STMT = "select FUNNO,EMPNO,AUTH_NO from AUTH order by EMPNO";
 	
 
 	
@@ -119,7 +117,6 @@ public class AuthDAO implements AuthDAO_interface {
 
 			pstmt.setInt(1, empno);
 			pstmt.setInt(2, funno);
-
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -143,7 +140,7 @@ public class AuthDAO implements AuthDAO_interface {
 	}
 
 	@Override
-	public AuthVO findByPrimeKey(Integer funno,Integer empno) {
+	public AuthVO findAuthByEmpno(Integer empno) {
 		AuthVO authVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -153,8 +150,8 @@ public class AuthDAO implements AuthDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_BY_EMPNO_AND_FUNNO_STMT);
 
-			pstmt.setInt(1, funno);
-			pstmt.setInt(2, empno);
+			pstmt.setInt(1, empno);
+
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {

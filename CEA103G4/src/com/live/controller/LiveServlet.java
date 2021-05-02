@@ -119,14 +119,14 @@ public class LiveServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("liveVO", liveVO); // 資料庫取出的liveVO物件,存入req
-				String url = "/front-end/live/update_live_input.jsp";
+				String url = "/front-end/liveManagement/liveUpdate.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live/listAllLive.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/liveManagement/liveList.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -189,7 +189,7 @@ public class LiveServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("liveVO", liveVO); // 含有輸入格式錯誤的liveVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/live/update_live_input.jsp");
+							.getRequestDispatcher("/front-end/liveManagement/liveUpdate.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -201,7 +201,7 @@ public class LiveServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("liveVO", liveVO); // 資料庫update成功後,正確的的liveVO物件,存入req
-				String url = "/front-end/live/listOneLive.jsp";
+				String url = "/front-end/liveManagement/liveList.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -209,7 +209,7 @@ public class LiveServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-end/live/update_live_input.jsp");
+						.getRequestDispatcher("/front-end/liveManagement/liveUpdate.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -264,7 +264,7 @@ public class LiveServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("liveVO", liveVO); // 含有輸入格式錯誤的liveVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/live/addLive.jsp");
+							.getRequestDispatcher("/front-end/liveManagement/liveAdd.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -274,14 +274,14 @@ public class LiveServlet extends HttpServlet {
 				liveVO = liveSvc.addLive(live_type,live_name,live_time,live_state,user_id,empno,live_photo);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/front-end/live/listAllLive.jsp";
+				String url = "/front-end/liveManagement/liveList.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live/addLive.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/liveManagement/liveAdd.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -302,14 +302,14 @@ public class LiveServlet extends HttpServlet {
 				liveSvc.deleteLive(live_no);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/front-end/live/listAllLive.jsp";
+				String url = "/front-end/liveManagement/liveList.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live/listAllLive.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/liveManagement/liveList.jsp");
 				failureView.forward(req, res);
 			}
 		}

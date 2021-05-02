@@ -13,6 +13,8 @@
 	pageContext.setAttribute("list", list);
 %>
 
+<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
+<jsp:useBean id="funSvc2" scope="page" class="com.fun.model.FunService" />
 
 <html>
 <head>
@@ -66,82 +68,31 @@ table th .AutoNewline {
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>網站功能資料 - ListOneFun.jsp</h3>
+				<h3>網站權限資料 - ListOneAuth.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/back-end/fun/selectFun.jsp"><img
-						src="<%=request.getContextPath()%>/images/back1.gif" width="100" height="32" border="0">回首頁</a>
+					<a href="<%=request.getContextPath()%>/back-end/auth/selectAuth.jsp"><img
+						src="<%=request.getContextPath()%>/images/back1.gif" width="100"
+						height="32" border="0">回首頁</a>
 				</h4>
 			</td>
 		</tr>
 	</table>
-					<table class="col-md-12" id="sampleTable">
-						<thead>
-							<tr role="row" class="table-info">
-								<th>員工名稱</th>
-								<th>功能名稱</th>
-								<th>狀態</th>
-								<!-- 								<th>修改</th> -->
-								<!-- 			<th>刪除</th> -->
-							</tr>
-						</thead>
-						<tbody>
-							<%-- 		<%@ include file="page1.file"%> --%>
-							<c:forEach var="futhVO" items="${list}">
+	<table  class="layui-table layui-form">
+		<tr>
+			<th>功能編號</th>
+<!-- 			<th>功能名稱</th> -->
+			<th>員工編號</th>
+<!-- 			<th>員工姓名</th> -->
+			<th>狀態</th>
+		</tr>
+		<tr>
+			<td>${authVO.empno}</td>
+			<td>${authVO.funno}</td>
+			<td>${authVO.auth_no}</td>
+		</tr>
+	
+	</table>
 
-								<tr>
-									<td>${authVO.funno}</td>
-									<td>${funSvc.getOneFun(authVO.funno).funName}</td>
-									<td>${authVO.empno}</td>
-									<td>${empSvc.getOneEmp(authVO.empno).ename}</td>
-									<c:choose>
-										<c:when test="${futhVO.state==0}">
-											<td>關閉</td>
-										</c:when>
-										<c:when test="${futhVO.state==1}">
-											<td>開啟</td>
-										</c:when>
-									</c:choose>
-									<!-- 				<td><select size="1" name="state"> -->
-									<%-- 						<option value="1" ${(futhVO.state==0)? 'selected':''}>開啟</option> --%>
-									<%-- 						<option value="0" ${(futhVO.state==0)? 'selected':''}>關閉</option> --%>
-									<!-- 				</select></td> -->
-
-									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/fun/fun.do"
-											style="margin-bottom: 0px;">
-											<input type="submit" value="修改"> <input type="hidden"
-												name="funno" value="${futhVO.funno}"> <input
-												type="hidden" name="action" value="getOne_For_Update">
-											<input type="hidden" name="requestURL"
-												value="<%=request.getParameter("requestURL")%>">
-											<!--接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用-->
-											<input type="hidden" name="whichPage"
-												value="<%=request.getParameter("whichPage")%>">
-											<!--只用於:istAllEmp.jsp-->
-
-										</FORM>
-									</td>
-
-
-									<!-- 				<td> -->
-									<%-- 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/fun/fun.do" --%>
-									<!-- 						style="margin-bottom: 0px;"> -->
-									<!-- 						<input type="submit" value="刪除"> <input type="hidden" -->
-									<%-- 							name="funno" value="${futhVO.funno}"> <input type="hidden" --%>
-									<!-- 							name="action" value="delete"> -->
-									<!-- 					</FORM> -->
-									<!-- 				</td> -->
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<jsp:include page="/back-end/backendfooter.jsp" />
 
 </body>
 </html>

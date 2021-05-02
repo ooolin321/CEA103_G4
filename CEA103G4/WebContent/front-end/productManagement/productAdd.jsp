@@ -3,6 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.product.model.*"%>
 <%@ page import="com.product_type.model.*"%>
+<%@ page import="com.user.model.*"%>
 
 <%
 	ProductVO productVO = (ProductVO) request.getAttribute("productVO");
@@ -10,6 +11,9 @@
 	Product_TypeDAO dao2 = new Product_TypeDAO();
 	List<Product_TypeVO> list2 = dao2.getAll();
 	pageContext.setAttribute("list2",list2);
+	
+	UserVO userVO = (UserVO) session.getAttribute("account"); 
+	session.setAttribute("userVO", userVO);
 	
 %>
 
@@ -39,6 +43,8 @@
 <!-- Main CSS-->
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/front-template/css/usermain.css">
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/front-template/css/style.css">	
 <!-- Font-icon css-->
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -46,7 +52,7 @@
 <body class="app sidebar-mini rtl">
 
 	<!-- Navbar_siderbar start-->
-	<%@include file="/front-end/user/userSidebar.jsp"%>
+	<%@include file="/front-end/header.jsp"%>
 	<!-- Navbar_siderbar finish-->
 
 
@@ -74,7 +80,7 @@
 			<div class="form-group">
 				<label for="product_info" class="col-sm-2 col-form-label">商品描述</label>
 				<div class="col-sm-10">
-				<textarea class="form-control" id="product_info" style="resize:none;" maxlength="300" rows="6" name="product_info" placeholder="請輸入商品說明"  value="<%=(productVO == null) ? "" : productVO.getProduct_info()%>" required></textarea>
+				<textarea class="form-control" id="product_info" style="resize:none; white-space:pre-wrap;" maxlength="300" rows="6" name="product_info" placeholder="請輸入商品說明"   ><%=(productVO == null) ? "" : productVO.getProduct_info()%></textarea>
 				<div id="words"><span style="font-weight: bold;">0</span>/300</div>
 				</div>
 			</div>
@@ -84,22 +90,15 @@
      			 <input type="text" class="form-control" id="product_price" name="product_price" placeholder="請輸入商品價格" value="<%=(productVO == null) ? "" : productVO.getProduct_price()%>" required>
    			 </div>
    			 	<div class="col-md-4 mb-3">
-  				<label for="product_quantity">商品數量</label>
-             	<select class="custom-select form-control" id="product_quantity" required>
-               		<option selected>請選擇商品數量</option>
-               		<option value="1">1</option>
-               		<option value="2">2</option>
-               		<option value="2">3</option>
-               		<option value="2">4</option>
-               		<option value="2">5</option>
-              </select>
+  				<label for="product_remaining">商品數量</label>
+  				  <input type="text" class="form-control" id="product_remaining" name="product_remaining" placeholder="請輸入商品數量" value="<%=(productVO == null) ? "" : productVO.getProduct_remaining()%>" required>
    		     </div>
    		       <div class="col-md-4 mb-3">
-  				<label for="product_quantity">商品類別</label>
-             	<select class="custom-select form-control" id="product_quantity" required>
-               		<option selected>請選擇商品類別</option>
+  				<label for="pdtype_no">商品類別</label>
+             	<select class="custom-select form-control" id="pdtype_no" name="pdtype_no" required>
+               		<option selected value="0">請選擇商品類別</option>
                		<c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()-1}">
-               		<option value="${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}</option>
+               		<option value="${product_typeVO.pdtype_no}"  ${(productVO.pdtype_no==product_typeVO.pdtype_no)? 'selected': ''}> ${product_typeVO.pdtype_name}</option>
                    </c:forEach>
               </select>
    		     </div>
@@ -109,18 +108,28 @@
 			<div class="row">
 			<div class="col-lg-4 col-sm-6">
 				<label for="product_photo" id="upload-img" class="card mb-2 productcard">
-				<input class="form-control" id="product_photo" type="file" name="product_photo"  value="<%= (productVO==null)? "" : productVO.getProduct_photo()%>" required>
+				<input class="form-control" id="product_photo" type="file" name="product_photo" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"  value="<%= (productVO==null)? "" : productVO.getProduct_photo()%>">
 				<i class="fa fa-camera" id="iconcamera"></i>
-				</label>
 				<i class="delAvatar fa fa-times-circle-o" title="移除圖片"></i>
+				</label>
 			</div>
+			<%-- 錯誤表列 --%>
+			<c:if test="${not empty errorMsgs}">
+			<font style="color:red">請修正以下錯誤:</font>
+			<ul>
+			<c:forEach var="message" items="${errorMsgs}">
+				<li style="color:red">${message}</li>
+			</c:forEach>
+			</ul>
+			</c:if>
 		  </div>
 		  </div>
 		  <div class="productAddBtn">
-			<br> <input type="hidden" name="action" value="insert">
-			<button type="button" class="btn btn-danger">取消</button>
-			<button type="submit" class="btn btn-info">儲存商品</button>
-			<button type="submit" class="btn btn-warning">儲存並上架</button>
+			<input type="hidden" name="action" value="insert">
+			<input type="hidden" name="user_id" value="<%=userVO.getUser_id()%>">
+			<a href="<%=request.getContextPath()%>/front-end/productManagement/productList.jsp"><button type="button" class="btn btn-danger">取消</button></a>
+			<button type="submit" class="btn btn-info submitAdd" name="product_state" value="<%= (productVO==null)? "0" : productVO.getProduct_state()%>">儲存商品</button>
+			<button type="submit" class="btn btn-warning submitAdd" name="product_state" value="<%= (productVO==null)? "1" : productVO.getProduct_state()%>">儲存並上架</button>
 			</div>
 		
 </form>
@@ -246,6 +255,12 @@
 		            var content_msg = remain;
 		            $(this).next().html(content_msg);
 		        });
+// 		$(".submitAdd").click(function() {
+// 			if ($("#product_photo").val() == null || $("#product_photo").val().length == 0){
+// 				alert('請上傳圖片！');
+// 			}
+// 		});
+		
 
 
 

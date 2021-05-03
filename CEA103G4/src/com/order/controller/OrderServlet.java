@@ -11,6 +11,8 @@ import org.json.JSONObject;
 import com.mysql.fabric.Response;
 import com.order.model.OrderService;
 import com.order.model.OrderVO;
+import com.order_detail.model.Order_detailService;
+import com.order_detail.model.Order_detailVO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
 
@@ -44,6 +46,72 @@ public class OrderServlet extends HttpServlet{
 //				 
 //		}
 		if ("getOne_For_Add".equals(action)) { // 來自select_page.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				String str = req.getParameter("product_no");
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("請輸入產品編號");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/order/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				Integer product_no = null;
+				try {
+					product_no = new Integer(str);
+				} catch (Exception e) {
+					errorMsgs.add("編號格式不正確");
+				}
+				
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/order/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				/***************************2.開始查詢資料*****************************************/
+				ProductService productSvc = new ProductService();
+				ProductVO productVO = productSvc.getOneProduct(product_no);
+				if (productVO == null) {
+					errorMsgs.add("查無資料");
+				}
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/order/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("productVO", productVO); // 資料庫取出的productVO物件,存入req
+				String url = "/front-end/order/addOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 addOrder.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/order/select_page.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("getOne_For_Insert".equals(action)) { // 來自select_page.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -404,29 +472,31 @@ public class OrderServlet extends HttpServlet{
 		}
 
         if ("insert".equals(action)) { // 來自addOrder.jsp的請求 
-			
+
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
+
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+				Integer product_no = new Integer(req.getParameter("product_no").trim());
+				System.out.println("check 486");
+				Integer product_remaining = new Integer(req.getParameter("product_remaining").trim());
 				
-				Integer order_state = null;
+				Integer product_num = null;
 				try {
-					order_state = new Integer(req.getParameter("order_state").trim());
+					product_num = new Integer(req.getParameter("product_num").trim());
 				} catch (NumberFormatException e) {
-					order_state = 0;
-					errorMsgs.add("訂單狀態請填數字.");
+					product_num = 0;
+					errorMsgs.add("產品數量請填數字.");
 				}
 				
-				Integer order_shipping = null;
-				try {
-					order_shipping = new Integer(req.getParameter("order_shipping").trim());
-				} catch (NumberFormatException e) {
-					order_shipping = 0;
-					errorMsgs.add("訂單運費請填數字.");
-				}
+				Integer order_no = new Integer(req.getParameter("order_no").trim());
+				System.out.println("check 496");
+				Integer order_state = new Integer(req.getParameter("order_state").trim());
+				
+				Integer order_shipping = new Integer(req.getParameter("order_shipping").trim());
 				
 				Integer order_price = null;
 				try {
@@ -443,7 +513,8 @@ public class OrderServlet extends HttpServlet{
 					pay_method = 0;
 					errorMsgs.add("付款方式請填數字.");
 				}
-				
+				System.out.println("check 515");
+
 				String rec_name = req.getParameter("rec_name");
 				String rec_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (rec_name == null || rec_name.trim().length() == 0) {
@@ -451,6 +522,7 @@ public class OrderServlet extends HttpServlet{
 				} else if(!rec_name.trim().matches(rec_nameReg)) { //以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("收件人姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 	            }
+				
 				String zipcode = req.getParameter("zipcode");
 				String city = req.getParameter("city");
 				String town = req.getParameter("town");
@@ -480,6 +552,7 @@ public class OrderServlet extends HttpServlet{
 					logistics = 0;
 					errorMsgs.add("物流方式請填數字.");
 				}
+				System.out.println("check 552");
 
 				Integer logisticsstate = null;
 				try {
@@ -524,8 +597,10 @@ public class OrderServlet extends HttpServlet{
 					point = 0;
 					errorMsgs.add("點數請填數字.");
 				}
+				System.out.println("check 596");
 
 				OrderVO orderVO = new OrderVO();
+				orderVO.setOrder_no(order_no);
 				orderVO.setOrder_state(order_state);
 				orderVO.setOrder_shipping(order_shipping);
 				orderVO.setOrder_price(order_price);
@@ -545,20 +620,33 @@ public class OrderServlet extends HttpServlet{
 				orderVO.setSrating(srating);
 				orderVO.setSrating_content(srating_content);
 				orderVO.setPoint(point);
-
+				
+				Order_detailVO order_detailVO = new Order_detailVO();
+				order_detailVO.setOrder_no(order_no);
+				order_detailVO.setOrder_price(order_price);
+				order_detailVO.setProduct_no(product_no);
+				order_detailVO.setProduct_num(product_num);
+				
+				ProductVO productVO = new ProductVO();
+				productVO.setProduct_no(product_no);
+				productVO.setProduct_remaining(product_remaining);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("orderVO", orderVO); // 資料庫取出的orderVO物件,存入req
+					req.setAttribute("order_detailVO", order_detailVO);
+					req.setAttribute("productVO", productVO);
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/front-end/order/addOrder.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
+				System.out.println("check 638");
 				/***************************2.開始修改資料***************************************/
 				OrderService orderSvc = new OrderService();
 				orderVO = orderSvc.addOrder(order_state, order_shipping, order_price, pay_method, rec_name, zipcode, city, town, rec_addr, rec_phone, rec_cellphone, logistics, logisticsstate, discount, user_id, seller_id, srating, srating_content, point);
-				
+				Order_detailService order_detailSvc = new Order_detailService();
+				order_detailVO = order_detailSvc.addOrder_detail(order_no, product_no, product_num, order_price);
 				/***************************3.修改完成,準備轉交(Send the Success view)***********/
 				String url = "/front-end/order/listAllOrder.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneOrder.jsp

@@ -83,6 +83,7 @@
           <option value="${productVO.product_no}">${productVO.product_no}
          </c:forEach>   
        </select>
+       <input type="hidden" name="product_remaining" value="${productVO.product_remaining}">
        <input type="hidden" name="action" value="getOne_For_Add">
        <input type="submit" value="送出">
     </FORM>

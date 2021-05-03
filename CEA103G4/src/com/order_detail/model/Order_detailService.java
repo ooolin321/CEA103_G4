@@ -10,11 +10,11 @@ public class Order_detailService {
 		dao = new Order_detailDAO();
 	}
 
-	public Order_detailVO addOrder_detail(Integer product_no, Integer product_num,Integer order_price) 
+	public Order_detailVO addOrder_detail(Integer order_no, Integer product_no, Integer product_num,Integer order_price) 
 	{
 
 		Order_detailVO order_detailVO = new Order_detailVO();
-
+		order_detailVO.setOrder_no(order_no);
 		order_detailVO.setProduct_no(product_no);
 		order_detailVO.setProduct_num(product_num);
 		order_detailVO.setOrder_price(order_price);
@@ -23,11 +23,11 @@ public class Order_detailService {
 		return order_detailVO;
 	}
 
-	public Order_detailVO updateOrder_detail(Integer product_no, Integer product_num,Integer order_price) 
+	public Order_detailVO updateOrder_detail(Integer order_no, Integer product_no, Integer product_num,Integer order_price) 
 	{
 
 		Order_detailVO order_detailVO = new Order_detailVO();
-
+		order_detailVO.setOrder_no(order_no);
 		order_detailVO.setProduct_no(product_no);
 		order_detailVO.setProduct_num(product_num);
 		order_detailVO.setOrder_price(order_price);

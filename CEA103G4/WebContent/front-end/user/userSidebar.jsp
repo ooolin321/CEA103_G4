@@ -110,10 +110,8 @@
                   
                   <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">直售訂單管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
-                      <li><a class="treeview-item" href="form-components.html"><i class="icon fa fa-circle-o"></i> Form Components</a></li>
-                      <li><a class="treeview-item" href="form-custom.html"><i class="icon fa fa-circle-o"></i> Custom Components</a></li>
-                      <li><a class="treeview-item" href="form-samples.html"><i class="icon fa fa-circle-o"></i> Form Samples</a></li>
-                      <li><a class="treeview-item" href="form-notifications.html"><i class="icon fa fa-circle-o"></i> Form Notifications</a></li>
+                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/orderManagement/OrderListA.jsp"><i class="icon fa fa-circle-o"></i>我的購買訂單</a></li>
+                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/orderManagement/OrderListB.jsp"><i class="icon fa fa-circle-o"></i>我的販賣訂單</a></li>
                     </ul>
                   </li>
                   <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">直播訂單管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>

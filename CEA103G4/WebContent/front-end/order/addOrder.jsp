@@ -84,11 +84,13 @@
 
 	<tr>
 		<td>商品編號：</td>
-		<td>${productVO.product_no}</td>
+		<td>${param.product_no}</td>
+		<td><input type="hidden" name="product_no" value="${param.product_no}"></td>
 	</tr>
 	<tr>
 		<td>商品庫存：</td>
 		<td id="product_remaining">${productVO.product_remaining}</td>
+		<td><input type="hidden" name="product_remaining" value="${productVO.product_remaining}"></td>
 	</tr>
 	<tr>
 		<td>購買數量：</td>
@@ -97,7 +99,6 @@
 		<input type="TEXT" name="product_num" size="2" id="product_num" value="0"  style="text-align:center">
 		<input type="button" value="+" class="add">
 		</td>
-		<td id="errorMsgs" style="color:red"></td>
 	</tr>
 	
 	
@@ -120,7 +121,6 @@
 			<option value="0">錢包</option>
 			<option value="1">信用卡</option>
 			<option value="2">轉帳</option>
-			
 		</select>
 		</td>
 	</tr>
@@ -203,7 +203,7 @@
 	</tr>
 	<tr>
 		<td>評價內容:</td>
-		<td><textarea name="srating_content" rows="10" cols="43" value="${param.srating_content}" ></textarea></td>
+		<td><textarea name="srating_content" rows="10" cols="43" >${param.srating_content}</textarea></td>
 	</tr>
 	<tr>
 		<td>點數回饋:</td>
@@ -258,7 +258,7 @@
 	}
 	});
 	$("#product_num").change(function(e){
-		if($("#product_num").val() > ${productVO.product_remaining}){
+		if($("#product_num").val() > ${productVO.product_remaining}){ //非數字尚未篩
 			window.alert('請勿超過庫存數量');
 			$("#product_num").val(${productVO.product_remaining});
 		}

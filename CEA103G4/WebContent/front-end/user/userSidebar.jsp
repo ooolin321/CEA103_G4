@@ -94,11 +94,7 @@
 				     <input type="hidden" name="action"	value="getOne_For_Display">
 				     <li><a class="treeview-item" href="#" onclick="document.getElementById('getOneUser').submit();"><i class="icon fa fa-circle-o"></i> 個人檔案</a></li>
 				     </FORM>
-                     <FORM id="getOneUpdate" METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/user/user.do">
-                     <input type="hidden" name="user_id"  value="${userVO.user_id}">
-				     <input type="hidden" name="action"	value="getOne_For_Update">
-                     <li><a class="treeview-item" href="#" onclick="document.getElementById('getOneUpdate').submit();"><i class="icon fa fa-circle-o"></i> 更改密碼</a></li>        
-                   	</FORM>
+                     <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/updateUserPwd.jsp"><i class="icon fa fa-circle-o"></i> 更改密碼</a></li>        
                     </ul>     
                   </li>       
                   <li class="treeview"><a class="app-menu__item" href="<%=request.getContextPath()%>/front-end/seller/productList.jsp" data-toggle="treeview"><i class="app-menu__icon fa fa-shopping-bag"></i><span class="app-menu__label">商品管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>

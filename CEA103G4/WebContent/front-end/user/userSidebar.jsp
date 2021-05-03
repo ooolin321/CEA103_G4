@@ -126,7 +126,7 @@
                     <ul class="treeview-menu">
                       <li><a class="treeview-item" href='<%=request.getContextPath()%>/front-end/liveManagement/liveList.jsp'><i class="icon fa fa-circle-o"></i>我的直播專案</a></li>
                       <li>
-                      <a class="treeview-item" href="<%=request.getContextPath()%>/front-end/liveManagement/liveAdd.jsp"><i class="icon fa fa-circle-o"></i>我的販賣訂單</a>
+                      <a class="treeview-item" href="<%=request.getContextPath()%>/front-end/liveManagement/liveAdd.jsp"><i class="icon fa fa-circle-o"></i>新增直播訂單</a>
                       <li>
                     </ul>
                   </li>

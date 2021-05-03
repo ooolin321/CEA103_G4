@@ -78,11 +78,11 @@ public class AuthDAO implements AuthDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_STMT);
 			pstmt.setInt(1, authVO.getAuth_no());
-System.out.println("DAO auth_no= "+ authVO.getAuth_no());
+//System.out.println("DAO auth_no= "+ authVO.getAuth_no());
 			pstmt.setInt(2, authVO.getEmpno());	
-System.out.println("DAO empno= "+ authVO.getEmpno());
+//System.out.println("DAO empno= "+ authVO.getEmpno());
 			pstmt.setInt(3, authVO.getFunno());
-System.out.println("DAO funno= "+ authVO.getFunno());	
+//System.out.println("DAO funno= "+ authVO.getFunno());	
 
 			pstmt.executeUpdate();
 

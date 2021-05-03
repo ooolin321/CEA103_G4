@@ -74,7 +74,7 @@
 											<td>關閉</td>
 										</c:when>
 										<c:when test="${funVO.state==1}">
-											<td>開啟</td>
+											<td>正常</td>
 										</c:when>
 									</c:choose>
 									<!-- 				<td><select size="1" name="state"> -->

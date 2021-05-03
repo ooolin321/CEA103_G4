@@ -366,7 +366,6 @@ public class EmpServlet extends HttpServlet {
 				for (int i = 0; i < funnos.length; i++) {
 					int auth_no = new Integer(auth_nos[i]);
 					int funno = new Integer(funnos[i]);
-					//
 					authVO.setEmpno(empno);
 					authVO.setFunno(funno);
 					authVO.setAuth_no(auth_no);

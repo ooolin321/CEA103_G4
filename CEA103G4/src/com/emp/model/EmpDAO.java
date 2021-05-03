@@ -74,7 +74,7 @@ public class EmpDAO implements EmpDAO_interface {
 			rs.next();
 			Integer empno = rs.getInt(1);
 			empVO.setEmpno(empno);
-System.out.println("EmpDAO新增成功"+empno);
+//System.out.println("EmpDAO新增成功"+empno);
 
 		} catch (SQLException se) {
 			throw new RuntimeException("database發生錯誤." + se.getMessage());
@@ -323,11 +323,11 @@ System.out.println("EmpDAO新增成功"+empno);
 		List<EmpVO> list = new ArrayList<EmpVO>();
 		String emailto = empVO.getEmail();
 
-		String subject = "密碼通知";
+		String subject = "Mode Femme密碼通知";
 
 		String ch_name = empVO.getEname();
 		String passRandom = empVO.getEmp_pwd();
-		String messageText = "Hello! " + ch_name + " 請謹記此密碼: " + passRandom + "\n" + " (已經啟用)";
+		String messageText = "Hello! " +"\n"+ ch_name + " 請謹記此密碼: " + passRandom + "\n" + " (已經啟用)";
 
 		try {
 
@@ -367,10 +367,10 @@ System.out.println("EmpDAO新增成功"+empno);
 			Date date = new Date();
 			String strDate = sdFormat.format(date);
 
-			System.out.println(strDate+" 傳送成功!");
+			System.out.println(strDate+" 員工mail傳送成功!");
 
 		} catch (MessagingException e) {
-			System.out.println("傳送失敗!");
+			System.out.println("員工mail傳送失敗!");
 			e.printStackTrace();
 		}
 		return list;

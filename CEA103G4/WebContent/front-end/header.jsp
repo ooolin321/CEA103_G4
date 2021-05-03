@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.user.model.*"%>
 	
 <!-- Page Preloder -->
 <div id="preloder">
@@ -42,6 +44,19 @@
 					</div>
 				</div>
 				<div class="col-lg-3 text-right col-md-3">
+					<c:if test="${ not empty userVO.user_name}">
+						<div class="header-right">
+						<FORM id="userLogOut" METHOD="post" class="logout-form" action="<%=request.getContextPath()%>/User_LogoutHandler">
+						<a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">
+						<span class="userLogin"style="cursor: pointer"><img class="rounded-circle" width="45px" height="40px" src=""/>&nbsp;               
+						${userVO.user_name}
+                         </span></a>
+						 <input type="hidden" name="action" value="signOut">
+						 <a href="#" onclick="document.getElementById('userLogOut').submit();"><button type="button" class="btn">登出</button></a>
+						 </FORM>
+						</div>
+    				</c:if>
+       			 <c:if test="${empty userVO.user_name}">
 					<div class="header-right">
 						<a
 							href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button
@@ -49,6 +64,7 @@
 							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><button
 								type="button" class="btn">登入</button></a>
 					</div>
+        		</c:if>
 					<!-- 鈴鐺/購物車顯示的數字+購物車預覽圖要改 -->
 					<ul class="nav-right">
 						<li class="bell-icon"><a href="#"> <svg

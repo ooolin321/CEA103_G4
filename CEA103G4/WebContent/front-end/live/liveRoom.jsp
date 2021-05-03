@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.live.model.*"%>
+<%@ page import="com.user.model.*"%>
 
 <%
 	LiveVO liveVO = (LiveVO) request.getAttribute("liveVO");
@@ -107,7 +108,7 @@ input {
 </head>
 
 <body onload="connect();" onunload="disconnect();">
-
+	
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<div class="loader"></div>
@@ -211,7 +212,7 @@ input {
 								<li><a href="#">直播預告</a></li>
 								<!-- <li><a href="#">Kid's</a></li> -->
 							</ul></li>
-						<li><a href="#">會員專區<i class="icon_profile"></i></a></li>
+						<li><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i class="icon_profile"></i></a></li>
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -237,7 +238,21 @@ input {
 	</div>
 	<!-- Breadcrumb Section Begin -->
 <body>
-
+	<div class="row">
+		<div class="col-md-12">
+		<h1>${liveVO.live_name}  #<span class="badge badge-primary">${liveVO.live_type }</span></h1>
+		<h2>
+			<span id="iflive">
+				${(liveVO.live_state==2)? '直播中':''}
+				${(liveVO.live_state==1)? '未直播':''}
+				${(liveVO.live_state==0)? '已結束':''}
+			</span>
+		</h2>
+		</div>
+	<script>
+		
+	</script>
+	</div>
 	<div class="row">
 		<div class="col-md-9">
 			<div id="stream">
@@ -247,10 +262,10 @@ input {
 		</div>
 
 		<div class="col-md-3">
-			<textarea id="messagesArea" class="panel message-area" readonly></textarea>
+			<textarea id="messagesArea" class="form-control" readonly></textarea>
 			<div class="input">
-				<input id="userName" class="text-field" type="text"
-					placeholder="User name" /> <input id="message" class="text-field"
+				<input id="userName" class="text-field" type="hidden"
+					value="${userVO.user_id}" /> <input id="message" class="form-control"
 					type="text" placeholder="Message"
 					onkeydown="if (event.keyCode == 13) sendMessage();" />
 			</div>

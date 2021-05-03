@@ -138,7 +138,7 @@
      				 <th scope="col">商品種類</th>
      				 <th scope="col">編輯</th>
   				  </tr>
- 				 </thead class="thead">
+ 				 </thead>
  				 <tbody>
  				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}" varStatus="i">
    				 	<c:if test="${productVO.user_id == userVO.getUser_id() && productVO.product_state == 1}"> 

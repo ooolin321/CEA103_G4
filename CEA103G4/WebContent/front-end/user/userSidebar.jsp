@@ -66,7 +66,10 @@
 				      <input type="hidden" name="action"	value="getOne_For_Display">
 				      <li><a class="dropdown-item" href="#" onclick="document.getElementById('getOneUser2').submit();"><i class="fa fa-user fa-lg"></i> Profile</a></li>
 				     </FORM>
-                      <li><a class="dropdown-item" href="<%=request.getContextPath()%>/front-end/userLogin.jsp"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
+				     <FORM id="userLogOut" METHOD="post" class="logout-form" action="<%=request.getContextPath()%>/User_LogoutHandler">
+				     <input type="hidden" name="action" value="signOut">
+                      <li><a class="dropdown-item" href="#" onclick="document.getElementById('userLogOut').submit();"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
+                      </FORM>
                     </ul>
                   </li>
                 </ul>

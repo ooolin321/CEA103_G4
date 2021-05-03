@@ -86,7 +86,7 @@ padding: 15px;
 	</tr>	
 	<tr>
 		<th>地址:</th>
-		<td>${userVO.city}${userVO.town}${userVO.user_addr}</td>
+		<td>${userVO.city}${userVO.town}${userVO.zipcode}${userVO.user_addr}</td>
 	</tr>	
 <!-- 	<tr> -->
 <!-- 		<th>狀態</th> -->

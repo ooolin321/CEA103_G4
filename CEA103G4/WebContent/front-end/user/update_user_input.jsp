@@ -5,14 +5,14 @@
 
 <%
   UserVO userVO = (UserVO) request.getAttribute("userVO"); //UserServlet.java (Controller) 存入req的userVO物件 (包括幫忙取出的userVO, 也包括輸入資料錯誤時的userVO物件)
+  request.setAttribute("userVO", userVO);
 %>
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>會員資料修改</title>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+
  <meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
   <!-- Twitter meta-->
   <meta property="twitter:card" content="summary_large_image">
@@ -46,11 +46,21 @@
                     <li class="breadcrumb-item">修改我的資料</li>
                   </ul>
                 </div>
+<%-- 錯誤表列 --%>
+<c:if test="${not empty errorMsgs}">
+	<font style="color:red">請修正以下錯誤:</font>
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message}</li>
+		</c:forEach>
+	</ul>
+</c:if>         
+         
 <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/front-end/user/user.do" name="form1">
 <table>
 	<tr>
 		<td>帳號:<font color=red><b>*</b></font></td>
-		<td><%=userVO.getUser_id()%></td>
+		<td>${param.user_id}</td>
 	</tr>
 <!-- 	<tr> -->
 <!-- 		<td>密碼:</td> -->
@@ -58,8 +68,10 @@
 <!-- 	</tr> -->
 	<tr>
 		<td>姓名:</td>
-		<td><input type="TEXT" name="user_name" size="45"	value="<%=userVO.getUser_name()%>" /></td>
-	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_name}</b></td></tr>
+		<td><input type="TEXT" name="user_name" size="45"
+			 value="<%= (userVO==null)? "" : userVO.getUser_name()%>" /></td>
+	</tr><tr><td></td><td><font color=red>
+<%-- 	<b>${errorMsgs.user_name}</b></td></tr> --%>
 	<tr>
 		<td>身分証字號:</td>
 		<td><%=userVO.getId_card()%></td>
@@ -72,35 +84,42 @@
 <!-- 			</select></td>  -->
 <%-- 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_gender}</b></td></tr> --%>
 	<tr>
-	<td>性別 *</td>
+	<td>性別:</td>
 	<td><input type="radio" id="user_gender" name="user_gender" value="1" ${(userVO.user_gender==1)? 'checked':'' }>
 	<label for="male">男</label>
 	<input type="radio" id="user_gender" name="user_gender" value="0" ${(userVO.user_gender==0)? 'checked':'' }>
 	<label for="female">女</label></td> 
-	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_gender}</b></td></tr>
+	</tr><tr><td></td><td><font color=red>
+<%-- 	<b>${errorMsgs.user_gender}</b></td></tr> --%>
 	
 	<tr>
 		<td>生日:</td>
 		<td><input name="user_dob" size="45" id="f_date1" type="text" ></td>
-	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_dob}</b></td></tr>
+	</tr><tr><td></td><td><font color=red>
+<%-- 	<b>${errorMsgs.user_dob}</b></td></tr> --%>
 	<tr>
 		<td>Email:</td>
 		<td><input type="TEXT" name="user_mail" size="45"	value="<%=userVO.getUser_mail()%>" /></td>
-	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_mail}</b></td></tr>
+	</tr><tr><td></td><td><font color=red>
+<%-- 	<b>${errorMsgs.user_mail}</b></td></tr> --%>
 	<tr>
 		<td>電話:</td>
 		<td><input type="TEXT" name="user_phone" size="45"	value="<%=userVO.getUser_phone()%>" /></td>
-	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_phone}</b></td></tr>
+	</tr><tr><td></td><td><font color=red>
+<%-- 	<b>${errorMsgs.user_phone}</b></td></tr> --%>
 	<tr>
 		<td>手機號碼:</td>
 		<td><input type="TEXT" name="user_mobile" size="45" value="<%=userVO.getUser_mobile()%>" /></td>
-	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_mobile}</b></td></tr>
+	</tr><tr><td></td><td><font color=red>
+<%-- 	<b>${errorMsgs.user_mobile}</b></td></tr> --%>
 	<tr>
 		<td>地址 *</td>
 		<td>
-		<div id="twzipcode"></div><font color=red><b>${errorMsgs.city}</b>
+		<div id="twzipcode"></div><font color=red>
+<%-- 		<b>${errorMsgs.city}</b> --%>
 		<input type="TEXT" name="user_addr" size="45" value="<%=userVO.getUser_addr()%>"></td>
-		</td><tr><td></td><td><font color=red><b>${errorMsgs.user_addr}</b></td></tr>
+		</td><tr><td></td><td><font color=red>
+<%-- 		<b>${errorMsgs.user_addr}</b></td></tr> --%>
 	</tr>
 <!-- 	<tr> -->
 <!-- 		<td>註冊日期:</td> -->
@@ -147,7 +166,76 @@
 <input type="hidden" name="user_id" value="<%=userVO.getUser_id()%>">
 <input type="hidden" name="id_card" value="<%=userVO.getId_card()%>">
 <input type="submit" value="送出修改"></FORM>
-<jsp:include page="/front-end/protected/userIndex_footer.jsp" />
+
+</main>
+              <!-- Essential javascripts for application to work-->
+<%--               <script src="<%=request.getContextPath()%>/back-template/docs/js/jquery-3.2.1.min.js"></script> --%>
+              <script src="<%=request.getContextPath()%>/back-template/docs/js/popper.min.js"></script>
+              <script src="<%=request.getContextPath()%>/back-template/docs/js/bootstrap.min.js"></script>
+              <script src="<%=request.getContextPath()%>/back-template/docs/js/main.js"></script>
+              <!-- The javascript plugin to display page loading on top-->
+              <script src="<%=request.getContextPath()%>/back-template/docs/js/plugins/pace.min.js"></script>
+              <!-- Page specific javascripts-->
+              <script type="text/javascript" src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
+              <script type="text/javascript">
+                var data = {
+                 labels: ["January", "February", "March", "April", "May"],
+                 datasets: [
+                 {
+                   label: "My First dataset",
+                   fillColor: "rgba(220,220,220,0.2)",
+                   strokeColor: "rgba(220,220,220,1)",
+                   pointColor: "rgba(220,220,220,1)",
+                   pointStrokeColor: "#fff",
+                   pointHighlightFill: "#fff",
+                   pointHighlightStroke: "rgba(220,220,220,1)",
+                   data: [65, 59, 80, 81, 56]
+                 },
+                 {
+                   label: "My Second dataset",
+                   fillColor: "rgba(151,187,205,0.2)",
+                   strokeColor: "rgba(151,187,205,1)",
+                   pointColor: "rgba(151,187,205,1)",
+                   pointStrokeColor: "#fff",
+                   pointHighlightFill: "#fff",
+                   pointHighlightStroke: "rgba(151,187,205,1)",
+                   data: [28, 48, 40, 19, 86]
+                 }
+                 ]
+               };
+               var pdata = [
+               {
+                value: 300,
+                color: "#46BFBD",
+                highlight: "#5AD3D1",
+                label: "Complete"
+              },
+              {
+                value: 50,
+                color:"#F7464A",
+                highlight: "#FF5A5E",
+                label: "In-Progress"
+              }
+              ]
+              
+//               var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+//               var lineChart = new Chart(ctxl).Line(data);
+              
+//               var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+//               var pieChart = new Chart(ctxp).Pie(pdata);
+            </script>
+            <!-- Google analytics script-->
+            <script type="text/javascript">
+              if(document.location.hostname == 'pratikborsadiya.in') {
+               (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+               })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+               ga('create', 'UA-72504830-1', 'auto');
+               ga('send', 'pageview');
+             }
+           </script>
+
 </body>
 
 <script>

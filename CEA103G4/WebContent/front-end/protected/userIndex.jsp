@@ -47,7 +47,7 @@
                     <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
                       <div class="info">
                         <h4>點數</h4>
-                        <p><b>${userVO.cash}</b></p>
+                        <p><b>${userVO.user_point}</b></p>
                       </div>
                     </div>
                   </div>
@@ -63,7 +63,7 @@
                     <div class="widget-small warning coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
                       <div class="info">
                         <h4>錢包</h4>
-                        <p><b>${userVO.violation}</b></p>
+                        <p><b>${userVO.cash}</b></p>
                       </div>
                     </div>
                   </div>
@@ -80,7 +80,7 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="tile">
-                      <h3 class="tile-title">Monthly Sales</h3>
+                      <h3 class="tile-title">購物車明細</h3>
                       <div class="embed-responsive embed-responsive-16by9">
                         <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
                       </div>

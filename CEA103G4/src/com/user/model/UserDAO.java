@@ -41,7 +41,7 @@ public class UserDAO implements UserDAO_interface {
 	private static final String UPDATE = "UPDATE `USER` SET `USER_NAME`=?, `USER_GENDER`=?, `USER_DOB`=?, `USER_MAIL`=?, `USER_PHONE`=?, `USER_MOBILE`=?, `CITY`=?, `TOWN`=?, `ZIPCODE`=?, `USER_ADDR`=? WHERE `USER_ID` = ?";
 	private static final String UPDATE_PSW = "UPDATE `USER` SET USER_PWD=? WHERE `USER_ID`=?";
 	private static final String GET_Live_reportByUser_id_STMT = "SELECT LIVE_REPORT_NO,LIVE_REPORT_CONTENT,LIVE_NO,USER_ID,EMPNO,LIVE_REPORT_STATE,REPORT_DATE,PHOTO FROM LIVE_REPORT where USER_ID = ? ORDER BY LIVE_REPORT_NO";
-	private static final String SIGN_IN = "SELECT USER_ID,USER_PWD,USER_NAME FROM USER where BINARY USER_ID=? AND BINARY USER_PWD=?";
+	private static final String SIGN_IN = "SELECT * FROM USER where BINARY USER_ID=? AND BINARY USER_PWD=?";
 
 	@Override
 	public void insert(UserVO userVO) {
@@ -404,9 +404,27 @@ public class UserDAO implements UserDAO_interface {
 			while (rs.next()) {
 
 				userVO = new UserVO();
+				
 				userVO.setUser_id(rs.getString("user_id"));
 				userVO.setUser_pwd(rs.getString("user_pwd"));
 				userVO.setUser_name(rs.getString("user_name"));
+				userVO.setId_card(rs.getString("id_card"));
+				userVO.setUser_gender(rs.getString("user_gender"));
+				userVO.setUser_dob(rs.getDate("user_dob"));
+				userVO.setUser_mail(rs.getString("user_mail"));
+				userVO.setUser_phone(rs.getString("user_phone"));
+				userVO.setUser_mobile(rs.getString("user_mobile"));
+				userVO.setCity(rs.getString("city"));
+				userVO.setTown(rs.getString("town"));
+				userVO.setZipcode(rs.getInt("zipcode"));
+				userVO.setUser_addr(rs.getString("user_addr"));
+				userVO.setRegdate(rs.getDate("regdate"));
+				userVO.setUser_point(rs.getInt("user_point"));
+				userVO.setViolation(rs.getInt("violation"));
+				userVO.setUser_state(rs.getInt("user_state"));
+				userVO.setUser_comment(rs.getInt("user_comment"));
+				userVO.setComment_total(rs.getInt("comment_total"));
+				userVO.setCash(rs.getInt("cash"));
 			}
 
 		} catch (SQLException se) {

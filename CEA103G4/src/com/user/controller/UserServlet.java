@@ -99,6 +99,10 @@ public class UserServlet extends HttpServlet {
 					return;//程式中斷
 				}
 				
+				//身分證字號隱藏(部分*表示)
+				String id_card = userVO.getId_card();
+				String idCard = id_card.replaceAll("([a-zA-Z]\\d{2})\\d{4}(\\d{3})", "$1****$2");
+				userVO.setId_card(idCard);
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("userVO", userVO); // 資料庫取出的userVO物件,存入req
 				String url = "/front-end/user/listOneUser.jsp";
@@ -129,13 +133,16 @@ public class UserServlet extends HttpServlet {
 				/***************************2.開始查詢資料****************************************/
 				UserService userSvc = new UserService();
 				UserVO userVO = userSvc.getOneUser(user_id);
+				
+				//身分證字號隱藏(部分*表示)
+				String id_card = userVO.getId_card();
+				String idCard = id_card.replaceAll("([a-zA-Z]\\d{2})\\d{4}(\\d{3})", "$1****$2");
+				userVO.setId_card(idCard);
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("userVO", userVO);         // 資料庫取出的userVO物件,存入req
 				String url = "/front-end/user/update_user_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_user_input.jsp
-				System.out.println("我有印到");
 				successView.forward(req, res);
-				System.out.println("我有印到2");
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
@@ -154,20 +161,19 @@ public class UserServlet extends HttpServlet {
 		
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				String user_id = new String(req.getParameter("user_id").trim());
-
+				String user_id = req.getParameter("user_id").trim();
 //				String user_pwd = new String(req.getParameter("user_pwd").trim());
 				
 				String user_name = req.getParameter("user_name");
 				String user_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-				if (user_name == null || user_name.trim().length() == 0) {
+				if (user_name == null || user_name.trim().length() == 0) { //user_name == null 防呆用,避免變數打錯
 					errorMsgs.put("user_name","*姓名請勿空白");
 				} else if(!user_name.trim().matches(user_nameReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.put("user_name","姓名只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+					errorMsgs.put("user_name","*姓名只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 	            }
 				
 				// 身分證驗證
-//				String id_card = req.getParameter("id_card");
+				String id_card = req.getParameter("id_card");
 //				String input_id = id_card;
 //				String checkLetter = "ABCDEFGHJKLMNPQRSTUVWXYZIO"; // 首字身分證英文字母代表之意義排序(小到大)
 //				if (input_id.length() == 10){
@@ -197,15 +203,13 @@ public class UserServlet extends HttpServlet {
 				if (user_gender == null || user_gender.trim().length() == 0) {
 					errorMsgs.put("user_gender","*性別請勿空白");
 				}
-				
 				java.sql.Date user_dob = null;
 				try {
-user_dob = java.sql.Date.valueOf(req.getParameter("user_dob").trim());
+				user_dob = java.sql.Date.valueOf(req.getParameter("user_dob").trim());
 				} catch (IllegalArgumentException e) {
 					user_dob =new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.put("user_dob","*請輸入日期!");
 				}
-
 				String user_mail = req.getParameter("user_mail");
 				String user_mailReg = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
 				if (user_mail == null || user_mail.trim().length() == 0) {
@@ -339,7 +343,7 @@ user_dob = java.sql.Date.valueOf(req.getParameter("user_dob").trim());
 				UserService userSvc = new UserService();
 				
 				userVO = userSvc.updateUser(user_id, user_name, user_gender,user_dob, user_mail, user_phone, user_mobile, city, town, zipcode, user_addr);
-				
+				userVO.setId_card(id_card);
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("userVO", userVO); // 資料庫update成功後,正確的的userVO物件,存入req
 				String url = "/front-end/user/listOneUser.jsp";

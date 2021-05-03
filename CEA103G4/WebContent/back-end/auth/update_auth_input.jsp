@@ -107,20 +107,23 @@ th, td {
 				<td>選擇功能名稱:<font color=red><b>*</b></font></td>
 				<td>
 					<ul>
-					<c:forEach var="funVO" items="${funSvc.all}">
-							<li><input name = "funno" value="${funVO.funno}" type="hidden"></input>${funVO.funName}
+					
+							<li><input name = "funno" value="${authVO.funno}" type="hidden"></input>${funSvc.getOneFun(authVO.funno).funName}
 							<select size="1" name="auth_no">
 										<option value="1" ${(authVO.auth_no==1)? 'selected':''}>開</option>
 										<option value="0" ${(authVO.auth_no==0)? 'selected':''}>關</option>
 									</select></li>
-						</c:forEach>
+						
 					</ul> 
 				</td>
 			</tr>
 		
 		</table>
 		<br> <input type="hidden" name="action" value="update"> 
-		<input type="hidden" name="empno"  value="<%=authVO.getEmpno()%>">
+		<input type="hidden" name="empno" value="<%=authVO.getEmpno()%>">
+		<input type="hidden" name="funno" value="<%=authVO.getFunno()%>">
+		<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">
+		<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
 		<input type="submit" id = "submit" value="送出新增">
 	</FORM>
 </body>

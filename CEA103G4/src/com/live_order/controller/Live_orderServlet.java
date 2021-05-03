@@ -113,7 +113,7 @@ public class Live_orderServlet extends HttpServlet {
 			}
 		}
 
-		if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
+		if ("getOne_For_UpdateA".equals(action) || "getOne_For_UpdateB".equals(action)) { // 來自listAllEmp.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -130,19 +130,26 @@ public class Live_orderServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("live_orderVO", live_orderVO); // 資料庫取出的live_orderVO物件,存入req
-				String url = "/front-end/live_order/update_live_order_input.jsp";
+				
+				String url = null;
+				if ("getOne_For_UpdateA".equals(action))
+					url = "/front-end/liveOrderManagement/liveOrderUpdate.jsp";        // 成功轉交 dept/listEmps_ByDeptno.jsp
+				else if ("getOne_For_UpdateB".equals(action))
+					url = "/front-end/liveOrderManagement/liveOrderUpdateB.jsp";              // 成功轉交 dept/listAllDept.jsp
+//				String url = "/front-end/liveOrderManagement/liveOrderUpdate.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
- 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/listAllLive_order.jsp");
-				failureView.forward(req, res);
+// 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/liveOrderManagement/liveOrderListA.jsp");
+//				failureView.forward(req, res);
+				throw new ServletException(e);
 			}
 		}
 
-		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
+		if ("updateA".equals(action) || "updateB".equals(action)) { // 來自update_emp_input.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -277,15 +284,22 @@ public class Live_orderServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("live_orderVO", live_orderVO); // 資料庫update成功後,正確的的live_orderVO物件,存入req
-				String url = "/front-end/live_order/listOneLive_order.jsp";
+				
+				String url = null;
+				if ("updateA".equals(action))
+					url = "/front-end/liveOrderManagement/liveOrderListA.jsp";        // 成功轉交 dept/listEmps_ByDeptno.jsp
+				else if ("updateB".equals(action))
+					url = "/front-end/liveOrderManagement/liveOrderListB.jsp";              // 成功轉交 dept/listAllDept.jsp
+//				String url = "/front-end/live_order/listOneLive_order.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/update_live_order_input.jsp");
-				failureView.forward(req, res);
+//				errorMsgs.add("修改資料失敗:" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/update_live_order_input.jsp");
+//				failureView.forward(req, res);
+				throw new ServletException(e);
 			}
 		}
 

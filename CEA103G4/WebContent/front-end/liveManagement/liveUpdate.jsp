@@ -135,8 +135,7 @@
 								<label for="live_photo" class="col-sm-2 col-form-label">直播預覽圖</label>
 								<div class="col-sm-10">
 									<input name="live_photo" class="form-control" type="file"
-										id="imgInp" accept="image/gif, image/jpeg, image/png"
-										/>
+										id="imgInp" accept="image/gif, image/jpeg, image/png" />
 								</div>
 								<div class="form-group">
 									<img id="preview_img" class="col-md-6 col-form-label" src="#"
@@ -147,14 +146,15 @@
 								<div class="form-group">
 									<label for="pre_photo" class="col-sm-2 col-form-label">前次預覽圖</label>
 									<div class="col-sm-10">
-									<img class="col-md-6 col-form-label"
-										src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}">
+										<img class="col-md-6 col-form-label"
+											src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}">
 									</div>
 								</div>
 
 								<div class="productAddBtn">
 									<br> <input type="hidden" name="action" value="update">
-									<input  type="hidden" name="live_no" value="<%=liveVO.getLive_no()%>">
+									<input type="hidden" name="live_no"
+										value="<%=liveVO.getLive_no()%>">
 									<button type="reset" class="btn btn-danger">取消</button>
 									<button type="submit" class="btn btn-info">確認修改</button>
 								</div>

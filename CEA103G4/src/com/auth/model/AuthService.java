@@ -23,13 +23,15 @@ public class AuthService {
 		return authVO;
 	}
 	
-	public AuthVO updateAuth(Integer funno,Integer empno , Integer auth_no) {
+	public AuthVO updateAuth(Integer auth_no, Integer empno,  Integer funno) {
 
 		AuthVO authVO = new AuthVO();
-
-		authVO.setEmpno(empno);
-		authVO.setFunno(funno);
+System.out.println("Svc auth_no= " + auth_no);
 		authVO.setAuth_no(auth_no);
+System.out.println("Svc empno= " + empno);		
+		authVO.setEmpno(empno);
+System.out.println("Svc funno= " + funno);		
+		authVO.setFunno(funno);
 		
 		dao.update(authVO);
 

@@ -1,16 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.auth.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
+
 <%
-	AuthVO funVO = (AuthVO) request.getAttribute("funVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
-%>
-<%
-	AuthService funSvc = new AuthService();
-	List<AuthVO> list = funSvc.getAll();
-	pageContext.setAttribute("list", list);
+	AuthVO authVO = (AuthVO) request.getAttribute("authVO");
 %>
 
 <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
@@ -18,7 +13,7 @@
 
 <html>
 <head>
-<title>員工資料 - listOneEmp.jsp</title>
+<title>權限資料 - listOneAuth .jsp</title>
 
 <style>
 table#table-1 {

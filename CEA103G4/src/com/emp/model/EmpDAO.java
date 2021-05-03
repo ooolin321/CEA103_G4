@@ -37,7 +37,7 @@ public class EmpDAO implements EmpDAO_interface {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = "INSERT INTO EMP (ENAME,JOB,ID,GENDER,DOB,CITY,DIST,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO EMP (EMPNO,ENAME,JOB,ID,GENDER,DOB,CITY,DIST,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD) VALUES (null,? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 	private static final String GET_ALL_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,CITY,DIST,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP ORDER BY EMPNO";
 	private static final String GET_ONE_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,CITY,DIST,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP WHERE EMPNO = ?";
 	private static final String DELETE = "DELETE FROM EMP WHERE EMPNO = ?";
@@ -45,15 +45,15 @@ public class EmpDAO implements EmpDAO_interface {
 	private static final String SIGN_IN = "SELECT EMPNO,EMP_PWD,ENAME FROM EMP  where BINARY EMPNO=? AND BINARY EMP_PWD=?";
 
 	@Override
-	public void insert(EmpVO empVO) {
+	public Object insert(EmpVO empVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT);
-
+			pstmt = con.prepareStatement(INSERT_STMT,PreparedStatement.RETURN_GENERATED_KEYS);
+			
 			pstmt.setString(1, empVO.getEname());
 			pstmt.setString(2, empVO.getJob());
 			pstmt.setString(3, empVO.getId());
@@ -69,6 +69,12 @@ public class EmpDAO implements EmpDAO_interface {
 			pstmt.setString(13, empVO.getEmp_pwd());
 
 			pstmt.executeUpdate();
+			
+			ResultSet rs = pstmt.getGeneratedKeys();
+			rs.next();
+			Integer empno = rs.getInt(1);
+			empVO.setEmpno(empno);
+System.out.println("EmpDAO新增成功"+empno);
 
 		} catch (SQLException se) {
 			throw new RuntimeException("database發生錯誤." + se.getMessage());
@@ -87,7 +93,7 @@ public class EmpDAO implements EmpDAO_interface {
 					e.printStackTrace(System.err);
 				}
 			}
-		}
+		}return empVO;
 	}
 
 	@Override

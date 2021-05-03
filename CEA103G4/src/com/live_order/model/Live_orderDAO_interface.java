@@ -18,4 +18,8 @@ public interface Live_orderDAO_interface {
 	public Set<Live_order_detailVO> getDetailsByNo(Integer live_order_no);
 	
 	public void insertWithDetails (Live_orderVO live_orderVO,List<Live_order_detailVO> list);
+	
+	public List<Live_orderVO> getAllByID(String user_id);
+	
+	public List<Live_orderVO> getAllByID2(String seller_id);
 }

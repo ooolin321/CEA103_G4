@@ -109,36 +109,46 @@ System.out.println("empno = "+empno);
 			
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				Integer empno = new Integer(req.getParameter("empno"));	
-System.out.println(empno);
-				String auth_nos[] = req.getParameterValues("auth_no");
-
-				String funnos[]= req.getParameterValues("funno");
-		
-					for(int i = 0; i < funnos.length; i++) {
-						int auth_no = new Integer(auth_nos[i]);
-System.out.println(auth_nos[i]);
-						int funno = new Integer(funnos[i]);
-System.out.println(funnos[i]);
-System.out.println(auth_no + "" + funno);
-						AuthVO authVO = new AuthVO();
-						authVO.setEmpno(empno);
-						authVO.setFunno(funno);
-						authVO.setAuth_no(auth_no);
-						AuthService authSvc = new AuthService();
-						authVO = authSvc.addAuth(empno, funno, auth_no);
-					} 
+//				Integer empno = new Integer(req.getParameter("empno"));	
+//
+//				String auth_nos[] = req.getParameterValues("auth_no");
+//
+//				String funnos[]= req.getParameterValues("funno");
+//		
+//					for(int i = 0; i < funnos.length; i++) {
+//						int auth_no = new Integer(auth_nos[i]);
+//System.out.println(auth_nos[i]);
+//						int funno = new Integer(funnos[i]);
+//System.out.println(funnos[i]);
+//System.out.println(auth_no + "" + funno);
+//						AuthVO authVO = new AuthVO();
+//						authVO.setEmpno(empno);
+//						authVO.setFunno(funno);
+//						authVO.setAuth_no(auth_no);
+//						AuthService authSvc = new AuthService();
+//						authVO = authSvc.addAuth(auth_no, empno, funno);
+//					} 
+				Integer empno = new Integer(req.getParameter("empno"));
+System.out.println("Servlet empno= "+empno);				
+				Integer funno = new Integer(req.getParameter("funno"));
+System.out.println("Servlet funno= "+funno);
+				Integer auth_no = new Integer(req.getParameter("auth_no"));
+System.out.println("Servlet auth_no= "+auth_no);
+				AuthVO authVO = new AuthVO();
+				authVO.setEmpno(empno);
+				authVO.setFunno(funno);
+				authVO.setAuth_no(auth_no);
 				
 				/*************************** 2.開始修改資料 *****************************************/
-//				AuthService authSvc = new AuthService();
-//				authVO = authSvc.updateAuth(empno, funno, auth_no);
-
+					AuthService authSvc = new AuthService();
+					authVO = authSvc.updateAuth(auth_no, empno, funno);
+System.out.println(authVO);
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 
 //				if (requestURL.equals("/back-end/emp/listOneEmp.jsp"))
 //					req.setAttribute("EmpVO", empVO); // 資料庫取出的list物件,存入request
-
-				String url = requestURL;
+req.setAttribute("authVO", authVO);
+				String url = requestURL;			
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 			

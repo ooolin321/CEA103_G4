@@ -1,18 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.emp.model.*"%>
-<%@ page import="com.auth.model.*"%>
 <%@page import="java.util.List"%>
+
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO");
 %>
 
-<%
-	EmpVO empVO2 = (EmpVO)session.getAttribute("account");
-	session.setAttribute("empVO", empVO2);
-%> 
- 
-
+<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
+<jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -40,7 +36,7 @@
 				<div class="pd-20 card-box mb-30">
 					<div class="clearfix">
 						<h2 class="text-dark h2">
-							<i class="fas fa-user-plus"></i>&nbsp;新增員工資料  <%=empVO2.getEmpno() %>
+							<i class="fas fa-user-plus"></i>&nbsp;新增員工資料 
 						</h2>
 					</div>
 					<div class="tile-body">
@@ -145,9 +141,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label><i class="fas fa-user-alt"></i>權限:</label>
-                                        <div class="form-group">
-                                           <jsp:useBean id="funSvc" scope="page"
-												class="com.fun.model.FunService" />
+                                        <div class="form-group">                                          
 											<ul>
 												<c:forEach var="funVO" items="${funSvc.all}">
 													<li><input name="funno" value="${funVO.funno}" type="hidden">
@@ -165,7 +159,7 @@
 							</div><br>
 							<input type="hidden" name="action" value="insert">
 							<div class="row">
-	<%-- 						<input type="hidden" name="empno" value="<%=empVO.getEmpno()%>"> --%>
+							<input type="hidden" name="empno" value="${empVO.empno}">
 							<input class="btn btn-primary" type="submit" value="送出新增">
 							</div>
 						</form>

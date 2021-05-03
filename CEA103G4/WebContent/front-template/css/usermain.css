@@ -12292,7 +12292,7 @@ body.stop-scrolling {
 }
 
 .pace .pace-progress {
-  background: #96000e;
+  background:#C2C2FF;
   position: fixed;
   z-index: 2000;
   top: 0;
@@ -15235,42 +15235,6 @@ be a descendant of the grid when it is being dragged.
 .productsAdd input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
 -webkit-box-shadow: 0 0 0px 1000px white inset;
 }  
-/*media*/
-
-@media (max-width: 576px) {
-	.header-section .logo {
-    float: left;
-    width: 31%;
-    height: 100%;
-    padding: 0px 4%;
-    box-sizing: border-box;
-    font-size: 700;
-    display: block;
-}
-	.app-content {
-    margin-top: 65px;
-    min-width: 100%;
-}
-}
-
-@media only screen and (max-width: 767px) {
-	
-}
-
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-	
-}
-
-@media only screen and (max-width: 991px) {
-	
-}
-
-@media only screen and (min-width: 1200px) {
-	
-}
-
-/*mediaFinish*/
-
 
 
 /*header*/
@@ -15413,3 +15377,43 @@ max-height:100%;
 
 
 								/*productAddFinsh*/
+								
+								
+								
+								
+/*media*/
+
+@media (max-width: 576px) {
+.header-section .logo{
+    float: left;
+    width: 31%;
+    height: 100%;
+    padding: 0px 4%;
+    box-sizing: border-box;
+    font-size: 700;
+    display: block;
+}
+.app-content {
+margin-top: 65px;
+min-width: 100%;
+}
+}
+
+@media only screen and (max-width: 767px) {
+	
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+	
+}
+
+@media only screen and (max-width: 991px) {
+	
+}
+
+@media only screen and (min-width: 1200px) {
+	
+}
+
+/*mediaFinish*/
+								

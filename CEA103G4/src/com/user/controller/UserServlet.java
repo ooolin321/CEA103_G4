@@ -129,12 +129,13 @@ public class UserServlet extends HttpServlet {
 				/***************************2.開始查詢資料****************************************/
 				UserService userSvc = new UserService();
 				UserVO userVO = userSvc.getOneUser(user_id);
-								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("userVO", userVO);         // 資料庫取出的userVO物件,存入req
 				String url = "/front-end/user/update_user_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_user_input.jsp
+				System.out.println("我有印到");
 				successView.forward(req, res);
+				System.out.println("我有印到2");
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
@@ -304,7 +305,7 @@ user_dob = java.sql.Date.valueOf(req.getParameter("user_dob").trim());
 				
 				UserVO userVO = new UserVO();
 				
-//				userVO.setUser_id(user_id);
+				userVO.setUser_id(user_id);
 //				userVO.setUser_pwd(user_pwd);
 				userVO.setUser_name(user_name);
 //				userVO.setId_card(id_card);

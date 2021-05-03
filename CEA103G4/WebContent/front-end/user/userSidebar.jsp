@@ -2,8 +2,6 @@
     pageEncoding="UTF-8"%>
   
   <header class="header-section">
-<!-- 			<div class="row"> -->
-<!-- 				<div class="col-lg-2 col-md-2"> -->
 					<div class="logo">
 					<div class="logoName">
 						<a href="${pageContext.request.contextPath}/front-end/index.jsp">
@@ -14,11 +12,8 @@
 						</a>
 						</div>
 					</div>
-<!-- 				</div> -->
-<!-- 				<div class="col-lg-7 col-md-7"> -->
-    <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
-<!--    			 </div> -->
-<!--     <div class="col-lg-3 text-right col-md-3"> -->
+    <!-- Sidebar toggle button-->
+    <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
     <!-- Navbar Right Menu-->
     <ul class="app-nav">
       <!--Notification Menu-->
@@ -75,8 +70,6 @@
                     </ul>
                   </li>
                 </ul>
-<!--                 </div> -->
-<!--                 </div> -->
               </header>
               
               

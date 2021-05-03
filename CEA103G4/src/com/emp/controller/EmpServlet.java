@@ -36,7 +36,7 @@ public class EmpServlet extends HttpServlet {
 					errorMsgs.add("請輸入員工編號");
 				} // 錯誤發生時將內容發送回表單
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/selectEmp.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendIndex.jsp");
 					failureView.forward(req, res);
 					return;
 				} // 程式中斷，回傳當傳頁面
@@ -48,7 +48,7 @@ public class EmpServlet extends HttpServlet {
 					errorMsgs.add("員工編號格式不正確");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/selectEmp.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendIndex.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -59,7 +59,7 @@ public class EmpServlet extends HttpServlet {
 					errorMsgs.add("查無資料");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/selectEmp.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendIndex.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -72,7 +72,7 @@ public class EmpServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/selectEmp.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendIndex.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -80,7 +80,7 @@ public class EmpServlet extends HttpServlet {
 		if ("getOne_For_Update".equals(action)) {// 來自listAllEmp.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			
+
 			String requestURL = req.getParameter("requestURL");
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
@@ -111,7 +111,7 @@ public class EmpServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			String requestURL = req.getParameter("requestURL");
-			
+
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer empno = new Integer(req.getParameter("empno").trim());
@@ -184,7 +184,7 @@ public class EmpServlet extends HttpServlet {
 				java.sql.Date hiredate = null;
 				try {
 					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
-					if(hiredate.before(dob)) {
+					if (hiredate.before(dob)) {
 						errorMsgs.add("日期格式錯誤，到職日期小於生日，請重新輸入");
 					}
 				} catch (IllegalArgumentException e) {
@@ -196,8 +196,6 @@ public class EmpServlet extends HttpServlet {
 				if (empPwd == null || empPwd.trim().length() == 0) {
 					errorMsgs.add("密碼請勿空白");
 				}
-
-				EmpService empSvc = new EmpService();
 
 				EmpVO empVO = new EmpVO();
 				empVO.setEmpno(empno);
@@ -222,20 +220,15 @@ public class EmpServlet extends HttpServlet {
 					return;
 				}
 				/*************************** 2.開始修改資料 *****************************************/
+				EmpService empSvc = new EmpService();
 				empVO = empSvc.updateEmp(empno, ename, job, id, gender, dob, city, dist, addr, email, sal, state,
 						hiredate, empPwd);
-				empVO = empSvc.sendPwdMail(ename, email, empPwd);// dao.service發送password email
-
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-
-//				if (requestURL.equals("/back-end/emp/listOneEmp.jsp"))
-//					req.setAttribute("EmpVO", empVO); // 資料庫取出的list物件,存入request
 
 				String url = requestURL;
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
-				
-			
+
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
@@ -247,9 +240,9 @@ public class EmpServlet extends HttpServlet {
 		if (("insert").equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			
+
 			String requestURL = req.getParameter("requestURL");
-			
+
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String ename = req.getParameter("ename");
@@ -286,7 +279,7 @@ public class EmpServlet extends HttpServlet {
 				if (city == null || city.length() == 0) {
 					errorMsgs.add("請選擇縣市");
 				}
-				
+
 				String dist = req.getParameter("dist");
 				if (dist == null || dist.length() == 0) {
 					errorMsgs.add("請選擇區域");
@@ -325,7 +318,7 @@ public class EmpServlet extends HttpServlet {
 				java.sql.Date hiredate = null;
 				try {
 					hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
-					if(hiredate.before(dob)) {
+					if (hiredate.before(dob)) {
 						errorMsgs.add("日期格式錯誤，到職日期小於生日，請重新輸入");
 					}
 				} catch (IllegalArgumentException e) {
@@ -353,78 +346,37 @@ public class EmpServlet extends HttpServlet {
 				empVO.setState(state);
 				empVO.setHiredate(hiredate);
 				empVO.setEmp_pwd(empPwd);
-				
-			
-				
+
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/addEmp.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-				
 
 				/*************************** 2.開始新增資料 *****************************************/
-				empVO = empSvc.addEmp(ename, job, id, gender, dob, city, dist, addr, email, sal, state,
-						hiredate, empPwd);	
-				
-			
-//			 	List<EmpVO> list = empSvc.getAll(); 				
-//			 	AuthService authSvc = new AuthService(); 
-//			 	List<AuthVO> list1 = authSvc.getAll(); 
-//				
-//			 	for(int i = 0; i < list.size(); i++){ 
-//			 		for(int j = 0; j < list1.size(); j++){ 
-//						if((list.get(i).getEmpno().intValue()==list1.get(j).getEmpno().intValue())){ 	
-//							list.remove(i);
-//							i--;
-//							break;
-//						} 
-//					} 
-//				} 
-//			 	req.setAttribute("list", list);
-			 	
-//		
-//				AuthVO authVO = new AuthVO();
-//				authVO.setEmpno(empno);
-//				System.out.println(empno);
-//				FunService funSvc = new FunService();
-//				List <EmpVO> listEmp = empSvc.getAll();
-//				List <FunVO> list = funSvc.getAll();
-//				for (int i = 0; i <= list.size(); i++) {
-//					
-//					authVO.setEmpno(empno);
-//					authVO.setAuth_no(auth_no);
-//					authVO.setFunno(i);
-//					
-//				}req.setAttribute("list", list);
-//				
-//				AuthService authSvc = new AuthService();
-//				authVO = authSvc.addAuth(authVO);
-				
-				
-//				Integer empno = empVO.getEmpno();
+				empVO = empSvc.addEmp(ename, job, id, gender, dob, city, dist, addr, email, sal, state, hiredate,
+						empPwd);
+				// EmpDAO裡，在新增Emp的同時，呼叫getGeneratedKeys()回傳, 可以拿到自增主鍵的Empno
+				Integer empno = empVO.getEmpno();
+				String auth_nos[] = req.getParameterValues("auth_no");// 新增Emp的同時可以新增Auth並轉交給Auth Table
+				String funnos[] = req.getParameterValues("funno");
 
-//				AuthVO authVO = new AuthVO();
-//			String[] funnos = req.getParameterValues("funno");			
-//				for (int i = 0; i < funno.length; i++) {
-////					authVO.setFunno(funno[i]);
-//
-//					authVO.setEmpno(empno);
-//System.out.println("empno = " + empno);
-//					authVO.setAuth_no(i);
-//System.out.println("auth_no = "+i);
-//					AuthService authSvc = new AuthService();
-//				for (int j = 0; j < funno.length; j++) {
-////					authVO = authSvc.addAuth(funno,empno,i);
-//					}
-//				}
-//				List <AuthVO> list = new AuthService().getOneAuth(empno, funno);
-				
-				
+				AuthVO authVO = new AuthVO();
+				for (int i = 0; i < funnos.length; i++) {
+					int auth_no = new Integer(auth_nos[i]);
+					int funno = new Integer(funnos[i]);
+					//
+					authVO.setEmpno(empno);
+					authVO.setFunno(funno);
+					authVO.setAuth_no(auth_no);
+					AuthService authSvc = new AuthService();
+					authVO = authSvc.addAuth(empno, funno, auth_no);
+				}
+
 				empVO = empSvc.sendPwdMail(ename, email, empPwd);// dao.service發送password email
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				
+
 				String url = "/back-end/emp/listAllEmp.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
@@ -446,7 +398,6 @@ public class EmpServlet extends HttpServlet {
 
 			String requestURL = req.getParameter("requestURL"); // 送出刪除的來源網頁路徑: 可能為【/emp/listAllEmp.jsp】 或
 
-
 			try {
 				/*************************** 1.接收請求參數 ***************************************/
 				Integer empno = new Integer(req.getParameter("empno"));
@@ -458,7 +409,6 @@ public class EmpServlet extends HttpServlet {
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 //				if (requestURL.equals("/back-end/emp/listOneEmp.jsp"))
 //					req.setAttribute("listAllEmp", empSvc.getOneEmp(empno)); // 資料庫取出的list物件,存入request
-
 
 				String url = requestURL;
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
@@ -481,14 +431,13 @@ public class EmpServlet extends HttpServlet {
 				EmpVO empVO = dao.findByPrimaryKey(empno);
 
 				req.setAttribute("empVO", empVO); // 資料庫取出的empVO物件,存入req
-				
-				//Bootstrap_modal
-				boolean openModal=true;
-				req.setAttribute("openModal",openModal );
-				
+
+				// Bootstrap_modal
+				boolean openModal = true;
+				req.setAttribute("openModal", openModal);
+
 				// 取出的empVO送給listOneEmp.jsp
-				RequestDispatcher successView = req
-						.getRequestDispatcher("/back-end/emp/listOneEmp.jsp");
+				RequestDispatcher successView = req.getRequestDispatcher("/back-end/emp/listOneEmp.jsp");
 				successView.forward(req, res);
 				return;
 

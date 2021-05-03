@@ -138,7 +138,7 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 	}
 
 	@Override
-	public AuthVO findByPrimeKey(Integer empno, Integer funno) {
+	public AuthVO findAuthByEmpno(Integer empno) {
 		AuthVO authVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -150,7 +150,7 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 			pstmt = con.prepareStatement(GET_ONE_BY_EMPNO_AND_FUNNO_STMT);
 
 			pstmt.setInt(1, empno);
-			pstmt.setInt(2, funno);
+	
 			
 			rs = pstmt.executeQuery();
 			

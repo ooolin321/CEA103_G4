@@ -44,7 +44,7 @@
 				<div class="col-lg-3 text-right col-md-3">
 					<div class="header-right">
 						<a
-							href="${pageContext.request.contextPath}/front-end/user/register.jsp"><button
+							href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button
 								type="button" class="btn">註冊</button></a> <a
 							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><button
 								type="button" class="btn">登入</button></a>

@@ -62,7 +62,7 @@ public class LoginHandler extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
-				
+
 				EmpService empSvc = new EmpService();
 				EmpVO empVO = empSvc.selectEmp(empno, empPwd);
 				if (empVO == null) {
@@ -70,7 +70,7 @@ public class LoginHandler extends HttpServlet {
 					String url = "/back-end/backendLogin.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
-				}else if (empVO != null) {
+				} else if (empVO != null) {
 					HttpSession session = req.getSession();
 					session.setAttribute("account", empVO); // *工作1: 才在session內做已經登入過的標識
 					try {
@@ -81,7 +81,7 @@ public class LoginHandler extends HttpServlet {
 							return;
 						}
 					} catch (Exception ignored) {
-						
+
 					}
 					res.sendRedirect(req.getContextPath() + "/back-end/backendIndex.jsp"); // *工作3:
 					// (-->如無來源網頁:則重導至login_success.jsp)
@@ -91,11 +91,33 @@ public class LoginHandler extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
+
+				if ("signOut".equals(action)) {
+					HttpSession session = req.getSession();
+					if (!session.isNew()) {
+						// 使用者登出
+						session.invalidate();
+
+						String url = "/back-end/backendLogin.jsp";
+						RequestDispatcher successView = req.getRequestDispatcher(url); // 登出後轉至首頁
+						successView.forward(req, res);
+					}
+				}
 			} catch (Exception e) {
-				errorMsgs.put("Exception",e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/backendLogin.jsp");
+				errorMsgs.put("Exception", e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
 				failureView.forward(req, res);
 			}
+		
+		if ("signOut".equals(action)) {
+			HttpSession session = req.getSession();
+			if (!session.isNew()) {// 使用者登出
+				session.invalidate();
+
+				String url = "/back-end/backendLogin.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 登出後轉至首頁
+				successView.forward(req, res);
+			}
+		}
 	}
 }

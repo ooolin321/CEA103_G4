@@ -2,12 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.product.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
+<%@ page import="com.user.model.*"%>
+
 
 <%
 	ProductDAO dao = new ProductDAO();
     List<ProductVO> list = dao.getAll();
     pageContext.setAttribute("list",list);
+    
+	UserVO userVO = (UserVO) session.getAttribute("account"); 
+	session.setAttribute("userVO", userVO);
 %>
 <jsp:useBean id="product_typeSvc" scope="page" class="com.product_type.model.Product_TypeService" />
 
@@ -46,13 +50,189 @@
               <main class="app-content">
                 <div class="app-title">
                   <div>
-                    <h1><i class="fa fa-archive"></i>我的商品</h1>
+                    <h1><i class="fa fa-archive">&nbsp;</i>我的商品</h1>
                   </div>
                   <ul class="app-breadcrumb breadcrumb">
                     <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
                     <li class="breadcrumb-item"><a href="#">商品管理</a></li>
                   </ul>
                 </div>
+                <div class="row productList">
+             <div class="product-tab col-lg-12">
+              <div class="tab-item">
+                <ul class="nav" role="tablist">
+                  <li class="col-xs-3">
+                    <a class="active" data-toggle="tab" href="#tab-1" role="tab"
+                      >未上架商品</a
+                    >
+                  </li>
+                  <li class="col-xs-3">
+                    <a data-toggle="tab" href="#tab-2" role="tab">上架中</a>
+                  </li>
+                  <li class="col-xs-3">
+                    <a data-toggle="tab" href="#tab-3" role="tab">已售出</a>
+                  </li>
+                  <li class="col-xs-3">
+                    <a data-toggle="tab" href="#tab-4" role="tab"
+                      >違規下架</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="tab-item-content">
+                <div class="tab-content">
+                  <div
+                    class="tab-pane fade-in active"
+                    id="tab-1"
+                    role="tabpanel">
+                   <table class="table">
+  					<thead class="thead">
+   					 <tr>
+     				 <th scope="col">#</th>
+     				 <th scope="col">商品圖片</th>
+     				 <th scope="col">商品名稱</th>
+     				 <th scope="col">商品描述</th>
+     				 <th scope="col">價格</th>
+     				 <th scope="col">數量</th>
+     				 <th scope="col">商品種類</th>
+     				 <th scope="col">編輯</th>
+  				  </tr>
+ 				 </thead>
+ 				 <tbody>
+ 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}" varStatus="i">
+   				 	<c:if test="${productVO.user_id == userVO.getUser_id() && productVO.product_state == 0}"> 
+   				 <tr>
+     				 <th scope="row">${i.index+1}</th>
+     				 <td><img width="200px" height="200px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" class="rounded mx-auto d-block" alt=""></td>
+      				 <td>${productVO.product_name}</td>
+      				 <td class="productInfo"><textarea class="form-control"  maxlength="300" rows="6" readonly>${productVO.product_info}</textarea></td>
+     				 <td>${productVO.product_price}</td>
+     				 <td>${productVO.product_remaining}</td>
+     				 <td>${product_typeSvc.getOneProduct_Type(productVO.pdtype_no).pdtype_name}</td>
+   					 <td>
+   					 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/product.do" style="margin-bottom: 0px;">
+   					   <button type="submit" class="btn btn-info submitAdd"  name="product_no"  value="${productVO.product_no}">修改</button>
+			     	   <input type="hidden" name="action"	value="getOne_For_Update">
+   					 </FORM>
+   					 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/product.do" style="margin-bottom: 0px;">
+   					 <button type="submit" class="btn btn-danger" name="product_no"value="${productVO.product_no}">刪除</button>
+			         <input type="hidden" name="action" value="delete">
+			         </FORM>
+   					 </td>
+   				 </tr>
+   				 	</c:if>
+   				 </c:forEach>
+   				 </tbody>
+				</table>
+                  </div>
+                  <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                                     <table class="table">
+  					<thead class="thead">
+   					 <tr>
+     				 <th scope="col">#</th>
+     				 <th scope="col">商品圖片</th>
+     				 <th scope="col">商品名稱</th>
+     				 <th scope="col">商品描述</th>
+     				 <th scope="col">價格</th>
+     				 <th scope="col">數量</th>
+     				 <th scope="col">商品種類</th>
+     				 <th scope="col">編輯</th>
+  				  </tr>
+ 				 </thead class="thead">
+ 				 <tbody>
+ 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}" varStatus="i">
+   				 	<c:if test="${productVO.user_id == userVO.getUser_id() && productVO.product_state == 1}"> 
+   				 <tr>
+     				 <th scope="row">${i.index+1}</th>
+     				 <td><img width="200px" height="200px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" class="rounded mx-auto d-block" alt=""></td>
+      				 <td>${productVO.product_name}</td>
+     				 <td class="productInfo"><textarea class="form-control"  maxlength="300" rows="6" readonly>${productVO.product_info}</textarea></td>
+     				 <td>${productVO.product_price}</td>
+     				 <td>${productVO.product_remaining}</td>
+     				 <td>${product_typeSvc.getOneProduct_Type(productVO.pdtype_no).pdtype_name}</td>
+   					 <td>
+   					 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/product.do" style="margin-bottom: 0px;">
+   					   <button type="submit" class="btn btn-info submitAdd"  name="product_no"  value="${productVO.product_no}">修改</button>
+			     	   <input type="hidden" name="action"	value="getOne_For_Update">
+   					 </FORM>
+   					 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/product.do" style="margin-bottom: 0px;">
+   					 <button type="submit" class="btn btn-danger" name="product_no"value="${productVO.product_no}">刪除</button>
+			         <input type="hidden" name="action" value="delete">
+			         </FORM>
+   					 </td>
+   				 </tr>
+   				 	</c:if>
+   				 </c:forEach>
+   				 </tbody>
+				</table>
+ 
+                  </div>
+                  <div class="tab-pane fade" id="tab-3" role="tabpanel">
+				 <table class="table">
+  					<thead class="thead">
+   					 <tr>
+     				 <th scope="col">#</th>
+     				 <th scope="col">商品圖片</th>
+     				 <th scope="col">商品名稱</th>
+     				 <th scope="col">商品描述</th>
+     				 <th scope="col">價格</th>
+     				 <th scope="col">商品種類</th>
+     				 <th scope="col">數量</th>
+     				 <th scope="col"></th>
+  				  </tr>
+ 				 </thead>
+ 				 <tbody>
+ 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}" varStatus="i">
+   				 	<c:if test="${productVO.user_id == userVO.getUser_id() && productVO.product_state == 3}"> 
+   				 <tr>
+     				 <th scope="row">${i.index+1}</th>
+     				 <td><img width="200px" height="200px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" class="rounded mx-auto d-block" alt=""></td>
+      				 <td>${productVO.product_name}</td>
+     				 <td class="productInfo"><textarea class="form-control"  maxlength="300" rows="6" readonly>${productVO.product_info}</textarea></td>
+     				 <td>${productVO.product_price}</td>
+     				 <td>${product_typeSvc.getOneProduct_Type(productVO.pdtype_no).pdtype_name}</td>
+     				 <td><button type="" class="btn btn-success">已售出</button></td>
+   				 </tr>
+   				 	</c:if>
+   				 </c:forEach>
+   				 </tbody>
+				</table>
+                </div>
+                 <div class="tab-pane fade" id="tab-4" role="tabpanel">
+                 <table class="table">
+  					<thead class="thead">
+   					 <tr>
+     				 <th scope="col">#</th>
+     				 <th scope="col">商品圖片</th>
+     				 <th scope="col">商品名稱</th>
+     				 <th scope="col">商品描述</th>
+     				 <th scope="col">檢舉時間</th>
+     				 <th scope="col">違規原因</th>
+  				  </tr>
+ 				 </thead>
+ 				 <tbody>
+ 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}" varStatus="i">
+   				 	<c:if test="${productVO.user_id == userVO.getUser_id() && productVO.product_state == 5}"> 
+   				 <tr>
+     				 <th scope="row">${i.index+1}</th>
+     				 <td><img width="200px" height="200px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" class="rounded mx-auto d-block" alt=""></td>
+      				 <td>${productVO.product_name}</td>
+     				 <td class="productInfo"><textarea class="form-control"  maxlength="300" rows="6" readonly>${productVO.product_info}</textarea></td>
+     				 <td></td>
+     				 <td></td>
+   				 </tr>
+   				 	</c:if>
+   				 </c:forEach>
+   				 </tbody>
+				</table>
+                 </div>
+              </div>
+            </div>
+           </div>
+          </div>
+
+    <!-- Product Shop Section End -->
+                
 
 
               </main>

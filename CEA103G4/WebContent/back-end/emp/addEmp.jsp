@@ -36,7 +36,7 @@
 				<div class="pd-20 card-box mb-30">
 					<div class="clearfix">
 						<h2 class="text-dark h2">
-							<i class="fas fa-user-plus"></i>&nbsp;新增員工資料 
+							新增員工資料 
 						</h2>
 					</div>
 					<div class="tile-body">
@@ -138,18 +138,21 @@
 								</div>
 								</div>
 								<div class="row">					
-								<div class="col-md-6">
+								<div class="col-md-12">
 									<div class="form-group">
 										<label><i class="fas fa-user-alt"></i>權限:</label>
                                         <div class="form-group">                                          
 											<ul>
 												<c:forEach var="funVO" items="${funSvc.all}">
-													<li><input name="funno" value="${funVO.funno}" type="hidden">
-														${funVO.funName}
-														<label><select size="1" name="auth_no">
-															<option value="1" ${(authVO.auth_no==1)? 'selected':''}>開</option>
-															<option value="0" ${(authVO.auth_no==0)? 'selected':''}>關</option>
-													</select></label></li>
+												
+													<li><input class="col-md-6" name="funno" value="${funVO.funno}" type="hidden">${funVO.funName}&emsp;：
+														<label>
+															<select class="form-control" size="1" name="auth_no">
+																<option value="1" ${(authVO.auth_no==1)? 'selected':''}>開</option>
+																<option value="0" ${(authVO.auth_no==0)? 'selected':''}>關</option>
+															</select>
+														</label></li>
+												
 												</c:forEach>
 												
 											</ul>

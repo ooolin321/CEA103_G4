@@ -10,28 +10,26 @@ public class NoticeService {
 		dao = new NoticeJNDIDAO();
 	}
 
-	public NoticeVO addNotice(String user_id, String content,java.sql.Date noc_date, 
-			Integer noc_state) {
+	public NoticeVO addNotice(String user_id, String noc_content, Integer noc_state) {
 
 		NoticeVO noticeVO = new NoticeVO();
 
 		noticeVO.setUser_id(user_id);
-		noticeVO.setContent(content);
-		noticeVO.setNoc_date(noc_date);
+		noticeVO.setNoc_content(noc_content);
 		noticeVO.setNoc_state(noc_state);
 		dao.insert(noticeVO);
 
 		return noticeVO;
 	}
 
-	public NoticeVO updateNotice(Integer notice_no, String user_id, String content, java.sql.Date noc_date,
+	public NoticeVO updateNotice(Integer notice_no, String user_id, String noc_content, java.sql.Timestamp noc_date,
 			Integer noc_state) {
 
 		NoticeVO noticeVO = new NoticeVO();
 
 		noticeVO.setNotice_no(notice_no);
 		noticeVO.setUser_id(user_id);
-		noticeVO.setContent(content);
+		noticeVO.setNoc_content(noc_content);
 		noticeVO.setNoc_date(noc_date);
 		noticeVO.setNoc_state(noc_state);
 		dao.update(noticeVO);

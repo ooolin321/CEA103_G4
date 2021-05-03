@@ -37,7 +37,7 @@ public class ProductService {
 	}
 
 	public ProductVO updateProduct(Integer product_no, String product_name, String product_info, Integer product_price,
-			Integer product_quantity, Integer product_remaining, Integer product_state, byte[] product_photo, String user_id,
+			Integer product_remaining, Integer product_state, byte[] product_photo, String user_id,
 			Integer pdtype_no) {
 
 		ProductVO productVO = new ProductVO();
@@ -46,7 +46,6 @@ public class ProductService {
 		productVO.setProduct_name(product_name);
 		productVO.setProduct_info(product_info);
 		productVO.setProduct_price(product_price);
-		productVO.setProduct_quantity(product_quantity);
 		productVO.setProduct_remaining(product_remaining);
 		productVO.setProduct_state(product_state);
 		productVO.setProduct_photo(product_photo);

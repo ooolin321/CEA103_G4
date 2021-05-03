@@ -53,7 +53,7 @@
   
   <li>
     <FORM METHOD="post" ACTION="order.do" >
-        <b>輸入訊息編號 (如6001):</b>
+        <b>輸入訂單編號 (如6001):</b>
         <input type="text" name="order_no">
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="submit" value="送出">
@@ -74,19 +74,20 @@
        <input type="submit" value="送出">
     </FORM>
   </li>
-  
+  <jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
   <li>
      <FORM METHOD="post" ACTION="order.do" >
-       <b>選擇訂單編號:</b>
-       <select size="1" name="order_no">
-         <c:forEach var="orderVO" items="${orderSvc.all}" > 
-          <option value="${orderVO.order_no}">${orderVO.user_id}
+       <b>選擇購買商品編號:</b>
+       <select size="1" name="product_no">
+         <c:forEach var="productVO" items="${productSvc.all}" > 
+          <option value="${productVO.product_no}">${productVO.product_no}
          </c:forEach>   
        </select>
-       <input type="hidden" name="action" value="getOne_For_Display">
+       <input type="hidden" name="action" value="getOne_For_Add">
        <input type="submit" value="送出">
-     </FORM>
+    </FORM>
   </li>
+  
 </ul>
 
 

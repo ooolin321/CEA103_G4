@@ -131,7 +131,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>直播訂單付款方式:</td>
+							<td>付款方式:</td>
 							<td>
 								${(live_orderVO.pay_method==0)? '錢包':''}
 								${(live_orderVO.pay_method==1)? '信用卡':''}

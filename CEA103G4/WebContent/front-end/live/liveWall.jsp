@@ -169,7 +169,7 @@
 								<li><a href="#">直播預告</a></li>
 
 							</ul></li>
-						<li><a href="#">會員專區<i class="icon_profile"></i></a></li>
+						<li><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i class="icon_profile"></i></a></li>
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>

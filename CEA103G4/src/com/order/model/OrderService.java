@@ -16,12 +16,10 @@ public class OrderService {
 
 		OrderVO orderVO = new OrderVO();
 
-//		orderVO.setOrder_date(order_date);
 		orderVO.setOrder_state(order_state);
 		orderVO.setOrder_shipping(order_shipping);
 		orderVO.setOrder_price(order_price);
 		orderVO.setPay_method(pay_method);
-//		orderVO.setPay_deadline(pay_deadline);
 		orderVO.setRec_name(rec_name);
 		orderVO.setZipcode(zipcode);
 		orderVO.setCity(city);

@@ -2,12 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.auth.model.*"%>
+<%@ page import="com.emp.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
 	AuthVO authVO = (AuthVO) request.getAttribute("authVO");
 %>
-
+<%
+	EmpVO empVO = (EmpVO)session.getAttribute("account");
+	session.setAttribute("empVO", empVO);
+%>
 <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 <jsp:useBean id="funSvc2" scope="page" class="com.fun.model.FunService" />
 

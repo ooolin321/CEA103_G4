@@ -1,11 +1,12 @@
 package com.notice.model;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class NoticeVO implements java.io.Serializable{
 	private Integer notice_no;
 	private String user_id;
-	private String content;
-	private Date noc_date;
+	private String noc_content;
+	private Timestamp noc_date;
 	private Integer noc_state;
 	
 	public Integer getNotice_no() {
@@ -20,16 +21,16 @@ public class NoticeVO implements java.io.Serializable{
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-	public String getContent() {
-		return content;
+	public String getNoc_content() {
+		return noc_content;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setNoc_content(String noc_content) {
+		this.noc_content = noc_content;
 	}
-	public Date getNoc_date() {
+	public Timestamp getNoc_date() {
 		return noc_date;
 	}
-	public void setNoc_date(Date noc_date) {
+	public void setNoc_date(Timestamp noc_date) {
 		this.noc_date = noc_date;
 	}
 	public Integer getNoc_state() {

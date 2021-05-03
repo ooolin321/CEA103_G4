@@ -102,8 +102,9 @@ table td, table tr, table th {
 									<td><fmt:formatDate value="${liveVO.live_time}"
 											pattern="yyyy-MM-dd HH:mm:ss" /></td>
 
-									<td>${(liveVO.live_state==0)? '未直播':''}
-										${(liveVO.live_state==1)? '直播中':''} ${(liveVO.live_state==2)? '已直播':''}
+									<td>${(liveVO.live_state==0)? '已結束':''}
+										${(liveVO.live_state==1)? '未直播':''} 
+										${(liveVO.live_state==2)? '直播中':''}
 									</td>
 									<td><img
 										src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}"

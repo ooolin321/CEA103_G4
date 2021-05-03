@@ -21,15 +21,15 @@ public class NoticeJNDIDAO implements NoticeDAO_interface{
 		}
 	}
 	private static final String INSERT_STMT = 
-			"INSERT INTO `NOTICE` (`USER_ID`,`CONTENT`,`NOC_DATE`,`NOC_STATE`) VALUES (?, ?, ?, ?)";
+			"INSERT INTO `NOTICE` (`USER_ID`,`NOC_CONTENT`,`NOC_STATE`) VALUES (?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT `NOTICE_NO`,`USER_ID`,`CONTENT`,`NOC_DATE`,`NOC_STATE` FROM `NOTICE` ORDER BY `NOTICE_NO`";
+			"SELECT `NOTICE_NO`,`USER_ID`,`NOC_CONTENT`,`NOC_DATE`,`NOC_STATE` FROM `NOTICE` ORDER BY `NOTICE_NO`";
 	private static final String GET_ONE_STMT = 
-			"SELECT `NOTICE_NO`,`USER_ID`,`CONTENT`,`NOC_DATE`,`NOC_STATE` FROM `NOTICE` WHERE `NOTICE_NO` = ?";
+			"SELECT `NOTICE_NO`,`USER_ID`,`NOC_CONTENT`,`NOC_DATE`,`NOC_STATE` FROM `NOTICE` WHERE `NOTICE_NO` = ?";
 	private static final String DELETE = 
 			"DELETE FROM `NOTICE` WHERE `NOTICE_NO` = ?";
 	private static final String UPDATE = 
-			"UPDATE `NOTICE` SET `USER_ID`=?, `CONTENT`=?, `NOC_DATE`=?, `NOC_STATE`=? WHERE `NOTICE_NO` = ?";
+			"UPDATE `NOTICE` SET `USER_ID`=?, `NOC_CONTENT`=?, `NOC_DATE`=?, `NOC_STATE`=? WHERE `NOTICE_NO` = ?";
 	
 	
 	
@@ -44,9 +44,8 @@ public class NoticeJNDIDAO implements NoticeDAO_interface{
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, noticeVO.getUser_id());
-			pstmt.setString(2, noticeVO.getContent());
-			pstmt.setDate(3, noticeVO.getNoc_date());
-			pstmt.setInt(4, noticeVO.getNoc_state());
+			pstmt.setString(2, noticeVO.getNoc_content());
+			pstmt.setInt(3, noticeVO.getNoc_state());
 
 			pstmt.executeUpdate();
 
@@ -83,8 +82,8 @@ public class NoticeJNDIDAO implements NoticeDAO_interface{
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, noticeVO.getUser_id());
-			pstmt.setString(2, noticeVO.getContent());
-			pstmt.setDate(3, noticeVO.getNoc_date());
+			pstmt.setString(2, noticeVO.getNoc_content());
+			pstmt.setTimestamp(3, noticeVO.getNoc_date());
 			pstmt.setInt(4, noticeVO.getNoc_state());
 
 			pstmt.executeUpdate();
@@ -169,8 +168,8 @@ public class NoticeJNDIDAO implements NoticeDAO_interface{
 				noticeVO = new NoticeVO();
 				noticeVO.setNotice_no(rs.getInt("notice_no"));
 				noticeVO.setUser_id(rs.getString("user_id"));
-				noticeVO.setContent(rs.getString("content"));
-				noticeVO.setNoc_date(rs.getDate("noc_date"));
+				noticeVO.setNoc_content(rs.getString("noc_content"));
+				noticeVO.setNoc_date(rs.getTimestamp("noc_date"));
 				noticeVO.setNoc_state(rs.getInt("noc_state"));
 			}
 		} catch (SQLException se) {
@@ -222,8 +221,8 @@ public class NoticeJNDIDAO implements NoticeDAO_interface{
 				noticeVO = new NoticeVO();
 				noticeVO.setNotice_no(rs.getInt("notice_no"));
 				noticeVO.setUser_id(rs.getString("user_id"));
-				noticeVO.setContent(rs.getString("content"));
-				noticeVO.setNoc_date(rs.getDate("noc_date"));
+				noticeVO.setNoc_content(rs.getString("noc_content"));
+				noticeVO.setNoc_date(rs.getTimestamp("noc_date"));
 				noticeVO.setNoc_state(rs.getInt("noc_state"));
 				list.add(noticeVO); // Store the row in the list
 			}

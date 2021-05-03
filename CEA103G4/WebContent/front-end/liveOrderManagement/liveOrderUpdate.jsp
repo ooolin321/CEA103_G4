@@ -74,7 +74,7 @@
 				</c:forEach>
 			</ul>
 		</c:if>
-		
+
 		<div class="row">
 			<div class="col-md-12 productsAdd">
 				<FORM METHOD="post"
@@ -149,7 +149,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>直播訂單付款方式:</td>
+							<td>付款方式:</td>
 							<td><select name="pay_method" class="form-control">
 									<option value="0"
 										${(live_orderVO.pay_method==0)? 'selected':''}>錢包</option>
@@ -199,10 +199,7 @@
 							<td>直播編號:</td>
 							<td><%=live_orderVO.getLive_no()%> <input type="HIDDEN"
 								name="live_no" size="45" class="form-control"
-								value="<%=live_orderVO.getLive_no()%>" /> <!-- 							<select size="1" name="live_no" id="live_no" -->
-								<!-- 								class="form-control" > --> <%-- 									<c:forEach var="liveVO" items="${liveSvc.all}"> --%>
-								<%-- 										<option value="${liveVO.live_no}" --%> <%-- 											${(live_orderVO.live_no==liveVO.live_no)? 'selected':'' }>${liveVO.live_no} --%>
-								<%-- 									</c:forEach> --%> <!-- 							</select> --></td>
+								value="<%=live_orderVO.getLive_no()%>" /></td>
 						</tr>
 
 						<jsp:useBean id="userSvc" scope="page"

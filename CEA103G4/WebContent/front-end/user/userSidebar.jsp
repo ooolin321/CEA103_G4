@@ -126,18 +126,8 @@
                     <ul class="treeview-menu">
                       <li><a class="treeview-item" href='<%=request.getContextPath()%>/front-end/liveManagement/liveList.jsp'><i class="icon fa fa-circle-o"></i>我的直播專案</a></li>
                       <li>
-                      <FORM id="add_live" METHOD="post" ACTION="<%=request.getContextPath()%>/live/live.do" style="margin-bottom: 0px;">
-					     <input type="hidden" name="user_id"  value="${userVO.user_id}">
-					     <input type="hidden" name="action"	value="insert">
-                      <a class="treeview-item" href="#" onclick="document.getElementById('add_live').submit();"><i class="icon fa fa-circle-o"></i>新增直播專案</a>
-                      </FORM>
-<!--                       <li> -->
-<%--                    	  <FORM id="update_live" METHOD="post" ACTION="<%=request.getContextPath()%>/live/live.do" style="margin-bottom: 0px;"> --%>
-<%-- 					     <input type="hidden" name="user_id"  value="${userVO.user_id}"> --%>
-<!-- 					     <input type="hidden" name="action"	value="getOne_For_Update"> -->
-<!--                       <a class="treeview-item" href="#" onclick="document.getElementById('update_live').submit();"><i class="icon fa fa-circle-o"></i>修改直播專案</a> -->
-<!--                       </FORM> -->
-<!--                       </li> -->
+                      <a class="treeview-item" href="<%=request.getContextPath()%>/front-end/liveManagement/liveAdd.jsp"><i class="icon fa fa-circle-o"></i>我的販賣訂單</a>
+                      <li>
                     </ul>
                   </li>
                 </ul>

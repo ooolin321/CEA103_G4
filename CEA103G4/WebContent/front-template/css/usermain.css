@@ -12292,7 +12292,7 @@ body.stop-scrolling {
 }
 
 .pace .pace-progress {
-  background: #96000e;
+  background:#C2C2FF;
   position: fixed;
   z-index: 2000;
   top: 0;
@@ -15384,7 +15384,7 @@ max-height:100%;
 /*media*/
 
 @media (max-width: 576px) {
-.header-section .logo;{
+.header-section .logo{
     float: left;
     width: 31%;
     height: 100%;
@@ -15393,9 +15393,9 @@ max-height:100%;
     font-size: 700;
     display: block;
 }
-	.app-content {
-    margin-top: 65px;
-    min-width: 100%;
+.app-content {
+margin-top: 65px;
+min-width: 100%;
 }
 }
 

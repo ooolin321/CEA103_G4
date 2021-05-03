@@ -6,6 +6,8 @@
 
 <%
 	LiveVO liveVO = (LiveVO) request.getAttribute("liveVO");
+
+
 %>
 
 <!DOCTYPE html>
@@ -72,6 +74,7 @@
 						<input type="hidden" name="user_id" value="${userVO.user_id}">
 							${userVO.user_id}
 						</div>
+						</div>
 
 
 						<div class="form-group">
@@ -116,6 +119,7 @@
 								<input name="live_time" class="form-control" id="f_date1"
 									type="text">
 							</div>
+							</div>
 
 							<jsp:useBean id="empSvc" scope="page"
 								class="com.emp.model.EmpService" />
@@ -136,7 +140,8 @@
 								<div class="col-sm-10">
 									<input name="live_photo" class="form-control" type="file"
 										id="imgInp" accept="image/gif, image/jpeg, image/png"
-										/ required>
+										required>
+								</div>
 								</div>
 
 								<div class="form-group">
@@ -151,6 +156,8 @@
 									<button type="submit" class="btn btn-info">新增直播專案</button>
 								</div>
 				</form>
+				</div>
+				</div>
 	</main>
 	<!-- Essential javascripts for application to work-->
 	<script

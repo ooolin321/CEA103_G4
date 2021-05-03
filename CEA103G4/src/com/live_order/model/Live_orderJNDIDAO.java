@@ -36,8 +36,8 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 	private static final String UPDATE = "UPDATE LIVE_ORDER SET ORDER_DATE=?,ORDER_STATE=?,ORDER_SHIPPING=?,ORDER_PRICE=?,PAY_METHOD=?,PAY_DEADLINE=?,REC_NAME=?,REC_ADDR=?,REC_PHONE=?,REC_CELLPHONE=?,LOGISTICS=?,LOGISTICS_STATE=?,DISCOUNT=?,LIVE_NO=?,USER_ID=?,SELLER_ID=?,SRATING=?,SRATING_CONTENT=?,POINT=? ,CITY=?,TOWN=?,ZIPCODE=? WHERE LIVE_ORDER_NO = ?";
 	private static final String GET_Details_ByNo_STMT = "SELECT * FROM LIVE_ORDER_DETAIL WHERE LIVE_ORDER_NO = ? ORDER BY PRODUCT_NO";
 	private static final String DELETE_DETAILs = "DELETE FROM LIVE_ORDER_DETAIL WHERE LIVE_ORDER_NO = ?";
-	
-	
+	private static final String GET_ORDER_BY_ID = "SELECT * FROM LIVE_ORDER WHERE USER_ID = ? ORDER BY LIVE_ORDER_NO";
+	private static final String GET_ORDER_BY_ID2 = "SELECT * FROM LIVE_ORDER WHERE SELLER_ID = ? ORDER BY LIVE_ORDER_NO";
 
 	@Override
 	public void insert(Live_orderVO live_orderVO) {
@@ -521,4 +521,157 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 
 	}
 
+	@Override
+	public List<Live_orderVO> getAllByID(String user_id) {
+		List<Live_orderVO> list = new ArrayList<Live_orderVO>();
+		Live_orderVO live_orderVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ORDER_BY_ID);
+			pstmt.setString(1, user_id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				
+				live_orderVO = new Live_orderVO();
+				live_orderVO.setLive_order_no(rs.getInt("live_order_no"));
+				live_orderVO.setOrder_date(rs.getTimestamp("order_date"));
+				live_orderVO.setOrder_state(rs.getInt("order_state"));
+				live_orderVO.setOrder_shipping(rs.getInt("order_shipping"));
+				live_orderVO.setOrder_price(rs.getInt("order_price"));
+				live_orderVO.setPay_method(rs.getInt("pay_method"));
+				live_orderVO.setPay_deadline(rs.getTimestamp("pay_deadline"));
+				live_orderVO.setRec_name(rs.getString("rec_name"));
+				live_orderVO.setRec_addr(rs.getString("rec_addr"));
+				live_orderVO.setRec_phone(rs.getString("rec_phone"));
+				live_orderVO.setRec_cellphone(rs.getString("rec_cellphone"));
+				live_orderVO.setLogistics(rs.getInt("logistics"));
+				live_orderVO.setLogistics_state(rs.getInt("logistics_state"));
+				live_orderVO.setDiscount(rs.getInt("discount"));
+				live_orderVO.setLive_no(rs.getInt("live_no"));
+				live_orderVO.setUser_id(rs.getString("user_id"));
+				live_orderVO.setSeller_id(rs.getString("seller_id"));
+				live_orderVO.setSrating(rs.getInt("srating"));
+				live_orderVO.setSrating_content(rs.getString("srating_content"));
+				live_orderVO.setPoint(rs.getInt("point"));
+				live_orderVO.setCity(rs.getString("City"));
+				live_orderVO.setTown(rs.getString("Town"));
+				live_orderVO.setZipcode(rs.getInt("zipcode"));
+				list.add(live_orderVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<Live_orderVO> getAllByID2(String seller_id) {
+		List<Live_orderVO> list = new ArrayList<Live_orderVO>();
+		Live_orderVO live_orderVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ORDER_BY_ID2);
+			pstmt.setString(1, seller_id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				
+				live_orderVO = new Live_orderVO();
+				live_orderVO.setLive_order_no(rs.getInt("live_order_no"));
+				live_orderVO.setOrder_date(rs.getTimestamp("order_date"));
+				live_orderVO.setOrder_state(rs.getInt("order_state"));
+				live_orderVO.setOrder_shipping(rs.getInt("order_shipping"));
+				live_orderVO.setOrder_price(rs.getInt("order_price"));
+				live_orderVO.setPay_method(rs.getInt("pay_method"));
+				live_orderVO.setPay_deadline(rs.getTimestamp("pay_deadline"));
+				live_orderVO.setRec_name(rs.getString("rec_name"));
+				live_orderVO.setRec_addr(rs.getString("rec_addr"));
+				live_orderVO.setRec_phone(rs.getString("rec_phone"));
+				live_orderVO.setRec_cellphone(rs.getString("rec_cellphone"));
+				live_orderVO.setLogistics(rs.getInt("logistics"));
+				live_orderVO.setLogistics_state(rs.getInt("logistics_state"));
+				live_orderVO.setDiscount(rs.getInt("discount"));
+				live_orderVO.setLive_no(rs.getInt("live_no"));
+				live_orderVO.setUser_id(rs.getString("user_id"));
+				live_orderVO.setSeller_id(rs.getString("seller_id"));
+				live_orderVO.setSrating(rs.getInt("srating"));
+				live_orderVO.setSrating_content(rs.getString("srating_content"));
+				live_orderVO.setPoint(rs.getInt("point"));
+				live_orderVO.setCity(rs.getString("City"));
+				live_orderVO.setTown(rs.getString("Town"));
+				live_orderVO.setZipcode(rs.getInt("zipcode"));
+				list.add(live_orderVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 }

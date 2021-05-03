@@ -64,4 +64,6 @@ public class LiveService {
 	public List<LiveVO> getAllByID(String user_id){
 		return dao.getAllByID(user_id);
 	}
+	
+	
 }

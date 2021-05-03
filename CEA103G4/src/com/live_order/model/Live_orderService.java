@@ -3,6 +3,7 @@ package com.live_order.model;
 import java.util.List;
 import java.util.Set;
 
+import com.live.model.LiveVO;
 import com.live_order_detail.model.Live_order_detailVO;
 
 public class Live_orderService {
@@ -102,4 +103,11 @@ public class Live_orderService {
 		return dao.getDetailsByNo(live_order_no);
 	}
 
+	public List<Live_orderVO> getAllByID(String user_id) {
+		return dao.getAllByID(user_id);
+	}
+	
+	public List<Live_orderVO> getAllByID2(String seller_id) {
+		return dao.getAllByID2(seller_id);
+	}
 }

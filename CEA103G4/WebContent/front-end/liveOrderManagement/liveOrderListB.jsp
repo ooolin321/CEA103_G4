@@ -2,12 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.live.model.*"%>
+<%@ page import="com.live_order.model.*"%>
 <%@ page import="com.user.model.*"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
-<jsp:useBean id="liveSvc" scope="page"
-	class="com.live.model.LiveService" />
+<jsp:useBean id="live_orderSvc" scope="page"
+	class="com.live_order.model.Live_orderService" />
 
 <!DOCTYPE html>
 <html lang="zh-tw">
@@ -63,12 +63,12 @@ table td, table tr, table th {
 		<div class="app-title">
 			<div>
 				<h1>
-					<i class="fa fa-archive"></i>我的直播專案
+					<i class="fa fa-archive"></i>我的販賣訂單
 				</h1>
 			</div>
 			<ul class="app-breadcrumb breadcrumb">
 				<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-				<li class="breadcrumb-item"><a href="#">直播專案管理</a></li>
+				<li class="breadcrumb-item"><a href="#">直播訂單管理</a></li>
 			</ul>
 		</div>
 
@@ -77,56 +77,96 @@ table td, table tr, table th {
 		<div class="row">
 			<div class="col-xl-12">
 				<div class="tile">
-					<h3 class="tile-title">我的直播專案</h3>
+					<h3 class="tile-title">我的販賣訂單</h3>
 					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>直播分類</th>
-								<th>直播名稱</th>
-								<th>直播時間</th>
-								<th>直播狀態</th>
-								<th>直播預覽圖</th>
+<!-- 								<th>訂單時間</th> -->
+								<th>付款截止時間</th>
+								<th>訂單狀態</th>
+								<th>訂單金額</th>
+								<th>訂單運費</th>
+								<th>付款方式</th>
+<!-- 								<th>收件人姓名</th> -->
+<!-- 								<th>收件人地址</th> -->
+<!-- 								<th>收件人電話</th> -->
+<!-- 								<th>收件人手機</th> -->
+								<th>物流方式</th>
+								<th>物流狀態</th>
+<!-- 								<th>使用點數折抵</th> -->
+<!-- 								<th>直播編號</th> -->
+<!-- 								<th>買家帳號</th> -->
+<!-- 								<th>賣家帳號</th> -->
+<!-- 								<th>賣家評價分數</th> -->
+<!-- 								<th>賣家評價內容</th> -->
+<!-- 								<th>點數回饋</th> -->
 								<th></th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="liveVO"
-								items="${liveSvc.getAllByID(userVO.user_id)}">
+
+							<c:forEach var="live_orderVO"
+								items="${live_orderSvc.getAllByID2(userVO.user_id)}">
 								<tr>
-									<td>${liveVO.live_no}</td>
-									<td>${liveVO.live_type}</td>
-									<td>${liveVO.live_name}</td>
-
-									<td><fmt:formatDate value="${liveVO.live_time}"
+									<td>${live_orderVO.live_order_no}</td>
+<%-- 									<td><fmt:formatDate value="${live_orderVO.order_date}" --%>
+<%-- 											pattern="yyyy-MM-dd HH:mm:ss" /></td> --%>
+									<td><fmt:formatDate value="${live_orderVO.pay_deadline}"
 											pattern="yyyy-MM-dd HH:mm:ss" /></td>
-
-									<td>${(liveVO.live_state==0)? '未直播':''}
-										${(liveVO.live_state==1)? '直播中':''} ${(liveVO.live_state==2)? '已直播':''}
-									</td>
-									<td><img
-										src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}"
-										width="200px"></td>
+									<td>${(live_orderVO.order_state==0)? '未付款':''}
+										${(live_orderVO.order_state==1)? '已付款':''}
+										${(live_orderVO.order_state==2)? '棄單':''}</td>
+									<td>${live_orderVO.order_price}</td>
+									<td>${live_orderVO.order_shipping}</td>
+									<td>${(live_orderVO.pay_method==0)? '錢包':''}
+										${(live_orderVO.pay_method==1)? '信用卡':''}
+										${(live_orderVO.pay_method==2)? '轉帳':''}</td>
+<%-- 									<td>${live_orderVO.rec_name}</td> --%>
+<%-- 									<td>${live_orderVO.zipcode}${live_orderVO.city}${live_orderVO.town}${live_orderVO.rec_addr}</td> --%>
+<%-- 									<td>${live_orderVO.rec_phone}</td> --%>
+<%-- 									<td>${live_orderVO.rec_cellphone}</td> --%>
+									<td>${(live_orderVO.logistics==0)? '宅配':'超商'}</td>
+									<td>${(live_orderVO.logistics_state==0)? '未出貨':''}
+										${(live_orderVO.logistics_state==1)? '已出貨':''}
+										${(live_orderVO.logistics_state==2)? '已取貨':''}</td>
+<%-- 									<td>${live_orderVO.discount}</td> --%>
+<%-- 									<td>${live_orderVO.live_no}</td> --%>
+<%-- 									<td>${live_orderVO.user_id}</td> --%>
+<%-- 									<td>${live_orderVO.seller_id}</td> --%>
+<%-- 									<td>${live_orderVO.srating}</td> --%>
+<%-- 									<td>${live_orderVO.srating_content}</td> --%>
+<%-- 									<td>${live_orderVO.point}</td> --%>
 
 									<td>
 										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/live/live.do"
+											ACTION="<%=request.getContextPath()%>/live_order/live_order.do"
 											style="margin-bottom: 0px;">
-											<input type="submit" value="修改" class="btn btn-info">
-											<input type="hidden" name="live_no" value="${liveVO.live_no}">
-											<input type="hidden" name="action" value="getOne_For_Update">
+											<input type="submit" class="btn btn-info" value="修改"> <input type="hidden"
+												name="live_order_no" value="${live_orderVO.live_order_no}">
+											<input type="hidden" name="action" value="getOne_For_UpdateB">
 										</FORM>
 									</td>
 									<td>
 										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/live/live.do"
+											ACTION="<%=request.getContextPath()%>/live_order/live_order.do"
 											style="margin-bottom: 0px;">
-											<input type="submit" value="刪除" class="btn btn-danger">
-											<input type="hidden" name="live_no" value="${liveVO.live_no}">
+											<input type="submit" class="btn btn-danger" value="刪除"> <input type="hidden"
+												name="live_order_no" value="${live_orderVO.live_order_no}">
 											<input type="hidden" name="action" value="delete">
 										</FORM>
 									</td>
+<!-- 									<td> -->
+<!-- 										<FORM METHOD="post" -->
+<%-- 											ACTION="<%=request.getContextPath()%>/live_order/live_order.do" --%>
+<!-- 											style="margin-bottom: 0px;"> -->
+<!-- 											<input type="submit"  value="送出查詢"> <input -->
+<!-- 												type="hidden" name="live_order_no" -->
+<%-- 												value="${live_orderVO.live_order_no}"> <input --%>
+<!-- 												type="hidden" name="action" value="listDetails_ByNo"> -->
+<!-- 										</FORM> -->
+<!-- 									</td> -->
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -155,7 +195,5 @@ table td, table tr, table th {
 	<!-- Page specific javascripts-->
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
-
-
 </body>
 </html>

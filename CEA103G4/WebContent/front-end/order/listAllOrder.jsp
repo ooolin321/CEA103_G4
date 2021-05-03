@@ -1,9 +1,9 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
-<%-- ¦¹­¶½m²ß±Ä¥Î EL ªº¼gªk¨ú­È --%>
+<%-- æ­¤é ç·´ç¿’æ¡ç”¨ EL çš„å¯«æ³•å–å€¼ --%>
 
 <%
     OrderService orderSvc = new OrderService();
@@ -14,7 +14,7 @@
 
 <html>
 <head>
-<title>©Ò¦³²á¤Ñ¸ê®Æ - listAllOrder.jsp</title>
+<title>æ‰€æœ‰èŠå¤©è³‡æ–™ - listAllOrder.jsp</title>
 
 <style>
   table#table-1 {
@@ -52,17 +52,17 @@
 </head>
 <body bgcolor='white'>
 
-<h4>¦¹­¶½m²ß±Ä¥Î EL ªº¼gªk¨ú­È:</h4>
+<h4>æ­¤é ç·´ç¿’æ¡ç”¨ EL çš„å¯«æ³•å–å€¼:</h4>
 <table id="table-1">
 	<tr><td>
-		 <h3>©Ò¦³­q³æ¸ê®Æ - listAllOrder.jsp</h3>
-		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">¦^­º­¶</a></h4>
+		 <h3>æ‰€æœ‰è¨‚å–®è³‡æ–™ - listAllOrder.jsp</h3>
+		 <h4><a href="select_page.jsp"><img src="images/back1.gif" width="100" height="32" border="0">å›é¦–é </a></h4>
 	</td></tr>
 </table>
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -72,25 +72,25 @@
 
 <table>
 	<tr>
-		<th>­q³æ½s¸¹</th>
-		<th>­q³æ¤é´Á</th>
-		<th>­q³æª¬ºA</th>
-		<th>­q³æ¹B¶O</th>
-		<th>­q³æ»ù®æ</th>
-		<th>¥I´Ú¤è¦¡</th>
-		<th>¥I´ÚºI¤î´Á­­</th>
-		<th>¦¬¥ó¤H©m¦W</th>
-		<th>¦¬¥ó¤H¦a§}</th>
-		<th>¦¬¥ó¤H¹q¸Ü</th>
-		<th>¦¬¥ó¤H¤â¾÷</th>
-		<th>ª«¬y¤è¦¡</th>
-		<th>ª«¬yª¬ªp</th>
-		<th>ÂI¼Æ§é©è</th>
-		<th>¶R®a±b¸¹</th>
-		<th>½æ®a±b¸¹</th>
-		<th>½æ®aµû»ù¤À¼Æ</th>
-		<th>½æ®aµû»ù¤º®e</th>
-		<th>ÂI¼Æ¦^õX</th>
+		<th>è¨‚å–®ç·¨è™Ÿ</th>
+		<th>è¨‚å–®æ—¥æœŸ</th>
+		<th>è¨‚å–®ç‹€æ…‹</th>
+		<th>è¨‚å–®é‹è²»</th>
+		<th>è¨‚å–®åƒ¹æ ¼</th>
+		<th>ä»˜æ¬¾æ–¹å¼</th>
+		<th>ä»˜æ¬¾æˆªæ­¢æœŸé™</th>
+		<th>æ”¶ä»¶äººå§“å</th>
+		<th>æ”¶ä»¶äººåœ°å€</th>
+		<th>æ”¶ä»¶äººé›»è©±</th>
+		<th>æ”¶ä»¶äººæ‰‹æ©Ÿ</th>
+		<th>ç‰©æµæ–¹å¼</th>
+		<th>ç‰©æµç‹€æ³</th>
+		<th>é»æ•¸æŠ˜æŠµ</th>
+		<th>è²·å®¶å¸³è™Ÿ</th>
+		<th>è³£å®¶å¸³è™Ÿ</th>
+		<th>è³£å®¶è©•åƒ¹åˆ†æ•¸</th>
+		<th>è³£å®¶è©•åƒ¹å…§å®¹</th>
+		<th>é»æ•¸å›é¥‹</th>
 		
 	</tr>
 	<%@ include file="page1.file" %> 
@@ -99,24 +99,24 @@
 		<tr>
 			<td>${orderVO.order_no}</td>
 			<td><fmt:formatDate value="${orderVO.order_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-			<td>${(orderVO.order_state==0)? '¥¼¥I´Ú':'¤w¥I´Ú'}</td>
+			<td>${(orderVO.order_state==0)? 'æœªä»˜æ¬¾':'å·²ä»˜æ¬¾'}</td>
 			<td>${orderVO.order_shipping}</td>
 			<td>${orderVO.order_price}</td>
 			<td>
-				${(orderVO.pay_method==0)? '¿ú¥]':''}
-				${(orderVO.pay_method==1)? '«H¥Î¥d':''}
-				${(orderVO.pay_method==2)? 'Âà±b':''}
+				${(orderVO.pay_method==0)? 'éŒ¢åŒ…':''}
+				${(orderVO.pay_method==1)? 'ä¿¡ç”¨å¡':''}
+				${(orderVO.pay_method==2)? 'è½‰å¸³':''}
 			</td>
 			<td><fmt:formatDate value="${orderVO.pay_deadline}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			<td>${orderVO.rec_name}</td>
 			<td>${orderVO.zipcode}${orderVO.city}${orderVO.town}${orderVO.rec_addr}</td>
 			<td>${orderVO.rec_phone}</td>
 			<td>${orderVO.rec_cellphone}</td>
-			<td>${(orderVO.logistics==0)? '¶W°Ó':'¦v°t'}</td>
+			<td>${(orderVO.logistics==0)? 'è¶…å•†':'å®…é…'}</td>
 			<td>
-			${(orderVO.logisticsstate==0)? '¥¼¥X³f':''}
-			${(orderVO.logisticsstate==1)? '¤w¥X³f':''}
-			${(orderVO.logisticsstate==2)? '¤w¨ú³f':''}
+			${(orderVO.logisticsstate==0)? 'æœªå‡ºè²¨':''}
+			${(orderVO.logisticsstate==1)? 'å·²å‡ºè²¨':''}
+			${(orderVO.logisticsstate==2)? 'å·²å–è²¨':''}
 			</td>
 			<td>${orderVO.discount}</td>
 			<td>${orderVO.user_id}</td>
@@ -126,13 +126,13 @@
 			<td>${orderVO.point}</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="­×§ï">
+			     <input type="submit" value="ä¿®æ”¹">
 			     <input type="hidden" name="order_no"  value="${orderVO.order_no}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="§R°£">
+			     <input type="submit" value="åˆªé™¤">
 			     <input type="hidden" name="order_no"  value="${orderVO.order_no}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>

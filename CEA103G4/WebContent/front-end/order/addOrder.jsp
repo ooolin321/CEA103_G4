@@ -1,9 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.order.model.*"%>
+<%@ page import="com.product.model.*"%>
 
 <%
-  OrderVO orderVO = (OrderVO) request.getAttribute("orderVO");
+  ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 %>
 
 <html>
@@ -79,10 +80,27 @@
 <FORM METHOD="post" ACTION="order.do" name="form1">
 <table>
 <jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
-	<!-- <tr>
-		<td>訂單日期:</td>
-		<td><input name="order_date" id="f_date1" type="date"></td>
-	</tr> -->
+<jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
+
+	<tr>
+		<td>商品編號：</td>
+		<td>${productVO.product_no}</td>
+	</tr>
+	<tr>
+		<td>商品庫存：</td>
+		<td id="product_remaining">${productVO.product_remaining}</td>
+	</tr>
+	<tr>
+		<td>購買數量：</td>
+		<td>
+		<input type="button" value="-" class="remove">
+		<input type="TEXT" name="product_num" size="2" id="product_num" value="0"  style="text-align:center">
+		<input type="button" value="+" class="add">
+		</td>
+		<td id="errorMsgs" style="color:red"></td>
+	</tr>
+	
+	
 	<tr>
 		<td>訂單狀態:</td>
 		<td><select name="order_state"> 
@@ -160,7 +178,7 @@
 		<td>買家帳號:<font color=red><b>*</b></font></td>
 		<td><select size="1" name="user_id">
 					<c:forEach var="userVO" items="${userSvc.all}">
-						<option value="${userVO.user_id}" ${(live_orderVO.user_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
+						<option value="${userVO.user_id}" ${(orderVO.user_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
 					</c:forEach>
 		</select></td>
 	</tr>
@@ -168,7 +186,7 @@
 		<td>賣家帳號:<font color=red><b>*</b></font></td>
 		<td><select size="1" name="seller_id">
 					<c:forEach var="userVO" items="${userSvc.all}">
-						<option value="${userVO.user_id}" ${(live_orderVO.user_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
+						<option value="${userVO.user_id}" ${(orderVO.user_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
 					</c:forEach>
 				</select></td>
 	</tr>
@@ -239,7 +257,22 @@
 		$("#showOrder_shipping").text("50");
 	}
 	});
-	
+	$("#product_num").change(function(e){
+		if($("#product_num").val() > ${productVO.product_remaining}){
+			window.alert('請勿超過庫存數量');
+			$("#product_num").val(${productVO.product_remaining});
+		}
+	})
+	$(".remove").click(function(e){
+		if($("#product_num").val()>0){
+			$("#product_num").val(parseInt($("#product_num").val())-1);
+		}
+	})
+	$(".add").click(function(e){
+		if($("#product_num").val()<${productVO.product_remaining}){
+			$("#product_num").val(parseInt($("#product_num").val())+1);
+		}
+	})
 	$("#order_price").change(function(e) {
 			let point = Math.floor($("#order_price").val()/100);
 			$("#point").attr('value', point);

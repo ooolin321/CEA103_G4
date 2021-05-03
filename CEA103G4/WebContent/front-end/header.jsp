@@ -46,11 +46,14 @@
 				<div class="col-lg-3 text-right col-md-3">
 					<c:if test="${ not empty userVO.user_name}">
 						<div class="header-right">
+						<FORM id="userLogOut" METHOD="post" class="logout-form" action="<%=request.getContextPath()%>/User_LogoutHandler">
 						<a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">
 						<span class="userLogin"style="cursor: pointer"><img class="rounded-circle" width="45px" height="40px" src=""/>&nbsp;               
 						${userVO.user_name}
                          </span></a>
-						 <a href=""><button type="button" class="btn">登出</button></a>
+						 <input type="hidden" name="action" value="signOut">
+						 <a href="#" onclick="document.getElementById('userLogOut').submit();"><button type="button" class="btn">登出</button></a>
+						 </FORM>
 						</div>
     				</c:if>
        			 <c:if test="${empty userVO.user_name}">

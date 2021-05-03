@@ -21,37 +21,37 @@ public class Live_orderServlet extends HttpServlet {
 
 		String action = req.getParameter("action");
 		
-	    // 來自select_page.jsp的請求                                  // 來自 dept/listAllDept.jsp的請求
-	if ("listDetails_ByNo_A".equals(action) || "listDetails_ByNo_B".equals(action)) {
-
-		List<String> errorMsgs = new LinkedList<String>();
-		req.setAttribute("errorMsgs", errorMsgs);
-
-		try {
-			/*************************** 1.接收請求參數 ****************************************/
-			Integer live_order_no = new Integer(req.getParameter("live_order_no"));
-
-			/*************************** 2.開始查詢資料 ****************************************/
-			Live_orderService live_orderSvc = new Live_orderService();
-			Set<Live_order_detailVO> set = live_orderSvc.getDetailsByNo(live_order_no);
-
-			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			req.setAttribute("listDetails_ByNo", set);    // 資料庫取出的set物件,存入request
-
-			String url = null;
-			if ("listDetails_ByNo_A".equals(action))
-				url = "/front-end/live_order/listDetails_ByNo.jsp";        // 成功轉交 dept/listEmps_ByDeptno.jsp
-			else if ("listDetails_ByNo_B".equals(action))
-				url = "/front-end/live_order/listAllLive_order.jsp";              // 成功轉交 dept/listAllDept.jsp
-
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);
-
-			/*************************** 其他可能的錯誤處理 ***********************************/
-		} catch (Exception e) {
-			throw new ServletException(e);
-		}
-	}
+//	    // 來自select_page.jsp的請求                                  // 來自 dept/listAllDept.jsp的請求
+//	if ("listDetails_ByNo_A".equals(action) || "listDetails_ByNo_B".equals(action)) {
+//
+//		List<String> errorMsgs = new LinkedList<String>();
+//		req.setAttribute("errorMsgs", errorMsgs);
+//
+//		try {
+//			/*************************** 1.接收請求參數 ****************************************/
+//			Integer live_order_no = new Integer(req.getParameter("live_order_no"));
+//
+//			/*************************** 2.開始查詢資料 ****************************************/
+//			Live_orderService live_orderSvc = new Live_orderService();
+//			Set<Live_order_detailVO> set = live_orderSvc.getDetailsByNo(live_order_no);
+//
+//			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+//			req.setAttribute("listDetails_ByNo", set);    // 資料庫取出的set物件,存入request
+//
+//			String url = null;
+//			if ("listDetails_ByNo_A".equals(action))
+//				url = "/front-end/live_order/listDetails_ByNo.jsp";        // 成功轉交 dept/listEmps_ByDeptno.jsp
+//			else if ("listDetails_ByNo_B".equals(action))
+//				url = "/front-end/live_order/listAllLive_order.jsp";              // 成功轉交 dept/listAllDept.jsp
+//
+//			RequestDispatcher successView = req.getRequestDispatcher(url);
+//			successView.forward(req, res);
+//
+//			/*************************** 其他可能的錯誤處理 ***********************************/
+//		} catch (Exception e) {
+//			throw new ServletException(e);
+//		}
+//	}
 
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
@@ -270,7 +270,12 @@ public class Live_orderServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("live_orderVO", live_orderVO); // 含有輸入格式錯誤的live_orderVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/live_order/update_live_order_input.jsp");
+					String url = null;
+					if ("updateA".equals(action))
+						url = "/front-end/liveOrderManagement/liveOrderUpdate.jsp";        // 成功轉交 dept/listEmps_ByDeptno.jsp
+					else if ("updateB".equals(action))
+						url = "/front-end/liveOrderManagement/liveOrderUpdateB.jsp";              // 成功轉交 dept/listAllDept.jsp
+					RequestDispatcher failureView = req.getRequestDispatcher(url);
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -473,7 +478,7 @@ public class Live_orderServlet extends HttpServlet {
 			}
 		}
 		
-		if ("listDetails_ByNo".equals(action)) {
+		if ("listDetails_ByNo".equals(action) || "listDetails_ByNo_B".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -493,8 +498,9 @@ public class Live_orderServlet extends HttpServlet {
 //				if ("listDetails_ByNo".equals(action))
 //					url = "/front-end/live_order/listDetails_ByNo.jsp";        // 成功轉交 dept/listEmps_ByDeptno.jsp
 				if ("listDetails_ByNo".equals(action))
-					url = "/front-end/live_order/listAllLive_order.jsp";              // 成功轉交 dept/listAllDept.jsp
-
+					url = "/front-end/liveOrderManagement/liveOrderListA.jsp";              // 成功轉交 dept/listAllDept.jsp
+				else if ("listDetails_ByNo_B".equals(action))
+					url = "/front-end/liveOrderManagement/liveOrderListB.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

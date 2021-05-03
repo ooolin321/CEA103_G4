@@ -64,6 +64,17 @@
 				<li class="breadcrumb-item"><a href="#">直播訂單管理</a></li>
 			</ul>
 		</div>
+
+		<%-- 錯誤表列 --%>
+		<c:if test="${not empty errorMsgs}">
+			<font style="color: red">請修正以下錯誤:</font>
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color: red">${message}</li>
+				</c:forEach>
+			</ul>
+		</c:if>
+		
 		<div class="row">
 			<div class="col-md-12 productsAdd">
 				<FORM METHOD="post"
@@ -91,9 +102,9 @@
 						</tr>
 						<tr>
 							<td>回饋點數:</td>
-							<td><%=Math.round(live_orderVO.getOrder_price()*0.01)%>
-							<input type="HIDDEN" name="point" size="45"
-								value="<%=Math.round(live_orderVO.getOrder_price()*0.01)%>" /></td>
+							<td><%=Math.round(live_orderVO.getOrder_price() * 0.01)%> <input
+								type="HIDDEN" name="point" size="45"
+								value="<%=Math.round(live_orderVO.getOrder_price() * 0.01)%>" /></td>
 						</tr>
 						<tr>
 							<td>物流方式:</td>
@@ -113,31 +124,27 @@
 						</tr>
 						<tr>
 							<td>使用折扣:</td>
-							<td><%=live_orderVO.getDiscount()%>
-							<input type="HIDDEN" name="discount" size="45"
-								class="form-control" value="<%=live_orderVO.getDiscount()%>" />
-								
-								</td>
+							<td><%=live_orderVO.getDiscount()%> <input type="HIDDEN"
+								name="discount" size="45" class="form-control"
+								value="<%=live_orderVO.getDiscount()%>" /></td>
 						</tr>
 						<tr>
 							<td>訂單狀態:</td>
-							<td>
-								${(live_orderVO.order_state==0)? '未付款':''}
+							<td>${(live_orderVO.order_state==0)? '未付款':''}
 								${(live_orderVO.order_state==1)? '已付款':''}
-								${(live_orderVO.order_state==2)? '棄單':''}
-							<input type="HIDDEN" name="order_state" size="45" value="<%=live_orderVO.getOrder_state()%>" />
-							
+								${(live_orderVO.order_state==2)? '棄單':''} <input type="HIDDEN"
+								name="order_state" size="45"
+								value="<%=live_orderVO.getOrder_state()%>" />
+
 							</td>
 						</tr>
 						<tr>
 							<td>物流狀態:</td>
-							<td>
-								${(live_orderVO.logistics_state==0)? '未出貨':''}
+							<td>${(live_orderVO.logistics_state==0)? '未出貨':''}
 								${(live_orderVO.logistics_state==1)? '已出貨':''}
-								${(live_orderVO.logistics_state==2)? '已取貨':''}
-							<input type="HIDDEN" name="logistics_state"
-								class="form-control" size="45"
-								value="<%=live_orderVO.getLogistics_state()%>" />
+								${(live_orderVO.logistics_state==2)? '已取貨':''} <input
+								type="HIDDEN" name="logistics_state" class="form-control"
+								size="45" value="<%=live_orderVO.getLogistics_state()%>" />
 
 							</td>
 						</tr>
@@ -156,7 +163,7 @@
 						<tr>
 							<td>收件人姓名:</td>
 							<td><input type="TEXT" class="form-control" name="rec_name"
-								size="45" value="<%=live_orderVO.getRec_name()%>" /></td>
+								size="45" value="<%=live_orderVO.getRec_name()%>" REQUIRED /></td>
 						</tr>
 
 						<tr>
@@ -181,7 +188,7 @@
 							<td>收件人手機:</td>
 							<td><input type="TEXT" name="rec_cellphone"
 								class="form-control" size="45"
-								value="<%=live_orderVO.getRec_cellphone()%>" /></td>
+								value="<%=live_orderVO.getRec_cellphone()%>" REQUIRED /></td>
 						</tr>
 
 
@@ -190,21 +197,12 @@
 							class="com.live.model.LiveService" />
 						<tr>
 							<td>直播編號:</td>
-							<td>
-							
-							<%=live_orderVO.getLive_no()%>
-							<input type="HIDDEN" name="live_no" size="45"
-								class="form-control" value="<%=live_orderVO.getLive_no()%>" />
-							
-<!-- 							<select size="1" name="live_no" id="live_no" -->
-<!-- 								class="form-control" > -->
-<%-- 									<c:forEach var="liveVO" items="${liveSvc.all}"> --%>
-<%-- 										<option value="${liveVO.live_no}" --%>
-<%-- 											${(live_orderVO.live_no==liveVO.live_no)? 'selected':'' }>${liveVO.live_no} --%>
-<%-- 									</c:forEach> --%>
-<!-- 							</select> -->
-							
-							</td>
+							<td><%=live_orderVO.getLive_no()%> <input type="HIDDEN"
+								name="live_no" size="45" class="form-control"
+								value="<%=live_orderVO.getLive_no()%>" /> <!-- 							<select size="1" name="live_no" id="live_no" -->
+								<!-- 								class="form-control" > --> <%-- 									<c:forEach var="liveVO" items="${liveSvc.all}"> --%>
+								<%-- 										<option value="${liveVO.live_no}" --%> <%-- 											${(live_orderVO.live_no==liveVO.live_no)? 'selected':'' }>${liveVO.live_no} --%>
+								<%-- 									</c:forEach> --%> <!-- 							</select> --></td>
 						</tr>
 
 						<jsp:useBean id="userSvc" scope="page"
@@ -233,13 +231,8 @@
 
 						<tr>
 							<td>評價內容:</td>
-							<td>
-<!-- 							<input type="TEXT" name="srating_content" size="45" -->
-<!-- 								class="form-control" -->
-<%-- 								value="<%=live_orderVO.getSrating_content()%>" /> --%>
-							<textarea class="form-control" name="srating_content" rows="4" cols="50"><%=live_orderVO.getSrating_content()%></textarea>
-
-							</td>
+							<td><textarea class="form-control" name="srating_content"
+									rows="4" cols="50"><%=live_orderVO.getSrating_content()%></textarea></td>
 						</tr>
 
 					</table>

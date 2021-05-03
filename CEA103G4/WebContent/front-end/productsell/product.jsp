@@ -227,17 +227,11 @@
           />
         </div>
       </div>
-
       <div class="report-button">
         <div id="report-submit">提交檢舉</div>
       </div>
     </div>
     </div>
-<%--     <input type="hidden" name="pro_report_content" value="${product_reportVO.pro_report_content}" /> --%>
-<%--     <input type="hidden" name="product_no" value="<%=productVO.getProduct_no()%>" /> --%>
-<!--     <input type="hidden" name="user_id" value="abcd01"/> -->
-<!--     <input type="hidden" name="empno"  value="14002" /> -->
-<!--     <input type="hidden" name="action" value="insert"> -->
     <!--遮蓋層-->
 <!--     燈箱結束 -->
                     <div class="p-code"><span>Pno : </span> ${productVO.product_no}</div>
@@ -274,9 +268,7 @@
                       <div class="row">
                         <div class="col-lg-7">
                           <h5>商品說明</h5>
-                          <p>
-							${productVO.product_info}
-                          </p>
+                          <textarea class="form-control" id="product_info" style="resize:none; white-space:pre-wrap;" maxlength="300" rows="6" name="product_info" readonly><%=productVO.getProduct_info()%></textarea>
                         </div>
                         <div class="col-lg-5">
                           <img src="${pageContext.request.contextPath}/front-template/images/productsell/tab-desc.jpg" alt="" />

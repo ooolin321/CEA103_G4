@@ -15331,7 +15331,7 @@ top: -21px;
 
 .productsAdd i.delAvatar.fa.fa-times-circle-o {
     font-size: 150%;
-     cursor: pointer;
+    cursor: pointer;
 }
 
 .productsAdd #upload-img img{
@@ -15378,7 +15378,117 @@ max-height:100%;
 
 								/*productAddFinsh*/
 								
+								/*productList*/
+
+.productList {
+	margin-top: -30px;
+}
+
+.productList .product-tab {
+  box-sizing: border-box;
+  display: block;
+}
+/* 框線取消改做陰影 */
+/* .productList .tab-item ul li:nth-child(1) a { */
+/*   border-right: 1px solid #ebebeb; */
+/* } */
+
+/* .productList .tab-item ul li:nth-child(2) a { */
+/*   border-right: 1px solid #ebebeb; */
+/* } */
+
+/* .productList .tab-item ul li:nth-child(3) a { */
+/*   border-right: 1px solid #ebebeb; */
+/* } */
+/* .productList .tab-item ul li:nth-child(4) a { */
+/*   border-right: 1px solid #ebebeb; */
+/* } */
+
+.productList .tab-item ul li a {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 700;
+  color: #b2b2b2;
+  text-transform: uppercase;
+  padding: 18px 61px;
+  position: relative;
+/*   border-top: 1px solid #ebebeb; */
+/*   border-left: 1px solid #ebebeb; */
+/*   border-bottom: 1px solid #ebebeb; */
+  text-decoration:none;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
+}
+
+.productList .tab-item ul li a.active {
+  color: #252525;
+}
+
+.productList .tab-item ul li a.active:before {
+  opacity: 1;
+}
+
+.productList .tab-item ul li a::before {
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 100%;
+  height: 5px;
+  background: #e7ab3c;
+  content: "";
+  opacity: 0;
+}
+/*textarea表格寬高*/
+/* .productList .productInfo { */
+/* 	width:300px; */
+/* 	height:200px; */
+/* } */
+.productList thead {
+    text-align: center;
+}
+
+.productList .table thead th, .productList .table th, .productList .table td{
+    border:none;
+}
+.productList tr {
+    text-align: center;
+}
+
+.productList .tab-content{
+  margin-top: 15px;
+}
+
+.productList .form-control:focus {
+    border-color: #fff;
+    webkit-box-shadow: none;
+    box-shadow: none;
+
+}
+.productList .form-control {
+	border: none;
+	background:white;
+	margin-top:-10px;
+	margin-left:-12px;
+	resize:none;
+	white-space:pre-wrap;
+	font-size: 0.875rem;
+	font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    padding-top:10px;
+    box-sizing:border-box;
+}
+.productList .table, .productList .thead {
+	border:none;
+	box-shadow: 1px 1px 10px rgb(0 0 0 / 10%);
+	border-radius: 5px;
+}
+
+.productList .btn.btn-danger{
+	margin-top:10px;
+}
 								
+								/*productListFinsh*/
 								
 								
 /*media*/

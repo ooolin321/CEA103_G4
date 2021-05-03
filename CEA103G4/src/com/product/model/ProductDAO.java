@@ -37,7 +37,7 @@ public class ProductDAO implements ProductDAO_interface {
 	//刪除商品 賣家使用
 	private static final String DELETE = "DELETE FROM PRODUCT where product_no = ?";
 	//修改商品 賣家使用
-	private static final String UPDATE = "UPDATE PRODUCT set product_name=?, product_info=?, product_price=?, product_quantity=?, product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=? where product_no = ?";
+	private static final String UPDATE = "UPDATE PRODUCT set product_name=?, product_info=?, product_price=?,product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=? where product_no = ?";
 	private static final String GET_ALLJSON = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";
 	
 	/*--------------shop.jsp商品區------------*/
@@ -108,13 +108,12 @@ public class ProductDAO implements ProductDAO_interface {
 			pstmt.setString(1, productVO.getProduct_name());
 			pstmt.setString(2, productVO.getProduct_info());
 			pstmt.setInt(3, productVO.getProduct_price());
-			pstmt.setInt(4, productVO.getProduct_quantity());
-			pstmt.setInt(5, productVO.getProduct_remaining());
-			pstmt.setInt(6, productVO.getProduct_state());
-			pstmt.setBytes(7,productVO.getProduct_photo());
-			pstmt.setString(8,productVO.getUser_id());
-			pstmt.setInt(9, productVO.getPdtype_no());
-			pstmt.setInt(10, productVO.getProduct_no());
+			pstmt.setInt(4, productVO.getProduct_remaining());
+			pstmt.setInt(5, productVO.getProduct_state());
+			pstmt.setBytes(6,productVO.getProduct_photo());
+			pstmt.setString(7,productVO.getUser_id());
+			pstmt.setInt(8, productVO.getPdtype_no());
+			pstmt.setInt(9, productVO.getProduct_no());
 
 			pstmt.executeUpdate();
 			

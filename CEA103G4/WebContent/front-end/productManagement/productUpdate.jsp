@@ -58,7 +58,7 @@
 		<div class="app-title">
 			<div>
 				<h1>
-					<i class="fa fa-plus">&nbsp;</i>新增商品
+					<i class="fa fa-edit"></i>修改商品資訊
 				</h1>
 			</div>
 			<ul class="app-breadcrumb breadcrumb">
@@ -72,24 +72,24 @@
 			<div class="form-group">
 				<label for="product_name" class="col-sm-2 col-form-label">商品名稱</label>
 				<div class="col-sm-10">
-				  <input class="form-control" id="product_name" name="product_name" type="text" placeholder="請輸入商品名稱" value="<%=(productVO == null) ? "" : productVO.getProduct_name()%>" required>
+				  <input class="form-control" id="product_name" name="product_name" type="text" value="<%=productVO.getProduct_name()%>" >
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="product_info" class="col-sm-2 col-form-label">商品描述</label>
 				<div class="col-sm-10">
-				<textarea class="form-control" id="product_info" style="resize:none; white-space:pre-wrap;" maxlength="300" rows="6" name="product_info" placeholder="請輸入商品說明"   ><%=(productVO == null) ? "" : productVO.getProduct_info()%></textarea>
+				<textarea class="form-control" id="product_info" style="resize:none; white-space:pre-wrap;" maxlength="300" rows="6" name="product_info"  ><%=productVO.getProduct_info()%></textarea>
 				<div id="words"><span style="font-weight: bold;">0</span>/300</div>
 				</div>
 			</div>
 			  <div class="form-row productInfoGroup">
     			<div class="col-md-4 mb-3">
       			<label for="product_price">商品價格</label>
-     			 <input type="text" class="form-control" id="product_price" name="product_price" placeholder="請輸入商品價格" value="<%=(productVO == null) ? "" : productVO.getProduct_price()%>" required>
+     			 <input type="text" class="form-control" id="product_price" name="product_price" placeholder="請輸入商品價格" value="<%=productVO.getProduct_price()%>" required>
    			 </div>
    			 	<div class="col-md-4 mb-3">
   				<label for="product_remaining">商品數量</label>
-  				  <input type="text" class="form-control" id="product_remaining" name="product_remaining" placeholder="請輸入商品數量" value="<%=(productVO == null) ? "" : productVO.getProduct_remaining()%>" required>
+  				  <input type="text" class="form-control" id="product_remaining" name="product_remaining" placeholder="請輸入商品數量" value="<%=productVO.getProduct_remaining()%>" required>
    		     </div>
    		       <div class="col-md-4 mb-3">
   				<label for="pdtype_no">商品類別</label>
@@ -102,11 +102,12 @@
    		     </div>
    		    </div>
    		    <div  class="productAddimg">
-   		    <div>請上傳商品圖片</div>
+   		    <div>商品圖片</div>
 			<div class="row">
 			<div class="col-lg-4 col-sm-6">
 				<label for="product_photo" id="upload-img" class="card mb-2 productcard">
-				<input class="form-control" id="product_photo" type="file" name="product_photo" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"  value="<%= (productVO==null)? "" : productVO.getProduct_photo()%>">
+				<input class="form-control" id="product_photo" type="file" name="product_photo" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+				<img style="max-width:100%; max-height:100%;" id="oldimg" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}">
 				<i class="fa fa-camera" id="iconcamera"></i>
 				<i class="delAvatar fa fa-times-circle-o" title="移除圖片"></i>
 				</label>
@@ -123,11 +124,12 @@
 		  </div>
 		  </div>
 		  <div class="productAddBtn">
-			<input type="hidden" name="action" value="insert">
+			<input type="hidden" name="action" value="update">
+			<input type="hidden" name="product_no" value="<%=productVO.getProduct_no()%>">
 			<input type="hidden" name="user_id" value="<%=userVO.getUser_id()%>">
 			<a href="<%=request.getContextPath()%>/front-end/productManagement/productList.jsp"><button type="button" class="btn btn-danger">取消</button></a>
-			<button type="submit" class="btn btn-info submitAdd" name="product_state" value="0">儲存商品</button>
-			<button type="submit" class="btn btn-warning submitAdd" name="product_state" value="1">儲存並上架</button>
+			<button type="submit" class="btn btn-info submitAdd" name="product_state" value="0">儲存未上架商品</button>
+			<button type="submit" class="btn btn-warning submitAdd" name="product_state" value="1">更新並上架</button>
 			</div>
 		
 </form>
@@ -212,7 +214,7 @@
 		//實現上傳圖片可以預覽所上傳的圖片,若重新上傳其他圖片,可以移除舊的圖片預覽,只顯示最新的狀態
 
 		let product_photo = document.getElementById("product_photo");
-		let iconcamera = document.getElementById("iconcamera");
+		var iconcamera = document.getElementById("iconcamera");
 		let uploadimg = document.getElementById("upload-img");
 
 		function init() {
@@ -258,6 +260,12 @@
 // 				alert('請上傳圖片！');
 // 			}
 // 		});
+
+		if ($("#product_photo").val() != null || $("#product_photo").val().length != 0){
+			iconcamera.style.display = "none";
+			} else {
+			  iconcamera.style.display = "block";
+			}
 		
 
 

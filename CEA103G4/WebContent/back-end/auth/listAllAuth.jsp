@@ -46,6 +46,20 @@
 <body class="app sidebar-mini rtl">
 
 <jsp:include page="/back-end/backendMenu.jsp" />
+<main class="app-content">
+	<div class="app-title">
+		<div>
+			<h1>
+				<i class="fa fa-dashboard"></i> 所有權限
+			</h1>
+			
+		</div>
+		<ul class="app-breadcrumb breadcrumb">
+			<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+			<li class="breadcrumb-item"><a
+				href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">回到首頁</a></li>
+		</ul>
+	</div>
 
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
@@ -126,6 +140,7 @@
         </div>
       </div>
 	<%@ include file="page2.file"%>
+	</main>
 <jsp:include page="/back-end/backendfooter.jsp" />
 </body>
 

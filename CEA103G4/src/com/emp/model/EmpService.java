@@ -76,12 +76,13 @@ public class EmpService {
 		return dao.genAuthCode();
 	}
 	
-	public EmpVO sendPwdMail(String ename,String email, String empPwd) {
+	public EmpVO sendPwdMail(Integer empno, String ename,String email, String empPwd, String link) {
 		EmpVO empVO = new EmpVO();
-		
+		empVO.setEmpno(empno);
 		empVO.setEname(ename);
 		empVO.setEmail(email);
 		empVO.setEmp_pwd(empPwd);
+		empVO.setLink(link);
 		
 		dao.sendMail(empVO);
 		return empVO;
@@ -90,6 +91,17 @@ public class EmpService {
 	public EmpVO selectEmp(Integer empno, String empPwd) {
 
 		return dao.login(empno, empPwd);
+	}
+
+	public EmpVO updatePswd(Integer empno, String empPwd) {
+		
+EmpVO empVO = new EmpVO();
+		
+		empVO.setEmpno(empno);;
+		empVO.setEmp_pwd(empPwd);
+		
+		dao.updatePswd(empVO);
+		return empVO;
 	}
 
 }

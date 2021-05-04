@@ -27,9 +27,23 @@
 	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 
 </head>
-<jsp:include page="/back-end/backendMenu.jsp" />
 
 <body bgcolor='white' class="app sidebar-mini rtl">
+<jsp:include page="/back-end/backendMenu.jsp" />
+<main class="app-content">
+	<div class="app-title">
+		<div>
+			<h1>
+				<i class="fa fa-dashboard"></i> 新增員工
+			</h1>
+			
+		</div>
+		<ul class="app-breadcrumb breadcrumb">
+			<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+			<li class="breadcrumb-item"><a
+				href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">回到首頁</a></li>
+		</ul>
+	</div>
 	<div class="main-container">
 		<div class="pd-ltr-20 xs-pd-20-10">
 			<div class="min-height-200px">
@@ -162,6 +176,7 @@
 							</div><br>
 							<input type="hidden" name="action" value="insert">
 							<div class="row">
+							<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 							<input type="hidden" name="empno" value="${empVO.empno}">
 							<input class="btn btn-primary" type="submit" value="送出新增">
 							</div>
@@ -282,7 +297,7 @@ $("#twzipcode").twzipcode({
 		//              return [true, ""];
 		//      }});
 	</script>
-
+  </main>
 	<jsp:include page="/back-end/backendfooter.jsp" />
 
 </body>

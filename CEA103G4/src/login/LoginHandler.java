@@ -1,6 +1,7 @@
 package login;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,8 +9,13 @@ import java.util.Map;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import com.auth.model.AuthService;
+import com.auth.model.AuthVO;
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
+import com.fun.model.FunService;
+import com.fun.model.FunVO;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -65,6 +71,16 @@ public class LoginHandler extends HttpServlet {
 
 				EmpService empSvc = new EmpService();
 				EmpVO empVO = empSvc.selectEmp(empno, empPwd);
+//				EmpVO empVO2 = (EmpVO) empSvc.getAll();
+//				
+//				List <AuthVO> authVO = (List<AuthVO>) new AuthService().getOneAuth(empno);
+//				List<FunVO> list = new ArrayList<>();
+//				FunService funSvc = new FunService();
+//				for (int i = 0; i < authVO.size(); i++) {
+//					FunVO funVO = funSvc
+//							.getOneFun(authVO.get(i).getAuth_no());
+//					list.add(funVO);
+//				}
 				if (empVO == null) {
 					errorMsgs.put("empno", "帳號密碼不正確，請重新輸入");
 					String url = "/back-end/backendLogin.jsp";
@@ -73,6 +89,9 @@ public class LoginHandler extends HttpServlet {
 				} else if (empVO != null) {
 					HttpSession session = req.getSession();
 					session.setAttribute("account", empVO); // *工作1: 才在session內做已經登入過的標識
+//					session.setAttribute("empVO", empVO2);
+//					session.setAttribute("authVO", authVO);
+					
 					try {
 						String location = (String) session.getAttribute("location");
 						if (location != null) {
@@ -85,39 +104,41 @@ public class LoginHandler extends HttpServlet {
 					}
 					res.sendRedirect(req.getContextPath() + "/back-end/backendIndex.jsp"); // *工作3:
 					// (-->如無來源網頁:則重導至login_success.jsp)
-				}
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-
-				if ("signOut".equals(action)) {
-					HttpSession session = req.getSession();
-					if (!session.isNew()) {
-						// 使用者登出
-						session.invalidate();
-
-						String url = "/back-end/backendLogin.jsp";
-						RequestDispatcher successView = req.getRequestDispatcher(url); // 登出後轉至首頁
-						successView.forward(req, res);
+					if (!errorMsgs.isEmpty()) {
+						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
+						failureView.forward(req, res);
+						return;
 					}
 				}
 			} catch (Exception e) {
-				errorMsgs.put("Exception", e.getMessage());
+				String badguys = "badguys";
+				req.setAttribute("badguys", badguys);
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
 				failureView.forward(req, res);
+			}if ("signOut".equals(action)) {
+				HttpSession session = req.getSession();
+				if(!session.isNew()) {
+					//使用者登出
+			        session.invalidate();
+			        
+					String url = "/back-end/backendLogin.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); //登出後轉至首頁
+					successView.forward(req, res);
+				}
+				if("forgotPassword".equals("action")) {
+					try {
+						String email = req.getParameter("forgotPassword");
+						String emailReg = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
+						if (email == null || email.trim().length() == 0) {
+							errorMsgs.put("email","email請勿空白");
+						} else if (!email.trim().matches(emailReg)) { // 以下練習正則(規)表示式(regular-expression)
+							errorMsgs.put("email","email格式不正確");
+						}
+						
+					} catch (Exception e) {
+					
+					}
+				}
 			}
-		
-		if ("signOut".equals(action)) {
-			HttpSession session = req.getSession();
-			if (!session.isNew()) {// 使用者登出
-				session.invalidate();
-
-				String url = "/back-end/backendLogin.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 登出後轉至首頁
-				successView.forward(req, res);
-			}
-		}
 	}
 }

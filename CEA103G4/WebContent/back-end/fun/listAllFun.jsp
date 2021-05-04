@@ -26,9 +26,6 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 	crossorigin="anonymous"></script>
-
-
-
 <!-- Font-icon css-->
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/back-template/docs/css/main.css">
@@ -36,9 +33,22 @@
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
-<jsp:include page="/back-end/backendMenu.jsp" />
 <body bgcolor='white' class="app sidebar-mini rtl">
-
+<jsp:include page="/back-end/backendMenu.jsp" />
+<main class="app-content">
+	<div class="app-title">
+		<div>
+			<h1>
+				<i class="fa fa-dashboard"></i> 所有權限
+			</h1>
+			
+		</div>
+		<ul class="app-breadcrumb breadcrumb">
+			<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+			<li class="breadcrumb-item"><a
+				href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">回到首頁</a></li>
+		</ul>
+	</div>
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
@@ -115,7 +125,7 @@
 			</div>
 		</div>
 	</div>
-
+</main>
 	<jsp:include page="/back-end/backendfooter.jsp" />
 
 </body>

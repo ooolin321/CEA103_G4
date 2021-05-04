@@ -179,7 +179,7 @@
 					href="<%=request.getContextPath()%>/back-end/product_type/addProduct_Type.jsp"><i
 						class="icon fa fa-circle-o"></i> 新增商品類別</a></li>
 				<li><a class="treeview-item"
-					href="<%=request.getContextPath()%>/back-end/product/listAllProduct.jsp"><i
+					href="<%=request.getContextPath()%>/back-end/product/backProductList.jsp"><i
 						class="icon fa fa-circle-o"></i>所有直售商品</a></li>
 				<li><a class="treeview-item"
 					href="<%=request.getContextPath()%>/back-end/product/addProduct.jsp"><i

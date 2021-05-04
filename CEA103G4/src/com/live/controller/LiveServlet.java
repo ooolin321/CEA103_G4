@@ -174,6 +174,8 @@ public class LiveServlet extends HttpServlet {
 					in.read(live_photo);
 					in.close();
 				}
+				String live_id = req.getParameter("live_id");
+				
 				
 				liveVO.setLive_no(live_no);
 				liveVO.setLive_type(live_type);
@@ -183,6 +185,7 @@ public class LiveServlet extends HttpServlet {
 				liveVO.setUser_id(user_id);
 				liveVO.setEmpno(empno);
 				liveVO.setLive_photo(live_photo);
+				liveVO.setLive_id(live_id);
 				
 
 				// Send the use back to the form, if there were errors
@@ -197,7 +200,7 @@ public class LiveServlet extends HttpServlet {
 				/*************************** 2.開始修改資料 *****************************************/
 				LiveService liveSvc = new LiveService();
 				liveVO = liveSvc.updateLive( live_type, live_name, live_time, live_state
-					,user_id,empno, live_photo,live_no);
+					,user_id,empno, live_photo,live_id,live_no);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("liveVO", liveVO); // 資料庫update成功後,正確的的liveVO物件,存入req
@@ -252,6 +255,7 @@ public class LiveServlet extends HttpServlet {
 					in.read(live_photo);
 					in.close();
 				}
+				String live_id = req.getParameter("live_id");
 				
 				liveVO.setLive_type(live_type);
 				liveVO.setLive_name(live_name);
@@ -260,6 +264,7 @@ public class LiveServlet extends HttpServlet {
 				liveVO.setUser_id(user_id);
 				liveVO.setEmpno(empno);
 				liveVO.setLive_photo(live_photo);
+				liveVO.setLive_id(live_id);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("liveVO", liveVO); // 含有輸入格式錯誤的liveVO物件,也存入req
@@ -271,7 +276,7 @@ public class LiveServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 ***************************************/
 				LiveService liveSvc = new LiveService();
-				liveVO = liveSvc.addLive(live_type,live_name,live_time,live_state,user_id,empno,live_photo);
+				liveVO = liveSvc.addLive(live_type,live_name,live_time,live_state,user_id,empno,live_photo,live_id);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/front-end/liveManagement/liveList.jsp";

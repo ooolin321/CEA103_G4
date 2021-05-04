@@ -98,6 +98,11 @@ th, td {
 				<td>直播名稱:<font color=red><b>*</b></font></td>
 				<td><input type="TEXT" name="live_name" size="45" value="<%= (liveVO==null)? "未命名" : liveVO.getLive_name()%>" /></td>
 			</tr>
+			
+			<tr>
+				<td>直播名稱:<font color=red><b>*</b></font></td>
+				<td><input type="TEXT" name="live_name" size="45" value="<%= (liveVO==null)? "未命名" : liveVO.getLive_name()%>" /></td>
+			</tr>
 
 			<tr>
 				<td>直播時間:<font color=red><b>*</b></font></td>

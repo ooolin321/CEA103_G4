@@ -1,7 +1,6 @@
 package com.live.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +11,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
 
 public class LiveJNDIDAO implements LiveDAO_interface {
 	private static DataSource ds = null;
@@ -25,14 +23,14 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 		}
 	}
 
-	private static final String INSERT_STMT = "INSERT INTO LIVE (LIVE_TYPE,LIVE_NAME,LIVE_TIME,LIVE_STATE,USER_ID,EMPNO,LIVE_PHOTO) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO LIVE (LIVE_TYPE,LIVE_NAME,LIVE_TIME,LIVE_STATE,USER_ID,EMPNO,LIVE_PHOTO,LIVE_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM LIVE ORDER BY LIVE_NO";
 	private static final String GET_ONE_STMT = "SELECT * FROM LIVE WHERE LIVE_NO = ?";
 	private static final String DELETE = "DELETE FROM LIVE WHERE LIVE_NO = ?";
-	private static final String UPDATE = "UPDATE LIVE SET LIVE_TYPE=?, LIVE_NAME=?, LIVE_TIME=?, LIVE_STATE=? ,USER_ID=?,EMPNO=?,LIVE_PHOTO=? WHERE LIVE_NO = ?";
+	private static final String UPDATE = "UPDATE LIVE SET LIVE_TYPE=?, LIVE_NAME=?, LIVE_TIME=?, LIVE_STATE=? ,USER_ID=?,EMPNO=?,LIVE_PHOTO=?,LIVE_ID=? WHERE LIVE_NO = ?";
 	private static final String GET_ALL_STATE1 = "SELECT * FROM LIVE ORDER BY LIVE_STATE DESC, LIVE_TIME DESC";
 	private static final String GET_ALL_BY_ID = "SELECT * FROM LIVE WHERE USER_ID = ? ORDER BY LIVE_NO";
-	
+
 	@Override
 	public void insert(LiveVO liveVO) {
 		Connection con = null;
@@ -43,7 +41,6 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			
 			pstmt.setString(1, liveVO.getLive_type());
 			pstmt.setString(2, liveVO.getLive_name());
 			pstmt.setTimestamp(3, liveVO.getLive_time());
@@ -51,9 +48,9 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 			pstmt.setString(5, liveVO.getUser_id());
 			pstmt.setInt(6, liveVO.getEmpno());
 			pstmt.setBytes(7, liveVO.getLive_photo());
+			pstmt.setString(8, liveVO.getLive_id());
 			pstmt.executeUpdate();
 
-		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -78,7 +75,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 	public void update(LiveVO liveVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 
 			con = ds.getConnection();
@@ -91,12 +88,13 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 			pstmt.setString(5, liveVO.getUser_id());
 			pstmt.setInt(6, liveVO.getEmpno());
 			pstmt.setBytes(7, liveVO.getLive_photo());
-			pstmt.setInt(8, liveVO.getLive_no());
+			pstmt.setString(8, liveVO.getLive_id());
+			pstmt.setInt(9, liveVO.getLive_no());
 
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -135,7 +133,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -176,7 +174,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				
+
 				liveVO = new LiveVO();
 				liveVO.setLive_no(rs.getInt("live_no"));
 				liveVO.setLive_type(rs.getString("live_type"));
@@ -186,10 +184,11 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 				liveVO.setUser_id(rs.getString("user_id"));
 				liveVO.setEmpno(rs.getInt("empno"));
 				liveVO.setLive_photo(rs.getBytes("live_photo"));
+				liveVO.setLive_id(rs.getString("live_id"));
 			}
 
 			// Handle any driver errors
-		
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -227,7 +226,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 
 			con = ds.getConnection();
@@ -235,7 +234,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				
+
 				liveVO = new LiveVO();
 				liveVO.setLive_no(rs.getInt("live_no"));
 				liveVO.setLive_type(rs.getString("live_type"));
@@ -245,14 +244,14 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 				liveVO.setUser_id(rs.getString("user_id"));
 				liveVO.setEmpno(rs.getInt("empno"));
 				liveVO.setLive_photo(rs.getBytes("live_photo"));
+				liveVO.setLive_id(rs.getString("live_id"));
 				list.add(liveVO); // Store the row in the list
 			}
 
 			// Handle any driver errors
-		
+
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -279,7 +278,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public List<LiveVO> getAll1() {
 		List<LiveVO> list = new ArrayList<LiveVO>();
@@ -288,7 +287,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 
 			con = ds.getConnection();
@@ -296,7 +295,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				
+
 				liveVO = new LiveVO();
 				liveVO.setLive_no(rs.getInt("live_no"));
 				liveVO.setLive_type(rs.getString("live_type"));
@@ -306,14 +305,14 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 				liveVO.setUser_id(rs.getString("user_id"));
 				liveVO.setEmpno(rs.getInt("empno"));
 				liveVO.setLive_photo(rs.getBytes("live_photo"));
+				liveVO.setLive_id(rs.getString("live_id"));
 				list.add(liveVO); // Store the row in the list
 			}
 
 			// Handle any driver errors
-		
+
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -349,17 +348,17 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_BY_ID);
-			
+
 			pstmt.setString(1, user_id);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				
+
 				liveVO = new LiveVO();
 				liveVO.setLive_no(rs.getInt("live_no"));
 				liveVO.setLive_type(rs.getString("live_type"));
@@ -369,14 +368,14 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 				liveVO.setUser_id(rs.getString("user_id"));
 				liveVO.setEmpno(rs.getInt("empno"));
 				liveVO.setLive_photo(rs.getBytes("live_photo"));
+				liveVO.setLive_id(rs.getString("live_id"));
 				list.add(liveVO); // Store the row in the list
 			}
 
 			// Handle any driver errors
-		
+
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {

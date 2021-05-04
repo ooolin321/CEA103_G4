@@ -415,7 +415,7 @@ input {
 		player = new YT.Player('player', {
 			height : "100%",
 			width : '100%',
-			videoId : '6uddGul0oAc',
+			videoId : "${liveVO.live_id}",
 			playerVars : {
 				'playsinline' : 1
 			},

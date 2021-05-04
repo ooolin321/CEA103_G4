@@ -86,6 +86,17 @@
 									required>
 							</div>
 						</div>
+						
+						
+						<div class="form-group">
+							<label for="live_id" class="col-sm-2 col-form-label">YoutubeID</label>
+							<div class="col-sm-10">
+								<input class="form-control" id="live_id" name="live_id"
+									type="text" placeholder="請輸入YoutubeID"
+									value="<%=(liveVO == null) ? "" : liveVO.getLive_id()%>"
+									required>
+							</div>
+						</div>
 
 						<jsp:useBean id="product_typeSvc" scope="page"
 							class="com.product_type.model.Product_TypeService" />
@@ -103,7 +114,7 @@
 
 
 						<div class="form-group">
-							<label for="live_state" class="col-sm-2 col-form-label">直播分類</label>
+							<label for="live_state" class="col-sm-2 col-form-label">直播狀態</label>
 							<div class="col-sm-10">
 								<select size="1" class="form-control" name="live_state">
 									<%-- 								<option value="0" ${(liveVO.live_state==0)? 'selected':'' }>已結束</option> --%>

@@ -14,6 +14,7 @@ public class LiveVO implements java.io.Serializable {
 	private String user_id;
 	private Integer empno;
 	private byte[] live_photo;
+	private String live_id;
 
 	public Integer getLive_no() {
 		return live_no;
@@ -77,6 +78,14 @@ public class LiveVO implements java.io.Serializable {
 
 	public void setLive_photo(byte[] live_photo) {
 		this.live_photo = live_photo;
+	}
+
+	public String getLive_id() {
+		return live_id;
+	}
+
+	public void setLive_id(String live_id) {
+		this.live_id = live_id;
 	}
 
 }

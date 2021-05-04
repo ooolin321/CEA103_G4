@@ -34,6 +34,16 @@
 th {
 padding: 15px;
 }
+button.btn.btn-info {
+margin-left: 15px;
+}
+.app-title {
+margin: -30px -30px 0px;
+}
+.table th, .table td {
+	border: 1px solid #dee2e6 !important;
+	text-align:left;
+}
 </style>
 
 </head>
@@ -50,7 +60,8 @@ padding: 15px;
                     <li class="breadcrumb-item">我的基本資料</li>
                   </ul>
                 </div>
-<table>
+          <div class="row productList" style="margin-top:0px;border-right: 1px solid #dee2e6;">
+<table class="table">
 	<tr>
 		<th>帳號:</th>
 		<td><%=userVO.getUser_id()%></td>
@@ -120,10 +131,12 @@ padding: 15px;
 </table>
 
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/user/user.do">
-	<input type="submit" value="修改我的資料">
+	<button type="submit" class="btn btn-info">修改我的資料</button>
 	<input type="hidden" name="user_id"  value="${userVO.user_id}">
 	<input type="hidden" name="action"	value="getOne_For_Update">       
 </FORM>
+</div>
 <jsp:include page="/front-end/protected/userIndex_footer.jsp" />
+
 </body>
 </html>

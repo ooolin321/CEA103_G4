@@ -28,10 +28,10 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 		req.setAttribute("errorMsgs", errorMsgs);
 		
 		if ("signIn".equals(action))
-		// 【取得使用者 帳號(account) 密碼(password)】
+		// 【取得使用者 帳號(user_id) 密碼(user_pwd)】
 		try {
-			String str = req.getParameter("account");
-			String str2 = req.getParameter("password");
+			String str = req.getParameter("user_id");
+			String str2 = req.getParameter("user_pwd");
 			if (str == null || (str.trim().length() == 0)) {
 				errorMsgs.put("user_id","請輸入會員帳號");
 			}if(str2 == null || (str2.trim().length() == 0)) {
@@ -64,7 +64,6 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 			
 			UserService userSvc = new UserService();
 			userVO = userSvc.selectUser(user_id, user_pwd);
-			
 			if(userVO == null) {
 				errorMsgs.put("user_id","帳號或密碼不正確，請重新輸入！");
 				String url = "/front-end/userLogin.jsp";

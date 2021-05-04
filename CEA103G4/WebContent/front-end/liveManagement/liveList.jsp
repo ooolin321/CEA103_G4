@@ -108,7 +108,7 @@ table td, table tr, table th {
 									</td>
 									<td><img
 										src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}"
-										width="200px"></td>
+										width="190px"></td>
 
 									<td>
 										<FORM METHOD="post"

@@ -4,7 +4,21 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.live.model.*"%>
+<%@ page import="com.product.model.*"%>
+<%@ page import="com.product_type.model.*"%>
+<%@ page import="com.product.controller.*"%>
 
+<%
+	ProductDAO dao1 = new ProductDAO();
+	Object prouducts = request.getAttribute("products") == null
+			? dao1.getAllShop()
+			: request.getAttribute("products");
+	pageContext.setAttribute("products", prouducts);
+
+	Product_TypeDAO dao2 = new Product_TypeDAO();
+	List<Product_TypeVO> list2 = dao2.getAll();
+	pageContext.setAttribute("list2", list2);
+%>
 
 <%
 	LiveJNDIDAO dao = new LiveJNDIDAO();
@@ -81,15 +95,34 @@
 							</a>
 						</div>
 					</div>
+
 					<div class="col-lg-7 col-md-7"></div>
 					<div class="col-lg-3 text-right col-md-3">
-						<div class="header-right">
-							<a
-								href="${pageContext.request.contextPath}/front-end/user/register.html"><button
-									type="button" class="btn">註冊</button></a> <a
-								href="${pageContext.request.contextPath}/front-end/user/login.html"><button
-									type="button" class="btn">登入</button></a>
-						</div>
+						<c:if test="${ not empty userVO.user_name}">
+							<div class="header-right">
+								<FORM id="userLogOut" METHOD="post" class="logout-form"
+									action="<%=request.getContextPath()%>/User_LogoutHandler">
+									<a
+										href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">
+										<span class="userLogin" style="cursor: pointer"><img
+											class="rounded-circle" width="45px" height="40px" src="" />&nbsp;
+											${userVO.user_name} </span>
+									</a> <input type="hidden" name="action" value="signOut"> <a
+										href="#"
+										onclick="document.getElementById('userLogOut').submit();"><button
+											type="button" class="btn">登出</button></a>
+								</FORM>
+							</div>
+						</c:if>
+						<c:if test="${empty userVO.user_name}">
+							<div class="header-right">
+								<a
+									href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button
+										type="button" class="btn">註冊</button></a> <a
+									href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><button
+										type="button" class="btn">登入</button></a>
+							</div>
+						</c:if>
 						<!-- 鈴鐺/購物車顯示的數字+購物車預覽圖要改 -->
 						<ul class="nav-right">
 							<li class="bell-icon"><a href="#"> <svg
@@ -154,27 +187,41 @@
 		</div>
 		<div class="nav-item">
 			<div class="container">
-				<div class="nav-depart">
 
-				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
 						<li class="active" id="nav-index"><a
 							href="${pageContext.request.contextPath}/front-end/index.jsp">首頁</a></li>
 						<li><a
 							href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp">商品專區</a></li>
-						<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播專區</a>
+						<li><a
+							href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播專區</a>
 							<ul class="dropdown">
-								<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播牆</a></li>
+								<li><a
+									href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播牆</a></li>
 								<li><a href="#">直播預告</a></li>
-
+								<!-- <li><a href="#">Kid's</a></li> -->
 							</ul></li>
-						<li><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i class="icon_profile"></i></a></li>
+						<li><a
+							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i
+								class="icon_profile"></i></a></li>
+						<!-- <li>
+                <a href="#">Pages</a>
+                <ul class="dropdown">
+                  <li><a href="./blog-details.html">Blog Details</a></li>
+                  <li><a href="./shopping-cart.html">Shopping Cart</a></li>
+                  <li><a href="./check-out.html">Checkout</a></li>
+                  <li><a href="./faq.html">Faq</a></li>
+                  <li><a href="./register.html">Register</a></li>
+                  <li><a href="./login.html">Login</a></li>
+                </ul>
+              </li> -->
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
 			</div>
 		</div>
+
 	</header>
 	<!-- Header End -->
 
@@ -220,20 +267,20 @@
 												href="<%=request.getContextPath()%>/live/live.do?live_no=${liveVO.live_no}">
 												<h5>${liveVO.live_name}</h5>
 												<div class="product-price">
-													<span></span>
-													${(liveVO.live_state==0)? '直播結束':''}
+													<span></span> ${(liveVO.live_state==0)? '直播結束':''}
 													${(liveVO.live_state==1)? '未直播':''}
-													${(liveVO.live_state==2)? '直播中':''}
-													<br><span>-${liveVO.live_type}-</span>
+													${(liveVO.live_state==2)? '直播中':''} <br>
+													<span>-${liveVO.live_type}-</span>
 												</div>
 												<div>
-												<fmt:formatDate value="${liveVO.live_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
+													<fmt:formatDate value="${liveVO.live_time}"
+														pattern="yyyy-MM-dd HH:mm:ss" />
 												</div>
-												
+
 											</a>
-											
+
 										</div>
-										
+
 									</div>
 								</div>
 							</div>
@@ -299,5 +346,4 @@
 	src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
-
 </html>

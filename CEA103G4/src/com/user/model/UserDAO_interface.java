@@ -25,4 +25,6 @@ public interface UserDAO_interface {
 	public List<UserVO> sendMail(UserVO userVO);
 	
 	public void getPassword_Update(UserVO userVO);
+	
+	public void newPassword_Update(UserVO userVO);
 }

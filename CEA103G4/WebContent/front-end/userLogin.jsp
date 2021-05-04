@@ -77,11 +77,11 @@
               <form METHOD="post" class="login-form" action="<%=request.getContextPath()%>/FrondEnd_LoginHandler">
                 <div class="group-input">
                   <label for="user_id">UserID *</label>
-                  <input type="text" name="account" value="${(userVO==null)? '' : userVO.user_id}" placeholder="UserID" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></td>
+                  <input type="text" name="user_id" value="${(userVO==null)? '' : userVO.user_id}" placeholder="UserID" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></td>
                 </div>
                 <div class="group-input">
                   <label for="user_pwd">Password *</label>
-                  <input type="password" name="password" placeholder="Password"/><td><font color=red><b>${errorMsgs.user_pwd}</b></td>
+                  <input type="password" name="user_pwd" placeholder="Password"/><td><font color=red><b>${errorMsgs.user_pwd}</b></td>
                 </div>
                 <div class="group-input gi-check">
                   <div class="gi-more">

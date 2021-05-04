@@ -95,8 +95,8 @@ public class UserService {
 	}
 	
 	public UserVO selectUser(String user_id, String user_pwd) {
-
-		return dao.login(user_id, user_pwd);
+		UserVO userVO = dao.login(user_id, user_pwd);
+		return userVO;
 	}
 	
 	public UserVO getPassword_Update(String user_id,String user_newpwd,String user_mail) {
@@ -114,6 +114,17 @@ public class UserService {
 	public UserVO sendPwdMail(UserVO userVO) {
 		
 		dao.sendMail(userVO);
+		return userVO;
+	}
+	
+public UserVO newPassword_Update(String user_id,String user_newNameCheck) {
+		
+		UserVO userVO = new UserVO();
+		
+		userVO.setUser_id(user_id);
+		userVO.setUser_pwd(user_newNameCheck);
+		
+		dao.newPassword_Update(userVO);
 		return userVO;
 	}
 }

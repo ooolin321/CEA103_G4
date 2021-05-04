@@ -84,12 +84,12 @@
 	<tr>
 		<td>帳號 *</td>
 		<td><input type="TEXT" name="user_id" size="45" 
-			 value="<%= (userVO==null)? "thor01" : userVO.getUser_id()%>" /></td>
+			 value="<%= (userVO==null)? "hans01" : userVO.getUser_id()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_id}</b></td></tr>
 	<tr>
 		<td>密碼 *</td>
-		<td><input type="TEXT" name="user_pwd" size="45" 
-			 value="<%= (userVO==null)? "thor01" : userVO.getUser_pwd()%>" /></td>
+		<td><input type="password" name="user_pwd" size="45" 
+			 value="<%= (userVO==null)? "hans01" : userVO.getUser_pwd()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_pwd}</b></td></tr>
 	<tr>
 		<td>姓名 *</td>

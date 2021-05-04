@@ -12,7 +12,7 @@
 	List<Product_TypeVO> list2 = dao2.getAll();
 	pageContext.setAttribute("list2",list2);
 	
-	UserVO userVO = (UserVO) session.getAttribute("account"); 
+	UserVO userVO = (UserVO) session.getAttribute("userVO"); 
 	session.setAttribute("userVO", userVO);
 	
 %>

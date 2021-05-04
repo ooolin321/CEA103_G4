@@ -1,4 +1,5 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
@@ -108,7 +109,7 @@ input {
 </head>
 
 <body onload="connect();" onunload="disconnect();">
-	
+
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<div class="loader"></div>
@@ -206,13 +207,17 @@ input {
 							href="${pageContext.request.contextPath}/front-end/index.jsp">首頁</a></li>
 						<li><a
 							href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp">商品專區</a></li>
-						<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播專區</a>
+						<li><a
+							href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播專區</a>
 							<ul class="dropdown">
-								<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播牆</a></li>
+								<li><a
+									href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播牆</a></li>
 								<li><a href="#">直播預告</a></li>
 								<!-- <li><a href="#">Kid's</a></li> -->
 							</ul></li>
-						<li><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i class="icon_profile"></i></a></li>
+						<li><a
+							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i
+								class="icon_profile"></i></a></li>
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -240,33 +245,30 @@ input {
 <body>
 	<div class="row">
 		<div class="col-md-12">
-		<h1>${liveVO.live_name}  #<span class="badge badge-primary">${liveVO.live_type }</span></h1>
-		<h2>
-			<span id="iflive">
-				${(liveVO.live_state==2)? '直播中':''}
-				${(liveVO.live_state==1)? '未直播':''}
-				${(liveVO.live_state==0)? '已結束':''}
-			</span>
-		</h2>
+			<h1>${liveVO.live_name}
+				#<span class="badge badge-primary">${liveVO.live_type }</span>
+			</h1>
+			<h2>
+				<span id="iflive"> ${(liveVO.live_state==2)? '直播中':''}
+					${(liveVO.live_state==1)? '未直播':''} ${(liveVO.live_state==0)? '已結束':''}
+				</span>
+			</h2>
 		</div>
-	<script>
-		
-	</script>
+		<script>
+			
+		</script>
 	</div>
 	<div class="row">
 		<div class="col-md-9">
-			<div id="stream">
-				<img src="https://via.placeholder.com/1000x550">
-				</video>
-			</div>
+			<div id="player"></div>
 		</div>
 
 		<div class="col-md-3">
 			<textarea id="messagesArea" class="form-control" readonly></textarea>
 			<div class="input">
 				<input id="userName" class="text-field" type="hidden"
-					value="${userVO.user_id}" /> <input id="message" class="form-control"
-					type="text" placeholder="Message"
+					value="${userVO.user_id}" /> <input id="message"
+					class="form-control" type="text" placeholder="Message"
 					onkeydown="if (event.keyCode == 13) sendMessage();" />
 			</div>
 		</div>
@@ -365,7 +367,7 @@ input {
 	function sendMessage() {
 		var userName = inputUserName.value.trim();
 		if (userName === "") {
-			alert("Input a user name");
+			alert("請登入會員");
 			inputUserName.focus();
 			return;
 		}
@@ -374,7 +376,7 @@ input {
 		var message = inputMessage.value.trim();
 
 		if (message === "") {
-			alert("Input a message");
+			alert("請輸入訊息");
 			inputMessage.focus();
 		} else {
 			var jsonObj = {
@@ -396,6 +398,51 @@ input {
 
 	function updateStatus(newStatus) {
 		statusOutput.innerHTML = newStatus;
+	}
+</script>
+<script>
+	// 2. This code loads the IFrame Player API code asynchronously.
+	var tag = document.createElement('script');
+
+	tag.src = "https://www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+	// 3. This function creates an <iframe> (and YouTube player)
+	//    after the API code downloads.
+	var player;
+	function onYouTubeIframeAPIReady() {
+		player = new YT.Player('player', {
+			height : "100%",
+			width : '100%',
+			videoId : '6uddGul0oAc',
+			playerVars : {
+				'playsinline' : 1
+			},
+			events : {
+				'onReady' : onPlayerReady,
+				'onStateChange' : onPlayerStateChange
+			}
+		});
+	}
+
+	// 4. The API will call this function when the video player is ready.
+	function onPlayerReady(event) {
+		event.target.playVideo();
+	}
+
+	// 5. The API calls this function when the player's state changes.
+	//    The function indicates that when playing a video (state=1),
+	//    the player should play for six seconds and then stop.
+	var done = false;
+	function onPlayerStateChange(event) {
+		if (event.data == YT.PlayerState.PLAYING && !done) {
+			setTimeout(stopVideo, 6000);
+			done = true;
+		}
+	}
+	function stopVideo() {
+		player.stopVideo();
 	}
 </script>
 </html>

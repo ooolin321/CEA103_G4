@@ -162,7 +162,7 @@
 				class="app-menu__label">直播商品管理</span><i
 				class="treeview-indicator fa fa-angle-right"></i></a>
 			<ul class="treeview-menu">
-				<li><a class="treeview-item" href="#"><i
+				<li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/liveProductManagement/listAllLiveProduct.jsp"><i
 						class="icon fa fa-circle-o"></i>所有直播商品(none)</a></li>
 				<li><a class="treeview-item" href="#"><i
 						class="icon fa fa-circle-o"></i> 新增直播商品(none)</a></li>

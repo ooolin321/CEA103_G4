@@ -24,8 +24,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-
-
 public class EmpDAO implements EmpDAO_interface {
 
 	private static DataSource ds = null;
@@ -43,7 +41,7 @@ public class EmpDAO implements EmpDAO_interface {
 	private static final String DELETE = "DELETE FROM EMP WHERE EMPNO = ?";
 	private static final String UPDATE = "UPDATE EMP SET ENAME=?, JOB=?, ID=?, GENDER=?, DOB=?, CITY=?, DIST=?, ADDR=?,EMAIL=?, SAL=?, STATE=?, HIREDATE=?, EMP_PWD=? WHERE EMPNO = ?";
 	private static final String SIGN_IN = "SELECT EMPNO,EMP_PWD,ENAME FROM EMP  where BINARY EMPNO=? AND BINARY EMP_PWD=?";
-
+	private static final String UPDATE_EMP_PWD = "UPDATE EMP SET EMP_PWD=? WHERE EMPNO = ?";
 	@Override
 	public Object insert(EmpVO empVO) {
 
@@ -52,8 +50,8 @@ public class EmpDAO implements EmpDAO_interface {
 
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT,PreparedStatement.RETURN_GENERATED_KEYS);
-			
+			pstmt = con.prepareStatement(INSERT_STMT, PreparedStatement.RETURN_GENERATED_KEYS);
+
 			pstmt.setString(1, empVO.getEname());
 			pstmt.setString(2, empVO.getJob());
 			pstmt.setString(3, empVO.getId());
@@ -69,7 +67,7 @@ public class EmpDAO implements EmpDAO_interface {
 			pstmt.setString(13, empVO.getEmp_pwd());
 
 			pstmt.executeUpdate();
-			
+
 			ResultSet rs = pstmt.getGeneratedKeys();
 			rs.next();
 			Integer empno = rs.getInt(1);
@@ -93,7 +91,8 @@ public class EmpDAO implements EmpDAO_interface {
 					e.printStackTrace(System.err);
 				}
 			}
-		}return empVO;
+		}
+		return empVO;
 	}
 
 	@Override
@@ -322,12 +321,14 @@ public class EmpDAO implements EmpDAO_interface {
 
 		List<EmpVO> list = new ArrayList<EmpVO>();
 		String emailto = empVO.getEmail();
-
+		String link = empVO.getLink();
 		String subject = "Mode Femme密碼通知";
-
+		Integer empno = empVO.getEmpno();
 		String ch_name = empVO.getEname();
 		String passRandom = empVO.getEmp_pwd();
-		String messageText = "Hello! " +"\n"+ ch_name + " 請謹記此密碼: " + passRandom + "\n" + " (已經啟用)";
+		String messageText = "Hello! " + "\n" + ch_name +"你的員編"+ empno +" 首次登入密碼: " + passRandom + "\n" + " (已經啟用)" + "\n"
+				+ " (請前往 http://" + link + "/back-end/backendLogin.jsp 登入首頁)";
+		
 
 		try {
 
@@ -362,12 +363,12 @@ public class EmpDAO implements EmpDAO_interface {
 			message.setText(messageText);
 
 			Transport.send(message);
-			
+
 			SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
 			Date date = new Date();
 			String strDate = sdFormat.format(date);
 
-			System.out.println(strDate+" 員工mail傳送成功!");
+			System.out.println(strDate + " 員工mail傳送成功!");
 
 		} catch (MessagingException e) {
 			System.out.println("員工mail傳送失敗!");
@@ -375,21 +376,80 @@ public class EmpDAO implements EmpDAO_interface {
 		}
 		return list;
 	}
+	@Override
+	public List<EmpVO> forgotPassword(EmpVO empVO) {
+		List<EmpVO> list = new ArrayList<EmpVO>();
+		
+		String emailto = empVO.getEmail();
+		String link = empVO.getLink();
+		
+		String subject = "Mode Femme 忘記密碼通知";
+		String ch_name = empVO.getEname();
+		String messageText = "Hello! " + "\n" + ch_name  + "\n"
+				+ " (請前往 http://" + link + "/back-end/update_pswd.jsp 修改密碼)";
+		try {
 
+			// 設定使用SSL連線至 Gmail smtp Server
+			Properties props = new Properties();
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.socketFactory.port", "465");
+			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.port", "465");
+
+			// ●設定 gmail 的帳號 & 密碼 (將藉由你的Gmail來傳送Email)
+			// ●須將myGmail的【安全性較低的應用程式存取權】打開
+			final String myGmail = "gea103g4@gmail.com";
+			final String myGmail_password = "gea103g4gea103g4";
+			Session session = Session.getInstance(props, new Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(myGmail, myGmail_password);
+				}
+			});
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(myGmail));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailto));
+
+//			MailService mailService = new MailService();
+//			empVO.sendMail(emailto, subject, messageText);
+
+			// 設定信中的主旨
+			message.setSubject(subject);
+			// 設定信中的內容
+			message.setText(messageText);
+
+			Transport.send(message);
+
+			SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+			Date date = new Date();
+			String strDate = sdFormat.format(date);
+
+			System.out.println(strDate + " forgetPassword mail傳送成功!");
+
+		} catch (MessagingException e) {
+			System.out.println("forgetPassword mail傳送失敗!");
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	
+	
 	@Override
 	public EmpVO login(Integer empno, String empPwd) {
 		EmpVO empVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-	
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(SIGN_IN);
-				
+
 			pstmt.setInt(1, empno);
-			pstmt.setString(2, empPwd);	
-			
+			pstmt.setString(2, empPwd);
+
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 
@@ -428,5 +488,39 @@ public class EmpDAO implements EmpDAO_interface {
 		return empVO;
 	}
 
-}
+	@Override
+	public void updatePswd(EmpVO empVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_EMP_PWD);
+
+			pstmt.setString(1, empVO.getEmp_pwd());
+			pstmt.setInt(2, empVO.getEmpno());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("database發生錯誤." + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
+
+}

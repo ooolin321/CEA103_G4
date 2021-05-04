@@ -15,6 +15,9 @@ public interface EmpDAO_interface {
 	public List<EmpVO> sendMail(EmpVO empVO);
 	public String genAuthCode();
 	
+	public void updatePswd(EmpVO empVO);
+	public List<EmpVO> forgotPassword(EmpVO empVO);
+	
 	
 
     

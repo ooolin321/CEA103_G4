@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-  </main>
+
               <!-- Essential javascripts for application to work-->
               <script src="<%=request.getContextPath()%>/back-template/docs/js/jquery-3.2.1.min.js"></script>
               <script src="<%=request.getContextPath()%>/back-template/docs/js/popper.min.js"></script>

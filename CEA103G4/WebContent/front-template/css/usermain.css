@@ -15306,7 +15306,7 @@ width: 300px;
 height: 300px;
 text-align: center;
 cursor: pointer;
-border: 1px dashed #e7ab3c;
+/* border: 1px dashed #e7ab3c; */
 margin-top:10px;
 }
 .productsAdd #product_photo {

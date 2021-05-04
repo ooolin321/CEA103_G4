@@ -179,7 +179,7 @@
 					href="<%=request.getContextPath()%>/back-end/product_type/addProduct_Type.jsp"><i
 						class="icon fa fa-circle-o"></i> 新增商品類別</a></li>
 				<li><a class="treeview-item"
-					href="<%=request.getContextPath()%>/back-end/product/listAllProduct.jsp"><i
+					href="<%=request.getContextPath()%>/back-end/product/backProductList.jsp"><i
 						class="icon fa fa-circle-o"></i>所有直售商品</a></li>
 				<li><a class="treeview-item"
 					href="<%=request.getContextPath()%>/back-end/product/addProduct.jsp"><i
@@ -242,17 +242,3 @@
 				class="app-menu__label">Charts</span></a></li> -->
 	</ul>
 </aside>
-<main class="app-content">
-	<div class="app-title">
-		<div>
-			<h1>
-				<i class="fa fa-dashboard"></i> Dashboard
-			</h1>
-			
-		</div>
-		<ul class="app-breadcrumb breadcrumb">
-			<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-			<li class="breadcrumb-item"><a
-				href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">Dashboard</a></li>
-		</ul>
-	</div>

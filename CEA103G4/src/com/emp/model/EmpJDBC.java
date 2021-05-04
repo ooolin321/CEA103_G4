@@ -207,6 +207,12 @@ public  class EmpJDBC implements EmpDAO_interface{
 		return null;
 	}
 
+	@Override
+	public void updatePswd(EmpVO empVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

@@ -48,7 +48,20 @@
 
 <body class="app sidebar-mini rtl">
 <jsp:include page="/back-end/backendMenu.jsp" />
-
+<main class="app-content">
+	<div class="app-title">
+		<div>
+			<h1>
+				<i class="fa fa-dashboard"></i> 所有員工
+			</h1>
+			
+		</div>
+		<ul class="app-breadcrumb breadcrumb">
+			<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+			<li class="breadcrumb-item"><a
+				href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">回到首頁</a></li>
+		</ul>
+	</div>
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
@@ -86,7 +99,7 @@
 		<c:forEach var="empVO" items="${list}" begin="<%=pageIndex%>"
 			end="<%=pageIndex+rowsPerPage-1%>">
 
-			<tr ${(empVO.empno==param.empno) ? 'bgcolor=#CCCCFF':''}>
+			<tr>
 				<td class="sorting_1"><A href="<%=request.getContextPath()%>/emp/emp.do?empno=${empVO.empno}&action=getOne_From">${empVO.empno}</A></td>
 				<td class="table-danger">${empVO.ename}</td>
 				<td class="table-warning">${empVO.job}</td>
@@ -147,7 +160,7 @@
           </div>
         </div>
       </div>
-
+  </main>
 	<%@ include file="page2.file"%>
 
 	<jsp:include page="/back-end/backendfooter.jsp" />

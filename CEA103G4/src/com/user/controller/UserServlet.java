@@ -225,7 +225,7 @@ public class UserServlet extends HttpServlet {
 				
 				String user_mobile = req.getParameter("user_mobile");
 				if (user_mobile == null || user_mobile.trim().length() == 0) {
-					errorMsgs.put("user_mobile","*手機請勿空白");
+					errorMsgs.put("user_mobile","*手機號碼請勿空白");
 				}
 				
 				String city = req.getParameter("city");
@@ -330,6 +330,10 @@ public class UserServlet extends HttpServlet {
 //				userVO.setComment_total(comment_total);
 //				userVO.setCash(cash);
 				
+				//身分證字號隱藏(部分*表示)
+				String idCard = id_card.replaceAll("([a-zA-Z]\\d{2})\\d{4}(\\d{3})", "$1****$2");
+				userVO.setId_card(idCard);
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("userVO", userVO); // 含有輸入格式錯誤的userVO物件,也存入req
@@ -343,7 +347,7 @@ public class UserServlet extends HttpServlet {
 				UserService userSvc = new UserService();
 				
 				userVO = userSvc.updateUser(user_id, user_name, user_gender,user_dob, user_mail, user_phone, user_mobile, city, town, zipcode, user_addr);
-				userVO.setId_card(id_card);
+				userVO.setId_card(idCard);
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("userVO", userVO); // 資料庫update成功後,正確的的userVO物件,存入req
 				String url = "/front-end/user/listOneUser.jsp";

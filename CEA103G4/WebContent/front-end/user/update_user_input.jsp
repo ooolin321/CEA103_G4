@@ -33,6 +33,15 @@
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-template/css/usermain.css">
   <!-- Font-icon css-->
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+td {
+padding: 15px 20px 5px 0px;
+}
+.app-title {
+margin: -30px -30px 0px;
+}
+</style>
+
 </head>
 <body bgcolor='white'>
 <jsp:include page="/front-end/user/userSidebar.jsp" />
@@ -47,14 +56,14 @@
                   </ul>
                 </div>
 <%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>         
+<%-- <c:if test="${not empty errorMsgs}"> --%>
+<!-- 	<font style="color:red">請修正以下錯誤:</font> -->
+<!-- 	<ul> -->
+<%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 			<li style="color:red">${message}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+<%-- </c:if>          --%>
          
 <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/front-end/user/user.do" name="form1">
 <table>
@@ -68,10 +77,10 @@
 <!-- 	</tr> -->
 	<tr>
 		<td>姓名:</td>
-		<td><input type="TEXT" name="user_name" size="45"
-			 value="<%= (userVO==null)? "" : userVO.getUser_name()%>" /></td>
-	</tr><tr><td></td><td><font color=red>
-<%-- 	<b>${errorMsgs.user_name}</b></td></tr> --%>
+		<td><input type="TEXT" class="form-control" name="user_name" size="45"
+			 value="<%= (userVO==null)? "" : userVO.getUser_name()%>" />
+			 <font color=red><b>${(empty errorMsgs) ? "" : errorMsgs.user_name }</b></td>
+	</tr>
 	<tr>
 		<td>身分証字號:</td>
 		<td><%=userVO.getId_card()%></td>
@@ -88,38 +97,38 @@
 	<td><input type="radio" id="user_gender" name="user_gender" value="1" ${(userVO.user_gender==1)? 'checked':'' }>
 	<label for="male">男</label>
 	<input type="radio" id="user_gender" name="user_gender" value="0" ${(userVO.user_gender==0)? 'checked':'' }>
-	<label for="female">女</label></td> 
-	</tr><tr><td></td><td><font color=red>
-<%-- 	<b>${errorMsgs.user_gender}</b></td></tr> --%>
+	<label for="female">女</label><font color=red><b>${(empty errorMsgs) ? "" : errorMsgs.user_gender }</b></td> 
+	</tr>
 	
 	<tr>
 		<td>生日:</td>
-		<td><input name="user_dob" size="45" id="f_date1" type="text" ></td>
-	</tr><tr><td></td><td><font color=red>
-<%-- 	<b>${errorMsgs.user_dob}</b></td></tr> --%>
+		<td><input name="user_dob" class="form-control" size="45" id="f_date1" type="text" >
+		<font color=red><b>${(empty errorMsgs) ? "" : errorMsgs.user_dob}</b></td>
+	</tr>
 	<tr>
 		<td>Email:</td>
-		<td><input type="TEXT" name="user_mail" size="45"	value="<%=userVO.getUser_mail()%>" /></td>
-	</tr><tr><td></td><td><font color=red>
-<%-- 	<b>${errorMsgs.user_mail}</b></td></tr> --%>
+		<td><input type="TEXT" class="form-control" name="user_mail" size="45"	value="<%=userVO.getUser_mail()%>" />
+		<font color=red><b>${(empty errorMsgs) ? "" : errorMsgs.user_mail }</b></td>
+	</tr>
 	<tr>
 		<td>電話:</td>
-		<td><input type="TEXT" name="user_phone" size="45"	value="<%=userVO.getUser_phone()%>" /></td>
-	</tr><tr><td></td><td><font color=red>
-<%-- 	<b>${errorMsgs.user_phone}</b></td></tr> --%>
+		<td><input type="TEXT" class="form-control" name="user_phone" size="45"	value="<%=userVO.getUser_phone()%>" />
+		<font color=red><b>${(empty errorMsgs) ? "" : errorMsgs.user_phone }</b></td>
+	</tr>
 	<tr>
 		<td>手機號碼:</td>
-		<td><input type="TEXT" name="user_mobile" size="45" value="<%=userVO.getUser_mobile()%>" /></td>
-	</tr><tr><td></td><td><font color=red>
-<%-- 	<b>${errorMsgs.user_mobile}</b></td></tr> --%>
+		<td><input type="TEXT" class="form-control" name="user_mobile" size="45" value="<%=userVO.getUser_mobile()%>" />
+		<font color=red><b>${(empty errorMsgs) ? "" : errorMsgs.user_mobile }</b></td>
+	</tr>
 	<tr>
-		<td>地址 *</td>
-		<td>
-		<div id="twzipcode"></div><font color=red>
-<%-- 		<b>${errorMsgs.city}</b> --%>
-		<input type="TEXT" name="user_addr" size="45" value="<%=userVO.getUser_addr()%>"></td>
-		</td><tr><td></td><td><font color=red>
-<%-- 		<b>${errorMsgs.user_addr}</b></td></tr> --%>
+		<td>地址:</td>
+		<th>
+			<div id="twzipcode">
+							<font color=red><b>${(empty errorMsgs) ? "" : errorMsgs.city }</b>
+						</div> 
+			<input type="TEXT" class="form-control" name="user_addr" size="45"
+			value="<%=userVO.getUser_addr()%>"> <font color=red><b>${(empty errorMsgs) ? "" : errorMsgs.user_addr }</b>
+		</th>
 	</tr>
 <!-- 	<tr> -->
 <!-- 		<td>註冊日期:</td> -->
@@ -161,11 +170,10 @@
 <!-- 	</tr> -->
 
 </table>
-<br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="user_id" value="<%=userVO.getUser_id()%>">
 <input type="hidden" name="id_card" value="<%=userVO.getId_card()%>">
-<input type="submit" value="送出修改"></FORM>
+<button type="submit" class="btn btn-info">送出修改</button></FORM>
 
 </main>
               <!-- Essential javascripts for application to work-->
@@ -283,7 +291,7 @@
 //         $('#f_date2').datetimepicker({
 //            theme: '',              //theme: 'dark',
 //  	       timepicker:false,       //timepicker:true,
-//  	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+//   	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
 //  	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
 <%--  		   value: '<%=userVO.getRegdate()%>', // value:   new Date(), --%>
 //            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含

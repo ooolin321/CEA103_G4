@@ -42,6 +42,7 @@ public class UserDAO implements UserDAO_interface {
 	private static final String UPDATE_PSW = "UPDATE `USER` SET USER_PWD=? WHERE `USER_ID`=?";
 	private static final String GET_Live_reportByUser_id_STMT = "SELECT LIVE_REPORT_NO,LIVE_REPORT_CONTENT,LIVE_NO,USER_ID,EMPNO,LIVE_REPORT_STATE,REPORT_DATE,PHOTO FROM LIVE_REPORT where USER_ID = ? ORDER BY LIVE_REPORT_NO";
 	private static final String SIGN_IN = "SELECT * FROM USER where BINARY USER_ID=? AND BINARY USER_PWD=?";
+	private static final String UPDATE_NEWPSW = "UPDATE `USER` SET USER_PWD=? WHERE `USER_ID`=?";
 
 	@Override
 	public void insert(UserVO userVO) {
@@ -396,15 +397,15 @@ public class UserDAO implements UserDAO_interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(SIGN_IN);
-
+			
 			pstmt.setString(1, user_id);
 			pstmt.setString(2, user_pwd);
-
+			
 			rs = pstmt.executeQuery();
+			
 			while (rs.next()) {
-
-				userVO = new UserVO();
 				
+				userVO = new UserVO();
 				userVO.setUser_id(rs.getString("user_id"));
 				userVO.setUser_pwd(rs.getString("user_pwd"));
 				userVO.setUser_name(rs.getString("user_name"));
@@ -453,6 +454,7 @@ public class UserDAO implements UserDAO_interface {
 				}
 			}
 		}
+		
 		return userVO;
 
 	}
@@ -472,7 +474,7 @@ public class UserDAO implements UserDAO_interface {
 			pstmt.setString(2, userVO.getUser_id());
 
 			int a = pstmt.executeUpdate();
-			System.out.println("a = " + a);
+
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -598,6 +600,44 @@ public class UserDAO implements UserDAO_interface {
 		}
 
 		return list;
+	}
+
+	@Override
+	public void newPassword_Update(UserVO userVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_NEWPSW);
+
+			pstmt.setString(1, userVO.getUser_pwd());
+			pstmt.setString(2, userVO.getUser_id());
+
+			int a = pstmt.executeUpdate();
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
 	}
 
 }

@@ -311,7 +311,15 @@ input {
 
 	</div>
 	<div class="row">
-		<div class="col-md-12">123123</div>
+		<div class="col-md-12">
+		
+		
+		
+		
+		
+		
+		
+		</div>
 	</div>
 
 
@@ -473,7 +481,7 @@ input {
 	var done = false;
 	function onPlayerStateChange(event) {
 		if (event.data == YT.PlayerState.PLAYING && !done) {
-			setTimeout(stopVideo, 6000);
+// 			setTimeout(stopVideo, 6000);
 			done = true;
 		}
 	}

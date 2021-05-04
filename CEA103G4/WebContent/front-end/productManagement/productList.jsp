@@ -14,6 +14,7 @@
 	session.setAttribute("userVO", userVO);
 %>
 <jsp:useBean id="product_typeSvc" scope="page" class="com.product_type.model.Product_TypeService" />
+<jsp:useBean id="liveSvc" scope="page" class="com.live.model.LiveService" />
 
 
 <!DOCTYPE html>
@@ -61,19 +62,22 @@
              <div class="product-tab col-lg-12">
               <div class="tab-item">
                 <ul class="nav" role="tablist">
-                  <li class="col-xs-3">
+                  <li>
                     <a class="active" data-toggle="tab" href="#tab-1" role="tab"
                       >未上架商品</a
                     >
                   </li>
-                  <li class="col-xs-3">
+                  <li>
                     <a data-toggle="tab" href="#tab-2" role="tab">上架中</a>
                   </li>
-                  <li class="col-xs-3">
-                    <a data-toggle="tab" href="#tab-3" role="tab">已售出</a>
+                  <li>
+                    <a data-toggle="tab" href="#tab-3" role="tab">待直播商品</a>
                   </li>
-                  <li class="col-xs-3">
-                    <a data-toggle="tab" href="#tab-4" role="tab"
+                  <li>
+                    <a data-toggle="tab" href="#tab-4" role="tab">已售出</a>
+                  </li>
+                  <li>
+                    <a data-toggle="tab" href="#tab-5" role="tab"
                       >違規下架</a
                     >
                   </li>
@@ -165,9 +169,41 @@
    				 </c:forEach>
    				 </tbody>
 				</table>
+                  </div>
+                 <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                   <table class="table">
+  					<thead class="thead">
+   				  <tr>
+   				  	 <th scope="col">直播間名稱</th>
+   				  	 <th scope="col">直播分類</th>
+     				 <th scope="col">直播時間</th>
+     				 <th scope="col">商品圖片</th>
+     				 <th scope="col">商品名稱</th>
+     				 <th scope="col">商品描述</th>
+     				 <th scope="col">起標價</th>
+     				 <th scope="col">數量</th>
+  				  </tr>
+ 				 </thead>
+ 				 <tbody>
+ 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}">
+   				 	<c:if test="${productVO.product_state == 2}"> 
+   				 <tr>
+   				 	 <th scope="row">${liveSvc.getOneLive(productVO.live_no).live_name}</th>
+   				 	 <td>${liveSvc.getOneLive(productVO.live_no).live_type}</td>
+     				 <td>${liveSvc.getOneLive(productVO.live_no).live_time}</td>
+     				 <td><img width="200px" height="200px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" class="rounded mx-auto d-block" alt=""></td>
+      				 <td>${productVO.product_name}</td>
+      				 <td class="productInfo"><textarea class="form-control"  maxlength="300" rows="6" readonly>${productVO.product_info}</textarea></td>
+     				 <td>${productVO.start_price}</td>
+     				 <td>${productVO.product_remaining}</td>
+   				 </tr>
+   				 	</c:if>
+   				 </c:forEach>
+   				 </tbody>
+				</table>
  
                   </div>
-                  <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                  <div class="tab-pane fade" id="tab-4" role="tabpanel">
 				 <table class="table">
   					<thead class="thead">
    					 <tr>
@@ -198,7 +234,7 @@
    				 </tbody>
 				</table>
                 </div>
-                 <div class="tab-pane fade" id="tab-4" role="tabpanel">
+                 <div class="tab-pane fade" id="tab-5" role="tabpanel">
                  <table class="table">
   					<thead class="thead">
    					 <tr>

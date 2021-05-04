@@ -39,6 +39,9 @@ public class ProductDAO implements ProductDAO_interface {
 	//修改商品 賣家使用
 	private static final String UPDATE = "UPDATE PRODUCT set product_name=?, product_info=?, product_price=?,product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=? where product_no = ?";
 	private static final String GET_ALLJSON = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";
+	//後台檢舉通過,狀態改為檢舉下架
+	private static final String UPDATESTATE = "UPDATE PRODUCT set product_state=? where product_no = ?";
+	
 	
 	/*--------------shop.jsp商品區------------*/
 	//查詢所有商品狀態為直售的商品 (隨機排序)
@@ -114,6 +117,47 @@ public class ProductDAO implements ProductDAO_interface {
 			pstmt.setString(7,productVO.getUser_id());
 			pstmt.setInt(8, productVO.getPdtype_no());
 			pstmt.setInt(9, productVO.getProduct_no());
+
+			pstmt.executeUpdate();
+			
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	
+	@Override
+	public void updateState(ProductVO productVO){
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATESTATE);
+
+			pstmt.setInt(1, productVO.getProduct_state());
+			pstmt.setInt(2, productVO.getProduct_no());
 
 			pstmt.executeUpdate();
 			

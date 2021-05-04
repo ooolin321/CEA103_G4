@@ -96,6 +96,17 @@ public class ProductService {
 	public List<ProductVO> getMoneyRangeShop(String minPrice, String maxPrice) {
 		return dao.getMoneyRangeShop(minPrice, maxPrice);
 	}
+	
+	public ProductVO updateState(Integer product_no, Integer product_state) {
+
+		ProductVO productVO = new ProductVO();
+
+		productVO.setProduct_no(product_no);
+		productVO.setProduct_state(product_state);
+		dao.update(productVO);
+
+		return productVO;
+	}
 
 	
 

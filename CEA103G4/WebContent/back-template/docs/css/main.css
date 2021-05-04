@@ -1674,7 +1674,7 @@ pre code {
   max-width: 100%;
   margin-bottom: 1rem;
   background-color: transparent;
-  display: block;
+/*   display: block; */
   white-space:nowrap;
   overflow-x: auto;
 }
@@ -15237,3 +15237,131 @@ be a descendant of the grid when it is being dragged.
 .user .user-settings label {
   color: #666;
 }
+
+/*自寫css*/
+
+.app-content {
+  background: white;
+}
+
+								/*backProductList*/
+
+.backProductList {
+	margin-top: -29px;
+	background: white;
+}
+
+
+.backProductList .product-tab {
+  box-sizing: border-box;
+  display: block;
+}
+/* 框線取消改做陰影 */
+/* .backProductList .tab-item ul li:nth-child(1) a { */
+/*   border-right: 1px solid #ebebeb; */
+/* } */
+
+/* .backProductList .tab-item ul li:nth-child(2) a { */
+/*   border-right: 1px solid #ebebeb; */
+/* } */
+
+/* .backProductList .tab-item ul li:nth-child(3) a { */
+/*   border-right: 1px solid #ebebeb; */
+/* } */
+/* .backProductList .tab-item ul li:nth-child(4) a { */
+/*   border-right: 1px solid #ebebeb; */
+/* } */
+
+.backProductList .tab-item ul li a {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 700;
+  color: #b2b2b2;
+  text-transform: uppercase;
+  padding: 18px 61px;
+  position: relative;
+/*   border-top: 1px solid #ebebeb; */
+/*   border-left: 1px solid #ebebeb; */
+/*   border-bottom: 1px solid #ebebeb; */
+  text-decoration:none;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
+}
+
+.backProductList .tab-item ul li a.active {
+  color: #252525;
+}
+
+.backProductList .tab-item ul li a.active:before {
+  opacity: 1;
+}
+
+.backProductList .tab-item ul li a::before {
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 100%;
+  height: 5px;
+  background: #e7ab3c;
+  content: "";
+  opacity: 0;
+}
+/*textarea表格寬高*/
+/* .backProductList .productInfo { */
+/* 	width:300px; */
+/* 	height:200px; */
+/* } */
+.backProductList thead {
+    text-align: center;
+}
+
+.backProductList .table thead th, .backProductList .table th, .backProductList .table td{
+    border:none;
+}
+.backProductList tr {
+    text-align: center;
+}
+
+.backProductList .tab-content{
+  margin-top: 15px;
+}
+
+.backProductList .form-control:focus {
+    border-color: #fff;
+    webkit-box-shadow: none;
+    box-shadow: none;
+
+}
+.backProductList .form-control {
+	border: none;
+	background:white;
+	margin-top:-10px;
+	margin-left:-12px;
+	resize:none;
+	white-space:pre-wrap;
+	font-size: 0.875rem;
+	font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    padding-top:10px;
+    box-sizing:border-box;
+}
+.backProductList .table, .backProductList .thead {
+	border:none;
+	box-shadow: 1px 1px 10px rgb(0 0 0 / 10%);
+	border-radius: 5px;
+}
+
+.backProductList .btn.btn-danger{
+	margin-top:10px;
+}
+								
+								/*backProductListFinsh*/
+/*getAllUserReport start*/
+								
+#ReportProreport_state {
+	display:block;
+	margin-bottom: 35px;
+}
+
+/*getAllUserReport Finish*/

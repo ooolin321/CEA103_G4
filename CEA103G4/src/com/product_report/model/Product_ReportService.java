@@ -24,18 +24,11 @@ public class Product_ReportService {
 		return product_reportVO;
 	}
 
-	public Product_ReportVO updateProduct_Report(Integer pro_report_no, String pro_report_content, Integer product_no,
-			String user_id, Integer empno, Integer proreport_state) {
+	public Product_ReportVO updateProduct_Report(Integer pro_report_no, Integer proreport_state) {
 
 		Product_ReportVO product_reportVO = new Product_ReportVO();
 
 		product_reportVO.setPro_report_no(pro_report_no);
-		product_reportVO.setPro_report_content(pro_report_content);
-		product_reportVO.setProduct_no(product_no);
-		product_reportVO.setUser_id(user_id);
-		//檢舉時間自動預設當下時間
-//		product_reportVO.setReport_date(report_date);
-		product_reportVO.setEmpno(empno);
 		product_reportVO.setProreport_state(proreport_state);
 		dao.update(product_reportVO);
 

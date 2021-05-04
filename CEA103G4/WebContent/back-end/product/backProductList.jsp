@@ -12,6 +12,7 @@
 
 %>
 <jsp:useBean id="product_typeSvc" scope="page" class="com.product_type.model.Product_TypeService" />
+<jsp:useBean id="liveSvc" scope="page" class="com.live.model.LiveService" />
 
 
 <!DOCTYPE html>
@@ -60,23 +61,24 @@
                     <li class="breadcrumb-item"><a href="#">直售商品管理</a></li>
                   </ul>
                 </div>
-                <div class="row productList">
+                <div class="row backProductList">
              <div class="product-tab col-lg-12">
               <div class="tab-item">
                 <ul class="nav" role="tablist">
-                  <li class="col-xs-3">
+                  <li>
                     <a class="active" data-toggle="tab" href="#tab-1" role="tab"
                       >未上架商品</a
                     >
                   </li>
-                  <li class="col-xs-3">
-                    <a data-toggle="tab" href="#tab-2" role="tab">上架中</a>
+                  <li>
+                    <a data-toggle="tab" href="#tab-2" role="tab">直售商品</a>
                   </li>
-                  <li class="col-xs-3">
+
+                  <li>
                     <a data-toggle="tab" href="#tab-3" role="tab">已售出</a>
                   </li>
-                  <li class="col-xs-3">
-                    <a data-toggle="tab" href="#tab-4" role="tab"
+                  <li>
+                    <a data-toggle="tab" href="#tab-5" role="tab"
                       >違規下架</a
                     >
                   </li>
@@ -120,7 +122,7 @@
 				</table>
                   </div>
                   <div class="tab-pane fade" id="tab-2" role="tabpanel">
-                                     <table class="table">
+                   <table class="table">
   					<thead class="thead">
    				  <tr>
      				 <th scope="col">商品編號</th>
@@ -150,8 +152,8 @@
    				 </c:forEach>
    				 </tbody>
 				</table>
- 
                   </div>
+
                   <div class="tab-pane fade" id="tab-3" role="tabpanel">
 				 <table class="table">
   					<thead class="thead">
@@ -184,7 +186,7 @@
    				 </tbody>
 				</table>
                 </div>
-                 <div class="tab-pane fade" id="tab-4" role="tabpanel">
+                 <div class="tab-pane fade" id="tab-5" role="tabpanel">
                  <table class="table">
   					<thead class="thead">
    					 <tr>

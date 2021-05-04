@@ -42,6 +42,8 @@ public class EmpDAO implements EmpDAO_interface {
 	private static final String UPDATE = "UPDATE EMP SET ENAME=?, JOB=?, ID=?, GENDER=?, DOB=?, CITY=?, DIST=?, ADDR=?,EMAIL=?, SAL=?, STATE=?, HIREDATE=?, EMP_PWD=? WHERE EMPNO = ?";
 	private static final String SIGN_IN = "SELECT EMPNO,EMP_PWD,ENAME FROM EMP  where BINARY EMPNO=? AND BINARY EMP_PWD=?";
 	private static final String UPDATE_EMP_PWD = "UPDATE EMP SET EMP_PWD=? WHERE EMPNO = ?";
+	private static final String GET_EMP_BY_EMAIL ="SELECT * FROM EMP WHERE EMAIL=?" ;
+	
 	@Override
 	public Object insert(EmpVO empVO) {
 
@@ -247,13 +249,11 @@ public class EmpDAO implements EmpDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-
 				empVO = new EmpVO();
 				empVO.setEmpno(rs.getInt("empno"));
 				empVO.setEname(rs.getString("ename"));
@@ -271,7 +271,6 @@ public class EmpDAO implements EmpDAO_interface {
 				empVO.setEmp_pwd(rs.getString("emp_pwd"));
 				list.add(empVO); // Store the row in the list
 			}
-
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("database發生錯誤." + se.getMessage());
@@ -317,9 +316,8 @@ public class EmpDAO implements EmpDAO_interface {
 
 	@Override
 	// 設定傳送郵件:至收信人的Email信箱,Email主旨,Email內容
-	public List<EmpVO> sendMail(EmpVO empVO) {
+	public void sendMail(EmpVO empVO) {
 
-		List<EmpVO> list = new ArrayList<EmpVO>();
 		String emailto = empVO.getEmail();
 		String link = empVO.getLink();
 		String subject = "Mode Femme密碼通知";
@@ -374,19 +372,18 @@ public class EmpDAO implements EmpDAO_interface {
 			System.out.println("員工mail傳送失敗!");
 			e.printStackTrace();
 		}
-		return list;
 	}
+	
 	@Override
-	public List<EmpVO> forgotPassword(EmpVO empVO) {
+	public void forgotPassword(EmpVO empVO) {
 		List<EmpVO> list = new ArrayList<EmpVO>();
 		
 		String emailto = empVO.getEmail();
 		String link = empVO.getLink();
 		
 		String subject = "Mode Femme 忘記密碼通知";
-		String ch_name = empVO.getEname();
-		String messageText = "Hello! " + "\n" + ch_name  + "\n"
-				+ " (請前往 http://" + link + "/back-end/update_pswd.jsp 修改密碼)";
+		String messageText = "Hello! " + "\n"
+				+ " (請前往 http://" + link + "/back-end/emp/update_pswd.jsp 修改密碼)";
 		try {
 
 			// 設定使用SSL連線至 Gmail smtp Server
@@ -431,10 +428,60 @@ public class EmpDAO implements EmpDAO_interface {
 			System.out.println("forgetPassword mail傳送失敗!");
 			e.printStackTrace();
 		}
-		return list;
+
 	}
 	
+	@Override
+	public EmpVO getEmail(String email){	
+		EmpVO empVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_EMP_BY_EMAIL);
+
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				empVO = new EmpVO();
+				empVO.setEmail(rs.getString("email"));
+			}
+			if(empVO.getEmail()== null) {
+				return null;
+			}
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return empVO;
 	
+	}
 	
 	@Override
 	public EmpVO login(Integer empno, String empPwd) {

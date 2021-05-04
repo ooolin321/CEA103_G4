@@ -32,7 +32,7 @@
 				</h3>
 				<div class="form-group">
 					<label class="control-label">員工編號：</label> <input
-						class="form-control" type="username" name="account"
+						class="form-control" type="username" name="empAccount"
 						placeholder="Empno" autofocus>
 					<td><font color=red><b>${errorMsgs.empno}</b></font></td>
 				</div>
@@ -62,15 +62,17 @@
 					</button>
 				</div>
 			</form>
-			<form class="forget-form" action="<%=request.getContextPath()%>/loginhandler">
+			
+			<form METHOD="post" class="forget-form" action="<%=request.getContextPath()%>/loginhandler">
 				<h3 class="login-head">
 					<i class="fa fa-lg fa-fw fa-lock"></i>Forgot Password ?
 				</h3>
 				<div class="form-group">
 					<label class="control-label">EMAIL</label> <input
-						class="form-control" type="text" placeholder="Email"><font color=red><b>${errorMsgs.email}</b></font>
+						class="form-control" type="text" placeholder="Email" name="email"><font color=red><b>${errorMsgs.email}</b></font>
 				</div>
 				<div class="form-group btn-container">
+						<input type="hidden" name="action" value="forgotPassword">
 					<button class="btn btn-primary btn-block">
 						<i class="fa fa-unlock fa-lg fa-fw"></i>RESET
 					</button>
@@ -78,7 +80,6 @@
 				
 				<div class="form-group mt-3">
 					<p class="semibold-text mb-0">
-						<input type="hidden" name="action" value="forgotPassword">
 						<a href="<%=request.getContextPath()%>/back-end/backendIndex.jsp" data-toggle="flip"><i
 							class="fa fa-angle-left fa-fw"></i> Back to Login</a>
 					</p>

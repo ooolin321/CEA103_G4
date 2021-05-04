@@ -4,7 +4,7 @@
 <%@ page import="com.emp.model.*"%>
 
 <%
-	EmpVO empVO = (EmpVO)session.getAttribute("account");
+	EmpVO empVO = (EmpVO)session.getAttribute("empAccount");
 %>
 
 <!DOCTYPE html>

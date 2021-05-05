@@ -34,13 +34,13 @@
 					<label class="control-label">員工編號：</label> <input
 						class="form-control" type="username" name="empAccount"
 						placeholder="Empno" autofocus>
-					<td><font color=red><b>${errorMsgs.empno}</b></font></td>
+					<font color=red><b>${errorMsgs.empno}</b></font>
 				</div>
 				<div class="form-group">
 					<label class="control-label">密碼：</label> <input
 						class="form-control" type="password" name="password"
 						placeholder="Password" autofocus>
-					<td><font color=red><b>${errorMsgs.empPwd}</b></font></td>
+					<font color=red><b>${errorMsgs.empPwd}</b></font>
 				</div>
 				<div class="form-group">
 					<div class="utility">

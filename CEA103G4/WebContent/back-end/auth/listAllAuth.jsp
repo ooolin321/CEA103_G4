@@ -11,7 +11,7 @@
 %>
 
 <%
-	AuthVO authVO = (AuthVO) request.getAttribute("authVO");
+List<AuthVO> authVO = (List<AuthVO> ) request.getAttribute("authVO");
 %>
 <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 <jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
@@ -84,7 +84,6 @@
 			<th>員工姓名</th>
 			<th>狀態</th>
 			<th>  </th>
-			<th>  </th>
 		</tr>
 		</thead>
 		<tbody>
@@ -92,7 +91,7 @@
 		<c:forEach var="authVO" items="${list}" begin="<%=pageIndex%>"
 			end="<%=pageIndex+rowsPerPage-1%>">
 
-			<tr ${(authVO.funno==param.funno) ? 'bgcolor=#CCCCFF':''}>
+			<tr>
 <%-- 				<td>${authVO.funno}</td> --%>
 				<td>${funSvc.getOneFun(authVO.funno).funName}</td>
 				<td>${authVO.empno}</td>
@@ -107,18 +106,18 @@
 				</c:choose>
 				
 
-				<td>
-					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/auth/auth.do"
-						style="margin-bottom: 0px;">
-						<input class="btn btn-primary" type="submit" value="修改"> 
+<!-- 				<td> -->
+<!-- 					<FORM METHOD="post" -->
+<%-- 						ACTION="<%=request.getContextPath()%>/auth/auth.do" --%>
+<!-- 						style="margin-bottom: 0px;"> -->
+<!-- 						<input class="btn btn-primary" type="submit" value="修改">  -->
 
-						<input type="hidden" name="empno" value="${authVO.empno}"> 
-			     		<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
-			     		<input type="hidden" name="whichPage"	value="<%=whichPage%>">      
-						<input type="hidden" name="action" value="getOne_For_Update">
-					</FORM>
-				</td>
+<%-- 						<input type="hidden" name="empno" value="${authVO.empno}">  --%>
+<%-- 			     		<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller--> --%>
+<%-- 			     		<input type="hidden" name="whichPage"	value="<%=whichPage%>">       --%>
+<!-- 						<input type="hidden" name="action" value="getOne_For_Update"> -->
+<!-- 					</FORM> -->
+<!-- 				</td> -->
 				<td>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/auth/auth.do"

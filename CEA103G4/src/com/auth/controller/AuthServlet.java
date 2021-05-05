@@ -43,7 +43,7 @@ public class AuthServlet extends HttpServlet {
 				}
 				/*************************** 2.開始查詢資料 *****************************************/
 				AuthService authSvc = new AuthService();
-				AuthVO authVO = authSvc.getOneAuth(empno);
+				List<AuthVO> authVO = authSvc.getOneAuth(empno);
 
 				if (authVO == null) {
 					errorMsgs.add("查無資料");
@@ -78,7 +78,7 @@ public class AuthServlet extends HttpServlet {
 				Integer empno = new Integer(req.getParameter("empno"));
 				/*************************** 2.開始查詢資料 ****************************************/
 				AuthService authSvc = new AuthService();
-				AuthVO authVO = authSvc.getOneAuth(empno);
+				List<AuthVO> authVO = authSvc.getOneAuth(empno);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("authVO", authVO);
 				String url = "/back-end/auth/update_auth_input.jsp";

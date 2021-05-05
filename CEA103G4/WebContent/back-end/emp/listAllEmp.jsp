@@ -160,9 +160,9 @@
           </div>
         </div>
       </div>
-  </main>
+  
 	<%@ include file="page2.file"%>
-
+ </main>
 	<jsp:include page="/back-end/backendfooter.jsp" />
 
 </body>

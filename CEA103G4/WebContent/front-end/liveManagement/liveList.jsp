@@ -4,7 +4,16 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.live.model.*"%>
 <%@ page import="com.user.model.*"%>
+<%@ page import="com.product.model.*"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
+<%
+	ProductDAO dao = new ProductDAO();
+	List<ProductVO> list = dao.getAll();
+	pageContext.setAttribute("list", list);
+%>
+
+<jsp:useBean id="product_typeSvc" scope="page"
+	class="com.product_type.model.Product_TypeService" />
 
 <jsp:useBean id="liveSvc" scope="page"
 	class="com.live.model.LiveService" />
@@ -103,8 +112,7 @@ table td, table tr, table th {
 											pattern="yyyy-MM-dd HH:mm:ss" /></td>
 
 									<td>${(liveVO.live_state==0)? '已結束':''}
-										${(liveVO.live_state==1)? '未直播':''} 
-										${(liveVO.live_state==2)? '直播中':''}
+										${(liveVO.live_state==1)? '未直播':''} ${(liveVO.live_state==2)? '直播中':''}
 									</td>
 									<td><img
 										src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}"
@@ -123,9 +131,9 @@ table td, table tr, table th {
 										<FORM METHOD="post"
 											ACTION="<%=request.getContextPath()%>/live/live.do"
 											style="margin-bottom: 0px;">
-											<input type="submit" value="刪除" class="btn btn-danger">
+											<input type="submit" value="結束直播" class="btn btn-danger">
 											<input type="hidden" name="live_no" value="${liveVO.live_no}">
-											<input type="hidden" name="action" value="delete">
+											<input type="hidden" name="action" value="over">
 										</FORM>
 									</td>
 								</tr>
@@ -135,6 +143,180 @@ table td, table tr, table th {
 				</div>
 			</div>
 		</div>
+
+
+
+
+		<div class="col-xl-12">
+			<div class="bs-component">
+				<ul class="nav nav-tabs">
+					<li class="nav-item"><a class="nav-link active show"
+						data-toggle="tab" href="#home">待上架商品</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#profile">我的直播商品</a></li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade active show" id="home">
+						<div class="row">
+							<div class="col-xl-12">
+								<div class="tile">
+									<h3 class="tile-title">我的待上架商品</h3>
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th scope="col">直播編號</th>
+												<!-- 									<th scope="col">直播分類</th> -->
+												<th scope="col">商品編號</th>
+												<th scope="col">商品圖片</th>
+												<th scope="col">商品名稱</th>
+												<th scope="col">商品描述</th>
+												<th scope="col">起標價</th>
+												<th scope="col">數量</th>
+												<th></th>
+												<th></th>
+												<!-- 								<th scope="col">賣家帳號</th> -->
+											</tr>
+										</thead>
+
+										<tbody>
+											<c:forEach var="productVO" items="${list}" begin="0"
+												end="${list.size()-1}">
+												<c:if
+													test="${productVO.product_state == 0 && productVO.user_id == userVO.user_id}">
+													<tr>
+														<th scope="row">${productVO.live_no == 0 ? '未設定':productVO.live_no}</th>
+														<%-- 											<td>${liveSvc.getOneLive(productVO.live_no).live_type}</td> --%>
+														<td>${productVO.product_no}</td>
+														<td><img width="200px"
+															src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}"
+															class="rounded mx-auto d-block" alt=""></td>
+														<td>${productVO.product_name}</td>
+														<td class="productInfo">${productVO.product_info}</td>
+														<td>${productVO.start_price}</td>
+														<td>${productVO.product_remaining}</td>
+														<%-- 										<td>${productVO.user_id}</td> --%>
+														<td>
+															<FORM METHOD="post"
+																ACTION="<%=request.getContextPath()%>/product/product.do"
+																style="margin-bottom: 0px;">
+																<input type="submit" value="修改" class="btn btn-info">
+																<input type="hidden" name="product_no"
+																	value="${productVO.product_no}"> <input
+																	type="hidden" name="action" value="getOne_For_Update_B">
+															</FORM>
+														</td>
+														<td>
+															<FORM METHOD="post"
+																ACTION="<%=request.getContextPath()%>/product/product.do"
+																style="margin-bottom: 0px;">
+																<input type="submit" value="刪除" class="btn btn-danger">
+																<input type="hidden" name="product_no"
+																	value="${productVO.product_no}"> <input
+																	type="hidden" name="action" value="delete">
+															</FORM>
+														</td>
+
+													</tr>
+
+												</c:if>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+
+
+					</div>
+					<div class="tab-pane fade" id="profile">
+
+						<div class="row">
+							<div class="col-xl-12">
+								<div class="tile">
+									<h3 class="tile-title">我的直播商品</h3>
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th scope="col">直播編號</th>
+												<!-- 									<th scope="col">直播分類</th> -->
+												<th scope="col">商品編號</th>
+												<th scope="col">商品圖片</th>
+												<th scope="col">商品名稱</th>
+												<th scope="col">商品描述</th>
+												<th scope="col">起標價</th>
+												<th scope="col">數量</th>
+												<th></th>
+												<th></th>
+												<!-- 								<th scope="col">賣家帳號</th> -->
+											</tr>
+										</thead>
+
+										<tbody>
+											<c:forEach var="productVO" items="${list}" begin="0"
+												end="${list.size()-1}">
+												<c:if
+													test="${productVO.product_state == 2 && productVO.user_id == userVO.user_id}">
+													<tr>
+														<th scope="row">${productVO.live_no == 0 ? '未設定':productVO.live_no}</th>
+														<%-- 											<td>${liveSvc.getOneLive(productVO.live_no).live_type}</td> --%>
+														<td>${productVO.product_no}</td>
+														<td><img width="200px"
+															src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}"
+															class="rounded mx-auto d-block" alt=""></td>
+														<td>${productVO.product_name}</td>
+														<td class="productInfo">${productVO.product_info}</td>
+														<td>${productVO.start_price}</td>
+														<td>${productVO.product_remaining}</td>
+														<%-- 										<td>${productVO.user_id}</td> --%>
+														<td>
+															<FORM METHOD="post"
+																ACTION="<%=request.getContextPath()%>/product/product.do"
+																style="margin-bottom: 0px;">
+																<input type="submit" value="修改" class="btn btn-info">
+																<input type="hidden" name="product_no"
+																	value="${productVO.product_no}"> <input
+																	type="hidden" name="action" value="getOne_For_Update_B">
+															</FORM>
+														</td>
+														<td>
+															<FORM METHOD="post"
+																ACTION="<%=request.getContextPath()%>/product/product.do"
+																style="margin-bottom: 0px;">
+																<input type="submit" value="刪除" class="btn btn-danger">
+																<input type="hidden" name="product_no"
+																	value="${productVO.product_no}"> <input
+																	type="hidden" name="action" value="delete">
+															</FORM>
+														</td>
+
+													</tr>
+
+												</c:if>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

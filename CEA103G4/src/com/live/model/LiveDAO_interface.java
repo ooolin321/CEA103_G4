@@ -16,4 +16,6 @@ public interface LiveDAO_interface {
 	public List<LiveVO> getAll1();
 	
 	public List<LiveVO> getAllByID(String user_id);
+	
+	public void over(Integer live_id);
 }

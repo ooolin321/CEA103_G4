@@ -103,7 +103,7 @@ public class ProductServlet extends HttpServlet {
 		}
 		
 		
-		if ("getOne_For_Update".equals(action)) { // 來自listAllProduct.jsp的請求
+		if ("getOne_For_Update".equals(action) || "getOne_For_Update_B".equals(action)) { // 來自listAllProduct.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -120,7 +120,12 @@ public class ProductServlet extends HttpServlet {
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("productVO", productVO);         // 資料庫取出的productVO物件,存入req
-				String url = "/front-end/productManagement/productUpdate.jsp";
+				
+				String url = null;
+				if("getOne_For_Update".equals(action))
+					url = "/front-end/productManagement/productUpdate.jsp";
+				else if ("getOne_For_Update_B".equals(action))
+					url = "/front-end/liveManagement/productUpdate.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_product_input.jsp
 				successView.forward(req, res);
 

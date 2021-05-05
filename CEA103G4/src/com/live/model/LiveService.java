@@ -67,5 +67,8 @@ public class LiveService {
 		return dao.getAllByID(user_id);
 	}
 	
+	public void overLive(Integer live_no) {
+		dao.over(live_no);
+	}
 	
 }

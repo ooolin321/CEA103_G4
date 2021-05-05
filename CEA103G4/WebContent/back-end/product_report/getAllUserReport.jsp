@@ -109,6 +109,7 @@
       				 <td>${product_reportVO.user_id}</td>
       				 <td>${product_reportVO.report_date}</td>
      				 <td>${product_reportVO.empno}</td>
+<%--      				 <td>${product_reportVO.proreport_state}</td> --%>
 					 <td>
 				  <form METHOD="post" ACTION="<%=request.getContextPath()%>/product_report/product_report.do" name="form1" >	 
              	  <select class="form-select"  name="proreport_state" id="ReportProreport_state">
@@ -117,6 +118,7 @@
 					<option value="2" ${(product_reportVO.proreport_state==2)? 'selected':'' }>審核不通過</option>
                  </select>
                  	<input type="hidden" name="pro_report_no" value="${product_reportVO.pro_report_no}">
+                 	<input type="hidden" name="product_no" value="${product_reportVO.product_no}">
                  	<button type="submit" class="btn btn-warning submitAdd" name="action" value="update">修改狀態</button>
                    </form>	
 					</td>

@@ -44,7 +44,7 @@
 					</div>
 				</div>
 				<div class="col-lg-3 text-right col-md-3">
-					<c:if test="${not empty userVO.user_name}">
+					<c:if test="${not empty userVO.user_id}">
 						<div class="header-right">
 						<FORM id="userLogOut" METHOD="post" class="logout-form" action="<%=request.getContextPath()%>/User_LogoutHandler">
 						<a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">

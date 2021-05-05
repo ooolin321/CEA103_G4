@@ -133,7 +133,7 @@ public class Product_ReportServlet extends HttpServlet{
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 		
-//			try {
+			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				Product_ReportVO product_reportVO = new Product_ReportVO();
 				
@@ -192,12 +192,12 @@ public class Product_ReportServlet extends HttpServlet{
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理*************************************/
-//			} catch (Exception e) {
-//				errorMsgs.add("修改資料失敗:"+e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher("/back-end/product_report/getAllUserReport.jsp");
-//				failureView.forward(req, res);
-//			}
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/back-end/product_report/getAllUserReport.jsp");
+				failureView.forward(req, res);
+			}
 		}
 		//product.jsp提交商品檢舉進來,員工預設14002
         if ("insert".equals(action)) { // 來自addProduct_Report.jsp的請求  

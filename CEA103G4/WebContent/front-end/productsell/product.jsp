@@ -208,7 +208,7 @@
                     </div>
 <!--                     檢舉燈箱 -->
 <div  class="report-bg">
-                    <div class="report">
+  <div class="report">
       <div class="report-title" value="${productVO.product_no}">
         檢舉商品名稱：${productVO.product_name}
         <span><a href="javascript:;" id="closeBtn">關閉</a></span>

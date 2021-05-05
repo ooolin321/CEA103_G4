@@ -173,22 +173,19 @@
 				class="treeview-indicator fa fa-angle-right"></i></a>
 			<ul class="treeview-menu">
 				<li><a class="treeview-item"
-					href="<%=request.getContextPath()%>/back-end/product_type/listAllProduct_Type.jsp"><i
-						class="icon fa fa-circle-o"></i>商品類別管理</a></li>
+					href="<%=request.getContextPath()%>/back-end/productManagement/backProductType.jsp"><i
+						class="icon fa fa-folder-open-o"></i>商品類別管理</a></li>
 				<li><a class="treeview-item"
-					href="<%=request.getContextPath()%>/back-end/product_type/addProduct_Type.jsp"><i
-						class="icon fa fa-circle-o"></i> 新增商品類別</a></li>
-				<li><a class="treeview-item"
-					href="<%=request.getContextPath()%>/back-end/product/backProductList.jsp"><i class="fa fa-archive">&nbsp;</i>所有直售商品</a></li>
+					href="<%=request.getContextPath()%>/back-end/productManagement/backProductList.jsp"><i class="fa fa-archive">&nbsp;</i>所有直售商品</a></li>
 			</ul></li>
 		<li class="treeview"><a class="app-menu__item" href="#"
-			data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span
+			data-toggle="treeview"><i class="app-menu__icon fa fa-exclamation-circle"></i><span
 				class="app-menu__label">直售檢舉管理</span><i
 				class="treeview-indicator fa fa-angle-right"></i></a>
 			<ul class="treeview-menu">
 				<li><a class="treeview-item"
 					href="<%=request.getContextPath()%>/back-end/product_report/getAllUserReport.jsp"><i
-						class="icon fa fa-circle-o"></i> 直售商品檢舉</a></li>
+						class="icon fa fa-exclamation-circle"></i> 直售商品檢舉</a></li>
 			</ul></li>
 		<li class="treeview"><a class="app-menu__item" href="#"
 			data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span

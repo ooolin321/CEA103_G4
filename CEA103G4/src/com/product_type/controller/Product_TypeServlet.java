@@ -111,16 +111,16 @@ public class Product_TypeServlet  extends HttpServlet {
 				Product_TypeVO product_typeVO = product_typeSvc.getOneProduct_Type(pdtype_no);
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-				req.setAttribute("product_typeVO", product_typeVO);         // 資料庫取出的product_typeVO物件,存入req
-				String url = "/back-end/product_type/update_product_type_input.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交update_product_type_input.jsp
+				req.setAttribute("product_typeVO", product_typeVO);         
+				String url = "/back-end/productManagement/backUpdatePdtype.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/product_type/listAllProduct_Type.jsp");
+						.getRequestDispatcher("/back-end/productManagement/backProductType.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -153,7 +153,7 @@ public class Product_TypeServlet  extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("product_typeVO", product_typeVO); // 含有輸入格式錯誤的product_typeVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/product_type/update_product_type_input.jsp");
+							.getRequestDispatcher("/back-end/productManagement/backUpdatePdtype.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -164,7 +164,7 @@ public class Product_TypeServlet  extends HttpServlet {
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("product_typeVO", product_typeVO); // 資料庫update成功後,正確的的product_typeVO物件,存入req
-				String url = "/back-end/product_type/listOneProduct_Type.jsp";
+				String url = "/back-end/productManagement/backProductType.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneProduct_Type.jsp
 				successView.forward(req, res);
 
@@ -172,7 +172,7 @@ public class Product_TypeServlet  extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/product_type/update_product_type_input.jsp");
+						.getRequestDispatcher("/back-end/productManagement/backUpdatePdtype.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -190,9 +190,9 @@ public class Product_TypeServlet  extends HttpServlet {
 
 				String pdtype_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,20}$";
 				if (pdtype_name == null || pdtype_name.trim().length() == 0) {
-					errorMsgs.add("商品名稱: 請勿空白");
+					errorMsgs.add("商品類別名稱: 請勿空白");
 				} else if(!pdtype_name.trim().matches(pdtype_nameReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("商品名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
+					errorMsgs.add("商品類別名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到20之間");
 	            }
 				
 				Product_TypeVO product_typeVO = new Product_TypeVO();
@@ -202,7 +202,7 @@ public class Product_TypeServlet  extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("product_typeVO", product_typeVO); // 含有輸入格式錯誤的product_typeVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/product_type/addProduct_Type.jsp");
+							.getRequestDispatcher("/back-end/productManagement/backProductType.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -212,7 +212,7 @@ public class Product_TypeServlet  extends HttpServlet {
 				product_typeVO = product_typeSvc.addProduct_Type(pdtype_name);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)*************/
-				String url = "/back-end/product_type/listAllProduct_Type.jsp";
+				String url = "/back-end/productManagement/backProductType.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後,轉交listAllProduct_Type.jsp
 				successView.forward(req, res);
 
@@ -220,7 +220,7 @@ public class Product_TypeServlet  extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/product_type/addProduct_Type.jsp");
+						.getRequestDispatcher("/back-end/productManagement/backProductType.jsp");
 				failureView.forward(req, res);
 			}
 		}

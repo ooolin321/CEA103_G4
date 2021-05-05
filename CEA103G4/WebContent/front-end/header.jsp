@@ -44,7 +44,7 @@
 					</div>
 				</div>
 				<div class="col-lg-3 text-right col-md-3">
-					<c:if test="${ not empty userVO.user_name}">
+					<c:if test="${ not empty userVO.user_name }">
 						<div class="header-right">
 						<FORM id="userLogOut" METHOD="post" class="logout-form" action="<%=request.getContextPath()%>/User_LogoutHandler">
 						<a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">
@@ -56,7 +56,7 @@
 						 </FORM>
 						</div>
     				</c:if>
-       			 <c:if test="${empty userVO.user_name}">
+       			 <c:if test="${empty userVO.user_name }">
 					<div class="header-right">
 						<a
 							href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button
@@ -75,7 +75,7 @@
                     </svg> <span>1</span>
 						</a></li>
 						<li class="cart-icon"><a
-							href="${pageContext.request.contextPath}/front-end/productsell/shopping-cart.html">
+							href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp">
 								<i class="icon_bag_alt"></i> <span>3</span>
 						</a>
 							<div class="cart-hover">
@@ -115,7 +115,7 @@
 								</div>
 								<div class="select-button">
 									<a
-										href="${pageContext.request.contextPath}/front-end/productsell/shopping-cart.html"
+										href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp"
 										class="primary-btn view-card">購物車清單</a>
 									<a
 										href="${pageContext.request.contextPath}/front-end/productsell/check-out.html"

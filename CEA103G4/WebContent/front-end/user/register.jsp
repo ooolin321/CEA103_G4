@@ -44,6 +44,10 @@
 	.register-form h2 {
     margin-bottom: 10px;
 	}
+	td {
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
   	</style>
   </head>
 
@@ -83,64 +87,56 @@
 	<tr><td>以下*為必填</td></tr>
 	<tr>
 		<td>帳號 *</td>
-		<td><input type="TEXT" name="user_id" size="45" 
-			 value="<%= (userVO==null)? "hans01" : userVO.getUser_id()%>" /></td>
+		<td><input type="TEXT" class="form-control" name="user_id" size="45" 
+			 value="<%= (userVO==null)? "abcd01" : userVO.getUser_id()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_id}</b></td></tr>
 	<tr>
 		<td>密碼 *</td>
-		<td><input type="password" name="user_pwd" size="45" 
-			 value="<%= (userVO==null)? "hans01" : userVO.getUser_pwd()%>" /></td>
+		<td><input type="password" class="form-control" name="user_pwd" size="45" 
+			 value="<%= (userVO==null)? "abcd01" : userVO.getUser_pwd()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_pwd}</b></td></tr>
 	<tr>
 		<td>姓名 *</td>
-		<td><input type="TEXT" name="user_name" size="45" 
+		<td><input type="TEXT" class="form-control" name="user_name" size="45" 
 			 value="<%= (userVO==null)? "漢斯" : userVO.getUser_name()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_name}</b></td></tr>
 	<tr>
 		<td>身分証字號 *</td>
-		<td><input type="TEXT" name="id_card" size="45"
+		<td><input type="TEXT" class="form-control" name="id_card" size="45"
 			 value="<%= (userVO==null)? "A123456789" : userVO.getId_card()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.id_card}</b></td></tr>
-<!-- 	<tr> -->
-<!-- 		<td>性別 *</td> -->
-<!-- 		<td><select name="user_gender"> -->
-<%-- 					<option value="0" ${(userVO.user_gender==0)? 'selected':'' }>女</option> --%>
-<%-- 					<option value="1" ${(userVO.user_gender==1)? 'selected':'' }>男</option> --%>
-<!-- 			</select></td>  -->
-<%-- 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_gender}</b></td></tr> --%>
-	
 	<tr>
 	<td>性別 *</td>
-	<td><input type="radio" id="user_gender" name="user_gender" value="1" ${(userVO.user_gender==1)? 'checked':'' }>
+	<td><input type="radio" name="user_gender" value="1" ${(userVO.user_gender==1)? 'checked':'' }>
 	<label for="male">男</label>
-	<input type="radio" id="user_gender" name="user_gender" value="0" ${(userVO.user_gender==0)? 'checked':'' }>
-	<label for="female">女</label></td> 
-	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_gender}</b></td></tr>
+	<input type="radio" name="user_gender" value="0" ${(userVO.user_gender==0)? 'checked':'' }>
+	<label for="female">女</label><font color=red><b>${errorMsgs.user_gender}</b></td>
+	</tr>
 	
 	<tr>
 		<td>生日 *</td>
-		<td><input name="user_dob" size="45" id="f_date1" type="text"></td>
+		<td><input name="user_dob" class="form-control" size="45" id="f_date1" type="text"></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_dob}</b></td></tr>
 	<tr>
 		<td>Email *</td>
-		<td><input type="TEXT" name="user_mail" size="45"
+		<td><input type="TEXT" class="form-control" name="user_mail" size="45"
 			 value="<%= (userVO==null)? "joy15132000@hotmail.com" : userVO.getUser_mail()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_mail}</b></td></tr>
 	<tr>
 		<td>電話 *</td>
-		<td><input type="TEXT" name="user_phone" size="45"
-			 value="<%= (userVO==null)? "0228825252" : userVO.getUser_phone()%>" /></td>
+		<td><input type="TEXT" class="form-control" name="user_phone" size="45"
+			 value="<%= (userVO==null)? "" : userVO.getUser_phone()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_phone}</b></td></tr>
 	<tr>
 		<td>手機號碼 *</td>
-		<td><input type="TEXT" name="user_mobile" size="45"
-			 value="<%= (userVO==null)? "0988888888" : userVO.getUser_mobile()%>" /></td>
+		<td><input type="TEXT" class="form-control" name="user_mobile" size="45"
+			 value="<%= (userVO==null)? "" : userVO.getUser_mobile()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_mobile}</b></td></tr>
 	<tr>
 		<td>地址 *</td>
 		<td>
 		<div id="twzipcode"></div><font color=red><b>${errorMsgs.city}</b>
-		<input type="TEXT" name="user_addr" size="45" value="<%= (userVO==null)? "XX路X段XXX巷XX號" : userVO.getUser_addr()%>"></td>
+		<input type="TEXT" class="form-control" name="user_addr" size="45" value="<%= (userVO==null)? "" : userVO.getUser_addr()%>"></td>
 		</td><tr><td></td><td><font color=red><b>${errorMsgs.user_addr}</b></td></tr>
 	</tr>
 <%-- 	<jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" /> --%>

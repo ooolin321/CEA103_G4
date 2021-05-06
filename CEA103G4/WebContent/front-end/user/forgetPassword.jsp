@@ -31,6 +31,14 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/jquery-ui.min.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/slicknav.min.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/style.css" type="text/css" />
+  <style>
+  label.text-gray-600.small {
+    color: black;
+}
+.small.text-center {
+    color: black;
+}
+  </style>
   </head>
 
   <body>

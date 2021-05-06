@@ -42,15 +42,6 @@
 <body class="app sidebar-mini rtl">
 <jsp:include page="/back-end/backendMenu.jsp" />
 
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
               <main class="app-content">
                 <div class="app-title">
                   <div>
@@ -78,7 +69,7 @@
                     <a data-toggle="tab" href="#tab-3" role="tab">已售出</a>
                   </li>
                   <li>
-                    <a data-toggle="tab" href="#tab-5" role="tab"
+                    <a data-toggle="tab" href="#tab-4" role="tab"
                       >違規下架</a
                     >
                   </li>
@@ -104,7 +95,7 @@
   				  </tr>
  				 </thead>
  				 <tbody>
- 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}" varStatus="i">
+ 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}">
    				 	<c:if test="${productVO.product_state == 0}"> 
    				 <tr>
      				 <th scope="row">${productVO.product_no}</th>
@@ -177,7 +168,7 @@
       				 <td>${productVO.product_name}</td>
       				 <td class="productInfo"><textarea class="form-control"  maxlength="300" rows="6" readonly>${productVO.product_info}</textarea></td>
      				 <td>${productVO.product_price}</td>
-     				 <td>${productVO.product_remaining}</td>
+     				 <td><button type="" class="btn btn-success">已售出</button></td>
      				 <td>${product_typeSvc.getOneProduct_Type(productVO.pdtype_no).pdtype_name}</td>
      				 <td>${productVO.user_id}</td>
    				 </tr>
@@ -186,7 +177,7 @@
    				 </tbody>
 				</table>
                 </div>
-                 <div class="tab-pane fade" id="tab-5" role="tabpanel">
+                 <div class="tab-pane fade" id="tab-4" role="tabpanel">
                  <table class="table">
   					<thead class="thead">
    					 <tr>

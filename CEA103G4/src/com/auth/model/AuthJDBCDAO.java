@@ -138,7 +138,8 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 	}
 
 	@Override
-	public AuthVO findAuthByEmpno(Integer empno) {
+	public List<AuthVO> findAuthByEmpno(Integer empno) {
+		List<AuthVO>list = new ArrayList<AuthVO>();
 		AuthVO authVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -160,6 +161,7 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 				authVO.setAuth_no(rs.getInt("AUTH_NO"));
 				authVO.setEmpno(rs.getInt("EMPNO"));
 				authVO.setFunno(rs.getInt("FUNNO"));
+				list.add(authVO);
 			}
 			
 			
@@ -186,7 +188,7 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 			}
 		}
 
-		return authVO;
+		return list;
 	}
 
 	@Override

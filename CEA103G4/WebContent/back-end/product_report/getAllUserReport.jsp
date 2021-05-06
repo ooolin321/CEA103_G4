@@ -52,7 +52,7 @@
               <main class="app-content">
                 <div class="app-title">
                   <div>
-                    <h1><i class="fa fa-archive">&nbsp;</i>直售商品檢舉</h1>
+                    <h1><i class="fa fa-exclamation-circle">&nbsp;</i>直售商品檢舉</h1>
                   </div>
                   <ul class="app-breadcrumb breadcrumb">
                     <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -109,6 +109,7 @@
       				 <td>${product_reportVO.user_id}</td>
       				 <td>${product_reportVO.report_date}</td>
      				 <td>${product_reportVO.empno}</td>
+<%--      				 <td>${product_reportVO.proreport_state}</td> --%>
 					 <td>
 				  <form METHOD="post" ACTION="<%=request.getContextPath()%>/product_report/product_report.do" name="form1" >	 
              	  <select class="form-select"  name="proreport_state" id="ReportProreport_state">
@@ -117,6 +118,7 @@
 					<option value="2" ${(product_reportVO.proreport_state==2)? 'selected':'' }>審核不通過</option>
                  </select>
                  	<input type="hidden" name="pro_report_no" value="${product_reportVO.pro_report_no}">
+                 	<input type="hidden" name="product_no" value="${product_reportVO.product_no}">
                  	<button type="submit" class="btn btn-warning submitAdd" name="action" value="update">修改狀態</button>
                    </form>	
 					</td>
@@ -154,16 +156,18 @@
       				 <td>${product_reportVO.report_date}</td>
      				 <td>${product_reportVO.empno}</td>
 					 <td>
-				  <form METHOD="post" ACTION="<%=request.getContextPath()%>/product_report/product_report.do" name="form1" >	 
-             	  <select class="form-select"  name="proreport_state" id="ReportProreport_state">
-             	  	<option value="0" ${(product_reportVO.proreport_state==0)? 'selected':'' }>未處理</option>
-					<option value="1" ${(product_reportVO.proreport_state==1)? 'selected':'' }>審核通過</option>
-					<option value="2" ${(product_reportVO.proreport_state==2)? 'selected':'' }>審核不通過</option>
-                 </select>
-                 	<input type="hidden" name="pro_report_no" value="${product_reportVO.pro_report_no}">
-                 	<button type="submit" class="btn btn-warning submitAdd" name="action" value="update">修改狀態</button>
-                   </form>	
-					</td>
+				<c:choose>
+    		     <c:when test="${product_reportVO.proreport_state == 0}">
+       			            未處理
+   			     </c:when>
+   			     <c:when test="${product_reportVO.proreport_state == 1}">
+       				審核通過
+    			</c:when>
+    			<c:when test="${product_reportVO.proreport_state == 2}">
+       				審核不通過
+    			</c:when>
+		      </c:choose>
+		      		</td>
    				 </tr>
    				 	</c:if>
    				 </c:forEach>
@@ -199,20 +203,18 @@
       				 <td>${product_reportVO.report_date}</td>
      				 <td>${product_reportVO.empno}</td>
 					 <td>
-				  <form METHOD="post" ACTION="<%=request.getContextPath()%>/product_report/product_report.do" name="form1" >	 
-             	  <select class="form-select"  name="proreport_state" id="ReportProreport_state">
-             	  	<option value="0" ${(product_reportVO.proreport_state==0)? 'selected':'' }>未處理</option>
-					<option value="1" ${(product_reportVO.proreport_state==1)? 'selected':'' }>審核通過</option>
-					<option value="2" ${(product_reportVO.proreport_state==2)? 'selected':'' }>審核不通過</option>
-                 </select>
-<%--                  	<c:if test="${product_reportVO.proreport_state == 2}"> --%>
-<!--                  	    <input type="hidden" name="action"	value="getOne_For_Update"> -->
-<!--                  		<input type="hidden" name="product_state" value="0"> -->
-<%--                  	</c:if>  --%>
-                 	<input type="hidden" name="pro_report_no" value="${product_reportVO.pro_report_no}">
-                 	<button type="submit" class="btn btn-warning submitAdd" name="action" value="update">修改狀態</button>
-                   </form>	
-					</td>
+				<c:choose>
+    		     <c:when test="${product_reportVO.proreport_state == 0}">
+       			            未處理
+   			     </c:when>
+   			     <c:when test="${product_reportVO.proreport_state == 1}">
+       				審核通過
+    			</c:when>
+    			<c:when test="${product_reportVO.proreport_state == 2}">
+       				審核不通過
+    			</c:when>
+		      </c:choose>
+		      		</td>
    				 </tr>
    				 	</c:if>
    				 </c:forEach>

@@ -103,10 +103,12 @@ public class ProductService {
 
 		productVO.setProduct_no(product_no);
 		productVO.setProduct_state(product_state);
-		dao.update(productVO);
+		dao.updateState(productVO);
 
 		return productVO;
 	}
+	
+	
 
 	public void updateLive(Integer live_no, List<ProductVO> product_no) {
 		

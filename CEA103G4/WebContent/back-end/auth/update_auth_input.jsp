@@ -5,7 +5,7 @@
 <%@ page import="com.emp.model.*"%>
 <%@ page import="com.fun.model.*"%>
 <%
-	AuthVO authVO = (AuthVO) request.getAttribute("authVO");
+	List<AuthVO> authVO = (List<AuthVO> ) request.getAttribute("authVO");
 %>
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO");
@@ -100,7 +100,7 @@ th, td {
 		<table>
 			<tr>
 				<td>員工編號:<font color=red><b>*</b></font></td>
-				<td><%=authVO.getEmpno()%></td>
+				<td>${empVO.empno}</td>
 				
 			</tr>			
 				<tr>
@@ -108,7 +108,7 @@ th, td {
 				<td>
 					<ul>
 					
-							<li><input name = "funno" value="${authVO.funno}" type="hidden"></input>${funSvc.getOneFun(authVO.funno).funName}
+							<li><input name = "funno" value="${funVO.funno}" type="hidden"></input>${funSvc.getOneFun(authVO.funno).funName}
 							<select size="1" name="auth_no">
 										<option value="1" ${(authVO.auth_no==1)? 'selected':''}>開</option>
 										<option value="0" ${(authVO.auth_no==0)? 'selected':''}>關</option>
@@ -120,8 +120,8 @@ th, td {
 		
 		</table>
 		<br> <input type="hidden" name="action" value="update"> 
-		<input type="hidden" name="empno" value="<%=authVO.getEmpno()%>">
-		<input type="hidden" name="funno" value="<%=authVO.getFunno()%>">
+		<input type="hidden" name="empno" value="${empVO.empno}">
+		<input type="hidden" name="funno" value="${funVO.funno}">
 		<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">
 		<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
 		<input type="submit" id = "submit" value="送出新增">

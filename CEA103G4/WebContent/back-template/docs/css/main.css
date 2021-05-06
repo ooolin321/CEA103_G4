@@ -15365,3 +15365,167 @@ be a descendant of the grid when it is being dragged.
 }
 
 /*getAllUserReport Finish*/
+
+/*backProductproductType 燈箱*/
+
+	.backProductType-bg {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background: rgba(0, 0, 0, 0.3);
+      }
+      
+
+.backProductType-bg .productType {
+        display: none;
+        width: 500px;
+        height: 245px;
+        position: fixed;
+        border: #ebebeb solid 1px;
+        left: 50%;
+        top: 50%;
+        background: #ffffff;
+        box-shadow: 0px 0px 20px #ddd;
+        z-index: 999;
+        transform: translate(-50%, -50%);
+        border-radius: 10px;
+      }
+
+.backProductType-bg .productType-title {
+        width: 100%;
+        margin: 20px 0px 0px 0px;
+        text-align: center;
+        line-height: 40px;
+        height: 40px;
+        font-size: 18px;
+        position: relative;
+        cursor: move;
+        font-weight: 700;
+      }
+#pdtype_noLink{
+	color:white;
+}
+
+.backProductType-bg .productType-input-content {
+        margin-top: 20px;
+      }
+
+.backProductType-bg  .productType-button a,
+.backProductType-bg  .productType-title a {
+        text-decoration: none;
+        color: #ffffff;
+        display: block;
+      }
+
+.backProductType-bg .productType #closeBtn {
+        color: #e7ab3c;
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+.backProductType-bg .productType-button {
+        width: 50%;
+        margin: 12px auto 0px 130px;
+        line-height: 40px;
+        font-size: 14px;
+        border: #ebebeb 1px solid;
+        text-align: center;
+        color: #ffffff;
+        font-weight: 700;
+        background: #e7ab3c;
+        border-radius: 2px;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        position: relative;
+        border-radius: 5px;
+      }
+
+.backProductType-bg  .productType-button::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        border: inherit;
+        border-color: #000;
+        border-radius: inherit;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        content: " ";
+      }
+.backProductType-bg .productType-button:active::before {
+        opacity: 0.1;
+      }
+
+.backProductType-bg .productType-input input {
+        float: left;
+        line-height: 35px;
+        height: 35px;
+        width: 367px;
+        border: #e7ab3c 1.5px solid;
+        text-indent: 5px;
+        border-radius: 5px;
+        margin-left: 5px;
+      }
+.backProductType-bg input:focus {
+  outline: none;
+}
+
+.backProductType-bg .productType-input {
+        overflow: hidden;
+        margin: 0px 0px 20px 0px;
+      }
+
+.backProductType-bg .productType-input label {
+        float: left;
+        width: 90px;
+        padding-right: 10px;
+        text-align: right;
+        line-height: 35px;
+        height: 35px;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+.backProductType-bg  .productType-title span {
+        position: absolute;
+        font-size: 12px;
+        right: -20px;
+        top: -30px;
+        background: #ffffff;
+        border: #ebebeb solid 1px;
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+      }
+.backProductType-bg{
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background: rgba(0, 0, 0, 0.3);
+      }
+
+ /*backProductType finish*/ 
+ 
+     
+  /*backUpdatePdtype start*/  
+ input.updatePdtype {
+  	border: #e7ab3c 1.5px solid;
+  	border-radius: 5px;
+  	font-weight:400;
+  	font-size:16px;
+  	padding-left: 8px;
+  }
+  
+input.updatePdtype:focus {
+  outline: none;
+}
+
+   

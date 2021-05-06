@@ -9,9 +9,9 @@
 <%
   ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
-	Product_TypeDAO dao2 = new Product_TypeDAO();
-	List<Product_TypeVO> list2 = dao2.getAll();
-	pageContext.setAttribute("list2",list2);
+// 	Product_TypeDAO dao2 = new Product_TypeDAO();
+// 	List<Product_TypeVO> list2 = dao2.getAll();
+// 	pageContext.setAttribute("list2",list2);
 	
 %>
 <jsp:useBean id="product_typeSvc" scope="page" class="com.product_type.model.Product_TypeService" />
@@ -208,7 +208,7 @@
                     </div>
 <!--                     檢舉燈箱 -->
 <div  class="report-bg">
-                    <div class="report">
+  <div class="report">
       <div class="report-title" value="${productVO.product_no}">
         檢舉商品名稱：${productVO.product_name}
         <span><a href="javascript:;" id="closeBtn">關閉</a></span>
@@ -555,67 +555,67 @@
     <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
-
+	<script src="${pageContext.request.contextPath}/front-template/js/ajaxSearch.js"></script>
     
     
     	<script>
 
 	//ajax header搜尋框	
 	
-    $("#sendQuery").on('click', () => { 
-		var datas = {
-		  "product_name":$("#product_name").val(),      				
-		  "action":"search_ajax" 
-		}; 
-	  sendQuery(datas); 
-  }); 
-	$("#search").on('submit',(event) => { 
-	  event.preventDefault()
-	  	var datas = {
-		  "product_name":$("#product_name").val(),      				
-		  "action":"search_ajax" 
-		};
-	  sendQuery(datas); 
-  }); 
+//     $("#sendQuery").on('click', () => { 
+// 		var datas = {
+// 		  "product_name":$("#product_name").val(),      				
+// 		  "action":"search_ajax" 
+// 		}; 
+// 	  sendQuery(datas); 
+//   }); 
+// 	$("#search").on('submit',(event) => { 
+// 	  event.preventDefault()
+// 	  	var datas = {
+// 		  "product_name":$("#product_name").val(),      				
+// 		  "action":"search_ajax" 
+// 		};
+// 	  sendQuery(datas); 
+//   }); 
 	
-	//功能列 分類
-		$(".catagoriesQuery").click(function() {
-			var datas = { 
-	 		  	"pdtype_no":$(this).attr("value"),
-	 			  "action":"search_ajax" 
-	 			}; 
-	 		  sendQuery(datas); 
-	 	  });
+// 	//功能列 分類
+// 		$(".catagoriesQuery").click(function() {
+// 			var datas = { 
+// 	 		  	"pdtype_no":$(this).attr("value"),
+// 	 			  "action":"search_ajax" 
+// 	 			}; 
+// 	 		  sendQuery(datas); 
+// 	 	  });
 	
-	//價格篩選
-	$("#moneyRange").click(function(){
-	  var min = $("#minamount").val();
-	  var max = $("#maxamount").val();
-	  min = min.substring(min.indexOf("$")+1);
-	  max = max.substring(max.indexOf("$")+1);
-	  var datas = {
-			  minPrice: min,
-			  maxPrice: max,
-			  action: 'moneyRange'
-			}
-			sendQuery(datas);
-	})
+// 	//價格篩選
+// 	$("#moneyRange").click(function(){
+// 	  var min = $("#minamount").val();
+// 	  var max = $("#maxamount").val();
+// 	  min = min.substring(min.indexOf("$")+1);
+// 	  max = max.substring(max.indexOf("$")+1);
+// 	  var datas = {
+// 			  minPrice: min,
+// 			  maxPrice: max,
+// 			  action: 'moneyRange'
+// 			}
+// 			sendQuery(datas);
+// 	})
 	
 	
-	//進階查詢ajax
-	$("#fw-all-btn").click(function(){
-		var arr = [];
-		$('input[name="pdtypeNo"]:checked').each(function(i) {
-	     	arr.push($(this).attr("value"));
-		});
-		var type = $('input[name="productPrice"]:checked').val();
-		var datas = {
-			pdtypeNo: arr,
-			productPrice: type,
-			action: 'fw-all-choose'
-		}
-		sendQuery(datas);
-	});
+// 	//進階查詢ajax
+// 	$("#fw-all-btn").click(function(){
+// 		var arr = [];
+// 		$('input[name="pdtypeNo"]:checked').each(function(i) {
+// 	     	arr.push($(this).attr("value"));
+// 		});
+// 		var type = $('input[name="productPrice"]:checked').val();
+// 		var datas = {
+// 			pdtypeNo: arr,
+// 			productPrice: type,
+// 			action: 'fw-all-choose'
+// 		}
+// 		sendQuery(datas);
+// 	});
 	
 	function sendQuery(datas){ 
 		

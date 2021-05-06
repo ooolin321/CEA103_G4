@@ -98,7 +98,7 @@
          </c:forEach>   
        </select>
        <input type="submit" value="送出">
-       <input type="hidden" name="action" value="listProducts_ByPdtype_A">
+       <input type="hidden" name="action" value="getProductsByPdtype">
      </FORM>
   </li>
   

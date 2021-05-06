@@ -140,7 +140,8 @@ public class AuthDAO implements AuthDAO_interface {
 	}
 
 	@Override
-	public AuthVO findAuthByEmpno(Integer empno) {
+	public List<AuthVO> findAuthByEmpno(Integer empno) {
+		List<AuthVO> list = new ArrayList<AuthVO>();
 		AuthVO authVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -160,7 +161,7 @@ public class AuthDAO implements AuthDAO_interface {
 				authVO.setFunno(rs.getInt("FUNNO"));
 				authVO.setEmpno(rs.getInt("EMPNO"));
 				authVO.setAuth_no(rs.getInt("AUTH_NO"));
-				
+				list.add(authVO);
 			}
 		}  catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -189,7 +190,7 @@ public class AuthDAO implements AuthDAO_interface {
 				}
 			}
 		}
-		return authVO;
+		return list;
 	}
 	
 	

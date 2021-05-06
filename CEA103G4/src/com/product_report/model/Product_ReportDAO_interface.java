@@ -13,6 +13,7 @@ public interface Product_ReportDAO_interface {
     public List<Product_ReportVO> getAll();
     //萬用複合查詢(傳入參數型態Map)(回傳 List)
 //  public List<Product_ReportVO> getAll(Map<String, String[]> map); 
+    public Product_ReportVO userProduct_ReportInfo(Integer product_no);
 
 	
 	

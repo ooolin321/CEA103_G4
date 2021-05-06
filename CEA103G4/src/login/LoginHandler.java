@@ -1,9 +1,7 @@
 package login;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +61,7 @@ public class LoginHandler extends HttpServlet {
 				empno = new Integer(req.getParameter("empAccount").trim());
 
 				String empPwd = req.getParameter("password");
+				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
 					failureView.forward(req, res);
@@ -70,27 +69,47 @@ public class LoginHandler extends HttpServlet {
 				}
 
 				EmpService empSvc = new EmpService();
-				EmpVO empVO = empSvc.selectEmp(empno, empPwd);
-//				EmpVO empVO2 = (EmpVO) empSvc.getAll();
-//				
-//				List <AuthVO> authVO = (List<AuthVO>) new AuthService().getOneAuth(empno);
-//				List<FunVO> list = new ArrayList<>();
-//				FunService funSvc = new FunService();
-//				for (int i = 0; i < authVO.size(); i++) {
-//					FunVO funVO = funSvc
-//							.getOneFun(authVO.get(i).getAuth_no());
-//					list.add(funVO);
-//				}
+				EmpVO empVO = empSvc.selectEmp(empno, empPwd);//查詢資料庫是否有此員工
+								
+				//設定權限
+				
+				FunService funSvc = new FunService();
+				List<FunVO> list = funSvc.getAll();
+				FunVO funVO = new FunVO();
+			 	AuthService authSvc = new AuthService(); 
+			 	List<AuthVO> list1 = authSvc.getAll(); 
+			 	int i = 0;
+			 	while (i <= list.size()) {
+			 		if(list1.get(i).getAuth_no().intValue()==1) {
+			 			list.add(funVO);
+			 		}break;
+				}
+			 			 	
+//req.setAttribute("list", list);
+System.out.println(list);			
+
+
+				
 				if (empVO == null) {
 					errorMsgs.put("empno", "帳號密碼不正確，請重新輸入");
 					String url = "/back-end/backendLogin.jsp";
-					RequestDispatcher successView = req.getRequestDispatcher(url);
-					successView.forward(req, res);
-				} else if (empVO != null) {
+					RequestDispatcher failureView = req.getRequestDispatcher(url);
+					failureView.forward(req, res);
+				} 
+				else  {
+					int state = empVO.getState(); //查詢員工在職狀態
+//System.out.println("state = "+state);
+					if (state == 0) {			  //離職的話導回login
+						String quit = "quit";
+						req.setAttribute("quit", quit);
+						errorMsgs.put("empno", "此員工已離職");
+						RequestDispatcher failureView = req.getRequestDispatcher("back-end/backendLogin.jsp");
+						failureView.forward(req, res);
+					}
 					HttpSession session = req.getSession();
 					session.setAttribute("empAccount", empVO); // *工作1: 才在session內做已經登入過的標識
-//					session.setAttribute("empVO", empVO2);
-//					session.setAttribute("authVO", authVO);
+					session.setAttribute("authVO", list);
+
 
 					try {
 						String location = (String) session.getAttribute("location");
@@ -133,55 +152,47 @@ public class LoginHandler extends HttpServlet {
 				String emailReg = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
 				if (email == null || email.trim().length() == 0) {
 					errorMsgs.put("email", "email請勿空白");
-				} else if (!email.trim().matches(emailReg)) { 
+				} else if (!email.trim().matches(emailReg)) {
 					errorMsgs.put("email", "email格式不正確");
 				}
-				
+
 				EmpVO empVO = new EmpVO();
 				empVO.setEmail(email);
-				
-				if (empVO != null) {
-					EmpService empSvc = new EmpService();
-					empVO = empSvc.selectEmail(email);
-System.out.println("146 ="+empVO.getEmail());					
-					if(empVO.getEmail() == null) {
+
+				EmpService empSvc = new EmpService();
+				empVO = empSvc.selectEmail(email);
+				if (empVO == null) {
+System.out.println("loginServlet 146 = "+empVO.getEmail());
 					errorMsgs.put("email", "沒有Email資料，請重新輸入");
 					String url = "/back-end/backendLogin.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
-					return;
-					}
-					String link = req.getServerName() + ":" + req.getServerPort() + req.getContextPath();
-				
-				empVO.setLink(link);
-				empVO = empSvc.forgotEmail(email,link);
-					
 				}
-System.out.println("154 = "+empVO.getEname());
-				
 
-				
-				
-				
-				
+				String link = req.getServerName() + ":" + req.getServerPort() + req.getContextPath();
+
+				empVO.setLink(link);
+				empVO = empSvc.forgotEmail(email, link);
+
+System.out.println("154 = " + empVO.getEname());
+
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-				
+
 				String url = "/back-end/backendLogin.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);
-				
+
 			} catch (Exception e) {
-				errorMsgs.put("Exception",e.getMessage());
+				errorMsgs.put("Exception", e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
 				failureView.forward(req, res);
-				}
 			}
+		}
 
-		
 	}
 }

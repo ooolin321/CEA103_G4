@@ -40,9 +40,9 @@ public class EmpDAO implements EmpDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,CITY,DIST,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP WHERE EMPNO = ?";
 	private static final String DELETE = "DELETE FROM EMP WHERE EMPNO = ?";
 	private static final String UPDATE = "UPDATE EMP SET ENAME=?, JOB=?, ID=?, GENDER=?, DOB=?, CITY=?, DIST=?, ADDR=?,EMAIL=?, SAL=?, STATE=?, HIREDATE=?, EMP_PWD=? WHERE EMPNO = ?";
-	private static final String SIGN_IN = "SELECT EMPNO,EMP_PWD,ENAME FROM EMP  where BINARY EMPNO=? AND BINARY EMP_PWD=?";
+	private static final String SIGN_IN = "SELECT EMPNO,EMP_PWD,ENAME,STATE FROM EMP WHERE BINARY EMPNO=? AND BINARY EMP_PWD=?";
 	private static final String UPDATE_EMP_PWD = "UPDATE EMP SET EMP_PWD=? WHERE EMPNO = ?";
-	private static final String GET_EMP_BY_EMAIL ="SELECT * FROM EMP WHERE EMAIL=?" ;
+	private static final String GET_EMP_BY_EMAIL = "SELECT EMAIL FROM EMP WHERE EMAIL=?";
 	
 	@Override
 	public Object insert(EmpVO empVO) {
@@ -324,9 +324,8 @@ public class EmpDAO implements EmpDAO_interface {
 		Integer empno = empVO.getEmpno();
 		String ch_name = empVO.getEname();
 		String passRandom = empVO.getEmp_pwd();
-		String messageText = "Hello! " + "\n" + ch_name +"你的員編"+ empno +" 首次登入密碼: " + passRandom + "\n" + " (已經啟用)" + "\n"
-				+ " (請前往 http://" + link + "/back-end/backendLogin.jsp 登入首頁)";
-		
+		String messageText = "Hello! " + "\n" + ch_name + "你的員編" + empno + " 首次登入密碼: " + passRandom + "\n" + " (已經啟用)"
+				+ "\n" + " (請前往 http://" + link + "/back-end/backendLogin.jsp 登入首頁)";
 
 		try {
 
@@ -373,17 +372,14 @@ public class EmpDAO implements EmpDAO_interface {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void forgotPassword(EmpVO empVO) {
-		List<EmpVO> list = new ArrayList<EmpVO>();
-		
 		String emailto = empVO.getEmail();
 		String link = empVO.getLink();
-		
+
 		String subject = "Mode Femme 忘記密碼通知";
-		String messageText = "Hello! " + "\n"
-				+ " (請前往 http://" + link + "/back-end/emp/update_pswd.jsp 修改密碼)";
+		String messageText = "Hello! " + "\n" + " (請前往 http://" + link + "/back-end/emp/update_pswd.jsp 修改密碼)";
 		try {
 
 			// 設定使用SSL連線至 Gmail smtp Server
@@ -430,9 +426,9 @@ public class EmpDAO implements EmpDAO_interface {
 		}
 
 	}
-	
+
 	@Override
-	public EmpVO getEmail(String email){	
+	public EmpVO getEmail(String email) {
 		EmpVO empVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -443,18 +439,18 @@ public class EmpDAO implements EmpDAO_interface {
 
 			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
-
+			
 			while (rs.next()) {
 				empVO = new EmpVO();
 				empVO.setEmail(rs.getString("email"));
+System.out.println("empDAO 447 =" + empVO.getEmail());
 			}
-			if(empVO.getEmail()== null) {
-				return null;
-			}
+
+System.out.println("empDAO 450 = " + empVO.getEmail());
+
 			// Handle any driver errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -480,9 +476,9 @@ public class EmpDAO implements EmpDAO_interface {
 			}
 		}
 		return empVO;
-	
+
 	}
-	
+
 	@Override
 	public EmpVO login(Integer empno, String empPwd) {
 		EmpVO empVO = null;
@@ -504,6 +500,7 @@ public class EmpDAO implements EmpDAO_interface {
 				empVO.setEmpno(rs.getInt("empno"));
 				empVO.setEname(rs.getString("ename"));
 				empVO.setEmp_pwd(rs.getString("emp_pwd"));
+				empVO.setState(rs.getInt("state"));
 			}
 
 		} catch (SQLException se) {
@@ -567,7 +564,7 @@ public class EmpDAO implements EmpDAO_interface {
 				}
 			}
 		}
-		
+
 	}
 
 }

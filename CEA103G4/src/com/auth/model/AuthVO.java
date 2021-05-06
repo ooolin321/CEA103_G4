@@ -5,6 +5,15 @@ public class AuthVO	implements java.io.Serializable {
 	private Integer empno;
 	private Integer auth_no;
 	
+	public AuthVO() {
+		super();
+	}
+
+	public AuthVO(Integer funno, Integer empno, Integer auth_no) {
+		this.funno = funno;
+		this.empno = empno;
+		this.auth_no = auth_no;
+	}
 
 	public Integer getFunno() {
 		return funno;

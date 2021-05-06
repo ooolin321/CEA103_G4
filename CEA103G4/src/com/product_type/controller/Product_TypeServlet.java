@@ -254,7 +254,7 @@ public class Product_TypeServlet  extends HttpServlet {
 			}
 		}
 	    // 來自product select_page.jsp的請求                                  
-			if ("listProducts_ByPdtype_A".equals(action)) {
+			if ("getProductsByPdtype".equals(action)) {
 
 				List<String> errorMsgs = new LinkedList<String>();
 				req.setAttribute("errorMsgs", errorMsgs);
@@ -268,10 +268,10 @@ public class Product_TypeServlet  extends HttpServlet {
 					Set<ProductVO> set = product_typeSvc.getProductsByPdtype_no(pdtype_no);
 
 					/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-					req.setAttribute("listProducts_ByPdtype_no", set);    // 資料庫取出的set物件,存入request
+					req.setAttribute("products", set);    // 資料庫取出的set物件,存入request
 
 					String url = null;
-					url = "/back-end/product_type/listProducts_ByPdtype_no.jsp";
+					url = "/front-end/productsell/shop.jsp";
 					
 					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);

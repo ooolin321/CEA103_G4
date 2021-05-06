@@ -11,10 +11,6 @@
 	Object prouducts = request.getAttribute("products")==null? dao.getAllShop():request.getAttribute("products");
 	pageContext.setAttribute("products",prouducts);
 	
-
-	Product_TypeDAO dao2 = new Product_TypeDAO();
-    List<Product_TypeVO> list2 = dao2.getAll();
-    pageContext.setAttribute("list2",list2);
 %>
 <%-- <jsp:useBean id="products" scope="page" type="java.util.List<ProductVO>" /> <!-- 於EL此行可省略 --> --%>
 <jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />

@@ -9,15 +9,13 @@
 %>
 
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Fashi Template" />
-    <meta name="keywords" content="Fashi, unica, creative, html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Register - Mode Femme</title>
-    
+    <title>Modefemme</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 
@@ -62,8 +60,8 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="breadcrumb-text">
-              <a href="<%=request.getContextPath()%>/front-end/index.jsp"><i class="fa fa-home"></i> 首頁</a>
-              <span>註冊頁面</span>
+              <a href="<%=request.getContextPath()%>/front-end/index.jsp"><i class="fa fa-home"></i> Home</a>
+              <span>註冊</span>
             </div>
           </div>
         </div>
@@ -148,7 +146,7 @@
               </FORM>
             <div _ngcontent-sc209="" class="card-body px-5 py-4">
 				<div _ngcontent-sc209="" class="small text-center">
-					已經有帳號了嗎? <a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">請直接登入 !</a>
+					已經有帳號了嗎?&nbsp; <a style="color:pink; font-weight:700;" href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">請直接登入 !</a>
 				</div>
 			</div>
 <!--               <div class="switch-login"> -->

@@ -4,7 +4,7 @@
 <%@ page import="com.product.model.*"%>
 
 
-<jsp:useBean id="listProducts_ByPdtype_no" scope="request" type="java.util.Set<ProductVO>" /> <!-- 於EL此行可省略 -->
+<jsp:useBean id="getProductsByPdtype" scope="request" type="java.util.Set<ProductVO>" /> <!-- 於EL此行可省略 -->
 <jsp:useBean id="product_typeSvc" scope="page" class="com.product_type.model.Product_TypeService" />
 
 <html>

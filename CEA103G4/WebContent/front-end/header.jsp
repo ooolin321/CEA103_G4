@@ -1,7 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.user.model.*"%>
+<%@ page import="com.product_type.model.*"%>
+<%
+
+	Product_TypeDAO dao2 = new Product_TypeDAO();
+     List<Product_TypeVO> list2 = dao2.getAll();
+    pageContext.setAttribute("list2",list2);
+ %>
 	
 <!-- Page Preloder -->
 <div id="preloder">
@@ -136,7 +144,7 @@
 <!-- 					<i class="fa fa-hand-o-down" id="ti-fa-hand"></i> -->
 					<ul class="depart-hover">
 						<c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()}">
-						<li><div class="catagoriesQuery" value="${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}</div></li>
+						<a href="<%=request.getContextPath()%>/product_type/product_type.do?action=getProductsByPdtype&pdtype_no=${product_typeVO.pdtype_no}"><li><div>${product_typeVO.pdtype_name}</div></li></a>
                			 </c:forEach>
 					</ul>
 				</div>

@@ -3,11 +3,19 @@
     pageEncoding="utf-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.emp.model.*"%>
+<%@ page import="com.auth.model.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
     EmpVO empVO = (EmpVO) session.getAttribute("empAccount");
     session.setAttribute("empVO", empVO);
-
+    
+    List<AuthVO> authList = (List<AuthVO>) session.getAttribute("authList");
+	session.setAttribute("authList", authList);
 %>
+<%-- <% --%>
+// for(AuthVO auth:authList) {
+// 	out.println(auth.getFunno()+","+auth.getAuth_no());
+<%-- }%> --%>
 <!-- Navbar-->
 <header class="app-header">
     <a class="app-header__logo"
@@ -131,17 +139,10 @@
                     href="<%=request.getContextPath()%>/back-end/emp/listAllEmp.jsp"><i
                         class="icon fa fa-circle-o"></i>所有員工</a></li>
                 <li><a class="treeview-item"
-                    href="<%=request.getContextPath()%>/back-end/emp/addEmp.jsp"
-                    target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i>新增員工</a></li>
+                    href="<%=request.getContextPath()%>/back-end/emp/addEmp.jsp">
+                    <i class="icon fa fa-circle-o"></i>新增員工</a></li>
             </ul></li>
-        <li class="treeview"><a class="app-menu__item active" href="#"
-            data-toggle="treeview"><i class="app-menu__icon fa fa-dashboard"></i><span
-                class="app-menu__label">會員管理</span><i
-                class="treeview-indicator fa fa-angle-right"></i></a>
-            <ul class="treeview-menu">
-                <li><a class="treeview-item" href="#"><i
-                        class="icon fa fa-circle-o"></i>所有會員(none)</a></li>
-            </ul></li>
+
         <li class="treeview"><a class="app-menu__item" href="#"
             data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span
                 class="app-menu__label">權限管理</span><i
@@ -154,6 +155,15 @@
                 <!--                <li><a class="treeview-item" -->
                 <%--                    href="<%=request.getContextPath()%>/back-end/fun/listAllFun.jsp"><i --%>
                 <!--                        class="icon fa fa-circle-o"></i>功能管理</a></li> -->
+            </ul></li>
+
+        <li class="treeview"><a class="app-menu__item active" href="#"
+            data-toggle="treeview"><i class="app-menu__icon fa fa-dashboard"></i><span
+                class="app-menu__label">會員管理</span><i
+                class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+                <li><a class="treeview-item" href="#"><i
+                        class="icon fa fa-circle-o"></i>所有會員(none)</a></li>
             </ul></li>
 
         <li class="treeview"><a class="app-menu__item" href="#"
@@ -233,3 +243,4 @@
                 class="app-menu__label">Charts</span></a></li> -->
     </ul>
 </aside>
+

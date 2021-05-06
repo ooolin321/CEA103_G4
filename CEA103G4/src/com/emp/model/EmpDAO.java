@@ -35,7 +35,7 @@ public class EmpDAO implements EmpDAO_interface {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT_STMT = "INSERT INTO EMP (EMPNO,ENAME,JOB,ID,GENDER,DOB,CITY,DIST,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD) VALUES (null,? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO EMP (EMPNO,ENAME,JOB,ID,GENDER,DOB,CITY,DIST,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD) VALUES (null, ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,CITY,DIST,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP ORDER BY EMPNO";
 	private static final String GET_ONE_STMT = "SELECT EMPNO,ENAME,JOB,ID,GENDER,DOB,CITY,DIST,ADDR,EMAIL,SAL,STATE,HIREDATE,EMP_PWD FROM EMP WHERE EMPNO = ?";
 	private static final String DELETE = "DELETE FROM EMP WHERE EMPNO = ?";
@@ -43,6 +43,7 @@ public class EmpDAO implements EmpDAO_interface {
 	private static final String SIGN_IN = "SELECT EMPNO,EMP_PWD,ENAME,STATE FROM EMP WHERE BINARY EMPNO=? AND BINARY EMP_PWD=?";
 	private static final String UPDATE_EMP_PWD = "UPDATE EMP SET EMP_PWD=? WHERE EMPNO = ?";
 	private static final String GET_EMP_BY_EMAIL = "SELECT EMAIL FROM EMP WHERE EMAIL=?";
+	
 	
 	@Override
 	public Object insert(EmpVO empVO) {

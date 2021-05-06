@@ -10,6 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.live.model.LiveService;
+import com.live.model.LiveVO;
 import com.product.model.*;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
@@ -450,5 +452,87 @@ public class ProductServlet extends HttpServlet {
 //			
 //			out.println(jsonObj.toString());
 //		}
+		
+		
+		
+		if ("goLive".equals(action)) { // 來自update_product_input.jsp的請求
+			
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+
+				ProductVO productVO = null;
+				LiveVO liveVO = null;
+				
+				ProductService productSvc = new ProductService();
+				LiveService liveSvc = new LiveService();
+				
+				String[] product_no = req.getParameterValues("product_no");
+//				String[] live_no = req.getParameterValues("live_no");
+				
+				
+				Integer live_no = new Integer(req.getParameter("live_no").trim());
+				List<ProductVO> list = new ArrayList<ProductVO>();
+//				List<LiveVO> list2 = new ArrayList<LiveVO>();
+				
+				
+				for(String s1 : product_no){
+					
+					Integer p_no = Integer.valueOf(s1);
+
+					
+					
+					productVO = new ProductVO();
+					productVO.setProduct_no(p_no);
+					productVO.setLive_no(live_no);
+					
+					list.add(productSvc.getOneProduct(p_no));
+					
+					System.out.println(s1);
+					
+					
+				}
+					
+					
+//				
+//				productVO.setProduct_no(product_no);
+				productVO.setLive_no(live_no);
+
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("productVO", productVO); // 含有輸入格式錯誤的productVO物件,也存入req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/liveManagement/liveList.jsp");
+					failureView.forward(req, res);
+					return; 
+				}
+				
+				/***************************2.開始修改資料*****************************************/
+
+				productSvc.updateLive(live_no,list);
+				
+
+				
+				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("productVO", productVO); // 資料庫update成功後,正確的的productVO物件,存入req
+				String url = "/front-end/liveManagement/liveList.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				
+				errorMsgs.add("修改資料失敗:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/liveManagement/liveList.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
 	}
 }
+
+

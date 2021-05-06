@@ -108,7 +108,11 @@ public class ProductService {
 		return productVO;
 	}
 
-	
+	public void updateLive(Integer live_no, List<ProductVO> product_no) {
+		
+		dao.updateStateLive(live_no, product_no);
+
+	}
 
 }
 

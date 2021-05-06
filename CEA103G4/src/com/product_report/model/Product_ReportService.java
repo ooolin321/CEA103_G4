@@ -51,4 +51,8 @@ public class Product_ReportService {
 	public List<Product_ReportVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public Product_ReportVO userProduct_ReportInfo(Integer product_no) {
+		return dao.userProduct_ReportInfo(product_no);
+	}
 }

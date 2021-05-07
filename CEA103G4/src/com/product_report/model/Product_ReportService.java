@@ -24,11 +24,12 @@ public class Product_ReportService {
 		return product_reportVO;
 	}
 
-	public Product_ReportVO updateProduct_Report(Integer pro_report_no, Integer proreport_state) {
+	public Product_ReportVO updateProduct_Report(Integer pro_report_no, Integer product_no, Integer proreport_state) {
 
 		Product_ReportVO product_reportVO = new Product_ReportVO();
 
 		product_reportVO.setPro_report_no(pro_report_no);
+		product_reportVO.setProduct_no(product_no);
 		product_reportVO.setProreport_state(proreport_state);
 		dao.update(product_reportVO);
 
@@ -49,5 +50,9 @@ public class Product_ReportService {
 
 	public List<Product_ReportVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public Product_ReportVO userProduct_ReportInfo(Integer product_no) {
+		return dao.userProduct_ReportInfo(product_no);
 	}
 }

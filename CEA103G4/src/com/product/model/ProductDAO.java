@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.live.model.LiveVO;
 import com.product.controller.CompositeQuery_Product;
 
 
@@ -41,13 +42,16 @@ public class ProductDAO implements ProductDAO_interface {
 	private static final String GET_ALLJSON = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";
 	//後台檢舉通過,狀態改為檢舉下架
 	private static final String UPDATESTATE = "UPDATE PRODUCT set product_state=? where product_no = ?";
-	
+	//設定商品為直播並帶入直播編號
+	private static final String UPDATELIVE = "UPDATE PRODUCT SET PRODUCT_STATE=2 , LIVE_NO=? WHERE PRODUCT_NO = ?";
 	
 	/*--------------shop.jsp商品區------------*/
 	//查詢所有商品狀態為直售的商品 (隨機排序)
 	private static final String GET_ALL_SHOP = "SELECT product_no, product_name, product_info,product_price, product_quantity,product_remaining,product_state,user_id,pdtype_no FROM PRODUCT where product_state = 1 AND product_photo IS NOT NULL order by rand()";	
 	//查詢價格區間的商品
 	private static final String GET_MoneyRangeShop = "select product_no, product_name, product_info,product_price, product_quantity,product_remaining,product_state,user_id,pdtype_no from PRODUCT where product_photo IS NOT NULL AND product_state = 1 AND product_price between ? and ?";
+	
+	
 	
 	@Override
 	public void insert(ProductVO productVO){
@@ -763,6 +767,49 @@ public class ProductDAO implements ProductDAO_interface {
 		}
 		return Optional.ofNullable(productVO);
 	}
-	
-}
 
+	@Override
+	public void updateStateLive(Integer live_no , List<ProductVO> list) {
+		
+			Connection con = null;
+			PreparedStatement pstmt = null;
+
+			try {
+
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(UPDATELIVE);
+				
+				
+				for (ProductVO aProduct : list) {
+					pstmt.setInt(1, live_no);
+					pstmt.setInt(2, aProduct.getProduct_no());
+					pstmt.addBatch();
+				}
+				
+				pstmt.executeBatch();
+
+				// Handle any driver errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+
+		}
+
+}

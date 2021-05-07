@@ -13,8 +13,8 @@ public class AuthService {
 	public AuthVO addAuth(Integer empno,Integer funno,Integer auth_no) {
 		AuthVO authVO = new AuthVO();
 		
-		authVO.setFunno(funno);
 		authVO.setEmpno(empno);
+		authVO.setFunno(funno);
 		authVO.setAuth_no(auth_no);
 
 				
@@ -23,15 +23,15 @@ public class AuthService {
 		return authVO;
 	}
 	
-	public AuthVO updateAuth(Integer auth_no, Integer empno,  Integer funno) {
+	public AuthVO updateAuth(Integer empno, Integer funno,  Integer auth_no) {
 
 		AuthVO authVO = new AuthVO();
-System.out.println("Svc auth_no= " + auth_no);
-		authVO.setAuth_no(auth_no);
-System.out.println("Svc empno= " + empno);		
 		authVO.setEmpno(empno);
-System.out.println("Svc funno= " + funno);		
+//System.out.println("AuthSvc empno= " + empno);		
 		authVO.setFunno(funno);
+//System.out.println("AuthSvc funno= " + funno);		
+		authVO.setAuth_no(auth_no);
+//System.out.println("AuthSvc auth_no= " + auth_no);
 		
 		dao.update(authVO);
 
@@ -49,5 +49,7 @@ System.out.println("Svc funno= " + funno);
 		return dao.getAll();
 	}
 
-	
+	public List<AuthVO> getAuthNOs (Integer empno){
+		return dao.getAuth(empno);
+	}
 }

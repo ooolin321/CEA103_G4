@@ -2,6 +2,8 @@ package com.product.model;
 import java.util.*;
 
 
+
+
 public interface ProductDAO_interface {
           public void insert(ProductVO productVO);
           public void update(ProductVO productVO);
@@ -17,5 +19,5 @@ public interface ProductDAO_interface {
           public List<ProductVO> getAdvSearchShop(String[] pdtypeNo, String priceType);
           public List<ProductVO> getMoneyRangeShop(String minPrice, String maxPrice);
           public void updateState(ProductVO productVO);
-
+          public void updateStateLive(Integer live_no,List<ProductVO> list);
 }

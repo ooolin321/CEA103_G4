@@ -19,7 +19,7 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 	private static final String DELETE_STMT = "delete from Auth where EMPNO=? and FUNNO=?";
 	private static final String GET_ONE_BY_EMPNO_AND_FUNNO_STMT = "select * from Auth where EMPNO = ? and FUNNO=?";
 	private static final String GET_ALL_BY_EMPNO_STMT = "select * from Auth order by EMPNO";
-
+	private static final String GET_AUTH_ON = "SELECT FUNNO FROM AUTH WHERE EMPNO=? AND AUTH_NO=1";
 	@Override
 	public void insert(AuthVO authVO) {
 		Connection con = null;
@@ -139,6 +139,7 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 
 	@Override
 	public AuthVO findAuthByEmpno(Integer empno) {
+		
 		AuthVO authVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -160,6 +161,7 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 				authVO.setAuth_no(rs.getInt("AUTH_NO"));
 				authVO.setEmpno(rs.getInt("EMPNO"));
 				authVO.setFunno(rs.getInt("FUNNO"));
+			
 			}
 			
 			
@@ -237,6 +239,57 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 
 		return list;
 	}
+	@Override
+	public List<AuthVO> getAuth(Integer empno){
+		List<AuthVO> list = new ArrayList<AuthVO>();
+		AuthVO authVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+
+			pstmt = con.prepareStatement(GET_AUTH_ON);
+
+			pstmt.setInt(1, empno);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// authorityVo 也稱為 Domain objects
+				authVO = new AuthVO();
+				authVO.setFunno(rs.getInt("FUNNO"));
+				list.add(authVO);
+				
+			}
+		}  catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+	
 	public static void main(String[] args) {
 
 		AuthJDBCDAO dao = new AuthJDBCDAO();
@@ -266,12 +319,14 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 //		System.out.println(authVO3.getEmpno());
 //		System.out.print(authVO3.getAuth_no() + ",");
 
-			EmpDAO dao2 = new EmpDAO();
-			EmpVO empVO = dao2.login(14001, "a1111111");
-			System.out.println(empVO.getEname());
+//			EmpDAO dao2 = new EmpDAO();
+//			EmpVO empVO = dao2.login(14001, "a1111111");
+//			System.out.println(empVO.getEname());
 		
-	
-	
+	List<AuthVO> list = dao.getAuth(14005);
+	for(AuthVO auth:list) {
+		System.out.println(auth.getFunno()+",");
+	}
 
 		
 //		// 查詢部門

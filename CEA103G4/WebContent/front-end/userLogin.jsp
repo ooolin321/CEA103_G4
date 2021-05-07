@@ -8,14 +8,13 @@
 %>
 
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Fashi Template" />
-    <meta name="keywords" content="Fashi, unica, creative, html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Login - Mode Femme</title>
+    <title>Modefemme</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
     <!-- Google Font -->
     <link
       href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
@@ -35,12 +34,19 @@
   	.register-login-section {
     padding-top: 0px;
 	}
+<<<<<<< HEAD
 	.small.text-center {
     color: black;
 }
 .login-form .group-input .gi-more .forget-pass {
 color: #007bff;
 }
+=======
+	input {
+	border-radius: 5px;
+	
+	}
+>>>>>>> 0ff55c88efc6f3f7c8283737ac74c76ea7ce69cd
   	</style>
   </head>
 
@@ -82,12 +88,21 @@ color: #007bff;
               <h2>會員登入</h2>
               <form METHOD="post" class="login-form" action="<%=request.getContextPath()%>/FrondEnd_LoginHandler">
                 <div class="group-input">
+<<<<<<< HEAD
                   <label for="user_id">UserID *</label>
                   <input type="text" name="user_id" id="username" value="${(userVO==null)? '' : userVO.user_id}" placeholder="UserID" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></td>
                 </div>
                 <div class="group-input">
                   <label for="user_pwd">Password *</label>
                   <input type="password" name="user_pwd" id="password" placeholder="Password"/><td><font color=red><b>${errorMsgs.user_pwd}</b></td>
+=======
+                  <label for="user_id">UserID</label>
+                  <input type="text" name="user_id" value="${(userVO==null)? '' : userVO.user_id}" placeholder="會員帳號" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></td>
+                </div>
+                <div class="group-input">
+                  <label for="user_pwd">Password</label>
+                  <input type="password" name="user_pwd" placeholder="密碼"/><td><font color=red><b>${errorMsgs.user_pwd}</b></td>
+>>>>>>> 0ff55c88efc6f3f7c8283737ac74c76ea7ce69cd
                 </div>
                 <div class="group-input gi-check">
                   <div class="gi-more">
@@ -103,12 +118,17 @@ color: #007bff;
                 <input type="hidden" name="action" value="signIn" id="btn" />
                 
                 <button type="submit" class="site-btn login-btn">
+<<<<<<< HEAD
                   	登入
+=======
+                	  登入
+>>>>>>> 0ff55c88efc6f3f7c8283737ac74c76ea7ce69cd
                 </button>
               </form>
-	        <div _ngcontent-sc209="" class="card-body px-5 py-4">
-				<div _ngcontent-sc209="" class="small text-center">
-					新朋友嗎? <a href="<%=request.getContextPath()%>/front-end/user/register.jsp">來註冊吧 !</a>
+	        <div class="card-body px-5 py-4">
+				<div class="small text-center" style="color:black">
+				新朋友嗎?&nbsp;
+					<a style="color:pink; font-weight:700;" href="<%=request.getContextPath()%>/front-end/user/register.jsp">來註冊吧 !</a>
 				</div>
 			</div>
 			 </div>
@@ -122,39 +142,7 @@ color: #007bff;
       </div>
     </div>
     <!-- Register Form Section End -->
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-      <div class="container">
-        <div class="logo-carousel owl-carousel">
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-1.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-2.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-3.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-4.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-5.png" alt="" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Partner Logo Section End -->
+
     
     <!-- Footer Section Begin -->
 	<%@include file="/front-end/footer.jsp"%>

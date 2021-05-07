@@ -807,7 +807,7 @@ ol {
   position: absolute;
   left: 47%;
   top: 160px;
-  background: #e7ab3c;
+  background: pink;
   z-index: 1;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
@@ -828,7 +828,7 @@ ol {
 }
 
 .hero-items .off-card h2 {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   color: #ffffff;
   text-transform: uppercase;
@@ -836,7 +836,7 @@ ol {
 
 .hero-items .off-card h2 span {
   display: block;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   color: #ffffff;
   text-transform: uppercase;
@@ -867,6 +867,14 @@ ol {
   -webkit-transition: all 0.6s ease 0.6s;
   -o-transition: all 0.6s ease 0.6s;
   transition: all 0.6s ease 0.6s;
+}
+.single-hero-items .indexwords h5,p {
+	font-weight:700;
+}
+
+.single-hero-items .indexwords .primary-btn{
+	border-radius: 8px;
+	background:pink;
 }
 
 .hero-items .owl-item.active .single-hero-items .primary-btn {
@@ -974,8 +982,8 @@ ol {
 .women-banner {
   padding-right: 65px;
   padding-left: 65px;
-  padding-top: 0;
-  padding-bottom: 80px;
+  padding-top: 10px;
+  padding-bottom: 0px;
 }
 
 .product-large {
@@ -984,6 +992,7 @@ ol {
   margin-right: -15px;
   text-align: center;
   padding-top: 285px;
+  margin-top: 40px;
 }
 
 .product-large h2 {
@@ -1050,6 +1059,21 @@ ol {
   margin-right: 0;
 }
 
+.women-banner .product-slider-pdtype {
+	line-height:50px;
+	text-align: center;
+}
+
+.women-banner .product-slider-pdtype a {
+	font-weight:700;
+	color:#e7ab3c;;
+	font-family: "Muli", sans-serif;
+}
+
+.women-banner .product-slider-pdtype a:hover {
+	font-size:18px;
+}
+
 .product-slider .owl-nav button[type="button"] {
   font-size: 30px;
   position: absolute;
@@ -1065,32 +1089,32 @@ ol {
   color: #171717;
   opacity: 1;
 }
+/* 首頁照片自動轉下方的小控制區 不使用 */
+/* .product-slider .owl-dots { */
+/*   text-align: center; */
+/*   margin-top: 27px; */
+/* } */
 
-.product-slider .owl-dots {
-  text-align: center;
-  margin-top: 27px;
-}
+/* .product-slider .owl-dots button { */
+/*   width: 6px; */
+/*   height: 6px; */
+/*   background: #d8d9da; */
+/*   border-radius: 50%; */
+/*   margin-right: 10px; */
+/*   -webkit-transition: all 0.3s; */
+/*   -o-transition: all 0.3s; */
+/*   transition: all 0.3s; */
+/* } */
 
-.product-slider .owl-dots button {
-  width: 6px;
-  height: 6px;
-  background: #d8d9da;
-  border-radius: 50%;
-  margin-right: 10px;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-}
+/* .product-slider .owl-dots button:last-child { */
+/*   margin-right: 0; */
+/* } */
 
-.product-slider .owl-dots button:last-child {
-  margin-right: 0;
-}
-
-.product-slider .owl-dots button.active {
-  width: 30px;
-  background: #252525;
-  border-radius: 50px;
-}
+/* .product-slider .owl-dots button.active { */
+/*   width: 30px; */
+/*   background: #252525; */
+/*   border-radius: 50px; */
+/* } */
 
 .product-item {
   margin-bottom: 26px;
@@ -1280,8 +1304,8 @@ ol {
 -----------------------*/
 
 .deal-of-week {
-  padding-top: 80px;
-  padding-bottom: 80px;
+  padding-top: 50px;
+  padding-bottom: 40px;
   margin-left: 65px;
   margin-right: 65px;
 }
@@ -1399,7 +1423,7 @@ ol {
 
 .footer-section {
   background: #191919;
-  padding-top: 75px;
+  padding-top: 35px;
 }
 
 .footer-left {
@@ -1421,9 +1445,9 @@ ol {
   line-height: 30px;
 }
 
-.footer-left .footer-social {
-  padding-top: 25px;
-}
+/* .footer-left .footer-social { */
+/*   padding-top: 25px; */
+/* } */
 
 .footer-left .footer-social a {
   display: inline-block;
@@ -1478,6 +1502,14 @@ ol {
   line-height: 36px;
   font-size: 16px;
   color: #b2b2b2;
+}
+
+.footer-widget .modefemmeinfo li{
+	color:white;
+	font-weight:700;
+}
+ul.modefemmeinfo {
+  padding-top: 140px;
 }
 
 .newslatter-item h5 {
@@ -1543,7 +1575,6 @@ ol {
 .copyright-reserved {
   border-top: 1px solid #303030;
   padding: 15px 0;
-  margin-top: 45px;
 }
 
 .copyright-reserved .copyright-text {
@@ -1772,7 +1803,7 @@ ol {
   color: #ffffff;
   font-weight: 700;
   background: #e7ab3c;
-  padding: 7px 20px 5px;
+  padding: 10px 20px 10px;
   border-radius: 2px;
   display: inline-block;
   text-transform: uppercase;
@@ -3810,12 +3841,14 @@ ol {
   padding-bottom: 80px;
 }
 
+
 .register-form h2,
 .login-form h2 {
   color: #252525;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 35px;
+  margin-bottom: 30px;
+  margin-top: 30px;
 }
 
 .register-form form .group-input,

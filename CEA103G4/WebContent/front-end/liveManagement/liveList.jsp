@@ -188,7 +188,9 @@ table td, table tr, table th {
 													end="${list.size()-1}">
 													<c:if
 														test="${productVO.product_state == 0 && productVO.user_id == userVO.user_id}">
-														<tr>
+														
+														<tr id="TR${productVO.product_no}">
+															
 															<%-- 											<td>${liveSvc.getOneLive(productVO.live_no).live_type}</td> --%>
 															<td scope="row">${productVO.product_no}</td>
 															<td><img width="200px"
@@ -199,10 +201,16 @@ table td, table tr, table th {
 															<td>${productVO.start_price}</td>
 															<td>${productVO.product_remaining}</td>
 															<%-- 										<td>${productVO.user_id}</td> --%>
+															
 															<td>
-															<input type="checkbox" id="CB${productVO.product_no}">
-															<input type="hidden" name="product_no" id="HB${productVO.product_no}" value="${productVO.product_no}" disabled></td>
+															
+															<input type="checkbox"  id="CB${productVO.product_no}">
+															<input type="hidden" name="product_no" id="HB${productVO.product_no}" value="${productVO.product_no}" disabled>
+															
+															</td>
+															
 														</tr>
+														
 
 													</c:if>
 												</c:forEach>
@@ -326,8 +334,11 @@ table td, table tr, table th {
 <script>
 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}">
 	<c:if test="${productVO.product_state == 0 && productVO.user_id == userVO.user_id}">
-		$("#CB${productVO.product_no}").click(function(e){
-			var isChecked = $(this).is(":checked");
+		
+		$("#TR${productVO.product_no}" ).click(function(e){
+			var checkBoxes = $("#CB${productVO.product_no}");
+			checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+			var isChecked = $("#CB${productVO.product_no}" ).is(":checked");
 			if(isChecked){
 				$("#HB${productVO.product_no}").prop('disabled', false);
 			}else{

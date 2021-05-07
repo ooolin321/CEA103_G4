@@ -158,7 +158,7 @@
 					<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播專區</a>
 						<ul class="dropdown">
 							<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播牆</a></li>
-							<li><a href="#">直播預告</a></li>
+							<li><a href="<%=request.getContextPath()%>/front-end/live/livePreview.jsp">直播預告</a></li>
 							<!-- <li><a href="#">Kid's</a></li> -->
 						</ul></li>
 					<li><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i class="icon_profile"></i></a></li>

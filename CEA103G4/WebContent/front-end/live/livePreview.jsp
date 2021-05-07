@@ -1,21 +1,25 @@
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.live.model.*"%>
-<%@ page import="com.user.model.*"%>
+
+
 
 <%
-	LiveVO liveVO = (LiveVO) request.getAttribute("liveVO");
+	LiveJNDIDAO dao = new LiveJNDIDAO();
+	Object lives = request.getAttribute("lives") == null ? dao.getAll() : request.getAttribute("lives");
+	pageContext.setAttribute("lives", lives);
 %>
 <jsp:useBean id="liveSvc" scope="page"
 	class="com.live.model.LiveService" />
 
+
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <title>Modefemme</title>
@@ -56,60 +60,10 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/front-template/css/style.css"
 	type="text/css" />
-<style>
-#messagesArea {
-	height: 500px;
-	width: 100%;
-	border: 1px solid #bbbbbb;
-	overflow-y: scroll;
-	display: inline-block;
-	right: 30px;
-}
 
-#stream {
-	height: 500px;
-	width: 100%;
-	padding: 5px;
-	border: 1px solid #bbbbbb;
-	display: inline-block;
-}
-
-#messagesArea>p {
-	margin: 0;
-	color: #bbbbbb;
-	font-size: 1rem;
-}
-
-input {
-	width: 100%;
-	border: 1px solid #bbbbbb;
-	border-top-width: 0;
-	box-sizing: border-box;
-	color: #bbbbbb;
-	background-color: #222222;
-	outline: none;
-	font-family: Monospace;
-	font-size: 1rem;
-	right: 0px;
-}
-
-@media ( min-width : 768px) {
-	.col-md-3 {
-		padding: 0;
-		max-width: 100%;
-	}
-	@media ( min-width : 768px) {
-		.col-md-9 {
-			padding: 0;
-			max-width: 100%;
-		}
-	}
-}
-</style>
 </head>
 
-<body onload="connect();" onunload="disconnect();">
-
+<body>
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<div class="loader"></div>
@@ -128,6 +82,7 @@ input {
 							</a>
 						</div>
 					</div>
+
 					<div class="col-lg-7 col-md-7"></div>
 					<div class="col-lg-3 text-right col-md-3">
 						<c:if test="${ not empty userVO.user_name}">
@@ -231,23 +186,11 @@ input {
 							<ul class="dropdown">
 								<li><a
 									href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播牆</a></li>
-								<li><a
-									href="<%=request.getContextPath()%>/front-end/live/livePreview.jsp">直播預告</a></li>
+								<li><a href="<%=request.getContextPath()%>/front-end/live/livePreview.jsp">直播預告</a></li>
 							</ul></li>
 						<li><a
 							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i
 								class="icon_profile"></i></a></li>
-						<!-- <li>
-                <a href="#">Pages</a>
-                <ul class="dropdown">
-                  <li><a href="./blog-details.html">Blog Details</a></li>
-                  <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                  <li><a href="./check-out.html">Checkout</a></li>
-                  <li><a href="./faq.html">Faq</a></li>
-                  <li><a href="./register.html">Register</a></li>
-                  <li><a href="./login.html">Login</a></li>
-                </ul>
-              </li> -->
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -256,16 +199,15 @@ input {
 
 	</header>
 	<!-- Header End -->
+
 	<!-- Breadcrumb Section Begin -->
 	<div class="breacrumb-section">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<div class="breadcrumb-text live-more">
+					<div class="breadcrumb-text">
 						<a href="${pageContext.request.contextPath}/front-end/index.jsp"><i
-							class="fa fa-home"></i> 首頁</a> <a
-							href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播</a>
-						<span>直播室</span>
+							class="fa fa-home"></i> 首頁</a> <span>直播預告</span>
 					</div>
 				</div>
 			</div>
@@ -273,43 +215,55 @@ input {
 	</div>
 	<!-- Breadcrumb Section Begin -->
 <body>
-	<div class="row">
-		<div class="col-md-12">
-			<h1>${liveVO.live_name}
-				#<span class="badge badge-primary">${liveVO.live_type }</span>
-			</h1>
-			<h2>
-				<span id="iflive"> ${(liveVO.live_state==2)? '直播中':''}
-					${(liveVO.live_state==1)? '未直播':''} ${(liveVO.live_state==0)? '已結束':''}
-				</span>
-			</h2>
-		</div>
-		<script>
-			
-		</script>
-	</div>
-	<div class="row">
-		<div class="col-md-9">
-			<div id="player"></div>
-		</div>
 
-		<div class="col-md-3">
-			<textarea id="messagesArea" class="form-control" readonly></textarea>
-			<div class="input">
-				<input id="userName" class="text-field" type="hidden"
-					value="${userVO.user_id}" /> <input id="message"
-					class="form-control" type="text" placeholder="Message"
-					onkeydown="if (event.keyCode == 13) sendMessage();" />
+	<!-- Product Shop Section Begin -->
+		<div class="row">
+			<div class="col-md-1"> </div>
+			<div class="col-md-11">
+				<div class="tile">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>直播分類</th>
+								<th>直播名稱</th>
+								<th>直播主ID</th>
+								<th>直播時間</th>
+								<th>直播狀態</th>
+								<th>直播預覽圖</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="liveVO"
+								items="${liveSvc.getAll()}">
+								<c:if test="${liveVO.live_state == 1}">
+								<tr>
+									
+									<td>${liveVO.live_no}</td>
+									<td>${liveVO.live_type}</td>
+									<td>${liveVO.live_name}</td>
+									<td>${liveVO.user_id}</td>
+
+									<td><fmt:formatDate value="${liveVO.live_time}"
+											pattern="yyyy-MM-dd HH:mm:ss" /></td>
+
+									<td>${(liveVO.live_state==0)? '已結束':''}
+										${(liveVO.live_state==1)? '未直播':''} 
+										${(liveVO.live_state==2)? '直播中':''}
+									</td>
+									<td><img
+										src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}"
+										width="190px"></td>
+								</tr>
+								</c:if>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
-
-	</div>
-	<div class="row">
-		<div class="col-md-12"></div>
-	</div>
-
-
-
 </body>
 
 
@@ -320,22 +274,6 @@ input {
 
 
 <!-- Js Plugins -->
-
-
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	crossorigin="anonymous">
-	
-</script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-	integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-	crossorigin="anonymous">
-	
-</script>
-
-
 <script
 	src="${pageContext.request.contextPath}/front-template/js/jquery-3.3.1.min.js"></script>
 <script
@@ -356,123 +294,5 @@ input {
 	src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
-
-<script>
-	var MyPoint = "/TogetherWS/james";
-	var host = window.location.host;
-	var path = window.location.pathname;
-	var webCtx = path.substring(0, path.indexOf('/', 1));
-	var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
-
-	var statusOutput = document.getElementById("statusOutput");
-	var webSocket;
-
-	function connect() {
-		// create a websocket
-		webSocket = new WebSocket(endPointURL);
-
-		webSocket.onopen = function(event) {
-			updateStatus("WebSocket Connected");
-			document.getElementById('sendMessage').disabled = false;
-			document.getElementById('connect').disabled = true;
-			document.getElementById('disconnect').disabled = false;
-		};
-
-		webSocket.onmessage = function(event) {
-			var messagesArea = document.getElementById("messagesArea");
-			var jsonObj = JSON.parse(event.data);
-			var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
-			messagesArea.value = messagesArea.value + message;
-			messagesArea.scrollTop = messagesArea.scrollHeight;
-		};
-
-		webSocket.onclose = function(event) {
-			updateStatus("WebSocket Disconnected");
-		};
-	}
-
-	var inputUserName = document.getElementById("userName");
-	inputUserName.focus();
-
-	function sendMessage() {
-		var userName = inputUserName.value.trim();
-		if (userName === "") {
-			alert("請登入會員");
-			inputUserName.focus();
-			return;
-		}
-
-		var inputMessage = document.getElementById("message");
-		var message = inputMessage.value.trim();
-
-		if (message === "") {
-			alert("請輸入訊息");
-			inputMessage.focus();
-		} else {
-			var jsonObj = {
-				"userName" : userName,
-				"message" : message
-			};
-			webSocket.send(JSON.stringify(jsonObj));
-			inputMessage.value = "";
-			inputMessage.focus();
-		}
-	}
-
-	function disconnect() {
-		webSocket.close();
-		document.getElementById('sendMessage').disabled = true;
-		document.getElementById('connect').disabled = false;
-		document.getElementById('disconnect').disabled = true;
-	}
-
-	function updateStatus(newStatus) {
-		statusOutput.innerHTML = newStatus;
-	}
-</script>
-<script>
-	// 2. This code loads the IFrame Player API code asynchronously.
-	var tag = document.createElement('script');
-
-	tag.src = "https://www.youtube.com/iframe_api";
-	var firstScriptTag = document.getElementsByTagName('script')[0];
-	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-	// 3. This function creates an <iframe> (and YouTube player)
-	//    after the API code downloads.
-	var player;
-	function onYouTubeIframeAPIReady() {
-		player = new YT.Player('player', {
-			height : "100%",
-			width : '100%',
-			videoId : "${liveVO.live_id}",
-			playerVars : {
-				'playsinline' : 1
-			},
-			events : {
-				'onReady' : onPlayerReady,
-				'onStateChange' : onPlayerStateChange
-			}
-		});
-	}
-
-	// 4. The API will call this function when the video player is ready.
-	function onPlayerReady(event) {
-		event.target.playVideo();
-	}
-
-	// 5. The API calls this function when the player's state changes.
-	//    The function indicates that when playing a video (state=1),
-	//    the player should play for six seconds and then stop.
-	var done = false;
-	function onPlayerStateChange(event) {
-		if (event.data == YT.PlayerState.PLAYING && !done) {
-			// 			setTimeout(stopVideo, 6000);
-			done = true;
-		}
-	}
-	function stopVideo() {
-		player.stopVideo();
-	}
-</script>
+	
 </html>

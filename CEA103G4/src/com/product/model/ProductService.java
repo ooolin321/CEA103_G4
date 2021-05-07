@@ -104,8 +104,8 @@ public class ProductService {
 		productVO.setProduct_no(product_no);
 		productVO.setProduct_state(product_state);
 		dao.updateState(productVO);
-
-<<<<<<< HEAD
+		return productVO;
+	}
 	public ProductVO updateProductRemaining(Integer product_no,Integer product_remaining, Integer product_state) 
 	{
 
@@ -118,9 +118,7 @@ public class ProductService {
 
 		return productVO;
 	}
-=======
-		return productVO;
-	}
+		
 	
 	
 
@@ -133,7 +131,7 @@ public class ProductService {
 		
 		dao.offShelf(product_no);
 	}
->>>>>>> 24150dee0bd38e626bb2c49ac6e8b13e89e4d3af
+
 
 }
 

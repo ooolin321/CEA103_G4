@@ -40,18 +40,15 @@ public class ProductDAO implements ProductDAO_interface {
 	//修改商品 賣家使用
 	private static final String UPDATE = "UPDATE PRODUCT set product_name=?, product_info=?, product_price=?,product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=? where product_no = ?";
 	private static final String GET_ALLJSON = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";
-<<<<<<< HEAD
 	//修改商品 買家使用
 	private static final String UPDATE_REMAINING = "UPDATE PRODUCT set product_remaining=?, product_state=? where product_no = ?";
 	
-=======
 	//後台檢舉通過,狀態改為檢舉下架
 	private static final String UPDATESTATE = "UPDATE PRODUCT set product_state=? where product_no = ?";
 	//設定商品為直播並帶入直播編號
 	private static final String UPDATELIVE = "UPDATE PRODUCT SET PRODUCT_STATE=2 , LIVE_NO=? WHERE PRODUCT_NO = ?";
 	//設定多個商品下架並去除直播編號
 	private static final String OFFSHELF = "UPDATE PRODUCT SET PRODUCT_STATE=0, LIVE_NO=NULL WHERE PRODUCT_NO = ?";
->>>>>>> 24150dee0bd38e626bb2c49ac6e8b13e89e4d3af
 	/*--------------shop.jsp商品區------------*/
 	//查詢所有商品狀態為直售的商品 (隨機排序)
 	private static final String GET_ALL_SHOP = "SELECT product_no, product_name, product_info,product_price, product_quantity,product_remaining,product_state,user_id,pdtype_no FROM PRODUCT where product_state = 1 AND product_photo IS NOT NULL order by rand()";	
@@ -774,7 +771,6 @@ public class ProductDAO implements ProductDAO_interface {
 		}
 		return Optional.ofNullable(productVO);
 	}
-<<<<<<< HEAD
 	
 	@Override
 	public void update_remaining(ProductVO productVO){
@@ -829,9 +825,6 @@ public class ProductDAO implements ProductDAO_interface {
 
 	}
 	
-}
-=======
->>>>>>> 24150dee0bd38e626bb2c49ac6e8b13e89e4d3af
 
 	@Override
 	public void updateStateLive(Integer live_no , List<ProductVO> list) {

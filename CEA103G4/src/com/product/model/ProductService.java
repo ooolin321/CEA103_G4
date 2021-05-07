@@ -113,7 +113,11 @@ public class ProductService {
 	public void updateLive(Integer live_no, List<ProductVO> product_no) {
 		
 		dao.updateStateLive(live_no, product_no);
-
+	}
+	
+	public void offShelf(List<ProductVO> product_no) {
+		
+		dao.offShelf(product_no);
 	}
 
 }

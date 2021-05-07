@@ -265,45 +265,43 @@ table td, table tr, table th {
 										</thead>
 
 										<tbody>
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/product.do" style="margin-bottom: 0px;">
 											<c:forEach var="productVO" items="${list}" begin="0"
 												end="${list.size()-1}">
 												<c:if
 													test="${productVO.product_state == 2 && productVO.user_id == userVO.user_id}">
-													<tr>
+													<tr id="tr${productVO.product_no}">
 														<th scope="row">${productVO.live_no == 0 ? '未設定':productVO.live_no}</th>
 														<%-- 											<td>${liveSvc.getOneLive(productVO.live_no).live_type}</td> --%>
 														<td>${productVO.product_no}</td>
-														<td><img width="200px"
+														<td><img width="120px" height="100px"
 															src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}"
 															class="rounded mx-auto d-block" alt=""></td>
 														<td>${productVO.product_name}</td>
 														<td class="productInfo">${productVO.product_info}</td>
 														<td>${productVO.start_price}</td>
 														<td>${productVO.product_remaining}</td>
-														<%-- 										<td>${productVO.user_id}</td> --%>
 														<td>
-															<FORM METHOD="post"
-																ACTION="<%=request.getContextPath()%>/product/product.do"
-																style="margin-bottom: 0px;">
-																<input type="submit" value="修改" class="btn btn-info">
-																<input type="hidden" name="product_no"
-																	value="${productVO.product_no}"> <input
-																	type="hidden" name="action" value="getOne_For_Update_B">
-															</FORM>
-														</td>
-														<td>
-															<FORM METHOD="post"
-																ACTION="<%=request.getContextPath()%>/product/product.do"
-																style="margin-bottom: 0px;">
-																<input type="submit" value="刪除" class="btn btn-danger">
-																<input type="hidden" name="product_no"
-																	value="${productVO.product_no}"> <input
-																	type="hidden" name="action" value="delete">
-															</FORM>
+															<input type="checkbox" id="cb${productVO.product_no}">
+															<input type="hidden" name="product_no" id="hb${productVO.product_no}" value="${productVO.product_no}" disabled>
 														</td>
 													</tr>
 												</c:if>
 											</c:forEach>
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>
+													
+													<input type="hidden" name="action" value="offShelf">
+													<input type="submit" value="下架" class="btn btn-info">
+													</FORM>	
+												</td>
+											</tr>
 										</tbody>
 									</table>
 								</div>
@@ -346,6 +344,20 @@ table td, table tr, table th {
 			}
 		});
 	</c:if>
+	
+	<c:if test="${productVO.product_state == 2 && productVO.user_id == userVO.user_id}">
+	
+	$("#tr${productVO.product_no}" ).click(function(e){
+		var checkBoxes = $("#cb${productVO.product_no}");
+		checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+		var isChecked = $("#cb${productVO.product_no}" ).is(":checked");
+		if(isChecked){
+			$("#hb${productVO.product_no}").prop('disabled', false);
+		}else{
+			$("#hb${productVO.product_no}").prop('disabled', true);
+		}
+	});
+</c:if>
 </c:forEach>
 </script>
 

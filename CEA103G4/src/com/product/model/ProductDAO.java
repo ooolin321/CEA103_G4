@@ -44,7 +44,8 @@ public class ProductDAO implements ProductDAO_interface {
 	private static final String UPDATESTATE = "UPDATE PRODUCT set product_state=? where product_no = ?";
 	//設定商品為直播並帶入直播編號
 	private static final String UPDATELIVE = "UPDATE PRODUCT SET PRODUCT_STATE=2 , LIVE_NO=? WHERE PRODUCT_NO = ?";
-	
+	//設定多個商品下架並去除直播編號
+	private static final String OFFSHELF = "UPDATE PRODUCT SET PRODUCT_STATE=0, LIVE_NO=NULL WHERE PRODUCT_NO = ?";
 	/*--------------shop.jsp商品區------------*/
 	//查詢所有商品狀態為直售的商品 (隨機排序)
 	private static final String GET_ALL_SHOP = "SELECT product_no, product_name, product_info,product_price, product_quantity,product_remaining,product_state,user_id,pdtype_no FROM PRODUCT where product_state = 1 AND product_photo IS NOT NULL order by rand()";	
@@ -811,5 +812,48 @@ public class ProductDAO implements ProductDAO_interface {
 			}
 
 		}
+
+	@Override
+	public void offShelf(List<ProductVO> list) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(OFFSHELF);
+			
+			
+			for (ProductVO aProduct : list) {
+				pstmt.setInt(1, aProduct.getProduct_no());
+				pstmt.addBatch();
+			}
+			
+			pstmt.executeBatch();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
 
 }

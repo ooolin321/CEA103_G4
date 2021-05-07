@@ -19,5 +19,8 @@ public interface ProductDAO_interface {
           public List<ProductVO> getAdvSearchShop(String[] pdtypeNo, String priceType);
           public List<ProductVO> getMoneyRangeShop(String minPrice, String maxPrice);
           public void updateState(ProductVO productVO);
+          //多個商品設定直播商品並帶入live_no
           public void updateStateLive(Integer live_no,List<ProductVO> list);
+          //多個商品下架並清空live_no
+          public void offShelf(List<ProductVO> list);
 }

@@ -307,7 +307,7 @@ $("#live_no").change(function(e) {
 	}	
 	</c:forEach>
 	});
-$()
+
 $("#user_id").change(function(e){
 	<c:forEach var="userVO" items="${userSvc.all}">	
 	if($("#user_id").val()=='${userVO.user_id}'){

@@ -1,10 +1,24 @@
+<%@page import="com.user.model.UserVO"%>
+<%@page import="com.auth.model.AuthVO"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+    pageEncoding="utf-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.emp.model.*"%>
+<%@ page import="com.auth.model.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 
 <%
-	EmpVO empVO = (EmpVO)session.getAttribute("account");
+    EmpVO empVO = (EmpVO) session.getAttribute("empAccount");
+    session.setAttribute("empVO", empVO);
+    
+    List<AuthVO> authList = (List<AuthVO>) session.getAttribute("authList");
+	session.setAttribute("authList", authList);
+%>
+<%
+// for(AuthVO auth:authList) {
+// 	out.println(auth.getFunno()+","+auth.getAuth_no());
+// }
 %>
 
 <!DOCTYPE html>
@@ -33,63 +47,88 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back-template/docs/css/main.css">
 <!-- Font-icon css-->
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<style>
+.app-menu__label {
+    pointer-events:none; //This makes it not clickable
+    opacity:0.6;         //This grays it out to look disabled
+}
+</style>
 </head>
 <body class="app sidebar-mini rtl">
 <jsp:include page="/back-end/backendMenu.jsp" />
-
-<!-- 			<div class="row"> -->
-<!-- 				<div class="col-md-6 col-lg-3"> -->
-<!-- 					<div class="widget-small primary coloured-icon"> -->
-<!-- 						<i class="icon fa fa-users fa-3x"></i> -->
-<!-- 						<div class="info"> -->
-<!-- 							<h4>Users</h4> -->
-<!-- 							<p> -->
-<!-- 								<b>5</b> -->
-<!-- 							</p> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			<div class="col-md-6 col-lg-3"> -->
-<!-- 				<div class="widget-small info coloured-icon"> -->
-<!-- 					<i class="icon fa fa-thumbs-o-up fa-3x"></i> -->
-<!-- 					<div class="info"> -->
-<!-- 						<h4>Likes</h4> -->
-<!-- 						<p> -->
-<!-- 							<b>25</b> -->
-<!-- 						</p> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 			<div class="col-md-6 col-lg-3"> -->
-<!-- 				<div class="widget-small warning coloured-icon"> -->
-<!-- 					<i class="icon fa fa-files-o fa-3x"></i> -->
-<!-- 					<div class="info"> -->
-<!-- 						<h4>Uploades</h4> -->
-<!-- 						<p> -->
-<!-- 							<b>10</b> -->
-<!-- 						</p> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 			<div class="col-md-6 col-lg-3"> -->
-<!-- 				<div class="widget-small danger coloured-icon"> -->
-<!-- 					<i class="icon fa fa-star fa-3x"></i> -->
-<!-- 					<div class="info"> -->
-<!-- 						<h4>Stars</h4> -->
-<!-- 						<p> -->
-<!-- 							<b>500</b> -->
-<!-- 						</p> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
+<main class="app-content">
+<div class="app-title">
+		<div>
+			<h1>
+				<i class="fa fa-dashboard"></i> Mode Femme
+			</h1>
+			
+		</div>
+		<ul class="app-breadcrumb breadcrumb">
+			<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+			<li class="breadcrumb-item"><a
+				href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">回到首頁</a></li>
+		</ul>
+	</div>
+			<div class="row">
+				<div class="col-md-6 col-lg-3">
+					<div class="widget-small primary coloured-icon">
+						<i class="icon fa fa-users fa-3x"></i>
+						<div class="info">
+							<h4>Users</h4>
+							<jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
+<%-- <c:set var="a" value="1"/> --%>
+<%-- <c:forEach var="user" items="list" varStatus="varStatusName"> --%>
+<%-- <c:if test="${user.status==1}"> --%>
+<%-- <c:set var="a" value="${a+1}"/> --%>
+<%-- </c:if> --%>
+<%-- </c:forEach> --%>
+							<p>
+								<b>${a}</b>
+							</p>
+						</div>
+					</div>
+				</div>
+			<div class="col-md-6 col-lg-3">
+				<div class="widget-small info coloured-icon">
+					<i class="icon fa fa-thumbs-o-up fa-3x"></i>
+					<div class="info">
+						<h4>Likes</h4>
+						<p>
+							<b>25</b>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3">
+				<div class="widget-small warning coloured-icon">
+					<i class="icon fa fa-files-o fa-3x"></i>
+					<div class="info">
+						<h4>Uploades</h4>
+						<p>
+							<b>10</b>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-3">
+				<div class="widget-small danger coloured-icon">
+					<i class="icon fa fa-star fa-3x"></i>
+					<div class="info">
+						<h4>Stars</h4>
+						<p>
+							<b>500</b>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
 <!-- 		<div class="row"> -->
 <!-- 			<div class="col-md-6"> -->
 <!-- 				<div class="tile"> -->
 <!-- 					<h3 class="tile-title">Monthly Sales</h3> -->
 <!-- 					<div class="embed-responsive embed-responsive-16by9"> -->
-<!-- 						<canvas class="embed-responsive-item" id="lineChartDemo"></canvas> -->
+<%-- 						<canvas class="embed-responsive-item" id="lineChartDemo"></canvas> --%>
 <!-- 					</div> -->
 <!-- 				</div> -->
 <!-- 			</div> -->
@@ -97,7 +136,7 @@
 <!-- 				<div class="tile"> -->
 <!-- 					<h3 class="tile-title">Support Requests</h3> -->
 <!-- 					<div class="embed-responsive embed-responsive-16by9"> -->
-<!-- 						<canvas class="embed-responsive-item" id="pieChartDemo"></canvas> -->
+<%-- 						<canvas class="embed-responsive-item" id="pieChartDemo"></canvas> --%>
 <!-- 					</div> -->
 <!-- 				</div> -->
 <!-- 			</div> -->
@@ -173,8 +212,8 @@
 	<script src="<%=request.getContextPath()%>/back-template/docs/js/plugins/pace.min.js"></script>
 	<!-- Page specific javascripts-->
 	<script src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
-	<script>
-	</script>
+
+	
 	<script>
 		var data = {
 			labels : [ "January", "February", "March", "April", "May" ],
@@ -210,11 +249,11 @@
 			label : "In-Progress"
 		} ]
 
-		var ctxl = $("#lineChartDemo").get(0).getContext("2d");
-		var lineChart = new Chart(ctxl).Line(data);
+// 		var ctxl = $("#lineChartDemo").get(0).getContext("2d");
+// 		var lineChart = new Chart(ctxl).Line(data);
 
-		var ctxp = $("#pieChartDemo").get(0).getContext("2d");
-		var pieChart = new Chart(ctxp).Pie(pdata);
+// 		var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+// 		var pieChart = new Chart(ctxp).Pie(pdata);
 	</script>
 	<!-- Google analytics script-->
 	<script type="text/javascript">
@@ -234,6 +273,46 @@
 			ga('send', 'pageview');
 		}
 	</script>
+    <script>		
 
+		 <c:forEach var="authList" items="${authList}">
+		 var index = parseInt('${authList.getFunno()}')-15001;
+		 var tree = document.getElementsByClassName("treeview")[index]
+			if(`${authList.getAuth_no()}`=='0'){
+// 				tree.style.display="none";
+				tree.classList.add("disabled");
+			}
+			
+// 		 arr1.push(`${authList.getFunno()}`);
+		 
+		</c:forEach>
+		
+		
+// // 		console.log(arr1);
+
+//         let auth = document.getElementsByClassName("app-menu__label");
+// 		console.log(document.getElementsByClassName("treeview")[2]);
+//         let arr2 = [];
+        
+//         for (let i = 0; i < auth.length; i++) {
+//             let x = auth[i].innerText;
+//             arr2.push(x);
+//         }
+//         console.log(arr2);
+        
+// 		for(let i = 0; i < data1.length; i++){
+// 			   if(data1[i] === "1"){
+// 			    let html = `<li>data2[i]</li>`;
+// 			    $('外面的標籤')append(html);
+// 			   }
+// 			  }
+//         console.log(arr1.toString()== arr2.toString());
+//         for(let i = 0; i <arr1.length; i++){
+//         	   if(arr1[i] === "1"){
+//         	    let html = arr2[i];
+//         	    $('.app-menu__label')append("<li>" + html + "</li>")
+//         	   };
+ </main>
+    </script>
 </body>
 </html>

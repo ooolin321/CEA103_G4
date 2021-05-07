@@ -12,6 +12,7 @@
 
 %>
 <jsp:useBean id="product_typeSvc" scope="page" class="com.product_type.model.Product_TypeService" />
+<jsp:useBean id="liveSvc" scope="page" class="com.live.model.LiveService" />
 
 
 <!DOCTYPE html>
@@ -41,15 +42,6 @@
 <body class="app sidebar-mini rtl">
 <jsp:include page="/back-end/backendMenu.jsp" />
 
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
               <main class="app-content">
                 <div class="app-title">
                   <div>
@@ -60,22 +52,23 @@
                     <li class="breadcrumb-item"><a href="#">直售商品管理</a></li>
                   </ul>
                 </div>
-                <div class="row productList">
+                <div class="row backProductList">
              <div class="product-tab col-lg-12">
               <div class="tab-item">
                 <ul class="nav" role="tablist">
-                  <li class="col-xs-3">
+                  <li>
                     <a class="active" data-toggle="tab" href="#tab-1" role="tab"
                       >未上架商品</a
                     >
                   </li>
-                  <li class="col-xs-3">
-                    <a data-toggle="tab" href="#tab-2" role="tab">上架中</a>
+                  <li>
+                    <a data-toggle="tab" href="#tab-2" role="tab">直售商品</a>
                   </li>
-                  <li class="col-xs-3">
+
+                  <li>
                     <a data-toggle="tab" href="#tab-3" role="tab">已售出</a>
                   </li>
-                  <li class="col-xs-3">
+                  <li>
                     <a data-toggle="tab" href="#tab-4" role="tab"
                       >違規下架</a
                     >
@@ -102,7 +95,7 @@
   				  </tr>
  				 </thead>
  				 <tbody>
- 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}" varStatus="i">
+ 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}">
    				 	<c:if test="${productVO.product_state == 0}"> 
    				 <tr>
      				 <th scope="row">${productVO.product_no}</th>
@@ -120,7 +113,7 @@
 				</table>
                   </div>
                   <div class="tab-pane fade" id="tab-2" role="tabpanel">
-                                     <table class="table">
+                   <table class="table">
   					<thead class="thead">
    				  <tr>
      				 <th scope="col">商品編號</th>
@@ -150,8 +143,8 @@
    				 </c:forEach>
    				 </tbody>
 				</table>
- 
                   </div>
+
                   <div class="tab-pane fade" id="tab-3" role="tabpanel">
 				 <table class="table">
   					<thead class="thead">
@@ -175,7 +168,7 @@
       				 <td>${productVO.product_name}</td>
       				 <td class="productInfo"><textarea class="form-control"  maxlength="300" rows="6" readonly>${productVO.product_info}</textarea></td>
      				 <td>${productVO.product_price}</td>
-     				 <td>${productVO.product_remaining}</td>
+     				 <td><button type="" class="btn btn-success">已售出</button></td>
      				 <td>${product_typeSvc.getOneProduct_Type(productVO.pdtype_no).pdtype_name}</td>
      				 <td>${productVO.user_id}</td>
    				 </tr>

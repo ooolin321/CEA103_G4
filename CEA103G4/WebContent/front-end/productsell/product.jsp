@@ -5,13 +5,10 @@
 <%@ page import="com.product.model.*"%>
 <%@ page import="com.product_type.model.*"%>
 <%@ page import="com.product_report.model.*"%>
+<%@ page import="com.user.model.*"%>
 
 <%
   ProductVO productVO = (ProductVO) request.getAttribute("productVO");
-
-	Product_TypeDAO dao2 = new Product_TypeDAO();
-	List<Product_TypeVO> list2 = dao2.getAll();
-	pageContext.setAttribute("list2",list2);
 	
 %>
 <jsp:useBean id="product_typeSvc" scope="page" class="com.product_type.model.Product_TypeService" />
@@ -75,7 +72,7 @@
             <div class="filter-widget">
               <h4 class="fw-title">商品分類</h4>
               <ul class="filter-catagories">
-              <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()-1}">
+              <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()}">
               <li><div class="catagoriesQuery" value="${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}</div></li>
                 </c:forEach>
               </ul>
@@ -114,7 +111,7 @@
               <h4 class="fw-title">進階查詢</h4>
               <div class="fw-all-choose" id="fw-all-choose">
               <div class="fw-cs" id="fw-cs">
-               <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()-1}">
+               <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()}">
                 <div class="cs-item">
                  <label for="${product_typeVO.pdtype_name}">
                     ${product_typeVO.pdtype_name}
@@ -176,20 +173,28 @@
                     <h4><span>$</span>
                         ${productVO.product_price}</h4>
                   </div>
+                  <form METHOD="post" action="<%=request.getContextPath()%>/ShoppingServlet">
                   <div class="quantity">
                     <div class="pro-qty">
                      <span id="decProduct" class="dec qtybtn">-</span>
                       <input name="proqty" type="text" value="1" />
                       <span id="addProduct" class="inc qtybtn" style="none">+</span>
                     </div>
-                    <a href="#" class="primary-btn pd-cart">加入購物車</a>
+                    <input type="hidden" name="product_no" value="${productVO.product_no}">
+                    <input type="hidden" name="product_name" value="${productVO.product_name}">
+                    <input type="hidden" name="product_price" value="${productVO.product_price}">
+                    <input type="hidden" name="product_remaining" value="${productVO.product_remaining}">
+                    <input type="hidden" name="action" value="ADD" />
+                    <button href="#" type="submit" class="primary-btn pd-cart">加入購物車</button>
                   </div>
+                  </form>
                   <ul class="pd-tags">
                     <li>
                       <span id="maxRemaining" value="${productVO.product_remaining}">商品數量：${productVO.product_remaining}</span>
                     </li>
                     <!-- <li><span>TAGS</span>: Clothing, T-shirt, Woman</li> -->
                   </ul>
+                
                   <div class="pd-share">
                     <div class="pd-social">
                       <a href="#"><i class="ti-facebook"></i></a>
@@ -203,12 +208,12 @@
                     </div>
                     <div class="pd-function">
                       <a href="#" class="primary-btn">私訊賣家</a>
-                      <a href="#" class="primary-btn">關注賣家</a>
-                      <a href="javascript:;" id="reportLink" class="primary-btn">商品檢舉</a>
+                      <a href="#"  id="${productVO.user_id}" value="${userVO.user_id}" class="primary-btn sellerFollow">關注賣家</a>
+                      <a href="javascript:;" id="reportLink"  class="primary-btn userReport" value="${userVO.user_id}">商品檢舉</a>
                     </div>
 <!--                     檢舉燈箱 -->
 <div  class="report-bg">
-                    <div class="report">
+  <div class="report">
       <div class="report-title" value="${productVO.product_no}">
         檢舉商品名稱：${productVO.product_name}
         <span><a href="javascript:;" id="closeBtn">關閉</a></span>
@@ -217,14 +222,7 @@
       <div class="report-input-content">
         <div class="report-input">
           <label for="">檢舉內容</label>
-          <input
-            type="text"
-            placeholder="請輸入檢舉原因"
-            name="pro_report_content"
-            id="username"
-            size="50"
-            value=""
-          />
+          <input type="text"  placeholder="請輸入檢舉原因" name="pro_report_content" size="50" required>
         </div>
       </div>
       <div class="report-button">
@@ -555,67 +553,11 @@
     <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
-
+	<script src="${pageContext.request.contextPath}/front-template/js/ajaxSearch.js"></script>
     
     
     	<script>
 
-	//ajax header搜尋框	
-	
-    $("#sendQuery").on('click', () => { 
-		var datas = {
-		  "product_name":$("#product_name").val(),      				
-		  "action":"search_ajax" 
-		}; 
-	  sendQuery(datas); 
-  }); 
-	$("#search").on('submit',(event) => { 
-	  event.preventDefault()
-	  	var datas = {
-		  "product_name":$("#product_name").val(),      				
-		  "action":"search_ajax" 
-		};
-	  sendQuery(datas); 
-  }); 
-	
-	//功能列 分類
-		$(".catagoriesQuery").click(function() {
-			var datas = { 
-	 		  	"pdtype_no":$(this).attr("value"),
-	 			  "action":"search_ajax" 
-	 			}; 
-	 		  sendQuery(datas); 
-	 	  });
-	
-	//價格篩選
-	$("#moneyRange").click(function(){
-	  var min = $("#minamount").val();
-	  var max = $("#maxamount").val();
-	  min = min.substring(min.indexOf("$")+1);
-	  max = max.substring(max.indexOf("$")+1);
-	  var datas = {
-			  minPrice: min,
-			  maxPrice: max,
-			  action: 'moneyRange'
-			}
-			sendQuery(datas);
-	})
-	
-	
-	//進階查詢ajax
-	$("#fw-all-btn").click(function(){
-		var arr = [];
-		$('input[name="pdtypeNo"]:checked').each(function(i) {
-	     	arr.push($(this).attr("value"));
-		});
-		var type = $('input[name="productPrice"]:checked').val();
-		var datas = {
-			pdtypeNo: arr,
-			productPrice: type,
-			action: 'fw-all-choose'
-		}
-		sendQuery(datas);
-	});
 	
 	function sendQuery(datas){ 
 		
@@ -642,6 +584,7 @@
 		 }) 
 	}
 	
+	
 	//檢舉燈箱js 
 
 	 var reportLink = document.querySelector("#reportLink");
@@ -651,12 +594,17 @@
 
 	  //1,燈箱顯示/隱藏
 	  reportLink.addEventListener("click", function () {
+		  if ($('#reportLink').attr("value") === "") {
+				alert("請先登入會員");
+			} else {
 	    report.style.display = "block";
 	    report_bg.style.display = "block";
+			}
 	  });
 	  closeBtn.addEventListener("click", function () {
 	    report.style.display = "none";
 	    report_bg.style.display = "none";
+	    $('input[name="pro_report_content"]').val("");
 	  });
 
 	  //2，拖曳
@@ -676,28 +624,65 @@
 	    });
 	  });
 	  
+
+	  
 	  //商品檢舉AJAX  
 
 	  $(".report-button").click(function(){
-			
+		  if($('input[name="pro_report_content"]').val().trim().length != 0){
 			$.ajax({ 
 			  url:"<%=request.getContextPath()%>/product_report/product_report.do",
 			  type:"POST", 
 			  data:{
 				  "pro_report_content": $('input[name="pro_report_content"]').val(),
 				  "product_no": $(".report-title").attr("value"),
-				  "user_id": "abcd01",
+				  "user_id": $('#reportLink').attr('value'), 
 				  "action": "insert"
 			  },
 			  success: function() { 
 						alert('商品檢舉已提交');
 					    report.style.display = "none";
-					    report_bg.style.display = "none";	
+					    report_bg.style.display = "none";
+					    $('input[name="pro_report_content"]').val("");
 		            }, 	  
 			  error:function () {
 				  alert('很抱歉,檢舉提交失敗,請重新提交。');
+				    report.style.display = "none";
+				    report_bg.style.display = "none";
+				  $('input[name="pro_report_content"]').val("");
 			  },				
-			 }) 
+			 });
+		  }  else {
+			  alert("檢舉內容請勿空白")
+		  };
+	  });
+	  
+	  //關注賣家AJAX
+	  	  $(".sellerFollow").click(function(){
+	  		  var user = $('.sellerFollow').attr("value");
+	  		  var sellerid = $('.sellerFollow').attr("id");
+	  		  if (user === "") {
+					alert("請先登入會員");
+				} else if (user === sellerid){
+					alert("很抱歉,無法追蹤自己");
+				}else {
+			$.ajax({ 
+			  url:"<%=request.getContextPath()%>/seller_follow/seller_follow.do",
+			  type:"POST", 
+			  data:{
+				  "user_id":user,
+				  "seller_id":sellerid,
+				  "action": "insert"
+			  },
+			  success: function() { 
+						alert('已追蹤賣家');
+
+		            }, 	  
+			  error:function () {
+				  alert('很抱歉,追蹤失敗,請重新點選。');
+			  },				
+			 });
+		  }
 	  });
 	  
 	  

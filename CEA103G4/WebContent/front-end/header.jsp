@@ -1,7 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.user.model.*"%>
+<%@ page import="com.product_type.model.*"%>
+<%
+
+	Product_TypeDAO dao2 = new Product_TypeDAO();
+     List<Product_TypeVO> list2 = dao2.getAll();
+    pageContext.setAttribute("list2",list2);
+ %>
 	
 <!-- Page Preloder -->
 <div id="preloder">
@@ -44,7 +52,7 @@
 					</div>
 				</div>
 				<div class="col-lg-3 text-right col-md-3">
-					<c:if test="${ not empty userVO.user_name}">
+					<c:if test="${not empty userVO.user_id}">
 						<div class="header-right">
 						<FORM id="userLogOut" METHOD="post" class="logout-form" action="<%=request.getContextPath()%>/User_LogoutHandler">
 						<a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">
@@ -75,7 +83,7 @@
                     </svg> <span>1</span>
 						</a></li>
 						<li class="cart-icon"><a
-							href="${pageContext.request.contextPath}/front-end/productsell/shopping-cart.html">
+							href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp">
 								<i class="icon_bag_alt"></i> <span>3</span>
 						</a>
 							<div class="cart-hover">
@@ -115,7 +123,7 @@
 								</div>
 								<div class="select-button">
 									<a
-										href="${pageContext.request.contextPath}/front-end/productsell/shopping-cart.html"
+										href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp"
 										class="primary-btn view-card">購物車清單</a>
 									<a
 										href="${pageContext.request.contextPath}/front-end/productsell/check-out.html"
@@ -136,7 +144,7 @@
 <!-- 					<i class="fa fa-hand-o-down" id="ti-fa-hand"></i> -->
 					<ul class="depart-hover">
 						<c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()}">
-						<li><div class="catagoriesQuery" value="${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}</div></li>
+						<a href="<%=request.getContextPath()%>/product_type/product_type.do?action=getProductsByPdtype&pdtype_no=${product_typeVO.pdtype_no}"><li><div>${product_typeVO.pdtype_name}</div></li></a>
                			 </c:forEach>
 					</ul>
 				</div>
@@ -150,7 +158,7 @@
 					<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播專區</a>
 						<ul class="dropdown">
 							<li><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播牆</a></li>
-							<li><a href="#">直播預告</a></li>
+							<li><a href="<%=request.getContextPath()%>/front-end/live/livePreview.jsp">直播預告</a></li>
 							<!-- <li><a href="#">Kid's</a></li> -->
 						</ul></li>
 					<li><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i class="icon_profile"></i></a></li>

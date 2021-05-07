@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.product.model.ProductService;
+import com.product.model.ProductVO;
 import com.product_report.model.Product_ReportService;
 import com.product_report.model.Product_ReportVO;
 
@@ -137,42 +139,55 @@ public class Product_ReportServlet extends HttpServlet{
 				
 				Integer pro_report_no = new Integer(req.getParameter("pro_report_no").trim());
 				
-				String pro_report_content = req.getParameter("pro_report_content");
-
-				//*需更改 之後要做點選按鈕 動態抓取商品的商品編號(會員不需自行填寫)
+//				String pro_report_content = req.getParameter("pro_report_content");
+//
+//				//*需更改 之後要做點選按鈕 動態抓取商品的商品編號(會員不需自行填寫)
 				Integer product_no = new Integer(req.getParameter("product_no").trim());;
-				//*需更改 檢舉者帳號 動態抓取自動帶入
-				String user_id = req.getParameter("user_id");
-				//檢舉時間不用驗證
-				Integer empno = new Integer(req.getParameter("empno").trim());
+//				//*需更改 檢舉者帳號 動態抓取自動帶入
+//				String user_id = req.getParameter("user_id");
+//				//檢舉時間不用驗證
+//				Integer empno = new Integer(req.getParameter("empno").trim());
 				
 				Integer proreport_state = new Integer(req.getParameter("proreport_state").trim());
-		
+
 			
 				product_reportVO.setPro_report_no(pro_report_no);
-				product_reportVO.setPro_report_content(pro_report_content);
+//				product_reportVO.setPro_report_content(pro_report_content);
 				product_reportVO.setProduct_no(product_no);
-				product_reportVO.setUser_id(user_id);
-				product_reportVO.setEmpno(empno);
+//				product_reportVO.setUser_id(user_id);
+//				product_reportVO.setEmpno(empno);
 				product_reportVO.setProreport_state(proreport_state);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("product_reportVO", product_reportVO); // 含有輸入格式錯誤的product_reportVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/product_report/update_product_report_input.jsp");
+							.getRequestDispatcher("/back-end/product_report/getAllUserReport.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
-				
+
 				/***************************2.開始修改資料*****************************************/
 				Product_ReportService product_reportSvc = new Product_ReportService();
-				product_reportVO = product_reportSvc.updateProduct_Report(pro_report_no, pro_report_content,
-						product_no,user_id,empno,proreport_state);
+				product_reportVO = product_reportSvc.updateProduct_Report(pro_report_no,product_no,proreport_state);
+				
+				//當檢舉狀態審核通過,商品狀態自動轉為檢舉下架
+				if(proreport_state == 1) {
+					
+					ProductService productSvc = new ProductService();
+					ProductVO productVO = productSvc.getOneProduct(product_no);
+				    Integer product_state = 5;
+
+				    productVO.setProduct_no(product_no);
+				    productVO.setProduct_state(product_state);
+				    productVO = productSvc.updateState(product_no,product_state);
+				} 
+				
+
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("product_reportVO", product_reportVO); // 資料庫update成功後,正確的的product_reportVO物件,存入req
-				String url = "/back-end/product_report/listOneProduct_Report.jsp";
+				String url = "/back-end/product_report/getAllUserReport.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneProduct_Report.jsp
 				successView.forward(req, res);
 
@@ -180,7 +195,7 @@ public class Product_ReportServlet extends HttpServlet{
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/product_report/update_product_report_input.jsp");
+						.getRequestDispatcher("/back-end/product_report/getAllUserReport.jsp");
 				failureView.forward(req, res);
 			}
 		}

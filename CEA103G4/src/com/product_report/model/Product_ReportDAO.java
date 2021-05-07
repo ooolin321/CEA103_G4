@@ -24,13 +24,16 @@ public class Product_ReportDAO implements Product_ReportDAO_interface {
 	//前台會員新增商品檢舉(時間sql已預設當下時間,檢舉狀態已預設未處理,故新增資料時不需再填寫)
 	private static final String INSERT_STMT = 
 		"INSERT INTO PRODUCT_REPORT (pro_report_content,product_no,user_id) VALUES (?, ?, ?)";
+	//會員商品資料內 顯示遭檢舉下架的資訊
+	private static final String GET_ONE_REPORT_INFO = 
+	  "SELECT pro_report_content,report_date FROM PRODUCT_REPORT where product_no = ?";
 	//後台查詢所有商品檢舉資料
 	private static final String GET_ALL_STMT = 
 		"SELECT * FROM PRODUCT_REPORT order by pro_report_no";
 	//後台查詢一個商品檢舉資料
 	private static final String GET_ONE_STMT = 
 		"SELECT * FROM PRODUCT_REPORT where pro_report_no = ?";
-	//後台依照不同的檢舉處理狀態做查詢
+	//後台依照不同的檢舉處理狀態做查詢(沒用到)
 	private static final String GET_REPORT_STATE = 
 		"SELECT * FROM PRODUCT_REPORT where proreport_state = ?";
 	//後台刪除檢舉紀錄
@@ -38,7 +41,7 @@ public class Product_ReportDAO implements Product_ReportDAO_interface {
 		"DELETE FROM PRODUCT_REPORT where pro_report_no = ?";
 	//後台修改檢舉狀態
 	private static final String UPDATE = 
-		"UPDATE PRODUCT_REPORT set pro_report_content=?, product_no=?, user_id=?, empno=?, proreport_state=? where pro_report_no = ?";
+		"UPDATE PRODUCT_REPORT set product_no=?, proreport_state=? where pro_report_no = ?";
 
 	@Override
 	public void insert(Product_ReportVO product_reportVO) {
@@ -91,14 +94,10 @@ public class Product_ReportDAO implements Product_ReportDAO_interface {
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
-
-			pstmt.setString(1, product_reportVO.getPro_report_content());
-			pstmt.setInt(2, product_reportVO.getProduct_no());
-			pstmt.setString(3, product_reportVO.getUser_id());
-//			pstmt.setDate(4, product_reportVO.getReport_date());
-			pstmt.setInt(4, product_reportVO.getEmpno());
-			pstmt.setInt(5, product_reportVO.getProreport_state());
-			pstmt.setInt(6, product_reportVO.getPro_report_no());
+			
+			pstmt.setInt(1, product_reportVO.getProduct_no());
+			pstmt.setInt(2, product_reportVO.getProreport_state());
+			pstmt.setInt(3, product_reportVO.getPro_report_no());
 
 			pstmt.executeUpdate();
 
@@ -342,5 +341,60 @@ public class Product_ReportDAO implements Product_ReportDAO_interface {
 			}
 		}
 		return list;
+	}
+	
+	@Override
+	public Product_ReportVO userProduct_ReportInfo(Integer product_no){
+
+		Product_ReportVO product_reportVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_REPORT_INFO);
+
+			pstmt.setInt(1, product_no);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+		
+				product_reportVO = new Product_ReportVO();
+				product_reportVO.setPro_report_content(rs.getString("pro_report_content"));
+				product_reportVO.setReport_date(rs.getTimestamp("report_date"));
+			}
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return product_reportVO;
 	}
 }

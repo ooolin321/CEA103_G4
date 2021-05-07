@@ -4,6 +4,8 @@ package com.order.model;
 import java.util.List;
 import java.util.Map;
 
+import com.live_order.model.Live_orderVO;
+
 public class OrderService {
 
 	private OrderDAO_interface dao;
@@ -83,7 +85,10 @@ public class OrderService {
 	public List<OrderVO> getAll() {
 		return dao.getAll();
 	}
-	public List<OrderVO> getAll(Map<String, String[]> map) {
-		return dao.getAll(map);
+	public List<OrderVO> getAllByID(String user_id) {
+		return dao.getAllByID(user_id);
+	}
+	public List<OrderVO> getAllByID2(String seller_id) {
+		return dao.getAllByID2(seller_id);
 	}
 }

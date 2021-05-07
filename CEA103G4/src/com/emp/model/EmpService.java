@@ -88,19 +88,34 @@ public class EmpService {
 		return empVO;
 	}
 	
+	public EmpVO forgotEmail(String email, String link) {
+		EmpVO empVO = new EmpVO();
+		empVO.setEmail(email);
+		empVO.setLink(link);
+		
+		dao.forgotPassword(empVO);
+		return empVO;
+	}
+	
 	public EmpVO selectEmp(Integer empno, String empPwd) {
 
 		return dao.login(empno, empPwd);
 	}
 
-	public EmpVO updatePswd(Integer empno, String empPwd) {
-		
-EmpVO empVO = new EmpVO();
-		
+	public EmpVO updatePswd(Integer empno, String empPwd) {		
+		EmpVO empVO = new EmpVO();	
 		empVO.setEmpno(empno);;
 		empVO.setEmp_pwd(empPwd);
 		
 		dao.updatePswd(empVO);
+		return empVO;
+	}
+	
+	public EmpVO selectEmail(String email) {
+		EmpVO empVO = new EmpVO();
+		empVO.setEmail(email);
+
+		dao.getEmail(email);
 		return empVO;
 	}
 

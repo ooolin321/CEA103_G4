@@ -4,25 +4,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.live.model.*"%>
-<%@ page import="com.product.model.*"%>
-<%@ page import="com.product_type.model.*"%>
-<%@ page import="com.product.controller.*"%>
-
-<%
-	ProductDAO dao1 = new ProductDAO();
-	Object prouducts = request.getAttribute("products") == null
-			? dao1.getAllShop()
-			: request.getAttribute("products");
-	pageContext.setAttribute("products", prouducts);
-
-	Product_TypeDAO dao2 = new Product_TypeDAO();
-	List<Product_TypeVO> list2 = dao2.getAll();
-	pageContext.setAttribute("list2", list2);
-%>
 
 <%
 	LiveJNDIDAO dao = new LiveJNDIDAO();
-	Object lives = request.getAttribute("lives") == null ? dao.getAll1() : request.getAttribute("lives");
+	Object lives = request.getAttribute("lives") == null ? dao.getAll() : request.getAttribute("lives");
 	pageContext.setAttribute("lives", lives);
 %>
 <jsp:useBean id="liveSvc" scope="page"
@@ -199,23 +184,12 @@
 							<ul class="dropdown">
 								<li><a
 									href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播牆</a></li>
-								<li><a href="#">直播預告</a></li>
+								<li><a href="<%=request.getContextPath()%>/front-end/live/livePreview.jsp">直播預告</a></li>
 								<!-- <li><a href="#">Kid's</a></li> -->
 							</ul></li>
 						<li><a
 							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i
 								class="icon_profile"></i></a></li>
-						<!-- <li>
-                <a href="#">Pages</a>
-                <ul class="dropdown">
-                  <li><a href="./blog-details.html">Blog Details</a></li>
-                  <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                  <li><a href="./check-out.html">Checkout</a></li>
-                  <li><a href="./faq.html">Faq</a></li>
-                  <li><a href="./register.html">Register</a></li>
-                  <li><a href="./login.html">Login</a></li>
-                </ul>
-              </li> -->
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -249,49 +223,50 @@
 					<div class="row" id="products">
 						<c:forEach var="liveVO" items="${lives}" begin="0"
 							end="${lives.size()-1}">
-							<div class="col-lg-3 col-md-4 col-sm-6">
-								<div class="card mb-2 productcard">
-									<div class="product-item">
-										<div class="pi-pic">
-											<div class="pi-img">
+							<c:if test="${liveVO.live_state==2}">
+								<div class="col-lg-3 col-md-4 col-sm-6">
+									<div class="card mb-2 productcard">
+										<div class="product-item">
+											<div class="pi-pic">
+												<div class="pi-img">
+													<a
+														href="<%=request.getContextPath()%>/live/live.do?live_no=${liveVO.live_no}">
+														<img class="card-img-top"
+														src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}"
+														alt="${liveVO.live_name}">
+													</a>
+												</div>
+											</div>
+											<div class="pi-text">
 												<a
 													href="<%=request.getContextPath()%>/live/live.do?live_no=${liveVO.live_no}">
-													<img class="card-img-top"
-													src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}"
-													alt="${liveVO.live_name}">
+													<h5>${liveVO.live_name}</h5>
+													<div class="product-price">
+														<span></span> ${(liveVO.live_state==0)? '直播結束':''}
+														${(liveVO.live_state==1)? '未直播':''}
+														${(liveVO.live_state==2)? '直播中':''} <br> <span>-${liveVO.live_type}-</span>
+													</div>
+													<div>
+														<fmt:formatDate value="${liveVO.live_time}"
+															pattern="yyyy-MM-dd HH:mm:ss" />
+													</div>
+
 												</a>
+
 											</div>
-										</div>
-										<div class="pi-text">
-											<a
-												href="<%=request.getContextPath()%>/live/live.do?live_no=${liveVO.live_no}">
-												<h5>${liveVO.live_name}</h5>
-												<div class="product-price">
-													<span></span> ${(liveVO.live_state==0)? '直播結束':''}
-													${(liveVO.live_state==1)? '未直播':''}
-													${(liveVO.live_state==2)? '直播中':''} <br>
-													<span>-${liveVO.live_type}-</span>
-												</div>
-												<div>
-													<fmt:formatDate value="${liveVO.live_time}"
-														pattern="yyyy-MM-dd HH:mm:ss" />
-												</div>
-
-											</a>
 
 										</div>
-
 									</div>
 								</div>
-							</div>
+							</c:if>
 						</c:forEach>
 					</div>
 				</div>
 			</div>
 		</div>
-		</div>
-	</section>
-	<!-- Product Shop Section End -->
+</div>
+</section>
+<!-- Product Shop Section End -->
 
 
 

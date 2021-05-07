@@ -42,12 +42,14 @@ public class Seller_FollowServlet extends HttpServlet {
 				Seller_FollowVO seller_followVO = new Seller_FollowVO();
 				seller_followVO.setUser_id(user_id);
 				seller_followVO.setSeller_id(seller_id);
-
+				
+				System.out.println(user_id);
+				System.out.println(seller_id);
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("seller_followVO", seller_followVO); // 含有輸入格式錯誤的seller_followVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/seller_follow/addSeller_Follow.jsp");
+							.getRequestDispatcher("/front-end/productsell/product.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -58,15 +60,15 @@ public class Seller_FollowServlet extends HttpServlet {
 				seller_followVO = seller_followSvc.addSeller_Follow(user_id, seller_id);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)*************/
-				String url = "/back-end/seller_follow/listAllSeller_Follow.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listAllSeller_Follow.jsp
-				successView.forward(req, res);
+//				String url = "/back-end/seller_follow/listAllSeller_Follow.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listAllSeller_Follow.jsp
+//				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理*************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/seller_follow/addSeller_Follow.jsp");
+						.getRequestDispatcher("/front-end/productsell/product.jsp");
 				failureView.forward(req, res);
 			}
 		}

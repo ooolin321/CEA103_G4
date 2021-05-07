@@ -12,11 +12,12 @@ public interface EmpDAO_interface {
     public List<EmpVO> getAll();
     
     public EmpVO login(Integer empno,String empPwd);
-	public List<EmpVO> sendMail(EmpVO empVO);
+	public void sendMail(EmpVO empVO);
 	public String genAuthCode();
 	
 	public void updatePswd(EmpVO empVO);
-	public List<EmpVO> forgotPassword(EmpVO empVO);
+	public void forgotPassword(EmpVO empVO);
+	public EmpVO getEmail(String ename);
 	
 	
 

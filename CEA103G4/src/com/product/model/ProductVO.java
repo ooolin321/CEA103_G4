@@ -3,6 +3,7 @@ import java.sql.Blob;
 import java.sql.Date;
 import java.util.Arrays;
 
+
 public class ProductVO implements java.io.Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -113,6 +114,37 @@ public class ProductVO implements java.io.Serializable{
 		this.pdtype_no = pdtype_no;
 		this.start_price = start_price;
 		this.live_no = live_no;
+	}
+	
+	@Override
+	public String toString() {
+		return "ProductVO [product_no=" + product_no + ", product_name=" + product_name + ", product_price="
+				+ product_price + ", product_quantity=" + product_quantity + ", product_remaining=" + product_remaining + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((product_name == null) ? 0 : product_name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProductVO other = (ProductVO) obj;
+		if (product_name == null) {
+			if (other.product_name != null)
+				return false;
+		} else if (!product_name.equals(other.product_name))
+			return false;
+		return true;
 	}
 
 	

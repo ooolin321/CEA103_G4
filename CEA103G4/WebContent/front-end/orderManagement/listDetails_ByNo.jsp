@@ -3,8 +3,8 @@
 
 
 <%-- <jsp:useBean id="listDetails_ByNo" scope="request" type="java.util.Set<Live_order_detailVO>" /> <!-- 於EL此行可省略 --> --%>
-<jsp:useBean id="live_orderSvc" scope="page"
-	class="com.live_order.model.Live_orderService" />
+<jsp:useBean id="orderSvc" scope="page"
+	class="com.order.model.OrderService" />
 
 
 <html>
@@ -43,14 +43,14 @@
 						<th></th>
 					</tr>
 				</thead>
-					<c:forEach var="live_order_detailVO" items="${listDetails_ByNo}">
+					<c:forEach var="order_detailVO" items="${listDetails_ByNo}">
 						<tr
-							${(live_order_detailVO.live_order_no==param.live_order_no)&&((live_order_detailVO.product_no==param.product_no)) ? 'bgcolor=#CCCCFF':''}>
+							${(order_detailVO.order_no==param.order_no)&&((order_detailVO.product_no==param.product_no)) ? 'bgcolor=#CCCCFF':''}>
 							<!--將修改的那一筆加入對比色-->
-							<td>${live_order_detailVO.live_order_no}</td>
-							<td>${live_order_detailVO.product_no}</td>
-							<td>${live_order_detailVO.price}</td>
-							<td>${live_order_detailVO.product_num}</td>
+							<td>${order_detailVO.order_no}</td>
+							<td>${order_detailVO.product_no}</td>
+							<td>${order_detailVO.price}</td>
+							<td>${order_detailVO.product_num}</td>
 <!-- 							<td> -->
 <!-- 								<FORM METHOD="post" -->
 <%-- 									ACTION="<%=request.getContextPath()%>/live_order_detail/live_order_detail.do" --%>

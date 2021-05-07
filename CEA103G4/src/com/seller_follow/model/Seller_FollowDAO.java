@@ -136,9 +136,9 @@ public class Seller_FollowDAO implements Seller_FollowDAO_interface {
 				while (rs.next()) {
 					
 					seller_followVO = new Seller_FollowVO();
-					seller_followVO.setTracer_no(rs.getInt("product_no"));
-					seller_followVO.setUser_id(rs.getString("product_name"));
-					seller_followVO.setSeller_id(rs.getString("product_info"));
+					seller_followVO.setTracer_no(rs.getInt("tracer_no"));
+					seller_followVO.setUser_id(rs.getString("user_id"));
+					seller_followVO.setSeller_id(rs.getString("seller_id"));
 					list.add(seller_followVO); // Store the row in the list
 				}
 				// Handle any driver errors
@@ -189,9 +189,9 @@ public class Seller_FollowDAO implements Seller_FollowDAO_interface {
 			while (rs.next()) {
 				
 				seller_followVO = new Seller_FollowVO();
-				seller_followVO.setTracer_no(rs.getInt("product_no"));
-				seller_followVO.setUser_id(rs.getString("product_name"));
-				seller_followVO.setSeller_id(rs.getString("product_info"));
+				seller_followVO.setTracer_no(rs.getInt("tracer_no"));
+				seller_followVO.setUser_id(rs.getString("user_id"));
+				seller_followVO.setSeller_id(rs.getString("seller_id"));
 				list.add(seller_followVO); // Store the row in the list
 			}
 			// Handle any driver errors

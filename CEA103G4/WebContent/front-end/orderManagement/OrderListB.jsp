@@ -68,7 +68,7 @@ table td, table tr, table th {
 			</div>
 			<ul class="app-breadcrumb breadcrumb">
 				<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-				<li class="breadcrumb-item"><a href="#">直播訂單管理</a></li>
+				<li class="breadcrumb-item"><a href="#">直售訂單管理</a></li>
 			</ul>
 		</div>
 
@@ -82,107 +82,53 @@ table td, table tr, table th {
 						<thead>
 							<tr>
 								<th>#</th>
-								<!-- 								<th>訂單時間</th> -->
-								<th>付款截止時間</th>
+								<th>訂單時間</th>
 								<th>訂單狀態</th>
 								<th>訂單金額</th>
-								<th>訂單運費</th>
 								<th>付款方式</th>
-								<!-- 								<th>收件人姓名</th> -->
-								<!-- 								<th>收件人地址</th> -->
-								<!-- 								<th>收件人電話</th> -->
-								<!-- 								<th>收件人手機</th> -->
 								<th>物流方式</th>
 								<th>物流狀態</th>
-								<!-- 								<th>使用點數折抵</th> -->
-								<!-- 								<th>直播編號</th> -->
-								<!-- 								<th>買家帳號</th> -->
-								<!-- 								<th>賣家帳號</th> -->
-								<!-- 								<th>賣家評價分數</th> -->
-								<!-- 								<th>賣家評價內容</th> -->
-								<!-- 								<th>點數回饋</th> -->
 								<th></th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 
-							<c:forEach var="live_orderVO" items="${list}">
+							<c:forEach var="orderVO"
+								items="${orderSvc.getAllByID2(userVO.user_id)}">
 								<tr>
-									<td>
-										<FORM id="${orderVO.order_no}" METHOD="post"
-											ACTION="<%=request.getContextPath()%>/order/order.do"
-											style="margin-bottom: 0px;">
-											<input type="hidden" name="live_order_no"
-												value="${orderVO.order_no}"> <input
-												type="hidden" name="action" value="listDetails_ByNo_B">
-											<a href="#"
-												onclick="document.getElementById('${orderVO.order_no}').submit();">${orderVO.order_no}</a>
-
-
-										</FORM>
-
-
-
-									</td>
-									<%-- 									<td><fmt:formatDate value="${live_orderVO.order_date}" --%>
-									<%-- 											pattern="yyyy-MM-dd HH:mm:ss" /></td> --%>
-									<td><fmt:formatDate value="${live_orderVO.pay_deadline}"
-											pattern="yyyy-MM-dd HH:mm:ss" /></td>
-									<td>${(orderVO.order_state==0)? '未付款':''}
-										${(orderVO.order_state==1)? '已付款':''}
-										${(orderVO.order_state==2)? '棄單':''}</td>
+									<td>${orderVO.order_no}</td>
+									<td><fmt:formatDate value="${orderVO.order_date}"
+											pattern="yyyy-MM-dd" /></td>
+									<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>
 									<td>${orderVO.order_price}</td>
-									<td>${orderVO.order_shipping}</td>
 									<td>${(orderVO.pay_method==0)? '錢包':''}
 										${(orderVO.pay_method==1)? '信用卡':''}
 										${(orderVO.pay_method==2)? '轉帳':''}</td>
-									<%-- 									<td>${live_orderVO.rec_name}</td> --%>
-									<%-- 									<td>${live_orderVO.zipcode}${live_orderVO.city}${live_orderVO.town}${live_orderVO.rec_addr}</td> --%>
-									<%-- 									<td>${live_orderVO.rec_phone}</td> --%>
-									<%-- 									<td>${live_orderVO.rec_cellphone}</td> --%>
-									<td>${(live_orderVO.logistics==0)? '宅配':'超商'}</td>
-									<td>${(live_orderVO.logistics_state==0)? '未出貨':''}
-										${(live_orderVO.logistics_state==1)? '已出貨':''}
-										${(live_orderVO.logistics_state==2)? '已取貨':''}</td>
-									<%-- 									<td>${live_orderVO.discount}</td> --%>
-									<%-- 									<td>${live_orderVO.live_no}</td> --%>
-									<%-- 									<td>${live_orderVO.user_id}</td> --%>
-									<%-- 									<td>${live_orderVO.seller_id}</td> --%>
-									<%-- 									<td>${live_orderVO.srating}</td> --%>
-									<%-- 									<td>${live_orderVO.srating_content}</td> --%>
-									<%-- 									<td>${live_orderVO.point}</td> --%>
-
+									<td>${(orderVO.logistics==0)? '超商':'宅配'}</td>
+									<td>${(orderVO.logisticsstate==0)? '未出貨':''}
+										${(orderVO.logisticsstate==1)? '已出貨':''}
+										${(orderVO.logisticsstate==2)? '已取貨':''}</td>
 									<td>
 										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/live_order/live_order.do"
+											ACTION="<%=request.getContextPath()%>/front-end/order/order.do"
 											style="margin-bottom: 0px;">
 											<input type="submit" class="btn btn-info" value="修改">
-											<input type="hidden" name="live_order_no"
-												value="${live_orderVO.live_order_no}"> <input
-												type="hidden" name="action" value="getOne_For_UpdateB">
+											<input type="hidden" name="order_no"
+												value="${orderVO.order_no}"> <input type="hidden"
+												name="action" value="getOne_For_UpdateB">
 										</FORM>
 									</td>
 									<td>
 										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/live_order/live_order.do"
+											ACTION="<%=request.getContextPath()%>/front-end/order/order.do"
 											style="margin-bottom: 0px;">
 											<input type="submit" class="btn btn-danger" value="刪除">
-											<input type="hidden" name="live_order_no"
-												value="${live_orderVO.live_order_no}"> <input
-												type="hidden" name="action" value="delete">
+											<input type="hidden" name="order_no"
+												value="${orderVO.order_no}"> <input type="hidden"
+												name="action" value="delete">
 										</FORM>
 									</td>
-									<!-- 									<td> -->
-									<!-- 										<FORM METHOD="post" -->
-									<%-- 											ACTION="<%=request.getContextPath()%>/live_order/live_order.do" --%>
-									<!-- 											style="margin-bottom: 0px;"> -->
-									<!-- 											<input type="submit"  value="送出查詢"> <input -->
-									<!-- 												type="hidden" name="live_order_no" -->
-									<%-- 												value="${live_orderVO.live_order_no}"> <input --%>
-									<!-- 												type="hidden" name="action" value="listDetails_ByNo"> -->
-									<!-- 										</FORM> -->
-									<!-- 									</td> -->
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -192,11 +138,11 @@ table td, table tr, table th {
 		</div>
 
 		<%
-			if (request.getAttribute("listDetails_ByNo") != null) {
+		if (request.getAttribute("listDetails_ByNo") != null) {
 		%>
 		<jsp:include page="listDetails_ByNo.jsp" />
 		<%
-			}
+		}
 		%>
 
 

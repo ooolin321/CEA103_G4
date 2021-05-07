@@ -8,7 +8,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Order;
+
 
 public class OrderJNDIDAO implements OrderDAO_interface{
 
@@ -32,7 +32,10 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			"DELETE FROM `ORDER` WHERE `ORDER_NO` = ?";
 	private static final String UPDATE = 
 			"UPDATE `ORDER` SET `ORDER_DATE`=?, `ORDER_STATE`=?, `ORDER_SHIPPING`=?,`ORDER_PRICE`=?,`PAY_METHOD`=?,`PAY_DEADLINE`=?,`REC_NAME`=?,`ZIPCODE`=?,`CITY`=?,`TOWN`=?,`REC_ADDR`=?,`REC_PHONE`=?,`REC_CELLPHONE`=?,`LOGISTICS`=?,`LOGISTICSSTATE`=?,`DISCOUNT`=?,`USER_ID`=?,`SELLER_ID`=?,`SRATING`=?,`SRATING_CONTENT`=?,`POINT`=? WHERE `ORDER_NO` = ?";
-	
+	private static final String GET_ORDER_BY_ID =
+			"SELECT * FROM `ORDER` WHERE `USER_ID` = ? ORDER BY `ORDER_NO`";
+	private static final String GET_ORDER_BY_ID2 =
+			"SELECT * FROM `ORDER` WHERE `SELLER_ID` = ? ORDER BY `ORDER_NO`";
 	
 	
 	@Override
@@ -345,22 +348,19 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 		return list;
 	}
 	@Override
-	public List<OrderVO> getAll(Map<String, String[]> map) {
+	public List<OrderVO> getAllByID(String user_id) {
 		List<OrderVO> list = new ArrayList<OrderVO>();
 		OrderVO orderVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
+		
 		try {
 
 			con = ds.getConnection();
-			String finalSQL = " select * from `order` "
-					+ jdbcUtil_CompositeQuery_Order.get_WhereCondition(map)
-					+ "order by `order_no`";
-			pstmt = con.prepareStatement(finalSQL);
-			System.out.println("finalSQL(by DAO) = "+finalSQL);
+			pstmt = con.prepareStatement(GET_ORDER_BY_ID);
+			pstmt.setString(1, user_id);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -374,9 +374,6 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 				orderVO.setPay_method(rs.getInt("pay_method"));
 				orderVO.setPay_deadline(rs.getTimestamp("pay_deadline"));
 				orderVO.setRec_name(rs.getString("rec_name"));
-				orderVO.setZipcode(rs.getString("zipcode"));
-				orderVO.setCity(rs.getString("city"));
-				orderVO.setTown(rs.getString("town"));
 				orderVO.setRec_addr(rs.getString("rec_addr"));
 				orderVO.setRec_phone(rs.getString("rec_phone"));
 				orderVO.setRec_cellphone(rs.getString("rec_cellphone"));
@@ -388,12 +385,93 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 				orderVO.setSrating(rs.getInt("srating"));
 				orderVO.setSrating_content(rs.getString("srating_content"));
 				orderVO.setPoint(rs.getInt("point"));
+				orderVO.setCity(rs.getString("City"));
+				orderVO.setTown(rs.getString("Town"));
+				orderVO.setZipcode(rs.getString("zipcode"));
 				list.add(orderVO); // Store the row in the list
 			}
 
 			// Handle any driver errors
+		
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<OrderVO> getAllByID2(String seller_id) {
+		List<OrderVO> list = new ArrayList<OrderVO>();
+		OrderVO orderVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ORDER_BY_ID2);
+			pstmt.setString(1, seller_id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				
+				orderVO = new OrderVO();
+				orderVO.setOrder_no(rs.getInt("order_no"));
+				orderVO.setOrder_date(rs.getTimestamp("order_date"));
+				orderVO.setOrder_state(rs.getInt("order_state"));
+				orderVO.setOrder_shipping(rs.getInt("order_shipping"));
+				orderVO.setOrder_price(rs.getInt("order_price"));
+				orderVO.setPay_method(rs.getInt("pay_method"));
+				orderVO.setPay_deadline(rs.getTimestamp("pay_deadline"));
+				orderVO.setRec_name(rs.getString("rec_name"));
+				orderVO.setRec_addr(rs.getString("rec_addr"));
+				orderVO.setRec_phone(rs.getString("rec_phone"));
+				orderVO.setRec_cellphone(rs.getString("rec_cellphone"));
+				orderVO.setLogistics(rs.getInt("logistics"));
+				orderVO.setLogisticsstate(rs.getInt("logisticsstate"));
+				orderVO.setDiscount(rs.getInt("discount"));
+				orderVO.setUser_id(rs.getString("user_id"));
+				orderVO.setSeller_id(rs.getString("seller_id"));
+				orderVO.setSrating(rs.getInt("srating"));
+				orderVO.setSrating_content(rs.getString("srating_content"));
+				orderVO.setPoint(rs.getInt("point"));
+				orderVO.setCity(rs.getString("City"));
+				orderVO.setTown(rs.getString("Town"));
+				orderVO.setZipcode(rs.getString("zipcode"));
+				list.add(orderVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {

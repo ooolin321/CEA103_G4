@@ -41,9 +41,9 @@ public class Product_TypeDAO  implements Product_TypeDAO_interface  {
 	//查詢某一個商品類別資料
 	private static final String GET_ONE_STMT = 
 		"SELECT * FROM PRODUCT_TYPE where pdtype_no = ?";
-	//查詢這個商品類別有哪些商品
+	//查詢這個商品類別有哪些商品(商品頁面header導覽列)
 	private static final String GET_Products_ByPdtype_no =
-		"SELECT * FROM PRODUCT where pdtype_no = ? order by product_no";
+		"SELECT * FROM PRODUCT where pdtype_no = ? and product_state = 1";
 	//刪除商品類別
 	private static final String DELETE = 
 		"DELETE FROM PRODUCT_TYPE where pdtype_no = ?";

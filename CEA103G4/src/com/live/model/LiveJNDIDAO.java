@@ -28,9 +28,11 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT * FROM LIVE WHERE LIVE_NO = ?";
 	private static final String DELETE = "DELETE FROM LIVE WHERE LIVE_NO = ?";
 	private static final String UPDATE = "UPDATE LIVE SET LIVE_TYPE=?, LIVE_NAME=?, LIVE_TIME=?, LIVE_STATE=? ,USER_ID=?,EMPNO=?,LIVE_PHOTO=?,LIVE_ID=? WHERE LIVE_NO = ?";
-	private static final String GET_ALL_STATE1 = "SELECT * FROM LIVE ORDER BY LIVE_STATE DESC, LIVE_TIME DESC";
+	private static final String GET_ALL_STATE2 = "SELECT * FROM LIVE WHERE LIVE_STATE = 2 ORDER BY LIVE_TIME DESC";
 	private static final String GET_ALL_BY_ID = "SELECT * FROM LIVE WHERE USER_ID = ? ORDER BY LIVE_NO";
-
+	private static final String OVER_LIVE = "UPDATE LIVE SET LIVE_STATE = 0 WHERE LIVE_NO = ?";
+	
+	
 	@Override
 	public void insert(LiveVO liveVO) {
 		Connection con = null;
@@ -291,7 +293,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ALL_STATE1);
+			pstmt = con.prepareStatement(GET_ALL_STATE2);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -401,5 +403,43 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public void over(Integer live_no) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(OVER_LIVE);
+
+			pstmt.setInt(1, live_no);
+
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 	}
 }

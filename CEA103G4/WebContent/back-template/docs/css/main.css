@@ -1674,7 +1674,7 @@ pre code {
   max-width: 100%;
   margin-bottom: 1rem;
   background-color: transparent;
-  display: block;
+/*   display: block; */
   white-space:nowrap;
   overflow-x: auto;
 }
@@ -15237,3 +15237,295 @@ be a descendant of the grid when it is being dragged.
 .user .user-settings label {
   color: #666;
 }
+
+/*自寫css*/
+
+.app-content {
+  background: white;
+}
+
+								/*backProductList*/
+
+.backProductList {
+	margin-top: -29px;
+	background: white;
+}
+
+
+.backProductList .product-tab {
+  box-sizing: border-box;
+  display: block;
+}
+/* 框線取消改做陰影 */
+/* .backProductList .tab-item ul li:nth-child(1) a { */
+/*   border-right: 1px solid #ebebeb; */
+/* } */
+
+/* .backProductList .tab-item ul li:nth-child(2) a { */
+/*   border-right: 1px solid #ebebeb; */
+/* } */
+
+/* .backProductList .tab-item ul li:nth-child(3) a { */
+/*   border-right: 1px solid #ebebeb; */
+/* } */
+/* .backProductList .tab-item ul li:nth-child(4) a { */
+/*   border-right: 1px solid #ebebeb; */
+/* } */
+
+.backProductList .tab-item ul li a {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 700;
+  color: #b2b2b2;
+  text-transform: uppercase;
+  padding: 18px 61px;
+  position: relative;
+/*   border-top: 1px solid #ebebeb; */
+/*   border-left: 1px solid #ebebeb; */
+/*   border-bottom: 1px solid #ebebeb; */
+  text-decoration:none;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
+}
+
+.backProductList .tab-item ul li a.active {
+  color: #252525;
+}
+
+.backProductList .tab-item ul li a.active:before {
+  opacity: 1;
+}
+
+.backProductList .tab-item ul li a::before {
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 100%;
+  height: 5px;
+  background: #e7ab3c;
+  content: "";
+  opacity: 0;
+}
+/*textarea表格寬高*/
+/* .backProductList .productInfo { */
+/* 	width:300px; */
+/* 	height:200px; */
+/* } */
+.backProductList thead {
+    text-align: center;
+}
+
+.backProductList .table thead th, .backProductList .table th, .backProductList .table td{
+    border:none;
+}
+.backProductList tr {
+    text-align: center;
+}
+
+.backProductList .tab-content{
+  margin-top: 15px;
+}
+
+.backProductList .form-control:focus {
+    border-color: #fff;
+    webkit-box-shadow: none;
+    box-shadow: none;
+
+}
+.backProductList .form-control {
+	border: none;
+	background:white;
+	margin-top:-10px;
+	margin-left:-12px;
+	resize:none;
+	white-space:pre-wrap;
+	font-size: 0.875rem;
+	font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    padding-top:10px;
+    box-sizing:border-box;
+}
+.backProductList .table, .backProductList .thead {
+	border:none;
+	box-shadow: 1px 1px 10px rgb(0 0 0 / 10%);
+	border-radius: 5px;
+}
+
+.backProductList .btn.btn-danger{
+	margin-top:10px;
+}
+								
+								/*backProductListFinsh*/
+/*getAllUserReport start*/
+								
+#ReportProreport_state {
+	display:block;
+	margin-bottom: 35px;
+}
+
+/*getAllUserReport Finish*/
+
+/*backProductproductType 燈箱*/
+
+	.backProductType-bg {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background: rgba(0, 0, 0, 0.3);
+      }
+      
+
+.backProductType-bg .productType {
+        display: none;
+        width: 500px;
+        height: 245px;
+        position: fixed;
+        border: #ebebeb solid 1px;
+        left: 50%;
+        top: 50%;
+        background: #ffffff;
+        box-shadow: 0px 0px 20px #ddd;
+        z-index: 999;
+        transform: translate(-50%, -50%);
+        border-radius: 10px;
+      }
+
+.backProductType-bg .productType-title {
+        width: 100%;
+        margin: 20px 0px 0px 0px;
+        text-align: center;
+        line-height: 40px;
+        height: 40px;
+        font-size: 18px;
+        position: relative;
+        cursor: move;
+        font-weight: 700;
+      }
+#pdtype_noLink{
+	color:white;
+}
+
+.backProductType-bg .productType-input-content {
+        margin-top: 20px;
+      }
+
+.backProductType-bg  .productType-button a,
+.backProductType-bg  .productType-title a {
+        text-decoration: none;
+        color: #ffffff;
+        display: block;
+      }
+
+.backProductType-bg .productType #closeBtn {
+        color: #e7ab3c;
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+.backProductType-bg .productType-button {
+        width: 50%;
+        margin: 12px auto 0px 130px;
+        line-height: 40px;
+        font-size: 14px;
+        border: #ebebeb 1px solid;
+        text-align: center;
+        color: #ffffff;
+        font-weight: 700;
+        background: #e7ab3c;
+        border-radius: 2px;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        position: relative;
+        border-radius: 5px;
+      }
+
+.backProductType-bg  .productType-button::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        border: inherit;
+        border-color: #000;
+        border-radius: inherit;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        content: " ";
+      }
+.backProductType-bg .productType-button:active::before {
+        opacity: 0.1;
+      }
+
+.backProductType-bg .productType-input input {
+        float: left;
+        line-height: 35px;
+        height: 35px;
+        width: 367px;
+        border: #e7ab3c 1.5px solid;
+        text-indent: 5px;
+        border-radius: 5px;
+        margin-left: 5px;
+      }
+.backProductType-bg input:focus {
+  outline: none;
+}
+
+.backProductType-bg .productType-input {
+        overflow: hidden;
+        margin: 0px 0px 20px 0px;
+      }
+
+.backProductType-bg .productType-input label {
+        float: left;
+        width: 90px;
+        padding-right: 10px;
+        text-align: right;
+        line-height: 35px;
+        height: 35px;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+.backProductType-bg  .productType-title span {
+        position: absolute;
+        font-size: 12px;
+        right: -20px;
+        top: -30px;
+        background: #ffffff;
+        border: #ebebeb solid 1px;
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+      }
+.backProductType-bg{
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        background: rgba(0, 0, 0, 0.3);
+      }
+
+ /*backProductType finish*/ 
+ 
+     
+  /*backUpdatePdtype start*/  
+ input.updatePdtype {
+  	border: #e7ab3c 1.5px solid;
+  	border-radius: 5px;
+  	font-weight:400;
+  	font-size:16px;
+  	padding-left: 8px;
+  }
+  
+input.updatePdtype:focus {
+  outline: none;
+}
+
+   

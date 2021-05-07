@@ -2,7 +2,20 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.product.model.*"%>
+<%@ page import="com.product_type.model.*"%>
+<%@ page import="com.product.controller.*"%>
 
+<%
+	
+	ProductDAO dao = new ProductDAO();
+	List<ProductVO> products = dao.getAllShop();
+	pageContext.setAttribute("products",products);
+		
+ %>
+ 
+ 
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,84 +51,45 @@
     <!-- Hero Section Begin -->
     <section class="hero-section">
       <div class="hero-items owl-carousel">
-        <div class="single-hero-items set-bg" data-setbg="img/hero-1.jpg">
+        <div class="single-hero-items set-bg" data-setbg="${pageContext.request.contextPath}/front-template/images/index/hero-1.jpg">
           <div class="container">
             <div class="row">
-              <div class="col-lg-5">
-                <span>Bag,kids</span>
-                <h1>Black friday</h1>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore
+              <div class="col-lg-5 indexwords">
+                <span>Second hand</span>
+                <h1>Mode femme</h1>
+                <h5>不追隨昂貴的品牌，尋找符合個人風格的穿搭</h5><br>
+                <p> 高價商品已不再是時尚的代名詞，二手服飾讓所有人以平價的方式打造出自我風格的穿搭Style。
+					來Mode Femme出售您的服飾、配件，或是尋找屬於你的風格搭配！
                 </p>
-                <a href="#" class="primary-btn">Shop Now</a>
+                <a href="${pageContext.request.contextPath}/front-end/productsell/shop.jsp" class="primary-btn">Shop Now</a>
               </div>
             </div>
             <div class="off-card">
-              <h2>Sale <span>50%</span></h2>
+              <h2>Mode <span>femme</span></h2>
             </div>
           </div>
         </div>
-        <div class="single-hero-items set-bg" data-setbg="img/hero-2.jpg">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-5">
-                <span>Bag,kids</span>
-                <h1>Black friday</h1>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore
-                </p>
-                <a href="#" class="primary-btn">Shop Now</a>
-              </div>
-            </div>
-            <div class="off-card">
-              <h2>Sale <span>50%</span></h2>
-            </div>
-          </div>
-        </div>
+<%--         <div class="single-hero-items set-bg" data-setbg="${pageContext.request.contextPath}/front-template/images/index/hero-2.jpg"> --%>
+<!--           <div class="container"> -->
+<!--             <div class="row"> -->
+<!--               <div class="col-lg-5"> -->
+<!--                 <span>Bag,kids</span> -->
+<!--                 <h1>Black friday</h1> -->
+<!--                 <p> -->
+<!--                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed -->
+<!--                   do eiusmod tempor incididunt ut labore et dolore -->
+<!--                 </p> -->
+<!--                 <a href="#" class="primary-btn">Shop Now</a> -->
+<!--               </div> -->
+<!--             </div> -->
+<!--             <div class="off-card"> -->
+<!--               <h2>Sale <span>50%</span></h2> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--         </div> -->
       </div>
     </section>
     <!-- Hero Section End -->
-
-    <!-- Banner Section Begin -->
-    <div class="banner-section spad">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-4">
-            <a href="#">
-            <div class="single-banner">
-              <img src="img/banner-1.jpg" alt="" />
-              <div class="inner-text">
-                <h4>Accessory</h4>
-              </div>
-            </div>
-            </a>
-          </div>
-          <div class="col-lg-4">
-            <a href="#">
-            <div class="single-banner">
-              <img src="img/banner-2.jpg" alt="" />
-              <div class="inner-text">
-                <h4>Clothings</h4>
-              </div>
-            </div>
-            </a>
-          </div>
-          <div class="col-lg-4">
-            <a href="#">
-            <div class="single-banner">
-              <img src="img/banner-3.png" alt="" width="200px"  height="250px" />
-              <div class="inner-text">
-                <h4>HandBag</h4>
-              </div>
-            </div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Banner Section End -->
 
     <!-- Women Banner Section Begin -->
     <section class="women-banner spad">
@@ -124,122 +98,75 @@
           <div class="col-lg-3">
             <div
               class="product-large set-bg"
-              data-setbg="img/products/women-large.jpg"
+              data-setbg="${pageContext.request.contextPath}/front-template/images/products/women-large.jpg"
             >
               <h2>Women’s</h2>
-              <a href="#">Discover More</a>
             </div>
           </div>
           <div class="col-lg-8 offset-lg-1">
-            <div class="filter-control">
-              <ul>
-                <li class="active">Clothings</li>
-                <li>HandBag</li>
-                <li>Shoes</li>
-                <li>Accessories</li>
-              </ul>
-            </div>
+          <div class="product-slider-pdtype"><a class="cative" href="<%=request.getContextPath()%>/product_type/product_type.do?action=getProductsByPdtype&pdtype_no=4001">Clothes</a></div>
             <div class="product-slider owl-carousel">
-              <div class="product-item">
+            <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()}">
+            <c:if test="${productVO.pdtype_no == 4001}"> 
+            <div class="product-item" >
                 <div class="pi-pic">
-                  <img src="img/products/women-1.jpg" alt="" />
-                  <div class="sale">Sale</div>
-                  <div class="icon">
-                    <i class="icon_heart_alt"></i>
+                <div class="pi-img">
+                <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}">
+                    <img class="card-img-top"  src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" alt="${productVO.product_name}">           
+                    </a>      	
                   </div>
-                  <ul>
-                    <li class="w-icon active">
-                      <a href="#"><i class="icon_bag_alt"></i></a>
-                    </li>
-                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                    <li class="w-icon">
-                      <a href="#"><i class="fa fa-random"></i></a>
-                    </li>
-                  </ul>
+                    <ul>
+                        <li class="w-icon active">
+                            <a href="#"><i class="icon_bag_alt"></i></a>
+                        </li>   
+                        <li class="w-heart" >
+                            <i class="icon_heart_alt"  data-no="${productVO.product_no}"></i>
+                        </li>
+                    </ul>
                 </div>
                 <div class="pi-text">
-                  <div class="catagory-name">Coat</div>
-                  <a href="#">
-                    <h5>Pure Pineapple</h5>
-                  </a>
-                  <div class="product-price">
-                    $14.00
-                    <span>$35.00</span>
-                  </div>
+                  <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}">                  
+                        <h5>${productVO.product_name}</h5>    
+                    	 <div class="product-price"><span>$</span>
+                          ${productVO.product_price}
+                    	</div>
+                    </a>
                 </div>
-              </div>
-              <div class="product-item">
+            </div>
+            </c:if>
+            </c:forEach>
+            </div>
+            <div class="product-slider-pdtype"><a class="cative" href="<%=request.getContextPath()%>/product_type/product_type.do?action=getProductsByPdtype&pdtype_no=4004">Shoes</a></div>
+           <div class="product-slider owl-carousel">  
+            <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()}">
+            <c:if test="${productVO.pdtype_no == 4004}"> 
+            <div class="product-item" >
                 <div class="pi-pic">
-                  <img src="img/products/women-2.jpg" alt="" />
-                  <div class="icon">
-                    <i class="icon_heart_alt"></i>
+                <div class="pi-img">
+                <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}">
+                    <img class="card-img-top"  src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" alt="${productVO.product_name}">           
+                    </a>      	
                   </div>
-                  <ul>
-                    <li class="w-icon active">
-                      <a href="#"><i class="icon_bag_alt"></i></a>
-                    </li>
-                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                    <li class="w-icon">
-                      <a href="#"><i class="fa fa-random"></i></a>
-                    </li>
-                  </ul>
+                    <ul>
+                        <li class="w-icon active">
+                            <a href="#"><i class="icon_bag_alt"></i></a>
+                        </li>   
+                        <li class="w-heart" >
+                            <i class="icon_heart_alt"  data-no="${productVO.product_no}"></i>
+                        </li>
+                    </ul>
                 </div>
                 <div class="pi-text">
-                  <div class="catagory-name">Shoes</div>
-                  <a href="#">
-                    <h5>Guangzhou sweater</h5>
-                  </a>
-                  <div class="product-price">$13.00</div>
+                  <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}">                  
+                        <h5>${productVO.product_name}</h5>    
+                    	 <div class="product-price"><span>$</span>
+                          ${productVO.product_price}
+                    	</div>
+                    </a>
                 </div>
-              </div>
-              <div class="product-item">
-                <div class="pi-pic">
-                  <img src="img/products/women-3.jpg" alt="" />
-                  <div class="icon">
-                    <i class="icon_heart_alt"></i>
-                  </div>
-                  <ul>
-                    <li class="w-icon active">
-                      <a href="#"><i class="icon_bag_alt"></i></a>
-                    </li>
-                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                    <li class="w-icon">
-                      <a href="#"><i class="fa fa-random"></i></a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="pi-text">
-                  <div class="catagory-name">Towel</div>
-                  <a href="#">
-                    <h5>Pure Pineapple</h5>
-                  </a>
-                  <div class="product-price">$34.00</div>
-                </div>
-              </div>
-              <div class="product-item">
-                <div class="pi-pic">
-                  <img src="img/products/women-4.jpg" alt="" />
-                  <div class="icon">
-                    <i class="icon_heart_alt"></i>
-                  </div>
-                  <ul>
-                    <li class="w-icon active">
-                      <a href="#"><i class="icon_bag_alt"></i></a>
-                    </li>
-                    <li class="quick-view"><a href="#">+ Quick View</a></li>
-                    <li class="w-icon">
-                      <a href="#"><i class="fa fa-random"></i></a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="pi-text">
-                  <div class="catagory-name">Towel</div>
-                  <a href="#">
-                    <h5>Converse Shoes</h5>
-                  </a>
-                  <div class="product-price">$34.00</div>
-                </div>
-              </div>
+            </div>
+            </c:if>
+            </c:forEach>
             </div>
           </div>
         </div>
@@ -248,15 +175,12 @@
     <!-- Women Banner Section End -->
 
     <!-- Deal Of The Week Section Begin-->
-    <section class="deal-of-week set-bg spad" data-setbg="img/time-bg.jpg">
-      <div class="container">
+    <section class="deal-of-week set-bg spad" data-setbg="${pageContext.request.contextPath}/front-template/images/index/time-live.jpg">
+      <div class="row container">
         <div class="col-lg-6 text-center">
           <div class="section-title">
-            <h2>Deal Of The Week</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br />
-              do ipsum dolor sit amet, consectetur adipisicing elit
-            </p>
+            <h2>直播預告</h2>
+			<h4>直播間名稱：</h4>			
             <div class="product-price">
               $35.00
               <span>/ HanBag</span>
@@ -264,24 +188,35 @@
           </div>
           <div class="countdown-timer" id="countdown">
             <div class="cd-item">
-              <span>56</span>
+              <span></span>
               <p>Days</p>
             </div>
             <div class="cd-item">
-              <span>12</span>
+              <span></span>
               <p>Hrs</p>
             </div>
             <div class="cd-item">
-              <span>40</span>
+              <span></span>
               <p>Mins</p>
             </div>
             <div class="cd-item">
-              <span>52</span>
+              <span></span>
               <p>Secs</p>
             </div>
           </div>
           <a href="#" class="primary-btn">Shop Now</a>
         </div>
+        <div class="col-lg-6 text-center">
+        <div>
+        <img width="350px" height="350px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=5081" class="rounded mx-auto d-block" alt="">
+        
+        </div>
+        
+        
+        </div>
+        
+        
+        
       </div>
     </section>
     <!-- Deal Of The Week Section End -->
@@ -421,7 +356,7 @@
             <div class="col-lg-4">
               <div class="single-benefit">
                 <div class="sb-icon">
-                  <img src="img/icon-1.png" alt="" />
+                  <img src="${pageContext.request.contextPath}/front-template/images/index/icon-1.png" alt="" />
                 </div>
                 <div class="sb-text">
                   <h6>Free Shipping</h6>
@@ -432,7 +367,7 @@
             <div class="col-lg-4">
               <div class="single-benefit">
                 <div class="sb-icon">
-                  <img src="img/icon-2.png" alt="" />
+                  <img src="${pageContext.request.contextPath}/front-template/images/index/icon-2.png" alt="" />
                 </div>
                 <div class="sb-text">
                   <h6>Delivery On Time</h6>
@@ -443,7 +378,7 @@
             <div class="col-lg-4">
               <div class="single-benefit">
                 <div class="sb-icon">
-                  <img src="img/icon-1.png" alt="" />
+                  <img src="${pageContext.request.contextPath}/front-template/images/index/icon-1.png" alt="" />
                 </div>
                 <div class="sb-text">
                   <h6>Secure Payment</h6>
@@ -456,40 +391,6 @@
       </div>
     </section>
     <!-- Latest Blog Section End -->
-
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-      <div class="container">
-        <div class="logo-carousel owl-carousel">
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-1.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-2.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-3.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-4.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-5.png" alt="" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Partner Logo Section End -->
 
    
     <!-- Footer Section Begin -->

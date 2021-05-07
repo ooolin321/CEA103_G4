@@ -273,14 +273,18 @@
 	}
 	})
 	$("#product_num").change(function(e){
-		
-		if($("#product_num").val() > ${productVO.product_remaining}){ //非數字尚未篩
+		if($("#product_num").val() > ${productVO.product_remaining}){ //數字以外未篩
 			window.alert('請勿超過庫存數量');
 			$("#product_num").val(${productVO.product_remaining});
 			let point = (Math.floor(${productVO.product_price}/100))*$("#product_num").val();
 			$("#point").attr('value', point);
 			$("#showOrder_point").text(point);
+		}else {
+			let point = (Math.floor(${productVO.product_price}/100))*$("#product_num").val();
+			$("#point").attr('value', point);
+			$("#showOrder_point").text(point);
 		}
+		
 	})
 	$(".remove").click(function(e){
 		if($("#product_num").val()>0){

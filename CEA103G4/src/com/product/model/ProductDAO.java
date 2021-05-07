@@ -39,6 +39,8 @@ public class ProductDAO implements ProductDAO_interface {
 	//修改商品 賣家使用
 	private static final String UPDATE = "UPDATE PRODUCT set product_name=?, product_info=?, product_price=?,product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=? where product_no = ?";
 	private static final String GET_ALLJSON = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";
+	//修改商品 買家使用
+	private static final String UPDATE_REMAINING = "UPDATE PRODUCT set product_remaining=?, product_state=? where product_no = ?";
 	
 	/*--------------shop.jsp商品區------------*/
 	//查詢所有商品狀態為直售的商品 (隨機排序)
@@ -718,6 +720,59 @@ public class ProductDAO implements ProductDAO_interface {
 			}
 		}
 		return Optional.ofNullable(productVO);
+	}
+	
+	@Override
+	public void update_remaining(ProductVO productVO){
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(UPDATE_REMAINING);
+
+			pstmt.setInt(1, productVO.getProduct_remaining());
+			pstmt.setInt(2, productVO.getProduct_state());
+			pstmt.setInt(3, productVO.getProduct_no());
+
+			pstmt.executeUpdate();
+			
+			con.commit();
+			// Handle any driver errors
+		} catch (SQLException se) {
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
 	}
 	
 }

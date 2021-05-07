@@ -23,7 +23,7 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 		}
 	}
 	private static final String INSERT_STMT = 
-			"INSERT INTO `ORDER` (`ORDER_STATE`,`ORDER_SHIPPING`,`ORDER_PRICE`,`PAY_METHOD`,`PAY_DEADLINE`,`REC_NAME`,`ZIPCODE`,`CITY`,`TOWN`,`REC_ADDR`,`REC_PHONE`,`REC_CELLPHONE`,`LOGISTICS`,`LOGISTICSSTATE`,`DISCOUNT`,`USER_ID`,`SELLER_ID`,`SRATING`,`SRATING_CONTENT`,`POINT`) VALUES (?, ?, ?, ?, DATE_ADD(CURRENT_TIMESTAMP() , INTERVAL 3 HOUR), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO `ORDER` (`ORDER_NO`,`ORDER_STATE`,`ORDER_SHIPPING`,`ORDER_PRICE`,`PAY_METHOD`,`PAY_DEADLINE`,`REC_NAME`,`ZIPCODE`,`CITY`,`TOWN`,`REC_ADDR`,`REC_PHONE`,`REC_CELLPHONE`,`LOGISTICS`,`LOGISTICSSTATE`,`DISCOUNT`,`USER_ID`,`SELLER_ID`,`SRATING`,`SRATING_CONTENT`,`POINT`) VALUES (null, ?, ?, ?, ?, DATE_ADD(CURRENT_TIMESTAMP() , INTERVAL 3 HOUR), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT `ORDER_NO`,`ORDER_DATE`,`ORDER_STATE`,`ORDER_SHIPPING`,`ORDER_PRICE`,`PAY_METHOD`,`PAY_DEADLINE`,`REC_NAME`,`ZIPCODE`,`CITY`,`TOWN`,`REC_ADDR`,`REC_PHONE`,`REC_CELLPHONE`,`LOGISTICS`,`LOGISTICSSTATE`,`DISCOUNT`,`USER_ID`,`SELLER_ID`,`SRATING`,`SRATING_CONTENT`,`POINT` FROM `ORDER` ORDER BY `ORDER_NO`";
 	private static final String GET_ONE_STMT = 
@@ -36,21 +36,20 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 	
 	
 	@Override
-	public void insert(OrderVO orderVO) {
+	public Object insert(OrderVO orderVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT);
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(INSERT_STMT,PreparedStatement.RETURN_GENERATED_KEYS);
 
-//			pstmt.setDate(1, orderVO.getOrder_date());
 			pstmt.setInt(1, orderVO.getOrder_state());
 			pstmt.setInt(2, orderVO.getOrder_shipping());			
 			pstmt.setInt(3, orderVO.getOrder_price());
 			pstmt.setInt(4, orderVO.getPay_method());
-//			pstmt.setTimestamp(5, orderVO.getPay_deadline());
 			pstmt.setString(5, orderVO.getRec_name());
 			pstmt.setString(6, orderVO.getZipcode());
 			pstmt.setString(7, orderVO.getCity());
@@ -68,12 +67,28 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			pstmt.setInt(19, orderVO.getPoint());
 		
 			pstmt.executeUpdate();
-
+			
+			ResultSet rs = pstmt.getGeneratedKeys();
+			rs.next();
+			Integer order_no = rs.getInt(1);
+			orderVO.setOrder_no(order_no);
+			con.commit();
 			// Handle any SQL errors
 		} catch (SQLException se) {
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -88,7 +103,7 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 					e.printStackTrace(System.err);
 				}
 			}
-		}
+		}return orderVO;
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class Order_detailDAO implements Order_detailDAO_interface{
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO `ORDER_DETAIL` (`PRODUCT_NO`,`PRODUCT_NUM`,`ORDER_PRICE`) VALUES (?, ?, ?)";
+			"INSERT INTO `ORDER_DETAIL` (`ORDER_NO`,`ORDER_PRICE`,`PRODUCT_NO`,`PRODUCT_NUM`) VALUES (?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT `ORDER_NO`,`PRODUCT_NO`,`PRODUCT_NUM`,`ORDER_PRICE` FROM `ORDER_DETAIL` ORDER BY `ORDER_NO`";
 	private static final String GET_ONE_STMT = 
@@ -44,18 +44,32 @@ public class Order_detailDAO implements Order_detailDAO_interface{
 		
 		try {
 			con = ds.getConnection();
+			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(INSERT_STMT);
-
-			pstmt.setInt(1, order_detailVO.getProduct_no());
-			pstmt.setInt(2, order_detailVO.getProduct_num());
-			pstmt.setInt(3, order_detailVO.getOrder_price());
+			
+			pstmt.setInt(1, order_detailVO.getOrder_no());
+			pstmt.setInt(2, order_detailVO.getOrder_price());
+			pstmt.setInt(3, order_detailVO.getProduct_no());
+			pstmt.setInt(4, order_detailVO.getProduct_num());
 
 			pstmt.executeUpdate();
+			con.commit();
 		} catch (SQLException se) {
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 			// Clean up JDBC resources		
 			} finally {
+				try {
+					con.setAutoCommit(true);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -82,9 +96,10 @@ public class Order_detailDAO implements Order_detailDAO_interface{
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(UPDATE);
 
-				pstmt.setInt(1, order_detailVO.getProduct_no());
-				pstmt.setInt(2, order_detailVO.getProduct_num());
-				pstmt.setInt(3, order_detailVO.getOrder_price());
+				pstmt.setInt(1, order_detailVO.getOrder_no());
+				pstmt.setInt(2, order_detailVO.getOrder_price());
+				pstmt.setInt(3, order_detailVO.getProduct_no());
+				pstmt.setInt(4, order_detailVO.getProduct_num());
 
 				pstmt.executeUpdate();
 
@@ -167,10 +182,10 @@ public class Order_detailDAO implements Order_detailDAO_interface{
 				while (rs.next()) {
 					//
 					order_detailVO = new Order_detailVO();
-					order_detailVO.setOrder_no(rs.getInt("notice_no"));
+					order_detailVO.setOrder_no(rs.getInt("order_no"));
+					order_detailVO.setOrder_price(rs.getInt("order_price"));
 					order_detailVO.setProduct_no(rs.getInt("product_no"));
 					order_detailVO.setProduct_num(rs.getInt("product_num"));
-					order_detailVO.setOrder_price(rs.getInt("order_price"));
 				}
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -219,10 +234,10 @@ public class Order_detailDAO implements Order_detailDAO_interface{
 				while (rs.next()) {
 					//
 					order_detailVO = new Order_detailVO();
-					order_detailVO.setOrder_no(rs.getInt("notice_no"));
+					order_detailVO.setOrder_no(rs.getInt("order_no"));
+					order_detailVO.setOrder_price(rs.getInt("order_price"));
 					order_detailVO.setProduct_no(rs.getInt("product_no"));
 					order_detailVO.setProduct_num(rs.getInt("product_num"));
-					order_detailVO.setOrder_price(rs.getInt("order_price"));
 					list.add(order_detailVO); // Store the row in the list
 				}
 

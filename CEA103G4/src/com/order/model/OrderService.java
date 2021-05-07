@@ -12,7 +12,7 @@ public class OrderService {
 		dao = new OrderJNDIDAO();
 	}
 
-	public OrderVO addOrder(Integer order_state, Integer order_shipping,  Integer order_price, Integer pay_method, String rec_name, String rec_addr, String zipcode, String city, String town, String rec_phone, String rec_cellphone, Integer logistics, Integer logisticsstate, Integer discount, String user_id, String seller_id, Integer srating, String srating_content, Integer point) {
+	public OrderVO addOrder(Integer order_state, Integer order_shipping,  Integer order_price, Integer pay_method, String rec_name, String zipcode, String city, String town,  String rec_addr, String rec_phone, String rec_cellphone, Integer logistics, Integer logisticsstate, Integer discount, String user_id, String seller_id, Integer srating, String srating_content, Integer point) {
 
 		OrderVO orderVO = new OrderVO();
 

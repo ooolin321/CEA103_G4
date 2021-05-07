@@ -272,7 +272,7 @@ $("#live_no").change(function(e) {
 $("#user_id").change(function(e){
 	<c:forEach var="userVO" items="${userSvc.all}">	
 	if($("#user_id").val()=='${userVO.user_id}'){
-		$("#showPoint").text('${userVO.user_point}');
+		$("#showPoint").text(${userVO.user_point});
 	}
 	</c:forEach>
 });

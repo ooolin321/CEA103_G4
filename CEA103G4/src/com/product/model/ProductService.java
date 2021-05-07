@@ -97,7 +97,18 @@ public class ProductService {
 		return dao.getMoneyRangeShop(minPrice, maxPrice);
 	}
 
-	
+	public ProductVO updateProductRemaining(Integer product_no,Integer product_remaining, Integer product_state) 
+	{
+
+		ProductVO productVO = new ProductVO();
+
+		productVO.setProduct_no(product_no);
+		productVO.setProduct_remaining(product_remaining);
+		productVO.setProduct_state(product_state);
+		dao.update_remaining(productVO);
+
+		return productVO;
+	}
 
 }
 

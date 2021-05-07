@@ -3,9 +3,8 @@
 <%@ page import="com.order.model.*"%>
 <%@ page import="com.product.model.*"%>
 
-<%
-  ProductVO productVO = (ProductVO) request.getAttribute("productVO");
-%>
+
+
 
 <html>
 <head>
@@ -89,8 +88,24 @@
 	</tr>
 	<tr>
 		<td>商品庫存：</td>
-		<td id="product_remaining">${productVO.product_remaining}</td>
+		<td>${productVO.product_remaining}</td>
 		<td><input type="hidden" name="product_remaining" value="${productVO.product_remaining}"></td>
+	</tr>
+	<tr>
+		<td>商品狀態：</td>
+		<td>${(productVO.product_state==0)? '待售':''}
+			${(productVO.product_state==1)? '直售':''}
+			${(productVO.product_state==2)? '直播':''}
+			${(productVO.product_state==3)? '已售出':''}
+			${(productVO.product_state==4)? '下架':''}
+			${(productVO.product_state==5)? '檢舉下架':''}
+		</td>
+		<td><input type="hidden" name="product_state" value="${productVO.product_state}"></td>
+	</tr>
+	<tr>
+		<td>商品售價：</td>
+		<td>${productVO.product_price}</td>
+		<td><input type="hidden" name="product_price" value="${productVO.product_price}"></td>
 	</tr>
 	<tr>
 		<td>購買數量：</td>
@@ -112,7 +127,7 @@
 	</tr>
 	
 	<tr>
-		<td>訂單金額:</td>
+		<td>結帳金額:</td>
 		<td><input type="TEXT" name="order_price" size="45" id="order_price" value="${param.order_price}"/></td>
 	</tr>
 	<tr>
@@ -168,15 +183,16 @@
 		</td>
 	</tr>
 	<tr>
+		<td>可用點數:</td>
+		<td><div id="showPoint">0</div></td>
+	</tr>
+	<tr>
 		<td>使用點數折抵:</td>
-		<td>
-		<div>可用點數:${userVO.user_point}</div>
-		<input type="TEXT" name="discount" size="45" value="0"/>
-		</td>
+		<td><input type="TEXT" name="discount" size="45" value="0"/></td>
 	</tr>
 	<tr>
 		<td>買家帳號:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="user_id">
+		<td><select size="1" name="user_id" id="user_id">
 					<c:forEach var="userVO" items="${userSvc.all}">
 						<option value="${userVO.user_id}" ${(orderVO.user_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
 					</c:forEach>
@@ -184,7 +200,7 @@
 	</tr>
 	<tr>
 		<td>賣家帳號:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="seller_id">
+		<td><select size="1" name="seller_id" id="seller_id">
 					<c:forEach var="userVO" items="${userSvc.all}">
 						<option value="${userVO.user_id}" ${(orderVO.user_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
 					</c:forEach>
@@ -247,7 +263,6 @@
 			$("#con").val("5");
 		})
 	})
-	
 	$("#logistics").change(function(e) {
 	if($("#logistics").val() == '0'){
 		$("#order_shipping").attr('value', '100');
@@ -256,36 +271,47 @@
 		$("#order_shipping").attr('value', '50');
 		$("#showOrder_shipping").text("50");
 	}
-	});
+	})
 	$("#product_num").change(function(e){
+		
 		if($("#product_num").val() > ${productVO.product_remaining}){ //非數字尚未篩
 			window.alert('請勿超過庫存數量');
 			$("#product_num").val(${productVO.product_remaining});
+			let point = (Math.floor(${productVO.product_price}/100))*$("#product_num").val();
+			$("#point").attr('value', point);
+			$("#showOrder_point").text(point);
 		}
 	})
 	$(".remove").click(function(e){
 		if($("#product_num").val()>0){
 			$("#product_num").val(parseInt($("#product_num").val())-1);
+			let point = (Math.floor(${productVO.product_price}/100))*$("#product_num").val();
+			$("#point").attr('value', point);
+			$("#showOrder_point").text(point);
 		}
 	})
 	$(".add").click(function(e){
 		if($("#product_num").val()<${productVO.product_remaining}){
 			$("#product_num").val(parseInt($("#product_num").val())+1);
-		}
-	})
-	$("#order_price").change(function(e) {
-			let point = Math.floor($("#order_price").val()/100);
+			let point = (Math.floor(${productVO.product_price}/100))*$("#product_num").val();
 			$("#point").attr('value', point);
 			$("#showOrder_point").text(point);
-		});
-	
+		}
+	})
+	$()
 	$("#twzipcode").twzipcode({
 		zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
 		css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 
 		countyName: "city", // 自訂城市 select 標籤的 name 值
 		districtName: "town" // 自訂區別 select 標籤的 name 值
-		});
-		
+		})
+	$("#user_id").change(function(e){
+		<c:forEach var="userVO" items="${userSvc.all}">	
+		if($("#user_id").val()=='${userVO.user_id}'){
+			$("#showPoint").text(${userVO.user_point});
+		}
+		</c:forEach>
+	});
 		
 </script>
 </html>

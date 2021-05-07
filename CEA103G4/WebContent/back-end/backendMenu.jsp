@@ -3,19 +3,17 @@
     pageEncoding="utf-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.emp.model.*"%>
+<%@ page import="com.fun.model.*"%>
 <%@ page import="com.auth.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
     EmpVO empVO = (EmpVO) session.getAttribute("empAccount");
     session.setAttribute("empVO", empVO);
-    
+    FunVO funVO = (FunVO) request.getAttribute("funVO");
     List<AuthVO> authList = (List<AuthVO>) session.getAttribute("authList");
 	session.setAttribute("authList", authList);
 %>
-<%-- <% --%>
-// for(AuthVO auth:authList) {
-// 	out.println(auth.getFunno()+","+auth.getAuth_no());
-<%-- }%> --%>
+
 <!-- Navbar-->
 <header class="app-header">
     <a class="app-header__logo"
@@ -126,13 +124,13 @@
         <img class="app-sidebar__user-avatar" src="#" alt="User Image">
         <div>
             <p class="app-sidebar__user-name">${empVO.ename}</p>
-            <p class="app-sidebar__user-designation">Frontend Developer</p>
+            <p class="app-sidebar__user-designation"></p>
         </div>
     </div>
     <ul class="app-menu">
-        <li class="treeview"><a class="app-menu__item active" href="#"
+        <li class="treeview disabled"><a class="app-menu__item active" href="#"
             data-toggle="treeview"><i class="app-menu__icon fa fa-dashboard"></i><span
-                class="app-menu__label" value="${funVO.funno}">員工管理</span><i
+                class="app-menu__label" >員工管理</span><i
                 class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li><a class="treeview-item"
@@ -143,7 +141,7 @@
                     <i class="icon fa fa-circle-o"></i>新增員工</a></li>
             </ul></li>
 
-        <li class="treeview"><a class="app-menu__item" href="#"
+        <li class="treeview disabled"><a class="app-menu__item" href="#"
             data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span
                 class="app-menu__label">權限管理</span><i
                 class="treeview-indicator fa fa-angle-right"></i></a>
@@ -162,8 +160,8 @@
                 class="app-menu__label">會員管理</span><i
                 class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li><a class="treeview-item" href="#"><i
-                        class="icon fa fa-circle-o"></i>所有會員(none)</a></li>
+                <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/listAllUser.jsp"><i
+                        class="icon fa fa-circle-o"></i>所有會員</a></li>
             </ul></li>
 
         <li class="treeview"><a class="app-menu__item" href="#"
@@ -244,3 +242,16 @@
     </ul>
 </aside>
 
+<script>
+<c:forEach var="authList" items="${authList}">
+var index = parseInt('${authList.getFunno()}')-15001;
+var tree = document.getElementsByClassName("treeview")[index]
+	if(`${authList.getAuth_no()}`=='0'){
+		tree.style.display="none";
+//		tree.classList.add("disabled");
+	}
+	
+// arr1.push(`${authList.getFunno()}`);
+
+</c:forEach>
+</script>

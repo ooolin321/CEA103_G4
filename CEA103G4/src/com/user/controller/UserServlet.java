@@ -103,6 +103,11 @@ public class UserServlet extends HttpServlet {
 				String id_card = userVO.getId_card();
 				String idCard = id_card.replaceAll("([a-zA-Z]\\d{2})\\d{4}(\\d{3})", "$1****$2");
 				userVO.setId_card(idCard);
+				
+				//信箱隱藏(部分*表示)
+				String user_mail = userVO.getUser_mail();
+				String userMail = user_mail.replaceAll("(\\w?)(\\w+)(\\w)(@\\w+\\.[a-z]+(\\.[a-z]+)?)", "$1****$3$4"); 
+				userVO.setUser_mail(userMail);
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("userVO", userVO); // 資料庫取出的userVO物件,存入req
 				String url = "/front-end/user/listOneUser.jsp";
@@ -481,9 +486,9 @@ public class UserServlet extends HttpServlet {
 				else
 					errorMsgs.put("id_card","*身分證長度不正確！");
 				
-				String user_gender = req.getParameter("user_gender").trim();
+				String user_gender = req.getParameter("user_gender");
 				if (user_gender == null || user_gender.trim().length() == 0) {
-					errorMsgs.put("user_gender","*性別請勿空白");
+					errorMsgs.put("user_gender","*請選性別");
 				}
 				
 				java.sql.Date user_dob = null;
@@ -582,8 +587,8 @@ public class UserServlet extends HttpServlet {
 				}
 				
 				/***************************2.開始新增資料***************************************/
-UserService userSvc = new UserService();
-userVO = userSvc.addUser(user_id, user_pwd, user_name, id_card, user_gender,user_dob, user_mail, user_phone, user_mobile, city, town, zipcode, user_addr, regdate, user_point, violation, user_state, user_comment, comment_total, cash);
+				UserService userSvc = new UserService();
+				userVO = userSvc.addUser(user_id, user_pwd, user_name, id_card, user_gender,user_dob, user_mail, user_phone, user_mobile, city, town, zipcode, user_addr, regdate, user_point, violation, user_state, user_comment, comment_total, cash);
 
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				req.setAttribute("userVO", userVO);// 資料庫insert成功後,正確的userVO物件,存入req

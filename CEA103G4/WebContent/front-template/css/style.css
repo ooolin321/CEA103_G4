@@ -2360,6 +2360,7 @@ ul.modefemmeinfo {
 .product-details .quantity .primary-btn.pd-cart {
   padding: 14px 70px 10px;
   border-radius: 2px;
+  border: none;
 }
 
 .product-details .pd-tags {

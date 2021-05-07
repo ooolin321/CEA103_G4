@@ -176,7 +176,7 @@
 							</div><br>
 							<input type="hidden" name="action" value="insert">
 							<div class="row">
-							<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+
 							<input type="hidden" name="empno" value="${empVO.empno}">
 							<input class="btn btn-primary" type="submit" value="送出新增">
 							</div>

@@ -34,98 +34,97 @@
 
 </head>
 <body bgcolor='white' class="app sidebar-mini rtl">
-<jsp:include page="/back-end/backendMenu.jsp" />
-<main class="app-content">
-	<div class="app-title">
-		<div>
-			<h1>
-				<i class="fa fa-dashboard"></i> 所有權限
-			</h1>
-			
+	<jsp:include page="/back-end/backendMenu.jsp" />
+	<main class="app-content">
+		<div class="app-title">
+			<div>
+				<h1>
+					<i class="fa fa-dashboard"></i> 所有權限
+				</h1>
+
+			</div>
+			<ul class="app-breadcrumb breadcrumb">
+				<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+				<li class="breadcrumb-item"><a
+					href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">回到首頁</a></li>
+			</ul>
 		</div>
-		<ul class="app-breadcrumb breadcrumb">
-			<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-			<li class="breadcrumb-item"><a
-				href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">回到首頁</a></li>
-		</ul>
-	</div>
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="tile">
-				<div class="tile-body">
-					<table class="col-md-12" id="sampleTable">
-						<thead>
-							<tr role="row" class="table-info">
-								<th>網站功能編號</th>
-								<th>功能名稱</th>
-								<th>網站功能狀態</th>
-<!-- 								<th>修改</th> -->
-								<!-- 			<th>刪除</th> -->
-							</tr>
-						</thead>
-						<tbody>
-							<%-- 		<%@ include file="page1.file"%> --%>
-							<c:forEach var="funVO" items="${list}">
-
-								<tr>
-									<td>${funVO.funno}</td>
-									<td>${funVO.funName}</td>
-									<c:choose>
-										<c:when test="${funVO.state==0}">
-											<td>關閉</td>
-										</c:when>
-										<c:when test="${funVO.state==1}">
-											<td>正常</td>
-										</c:when>
-									</c:choose>
-									<!-- 				<td><select size="1" name="state"> -->
-									<%-- 						<option value="1" ${(funVO.state==0)? 'selected':''}>開啟</option> --%>
-									<%-- 						<option value="0" ${(funVO.state==0)? 'selected':''}>關閉</option> --%>
-									<!-- 				</select></td> -->
-
-<!-- 									<td> -->
-<!-- 										<FORM METHOD="post" -->
-<%-- 											ACTION="<%=request.getContextPath()%>/fun/fun.do" --%>
-<!-- 											style="margin-bottom: 0px;"> -->
-<!-- 											<input type="submit" value="修改"> <input type="hidden" -->
-<%-- 												name="funno" value="${funVO.funno}"> <input --%>
-<!-- 												type="hidden" name="action" value="getOne_For_Update"> -->
-<!-- 											<input type="hidden" name="requestURL" -->
-<%-- 												value="<%=request.getParameter("requestURL")%>"> --%>
-<!-- 											接收原送出修改的來源網頁路徑後,再送給Controller準備轉交之用 -->
-<!-- 											<input type="hidden" name="whichPage" -->
-<%-- 												value="<%=request.getParameter("whichPage")%>"> --%>
-<!-- 											只用於:istAllEmp.jsp -->
-<!-- 									</td> -->
-										</FORM>
-
-
-									<!-- 				<td> -->
-									<%-- 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/fun/fun.do" --%>
-									<!-- 						style="margin-bottom: 0px;"> -->
-									<!-- 						<input type="submit" value="刪除"> <input type="hidden" -->
-									<%-- 							name="funno" value="${funVO.funno}"> <input type="hidden" --%>
-									<!-- 							name="action" value="delete"> -->
-									<!-- 					</FORM> -->
-									<!-- 				</td> -->
+		<%-- 錯誤表列 --%>
+		<c:if test="${not empty errorMsgs}">
+			<font style="color: red">請修正以下錯誤:</font>
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color: red">${message}</li>
+				</c:forEach>
+			</ul>
+		</c:if>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="tile">
+					<div class="tile-body">
+						<table class="col-md-12" id="sampleTable">
+							<thead>
+								<tr role="row" class="table-info">
+									<th>網站功能編號</th>
+									<th>功能名稱</th>
+									<th>網站功能狀態</th>
+									<!-- 								<th>修改</th> -->
+									<!-- 			<th>刪除</th> -->
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<%-- 		<%@ include file="page1.file"%> --%>
+								<c:forEach var="funVO" items="${list}">
+
+									<tr>
+										<td>${funVO.funno}</td>
+										<td>${funVO.funName}</td>
+										<c:choose>
+											<c:when test="${funVO.state==0}">
+												<td>關閉</td>
+											</c:when>
+											<c:when test="${funVO.state==1}">
+												<td>正常</td>
+											</c:when>
+										</c:choose>
+										<!-- 				<td><select size="1" name="state"> -->
+										<%-- 						<option value="1" ${(funVO.state==0)? 'selected':''}>開啟</option> --%>
+										<%-- 						<option value="0" ${(funVO.state==0)? 'selected':''}>關閉</option> --%>
+										<!-- 				</select></td> -->
+
+										<td>
+											<FORM METHOD="post"
+												ACTION="<%=request.getContextPath()%>/fun/fun.do"
+												style="margin-bottom: 0px;">
+												<input type="submit" value="修改"> <input
+													type="hidden" name="funno" value="${funVO.funno}">
+												<input type="hidden" name="action" value="getOne_For_Update">
+												<input type="hidden" name="requestURL"
+													value="<%=request.getParameter("requestURL")%>"> <input
+													type="hidden" name="whichPage"
+													value="<%=request.getParameter("whichPage")%>">
+										</FORM>
+										</td>
+
+
+										<td>
+											<FORM METHOD="post"
+												ACTION="<%=request.getContextPath()%>/fun/fun.do"
+												style="margin-bottom: 0px;">
+												<input type="submit" value="刪除"> <input
+													type="hidden" name="funno" value="${funVO.funno}">
+												<input type="hidden" name="action" value="delete">
+											</FORM>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</main>
+	</main>
 	<jsp:include page="/back-end/backendfooter.jsp" />
 
 </body>

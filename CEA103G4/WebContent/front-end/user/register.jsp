@@ -82,29 +82,28 @@
 <%--                   <input type="text" name="user_id" value="<%= (userVO==null)? "" : userVO.getUser_id()%>"/> --%>
 <!--                 </div> -->
 <table>
-	<tr><td>以下*為必填</td></tr>
 	<tr>
-		<td>帳號 *</td>
+		<td>帳號 </td>
 		<td><input type="TEXT" class="form-control" name="user_id" size="45" 
 			 value="<%= (userVO==null)? "abcd01" : userVO.getUser_id()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_id}</b></td></tr>
 	<tr>
-		<td>密碼 *</td>
+		<td>密碼 </td>
 		<td><input type="password" class="form-control" name="user_pwd" size="45" 
 			 value="<%= (userVO==null)? "abcd01" : userVO.getUser_pwd()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_pwd}</b></td></tr>
 	<tr>
-		<td>姓名 *</td>
+		<td>姓名 </td>
 		<td><input type="TEXT" class="form-control" name="user_name" size="45" 
 			 value="<%= (userVO==null)? "漢斯" : userVO.getUser_name()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_name}</b></td></tr>
 	<tr>
-		<td>身分証字號 *</td>
+		<td>身分證字號 </td>
 		<td><input type="TEXT" class="form-control" name="id_card" size="45"
 			 value="<%= (userVO==null)? "A123456789" : userVO.getId_card()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.id_card}</b></td></tr>
 	<tr>
-	<td>性別 *</td>
+	<td>性別 </td>
 	<td><input type="radio" name="user_gender" value="1" ${(userVO.user_gender==1)? 'checked':'' }>
 	<label for="male">男</label>
 	<input type="radio" name="user_gender" value="0" ${(userVO.user_gender==0)? 'checked':'' }>
@@ -112,26 +111,26 @@
 	</tr>
 	
 	<tr>
-		<td>生日 *</td>
+		<td>生日 </td>
 		<td><input name="user_dob" class="form-control" size="45" id="f_date1" type="text"></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_dob}</b></td></tr>
 	<tr>
-		<td>Email *</td>
+		<td>Email</td>
 		<td><input type="TEXT" class="form-control" name="user_mail" size="45"
 			 value="<%= (userVO==null)? "joy15132000@hotmail.com" : userVO.getUser_mail()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_mail}</b></td></tr>
 	<tr>
-		<td>電話 *</td>
+		<td>電話</td>
 		<td><input type="TEXT" class="form-control" name="user_phone" size="45"
 			 value="<%= (userVO==null)? "" : userVO.getUser_phone()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_phone}</b></td></tr>
 	<tr>
-		<td>手機號碼 *</td>
+		<td>手機號碼</td>
 		<td><input type="TEXT" class="form-control" name="user_mobile" size="45"
 			 value="<%= (userVO==null)? "" : userVO.getUser_mobile()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_mobile}</b></td></tr>
 	<tr>
-		<td>地址 *</td>
+		<td>地址</td>
 		<td>
 		<div id="twzipcode"></div><font color=red><b>${errorMsgs.city}</b>
 		<input type="TEXT" class="form-control" name="user_addr" size="45" value="<%= (userVO==null)? "" : userVO.getUser_addr()%>"></td>

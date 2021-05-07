@@ -1,12 +1,21 @@
+<%@page import="com.auth.model.AuthVO"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+    pageEncoding="utf-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.emp.model.*"%>
-
+<%@ page import="com.auth.model.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	EmpVO empVO = (EmpVO)session.getAttribute("empAccount");
+    EmpVO empVO = (EmpVO) session.getAttribute("empAccount");
+    session.setAttribute("empVO", empVO);
+    
+    List<AuthVO> authList = (List<AuthVO>) session.getAttribute("authList");
+	session.setAttribute("authList", authList);
 %>
-
+<%
+for(AuthVO auth:authList) {
+	out.println(auth.getFunno()+","+auth.getAuth_no());
+}%>
 <!DOCTYPE html>
 <html lang="zh-tw">
 <head>
@@ -234,6 +243,42 @@
 			ga('send', 'pageview');
 		}
 	</script>
+    <script>		
+       	var arr1 = [];
 
+		 <c:forEach var="authList" items="${authList}">
+			arr1.push(`${authList.getAuth_no()}`);
+		</c:forEach>
+        
+		console.log(arr1);
+
+        var auth = document.getElementsByClassName("app-menu__label");
+
+        var arr2 = [];
+        
+        for (let i = 0; i < auth.length; i++) {
+            var x = auth[i].innerText;
+            arr2.push(x);
+        }
+        console.log(arr2);
+        
+        for (let i = 0; i < arr2.length; i++) {
+            var allow = true;
+            for (let j = 0; j < arr1.length; j++) {
+                if (arr2[i] === arr1[j]) {
+                    allow = false;
+                    break;
+                }
+            }
+            if (allow) {
+            	 auth[i].classList.add("unshow");
+            	 console.log('auth')
+            }
+// 				if (allow) {
+//             	 auth2[i].closest('.auth').classList.add("unshow");
+//             	 console.log('auth2')
+//             }
+        }
+    </script>
 </body>
 </html>

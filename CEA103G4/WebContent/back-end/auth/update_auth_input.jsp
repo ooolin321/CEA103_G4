@@ -3,20 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.auth.model.*"%>
 <%@ page import="com.emp.model.*"%>
-<%@ page import="com.fun.model.*"%>
+
 <%
-	List<AuthVO> authVO = (List<AuthVO> ) request.getAttribute("authVO");
+	AuthVO authVO = (AuthVO) request.getAttribute("authVO");
 %>
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO");
 %>
-<%
-	FunVO funVO = (FunVO) request.getAttribute("funVO");
-%>
 
 <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 <jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
-<jsp:useBean id="authSvc" scope="page" class="com.auth.model.AuthService" />
+<jsp:useBean id="authSvc" scope="page"
+	class="com.auth.model.AuthService" />
 
 <html>
 <head>
@@ -96,50 +94,49 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do" name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/auth/auth.do"
+		name="form1">
 		<table>
 			<tr>
 				<td>員工編號:<font color=red><b>*</b></font></td>
 				<td>${empVO.empno}</td>
-				
-			</tr>			
-				<tr>
+
+			</tr>
+			<tr>
 				<td>選擇功能名稱:<font color=red><b>*</b></font></td>
 				<td>
 					<ul>
-					
-							<li><input name = "funno" value="${funVO.funno}" type="hidden"></input>${funSvc.getOneFun(authVO.funno).funName}
+						<li><input name="funno" value="${authVO.funno}" type="hidden"></input>${funSvc.getOneFun(authVO.funno).funName}
 							<select size="1" name="auth_no">
-										<option value="1" ${(authVO.auth_no==1)? 'selected':''}>開</option>
-										<option value="0" ${(authVO.auth_no==0)? 'selected':''}>關</option>
-									</select></li>
-						
-					</ul> 
+								<option value="1" ${(authVO.auth_no==1)? 'selected':''}>開</option>
+								<option value="0" ${(authVO.auth_no==0)? 'selected':''}>關</option>
+						</select></li>
+					</ul>
 				</td>
 			</tr>
-		
+
 		</table>
-		<br> <input type="hidden" name="action" value="update"> 
-		<input type="hidden" name="empno" value="${empVO.empno}">
-		<input type="hidden" name="funno" value="${funVO.funno}">
-		<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">
-		<input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">
-		<input type="submit" id = "submit" value="送出新增">
+		<br> <input type="hidden" name="action" value="update"> <input
+			type="hidden" name="empno" value="${authVO.empno}"> <input
+			type="hidden" name="funno" value="${authVO.funno}"> <input
+			type="hidden" name="requestURL"
+			value="<%=request.getParameter("requestURL")%>"> <input
+			type="hidden" name="whichPage"
+			value="<%=request.getParameter("whichPage")%>"> <input
+			type="submit" id="submit" value="送出新增">
 	</FORM>
 </body>
 <script>
-/* 	let sub = document.getElementById("submit");
- 	sub.addEventListener(type, callback, capture)
+	/* 	let sub = document.getElementById("submit");
+	 sub.addEventListener(type, callback, capture)
 
-			sub.addEventListener("onclick", function(){
-		let chx = document.getElementsByName("auth_no");
-		for(let i = 0; i < chx.length; i++){
-			let checkbox = chx[i];
-			checkbox.checked = true;
-	}
-	},false); */
-
-
+	 sub.addEventListener("onclick", function(){
+	 let chx = document.getElementsByName("auth_no");
+	 for(let i = 0; i < chx.length; i++){
+	 let checkbox = chx[i];
+	 checkbox.checked = true;
+	 }
+	 },false); */
 </script>
 
 

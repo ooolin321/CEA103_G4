@@ -12,9 +12,6 @@ import com.auth.model.AuthService;
 import com.auth.model.AuthVO;
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
-import com.fun.model.FunService;
-import com.fun.model.FunVO;
-
 import javax.servlet.annotation.WebServlet;
 
 @WebServlet("/loginhandler")
@@ -71,25 +68,6 @@ public class LoginHandler extends HttpServlet {
 				EmpService empSvc = new EmpService();
 				EmpVO empVO = empSvc.selectEmp(empno, empPwd);//查詢資料庫是否有此員工
 								
-				//設定權限
-				
-				FunService funSvc = new FunService();
-				List<FunVO> list = funSvc.getAll();
-				FunVO funVO = new FunVO();
-			 	AuthService authSvc = new AuthService(); 
-			 	List<AuthVO> list1 = authSvc.getAll(); 
-			 	int i = 0;
-			 	while (i <= list.size()) {
-			 		if(list1.get(i).getAuth_no().intValue()==1) {
-			 			list.add(funVO);
-			 		}break;
-				}
-			 			 	
-//req.setAttribute("list", list);
-System.out.println(list);			
-
-
-				
 				if (empVO == null) {
 					errorMsgs.put("empno", "帳號密碼不正確，請重新輸入");
 					String url = "/back-end/backendLogin.jsp";
@@ -98,18 +76,26 @@ System.out.println(list);
 				} 
 				else  {
 					int state = empVO.getState(); //查詢員工在職狀態
-//System.out.println("state = "+state);
 					if (state == 0) {			  //離職的話導回login
 						String quit = "quit";
 						req.setAttribute("quit", quit);
 						errorMsgs.put("empno", "此員工已離職");
 						RequestDispatcher failureView = req.getRequestDispatcher("back-end/backendLogin.jsp");
 						failureView.forward(req, res);
-					}
+					}				
+					
+					//取得員工帳號的權限
+					AuthService authSvc = new AuthService();
+					List<AuthVO> authList = authSvc.getAuthNOs(empno);
+//					for(AuthVO auth:list) {
+//						System.out.println(auth.getFunno()+",");
+//					}
+					
 					HttpSession session = req.getSession();
 					session.setAttribute("empAccount", empVO); // *工作1: 才在session內做已經登入過的標識
-					session.setAttribute("authVO", list);
-
+					session.setAttribute("authList", authList);
+//					session.setAttribute("authVO", listFun);
+					
 
 					try {
 						String location = (String) session.getAttribute("location");
@@ -129,12 +115,16 @@ System.out.println(list);
 						return;
 					}
 				}
+				
 			} catch (Exception e) {
 				String badguys = "badguys";
 				req.setAttribute("badguys", badguys);
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
 				failureView.forward(req, res);
 			}
+		
+		
+		
 		if ("signOut".equals(action)) {
 			HttpSession session = req.getSession();
 			if (!session.isNew()) {
@@ -146,6 +136,7 @@ System.out.println(list);
 				successView.forward(req, res);
 			}
 		}
+		
 		if ("forgotPassword".equals(action)) {
 			try {
 				String email = req.getParameter("email");

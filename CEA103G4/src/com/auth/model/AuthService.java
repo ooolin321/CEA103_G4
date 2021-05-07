@@ -41,7 +41,7 @@ public class AuthService {
 		dao.delete(funno,empno);
 	}
 
-	public List<AuthVO> getOneAuth(Integer empno) {
+	public AuthVO getOneAuth(Integer empno) {
 		return dao.findAuthByEmpno(empno);
 	}
 
@@ -49,5 +49,7 @@ public class AuthService {
 		return dao.getAll();
 	}
 
-	
+	public List<AuthVO> getAuthNOs (Integer empno){
+		return dao.getAuth(empno);
+	}
 }

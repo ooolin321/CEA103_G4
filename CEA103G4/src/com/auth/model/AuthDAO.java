@@ -30,7 +30,7 @@ public class AuthDAO implements AuthDAO_interface {
 	private static final String DELETE_STMT = "delete from AUTH where EMPNO=? and FUNNO=?";
 	private static final String GET_ONE_BY_EMPNO_AND_FUNNO_STMT = "select FUNNO,EMPNO,AUTH_NO from AUTH where EMPNO = ? ";
 	private static final String GET_ALL_BY_EMPNO_STMT = "select FUNNO,EMPNO,AUTH_NO from AUTH order by EMPNO";
-	
+	private static final String GET_AUTH_ON = "SELECT FUNNO,AUTH_NO FROM AUTH WHERE EMPNO=? ";
 
 	
 	@Override
@@ -140,8 +140,8 @@ public class AuthDAO implements AuthDAO_interface {
 	}
 
 	@Override
-	public List<AuthVO> findAuthByEmpno(Integer empno) {
-		List<AuthVO> list = new ArrayList<AuthVO>();
+	public AuthVO findAuthByEmpno(Integer empno) {
+
 		AuthVO authVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -161,7 +161,60 @@ public class AuthDAO implements AuthDAO_interface {
 				authVO.setFunno(rs.getInt("FUNNO"));
 				authVO.setEmpno(rs.getInt("EMPNO"));
 				authVO.setAuth_no(rs.getInt("AUTH_NO"));
+				
+			}
+		}  catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return authVO;
+	}
+	@Override
+	public List<AuthVO> getAuth(Integer empno){
+		List<AuthVO> list = new ArrayList<AuthVO>();
+		AuthVO authVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_AUTH_ON);
+
+			pstmt.setInt(1, empno);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// authorityVo 也稱為 Domain objects
+				authVO = new AuthVO();
+				authVO.setFunno(rs.getInt("FUNNO"));
+				authVO.setAuth_no(rs.getInt("auth_no"));
 				list.add(authVO);
+				
 			}
 		}  catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -192,7 +245,6 @@ public class AuthDAO implements AuthDAO_interface {
 		}
 		return list;
 	}
-	
 	
 	@Override
 	public List<AuthVO> getAll() {

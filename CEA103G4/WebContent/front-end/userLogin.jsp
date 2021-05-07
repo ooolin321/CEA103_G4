@@ -35,6 +35,12 @@
   	.register-login-section {
     padding-top: 0px;
 	}
+	.small.text-center {
+    color: black;
+}
+.login-form .group-input .gi-more .forget-pass {
+color: #007bff;
+}
   	</style>
   </head>
 
@@ -73,31 +79,31 @@
         <div class="row">
           <div class="col-lg-6 offset-lg-3">
             <div class="login-form">
-              <h2>Login</h2>
+              <h2>會員登入</h2>
               <form METHOD="post" class="login-form" action="<%=request.getContextPath()%>/FrondEnd_LoginHandler">
                 <div class="group-input">
                   <label for="user_id">UserID *</label>
-                  <input type="text" name="user_id" value="${(userVO==null)? '' : userVO.user_id}" placeholder="UserID" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></td>
+                  <input type="text" name="user_id" id="username" value="${(userVO==null)? '' : userVO.user_id}" placeholder="UserID" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></td>
                 </div>
                 <div class="group-input">
                   <label for="user_pwd">Password *</label>
-                  <input type="password" name="user_pwd" placeholder="Password"/><td><font color=red><b>${errorMsgs.user_pwd}</b></td>
+                  <input type="password" name="user_pwd" id="password" placeholder="Password"/><td><font color=red><b>${errorMsgs.user_pwd}</b></td>
                 </div>
                 <div class="group-input gi-check">
                   <div class="gi-more">
-                    <label for="save-pass">
-                      Save Password
-                      <input type="checkbox" id="save-pass" />
+                    <label for="memory">
+                      	記住我
+                      <input id="memory" type="checkbox" />
                       <span class="checkmark"></span>
                     </label>
-                    <a href="<%=request.getContextPath()%>/front-end/user/forgetPassword.jsp" class="forget-pass">Forget your Password</a>
+                    <a href="<%=request.getContextPath()%>/front-end/user/forgetPassword.jsp" class="forget-pass">忘記密碼</a>
                   </div>
                 </div>
                 
-                <input type="hidden" name="action" value="signIn">
+                <input type="hidden" name="action" value="signIn" id="btn" />
                 
                 <button type="submit" class="site-btn login-btn">
-                  Sign In
+                  	登入
                 </button>
               </form>
 	        <div _ngcontent-sc209="" class="card-body px-5 py-4">
@@ -165,5 +171,58 @@
     <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
+    
+     <script>
+        $(function(){
+            if(getCookie('name')&&getCookie('password')){
+                $('#username').val(getCookie('name'));
+                $('#password').val(getCookie('password'));
+                $('#memory').prop('checked','checked');
+            }
+            else{
+                $('#username').val('');
+                $('#password').val('');
+            }
+        });
+        $('#btn').click(function(){
+            if($('#memory').prop('checked')){
+                var username = $('#username').val();
+                var password = $('#password').val();
+                setCookie("name",username);
+                setCookie("password",password);
+            }
+            else{
+                delCookie('name');
+                delCookie('password');
+            }
+        });
+//        主要函数
+        function setCookie(name,value)//设置cookie
+        {
+            var Days = 30;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + Days*24*60*60*1000);
+            document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+        }
+
+        function getCookie(name)//拿到cookie
+        {
+            var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+            if(arr=document.cookie.match(reg))
+                return unescape(arr[2]);
+            else
+                return null;
+        }
+
+        function delCookie(name)//删除cookie
+        {
+            var exp = new Date();
+            exp.setTime(exp.getTime() - 1);
+            var cval=getCookie(name);
+            if(cval!=null)
+                document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+        }
+    </script>
+    
   </body>
 </html>

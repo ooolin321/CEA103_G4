@@ -103,40 +103,45 @@ table td, table tr, table th {
 						<tbody>
 							<c:forEach var="liveVO"
 								items="${liveSvc.getAllByID(userVO.user_id)}">
-								<tr>
-									<td>${liveVO.live_no}</td>
-									<td>${liveVO.live_type}</td>
-									<td>${liveVO.live_name}</td>
+								<c:if test="${liveVO.live_state >0}">
 
-									<td><fmt:formatDate value="${liveVO.live_time}"
-											pattern="yyyy-MM-dd HH:mm:ss" /></td>
+									<tr>
+										<td>${liveVO.live_no}</td>
+										<td>${liveVO.live_type}</td>
+										<td>${liveVO.live_name}</td>
 
-									<td>${(liveVO.live_state==0)? '已結束':''}
-										${(liveVO.live_state==1)? '未直播':''} ${(liveVO.live_state==2)? '直播中':''}
-									</td>
-									<td><img
-										src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}"
-										width="190px"></td>
+										<td><fmt:formatDate value="${liveVO.live_time}"
+												pattern="yyyy-MM-dd HH:mm:ss" /></td>
 
-									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/live/live.do"
-											style="margin-bottom: 0px;">
-											<input type="submit" value="修改" class="btn btn-info">
-											<input type="hidden" name="live_no" value="${liveVO.live_no}">
-											<input type="hidden" name="action" value="getOne_For_Update">
-										</FORM>
-									</td>
-									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/live/live.do"
-											style="margin-bottom: 0px;">
-											<input type="submit" value="結束直播" class="btn btn-danger">
-											<input type="hidden" name="live_no" value="${liveVO.live_no}">
-											<input type="hidden" name="action" value="over">
-										</FORM>
-									</td>
-								</tr>
+										<td>${(liveVO.live_state==0)? '已結束':''}
+											${(liveVO.live_state==1)? '未直播':''} ${(liveVO.live_state==2)? '直播中':''}
+										</td>
+										<td><img
+											src="${pageContext.request.contextPath}/live/LiveGifReader.do?live_no=${liveVO.live_no}"
+											width="190px"></td>
+
+										<td>
+											<FORM METHOD="post"
+												ACTION="<%=request.getContextPath()%>/live/live.do"
+												style="margin-bottom: 0px;">
+												<input type="submit" value="修改" class="btn btn-info">
+												<input type="hidden" name="live_no"
+													value="${liveVO.live_no}"> <input type="hidden"
+													name="action" value="getOne_For_Update">
+											</FORM>
+										</td>
+										<td>
+											<FORM METHOD="post"
+												ACTION="<%=request.getContextPath()%>/live/live.do"
+												style="margin-bottom: 0px;">
+												<input type="submit" value="結束直播" class="btn btn-danger">
+												<input type="hidden" name="live_no"
+													value="${liveVO.live_no}"> <input type="hidden"
+													name="action" value="over">
+											</FORM>
+										</td>
+									</tr>
+								</c:if>
 							</c:forEach>
 						</tbody>
 					</table>
@@ -188,12 +193,12 @@ table td, table tr, table th {
 													end="${list.size()-1}">
 													<c:if
 														test="${productVO.product_state == 0 && productVO.user_id == userVO.user_id}">
-														
+
 														<tr id="TR${productVO.product_no}">
-															
+
 															<%-- 											<td>${liveSvc.getOneLive(productVO.live_no).live_type}</td> --%>
 															<td scope="row">${productVO.product_no}</td>
-															<td><img width="200px"
+															<td><img width="120px" height="100px"
 																src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}"
 																class="rounded mx-auto d-block" alt=""></td>
 															<td>${productVO.product_name}</td>
@@ -201,37 +206,39 @@ table td, table tr, table th {
 															<td>${productVO.start_price}</td>
 															<td>${productVO.product_remaining}</td>
 															<%-- 										<td>${productVO.user_id}</td> --%>
-															
-															<td>
-															
-															<input type="checkbox"  id="CB${productVO.product_no}">
-															<input type="hidden" name="product_no" id="HB${productVO.product_no}" value="${productVO.product_no}" disabled>
-															
-															</td>
-															
+
+															<td><input type="checkbox"
+																id="CB${productVO.product_no}"> <input
+																type="hidden" name="product_no"
+																id="HB${productVO.product_no}"
+																value="${productVO.product_no}" disabled></td>
+
 														</tr>
-														
+
 
 													</c:if>
 												</c:forEach>
 												<tr>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<th>直播編號</th>
-												<td><select size="1" name="live_no" id="live_no" class="custom-select custom-select-lg mb-3">
-																	<option value="">
-																		<c:forEach var="liveVO"
-																			items="${liveSvc.getAllByID(userVO.user_id)}">
-																			<option value="${liveVO.live_no}"
-																				${(live_orderVO.live_no==liveVO.live_no)? 'selected':'' }>${liveVO.live_no}
-																		</c:forEach>
-															</select> </td>
-													<td>
-													<input type="hidden" name="action" value="goLive" >
-													<input type="submit" value="帶入"
-														class="btn btn-info"></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td>直播編號</td>
+
+													<td colspan="2"><select size="1" name="live_no"
+														id="live_no" class="custom-select custom-select-lg mb-3">
+															<option value="">
+																<c:forEach var="liveVO"
+																	items="${liveSvc.getAllByID(userVO.user_id)}">
+																	<c:if test="${liveVO.live_state >0}">
+
+																		<option value="${liveVO.live_no}"
+																			${(live_orderVO.live_no==liveVO.live_no)? 'selected':'' }>${liveVO.live_no}
+																		</option>
+																	</c:if>
+																</c:forEach>
+													</select></td>
+													<td><input type="hidden" name="action" value="goLive">
+														<input type="submit" value="帶入" class="btn btn-info"></td>
 												</tr>
 											</FORM>
 										</tbody>
@@ -258,49 +265,51 @@ table td, table tr, table th {
 												<th scope="col">商品描述</th>
 												<th scope="col">起標價</th>
 												<th scope="col">數量</th>
-												<th></th>
-												<th></th>
+												<th scope="col">選取</th>
+												<th scope="col"></th>
 												<!-- 								<th scope="col">賣家帳號</th> -->
 											</tr>
 										</thead>
 
 										<tbody>
-											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/product/product.do" style="margin-bottom: 0px;">
-											<c:forEach var="productVO" items="${list}" begin="0"
-												end="${list.size()-1}">
-												<c:if
-													test="${productVO.product_state == 2 && productVO.user_id == userVO.user_id}">
-													<tr id="tr${productVO.product_no}">
-														<th scope="row">${productVO.live_no == 0 ? '未設定':productVO.live_no}</th>
-														<%-- 											<td>${liveSvc.getOneLive(productVO.live_no).live_type}</td> --%>
-														<td>${productVO.product_no}</td>
-														<td><img width="120px" height="100px"
-															src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}"
-															class="rounded mx-auto d-block" alt=""></td>
-														<td>${productVO.product_name}</td>
-														<td class="productInfo">${productVO.product_info}</td>
-														<td>${productVO.start_price}</td>
-														<td>${productVO.product_remaining}</td>
-														<td>
-															<input type="checkbox" id="cb${productVO.product_no}">
-															<input type="hidden" name="product_no" id="hb${productVO.product_no}" value="${productVO.product_no}" disabled>
-														</td>
-													</tr>
-												</c:if>
-											</c:forEach>
-											<tr>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td>
-													
-													<input type="hidden" name="action" value="offShelf">
-													<input type="submit" value="下架" class="btn btn-info">
-													</FORM>	
-												</td>
+											<FORM METHOD="post"
+												ACTION="<%=request.getContextPath()%>/product/product.do"
+												style="margin-bottom: 0px;">
+												<c:forEach var="productVO" items="${list}" begin="0"
+													end="${list.size()-1}">
+													<c:if
+														test="${productVO.product_state == 2 && productVO.user_id == userVO.user_id}">
+														<tr id="tr${productVO.product_no}">
+															<th scope="row">${productVO.live_no == 0 ? '未設定':productVO.live_no}</th>
+															<%-- 											<td>${liveSvc.getOneLive(productVO.live_no).live_type}</td> --%>
+															<td>${productVO.product_no}</td>
+															<td><img width="120px" height="100px"
+																src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}"
+																class="rounded mx-auto d-block" alt=""></td>
+															<td>${productVO.product_name}</td>
+															<td class="productInfo">${productVO.product_info}</td>
+															<td>${productVO.start_price}</td>
+															<td>${productVO.product_remaining}</td>
+															<td><input type="checkbox"
+																id="cb${productVO.product_no}"> <input
+																type="hidden" name="product_no"
+																id="hb${productVO.product_no}"
+																value="${productVO.product_no}" disabled></td>
+														</tr>
+													</c:if>
+												</c:forEach>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td><input type="hidden" name="action"
+														value="offShelf"> <input type="submit" value="下架"
+														class="btn btn-info">
+											</FORM>
+											</td>
 											</tr>
 										</tbody>
 									</table>
@@ -329,7 +338,7 @@ table td, table tr, table th {
 	<!-- Page specific javascripts-->
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
-<script>
+	<script>
 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}">
 	<c:if test="${productVO.product_state == 0 && productVO.user_id == userVO.user_id}">
 		

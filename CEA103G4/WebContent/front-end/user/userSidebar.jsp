@@ -118,9 +118,12 @@
                   </li>
                   <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">直播專案管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
-                      <li><a class="treeview-item" href='<%=request.getContextPath()%>/front-end/liveManagement/liveList.jsp'><i class="icon fa fa-circle-o"></i>我的直播專案</a></li>
                       <li>
                       <a class="treeview-item" href="<%=request.getContextPath()%>/front-end/liveManagement/liveAdd.jsp"><i class="icon fa fa-circle-o"></i>新增直播訂單</a>
+                      <li>
+                      <li><a class="treeview-item" href='<%=request.getContextPath()%>/front-end/liveManagement/liveList.jsp'><i class="icon fa fa-circle-o"></i>我的直播專案</a></li>
+                      <li>
+                      <a class="treeview-item" href="<%=request.getContextPath()%>/front-end/liveManagement/liveHistory.jsp"><i class="icon fa fa-circle-o"></i>我的歷史專案</a>
                       <li>
                     </ul>
                   </li>

@@ -45,7 +45,6 @@
 
 </head>
 
-
 <body class="app sidebar-mini rtl">
 <jsp:include page="/back-end/backendMenu.jsp" />
 <main class="app-content">

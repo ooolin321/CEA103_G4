@@ -1,3 +1,4 @@
+<%@page import="com.user.model.UserVO"%>
 <%@page import="com.auth.model.AuthVO"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
@@ -5,6 +6,8 @@
 <%@ page import="com.emp.model.*"%>
 <%@ page import="com.auth.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
+
 <%
     EmpVO empVO = (EmpVO) session.getAttribute("empAccount");
     session.setAttribute("empVO", empVO);
@@ -73,8 +76,15 @@
 						<i class="icon fa fa-users fa-3x"></i>
 						<div class="info">
 							<h4>Users</h4>
+							<jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
+<%-- <c:set var="a" value="1"/> --%>
+<%-- <c:forEach var="user" items="list" varStatus="varStatusName"> --%>
+<%-- <c:if test="${user.status==1}"> --%>
+<%-- <c:set var="a" value="${a+1}"/> --%>
+<%-- </c:if> --%>
+<%-- </c:forEach> --%>
 							<p>
-								<b>5</b>
+								<b>${a}</b>
 							</p>
 						</div>
 					</div>

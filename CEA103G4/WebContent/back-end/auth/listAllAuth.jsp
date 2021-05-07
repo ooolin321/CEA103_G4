@@ -104,7 +104,7 @@
 										<%-- 													<option value="1" ${(authVO.auth_no==1)? 'selected':''}>正常</option> --%>
 										<%-- 													<option value="0" ${(authVO.auth_no==0)? 'selected':''}>無權限</option> --%>
 										<!-- 											</select></td> -->
-										<%-- 				<c:choose> --%>
+									
 										<c:choose>
 											<c:when test="${authVO.auth_no==0}">
 												<td>無權限</td>
@@ -121,9 +121,8 @@
 												<input class="btn btn-primary" type="submit" value="修改">
 												<input type="hidden" name="empno" value="${authVO.empno}">
 												<input type="hidden" name="funno" value="${authVO.funno}">
-												<input type="hidden" name="auth_no"
-													value="${authVO.auth_no}"> <input type="hidden"
-													name="requestURL" value="<%=request.getServletPath()%>">
+												<input type="hidden" name="auth_no" value="${authVO.auth_no}"> 
+												<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 												<!--送出本網頁的路徑給Controller-->
 												<input type="hidden" name="whichPage" value="<%=whichPage%>">
 												<input type="hidden" name="action" value="getOne_For_Update">

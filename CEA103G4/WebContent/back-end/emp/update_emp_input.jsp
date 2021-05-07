@@ -7,11 +7,11 @@
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
 	AuthVO authVO = (AuthVO) request.getAttribute("authVO");
-	FunVO funVO = (FunVO)request.getAttribute("funVO");
 %>
 
 <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 <jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
+<jsp:useBean id="authSvc" scope="page" class="com.auth.model.AuthService" />
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -88,8 +88,8 @@
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-														<label><i class="fas fa-user-alt" ></i>員工編號:<font
-															color=red style="font-size:120%"><%=empVO.getEmpno()%></font></label>
+														<label><i class="fas fa-user-alt"></i>員工編號:<font
+															color=red style="font-size: 120%"><%=empVO.getEmpno()%></font></label>
 													</div>
 												</div>
 											</div>
@@ -207,20 +207,16 @@
 														<label><i class="fas fa-user-alt"></i>權限:</label>
 														<div class="form-group">
 															<ul>
-																<c:forEach var="funVO" items="${funSvc.all}">
-																	<li><input class="col-md-6" name="funno"
-																		value="${funVO.funno}" type="hidden">${funVO.funName}&emsp;：
-																		<label> <select class="form-control" size="1"
-																			name="auth_no">
+																<c:forEach var="authVO" items="<%=authSvc.getAuthNOs(empVO.getEmpno())%>">
+																	<li><input class="col-md-6" name="funno" value="${authVO.funno}" type="hidden">${funSvc.getOneFun(authVO.funno).funName}&emsp;：
+																		<label> <select class="form-control" size="1" name="auth_no">
 																				<option value="1"
 																					${(authVO.auth_no==1)? 'selected':''}>開</option>
 																				<option value="0"
 																					${(authVO.auth_no==0)? 'selected':''}>關</option>
 																		</select>
 																	</label></li>
-
 																</c:forEach>
-
 															</ul>
 														</div>
 													</div>

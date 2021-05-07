@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.emp.model.*"%>
+<%@ page import="com.auth.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
@@ -13,6 +14,7 @@
 
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+	AuthVO authVO = (AuthVO) request.getAttribute("authVO"); //AuthServlet.java(Concroller), 存入req的authVO物件
 %>
 
 
@@ -128,7 +130,8 @@
 						pattern="yyyy-MM-dd" /></td>
 <%-- 				<td>${empVO.emp_pwd}</td> --%>
 
-
+				
+				
 				<td>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/emp/emp.do"

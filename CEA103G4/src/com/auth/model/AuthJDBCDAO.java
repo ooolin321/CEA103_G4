@@ -138,7 +138,7 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 	}
 
 	@Override
-	public AuthVO findAuthByEmpno(Integer empno) {
+	public AuthVO findAuthAllValues(Integer empno ,Integer funno, Integer auth_no) {
 		
 		AuthVO authVO = null;
 		Connection con = null;

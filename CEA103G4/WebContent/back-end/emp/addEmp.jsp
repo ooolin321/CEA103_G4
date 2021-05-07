@@ -1,13 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.emp.model.*"%>
-<%@page import="java.util.List"%>
+<%@ page import="com.auth.model.*"%>
+<%@ page import="java.util.List"%>
 
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO");
+	AuthVO authVO = (AuthVO) request.getAttribute("authVO");
 %>
 
-<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
+
+<jsp:useBean id="authSvc" scope="page" class="com.auth.model.AuthService" />
 <jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
 <html>
 <head>
@@ -157,18 +160,16 @@
 										<label><i class="fas fa-user-alt"></i>權限:</label>
                                         <div class="form-group">                                          
 											<ul>
-												<c:forEach var="funVO" items="${funSvc.all}">
-												
+												<c:forEach var="funVO" items="${funSvc.all}">		
 													<li><input class="col-md-6" name="funno" value="${funVO.funno}" type="hidden">${funVO.funName}&emsp;：
-														<label>
-															<select class="button-indecator" size="1" name="auth_no">
+														<label>		
+															<select class="form-control" size="1" name="auth_no">
 																<option value="1" ${(authVO.auth_no==1)? 'selected':''}>開</option>
 																<option value="0" ${(authVO.auth_no==0)? 'selected':''}>關</option>
 															</select>
-														</label></li>
-												
-												</c:forEach>
-												
+														</label>
+													</li>
+												</c:forEach>			
 											</ul>
 										</div>
 										</div>

@@ -23,7 +23,7 @@ public class AuthService {
 		return authVO;
 	}
 	
-	public AuthVO updateAuth(Integer empno, Integer funno,  Integer auth_no) {
+	public AuthVO updateAuth(Integer auth_no,Integer  empno,Integer  funno) {
 
 		AuthVO authVO = new AuthVO();
 		authVO.setEmpno(empno);
@@ -41,8 +41,13 @@ public class AuthService {
 		dao.delete(funno,empno);
 	}
 
-	public AuthVO getOneAuth(Integer empno) {
-		return dao.findAuthByEmpno(empno);
+	public AuthVO getOneAuth(Integer empno, Integer funno, Integer auth_no) {
+		AuthVO authVO = new AuthVO();
+		authVO.setEmpno(empno);		
+		authVO.setFunno(funno);
+		authVO.setAuth_no(auth_no);		
+		dao.findAuthAllValues(authVO);
+		return authVO;
 	}
 
 	public List<AuthVO> getAll() {

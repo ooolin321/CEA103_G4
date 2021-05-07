@@ -12,6 +12,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import oracle.net.aso.a;
+
 
 
 public class AuthDAO implements AuthDAO_interface {
@@ -28,9 +30,9 @@ public class AuthDAO implements AuthDAO_interface {
 	private static final String INSERT_STMT = "insert into AUTH (FUNNO,EMPNO,AUTH_NO) values (?, ?, ?)";
 	private static final String UPDATE_STMT = "update AUTH set AUTH_NO=? where EMPNO=? and FUNNO=?";
 	private static final String DELETE_STMT = "delete from AUTH where EMPNO=? and FUNNO=?";
-	private static final String GET_ONE_BY_EMPNO_AND_FUNNO_STMT = "select FUNNO,EMPNO,AUTH_NO from AUTH where EMPNO = ? ";
+	private static final String GET_ONE_BY_EMPNO_STMT = "select FUNNO,EMPNO,AUTH_NO from AUTH where EMPNO = ? ";
 	private static final String GET_ALL_BY_EMPNO_STMT = "select FUNNO,EMPNO,AUTH_NO from AUTH order by EMPNO";
-	private static final String GET_AUTH_ON = "SELECT FUNNO,AUTH_NO FROM AUTH WHERE EMPNO=? ";
+	private static final String GET_AUTH_ON = "SELECT AUTH_NO,EMPNO,FUNNO FROM AUTH WHERE EMPNO=? ";
 
 	
 	@Override
@@ -140,18 +142,17 @@ public class AuthDAO implements AuthDAO_interface {
 	}
 
 	@Override
-	public AuthVO findAuthByEmpno(Integer empno) {
+	public AuthVO findAuthAllValues(AuthVO authVO) {
 
-		AuthVO authVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ONE_BY_EMPNO_AND_FUNNO_STMT);
+			pstmt = con.prepareStatement(GET_ONE_BY_EMPNO_STMT);
 
-			pstmt.setInt(1, empno);
+			pstmt.setInt(1, authVO.getEmpno());
 
 			rs = pstmt.executeQuery();
 
@@ -211,8 +212,9 @@ public class AuthDAO implements AuthDAO_interface {
 			while (rs.next()) {
 				// authorityVo 也稱為 Domain objects
 				authVO = new AuthVO();
+				authVO.setAuth_no(rs.getInt("AUTH_NO"));
+				authVO.setEmpno(rs.getInt("EMPNO"));
 				authVO.setFunno(rs.getInt("FUNNO"));
-				authVO.setAuth_no(rs.getInt("auth_no"));
 				list.add(authVO);
 				
 			}

@@ -312,7 +312,7 @@
 //         	    let html = arr2[i];
 //         	    $('.app-menu__label')append("<li>" + html + "</li>")
 //         	   };
- </main>
     </script>
+
 </body>
 </html>

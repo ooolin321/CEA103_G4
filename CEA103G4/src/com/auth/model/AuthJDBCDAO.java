@@ -138,9 +138,8 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 	}
 
 	@Override
-	public AuthVO findAuthAllValues(Integer empno ,Integer funno, Integer auth_no) {
-		
-		AuthVO authVO = null;
+	public AuthVO findAuthAllValues(AuthVO authVO) {
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -150,7 +149,7 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 
 			pstmt = con.prepareStatement(GET_ONE_BY_EMPNO_AND_FUNNO_STMT);
 
-			pstmt.setInt(1, empno);
+			pstmt.setInt(1, authVO.getEmpno());
 	
 			
 			rs = pstmt.executeQuery();

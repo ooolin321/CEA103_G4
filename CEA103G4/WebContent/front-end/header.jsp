@@ -181,3 +181,29 @@
 	
 </header>
 <!-- Header End -->
+<!-- heade搜尋 -->
+    <script>
+    
+	function sendQuery(datas){ 
+		
+		$.ajax({ 
+		  url:"<%=request.getContextPath()%>/ProductSearch",
+		  type:"POST", 
+		  data:datas,
+		  success: function(result) { 
+			const obj  = JSON.parse(result);
+				if(obj["results"].length == 0){
+					alert('很抱歉,查無此商品');
+	            } else {
+	            	var data = JSON.stringify(result);
+					window.location.href='<%=request.getContextPath()%>/front-end/productsell/shop.jsp?data='+encodeURI(data);
+	            }
+		  }, 
+		  error:function () {
+			  alert('很抱歉,查無此商品');
+		  },
+			
+		 }) 
+	}
+    
+    </script>

@@ -2491,11 +2491,13 @@ ul.modefemmeinfo {
 }
 
 .specification-table table {
-  width: 100%;
+   width: 90%;
 }
 
 .specification-table table tr td {
-  border: 1px solid #eff0f2;
+  border:none;
+  box-shadow: 1px 1px 10px rgb(0 0 0 / 10%);
+  border-radius: 5px;
   text-align: center;
   padding-top: 18px;
   padding-bottom: 18px;

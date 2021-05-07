@@ -408,5 +408,10 @@
     <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/ajaxSearch.js"></script>
+    
+
+    
+    
   </body>
 </html>

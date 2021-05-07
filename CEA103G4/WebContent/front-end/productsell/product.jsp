@@ -9,11 +9,14 @@
 
 <%
   ProductVO productVO = (ProductVO) request.getAttribute("productVO");
+
 	
 %>
 <jsp:useBean id="product_typeSvc" scope="page" class="com.product_type.model.Product_TypeService" />
 <jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
 <jsp:useBean id="product_reportSvc" scope="page" class="com.product_report.model.Product_ReportService" />
+<jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
+
 
 <!DOCTYPE html>
 <html>
@@ -276,7 +279,7 @@
                   </div>
                   <div class="tab-pane fade" id="tab-2" role="tabpanel">
                     <div class="specification-table">
-                      <table>
+                      <table class="table">
                         <tr>
                           <td class="p-catagory">賣家帳號</td>
                           <td>
@@ -296,40 +299,15 @@
                             </div>
                           </td>
                         </tr>
-
                         <tr>
                           <td class="p-catagory">加入時間</td>
                           <td>
-                            <div class="cart-add">24個月 前</div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="p-catagory">粉絲</td>
-                          <td>
-                            <div class="p-stock">22</div>
+                            <div class="cart-add">${userSvc.getOneUser(productVO.user_id).regdate}</div>
                           </td>
                         </tr>
                         <tr>
                           <td class="p-catagory">查看賣場</td>
-                          <td>
-                            <div class="p-weight">1,3kg</div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="p-catagory">Size</td>
-                          <td>
-                            <div class="p-size">Xxl</div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="p-catagory">Color</td>
-                          <td><span class="cs-color"></span></td>
-                        </tr>
-                        <tr>
-                          <td class="p-catagory">Sku</td>
-                          <td>
-                            <div class="p-code">00012</div>
-                          </td>
+                          <td></td>
                         </tr>
                       </table>
                     </div>

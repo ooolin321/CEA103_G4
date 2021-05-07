@@ -34,19 +34,16 @@
   	.register-login-section {
     padding-top: 0px;
 	}
-<<<<<<< HEAD
 	.small.text-center {
     color: black;
 }
 .login-form .group-input .gi-more .forget-pass {
 color: #007bff;
 }
-=======
 	input {
 	border-radius: 5px;
 	
 	}
->>>>>>> 0ff55c88efc6f3f7c8283737ac74c76ea7ce69cd
   	</style>
   </head>
 
@@ -88,21 +85,12 @@ color: #007bff;
               <h2>會員登入</h2>
               <form METHOD="post" class="login-form" action="<%=request.getContextPath()%>/FrondEnd_LoginHandler">
                 <div class="group-input">
-<<<<<<< HEAD
-                  <label for="user_id">UserID *</label>
-                  <input type="text" name="user_id" id="username" value="${(userVO==null)? '' : userVO.user_id}" placeholder="UserID" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></td>
-                </div>
-                <div class="group-input">
-                  <label for="user_pwd">Password *</label>
-                  <input type="password" name="user_pwd" id="password" placeholder="Password"/><td><font color=red><b>${errorMsgs.user_pwd}</b></td>
-=======
                   <label for="user_id">UserID</label>
                   <input type="text" name="user_id" value="${(userVO==null)? '' : userVO.user_id}" placeholder="會員帳號" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></td>
                 </div>
                 <div class="group-input">
                   <label for="user_pwd">Password</label>
                   <input type="password" name="user_pwd" placeholder="密碼"/><td><font color=red><b>${errorMsgs.user_pwd}</b></td>
->>>>>>> 0ff55c88efc6f3f7c8283737ac74c76ea7ce69cd
                 </div>
                 <div class="group-input gi-check">
                   <div class="gi-more">
@@ -118,11 +106,7 @@ color: #007bff;
                 <input type="hidden" name="action" value="signIn" id="btn" />
                 
                 <button type="submit" class="site-btn login-btn">
-<<<<<<< HEAD
                   	登入
-=======
-                	  登入
->>>>>>> 0ff55c88efc6f3f7c8283737ac74c76ea7ce69cd
                 </button>
               </form>
 	        <div class="card-body px-5 py-4">

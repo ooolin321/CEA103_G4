@@ -25,4 +25,5 @@ public interface ProductDAO_interface {
           public void updateStateLive(Integer live_no,List<ProductVO> list);
           //多個商品下架並清空live_no
           public void offShelf(List<ProductVO> list);
+          public List<ProductVO> getSellerProducts(String user_id);
 }

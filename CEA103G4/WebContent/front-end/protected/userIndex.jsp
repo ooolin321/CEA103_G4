@@ -107,7 +107,7 @@
                         <c:forEach var="sellerFollow" items="${list}" begin="0" end="${list.size()}">
                         <c:if test="${sellerFollow.user_id == userVO.getUser_id()}">
                           <tr>
-                           <td>${sellerFollow.seller_id}</td>
+                           <td><a href="<%=request.getContextPath()%>/SellerProducts?user_id=${sellerFollow.seller_id}">${sellerFollow.seller_id}</a></td>
                            <td></td>
                           </tr>
                           </c:if>

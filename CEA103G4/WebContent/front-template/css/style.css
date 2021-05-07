@@ -4600,3 +4600,21 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
         left: 0px;
         background: rgba(0, 0, 0, 0.3);
       }
+      
+      /*sellerHome*/
+.sellerHome {
+	padding-left: 45px;
+    padding-right: 45px;
+    box-sizing: border-box;
+}
+.sellerHome .sellerInfo{
+	display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+.sellerHome .card {
+	border-radius:10px;
+	border:none;
+	box-shadow: 1px 1px 10px rgb(0 0 0 / 10%);
+}      

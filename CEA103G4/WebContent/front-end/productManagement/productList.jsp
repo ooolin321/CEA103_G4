@@ -105,7 +105,7 @@
   				  </tr>
  				 </thead>
  				 <tbody>
- 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}" varStatus="i">
+ 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()}" varStatus="i">
    				 	<c:if test="${productVO.user_id == userVO.getUser_id() && productVO.product_state == 0}"> 
    				 <tr>
      				 <th scope="row">${i.index+1}</th>
@@ -146,7 +146,7 @@
   				  </tr>
  				 </thead>
  				 <tbody>
- 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}" varStatus="i">
+ 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()}" varStatus="i">
    				 	<c:if test="${productVO.user_id == userVO.getUser_id() && productVO.product_state == 1}"> 
    				 <tr>
      				 <th scope="row">${i.index+1}</th>
@@ -187,7 +187,7 @@
   				  </tr>
  				 </thead>
  				 <tbody>
- 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}">
+ 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()}">
    				 	<c:if test="${productVO.product_state == 2}"> 
    				 <tr>
    				 	 <th scope="row">${liveSvc.getOneLive(productVO.live_no).live_name}</th>
@@ -219,7 +219,7 @@
   				  </tr>
  				 </thead>
  				 <tbody>
- 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}" varStatus="i">
+ 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()}" varStatus="i">
    				 	<c:if test="${productVO.user_id == userVO.getUser_id() && productVO.product_state == 3}"> 
    				 <tr>
      				 <th scope="row">${i.index+1}</th>
@@ -248,7 +248,7 @@
   				  </tr>
  				 </thead>
  				 <tbody>
- 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}" varStatus="i">
+ 				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()}" varStatus="i">
    				 	<c:if test="${productVO.user_id == userVO.getUser_id() && productVO.product_state == 5}"> 
    				 <tr>
      				 <th scope="row">${i.index+1}</th>

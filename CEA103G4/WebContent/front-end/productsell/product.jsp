@@ -5,6 +5,7 @@
 <%@ page import="com.product.model.*"%>
 <%@ page import="com.product_type.model.*"%>
 <%@ page import="com.product_report.model.*"%>
+<%@ page import="com.user.model.*"%>
 
 <%
   ProductVO productVO = (ProductVO) request.getAttribute("productVO");
@@ -71,7 +72,7 @@
             <div class="filter-widget">
               <h4 class="fw-title">商品分類</h4>
               <ul class="filter-catagories">
-              <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()-1}">
+              <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()}">
               <li><div class="catagoriesQuery" value="${product_typeVO.pdtype_no}">${product_typeVO.pdtype_name}</div></li>
                 </c:forEach>
               </ul>
@@ -110,7 +111,7 @@
               <h4 class="fw-title">進階查詢</h4>
               <div class="fw-all-choose" id="fw-all-choose">
               <div class="fw-cs" id="fw-cs">
-               <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()-1}">
+               <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()}">
                 <div class="cs-item">
                  <label for="${product_typeVO.pdtype_name}">
                     ${product_typeVO.pdtype_name}
@@ -207,8 +208,8 @@
                     </div>
                     <div class="pd-function">
                       <a href="#" class="primary-btn">私訊賣家</a>
-                      <a href="#" class="primary-btn">關注賣家</a>
-                      <a href="javascript:;" id="reportLink" class="primary-btn">商品檢舉</a>
+                      <a href="#"  id="${productVO.user_id}" value="${userVO.user_id}" class="primary-btn sellerFollow">關注賣家</a>
+                      <a href="javascript:;" id="reportLink"  class="primary-btn userReport" value="${userVO.user_id}">商品檢舉</a>
                     </div>
 <!--                     檢舉燈箱 -->
 <div  class="report-bg">
@@ -221,14 +222,7 @@
       <div class="report-input-content">
         <div class="report-input">
           <label for="">檢舉內容</label>
-          <input
-            type="text"
-            placeholder="請輸入檢舉原因"
-            name="pro_report_content"
-            id="username"
-            size="50"
-            value=""
-          />
+          <input type="text"  placeholder="請輸入檢舉原因" name="pro_report_content" size="50" required>
         </div>
       </div>
       <div class="report-button">
@@ -590,6 +584,7 @@
 		 }) 
 	}
 	
+	
 	//檢舉燈箱js 
 
 	 var reportLink = document.querySelector("#reportLink");
@@ -599,12 +594,17 @@
 
 	  //1,燈箱顯示/隱藏
 	  reportLink.addEventListener("click", function () {
+		  if ($('#reportLink').attr("value") === "") {
+				alert("請先登入會員");
+			} else {
 	    report.style.display = "block";
 	    report_bg.style.display = "block";
+			}
 	  });
 	  closeBtn.addEventListener("click", function () {
 	    report.style.display = "none";
 	    report_bg.style.display = "none";
+	    $('input[name="pro_report_content"]').val("");
 	  });
 
 	  //2，拖曳
@@ -624,28 +624,65 @@
 	    });
 	  });
 	  
+
+	  
 	  //商品檢舉AJAX  
 
 	  $(".report-button").click(function(){
-			
+		  if($('input[name="pro_report_content"]').val().trim().length != 0){
 			$.ajax({ 
 			  url:"<%=request.getContextPath()%>/product_report/product_report.do",
 			  type:"POST", 
 			  data:{
 				  "pro_report_content": $('input[name="pro_report_content"]').val(),
 				  "product_no": $(".report-title").attr("value"),
-				  "user_id": "abcd01",
+				  "user_id": $('#reportLink').attr('value'), 
 				  "action": "insert"
 			  },
 			  success: function() { 
 						alert('商品檢舉已提交');
 					    report.style.display = "none";
-					    report_bg.style.display = "none";	
+					    report_bg.style.display = "none";
+					    $('input[name="pro_report_content"]').val("");
 		            }, 	  
 			  error:function () {
 				  alert('很抱歉,檢舉提交失敗,請重新提交。');
+				    report.style.display = "none";
+				    report_bg.style.display = "none";
+				  $('input[name="pro_report_content"]').val("");
 			  },				
-			 }) 
+			 });
+		  }  else {
+			  alert("檢舉內容請勿空白")
+		  };
+	  });
+	  
+	  //關注賣家AJAX
+	  	  $(".sellerFollow").click(function(){
+	  		  var user = $('.sellerFollow').attr("value");
+	  		  var sellerid = $('.sellerFollow').attr("id");
+	  		  if (user === "") {
+					alert("請先登入會員");
+				} else if (user === sellerid){
+					alert("很抱歉,無法追蹤自己");
+				}else {
+			$.ajax({ 
+			  url:"<%=request.getContextPath()%>/seller_follow/seller_follow.do",
+			  type:"POST", 
+			  data:{
+				  "user_id":user,
+				  "seller_id":sellerid,
+				  "action": "insert"
+			  },
+			  success: function() { 
+						alert('已追蹤賣家');
+
+		            }, 	  
+			  error:function () {
+				  alert('很抱歉,追蹤失敗,請重新點選。');
+			  },				
+			 });
+		  }
 	  });
 	  
 	  

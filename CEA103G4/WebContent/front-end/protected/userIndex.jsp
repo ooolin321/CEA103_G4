@@ -1,11 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.user.model.*"%>
+<%@ page import="com.seller_follow.model.*"%>
 
 <%
 	UserVO userVO = (UserVO) session.getAttribute("account"); 
 	session.setAttribute("userVO", userVO);
+	
+	Seller_FollowDAO dao = new Seller_FollowDAO();
+    List<Seller_FollowVO> list = dao.getAll();
+    pageContext.setAttribute("list",list);
 %>
+
 
 <html lang="zh-tw">
 <head>
@@ -86,15 +93,30 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-6 productList" style="margin-top:0px;">
                     <div class="tile">
-                      <h3 class="tile-title">Support Requests</h3>
-                      <div class="embed-responsive embed-responsive-16by9">
-                        <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
+                      <h3 class="tile-title">追蹤賣家清單</h3>
+                      <table class="table">
+                        <thead class="thead">
+                         <tr>
+                          <th scope="col">賣家帳號</th>
+                          <th scope="col">私訊賣家</th>
+                         </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="sellerFollow" items="${list}" begin="0" end="${list.size()}">
+                        <c:if test="${sellerFollow.user_id == userVO.getUser_id()}">
+                          <tr>
+                           <td>${sellerFollow.seller_id}</td>
+                           <td></td>
+                          </tr>
+                          </c:if>
+                         </c:forEach>
+                          </tbody>
+                          </table>
                       </div>
                     </div>
                   </div>
-                </div>
 <!--                 <div class="row"> -->
 <!--                   <div class="col-md-6"> -->
 <!--                     <div class="tile"> -->

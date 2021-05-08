@@ -10,10 +10,12 @@
 		Object SellerProducts = request.getAttribute("SellerProducts");
 		pageContext.setAttribute("SellerProducts", SellerProducts);
 
+
 	
 %>
 <jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
 <jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
+
 
 
 <!DOCTYPE html>
@@ -56,7 +58,7 @@
           <div class="col-lg-12">
             <div class="breadcrumb-text">
               <a href="${pageContext.request.contextPath}/front-end/index.jsp"><i class="fa fa-home"></i> Home</a>
-              <span>Shop</span>
+              <span>SellerHome</span>
             </div>
           </div>
         </div>
@@ -76,8 +78,10 @@
     			<div class="col-md-6">
      		 <div class="card-body">
        		 <h5 class="card-title"></h5>
-        		<p class="card-text"></p>
        			<p class="card-text"><small class="text-muted"></small></p>
+       			<div class="seller-btn">
+       			<div><a href="#"><i class="fa fa-commenting-o"></i>&nbsp;<p style="display:inline-block; color:pink;">私訊賣家</p></a></div>
+       			</div>
      		 </div>
     		</div>
  		 </div>

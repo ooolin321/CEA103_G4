@@ -24,5 +24,6 @@ public class Seller_FollowVO implements java.io.Serializable {
 		this.seller_id = seller_id;
 	}
 
+
 	
 }

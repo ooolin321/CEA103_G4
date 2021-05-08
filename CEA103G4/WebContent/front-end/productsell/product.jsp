@@ -6,6 +6,7 @@
 <%@ page import="com.product_type.model.*"%>
 <%@ page import="com.product_report.model.*"%>
 <%@ page import="com.user.model.*"%>
+<%@ page import="com.seller_follow.model.*"%>
 
 <%
   ProductVO productVO = (ProductVO) request.getAttribute("productVO");
@@ -16,6 +17,7 @@
 <jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
 <jsp:useBean id="product_reportSvc" scope="page" class="com.product_report.model.Product_ReportService" />
 <jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
+<jsp:useBean id="seller_followSvc" scope="page" class="com.seller_follow.model.Seller_FollowService" />
 
 
 <!DOCTYPE html>
@@ -211,7 +213,12 @@
                     </div>
                     <div class="pd-function">
                       <a href="#" class="primary-btn">私訊賣家</a>
-                      <a href="#"  id="${productVO.user_id}" value="${userVO.user_id}" class="primary-btn sellerFollow">關注賣家</a>
+                      <c:if test="${seller_followSvc.getTracerNo(userVO.user_id, productVO.user_id) != null}">
+                      <div class="primary-btn unFollow" value="${seller_followSvc.getTracerNo(userVO.user_id,productVO.user_id).tracer_no}">取消關注</div>
+                      </c:if>
+                      <c:if test="${seller_followSvc.getTracerNo(userVO.user_id, productVO.user_id) == null}">
+                      <div id="${productVO.user_id}" value="${userVO.user_id}" class="primary-btn sellerFollow">關注賣家</div>
+                      </c:if>
                       <a href="javascript:;" id="reportLink"  class="primary-btn userReport" value="${userVO.user_id}">商品檢舉</a>
                     </div>
 <!--                     檢舉燈箱 -->
@@ -307,7 +314,7 @@
                         </tr>
                         <tr>
                           <td class="p-catagory">查看賣場</td>
-                          <td></td>
+                          <td><a href="<%=request.getContextPath()%>/SellerProducts?user_id=${productVO.user_id}" target="_blank"><div class="primary-btn" style="background: pink; border-radius:5px;" >前往賣場</div></a></td>
                         </tr>
                       </table>
                     </div>
@@ -642,7 +649,7 @@
 	  		  if (user === "") {
 					alert("請先登入會員");
 				} else if (user === sellerid){
-					alert("很抱歉,無法追蹤自己");
+					alert("很抱歉,無法關注自己");
 				}else {
 			$.ajax({ 
 			  url:"<%=request.getContextPath()%>/seller_follow/seller_follow.do",
@@ -653,16 +660,35 @@
 				  "action": "insert"
 			  },
 			  success: function() { 
-						alert('已追蹤賣家');
-
+						alert('已關注賣家');
+						window.location.reload();
 		            }, 	  
 			  error:function () {
-				  alert('很抱歉,追蹤失敗,請重新點選。');
+				  alert('很抱歉,關注失敗,請重新點選。');
 			  },				
 			 });
 		  }
 	  });
 	  
+	  	//取消關注賣家AJAX
+	  		$(".unFollow").click(function(){
+
+			$.ajax({ 
+			  url:"<%=request.getContextPath()%>/seller_follow/seller_follow.do",
+			  type:"POST", 
+			  data:{
+				  "tracer_no":$(".unFollow").attr("value"),
+				  "action": "deleteFromProduct"
+			  },
+			  success: function() { 
+						alert('已取消關注');
+						window.location.reload();
+		            }, 	  
+			  error:function () {
+				  alert('很抱歉,取消失敗,請重新點選。');
+			  },				
+			 });
+	  });
 	  
 	  
 	  

@@ -94,21 +94,28 @@
                     </div>
                   </div>
                   <div class="col-md-6 productList" style="margin-top:0px;">
-                    <div class="tile">
-                      <h3 class="tile-title">追蹤賣家清單</h3>
+                    <div class="tile userSeller">
+                      <h3 class="tile-title">關注賣家清單</h3>
                       <table class="table">
                         <thead class="thead">
                          <tr>
-                          <th scope="col">賣家帳號</th>
+                          <th scope="col">前往賣場</th>
                           <th scope="col">私訊賣家</th>
+                          <th scope="col">取消關注</th>
                          </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="sellerFollow" items="${list}" begin="0" end="${list.size()}">
                         <c:if test="${sellerFollow.user_id == userVO.getUser_id()}">
                           <tr>
-                           <td><a href="<%=request.getContextPath()%>/SellerProducts?user_id=${sellerFollow.seller_id}">${sellerFollow.seller_id}</a></td>
-                           <td></td>
+                           <td><a href="<%=request.getContextPath()%>/SellerProducts?user_id=${sellerFollow.seller_id}" target="_blank">${sellerFollow.seller_id}</a></td>
+                           <td><a href="#"><i class="fa fa-commenting-o"></i></a></td>
+                           <td>
+                            <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/seller_follow/seller_follow.do" style="margin-bottom: 0px;">
+                             <button class="btn btn-outline-info" type="submit" name="tracer_no" value="${sellerFollow.tracer_no}">取消關注</button>
+                             <input type="hidden" name="action" value="deleteUserIndex">
+			                </FORM>
+			               </td>
                           </tr>
                           </c:if>
                          </c:forEach>

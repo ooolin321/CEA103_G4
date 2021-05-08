@@ -1,14 +1,22 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.live.model.*"%>
 <%@ page import="com.user.model.*"%>
+<%@ page import="com.product.model.*"%>
 
 <%
 	LiveVO liveVO = (LiveVO) request.getAttribute("liveVO");
 %>
+
+<%
+	ProductDAO dao = new ProductDAO();
+	List<ProductVO> list = dao.getAll();
+	pageContext.setAttribute("list", list);
+%>
+
+
 <jsp:useBean id="liveSvc" scope="page"
 	class="com.live.model.LiveService" />
 
@@ -237,17 +245,6 @@ input {
 						<li><a
 							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i
 								class="icon_profile"></i></a></li>
-						<!-- <li>
-                <a href="#">Pages</a>
-                <ul class="dropdown">
-                  <li><a href="./blog-details.html">Blog Details</a></li>
-                  <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                  <li><a href="./check-out.html">Checkout</a></li>
-                  <li><a href="./faq.html">Faq</a></li>
-                  <li><a href="./register.html">Register</a></li>
-                  <li><a href="./login.html">Login</a></li>
-                </ul>
-              </li> -->
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -275,9 +272,9 @@ input {
 <body>
 	<div class="row">
 		<div class="col-md-12">
-			<h1>${liveVO.live_name}
-				#<span class="badge badge-primary">${liveVO.live_type }</span>
-			</h1>
+			<h2>${liveVO.live_name}
+				#<span class="badge badge-primary">${liveVO.live_type}</span>
+			</h2>
 			<h2>
 				<span id="iflive"> ${(liveVO.live_state==2)? '直播中':''}
 					${(liveVO.live_state==1)? '未直播':''} ${(liveVO.live_state==0)? '已結束':''}
@@ -304,8 +301,51 @@ input {
 		</div>
 
 	</div>
+
+
 	<div class="row">
-		<div class="col-md-12"></div>
+		<div class="col-xl-9">
+			<div class="tile">
+				<h3 class="tile-title">直播拍賣商品</h3>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th scope="col">直播編號</th>
+							<!-- 									<th scope="col">直播分類</th> -->
+							<th scope="col">商品編號</th>
+							<th scope="col">商品圖片</th>
+							<th scope="col">商品名稱</th>
+							<th scope="col">商品描述</th>
+							<th scope="col">起標價</th>
+							<th scope="col">數量</th>
+							<th scope="col"></th>
+							<!-- 								<th scope="col">賣家帳號</th> -->
+						</tr>
+					</thead>
+
+					<tbody>
+						<c:forEach var="productVO" items="${list}" begin="0"
+							end="${list.size()-1}">
+							<c:if
+								test="${productVO.product_state == 2 && productVO.user_id == liveVO.user_id &&productVO.live_no == liveVO.live_no}">
+								<tr id="tr${productVO.product_no}">
+									<th scope="row">${productVO.live_no == 0 ? '未設定':productVO.live_no}</th>
+									<%-- 											<td>${liveSvc.getOneLive(productVO.live_no).live_type}</td> --%>
+									<td>${productVO.product_no}</td>
+									<td><img width="120px" height="100px"
+										src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}"
+										class="rounded mx-auto d-block" alt=""></td>
+									<td>${productVO.product_name}</td>
+									<td class="productInfo">${productVO.product_info}</td>
+									<td>${productVO.start_price}</td>
+									<td>${productVO.product_remaining}</td>
+								</tr>
+							</c:if>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 
 
@@ -326,14 +366,18 @@ input {
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 	crossorigin="anonymous">
+<!--
 	
 </script>
+-->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
 	integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
 	crossorigin="anonymous">
+<!--
 	
 </script>
+-->
 
 
 <script

@@ -13,7 +13,7 @@ public interface LiveDAO_interface {
 
 	public List<LiveVO> getAll();
 	
-	public List<LiveVO> getAll1();
+	public List<LiveVO> getAll2();
 	
 	public List<LiveVO> getAllByID(String user_id);
 	

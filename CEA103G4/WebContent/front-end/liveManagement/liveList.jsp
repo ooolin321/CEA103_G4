@@ -12,9 +12,6 @@
 	pageContext.setAttribute("list", list);
 %>
 
-<jsp:useBean id="product_typeSvc" scope="page"
-	class="com.product_type.model.Product_TypeService" />
-
 <jsp:useBean id="liveSvc" scope="page"
 	class="com.live.model.LiveService" />
 
@@ -299,6 +296,7 @@ table td, table tr, table th {
 													</c:if>
 												</c:forEach>
 												<tr>
+													<td></td>
 													<td></td>
 													<td></td>
 													<td></td>

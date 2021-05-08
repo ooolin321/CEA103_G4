@@ -90,6 +90,7 @@ public class EmpService {
 	
 	public EmpVO forgotEmail(String email, String link) {
 		EmpVO empVO = new EmpVO();
+		
 		empVO.setEmail(email);
 		empVO.setLink(link);
 		

@@ -6,9 +6,13 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import com.live.model.LiveService;
+import com.live.model.LiveVO;
 import com.live_order.model.Live_orderService;
 import com.live_order.model.Live_orderVO;
 import com.live_order_detail.model.Live_order_detailVO;
+import com.product.model.ProductService;
+import com.product.model.ProductVO;
 
 public class Live_orderServlet extends HttpServlet {
 
@@ -507,6 +511,70 @@ public class Live_orderServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 ***********************************/
 			} catch (Exception e) {
 				throw new ServletException(e);
+			}
+		}
+		
+		
+		if ("updateShipment".equals(action)) { // 來自update_product_input.jsp的請求
+			
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+
+				Live_orderVO live_orderVO = null;
+				
+				Live_orderService live_orderSvc = new Live_orderService();
+				
+				String[] live_order_no = req.getParameterValues("live_order_no");
+				
+				List<Live_orderVO> list = new ArrayList<Live_orderVO>();
+				
+				
+				for(String s1 : live_order_no){
+					
+					Integer l_no = Integer.valueOf(s1);
+
+					live_orderVO = new Live_orderVO();
+					live_orderVO.setLive_order_no(l_no);
+					
+					list.add(live_orderSvc.getOneLive_order(l_no));
+					
+					System.out.println(s1);
+					
+					
+				}
+
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("live_orderVO", live_orderVO); // 含有輸入格式錯誤的productVO物件,也存入req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/liveOrderManagement/liveOrderListB.jsp");
+					failureView.forward(req, res);
+					return; 
+				}
+				
+				/***************************2.開始修改資料*****************************************/
+
+				live_orderSvc.updateShipment(list);
+				
+
+				
+				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("live_orderVO", live_orderVO); // 資料庫update成功後,正確的的productVO物件,存入req
+				String url = "/front-end/liveOrderManagement/liveOrderListB.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				
+				errorMsgs.add("修改資料失敗:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/liveOrderManagement/liveOrderListB.jsp");
+				failureView.forward(req, res);
 			}
 		}
 	}

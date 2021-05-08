@@ -73,124 +73,193 @@ table td, table tr, table th {
 		</div>
 
 
+		<div class="col-xl-12">
+			<div class="bs-component">
+				<ul class="nav nav-tabs">
+					<li class="nav-item"><a class="nav-link active show"
+						data-toggle="tab" href="#home">已付款訂單</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#profile">未付款訂單</a></li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade active show" id="home">
+						<div class="row">
+							<div class="col-xl-12">
+								<div class="tile">
+									<h3 class="tile-title">已付款訂單</h3>
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>付款截止時間</th>
+												<th>訂單狀態</th>
+												<th>訂單金額</th>
+												<th>訂單運費</th>
+												<th>付款方式</th>
+												<th>物流方式</th>
+												<th>物流狀態</th>
+												<th>選取帶入</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
 
-		<div class="row">
-			<div class="col-xl-12">
-				<div class="tile">
-					<h3 class="tile-title">我的販賣訂單</h3>
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>#</th>
-								<!-- 								<th>訂單時間</th> -->
-								<th>付款截止時間</th>
-								<th>訂單狀態</th>
-								<th>訂單金額</th>
-								<th>訂單運費</th>
-								<th>付款方式</th>
-								<!-- 								<th>收件人姓名</th> -->
-								<!-- 								<th>收件人地址</th> -->
-								<!-- 								<th>收件人電話</th> -->
-								<!-- 								<th>收件人手機</th> -->
-								<th>物流方式</th>
-								<th>物流狀態</th>
-								<!-- 								<th>使用點數折抵</th> -->
-								<!-- 								<th>直播編號</th> -->
-								<!-- 								<th>買家帳號</th> -->
-								<!-- 								<th>賣家帳號</th> -->
-								<!-- 								<th>賣家評價分數</th> -->
-								<!-- 								<th>賣家評價內容</th> -->
-								<!-- 								<th>點數回饋</th> -->
-								<th></th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-
-							<c:forEach var="live_orderVO"
-								items="${live_orderSvc.getAllByID2(userVO.user_id)}">
-								<tr>
-									<td>
-										<FORM id="${live_orderVO.live_order_no}" METHOD="post"
-											ACTION="<%=request.getContextPath()%>/live_order/live_order.do"
-											style="margin-bottom: 0px;">
-											<input type="hidden" name="live_order_no"
-												value="${live_orderVO.live_order_no}"> <input
-												type="hidden" name="action" value="listDetails_ByNo_B">
-											<a href="#"
-												onclick="document.getElementById('${live_orderVO.live_order_no}').submit();">${live_orderVO.live_order_no}</a>
+											<c:forEach var="live_orderVO"
+												items="${live_orderSvc.getAllByID2(userVO.user_id)}">
+												<c:if test="${live_orderVO.order_state ==1}">
+													<tr id="TR${live_orderVO.live_order_no}">
+														<td>
+															<FORM id="${live_orderVO.live_order_no}" METHOD="post"
+																ACTION="<%=request.getContextPath()%>/live_order/live_order.do"
+																style="margin-bottom: 0px;">
+																<input type="hidden" name="live_order_no"
+																	value="${live_orderVO.live_order_no}"> <input
+																	type="hidden" name="action" value="listDetails_ByNo_B">
+																<a href="#"
+																	onclick="document.getElementById('${live_orderVO.live_order_no}').submit();">${live_orderVO.live_order_no}</a>
 
 
-										</FORM>
+															</FORM>
 
 
 
-									</td>
-									<%-- 									<td><fmt:formatDate value="${live_orderVO.order_date}" --%>
-									<%-- 											pattern="yyyy-MM-dd HH:mm:ss" /></td> --%>
-									<td><fmt:formatDate value="${live_orderVO.pay_deadline}"
-											pattern="yyyy-MM-dd HH:mm:ss" /></td>
-									<td>${(live_orderVO.order_state==0)? '未付款':''}
-										${(live_orderVO.order_state==1)? '已付款':''}
-										${(live_orderVO.order_state==2)? '棄單':''}</td>
-									<td>${live_orderVO.order_price}</td>
-									<td>${live_orderVO.order_shipping}</td>
-									<td>${(live_orderVO.pay_method==0)? '錢包':''}
-										${(live_orderVO.pay_method==1)? '信用卡':''}
-										${(live_orderVO.pay_method==2)? '轉帳':''}</td>
-									<%-- 									<td>${live_orderVO.rec_name}</td> --%>
-									<%-- 									<td>${live_orderVO.zipcode}${live_orderVO.city}${live_orderVO.town}${live_orderVO.rec_addr}</td> --%>
-									<%-- 									<td>${live_orderVO.rec_phone}</td> --%>
-									<%-- 									<td>${live_orderVO.rec_cellphone}</td> --%>
-									<td>${(live_orderVO.logistics==0)? '宅配':'超商'}</td>
-									<td>${(live_orderVO.logistics_state==0)? '未出貨':''}
-										${(live_orderVO.logistics_state==1)? '已出貨':''}
-										${(live_orderVO.logistics_state==2)? '已取貨':''}</td>
-									<%-- 									<td>${live_orderVO.discount}</td> --%>
-									<%-- 									<td>${live_orderVO.live_no}</td> --%>
-									<%-- 									<td>${live_orderVO.user_id}</td> --%>
-									<%-- 									<td>${live_orderVO.seller_id}</td> --%>
-									<%-- 									<td>${live_orderVO.srating}</td> --%>
-									<%-- 									<td>${live_orderVO.srating_content}</td> --%>
-									<%-- 									<td>${live_orderVO.point}</td> --%>
+														</td>
+														<td><fmt:formatDate
+																value="${live_orderVO.pay_deadline}"
+																pattern="yyyy-MM-dd HH:mm:ss" /></td>
+														<td>${(live_orderVO.order_state==0)? '未付款':''}
+															${(live_orderVO.order_state==1)? '已付款':''}
+															${(live_orderVO.order_state==2)? '棄單':''}</td>
+														<td>${live_orderVO.order_price}</td>
+														<td>${live_orderVO.order_shipping}</td>
+														<td>${(live_orderVO.pay_method==0)? '錢包':''}
+															${(live_orderVO.pay_method==1)? '信用卡':''}
+															${(live_orderVO.pay_method==2)? '轉帳':''}</td>
+														<td>${(live_orderVO.logistics==0)? '宅配':'超商'}</td>
+														<td>${(live_orderVO.logistics_state==0)? '未出貨':''}
+															${(live_orderVO.logistics_state==1)? '已出貨':''}
+															${(live_orderVO.logistics_state==2)? '已取貨':''}</td>
+														<td><input type="checkbox" id="CB${live_orderVO.live_order_no}"></td>
+													</tr>
+												</c:if>
+											</c:forEach>
 
-									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/live_order/live_order.do"
-											style="margin-bottom: 0px;">
-											<input type="submit" class="btn btn-info" value="修改">
-											<input type="hidden" name="live_order_no"
-												value="${live_orderVO.live_order_no}"> <input
-												type="hidden" name="action" value="getOne_For_UpdateB">
-										</FORM>
-									</td>
-									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/live_order/live_order.do"
-											style="margin-bottom: 0px;">
-											<input type="submit" class="btn btn-danger" value="刪除">
-											<input type="hidden" name="live_order_no"
-												value="${live_orderVO.live_order_no}"> <input
-												type="hidden" name="action" value="delete">
-										</FORM>
-									</td>
-									<!-- 									<td> -->
-									<!-- 										<FORM METHOD="post" -->
-									<%-- 											ACTION="<%=request.getContextPath()%>/live_order/live_order.do" --%>
-									<!-- 											style="margin-bottom: 0px;"> -->
-									<!-- 											<input type="submit"  value="送出查詢"> <input -->
-									<!-- 												type="hidden" name="live_order_no" -->
-									<%-- 												value="${live_orderVO.live_order_no}"> <input --%>
-									<!-- 												type="hidden" name="action" value="listDetails_ByNo"> -->
-									<!-- 										</FORM> -->
-									<!-- 									</td> -->
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+
+												<c:forEach var="live_orderVO"
+													items="${live_orderSvc.getAllByID2(userVO.user_id)}">
+													<c:if test="${live_orderVO.order_state ==1}">
+														<td><FORM METHOD="post"
+																ACTION="<%=request.getContextPath()%>/live_order/live_order.do"
+																style="margin-bottom: 0px;">
+																<input type="submit" class="btn btn-info" value="出貨">
+																<input type="hidden" id="HB${live_orderVO.live_order_no}" name="live_order_no"
+																	value="${live_orderVO.live_order_no}" disabled> <input
+																	type="hidden" name="action" value="updateShipment">
+															</FORM></td>
+													</c:if>
+												</c:forEach>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="tab-pane fade" id="profile">
+
+						<div class="row">
+							<div class="col-xl-12">
+								<div class="tile">
+									<h3 class="tile-title">未付款訂單</h3>
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>付款截止時間</th>
+												<th>訂單狀態</th>
+												<th>訂單金額</th>
+												<th>訂單運費</th>
+												<th>付款方式</th>
+												<th>物流方式</th>
+												<th>物流狀態</th>
+												<th></th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+
+											<c:forEach var="live_orderVO"
+												items="${live_orderSvc.getAllByID2(userVO.user_id)}">
+												<c:if test="${live_orderVO.order_state ==0}">
+
+													<tr>
+														<td>
+															<FORM id="${live_orderVO.live_order_no}" METHOD="post"
+																ACTION="<%=request.getContextPath()%>/live_order/live_order.do"
+																style="margin-bottom: 0px;">
+																<input type="hidden" name="live_order_no"
+																	value="${live_orderVO.live_order_no}"> <input
+																	type="hidden" name="action" value="listDetails_ByNo_B">
+																<a href="#"
+																	onclick="document.getElementById('${live_orderVO.live_order_no}').submit();">${live_orderVO.live_order_no}</a>
+															</FORM>
+														</td>
+														<td><fmt:formatDate
+																value="${live_orderVO.pay_deadline}"
+																pattern="yyyy-MM-dd HH:mm:ss" /></td>
+														<td>${(live_orderVO.order_state==0)? '未付款':''}
+															${(live_orderVO.order_state==1)? '已付款':''}
+															${(live_orderVO.order_state==2)? '棄單':''}</td>
+														<td>${live_orderVO.order_price}</td>
+														<td>${live_orderVO.order_shipping}</td>
+														<td>${(live_orderVO.pay_method==0)? '錢包':''}
+															${(live_orderVO.pay_method==1)? '信用卡':''}
+															${(live_orderVO.pay_method==2)? '轉帳':''}</td>
+														<td>${(live_orderVO.logistics==0)? '宅配':'超商'}</td>
+														<td>${(live_orderVO.logistics_state==0)? '未出貨':''}
+															${(live_orderVO.logistics_state==1)? '已出貨':''}
+															${(live_orderVO.logistics_state==2)? '已取貨':''}</td>
+													</tr>
+												</c:if>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+					</div>
 				</div>
 			</div>
 		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		<%
 			if (request.getAttribute("listDetails_ByNo") != null) {
@@ -218,5 +287,22 @@ table td, table tr, table th {
 	<!-- Page specific javascripts-->
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
+			<script>
+<c:forEach var="live_orderVO" items="${live_orderSvc.getAllByID2(userVO.user_id)}">
+	<c:if test="${live_orderVO.order_state ==1}">
+		
+		$("#TR${live_orderVO.live_order_no}" ).click(function(e){
+			var checkBoxes = $("#CB${live_orderVO.live_order_no}");
+			checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+			var isChecked = $("#CB${live_orderVO.live_order_no}" ).is(":checked");
+			if(isChecked){
+				$("#HB${live_orderVO.live_order_no}").prop('disabled', false);
+			}else{
+				$("#HB${live_orderVO.live_order_no}").prop('disabled', true);
+			}
+		});
+	</c:if>
+</c:forEach>
+</script>
 </body>
 </html>

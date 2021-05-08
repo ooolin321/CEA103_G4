@@ -17,6 +17,7 @@ import javax.sql.DataSource;
 
 import com.live_order_detail.model.Live_order_detailJNDIDAO;
 import com.live_order_detail.model.Live_order_detailVO;
+import com.product.model.ProductVO;
 
 public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 	private static DataSource ds = null;
@@ -38,7 +39,9 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 	private static final String DELETE_DETAILs = "DELETE FROM LIVE_ORDER_DETAIL WHERE LIVE_ORDER_NO = ?";
 	private static final String GET_ORDER_BY_ID = "SELECT * FROM LIVE_ORDER WHERE USER_ID = ? ORDER BY LIVE_ORDER_NO";
 	private static final String GET_ORDER_BY_ID2 = "SELECT * FROM LIVE_ORDER WHERE SELLER_ID = ? ORDER BY LIVE_ORDER_NO";
-
+	//設定多個直播訂單出貨
+	private static final String UPDATESHIPMENT = "UPDATE LIVE_ORDER SET LOGISTICS_STATE=1 WHERE LIVE_ORDER_NO = ?";
+	
 	@Override
 	public void insert(Live_orderVO live_orderVO) {
 		Connection con = null;
@@ -674,4 +677,48 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 		}
 		return list;
 	}
+
+	@Override
+	public void updateShipment(List<Live_orderVO> list) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATESHIPMENT);
+			
+			
+			for (Live_orderVO aOrder : list) {
+				pstmt.setInt(1, aOrder.getLive_order_no());
+				pstmt.addBatch();
+			}
+			
+			pstmt.executeBatch();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+
 }

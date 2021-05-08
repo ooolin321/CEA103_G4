@@ -29,6 +29,7 @@
   <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
   <meta property="og:description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
   <title>Mode Femme 會員專區</title>
+  <link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,6 +37,20 @@
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-template/css/usermain.css">
   <!-- Font-icon css-->
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.app-title h1 {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.SellerHomeBtn .btn-outline-warning:hover {
+	color:white;
+
+}
+
+
+</style>
+
 </head>
 <body class="app sidebar-mini rtl">
  <%@include file="/front-end/user/userSidebar.jsp"%>
@@ -43,6 +58,9 @@
                 <div class="app-title">
                   <div>
                     <h1><i class="fa fa-drivers-license-o"></i> 會員首頁</h1>
+                    </div>
+                    <div class="SellerHomeBtn">
+                    <a href="<%=request.getContextPath()%>/SellerProducts?user_id=${userVO.user_id}" target="_blank"><button class="btn btn-outline-warning" type="button">前往我的賣場</button></a>
                   </div>
                   <ul class="app-breadcrumb breadcrumb">
                     <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><i class="fa fa-home fa-lg"></i></a></li>

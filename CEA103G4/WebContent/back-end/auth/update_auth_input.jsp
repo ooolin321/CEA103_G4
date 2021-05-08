@@ -16,8 +16,8 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>員工權限資料修改 - update_input_Auth.jsp</title>
-
+<title>員工權限資料修改</title>
+<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script
@@ -49,7 +49,7 @@
 		<div class="app-title">
 			<div>
 				<h1>
-					<i class="fa fa-dashboard"></i> 權限管理
+					<i class="fa fa-wrench"></i> 權限管理
 				</h1>
 
 			</div>
@@ -119,6 +119,16 @@
 												value="<%=request.getParameter("whichPage")%>"> <input
 												class="btn btn-primary" type="submit" id="submit" value="送出新增">
 										</FORM>
+																								
+									</div>
+								</div>
+						     </div>
+						 </div>
+					</div>
+				</div>
+			   </div>
+			</div>
+		</main>
 </body>
 <script>
 	/* 	let sub = document.getElementById("submit");

@@ -129,16 +129,16 @@
     </div>
     <ul class="app-menu">
         <li class="treeview disabled"><a class="app-menu__item active" href="#"
-            data-toggle="treeview"><i class="app-menu__icon fa fa-dashboard"></i><span
+            data-toggle="treeview"><i class="app-menu__icon fa fa-group"></i><span
                 class="app-menu__label" >員工管理</span><i
                 class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li><a class="treeview-item"
                     href="<%=request.getContextPath()%>/back-end/emp/listAllEmp.jsp"><i
-                        class="icon fa fa-circle-o"></i>所有員工</a></li>
+                        class="icon fa fa-group"></i>所有員工</a></li>
                 <li><a class="treeview-item"
                     href="<%=request.getContextPath()%>/back-end/emp/addEmp.jsp">
-                    <i class="icon fa fa-circle-o"></i>新增員工</a></li>
+                    <i class="icon 	fa fa-handshake-o"></i>新增員工</a></li>
             </ul></li>
 
         <li class="treeview disabled"><a class="app-menu__item" href="#"
@@ -149,7 +149,7 @@
 
                 <li><a class="treeview-item"
                     href="<%=request.getContextPath()%>/back-end/auth/listAllAuth.jsp"><i
-                        class="icon fa fa-circle-o"></i>員工權限管理</a></li>
+                        class="icon fa fa-laptop"></i>員工權限管理</a></li>
                 <!--                <li><a class="treeview-item" -->
                 <%--                    href="<%=request.getContextPath()%>/back-end/fun/listAllFun.jsp"><i --%>
                 <!--                        class="icon fa fa-circle-o"></i>功能管理</a></li> -->

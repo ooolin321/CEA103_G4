@@ -15489,7 +15489,19 @@ max-height:100%;
 }
 								
 								/*productListFinsh*/
-							
+/*userIndex*/
+.userSeller a:hover{
+	text-decoration:none;
+	font-size:18px;
+}
+
+.userSeller i.fa.fa-commenting-o {
+    font-size: 25px;
+}
+
+.userSeller {
+	height: 100%;
+}							
 								
 /*media*/
 

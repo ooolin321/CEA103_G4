@@ -15,7 +15,8 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>員工資料修改 - update_input_Emp.jsp</title>
+<title>員工資料修改</title>
+<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
@@ -40,6 +41,22 @@
 .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
 	height: 151px; /* height:  151px; */
 }
+
+.address .form-control {
+    display:inline-block;
+    margin-right: 30px;
+}
+
+.form-group.authselect ul li {
+    display:inline-block;
+    margin-right: 15px;
+}
+.row {
+justify-content: center;
+
+}
+
+
 </style>
 </head>
 
@@ -49,7 +66,7 @@
 		<div class="app-title">
 			<div>
 				<h1>
-					<i class="fa fa-dashboard"></i> 新增員工
+					<i class="fa fa-edit"></i> 員工資料修改
 				</h1>
 
 			</div>
@@ -63,13 +80,9 @@
 			<div class="pd-ltr-20 xs-pd-20-10">
 				<div class="min-height-200px">
 					<div class="pd-20 card-box mb-30">
-						<div class="clearfix">
-							<h2 class="text-dark h2">修改員工資料</h2>
-						</div>
 						<div class="row">
 							<div class="col-md-12">
 								<div class="tile">
-									<h3 class="tile-title">資料修改:</h3>
 									<div class="tile-body">
 										<%-- 錯誤表列 --%>
 										<c:if test="${not empty errorMsgs}">
@@ -88,25 +101,20 @@
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-														<label><i class="fas fa-user-alt"></i>員工編號:<font
+														<label style="padding-left: 160px;"><i class="fas fa-user-alt"></i>員工編號:<font
 															color=red style="font-size: 120%"><%=empVO.getEmpno()%></font></label>
 													</div>
 												</div>
 											</div>
-
-
 											<div class="row">
-												<div class="col-md-6">
+												<div class="col-md-5">
 													<div class="form-group">
 														<label><i class="fas fa-user-alt"></i>員工姓名:</label> <input
 															class="form-control" type="TEXT" name="ename" size="45"
 															value="<%=(empVO == null) ? "" : empVO.getEname()%>" />
 													</div>
 												</div>
-											</div>
-
-											<div class="row">
-												<div class="col-md-6">
+											<div class="col-md-5">
 													<div class="form-group">
 														<label><i class="fas fa-user-alt"></i>職位:</label> <input
 															class="form-control" type="TEXT" name="job" size="45"
@@ -114,18 +122,15 @@
 													</div>
 												</div>
 											</div>
-
 											<div class="row">
-												<div class="col-md-6">
+												<div class="col-md-5">
 													<div class="form-group">
 														<label><i class="fas fa-user-alt"></i>身份證字號:</label> <input
 															class="form-control" type="TEXT" name="id" size="45"
 															value="<%=(empVO == null) ? "" : empVO.getId()%>" />
 													</div>
 												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
+												<div class="col-md-5">
 													<div class="form-group">
 														<label><i class="fas fa-user-alt"></i>性別:</label> <select
 															class="form-control" size="1" name="gender">
@@ -136,64 +141,13 @@
 												</div>
 											</div>
 											<div class="row">
-												<div class="col-md-6">
+												<div class="col-md-5">
 													<div class="form-group">
 														<label><i class="fas fa-user-alt"></i>生日:</label> <input
 															class="form-control" name="dob" id="f_date2" type="text">
 													</div>
 												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label><i class="fas fa-user-alt"></i>地址:</label>
-														<div id="twzipcode"></div>
-														<input class="form-control" type="TEXT" name="addr"
-															size="45" value="<%=empVO.getAddr()%>" />
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label><i class="fas fa-user-alt"></i>email:</label> <input
-															class="form-control" type="TEXT" name="email" size="45"
-															value="<%=(empVO == null) ? "" : empVO.getEmail()%>" />
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label><i class="fas fa-user-alt"></i>薪水:</label> <input
-															class="form-control" type="TEXT" name="sal" size="45"
-															value="<%=(empVO == null) ? "" : empVO.getSal()%>" />
-													</div>
-												</div>
-											</div>
-
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label><i class="fas fa-user-alt"></i>狀態:</label> <select
-															class="form-control" size="1" name="state">
-															<option value="1" ${(empVO.state==0)? 'selected':''}>在職</option>
-															<option value="0" ${(empVO.state==0)? 'selected':''}>離職</option>
-														</select>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label><i class="fas fa-user-alt"></i>到職日期:</label> <input
-															class="form-control" name="hiredate" id="f_date1"
-															type="text">
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
+												<div class="col-md-5">
 													<div class="form-group">
 														<label><i class="fas fa-user-alt"></i>員工密碼:</label> <input
 															class="form-control" type="TEXT" name="emp_pwd" size="45"
@@ -202,13 +156,58 @@
 												</div>
 											</div>
 											<div class="row">
-												<div class="col-md-12">
+												<div class="col-md-5">
+													<div class="form-group">
+														<label><i class="fas fa-user-alt"></i>email:</label> <input
+															class="form-control" type="TEXT" name="email" size="45"
+															value="<%=(empVO == null) ? "" : empVO.getEmail()%>" />
+													</div>
+												</div>
+												<div class="col-md-5">
+													<div class="form-group">
+														<label><i class="fas fa-user-alt"></i>薪水:</label> <input
+															class="form-control" type="TEXT" name="sal" size="45"
+															value="<%=(empVO == null) ? "" : empVO.getSal()%>" />
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-5">
+													<div class="form-group">
+														<label><i class="fas fa-user-alt"></i>狀態:</label> <select
+															class="form-control" size="1" name="state">
+															<option value="1" ${(empVO.state==0)? 'selected':''}>在職</option>
+															<option value="0" ${(empVO.state==0)? 'selected':''}>離職</option>
+														</select>
+													</div>
+												</div>
+											  <div class="col-md-5">
+													<div class="form-group">
+														<label><i class="fas fa-user-alt"></i>到職日期:</label> <input
+															class="form-control" name="hiredate" id="f_date1"
+															type="text">
+													</div>
+												</div>
+											</div>
+											<div class="row address">
+													<div class="form-group col-md-10">
+														<label><i class="fas fa-user-alt"></i>地址:</label>
+														<div id="twzipcode"></div>
+													</div>	
+														<div class="form-group col-md-10">
+														<input class="form-control" type="TEXT" name="addr"
+															size="45" value="<%=empVO.getAddr()%>" />
+														</div>	
+													
+											</div>
+											<div class="row">
+												<div class="col-md-10">
 													<div class="form-group">
 														<label><i class="fas fa-user-alt"></i>權限:</label>
-														<div class="form-group">
+														<div class="form-group authselect">
 															<ul>
 																<c:forEach var="authVO" items="<%=authSvc.getAuthNOs(empVO.getEmpno())%>">
-																	<li><input class="col-md-6" name="funno" value="${authVO.funno}" type="hidden">${funSvc.getOneFun(authVO.funno).funName}&emsp;：
+																	<li><input class="col-md-3" name="funno" value="${authVO.funno}" type="hidden">${funSvc.getOneFun(authVO.funno).funName}&emsp;
 																		<label> <select class="form-control" size="1" name="auth_no">
 																				<option value="1"
 																					${(authVO.auth_no==1)? 'selected':''}>開</option>
@@ -226,6 +225,7 @@
 
 											<br>
 											<div class="row">
+											
 												<input type="hidden" name="action" value="update"> <input
 													type="hidden" name="empno" value="<%=empVO.getEmpno()%>">
 												<input type="hidden" name="requestURL"
@@ -248,7 +248,7 @@
 		<script>
 $("#twzipcode").twzipcode({
 	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
-	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 
+	css: ["city form-control col-md-5", "town form-control col-md-5"], // 自訂 "城市"、"地別" class 名稱 
 	countyName: "city", // 自訂城市 select 標籤的 name 值
 	districtName: "dist", // 自訂區別 select 標籤的 name 值
 	countySel: "<%=empVO.getCity()%>",

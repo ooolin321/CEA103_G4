@@ -93,9 +93,7 @@ public class LoginHandler extends HttpServlet {
 					
 					HttpSession session = req.getSession();
 					session.setAttribute("empAccount", empVO); // *工作1: 才在session內做已經登入過的標識
-					session.setAttribute("authList", authList);
-//					session.setAttribute("authVO", listFun);
-					
+					session.setAttribute("authList", authList);					
 
 					try {
 						String location = (String) session.getAttribute("location");
@@ -153,7 +151,7 @@ public class LoginHandler extends HttpServlet {
 				EmpService empSvc = new EmpService();
 				empVO = empSvc.selectEmail(email);
 				if (empVO == null) {
-System.out.println("loginServlet 156 = "+empVO.getEmail());
+System.out.println("loginServlet 146 = "+empVO.getEmail());
 					errorMsgs.put("email", "沒有Email資料，請重新輸入");
 					String url = "/back-end/backendLogin.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -162,10 +160,10 @@ System.out.println("loginServlet 156 = "+empVO.getEmail());
 
 				String link = req.getServerName() + ":" + req.getServerPort() + req.getContextPath();
 
-System.out.println("loginServlet 165 = " + empVO.getEname());
 				empVO.setLink(link);
 				empVO = empSvc.forgotEmail(email, link);
 
+System.out.println("154 = " + empVO.getEname());
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -174,35 +172,15 @@ System.out.println("loginServlet 165 = " + empVO.getEname());
 					return;
 				}
 
-				HttpSession session = req.getSession();
-				session.setAttribute("forgotPassword", empVO); // *工作1: 才在session內做已經登入過的標識
+				String url = "/back-end/backendLogin.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				successView.forward(req, res);
 
-
-				try {
-					String location = (String) session.getAttribute("location");
-					if (location != null) {
-						session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
-						res.sendRedirect(location);
-						return;
-					}
-				} catch (Exception ignored) {
-
-				}
-				res.sendRedirect(req.getContextPath() + "/back-end/backendLogin.jsp"); // *工作3:
-				// (-->如無來源網頁:則重導至login_success.jsp)
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
-					failureView.forward(req, res);
-					return;
-				}
 			} catch (Exception e) {
 				errorMsgs.put("Exception", e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
 				failureView.forward(req, res);
 			}
-			
-			
-		
 		}
 
 	}

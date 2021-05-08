@@ -4,8 +4,8 @@
 <%@ page import="com.emp.model.*"%>
 
 <%
-EmpVO empVO = (EmpVO) session.getAttribute("forgotPassword");
-session.setAttribute("empVO", empVO);
+EmpVO empno = (EmpVO) session.getAttribute("forgotPassword");
+session.setAttribute("forgotPassword", empno);
 %> 
 
 <html>

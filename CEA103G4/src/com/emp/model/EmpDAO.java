@@ -378,11 +378,12 @@ public class EmpDAO implements EmpDAO_interface {
 
 	@Override
 	public void forgotPassword(EmpVO empVO) {
+		String ch_name = empVO.getEname();
 		String emailto = empVO.getEmail();
 		String link = empVO.getLink();
 
 		String subject = "Mode Femme 忘記密碼通知";
-		String messageText = "<h1>Hello! " + "<br>" + " (請前往 <a href=\"http://" + link + "/back-end/emp/update_pswd.jsp \"> 修改密碼 </a>) <h1>";
+		String messageText = "<h1>Hello! " + ch_name + "<br>" + " (請前往 <a href=\"http://" + link + "/back-end/emp/update_pswd.jsp \"> 修改密碼 </a>) <h1>";
 		try {
 
 			// 設定使用SSL連線至 Gmail smtp Server

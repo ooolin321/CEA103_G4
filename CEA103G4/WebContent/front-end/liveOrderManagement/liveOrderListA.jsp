@@ -164,16 +164,16 @@ table td, table tr, table th {
 												type="hidden" name="action" value="getOne_For_UpdateA">
 										</FORM>
 									</td>
-									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/live_order/live_order.do"
-											style="margin-bottom: 0px;">
-											<input type="submit" class="btn btn-danger" value="刪除">
-											<input type="hidden" name="live_order_no"
-												value="${live_orderVO.live_order_no}"> <input
-												type="hidden" name="action" value="delete">
-										</FORM>
-									</td>
+<!-- 									<td> -->
+<!-- 										<FORM METHOD="post" -->
+<%-- 											ACTION="<%=request.getContextPath()%>/live_order/live_order.do" --%>
+<!-- 											style="margin-bottom: 0px;"> -->
+<!-- 											<input type="submit" class="btn btn-danger" value="刪除"> -->
+<!-- 											<input type="hidden" name="live_order_no" -->
+<%-- 												value="${live_orderVO.live_order_no}"> <input --%>
+<!-- 												type="hidden" name="action" value="delete"> -->
+<!-- 										</FORM> -->
+<!-- 									</td> -->
 									<!-- 									<td> -->
 									<!-- 										<FORM METHOD="post" -->
 									<%-- 											ACTION="<%=request.getContextPath()%>/live_order/live_order.do" --%>

@@ -110,4 +110,8 @@ public class Live_orderService {
 	public List<Live_orderVO> getAllByID2(String seller_id) {
 		return dao.getAllByID2(seller_id);
 	}
+	
+	public void updateShipment(List<Live_orderVO> live_order_no){
+		dao.updateShipment(live_order_no);
+	}
 }

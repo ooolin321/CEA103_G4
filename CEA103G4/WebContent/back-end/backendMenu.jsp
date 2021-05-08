@@ -22,12 +22,16 @@
     <a class="app-sidebar__toggle" href="#" data-toggle="sidebar"
         aria-label="Hide Sidebar"></a>
     <!-- Navbar Right Menu-->
-    <ul class="app-nav">
-        <li class="app-search"><input class="app-search__input"
-            type="search" placeholder="Search">
+     <ul class="app-nav">
+        <li class="app-search">
+         <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
+        <input class="app-search__input" name="empno" value="${empVO.empno}" type="search" placeholder="Search">
+        <input type="hidden" name="action" value="getOne_For_Display">
             <button class="app-search__button">
                 <i class="fa fa-search"></i>
-            </button></li>
+            </button>
+        </FORM>
+            </li>
         <!--Notification Menu-->
         <li class="dropdown"><a class="app-nav__item" href="#"
             data-toggle="dropdown" aria-label="Show notifications"><i

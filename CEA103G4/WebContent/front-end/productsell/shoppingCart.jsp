@@ -39,6 +39,38 @@
   .shopping-cart {
     padding-top: 0px;
 }
+.cart-table table tr td.qua-col .productCounts {
+  width: 123px;
+  height: 46px;
+  border: 2px solid #ebebeb;
+  padding: 0 15px;
+  float: left;
+}
+
+.cart-table table tr td.qua-col .productCounts .qtybtn {
+  font-size: 24px;
+  color: #b2b2b2;
+  float: left;
+  line-height: 38px;
+  cursor: pointer;
+  width: 18px;
+}
+
+.cart-table table tr td.qua-col .productCounts .qtybtn.dec {
+  font-size: 30px;
+}
+
+.cart-table table tr td.qua-col .productCounts input {
+  text-align: center;
+  width: 52px;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  color: #4c4c4c;
+  line-height: 40px;
+  float: left;
+}
+
   </style>
   
   </head>
@@ -105,15 +137,15 @@
                       <div class="quantity" style="margin-top: 30px;">
                       
                       
-                     <div id="PC${order.product_no}" class="pro-qty" >
+                     <div id="PC${order.product_no}" class="productCounts" >
                      <span id="decProduct" class="dec qtybtn ${order.product_no}">-</span>
-                      <input name="proqty" id="PN${order.product_no}" type="text" value="${order.product_quantity}" />
-                      <span id="addProduct" class="inc qtybtn ${order.product_no}" style="none">+</span>
+                      <input name="${order.product_no}" id="PN${order.product_no}" type="text" value="${order.product_quantity}" />
+                      <span id="Add${order.product_no}" class="inc qtybtn" style="none">+</span>
                     </div>
                     
                     
                       </div>
-                      <span id="maxRemaining" value="${order.product_remaining}">在庫數量：${order.product_remaining}</span>
+                      <span id="max${order.product_no}" value="${order.product_remaining}">在庫數量：${order.product_remaining}</span>
 <%--                       <h5 style="color:#FF0000">在庫數量：${order.product_remaining}</h5> --%>
                     </td>
                     <td>
@@ -166,39 +198,7 @@
 
     <!-- Shopping Cart Section End -->
 
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-      <div class="container">
-        <div class="logo-carousel owl-carousel">
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-1.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-2.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-3.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-4.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-5.png" alt="" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Partner Logo Section End -->
+
 
     <!-- Footer Section Begin -->
 	<%@include file="/front-end/footer.jsp"%>
@@ -229,43 +229,54 @@
 // 		let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
 // 		$("#TP${order.product_no}").text(totalPrice);
 // 	});
+    <c:forEach var="order" items="${buylist}" varStatus="cartstatus">
     
-//     var proQty = $('#PC${order.product_no}');
-// 	proQty.on('click', '.${order.product_no}', function () {
-// 		var $button = $(this);
-// 		var oldValue = $button.parent().find('input').val();
-// 		if ($button.hasClass('inc')) {
-// 			var newVal = parseFloat(oldValue) + 1;
-// 		} else {
-// 			// Don't allow decrementing below zero
-// 			if (oldValue > 0) {
-// 				var newVal = parseFloat(oldValue) - 1;
-// 			} else {
-// 				newVal = 0;
-// 			}
-// 		}
-// 		$button.parent().find('input').val(newVal);
-// 	});
-
+   
+    
+    var proQty = $('#PC${order.product_no}');
+	proQty.on('click', '.qtybtn', function () {
+		var $button = $(this);
+		var oldValue = $button.parent().find('input').val();
+		if ($button.hasClass('inc')) {
+			var newVal = parseFloat(oldValue) + 1;
+		} else {
+			// Don't allow decrementing below zero
+			if (oldValue > 0) {
+				var newVal = parseFloat(oldValue) - 1;
+			} else {
+				newVal = 0;
+			}
+		}
+		$button.parent().find('input').val(newVal);
+	});
+    
+    
+    
+    
 	//數量按鈕前端控制不可大於商品數量
-// 	$('#addProduct').on('click', function () {
-//     	var Count = $('input[name="proqty"]').val();
-//     	var maxRemaining = $("#maxRemaining").attr("value");
-//     	if (Count == maxRemaining) {
-//     		$('#addProduct').prop('disabled',true);
-//     		alert("商品數量只剩下"+ maxRemaining +"個");	
-//     	} 
-//     	if (Count < maxRemaining) {
-//     		$('#addProduct').prop('disabled',false);
-//     	}
+	$('#Add${order.product_no}').on('click', function () {
+    	var Count = $('input[name="${order.product_no}"]').val();
+    	var maxRemaining = $("#max${order.product_no}").attr("value");
+    	if (Count == maxRemaining) {
+    		$("#Add${order.product_no}").prop('disabled',true);
+    		alert("商品數量只剩下"+ maxRemaining +"個");	
+    	} 
+    	if (Count < maxRemaining) {
+    		$("#Add${order.product_no}").prop('disabled',false);
+    	}
 
-// 	});
+	});
 	
-// 	$('#PC${order.product_no}').change(function() {
-// 		var maxRemaining = $("#maxRemaining").attr("value");
-// 		alert("商品數量只剩下"+ maxRemaining +"個");
-// 		$('input[name="proqty"]').val(maxRemaining);
-// 	});
+	
+	$("#PC${order.product_no}").change(function() {	
+		var maxRemaining = $("#max${order.product_no}").attr("value");
+		alert("商品數量只剩下"+ maxRemaining +"個");
+		$('input[name="${order.product_no}"]').val(maxRemaining);
+	});
+	
+	
+	
+	 </c:forEach>
     </script>
     
   </body>

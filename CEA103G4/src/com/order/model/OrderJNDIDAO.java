@@ -8,9 +8,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.product.model.ProductVO;
 
 
-public class OrderJNDIDAO implements OrderDAO_interface{
+
+public class OrderJNDIDAO implements OrderDAO_interface{  
 
 	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
 	private static DataSource ds = null;
@@ -36,6 +38,10 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			"SELECT * FROM `ORDER` WHERE `USER_ID` = ? ORDER BY `ORDER_NO`";
 	private static final String GET_ORDER_BY_ID2 =
 			"SELECT * FROM `ORDER` WHERE `SELLER_ID` = ? ORDER BY `ORDER_NO`";
+	private static final String UPDATE_SHIPPED =
+			"UPDATE `ORDER` SET `LOGISTICSSTATE`=1 WHERE `ORDER_NO` = ?";
+	private static final String UPDATE_UNSHIPPED =
+			"UPDATE `ORDER` SET `LOGISTICSSTATE`=0 WHERE `ORDER_NO` = ?";
 	
 	
 	@Override
@@ -89,7 +95,6 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			try {
 				con.setAutoCommit(true);
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			if (pstmt != null) {
@@ -498,4 +503,81 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 		}
 		return list;
 	}
+	@Override
+	public void updateShipped(List <Integer> list) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_SHIPPED);
+
+			for (Integer order_no  : list) {
+				pstmt.setInt(1, order_no);
+				pstmt.addBatch();
+			}
+			
+			pstmt.executeBatch();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	@Override
+	public void updateUnshipped(List <Integer> list) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_UNSHIPPED);
+
+			for (Integer order_no  : list) {
+				pstmt.setInt(1, order_no);
+				pstmt.addBatch();
+			}
+			
+			pstmt.executeBatch();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
 }

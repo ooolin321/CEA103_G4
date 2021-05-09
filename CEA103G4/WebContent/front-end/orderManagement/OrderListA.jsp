@@ -6,11 +6,6 @@
 <%@ page import="com.user.model.*"%>
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
-<%-- <%
-    OrderService orderSvc = new OrderService();
-    List<OrderVO> list = orderSvc.getAll();
-    pageContext.setAttribute("list",list);
-%> --%>
 <jsp:useBean id="orderSvc" scope="page" class="com.order.model.OrderService" />
 
 <!DOCTYPE html>

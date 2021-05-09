@@ -138,7 +138,7 @@
                       
                       
                      <div id="PC${order.product_no}" class="productCounts" >
-                     <span id="decProduct" class="dec qtybtn ${order.product_no}">-</span>
+                     <span id="decProduct" class="dec qtybtn">-</span>
                       <input name="${order.product_no}" id="PN${order.product_no}" type="text" value="${order.product_quantity}" />
                       <span id="Add${order.product_no}" class="inc qtybtn" style="none">+</span>
                     </div>

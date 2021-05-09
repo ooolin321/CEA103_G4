@@ -54,7 +54,8 @@ public class ProductDAO implements ProductDAO_interface {
 	private static final String GET_ALL_SHOP = "SELECT product_no, product_name, product_info,product_price, product_quantity,product_remaining,product_state,user_id,pdtype_no FROM PRODUCT where product_state = 1 AND product_photo IS NOT NULL order by rand()";	
 	//查詢價格區間的商品
 	private static final String GET_MoneyRangeShop = "select product_no, product_name, product_info,product_price, product_quantity,product_remaining,product_state,user_id,pdtype_no from PRODUCT where product_photo IS NOT NULL AND product_state = 1 AND product_price between ? and ?";
-	
+	//賣家賣場頁面
+	private static final String GET_SELLER_PRODUCTS = "select product_no, product_name, product_info,product_price, product_quantity,product_remaining,product_state,user_id,pdtype_no from PRODUCT where product_photo IS NOT NULL AND product_state = 1 AND user_id = ?";
 	
 	
 	@Override
@@ -911,6 +912,67 @@ public class ProductDAO implements ProductDAO_interface {
 			}
 		}
 
+	}
+	
+	@Override
+	public List<ProductVO> getSellerProducts(String user_id){
+		List<ProductVO> list = new ArrayList<ProductVO>();
+		ProductVO productVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_SELLER_PRODUCTS);
+			pstmt.setString(1, user_id);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+		
+				productVO = new ProductVO();
+				productVO.setProduct_no(rs.getInt("product_no"));
+				productVO.setProduct_name(rs.getString("product_name"));
+				productVO.setProduct_info(rs.getString("product_info"));
+				productVO.setProduct_price(rs.getInt("product_price"));
+				productVO.setProduct_quantity(rs.getInt("product_quantity"));
+				productVO.setProduct_remaining(rs.getInt("product_remaining"));
+				productVO.setProduct_state(rs.getInt("product_state"));
+				productVO.setUser_id(rs.getString("user_id"));
+				productVO.setPdtype_no(rs.getInt("pdtype_no"));
+				list.add(productVO);
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
 
 }

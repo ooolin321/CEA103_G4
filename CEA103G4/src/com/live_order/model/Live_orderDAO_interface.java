@@ -22,4 +22,6 @@ public interface Live_orderDAO_interface {
 	public List<Live_orderVO> getAllByID(String user_id);
 	
 	public List<Live_orderVO> getAllByID2(String seller_id);
+	
+	public void updateShipment(List<Live_orderVO> list);
 }

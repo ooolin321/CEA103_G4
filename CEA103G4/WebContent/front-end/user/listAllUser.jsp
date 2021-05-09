@@ -31,6 +31,7 @@
 <meta property="og:description"
 	content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
 <title>所有會員資料</title>
+<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,7 +47,7 @@
 	<div class="app-title">
 		<div>
 			<h1>
-				<i class="fa fa-dashboard"></i> 所有會員
+				<i class="fa fa-dashboard"></i> 會員管理
 			</h1>
 			
 		</div>
@@ -74,24 +75,24 @@
                 <thead>
 		<tr role="row" class="table-info">
 			<th class="sorting_asc">帳號</th>
-		<th>密碼</th>
+<!-- 		<th>密碼</th> -->
 		<th>姓名</th>
-		<th>身分証字號</th>
-		<th>性別</th>
-		<th>生日</th>
-		<th>Email</th>
-		<th>電話</th>
-		<th>手機號碼</th>
-		<th>地址</th>
+<!-- 		<th>身分証字號</th> -->
+<!-- 		<th>性別</th> -->
+<!-- 		<th>生日</th> -->
+<!-- 		<th>Email</th> -->
+<!-- 		<th>電話</th> -->
+<!-- 		<th>手機號碼</th> -->
+<!-- 		<th>地址</th> -->
 		<th>註冊日期</th>
-		<th>點數</th>
+<!-- 		<th>點數</th> -->
 		<th>違約次數</th>
 		<th>狀態</th>
-		<th>賣家評價</th>
-		<th>評價人數</th>
-		<th>錢包</th>
+<!-- 		<th>賣家評價</th> -->
+<!-- 		<th>評價人數</th> -->
+<!-- 		<th>錢包</th> -->
 		<th>修改</th>
-		<th>刪除</th>
+<!-- 		<th>刪除</th> -->
 		<th>曾經檢舉過的直播</th>
 	</tr>
 		</thead>
@@ -101,51 +102,56 @@
 		
 		<tr>
 			<td>${userVO.user_id}</td>
-			<td>${userVO.user_pwd}</td>
+<%-- 			<td>${userVO.user_pwd}</td> --%>
 			<td>${userVO.user_name}</td>
-			<td>${userVO.id_card}</td>
-			<td>			
-			${(userVO.user_gender=='1')? '男':''}
-			${(userVO.user_gender=='0')? '女':''}
-			</td>
-			<td><fmt:formatDate value="${userVO.user_dob}" pattern="yyyy-MM-dd"/></td>
+<%-- 			<td>${userVO.id_card}</td> --%>
+<!-- 			<td>			 -->
+<%-- 			${(userVO.user_gender=='1')? '男':''} --%>
+<%-- 			${(userVO.user_gender=='0')? '女':''} --%>
+<!-- 			</td> -->
+<%-- 			<td><fmt:formatDate value="${userVO.user_dob}" pattern="yyyy-MM-dd"/></td> --%>
 <%-- 		                       <td>${userVO.user_dob}</td> --%>
-			<td>${userVO.user_mail}</td>
-			<td>${userVO.user_phone}</td>
-			<td>${userVO.user_mobile}</td> 
+<%-- 			<td>${userVO.user_mail}</td> --%>
+<%-- 			<td>${userVO.user_phone}</td> --%>
+<%-- 			<td>${userVO.user_mobile}</td>  --%>
 <%-- 			<td>${userVO.user_addr}</td> --%>
-			<td>${userVO.zipcode}${userVO.city}${userVO.town}${userVO.user_addr}</td>
+<%-- 			<td>${userVO.zipcode}${userVO.city}${userVO.town}${userVO.user_addr}</td> --%>
 			<td><fmt:formatDate value="${userVO.regdate}" pattern="yyyy-MM-dd"/></td>
-			<td>${userVO.user_point}</td>
+<%-- 			<td>${userVO.user_point}</td> --%>
 			<td>${userVO.violation}</td>
 			<td>			
 			${(userVO.user_state==0)? '停權':''}
 			${(userVO.user_state==1)? '正常':''}
 			</td>
-			<td>${userVO.user_comment}</td>
-			<td>${userVO.comment_total}</td>
-			<td>${userVO.cash}</td>
+<%-- 			<td>${userVO.user_comment}</td> --%>
+<%-- 			<td>${userVO.comment_total}</td> --%>
+<%-- 			<td>${userVO.cash}</td> --%>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/user/user.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
+			     <input class="btn btn-danger" type="submit" value="修改">
 			     <input type="hidden" name="user_id"  value="${userVO.user_id}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
+<!-- 			<td> -->
+<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/user/user.do" style="margin-bottom: 0px;"> --%>
+<!-- 			     <input type="submit" value="刪除"> -->
+<%-- 			     <input type="hidden" name="user_id"  value="${userVO.user_id}"> --%>
+<!-- 			     <input type="hidden" name="action" value="delete"></FORM> -->
+<!-- 			</td> -->
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/user/user.do" style="margin-bottom: 0px;">
-			     <input type="submit" value="刪除">
-			     <input type="hidden" name="user_id"  value="${userVO.user_id}">
-			     <input type="hidden" name="action" value="delete"></FORM>
-			</td>
-			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/user/user.do" style="margin-bottom: 0px;">
-			    <input type="submit" value="送出查詢"> 
+			    <input class="btn btn-warning" type="submit" value="送出查詢"> 
 			    <input type="hidden" name="user_id" value="${userVO.user_id}">
 			    <input type="hidden" name="action" value="listLive_report_ByUser_id_A"></FORM>
 			</td>
 		</tr>
 	</c:forEach>
-</table>
+  </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
 <%@ include file="page2.file" %>
 <%if (request.getAttribute("listLive_report_ByUser_id")!=null){%>
        <jsp:include page="listLive_report_ByUser_id.jsp" />

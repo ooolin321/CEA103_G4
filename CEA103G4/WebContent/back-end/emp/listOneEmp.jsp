@@ -6,7 +6,10 @@
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
 %>
-
+<jsp:useBean id="authSvc" scope="page"
+	class="com.auth.model.AuthService" />
+<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
+<jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
 <!DOCTYPE html>
 <html lang="zh-tw">
 <head>
@@ -60,159 +63,116 @@
 					href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">回到首頁</a></li>
 			</ul>
 		</div>
-		
+
 		<div class="row">
 			<div class="col-md-12">
 				<div class="tile">
 					<div class="tile-body">
-					<div class="row">
-								<div class="col-md-6">
-									<div class="form-group">
-										<label><i class="fas fa-user-alt"></i>員工編號: ${empVO.empno}</label> 
-									</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label><i class="fas fa-user-alt"></i>員工編號:
+										${empVO.empno}</label>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label><i class="fas fa-user-alt"></i>員工姓名: ${empVO.ename}</label> 
-									</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label><i class="fas fa-user-alt"></i>員工姓名:
+										${empVO.ename}</label>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label><i class="fas fa-user-alt"></i>職位: ${empVO.job}</label> 
-									</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label><i class="fas fa-user-alt"></i>職位: ${empVO.job}</label>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label><i class="fas fa-user-alt"></i>身分證字號: ${empVO.id}</label> 
-									</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label><i class="fas fa-user-alt"></i>身分證字號:
+										${empVO.id}</label>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label><i class="fas fa-user-alt"></i>性別: 
-									<c:choose>
-										<c:when test="${empVO.gender==0}">
-											<td>女</td>
-										</c:when>
-										<c:when test="${empVO.gender==1}">
-											<td>男</td>
-										</c:when>
-									</c:choose>
-										</label> 
-									</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label><i class="fas fa-user-alt"></i>性別: <c:choose>
+											<c:when test="${empVO.gender==0}">
+												<td>女</td>
+											</c:when>
+											<c:when test="${empVO.gender==1}">
+												<td>男</td>
+											</c:when>
+										</c:choose> </label>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label><i class="fas fa-user-alt"></i>生日: ${empVO.dob}</label> 
-									</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label><i class="fas fa-user-alt"></i>生日: ${empVO.dob}</label>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label><i class="fas fa-user-alt"></i>地址: ${empVO.city}${empVO.dist}${empVO.addr}</label> 
-									</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label><i class="fas fa-user-alt"></i>地址:
+										${empVO.city}${empVO.dist}${empVO.addr}</label>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label><i class="fas fa-user-alt"></i>E-mail: ${empVO.email}</label> 
-									</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label><i class="fas fa-user-alt"></i>E-mail:
+										${empVO.email}</label>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label><i class="fas fa-user-alt"></i>薪水: ${empVO.sal}</label> 
-									</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label><i class="fas fa-user-alt"></i>薪水: ${empVO.sal}</label>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label><i class="fas fa-user-alt"></i>狀態: 
-										<c:choose>
-										<c:when test="${empVO.state==0}">
-											<td class="table-danger">離職</td>
-										</c:when>
-										<c:when test="${empVO.state==1}">
-											<td class="table-danger">在職</td>
-										</c:when>
-									</c:choose></label> 
-									</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label><i class="fas fa-user-alt"></i>狀態: <c:choose>
+											<c:when test="${empVO.state==0}">
+												<td class="table-danger">離職</td>
+											</c:when>
+											<c:when test="${empVO.state==1}">
+												<td class="table-danger">在職</td>
+											</c:when>
+										</c:choose></label>
 								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label><i class="fas fa-user-alt"></i>到職日期: ${empVO.hiredate}</label> 
-									</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label><i class="fas fa-user-alt"></i>到職日期:
+										${empVO.hiredate}</label>
 								</div>
-<!-- 								<div class="col-md-6"> -->
-<!-- 									<div class="form-group"> -->
-<%-- 										<label><i class="fas fa-user-alt"></i>員工密碼: ${empVO.emp_pwd}</label>  --%>
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 						<table class="table table-hover" id="sampleTable" -->
-<!-- 							style="font-size: 120%"> -->
-<!-- 							<thead> -->
-<!-- 								<tr role="row" class="table-info"> -->
-<!-- 									<th class="sorting_asc">員工編號</th> -->
-<!-- 									<th>員工姓名</th> -->
-<!-- 									<th>職位</th> -->
-<!-- 									<th>身分證字號</th> -->
-<!-- 									<th>性別</th> -->
-<!-- 									<th>生日</th> -->
-<!-- 									<th>地址</th> -->
-<!-- 									<th>email</th> -->
-<!-- 									<th>薪水</th> -->
-<!-- 									<th>狀態</th> -->
-<!-- 									<th>到職日期</th> -->
-<!-- 									<th>員工密碼</th> -->
-<!-- 																	<th>修改</th> -->
-<!-- 								</tr> -->
-<!-- 							</thead> -->
-<!-- 							<tbody> -->
-<!-- 								<tr> -->
-<%-- 									<td>${empVO.empno}</td> --%>
-<%-- 									<td class="table-danger">${empVO.ename}</td> --%>
-<%-- 									<td class="table-warning">${empVO.job}</td> --%>
-<%-- 									<td class="table-success">${empVO.id}</td> --%>
-<%-- 									<c:choose> --%>
-<%-- 										<c:when test="${empVO.gender==0}"> --%>
-<!-- 											<td>女</td> -->
-<%-- 										</c:when> --%>
-<%-- 										<c:when test="${empVO.gender==1}"> --%>
-<!-- 											<td>男</td> -->
-<%-- 										</c:when> --%>
-<%-- 									</c:choose> --%>
-<%-- 									<td class="table-danger">${empVO.dob}</td> --%>
-<%-- 									<td class="table-warning">${empVO.city}${empVO.dist}${empVO.addr}</td> --%>
-<%-- 									<td class="table-success">${empVO.email}</td> --%>
-<%-- 									<td>${empVO.sal}</td> --%>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label><i class="fas fa-user-alt"></i>權限:</label>
+										<div class="form-group">
+											<ul>
+												<c:forEach var="authVO"
+													items="<%=authSvc.getAuthNOs(empVO.getEmpno())%>">
+													<li><input class="col-md-6" name="funno"
+														value="${authVO.funno}" type="hidden">${funSvc.getOneFun(authVO.funno).funName}&emsp;：
+														<label> <c:choose>
+																<c:when test="${authVO.auth_no==0}">
+																	<td class="table-danger">無權限</td>
+																</c:when>
+																<c:when test="${authVO.auth_no==1}">
+																	<td class="table-danger">正常</td>
+																</c:when>
+															</c:choose>
 
-<%-- 									<c:choose> --%>
-<%-- 										<c:when test="${empVO.state==0}"> --%>
-<!-- 											<td class="table-danger">離職</td> -->
-<%-- 										</c:when> --%>
-<%-- 										<c:when test="${empVO.state==1}"> --%>
-<!-- 											<td class="table-danger">在職</td> -->
-<%-- 										</c:when> --%>
-<%-- 									</c:choose> --%>
-<%-- 									<td class="table-warning"><fmt:formatDate --%>
-<%-- 											value="${empVO.hiredate}" pattern="yyyy-MM-dd" /></td> --%>
-<%-- 									<td class="table-success">${empVO.emp_pwd}</td> --%>
-									<%-- <jsp:include page="/back-end/auth/listOneAuth.jsp" /> --%>
+													</label></li>
+												</c:forEach>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
 
-									<!-- 								<td> -->
-									<!-- 									<FORM METHOD="post" -->
-									<%-- 										ACTION="<%=request.getContextPath()%>/emp/emp.do" --%>
-									<!-- 										style="margin-bottom: 0px;"> -->
-									<!-- 										<input class="btn btn-primary" type="submit" value="修改"> -->
-									<%-- 										<input type="hidden" name="empno" value="${empVO.empno}"> --%>
-									<!-- 										<input type="hidden" name="requestURL" -->
-									<%-- 											value="<%=request.getServletPath()%>"> --%>
-									<!-- 										送出本網頁的路徑給Controller -->
-
-									<!-- 										<input type="hidden" name="action" value="getOne_For_Update"> -->
-									<!-- 									</FORM> -->
-									<!-- 								</td> -->
-
-<!-- 								</tr> -->
-
-<!-- 							</tbody> -->
-<!-- 						</table> -->
-					</div></div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

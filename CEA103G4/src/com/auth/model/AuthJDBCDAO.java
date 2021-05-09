@@ -20,6 +20,8 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 	private static final String GET_ONE_BY_EMPNO_AND_FUNNO_STMT = "select * from Auth where EMPNO = ? and FUNNO=?";
 	private static final String GET_ALL_BY_EMPNO_STMT = "select * from Auth order by EMPNO";
 	private static final String GET_AUTH_ON = "SELECT FUNNO FROM AUTH WHERE EMPNO=? AND AUTH_NO=1";
+	private static final String GET_EMP_BY_EMAIL = "SELECT EMAIL FROM EMP WHERE EMAIL=?";
+	
 	@Override
 	public void insert(AuthVO authVO) {
 		Connection con = null;
@@ -138,9 +140,8 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 	}
 
 	@Override
-	public AuthVO findAuthByEmpno(Integer empno) {
-		
-		AuthVO authVO = null;
+	public AuthVO findAuthAllValues(AuthVO authVO) {
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -150,7 +151,7 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 
 			pstmt = con.prepareStatement(GET_ONE_BY_EMPNO_AND_FUNNO_STMT);
 
-			pstmt.setInt(1, empno);
+			pstmt.setInt(1, authVO.getEmpno());
 	
 			
 			rs = pstmt.executeQuery();
@@ -290,6 +291,52 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 		return list;
 	}
 	
+	public EmpVO getEmail(String email) {
+		EmpVO empVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_EMP_BY_EMAIL);
+
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				empVO = new EmpVO();
+				empVO.setEmail(rs.getString("email"));
+			}
+
+			// Handle any driver errors
+		}  catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return empVO;
+
+	}
+	
+	
 	public static void main(String[] args) {
 
 		AuthJDBCDAO dao = new AuthJDBCDAO();
@@ -323,10 +370,14 @@ public class AuthJDBCDAO implements AuthDAO_interface {
 //			EmpVO empVO = dao2.login(14001, "a1111111");
 //			System.out.println(empVO.getEname());
 		
-	List<AuthVO> list = dao.getAuth(14005);
-	for(AuthVO auth:list) {
-		System.out.println(auth.getFunno()+",");
-	}
+//	List<AuthVO> list = dao.getAuth(14005);
+//	for(AuthVO auth:list) {
+//		System.out.println(auth.getFunno()+",");
+//	}
+	
+//	AuthJDBCDAO dao2 = new AuthJDBCDAO();
+//	String eString = dao2.getEmail("feng.school@gmail.com").toString();
+//	System.out.println(eString);
 
 		
 //		// 查詢部門

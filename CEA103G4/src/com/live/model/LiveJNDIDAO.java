@@ -282,7 +282,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 	}
 
 	@Override
-	public List<LiveVO> getAll1() {
+	public List<LiveVO> getAll2() {
 		List<LiveVO> list = new ArrayList<LiveVO>();
 		LiveVO liveVO = null;
 

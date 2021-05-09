@@ -12,9 +12,6 @@
 	pageContext.setAttribute("list", list);
 %>
 
-<jsp:useBean id="product_typeSvc" scope="page"
-	class="com.product_type.model.Product_TypeService" />
-
 <jsp:useBean id="liveSvc" scope="page"
 	class="com.live.model.LiveService" />
 
@@ -37,7 +34,8 @@
 	content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
 <meta property="og:description"
 	content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-<title>Mode Femme 會員專區</title>
+<title>Mode Femme 我的直播專案</title>
+<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -296,6 +294,7 @@ table td, table tr, table th {
 													</c:if>
 												</c:forEach>
 												<tr>
+													<td></td>
 													<td></td>
 													<td></td>
 													<td></td>

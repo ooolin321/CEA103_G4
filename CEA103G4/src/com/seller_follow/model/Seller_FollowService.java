@@ -31,5 +31,9 @@ public class Seller_FollowService {
 		public List<Seller_FollowVO> getAll() {
 			return dao.getAll();
 		}
+		
+		public Seller_FollowVO getTracerNo(String user_id, String seller_id) {
+			return dao.getTracerNo(user_id,seller_id);
+		}
 	}
 

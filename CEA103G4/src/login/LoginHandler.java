@@ -93,9 +93,7 @@ public class LoginHandler extends HttpServlet {
 					
 					HttpSession session = req.getSession();
 					session.setAttribute("empAccount", empVO); // *工作1: 才在session內做已經登入過的標識
-					session.setAttribute("authList", authList);
-//					session.setAttribute("authVO", listFun);
-					
+					session.setAttribute("authList", authList);					
 
 					try {
 						String location = (String) session.getAttribute("location");

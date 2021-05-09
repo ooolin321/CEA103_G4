@@ -1,18 +1,22 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.emp.model.*"%>
-<%@page import="java.util.List"%>
+<%@ page import="com.auth.model.*"%>
+<%@ page import="java.util.List"%>
 
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO");
+	AuthVO authVO = (AuthVO) request.getAttribute("authVO");
 %>
 
-<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
+
+<jsp:useBean id="authSvc" scope="page" class="com.auth.model.AuthService" />
 <jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>員工資料新增 - addEmp.jsp</title>
+<title>員工資料新增</title>
+<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script
@@ -25,6 +29,28 @@
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<style>
+
+.tile-body {
+    padding-top: 30px;
+}
+
+.address .form-control {
+    display:inline-block;
+    margin-right: 30px;
+}
+
+.form-group.authselect ul li {
+    display:inline-block;
+    margin-right: 15px;
+}
+.row {
+justify-content: center;
+
+}
+
+</style>
+
 
 </head>
 
@@ -34,7 +60,7 @@
 	<div class="app-title">
 		<div>
 			<h1>
-				<i class="fa fa-dashboard"></i> 新增員工
+				<i class="fa fa-handshake-o"></i> 新增員工
 			</h1>
 			
 		</div>
@@ -48,12 +74,10 @@
 		<div class="pd-ltr-20 xs-pd-20-10">
 			<div class="min-height-200px">
 				<div class="pd-20 card-box mb-30">
-					<div class="clearfix">
-						<h2 class="text-dark h2">
-							新增員工資料 
-						</h2>
-					</div>
-					<div class="tile-body">
+				  <div class="row">
+					<div class="col-md-12">
+					  <div class="tile">
+						<div class="tile-body">
 						<%-- 錯誤表列 --%>
 						<c:if test="${not empty errorMsgs}">
 							<font style="color: red">請修正以下錯誤:</font>
@@ -63,18 +87,17 @@
 								</c:forEach>
 							</ul>
 						</c:if>
-
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/emp/emp.do" name="form1">
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-5">
 									<div class="form-group">
 										<label><i class="fas fa-user-alt"></i>員工姓名:</label><input
 											class="form-control" type="TEXT" name="ename" size="45"
 											value="<%=(empVO == null) ? "" : empVO.getEname()%>" />
 									</div>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-5">
 									<div class="form-group">
 										<label><i class="fas fa-user-alt"></i>職位:</label><input
 											class="form-control" type="TEXT" name="job" size="45"
@@ -83,7 +106,7 @@
 								</div>
 							</div>
 							 <div class="row">
-								<div class="col-md-6">
+								<div class="col-md-5">
 									<div class="form-group">
 										<label><i class="fas fa-user-alt"></i>身份證字號:</label><input
 											class="form-control" type="TEXT" name="id" size="45"
@@ -91,7 +114,7 @@
 									</div>
 								</div>
 
-								<div class="col-md-6">
+								<div class="col-md-5">
 									<div class="form-group">
 										<label><i class="fas fa-user-alt"></i>性別:</label><select
 											class="form-control" size="1" name="gender">
@@ -103,13 +126,13 @@
 							</div>
 							
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-5">
 									<div class="form-group">
 										<label><i class="fas fa-user-alt"></i>生日:</label> <input
 											class="form-control" name="dob" id="f_date2" type="text">
 									</div>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-5">
 									<div class="form-group">
 										<label><i class="fas fa-user-alt"></i>e-mail:</label> <input
 											class="form-control" type="email" name="email"
@@ -118,14 +141,14 @@
 								</div>
 							</div>
 							 <div class="row">
-								<div class="col-md-6">
+								<div class="col-md-5">
 									<div class="form-group">
 										<label><i class="fas fa-user-alt"></i>薪水:</label> <input
 											class="form-control" type="TEXT" name="sal" size="45"
 											value="<%=(empVO == null) ? "" : empVO.getSal()%>" />
 									</div>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-5">
 									<div class="form-group">
 										<label><i class="fas fa-user-alt"></i>狀態:</label> <select
 											class="form-control" size="1" name="state">
@@ -135,40 +158,40 @@
 									</div>
 								</div>
 							</div>
-							 <div class="row">
-								<div class="col-md-6">
-									<div class="form-group">
+						    <div class="row address">
+								<div class="form-group col-md-10">
 										<label><i class="fas fa-user-alt"></i>地址:</label>
 										<div id="twzipcode"></div>
+								</div>		
+								<div class="form-group col-md-10">		
 										<input class="form-control" type="TEXT" name="addr" size="45"
 											value="<%=(empVO == null) ? "" : empVO.getAddr()%>" />
-									</div>
 								</div>
-								<div class="col-md-6">
+							</div>
+							<div class="row">
+								<div class="col-md-10">
 									<div class="form-group">
 										<label><i class="fas fa-user-alt"></i>到職日期:</label> <input
 											class="form-control" name="hiredate" id="f_date1" type="text">
 									</div>
-								</div>
+								  </div>
 								</div>
 								<div class="row">					
-								<div class="col-md-12">
+								<div class="col-md-10">
 									<div class="form-group">
 										<label><i class="fas fa-user-alt"></i>權限:</label>
-                                        <div class="form-group">                                          
+                                        <div class="form-group authselect">                                          
 											<ul>
-												<c:forEach var="funVO" items="${funSvc.all}">
-												
-													<li><input class="col-md-6" name="funno" value="${funVO.funno}" type="hidden">${funVO.funName}&emsp;：
-														<label>
-															<select class="button-indecator" size="1" name="auth_no">
+												<c:forEach var="funVO" items="${funSvc.all}">		
+													<li><input class="col-md-3" name="funno" value="${funVO.funno}" type="hidden">${funVO.funName}&emsp;
+														<label>		
+															<select class="form-control" size="1" name="auth_no">
 																<option value="1" ${(authVO.auth_no==1)? 'selected':''}>開</option>
 																<option value="0" ${(authVO.auth_no==0)? 'selected':''}>關</option>
 															</select>
-														</label></li>
-												
-												</c:forEach>
-												
+														</label>
+													</li>
+												</c:forEach>			
 											</ul>
 										</div>
 										</div>
@@ -186,10 +209,13 @@
 			</div>
 		</div>
 	</div>
+  </div>
+</div>
+</div>
 	<script>
 $("#twzipcode").twzipcode({
 	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
-	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 
+	css: ["city form-control col-md-5", "town form-control col-md-5"], // 自訂 "城市"、"地別" class 名稱 
 	countyName: "city", // 自訂城市 select 標籤的 name 值
 	districtName: "dist" // 自訂區別 select 標籤的 name 值
 	});

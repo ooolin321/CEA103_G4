@@ -10,5 +10,6 @@ public interface Seller_FollowDAO_interface {
      public List<Seller_FollowVO> getAll();
      //萬用複合查詢(傳入參數型態Map)(回傳 List)
 //   public List<Seller_FollowVO> getAll(Map<String, String[]> map); 
+     public Seller_FollowVO getTracerNo(String user_id, String seller_id);
 
 }

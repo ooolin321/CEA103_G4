@@ -7,7 +7,7 @@
 
 <%
 	LiveJNDIDAO dao = new LiveJNDIDAO();
-	Object lives = request.getAttribute("lives") == null ? dao.getAll() : request.getAttribute("lives");
+	Object lives = request.getAttribute("lives") == null ? dao.getAll2() : request.getAttribute("lives");
 	pageContext.setAttribute("lives", lives);
 %>
 <jsp:useBean id="liveSvc" scope="page"

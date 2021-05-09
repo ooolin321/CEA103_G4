@@ -35,6 +35,7 @@
 <meta property="og:description"
 	content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
 <title>所有權限資料</title>
+<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,7 +54,7 @@
 		<div class="app-title">
 			<div>
 				<h1>
-					<i class="fa fa-dashboard"></i> 所有權限
+					<i class="fa fa-server"></i> 所有權限
 				</h1>
 
 			</div>
@@ -104,7 +105,7 @@
 										<%-- 													<option value="1" ${(authVO.auth_no==1)? 'selected':''}>正常</option> --%>
 										<%-- 													<option value="0" ${(authVO.auth_no==0)? 'selected':''}>無權限</option> --%>
 										<!-- 											</select></td> -->
-										<%-- 				<c:choose> --%>
+									
 										<c:choose>
 											<c:when test="${authVO.auth_no==0}">
 												<td>無權限</td>
@@ -121,9 +122,8 @@
 												<input class="btn btn-primary" type="submit" value="修改">
 												<input type="hidden" name="empno" value="${authVO.empno}">
 												<input type="hidden" name="funno" value="${authVO.funno}">
-												<input type="hidden" name="auth_no"
-													value="${authVO.auth_no}"> <input type="hidden"
-													name="requestURL" value="<%=request.getServletPath()%>">
+												<input type="hidden" name="auth_no" value="${authVO.auth_no}"> 
+												<input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
 												<!--送出本網頁的路徑給Controller-->
 												<input type="hidden" name="whichPage" value="<%=whichPage%>">
 												<input type="hidden" name="action" value="getOne_For_Update">

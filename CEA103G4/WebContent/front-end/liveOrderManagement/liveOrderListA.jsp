@@ -28,7 +28,8 @@
 	content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
 <meta property="og:description"
 	content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-<title>Mode Femme 會員專區</title>
+<title>Mode Femme 直播購買訂單</title>
+<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -163,16 +164,16 @@ table td, table tr, table th {
 												type="hidden" name="action" value="getOne_For_UpdateA">
 										</FORM>
 									</td>
-									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/live_order/live_order.do"
-											style="margin-bottom: 0px;">
-											<input type="submit" class="btn btn-danger" value="刪除">
-											<input type="hidden" name="live_order_no"
-												value="${live_orderVO.live_order_no}"> <input
-												type="hidden" name="action" value="delete">
-										</FORM>
-									</td>
+<!-- 									<td> -->
+<!-- 										<FORM METHOD="post" -->
+<%-- 											ACTION="<%=request.getContextPath()%>/live_order/live_order.do" --%>
+<!-- 											style="margin-bottom: 0px;"> -->
+<!-- 											<input type="submit" class="btn btn-danger" value="刪除"> -->
+<!-- 											<input type="hidden" name="live_order_no" -->
+<%-- 												value="${live_orderVO.live_order_no}"> <input --%>
+<!-- 												type="hidden" name="action" value="delete"> -->
+<!-- 										</FORM> -->
+<!-- 									</td> -->
 									<!-- 									<td> -->
 									<!-- 										<FORM METHOD="post" -->
 									<%-- 											ACTION="<%=request.getContextPath()%>/live_order/live_order.do" --%>

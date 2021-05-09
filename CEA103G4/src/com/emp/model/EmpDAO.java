@@ -325,8 +325,8 @@ public class EmpDAO implements EmpDAO_interface {
 		Integer empno = empVO.getEmpno();
 		String ch_name = empVO.getEname();
 		String passRandom = empVO.getEmp_pwd();
-		String messageText = "Hello! " + "\n" + ch_name + "你的員編" + empno + " 首次登入密碼: " + passRandom + "\n" + " (已經啟用)"
-				+ "\n" + " (請前往 http://" + link + "/back-end/backendLogin.jsp 登入首頁)";
+		String messageText = "<h1>Hello! " + "<br>" + ch_name + "你的員編" + empno + " 首次登入密碼: " + passRandom + "<br>" + " (已經啟用)"
+				+ "<br>" + " ( <a href=\"http://" + link + "/back-end/backendLogin.jsp \"> 登入首頁 </a>) <h1>";
 
 		try {
 
@@ -357,8 +357,10 @@ public class EmpDAO implements EmpDAO_interface {
 
 			// 設定信中的主旨
 			message.setSubject(subject);
+			
 			// 設定信中的內容
-			message.setText(messageText);
+//			message.setText(messageText);
+			message.setContent(messageText, "text/html ;charset=UTF-8");
 
 			Transport.send(message);
 
@@ -376,11 +378,12 @@ public class EmpDAO implements EmpDAO_interface {
 
 	@Override
 	public void forgotPassword(EmpVO empVO) {
+		String ch_name = empVO.getEname();
 		String emailto = empVO.getEmail();
 		String link = empVO.getLink();
 
 		String subject = "Mode Femme 忘記密碼通知";
-		String messageText = "Hello! " + "\n" + " (請前往 http://" + link + "/back-end/emp/update_pswd.jsp 修改密碼)";
+		String messageText = "<h1>Hello! " + ch_name + "<br>" + " (請前往 <a href=\"http://" + link + "/back-end/emp/update_pswd.jsp \"> 修改密碼 </a>) <h1>";
 		try {
 
 			// 設定使用SSL連線至 Gmail smtp Server
@@ -411,8 +414,9 @@ public class EmpDAO implements EmpDAO_interface {
 			// 設定信中的主旨
 			message.setSubject(subject);
 			// 設定信中的內容
-			message.setText(messageText);
-
+//			message.setText(messageText);
+			message.setContent(messageText, "text/html ;charset=UTF-8");
+			
 			Transport.send(message);
 
 			SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
@@ -444,10 +448,7 @@ public class EmpDAO implements EmpDAO_interface {
 			while (rs.next()) {
 				empVO = new EmpVO();
 				empVO.setEmail(rs.getString("email"));
-System.out.println("empDAO 447 =" + empVO.getEmail());
 			}
-
-System.out.println("empDAO 450 = " + empVO.getEmail());
 
 			// Handle any driver errors
 		} catch (SQLException se) {

@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.emp.model.*"%>
+<%@ page import="com.auth.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
@@ -13,6 +14,7 @@
 
 <%
 	EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+	AuthVO authVO = (AuthVO) request.getAttribute("authVO"); //AuthServlet.java(Concroller), 存入req的authVO物件
 %>
 
 
@@ -35,6 +37,7 @@
 <meta property="og:description"
 	content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
 <title>所有員工資料</title>
+<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,7 +54,7 @@
 	<div class="app-title">
 		<div>
 			<h1>
-				<i class="fa fa-dashboard"></i> 所有員工
+				<i class="fa fa-group"></i> 所有員工
 			</h1>
 			
 		</div>
@@ -128,7 +131,8 @@
 						pattern="yyyy-MM-dd" /></td>
 <%-- 				<td>${empVO.emp_pwd}</td> --%>
 
-
+				
+				
 				<td>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/emp/emp.do"

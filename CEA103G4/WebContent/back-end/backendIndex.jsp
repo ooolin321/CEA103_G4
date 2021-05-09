@@ -40,6 +40,7 @@
 <meta property="og:description"
 	content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
 <title>Mode Femme 後台管理系統</title>
+<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -59,10 +60,8 @@
 <main class="app-content">
 <div class="app-title">
 		<div>
-			<h1>
-				<i class="fa fa-dashboard"></i> Mode Femme
-			</h1>
-			
+			<img class="rounded-circle" width="45px" height="40px" src="../front-template/images/favicon.ico"/>
+				<h1 style="display:inline-block;">Mode Femme</h1>
 		</div>
 		<ul class="app-breadcrumb breadcrumb">
 			<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -312,7 +311,7 @@
 //         	    let html = arr2[i];
 //         	    $('.app-menu__label')append("<li>" + html + "</li>")
 //         	   };
- </main>
     </script>
+
 </body>
 </html>

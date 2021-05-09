@@ -5,7 +5,7 @@
 <%@ page import="com.fun.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 <%
-	FunVO funVO = (FunVO) request.getAttribute("funVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
+	FunVO funVO = (FunVO) request.getAttribute("funVO"); 
 %>
 <%
 	FunService funSvc = new FunService();

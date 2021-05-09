@@ -131,6 +131,10 @@ public class ProductService {
 		
 		dao.offShelf(product_no);
 	}
+	
+	public List<ProductVO> getSellerProducts(String user_id) {
+		return dao.getSellerProducts(user_id);
+	}
 
 
 }

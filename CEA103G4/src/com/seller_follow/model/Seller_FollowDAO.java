@@ -10,6 +10,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.product.model.ProductVO;
+
 
 
 public class Seller_FollowDAO implements Seller_FollowDAO_interface {
@@ -38,6 +40,9 @@ public class Seller_FollowDAO implements Seller_FollowDAO_interface {
 	//買家可以取消關注的賣家
 	private static final String DELETE = 
 		"DELETE FROM SELLER_FOLLOW where tracer_no = ?";
+	
+	//查詢關注者與被關注者兩人的關注編號(與是否重複關注)
+	private static final String GET_TRACER_NO = "SELECT * FROM SELLER_FOLLOW WHERE user_id = ? and seller_id = ?";
 
 	@Override
 	public void insert(Seller_FollowVO seller_followVO){
@@ -223,5 +228,61 @@ public class Seller_FollowDAO implements Seller_FollowDAO_interface {
 			}
 		}
 		return list;
-	}	
+	}
+	
+	
+	@Override
+	public Seller_FollowVO getTracerNo (String user_id, String seller_id) {
+		
+		Seller_FollowVO seller_followVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {	
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_TRACER_NO);
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, seller_id);
+			
+			rs = pstmt.executeQuery();
+		
+			while (rs.next()) {
+				
+			seller_followVO = new Seller_FollowVO();
+			seller_followVO.setTracer_no(rs.getInt("tracer_no"));
+			seller_followVO.setUser_id(rs.getString("user_id"));
+			seller_followVO.setSeller_id(rs.getString("seller_id"));
+
+			}
+	
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return seller_followVO;
+	}
 }

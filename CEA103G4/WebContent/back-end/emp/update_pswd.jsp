@@ -4,7 +4,8 @@
 <%@ page import="com.emp.model.*"%>
 
 <%
-	Integer empno =  (Integer)session.getAttribute("empno");
+EmpVO empno = (EmpVO) session.getAttribute("forgotPassword");
+session.setAttribute("forgotPassword", empno);
 %> 
 
 <html>

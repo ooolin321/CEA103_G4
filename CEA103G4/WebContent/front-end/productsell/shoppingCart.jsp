@@ -4,8 +4,10 @@
 <%@ page import="java.util.* , com.product.model.*" %>
 
 <%
-  ProductVO productVO = (ProductVO) request.getAttribute("productVO");
+	Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
+	pageContext.setAttribute("buylist", buylist);
 %>
+
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -37,6 +39,38 @@
   .shopping-cart {
     padding-top: 0px;
 }
+.cart-table table tr td.qua-col .productCounts {
+  width: 123px;
+  height: 46px;
+  border: 2px solid #ebebeb;
+  padding: 0 15px;
+  float: left;
+}
+
+.cart-table table tr td.qua-col .productCounts .qtybtn {
+  font-size: 24px;
+  color: #b2b2b2;
+  float: left;
+  line-height: 38px;
+  cursor: pointer;
+  width: 18px;
+}
+
+.cart-table table tr td.qua-col .productCounts .qtybtn.dec {
+  font-size: 30px;
+}
+
+.cart-table table tr td.qua-col .productCounts input {
+  text-align: center;
+  width: 52px;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  color: #4c4c4c;
+  line-height: 40px;
+  float: left;
+}
+
   </style>
   
   </head>
@@ -79,53 +113,56 @@
                     <th>操作</th>
                   </tr>
                 </thead>
- <% @SuppressWarnings("unchecked")
-   Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");%>
+
 <%if (buylist != null && (buylist.size() > 0)) {%>   
     <%
-	 for (int index = 0; index < buylist.size(); index++) {
-		 ProductVO order = buylist.get(index);
-		 pageContext.setAttribute("order", order);
+// 	 for (int index = 0; index < buylist.size(); index++) {
+// 		 ProductVO order = buylist.get(index);
+// 		 pageContext.setAttribute("order", order);
 	%>
+	<c:set var="sum" value="0"> </c:set>
+	<c:forEach var="order" items="${buylist}" varStatus="cartstatus">
                 <tbody>
+                	<tr><td>賣家:${order.product_no}</td></tr>
                   <tr>
                     <td class="cart-pic first-row">
                     <a href="<%=request.getContextPath()%>/product/product.do?product_no=${order.product_no}">
-                      <img src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=<%=order.getProduct_no()%>" alt="<%=order.getProduct_name()%>" />
+                      <img src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}" alt="${order.product_name}" />
                     </td>
                     <td class="p-name first-row">
                       <h5>${order.product_name }</h5>
                     </td>
-                    <td class="p-price first-row">$<%=order.getProduct_price()%></td>
+                    <td class="PP${order.product_no} first-row" value="${order.product_price}">$${order.product_price }</td>
                     <td class="qua-col first-row">
                       <div class="quantity" style="margin-top: 30px;">
-                     <div class="pro-qty">
+                      
+                      
+                     <div id="PC${order.product_no}" class="productCounts" >
                      <span id="decProduct" class="dec qtybtn">-</span>
-                      <input name="proqty" type="text" value="<%=order.getProduct_quantity()%>" />
-                      <span id="addProduct" class="inc qtybtn" style="none">+</span>
+                      <input name="${order.product_no}" id="PN${order.product_no}" type="text" value="${order.product_quantity}" />
+                      <span id="Add${order.product_no}" class="inc qtybtn" style="none">+</span>
                     </div>
                     
-<!-- 					<div class="pro-qty"> -->
-<!--                      <a href="javascript:;" id="decrement" class="dec qtybtn">-</a> -->
-<%--                       <input name="proqty" id="product_num" class="itxt" type="text" value="<%=order.getProduct_quantity()%>" onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"/> --%>
-<!--                       <a href="javascript:;" id="increment" class="inc qtybtn" style="none">+</a> -->
-<!--                     </div> -->
                     
                       </div>
-                      <span id="maxRemaining" value="${order.product_remaining}">在庫數量：${order.product_remaining}</span>
+                      <span id="max${order.product_no}" value="${order.product_remaining}">在庫數量：${order.product_remaining}</span>
 <%--                       <h5 style="color:#FF0000">在庫數量：${order.product_remaining}</h5> --%>
                     </td>
-                    <td class="total-price first-row">${order.product_price*order.product_quantity }</td>
+                    <td>
+                    <div id="TP${order.product_no}" style="margin-top: 30px;color: #e7ab3c;">${order.product_price*order.product_quantity}</div>
+<%--                     <td class="total-price first-row">${order.product_price*order.product_quantity}</td> --%>
+					</td>
                     <form action="<%=request.getContextPath()%>/ShoppingServlet" method="POST">
 		              <input type="hidden" name="action"  value="DELETE">
-		              <input type="hidden" name="del" value="<%= index %>">
+		              <input type="hidden" name="del" value="${cartstatus.index}">
 		              <td class="close-td first-row">
 		              <input type="submit" class="btn btn-info" value="刪 除">
 		              </td>
 		          	</form></td>
                   </tr>
                 </tbody>
-     <%}%>
+                <c:set var="sum" value="${sum + order.product_price*order.product_quantity}"> </c:set>
+                </c:forEach>
 <%}%>
               </table>
             </div>
@@ -148,8 +185,7 @@
               <div class="col-lg-4 offset-lg-4">
                 <div class="proceed-checkout">
                   <ul>
-<!--                     <li class="subtotal">Subtotal <span>$240.00</span></li> -->
-                    <li class="cart-total">Total <span>$240.00</span></li>
+                    <li class="cart-total">合計 <span>$${sum}</span></li>
                   </ul>
                   <a href="<%=request.getContextPath()%>/front-end/protected/check-out.html" class="proceed-btn">結帳</a>
                 </div>
@@ -162,39 +198,7 @@
 
     <!-- Shopping Cart Section End -->
 
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-      <div class="container">
-        <div class="logo-carousel owl-carousel">
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-1.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-2.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-3.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-4.png" alt="" />
-            </div>
-          </div>
-          <div class="logo-item">
-            <div class="tablecell-inner">
-              <img src="img/logo-carousel/logo-5.png" alt="" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Partner Logo Section End -->
+
 
     <!-- Footer Section Begin -->
 	<%@include file="/front-end/footer.jsp"%>
@@ -213,71 +217,66 @@
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
     
     <script>
+     <c:forEach var="order" items="${buylist}" varStatus="cartstatus">
+    	$("#PC${order.product_no}").click(function(e){
+			let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
+			$("#TP${order.product_no}").text(totalPrice);
+	});
+    </c:forEach>
+	
     
-    let buyCount = $('input[name="proqty"]').val();
+//     $("#PC${order.product_no}").click(function(e){
+// 		let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
+// 		$("#TP${order.product_no}").text(totalPrice);
+// 	});
+    <c:forEach var="order" items="${buylist}" varStatus="cartstatus">
+    
+   
+    
+    var proQty = $('#PC${order.product_no}');
+	proQty.on('click', '.qtybtn', function () {
+		var $button = $(this);
+		var oldValue = $button.parent().find('input').val();
+		if ($button.hasClass('inc')) {
+			var newVal = parseFloat(oldValue) + 1;
+		} else {
+			// Don't allow decrementing below zero
+			if (oldValue > 0) {
+				var newVal = parseFloat(oldValue) - 1;
+			} else {
+				newVal = 0;
+			}
+		}
+		$button.parent().find('input').val(newVal);
+	});
     
     
-// $(function(){
-// 	//增減商品,修改價格
-// 	//點選加號時
-// 	$("#increment").click(function(){
-// 		//獲得輸入框的數量
-// 		var num = $(this).siblings(".itxt").val();
-// 		//加一
-// 		num++;
-// 		that = this;
-// 		//重新整理小計
-// 		flushSum(that,num);
-// 	})
-// 	//點選減號時
-// 	$("#decrement").click(function(){
-// 		//獲得輸入框的數量
-// 		var num = $(this).siblings(".itxt").val();
-// 		//如果數量大於一
-// 		if(num > 1){
-// 			//減一
-// 			num--;
-// 		}
-// 		that = this;
-// 		//重新整理小計
-// 		flushSum(that,num);
-// 	})
-		
-// 	//使用者修改輸入框
-// 	$(".itxt").change(function(){
-// 		//獲得輸入框的數量
-// 		var num = $(this).val();
-// 		//判斷是否輸入有誤
-// 		if(num == ""){
-// 			alert("輸入有誤");
-// 			num = 1;
-// 			$(this).val(1);
-// 		}
-// 		that = this;
-// 		//重新整理小計
-// 		flushSum(that,num);
-// 	})
-		
-// 	//重新整理小計
-// 	function flushSum(that,num){
-// 		//判斷庫存
-// 		if(num > 999){
-// 			alert("庫存不足");
-// 			num = 1;
-// 			$(that).val(1);
-// 		}
-// 		//重新整理商品數量
-// 		$(that).siblings(".itxt").val(num);
-// 		//獲得商品的價格
-// 		var price = $(that).siblings(".p-price first-row").text();
-// 		//擷取字串並轉型
-// 		price = parseFloat(price.substr(1));
-// 		//獲得商品小計
-// 		sum = num * price;
-// 		//重新整理商品小計,商品小計保留兩位小數
-// 		$(that).siblings(".total-price first-row").text("$"+sum.toFixed(2));
-// 	}
-// })
+    
+    
+	//數量按鈕前端控制不可大於商品數量
+	$('#Add${order.product_no}').on('click', function () {
+    	var Count = $('input[name="${order.product_no}"]').val();
+    	var maxRemaining = $("#max${order.product_no}").attr("value");
+    	if (Count == maxRemaining) {
+    		$("#Add${order.product_no}").prop('disabled',true);
+    		alert("商品數量只剩下"+ maxRemaining +"個");	
+    	} 
+    	if (Count < maxRemaining) {
+    		$("#Add${order.product_no}").prop('disabled',false);
+    	}
+
+	});
+	
+	
+	$("#PC${order.product_no}").change(function() {	
+		var maxRemaining = $("#max${order.product_no}").attr("value");
+		alert("商品數量只剩下"+ maxRemaining +"個");
+		$('input[name="${order.product_no}"]').val(maxRemaining);
+	});
+	
+	
+	
+	 </c:forEach>
     </script>
     
   </body>

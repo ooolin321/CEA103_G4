@@ -16,7 +16,7 @@ public interface EmpDAO_interface {
 	public String genAuthCode();
 	
 	public void updatePswd(EmpVO empVO);
-	public void forgotPassword(EmpVO empVO);
+
 	public EmpVO getEmail(String ename);
 	
 	

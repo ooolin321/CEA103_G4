@@ -4,8 +4,7 @@
 <%@ page import="com.emp.model.*"%>
 
 <%
-EmpVO empno = (EmpVO) session.getAttribute("forgotPassword");
-session.setAttribute("forgotPassword", empno);
+	EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
 %> 
 
 <html>
@@ -92,24 +91,16 @@ body {
 								<div class="p-5">
 
 									<form method="post"
-										action="<%=request.getContextPath()%>/emp/emp.do"
+										action="<%=request.getContextPath()%>/loginhandler"
 										class="user">
-										<%-- 錯誤表列 --%>
-<%-- 										<c:if test="${not empty errorMsgs}"> --%>
-<!-- 											<font style="color: red">請修正以下錯誤:</font> -->
-<!-- 											<ul> -->
-<%-- 												<c:forEach var="message" items="${errorMsgs}"> --%>
-<%-- 													<li style="color: red">${message}</li> --%>
-<%-- 												</c:forEach> --%>
-<!-- 											</ul> -->
-<%-- 										</c:if> --%>
+<h1>${empVO.ename}</h1>
 										<span id="word"></span>
-										<div class="form-group">
-											<input type="text" name="empno"
-												class="form-control form-control-user"
-												id="exampleInputEmpno" 
-												placeholder="請輸入員編..." required><font color=red><b>${errorMsgs.empno}</b></font>
-										</div>
+<!-- 										<div class="form-group"> -->
+<!-- 											<input type="text" name="empno" -->
+<!-- 												class="form-control form-control-user" -->
+<!-- 												id="exampleInputEmpno"  -->
+<%-- 												placeholder="請輸入員編..." required><font color=red><b>${errorMsgs.empno}</b></font> --%>
+<!-- 										</div> -->
 										<div class="form-group">
 											<input type="text" name="pswd"
 												class="form-control form-control-user"
@@ -122,7 +113,7 @@ body {
 												id="exampleInputPassword" placeholder="確認密碼" required><font color=red><b>${errorMsgs.pswd_again}</b></font>
 										</div>
 										<input type="hidden" name="action" value="update_pswd">
-										<input type="hidden" name="empno" value="<%=empno%>">
+										<input type="hidden" name="empno" value="${empVO.empno}">
 										<input type="submit" value="確認" class="btn btn-user btn-block"
 											id="confirm" />
 									</form>
@@ -142,30 +133,30 @@ body {
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 	<script type="text/javascript">
 		var confirm = document.getElementById("confirm");
-		var exampleInputAccount = document
-				.getElementById("exampleInputEmpno");
+// 		var exampleInputAccount = document
+// 				.getElementById("exampleInputEmpno");
 		var exampleInputAccount = document
 				.getElementById("exampleInputAccount");
 		var exampleInputPassword = document
 				.getElementById("exampleInputPassword");
 
-// 		confirm.addEventListener(
-// 						"click",
-// 						function(e) {
+		confirm.addEventListener(
+						"click",
+						function(e) {
 
-// 							if (exampleInputAccount.value !== ""
-// 									&& exampleInputPassword.value !== ""
-// 									&& exampleInputAccount.value === exampleInputPassword.value) {
-// 							} else {
-// 								swal({
-// 									title : "修改失敗！",
-// 									icon : "warning",
-// 									timer : 1500,
-// 									showConfirmButton : false
-// 								})
-// 								e.preventDefault();
-// 							}
-// 						});
+							if (exampleInputAccount.value !== ""
+									&& exampleInputPassword.value !== ""
+									&& exampleInputAccount.value === exampleInputPassword.value) {
+							} else {
+								swal({
+									title : "修改失敗！",
+									icon : "warning",
+									timer : 1500,
+									showConfirmButton : false
+								})
+								e.preventDefault();
+							}
+						});
 	</script>
 	<script>
     var colors = new Array(
@@ -230,7 +221,7 @@ var color2 = "rgb("+r2+","+g2+","+b2+")";
 }
 
 setInterval(updateGradient,10);
-<!-- </script> -->
+</script>
 </body>
 
 </html>

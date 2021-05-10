@@ -463,67 +463,7 @@ public class EmpServlet extends HttpServlet {
 				throw new ServletException(e);
 			}
 		}
-		if ("update_pswd".equals(action)) {
-			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
-				Integer empno = new Integer(req.getParameter("empno"));
-//System.out.println("1,empno = "+empno);
-
-			String str = req.getParameter("empno");
-			if (str == null || (str.trim().length() == 0)) {
-				errorMsgs.put("empno","請輸入員工編號");
-			} // 錯誤發生時將內容發送回表單
-			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/update_pswd.jsp");
-				failureView.forward(req, res);
-				return;
-			} // 程式中斷，回傳當傳頁面
-				String pswd = req.getParameter("pswd").trim();
-				String pswd_again = req.getParameter("pswd_again").trim();
-				String empPwd = null;
-//System.out.println("2,pswd " + pswd);
-//System.out.println("3,pswd_again" + pswd_again);
-				
-				if (pswd == null || pswd.trim().length() == 0 || pswd_again == null
-						|| pswd_again.trim().length() == 0) {
-					errorMsgs.put("pswd","密碼:不得空白");
-				} else if (!pswd.trim().equals(pswd_again)) {
-					errorMsgs.put("pswd_again","兩次輸入修改密碼不一樣");
-				} else {
-					empPwd = pswd_again;
-					String update = "update";
-					req.setAttribute("update", update);
-				}
-				EmpVO empVO = new EmpVO();
-				empVO.setEmp_pwd(empPwd);
-
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("empVO", empVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/update_pswd.jsp");
-					failureView.forward(req, res);
-					return; // 程式中斷
-				}
-
-				// 開始修改
-				EmpService empSvc = new EmpService();
-				empVO = empSvc.updatePswd(empno, empPwd);
-
-				/*************************** 3.新增完成，準備轉交(Send the Success view) ***********/
-				req.setAttribute("empVO", empVO);
-//				res.sendRedirect(req.getContextPath() + "/back-end/backendLogin.jsp");
-				String url = "/back-end/backendLogin.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功轉交listAllEmp.jsp
-				successView.forward(req, res);
-				req.getSession().invalidate();
-
-			} catch (Exception e) {
-				errorMsgs.put("修改密碼失敗:" , e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/update_pswd.jsp");
-				failureView.forward(req, res);
-			}
-		}
+		
 	}
 
 }

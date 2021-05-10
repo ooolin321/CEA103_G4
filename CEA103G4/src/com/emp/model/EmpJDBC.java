@@ -205,13 +205,6 @@ System.out.println("98 = "+ empVO.getEmail());
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void forgotPassword(EmpVO empVO) {
-		// TODO Auto-generated method stub
-		return;
-	}
-
 	@Override
 	public EmpVO getEmail(String email) {
 		

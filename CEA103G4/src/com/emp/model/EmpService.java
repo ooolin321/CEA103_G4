@@ -88,15 +88,7 @@ public class EmpService {
 		return empVO;
 	}
 	
-	public EmpVO forgotEmail(String email, String link) {
-		EmpVO empVO = new EmpVO();
-		
-		empVO.setEmail(email);
-		empVO.setLink(link);
-		
-		dao.forgotPassword(empVO);
-		return empVO;
-	}
+
 	
 	public EmpVO selectEmp(Integer empno, String empPwd) {
 
@@ -113,11 +105,8 @@ public class EmpService {
 	}
 	
 	public EmpVO selectEmail(String email) {
-		EmpVO empVO = new EmpVO();
-		empVO.setEmail(email);
 
-		dao.getEmail(email);
-		return empVO;
+		return dao.getEmail(email); 
 	}
 
 }

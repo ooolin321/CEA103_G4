@@ -69,7 +69,7 @@
 						<a
 							href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button
 								type="button" class="btn">註冊</button></a> <a
-							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><button
+							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp" target="_blank"><button
 								type="button" class="btn">登入</button></a>
 					</div>
         		</c:if>
@@ -162,6 +162,7 @@
 							<!-- <li><a href="#">Kid's</a></li> -->
 						</ul></li>
 					<li><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i class="icon_profile"></i></a></li>
+					<li><a href="#">線上客服&nbsp;<i class="fa fa-comment-o"></i></a></li>
 					<!-- <li>
                 <a href="#">Pages</a>
                 <ul class="dropdown">
@@ -178,7 +179,16 @@
 			<div id="mobile-menu-wrap"></div>
 		</div>
 	</div>
+	<div id="chatBtn" style="position: fixed; right: 8px; bottom: 0px; z-index: 99999;">
+		<div class="chat-notice">1</div>
+		<div class="chat-btn" >私訊&nbsp;<i class="fa fa-commenting-o"></i></div>
+	</div>
 	
+	<div class="mini-chat" style="position: fixed; right: 0px; bottom: 0px; z-index: 99999;display:none;">
+		<div class="content">
+
+		</div>
+	</div>
 </header>
 <!-- Header End -->
 <!-- heade搜尋 -->
@@ -206,4 +216,13 @@
 		 }) 
 	}
     
+	var chatBtn = document.querySelector(".chat-btn");
+	var miniChat = document.querySelector(".mini-chat");
+	
+	chatBtn.addEventListener("click", function () {
+		miniChat.style.display = "block";
+	});
+
+	
+	
     </script>

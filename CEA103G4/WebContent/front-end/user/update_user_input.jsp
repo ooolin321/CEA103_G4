@@ -130,6 +130,7 @@ margin: -30px -30px 0px;
 			value="<%=userVO.getUser_addr()%>"> <font color=red><b>${(empty errorMsgs) ? "" : errorMsgs.user_addr }</b>
 		</th>
 	</tr>
+	
 <!-- 	<tr> -->
 <!-- 		<td>註冊日期:</td> -->
 <!-- 		<td><input name="regdate" id="f_date2" type="text" ></td> -->
@@ -170,6 +171,7 @@ margin: -30px -30px 0px;
 <!-- 	</tr> -->
 
 </table>
+
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="user_id" value="<%=userVO.getUser_id()%>">
 <input type="hidden" name="id_card" value="<%=userVO.getId_card()%>">

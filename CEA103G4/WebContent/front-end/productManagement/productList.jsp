@@ -189,7 +189,7 @@
  				 </thead>
  				 <tbody>
  				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()}">
-   				 	<c:if test="${productVO.product_state == 2}"> 
+   				 	<c:if test="${productVO.user_id == userVO.getUser_id() && productVO.product_state == 2}"> 
    				 <tr>
    				 	 <th scope="row">${liveSvc.getOneLive(productVO.live_no).live_name}</th>
    				 	 <td>${liveSvc.getOneLive(productVO.live_no).live_type}</td>

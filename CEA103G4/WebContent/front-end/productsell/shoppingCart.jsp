@@ -4,8 +4,8 @@
 <%@ page import="java.util.* , com.product.model.*" %>
 
 <%
-	Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
-	pageContext.setAttribute("buylist", buylist);
+// 	Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
+// 	pageContext.setAttribute("buylist", buylist);
 %>
 
 
@@ -185,7 +185,7 @@
               <div class="col-lg-4 offset-lg-4">
                 <div class="proceed-checkout">
                   <ul>
-                    <li class="cart-total">合計 <span id="Sum">$${sum}</span></li>
+                    <li class="cart-total">合計 <span id="Sum">${sum}</span></li>
                   </ul>
                   <a href="<%=request.getContextPath()%>/front-end/protected/check-out.html" class="proceed-btn">結帳</a>
                 </div>

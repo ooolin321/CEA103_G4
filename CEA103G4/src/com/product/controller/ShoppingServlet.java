@@ -17,7 +17,6 @@ public class ShoppingServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
-
 		
 		@SuppressWarnings("unchecked")
 		List<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
@@ -40,6 +39,7 @@ public class ShoppingServlet extends HttpServlet {
 			}
 			// 新增商品至購物車中
 			else if (action.equals("ADD")) {
+				
 				// 取得後來新增的商品
 				product = getProduct(req);
 
@@ -83,7 +83,7 @@ public class ShoppingServlet extends HttpServlet {
 	}
 
 	private ProductVO getProduct(HttpServletRequest req) {
-
+		
 		String product_no = req.getParameter("product_no");
 		String product_name = req.getParameter("product_name");
 		String product_price = req.getParameter("product_price");

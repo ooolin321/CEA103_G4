@@ -187,7 +187,12 @@
                   </div>
                     <ul>
                         <li class="w-icon active">
-                            <a href="#"><i class="icon_bag_alt"></i></a>
+                    <input type="hidden" id="NO${productVO.product_no}" value="${productVO.product_no}">
+                    <input type="hidden" id="NA${productVO.product_no}" value="${productVO.product_name}">
+                    <input type="hidden" id="PR${productVO.product_no}" value="${productVO.product_price}">
+                    <input type="hidden" id="RE${productVO.product_no}" value="${productVO.product_remaining}">
+                    <input type="hidden" id="ST${productVO.product_no}" value="${productVO.product_state}">
+                            <a href="#" id="SC${productVO.product_no}"><i class="icon_bag_alt"></i></a>
                         </li>   
                         <li class="w-heart" >
                             <i class="icon_heart_alt"  data-no="${productVO.product_no}"></i>
@@ -304,6 +309,42 @@
 				Swal.fire('很抱歉,查無此商品');
             }
 		};
+		
+		  //購物車按鈕  
+		  <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()}">
+		  $("#SC${productVO.product_no}").click(function(){
+				$.ajax({ 
+				  type:"POST",
+				  url:"<%=request.getContextPath()%>/ShoppingServlet",
+				  data:{
+					  "product_no": $("#NO${productVO.product_no}").attr("value"),
+					  "product_name": $("#NA${productVO.product_no}").attr("value"),
+					  "product_price": $("#PR${productVO.product_no}").attr("value"),
+					  "proqty": "1",
+					  "product_remaining": $("#RE${productVO.product_no}").attr("value"),
+					  "product_state": $("#ST${productVO.product_no}").attr("value"),
+					  "action": "ADD"
+				  },
+				  success: function() { 
+					  Swal.fire({
+						  position: 'top',
+						  icon: 'success',
+						  title: '商品加入購物車',
+						  showConfirmButton: false,
+						  timer: 1500
+						});
+			      }, 	  
+				  error:function () {
+			  			Swal.fire({
+				  			  icon: 'error',
+				  			  title: '很抱歉,加入購物車失敗',
+				  			  showConfirmButton: false,
+				  			  timer: 1500
+				  			});
+				  },				
+				 });
+		  });
+		  </c:forEach>
 	
        	</script>	
   </body>

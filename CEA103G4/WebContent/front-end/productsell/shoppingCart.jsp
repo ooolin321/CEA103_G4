@@ -149,7 +149,7 @@
 <%--                       <h5 style="color:#FF0000">在庫數量：${order.product_remaining}</h5> --%>
                     </td>
                     <td>
-                    <div id="TP${order.product_no}" style="margin-top: 30px;color: #e7ab3c;">${order.product_price*order.product_quantity}</div>
+                    <div id="TP${order.product_no}" class="cartProductItemSumPrice" style="margin-top: 30px;color: #e7ab3c;">${order.product_price*order.product_quantity}</div>
 <%--                     <td class="total-price first-row">${order.product_price*order.product_quantity}</td> --%>
 					</td>
                     <form action="<%=request.getContextPath()%>/ShoppingServlet" method="POST">
@@ -185,7 +185,7 @@
               <div class="col-lg-4 offset-lg-4">
                 <div class="proceed-checkout">
                   <ul>
-                    <li class="cart-total">合計 <span>$${sum}</span></li>
+                    <li class="cart-total">合計 <span id="Sum">$${sum}</span></li>
                   </ul>
                   <a href="<%=request.getContextPath()%>/front-end/protected/check-out.html" class="proceed-btn">結帳</a>
                 </div>
@@ -217,21 +217,16 @@
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
     
     <script>
+    // 各商品小計
      <c:forEach var="order" items="${buylist}" varStatus="cartstatus">
     	$("#PC${order.product_no}").click(function(e){
 			let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
 			$("#TP${order.product_no}").text(totalPrice);
+			sum();
 	});
     </c:forEach>
 	
-    
-//     $("#PC${order.product_no}").click(function(e){
-// 		let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
-// 		$("#TP${order.product_no}").text(totalPrice);
-// 	});
     <c:forEach var="order" items="${buylist}" varStatus="cartstatus">
-    
-   
     
     var proQty = $('#PC${order.product_no}');
 	proQty.on('click', '.qtybtn', function () {
@@ -250,9 +245,6 @@
 		$button.parent().find('input').val(newVal);
 	});
     
-    
-    
-    
 	//數量按鈕前端控制不可大於商品數量
 	$('#Add${order.product_no}').on('click', function () {
     	var Count = $('input[name="${order.product_no}"]').val();
@@ -267,16 +259,27 @@
 
 	});
 	
-	
 	$("#PC${order.product_no}").change(function() {	
+		
 		var maxRemaining = $("#max${order.product_no}").attr("value");
 		alert("商品數量只剩下"+ maxRemaining +"個");
 		$('input[name="${order.product_no}"]').val(maxRemaining);
 	});
 	
 	
-	
 	 </c:forEach>
+	 
+		//計算合計方法
+		function sum(){
+			//計算總價，編寫總價方法
+	             var zong = 0;
+	             $(".cartProductItemSumPrice").each(function () {
+	                 var all = parseInt($(this).text());
+	                 zong += all;
+	             })
+	             $("#Sum").text(zong);
+		}
+	 
     </script>
     
   </body>

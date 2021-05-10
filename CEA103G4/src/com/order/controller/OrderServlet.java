@@ -30,22 +30,6 @@ public class OrderServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
-//		if("getAll".equals(action)) {
-//			
-//				  /*************************** 1.接收請求參數 ****************************************/
-//				 Integer order_no = new Integer(req.getParameter("order_no"));
-//
-//				 /*************************** 2.開始查詢資料 ****************************************/
-//			 	OrderService orderSvc = new OrderService();
-//			    List<OrderVO> list = orderSvc.getAll();
-//			  
-//				 /*************************** 3.查詢完成 ********************************************/
-//			   
-//			    
-//			    
-//				 /*************************** 其他可能的錯誤處理 ***********************************/
-//				 
-//		}
 		if ("getOne_For_Add".equals(action)) { // 來自select_page.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -701,6 +685,76 @@ public class OrderServlet extends HttpServlet{
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/front-end/order/listAllOrder.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		if ("shipped".equals(action)) { // 來自update_order_input.jsp的請求
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				List<Integer> list = new ArrayList<Integer>();
+				
+				String order_no_arr[]= req.getParameterValues("order_no");
+				
+				for(String s: order_no_arr) {
+					Integer order_no = new Integer(s);
+					list.add(order_no);
+				};
+
+				/***************************2.開始修改資料*****************************************/
+				OrderService orderSvc = new OrderService();
+				orderSvc.updateShipped(list);
+				
+				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				String url = "/front-end/orderManagement/OrderListB.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/order/update_order_input.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		if ("unshipped".equals(action)) { // 來自update_order_input.jsp的請求
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				List<Integer> list = new ArrayList<Integer>();
+				
+				String order_no_arr[]= req.getParameterValues("order_no");
+				
+				for(String s: order_no_arr) {
+					Integer order_no = new Integer(s);
+					list.add(order_no);
+				};
+				
+				/***************************2.開始修改資料*****************************************/
+				OrderService orderSvc = new OrderService();
+				orderSvc.updateUnshipped(list);
+				
+				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				String url = "/front-end/orderManagement/OrderListB.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				successView.forward(req, res);
+				
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/order/update_order_input.jsp");
 				failureView.forward(req, res);
 			}
 		}

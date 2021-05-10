@@ -43,6 +43,15 @@
 table td, table tr, table th {
 	white-space: nowrap;
 }
+
+h3 {
+	display: inline;
+}
+
+#change {
+	diplay: inline;
+	float: right;
+}
 </style>
 </head>
 <body class="app sidebar-mini rtl">
@@ -73,70 +82,191 @@ table td, table tr, table th {
 			</ul>
 		</div>
 
+		<div class="col-xl-12">
+			<div class="bs-component">
+				<ul class="nav nav-tabs">
+					<li class="nav-item"><a class="nav-link active show"
+						data-toggle="tab" href="#unshipped">待出貨商品</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#shipped">已出貨商品</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#picked">已取貨商品</a></li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade active show" id="unshipped">
+						<div class="row">
+							<div class="col-xl-12">
+								<FORM METHOD="post"
+									ACTION="<%=request.getContextPath()%>/front-end/order/order.do"
+									style="margin-bottom: 0px;">
+									<div class="tile">
+										<h3 class="tile-title">我的待出貨商品</h3>
+										<div id="change">
+											<input type="submit" class="btn btn-info" value="批次出貨">
+											<input type="hidden" name="action" value="shipped">
+										</div>
+										<table class="table table-hover">
+											<thead>
+												<tr id="tr">
+													<th scope="col"><input type="checkbox" id="AllCheck"></th>
+													<th scope="col">#</th>
+													<th scope="col">訂單時間</th>
+													<th scope="col">訂單狀態</th>
+													<th scope="col">訂單金額</th>
+													<th scope="col">付款方式</th>
+													<th scope="col">物流方式</th>
+													<th scope="col">物流狀態</th>
+													<th></th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="orderVO"
+													items="${orderSvc.getAllByID2(userVO.user_id)}">
+													<c:if test="${orderVO.logisticsstate==0}">
+														<tr>
+															<td><input type="checkbox" name="order_no"
+																value="${orderVO.order_no}"></td>
+															<td>${orderVO.order_no}</td>
+															<td><fmt:formatDate value="${orderVO.order_date}"
+																	pattern="yyyy-MM-dd" /></td>
+															<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>
+															<td>${orderVO.order_price}</td>
+															<td>${(orderVO.pay_method==0)? '錢包':''}
+																${(orderVO.pay_method==1)? '信用卡':''}
+																${(orderVO.pay_method==2)? '轉帳':''}</td>
+															<td>${(orderVO.logistics==0)? '超商':'宅配'}</td>
+															<td>${(orderVO.logisticsstate==0)? '未出貨':''}
+																${(orderVO.logisticsstate==1)? '已出貨':''}
+																${(orderVO.logisticsstate==2)? '已取貨':''}</td>
+															<td></td>
+														</tr>
+													</c:if>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</FORM>
+							</div>
+						</div>
+					</div>
 
 
-		<div class="row">
-			<div class="col-xl-12">
-				<div class="tile">
-					<h3 class="tile-title">我的販賣訂單</h3>
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>訂單時間</th>
-								<th>訂單狀態</th>
-								<th>訂單金額</th>
-								<th>付款方式</th>
-								<th>物流方式</th>
-								<th>物流狀態</th>
-								<th></th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-
-							<c:forEach var="orderVO"
-								items="${orderSvc.getAllByID2(userVO.user_id)}">
-								<tr>
-									<td>${orderVO.order_no}</td>
-									<td><fmt:formatDate value="${orderVO.order_date}"
-											pattern="yyyy-MM-dd" /></td>
-									<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>
-									<td>${orderVO.order_price}</td>
-									<td>${(orderVO.pay_method==0)? '錢包':''}
-										${(orderVO.pay_method==1)? '信用卡':''}
-										${(orderVO.pay_method==2)? '轉帳':''}</td>
-									<td>${(orderVO.logistics==0)? '超商':'宅配'}</td>
-									<td>${(orderVO.logisticsstate==0)? '未出貨':''}
-										${(orderVO.logisticsstate==1)? '已出貨':''}
-										${(orderVO.logisticsstate==2)? '已取貨':''}</td>
-									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/front-end/order/order.do"
-											style="margin-bottom: 0px;">
-											<input type="submit" class="btn btn-info" value="修改">
-											<input type="hidden" name="order_no"
-												value="${orderVO.order_no}"> <input type="hidden"
-												name="action" value="getOne_For_UpdateB">
-										</FORM>
-									</td>
-									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/front-end/order/order.do"
-											style="margin-bottom: 0px;">
-											<input type="submit" class="btn btn-danger" value="刪除">
-											<input type="hidden" name="order_no"
-												value="${orderVO.order_no}"> <input type="hidden"
-												name="action" value="delete">
-										</FORM>
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+					<div class="tab-pane fade" id="shipped">
+						<div class="row">
+							<div class="col-xl-12">
+								<FORM METHOD="post"
+									ACTION="<%=request.getContextPath()%>/front-end/order/order.do"
+									style="margin-bottom: 0px;">
+									<div class="tile">
+										<h3 class="tile-title">我的已出貨商品</h3>
+										<div id="change">
+											<input type="submit" class="btn btn-info" value="取消出貨">
+											<input type="hidden" name="action" value="unshipped">
+										</div>
+										<table class="table table-hover">
+											<thead>
+												<tr>
+													<th scope="col"><input type="checkbox" id="AllCheck"></th>
+													<th scope="col">#</th>
+													<th scope="col">訂單時間</th>
+													<th scope="col">訂單狀態</th>
+													<th scope="col">訂單金額</th>
+													<th scope="col">付款方式</th>
+													<th scope="col">物流方式</th>
+													<th scope="col">物流狀態</th>
+													<th></th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="orderVO"
+													items="${orderSvc.getAllByID2(userVO.user_id)}">
+													<c:if test="${orderVO.logisticsstate==1}">
+														<tr>
+															<td><input type="checkbox" name="order_no"
+																value="${orderVO.order_no}"></td>
+															<td>${orderVO.order_no}</td>
+															<td><fmt:formatDate value="${orderVO.order_date}"
+																	pattern="yyyy-MM-dd" /></td>
+															<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>
+															<td>${orderVO.order_price}</td>
+															<td>${(orderVO.pay_method==0)? '錢包':''}
+																${(orderVO.pay_method==1)? '信用卡':''}
+																${(orderVO.pay_method==2)? '轉帳':''}</td>
+															<td>${(orderVO.logistics==0)? '超商':'宅配'}</td>
+															<td>${(orderVO.logisticsstate==0)? '未出貨':''}
+																${(orderVO.logisticsstate==1)? '已出貨':''}
+																${(orderVO.logisticsstate==2)? '已取貨':''}</td>
+															<td></td>
+														</tr>
+													</c:if>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</FORM>
+							</div>
+						</div>
+					</div>
+					
+					<div class="tab-pane fade" id="picked">
+						<div class="row">
+							<div class="col-xl-12">
+								<FORM METHOD="post"
+									ACTION="<%=request.getContextPath()%>/front-end/order/order.do"
+									style="margin-bottom: 0px;">
+									<div class="tile">
+										<h3 class="tile-title">我的已取貨商品</h3>
+										<table class="table table-hover">
+											<thead>
+												<tr>
+													<th scope="col">#</th>
+													<th scope="col">訂單時間</th>
+													<th scope="col">訂單狀態</th>
+													<th scope="col">訂單金額</th>
+													<th scope="col">付款方式</th>
+													<th scope="col">物流方式</th>
+													<th scope="col">物流狀態</th>
+													<th></th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="orderVO"
+													items="${orderSvc.getAllByID2(userVO.user_id)}">
+													<c:if test="${orderVO.logisticsstate==2}">
+														<tr>
+															<td>${orderVO.order_no}</td>
+															<td><fmt:formatDate value="${orderVO.order_date}"
+																	pattern="yyyy-MM-dd" /></td>
+															<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>
+															<td>${orderVO.order_price}</td>
+															<td>${(orderVO.pay_method==0)? '錢包':''}
+																${(orderVO.pay_method==1)? '信用卡':''}
+																${(orderVO.pay_method==2)? '轉帳':''}</td>
+															<td>${(orderVO.logistics==0)? '超商':'宅配'}</td>
+															<td>${(orderVO.logisticsstate==0)? '未出貨':''}
+																${(orderVO.logisticsstate==1)? '已出貨':''}
+																${(orderVO.logisticsstate==2)? '已取貨':''}</td>
+															<td></td>
+														</tr>
+													</c:if>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</FORM>
+							</div>
+						</div>
+					</div>
+					
 				</div>
 			</div>
 		</div>
+
+
+
 
 		<%
 		if (request.getAttribute("listDetails_ByNo") != null) {
@@ -164,5 +294,14 @@ table td, table tr, table th {
 	<!-- Page specific javascripts-->
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
+	<script>
+		$("#AllCheck").change(function() {
+			if ($("#AllCheck").is(":checked")) {
+				$("input:checkbox").prop("checked", true);
+			} else {
+				$("input:checkbox").prop("checked", false);
+			}
+		});
+	</script>
 </body>
 </html>

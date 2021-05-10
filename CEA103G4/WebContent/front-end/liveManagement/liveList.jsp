@@ -288,11 +288,8 @@ table td, table tr, table th {
 															<td class="productInfo">${productVO.product_info}</td>
 															<td>${productVO.start_price}</td>
 															<td>${productVO.product_remaining}</td>
-															<td><input type="checkbox"
-																id="cb${productVO.product_no}"> <input
-																type="hidden" name="product_no"
-																id="hb${productVO.product_no}"
-																value="${productVO.product_no}" disabled></td>
+															<td><input type="checkbox" id="cb${productVO.product_no}"> 
+																<input type="hidden" name="product_no" id="hb${productVO.product_no}" value="${productVO.product_no}" disabled></td>
 														</tr>
 													</c:if>
 												</c:forEach>

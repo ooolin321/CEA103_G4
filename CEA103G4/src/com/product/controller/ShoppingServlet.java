@@ -89,6 +89,7 @@ public class ShoppingServlet extends HttpServlet {
 		String product_price = req.getParameter("product_price");
 		String proqty = req.getParameter("proqty");
 		String product_remaining = req.getParameter("product_remaining");
+		String product_state = req.getParameter("product_state");
 		
 		ProductVO productVO = new ProductVO();
 
@@ -97,6 +98,7 @@ public class ShoppingServlet extends HttpServlet {
 		productVO.setProduct_price(new Integer(product_price));
 		productVO.setProduct_quantity(new Integer(proqty));
 		productVO.setProduct_remaining(new Integer(product_remaining));
+		productVO.setProduct_state(new Integer(product_state));
 		return productVO;
 	}
 	

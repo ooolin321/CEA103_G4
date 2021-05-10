@@ -12,4 +12,6 @@ public interface OrderDAO_interface {
 	public List<OrderVO> getAll();
 	public List<OrderVO> getAllByID(String user_id);
 	public List<OrderVO> getAllByID2(String seller_id);
+	public void updateShipped(List<Integer> list);
+	public void updateUnshipped(List<Integer> list);
 }

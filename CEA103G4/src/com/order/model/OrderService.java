@@ -91,4 +91,12 @@ public class OrderService {
 	public List<OrderVO> getAllByID2(String seller_id) {
 		return dao.getAllByID2(seller_id);
 	}
+	public void updateShipped(List<Integer> list){
+		dao.updateShipped(list);
+		
+	}
+	public void updateUnshipped(List<Integer> list){
+		dao.updateUnshipped(list);
+		
+	}
 }

@@ -262,6 +262,7 @@
 <%--     <script src="${pageContext.request.contextPath}/front-template/js/productFavorite.js" ></script>   --%>
 	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/front-template/js/ajaxSearch.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
 	
 	<script>
 
@@ -279,12 +280,12 @@
 			$("#products").html(str); 
 			
 			if(str.length === 0){
-				alert('很抱歉,查無此商品');
+				Swal.fire('很抱歉,查無此商品');
             }
 
 		  },
 		  error:function () {
-			  alert('很抱歉,查無此商品');
+			  Swal.fire('很抱歉,查無此商品');
 		  },
 			
 		 }) 
@@ -300,7 +301,7 @@
 			$("#products").html(fromProduct); 
 			
 			if(fromProduct.length === 0){
-				alert('很抱歉,查無此商品');
+				Swal.fire('很抱歉,查無此商品');
             }
 		};
 	

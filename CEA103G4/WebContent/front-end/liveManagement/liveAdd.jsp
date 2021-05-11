@@ -6,8 +6,6 @@
 
 <%
 	LiveVO liveVO = (LiveVO) request.getAttribute("liveVO");
-
-
 %>
 
 <!DOCTYPE html>
@@ -30,7 +28,9 @@
 <meta property="og:description"
 	content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
 <title>Mode Femme 新增直播</title>
-<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
+<link rel="icon"
+	href="${pageContext.request.contextPath}/front-template/images/favicon.ico"
+	type="image/x-icon">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,104 +72,103 @@
 					<div class="form-group">
 						<label for="user_id" class="col-sm-2 col-form-label">直播主ID</label>
 						<div class="col-sm-10">
-						<input type="hidden" name="user_id" value="${userVO.user_id}">
+							<input type="hidden" name="user_id" value="${userVO.user_id}">
 							${userVO.user_id}
 						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label for="live_name" class="col-sm-2 col-form-label">直播名稱</label>
+						<div class="col-sm-10">
+							<input class="form-control" id="live_name" name="live_name"
+								type="text" placeholder="請輸入直播名稱"
+								value="<%=(liveVO == null) ? "" : liveVO.getLive_name()%>"
+								required>
 						</div>
+					</div>
 
 
-						<div class="form-group">
-							<label for="live_name" class="col-sm-2 col-form-label">直播名稱</label>
-							<div class="col-sm-10">
-								<input class="form-control" id="live_name" name="live_name"
-									type="text" placeholder="請輸入直播名稱"
-									value="<%=(liveVO == null) ? "" : liveVO.getLive_name()%>"
-									required>
-							</div>
+					<div class="form-group">
+						<label for="live_id" class="col-sm-2 col-form-label">YoutubeID</label>
+						<div class="col-sm-10">
+							<input class="form-control" id="live_id" name="live_id"
+								type="text" placeholder="請輸入YoutubeID"
+								value="<%=(liveVO == null) ? "" : liveVO.getLive_id()%>"
+								required>
 						</div>
-						
-						
-						<div class="form-group">
-							<label for="live_id" class="col-sm-2 col-form-label">YoutubeID</label>
-							<div class="col-sm-10">
-								<input class="form-control" id="live_id" name="live_id"
-									type="text" placeholder="請輸入YoutubeID"
-									value="<%=(liveVO == null) ? "" : liveVO.getLive_id()%>"
-									required>
-							</div>
+					</div>
+
+					<jsp:useBean id="product_typeSvc" scope="page"
+						class="com.product_type.model.Product_TypeService" />
+					<div class="form-group">
+						<label for="live_type" class="col-sm-2 col-form-label">直播分類</label>
+						<div class="col-sm-10">
+							<select size="1" class="form-control" name="live_type">
+								<c:forEach var="product_typeVO" items="${product_typeSvc.all}">
+									<option value="${product_typeVO.pdtype_name}"
+										${(liveVO.live_type==product_typeVO.pdtype_name)? 'selected':'' }>${product_typeVO.pdtype_name}
+								</c:forEach>
+							</select>
 						</div>
+					</div>
 
-						<jsp:useBean id="product_typeSvc" scope="page"
-							class="com.product_type.model.Product_TypeService" />
-						<div class="form-group">
-							<label for="live_type" class="col-sm-2 col-form-label">直播分類</label>
-							<div class="col-sm-10">
-								<select size="1" class="form-control" name="live_type">
-									<c:forEach var="product_typeVO" items="${product_typeSvc.all}">
-										<option value="${product_typeVO.pdtype_name}"
-											${(liveVO.live_type==product_typeVO.pdtype_name)? 'selected':'' }>${product_typeVO.pdtype_name}
-									</c:forEach>
-								</select>
-							</div>
+
+					<div class="form-group">
+						<label for="live_state" class="col-sm-2 col-form-label">直播狀態</label>
+						<div class="col-sm-10">
+							<select size="1" class="form-control" name="live_state">
+								<%-- 								<option value="0" ${(liveVO.live_state==0)? 'selected':'' }>已結束</option> --%>
+								<option value="1" ${(liveVO.live_state==1)? 'selected':'' }>未直播</option>
+								<option value="2" ${(liveVO.live_state==2)? 'selected':'' }>直播中</option>
+							</select>
 						</div>
+					</div>
 
-
-						<div class="form-group">
-							<label for="live_state" class="col-sm-2 col-form-label">直播狀態</label>
-							<div class="col-sm-10">
-								<select size="1" class="form-control" name="live_state">
-									<%-- 								<option value="0" ${(liveVO.live_state==0)? 'selected':'' }>已結束</option> --%>
-									<option value="1" ${(liveVO.live_state==1)? 'selected':'' }>未直播</option>
-									<option value="2" ${(liveVO.live_state==2)? 'selected':'' }>直播中</option>
-								</select>
-							</div>
+					<div class="form-group">
+						<label for="product_info" class="col-sm-2 col-form-label">直播時間</label>
+						<div class="col-sm-10">
+							<input name="live_time" class="form-control" id="f_date1"
+								type="text">
 						</div>
+					</div>
 
-						<div class="form-group">
-							<label for="product_info" class="col-sm-2 col-form-label">直播時間</label>
-							<div class="col-sm-10">
-								<input name="live_time" class="form-control" id="f_date1"
-									type="text">
-							</div>
-							</div>
+					<jsp:useBean id="empSvc" scope="page"
+						class="com.emp.model.EmpService" />
+					<div class="form-group">
+						<label for="empno" class="col-sm-2 col-form-label">管理員編號</label>
+						<div class="col-sm-10">
+							<select size="1" class="form-control" name="empno">
+								<c:forEach var="empVO" items="${empSvc.all}">
+									<option value="${empVO.empno}"
+										${(liveVO.empno==empVO.empno)? 'selected':'' }>${empVO.empno}
+								</c:forEach>
+							</select>
+						</div>
+					</div>
 
-							<jsp:useBean id="empSvc" scope="page"
-								class="com.emp.model.EmpService" />
-							<div class="form-group">
-								<label for="empno" class="col-sm-2 col-form-label">管理員編號</label>
-								<div class="col-sm-10">
-									<select size="1" class="form-control" name="empno">
-										<c:forEach var="empVO" items="${empSvc.all}">
-											<option value="${empVO.empno}"
-												${(liveVO.empno==empVO.empno)? 'selected':'' }>${empVO.empno}
-										</c:forEach>
-									</select>
-								</div>
-							</div>
+					<div class="form-group">
+						<label for="live_photo" class="col-sm-2 col-form-label">直播預覽圖</label>
+						<div class="col-sm-10">
+							<input name="live_photo" class="form-control" type="file"
+								id="imgInp" accept="image/gif, image/jpeg, image/png" required>
+						</div>
+					</div>
 
-							<div class="form-group">
-								<label for="live_photo" class="col-sm-2 col-form-label">直播預覽圖</label>
-								<div class="col-sm-10">
-									<input name="live_photo" class="form-control" type="file"
-										id="imgInp" accept="image/gif, image/jpeg, image/png"
-										required>
-								</div>
-								</div>
+					<div class="form-group">
+						<img id="preview_img" class="col-md-6 col-form-label" src="#"
+							style="display: none;" />
 
-								<div class="form-group">
-									<img id="preview_img" class="col-md-6 col-form-label" src="#"
-										style="display: none;" />
+					</div>
 
-								</div>
+					<div class="form-group">
+						<br> <input type="hidden" name="action" value="insert">
+						<button type="submit" class="btn btn-info">新增直播專案</button>
 
-								<div class="productAddBtn">
-									<br> <input type="hidden" name="action" value="insert">
-									<button type="reset" class="btn btn-danger">取消</button>
-									<button type="submit" class="btn btn-info">新增直播專案</button>
-								</div>
+					</div>
 				</form>
-				</div>
-				</div>
+			</div>
+		</div>
 	</main>
 	<!-- Essential javascripts for application to work-->
 	<script

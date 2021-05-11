@@ -186,8 +186,8 @@
                     </a>      	
                   </div>
                     <ul>
-                        <li class="w-icon active">
-                            <a href="#"><i class="icon_bag_alt"></i></a>
+                        <li class="w-icon active" id="SC${productVO.product_no}">
+                            <a href="javascript:void(0)"><i class="icon_bag_alt"></i></a>
                         </li>   
                         <li class="w-heart" >
                             <i class="icon_heart_alt"  data-no="${productVO.product_no}"></i>
@@ -262,6 +262,7 @@
 <%--     <script src="${pageContext.request.contextPath}/front-template/js/productFavorite.js" ></script>   --%>
 	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/front-template/js/ajaxSearch.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
 	
 	<script>
 
@@ -279,12 +280,12 @@
 			$("#products").html(str); 
 			
 			if(str.length === 0){
-				alert('很抱歉,查無此商品');
+				Swal.fire('很抱歉,查無此商品');
             }
 
 		  },
 		  error:function () {
-			  alert('很抱歉,查無此商品');
+			  Swal.fire('很抱歉,查無此商品');
 		  },
 			
 		 }) 
@@ -300,10 +301,58 @@
 			$("#products").html(fromProduct); 
 			
 			if(fromProduct.length === 0){
-				alert('很抱歉,查無此商品');
+				Swal.fire('很抱歉,查無此商品');
             }
 		};
-	
-       	</script>	
+		</script>
+		
+<!-- 		  購物車按鈕   -->
+		  <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()}">
+		  <script>
+		  $("#SC${productVO.product_no}").click(function(){
+				$.ajax({ 
+				  type:"POST",
+				  url:"<%=request.getContextPath()%>/ShoppingServlet",
+				  data:{
+					  "product_no": "${productVO.product_no}",
+					  "product_name": "${productVO.product_name}",
+					  "product_price": "${productVO.product_price}",
+					  "proqty": "1",
+					  "product_remaining": "${productVO.product_remaining}",
+					  "product_state": "${productVO.product_state}",
+					  "action": "ADD"
+				  },
+				  success: function(res) {
+					  
+<%-- 					  const cart=cartProduct(res, "<%=request.getContextPath()%>");  --%>
+// 						$("#carts").html(cart); 
+					  
+					  var carRes  = JSON.parse(res)
+					  console.log(carRes["results"].length);
+					  var ibaCount = carRes["results"].length;
+					  $("#iba").html(ibaCount);
+
+					  Swal.fire({
+// 						  position: 'top',
+						  icon: 'success',
+						  title: '商品加入購物車',
+						  showConfirmButton: false,
+						  timer: 1000
+						});
+					  
+			      }, 	  
+				  error:function () {
+			  			Swal.fire({
+				  			  icon: 'error',
+				  			  title: '很抱歉,加入購物車失敗',
+				  			  showConfirmButton: false,
+				  			  timer: 1000
+				  			});
+				  },				
+				 });
+		  });
+		  </script>
+		  </c:forEach>
+
   </body>
 </html>

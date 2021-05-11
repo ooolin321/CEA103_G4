@@ -10,7 +10,6 @@
 		Object SellerProducts = request.getAttribute("SellerProducts");
 		pageContext.setAttribute("SellerProducts", SellerProducts);
 
-
 	
 %>
 <jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
@@ -146,11 +145,17 @@
 	<script src="${pageContext.request.contextPath}/front-template/js/ajaxSearch.js"></script>
 	
 	<script>
-	var user_id = $(".user_id").attr("value");
-	var user_regdate = $(".user_regdate").attr("value");
+	var url = window.location.search;
+	var str = url.split('?')[1];
+	var sellerID = str.split('=')[1];
+	$(".card-title").text("賣家帳號"+ sellerID);
 	
-	$(".card-title").text("賣家帳號"+ user_id);
-	$(".text-muted").text("加入時間"+ user_regdate);
+	var user_regdate = $(".user_regdate").attr("value");
+	if (user_regdate !== undefined){
+		$(".text-muted").text("加入時間"+ user_regdate);
+	}
+	
+	
 	
 	
 	</script>

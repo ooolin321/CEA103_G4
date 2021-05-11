@@ -209,7 +209,6 @@ ol {
 }
 
 /* Preloder */
-/* 蝬脤�歲頧����,頧���隞亙��憿 */
 #preloder {
   position: fixed;
   width: 100%;
@@ -276,6 +275,41 @@ ol {
   Header
 -----------------------*/
 
+#chatBtn .chat-btn{
+	display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 10px;
+    color: #ffffff;
+    background: pink;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#chatBtn .chat-notice{
+    position: absolute;
+    top: -9px;
+    right: -4px;
+    color: #fff;
+    height: 18px;
+    padding: 0px 5px 5px 5px;
+    font-size: 12px;
+    overflow: hidden;
+    border-radius: 9px;
+    box-sizing: border-box;
+    border: 1px solid #f6f6f6;
+    background: #ee4d2d;
+    transition: opacity .27s linear .03s;
+}
+.mini-chat {
+	width: 240px;
+    height: 300px;
+    box-sizing: border-box;
+    border: 1px solid #dcdce0;
+    background:red;
+    transition: width .25s cubic-bezier(.4,.8,.74,1),height .25s cubic-bezier(.4,.8,.74,1);
+}
 .header-section {
   background-color: pink;
 }
@@ -576,7 +610,7 @@ ol {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding-left: 200px;
+  padding-left: 150px;
 }
 
 .nav-item .nav-depart {
@@ -4641,4 +4675,5 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
   .sellerHome .seller-btn a:hover {
   	font-size:26px;
   	color:pink;
-  }      
+  }
+        

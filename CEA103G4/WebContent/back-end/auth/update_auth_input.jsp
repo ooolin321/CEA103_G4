@@ -128,8 +128,8 @@
 				</div>
 			   </div>
 			</div>
-		</main>
-</body>
+	
+
 <script>
 	/* 	let sub = document.getElementById("submit");
 	 sub.addEventListener(type, callback, capture)
@@ -142,6 +142,7 @@
 	 }
 	 },false); */
 </script>
-
-
+	</main>
+	<jsp:include page="/back-end/backendfooter.jsp" />
+</body>
 </html>

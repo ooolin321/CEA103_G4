@@ -5,6 +5,10 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.product.model.*;
 
 @WebServlet("/ShoppingServlet")
@@ -17,7 +21,6 @@ public class ShoppingServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		HttpSession session = req.getSession();
-
 		
 		@SuppressWarnings("unchecked")
 		List<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
@@ -40,6 +43,7 @@ public class ShoppingServlet extends HttpServlet {
 			}
 			// 新增商品至購物車中
 			else if (action.equals("ADD")) {
+				
 				// 取得後來新增的商品
 				product = getProduct(req);
 
@@ -56,12 +60,27 @@ public class ShoppingServlet extends HttpServlet {
 					}
 				}
 			}
-			
 			session.setAttribute("shoppingcart", buylist);
-			String url = "/front-end/productsell/product.jsp";
 			req.setAttribute("productVO", product);
-			RequestDispatcher rd = req.getRequestDispatcher(url);
-			rd.forward(req, res);
+			
+			res.setContentType("text/html; charset=utf-8");
+			PrintWriter out = res.getWriter();
+			JSONObject jsonObj = new JSONObject();
+			try {
+				jsonObj.put("results", buylist);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			out.println(jsonObj.toString());
+			out.flush();
+			out.close();
+			
+			
+			
+//			String url = "/front-end/productsell/product.jsp";
+			
+//			RequestDispatcher rd = req.getRequestDispatcher(url);
+//			rd.forward(req, res);
 		}
 
 //		// 結帳，計算購物車商品價錢總數
@@ -83,12 +102,13 @@ public class ShoppingServlet extends HttpServlet {
 	}
 
 	private ProductVO getProduct(HttpServletRequest req) {
-
+		
 		String product_no = req.getParameter("product_no");
 		String product_name = req.getParameter("product_name");
 		String product_price = req.getParameter("product_price");
 		String proqty = req.getParameter("proqty");
 		String product_remaining = req.getParameter("product_remaining");
+		String product_state = req.getParameter("product_state");
 		
 		ProductVO productVO = new ProductVO();
 
@@ -97,6 +117,7 @@ public class ShoppingServlet extends HttpServlet {
 		productVO.setProduct_price(new Integer(product_price));
 		productVO.setProduct_quantity(new Integer(proqty));
 		productVO.setProduct_remaining(new Integer(product_remaining));
+		productVO.setProduct_state(new Integer(product_state));
 		return productVO;
 	}
 	

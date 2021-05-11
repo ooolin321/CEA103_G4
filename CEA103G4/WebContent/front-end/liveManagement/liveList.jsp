@@ -337,8 +337,7 @@ table td, table tr, table th {
 	<script>
 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()-1}">
 	<c:if test="${productVO.product_state == 0 && productVO.user_id == userVO.user_id}">
-		
-		$("#TR${productVO.product_no}" ).click(function(e){
+		$("#TR${productVO.product_no}").click(function(e){
 			var checkBoxes = $("#CB${productVO.product_no}");
 			checkBoxes.prop("checked", !checkBoxes.prop("checked"));
 			var isChecked = $("#CB${productVO.product_no}" ).is(":checked");

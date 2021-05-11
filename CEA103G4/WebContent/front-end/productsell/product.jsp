@@ -178,28 +178,36 @@
                     <h4><span>$</span>
                         ${productVO.product_price}</h4>
                   </div>
-                  <form METHOD="post" action="<%=request.getContextPath()%>/ShoppingServlet">
+                  <c:if test="${productVO.product_state == 1}">
+<%--                   <form METHOD="post" action="<%=request.getContextPath()%>/ShoppingServlet"> --%>
                   <div class="quantity">
                     <div class="pro-qty">
                      <span id="decProduct" class="dec qtybtn">-</span>
-                      <input name="proqty" type="text" value="1" />
+                      <input name="proqty" id="proqty" type="text" value="1" />
                       <span id="addProduct" class="inc qtybtn" style="none">+</span>
                     </div>
-                    <input type="hidden" name="product_no" value="${productVO.product_no}">
-                    <input type="hidden" name="product_name" value="${productVO.product_name}">
-                    <input type="hidden" name="product_price" value="${productVO.product_price}">
-                    <input type="hidden" name="product_remaining" value="${productVO.product_remaining}">
-                    <input type="hidden" name="action" value="ADD" />
-                    <button href="#" type="submit" class="primary-btn pd-cart">加入購物車</button>
+<%--                     <input type="hidden" name="product_no" value="${productVO.product_no}"> --%>
+<%--                     <input type="hidden" name="product_name" value="${productVO.product_name}"> --%>
+<%--                     <input type="hidden" name="product_price" value="${productVO.product_price}"> --%>
+<%--                     <input type="hidden" name="product_remaining" value="${productVO.product_remaining}"> --%>
+<%--                     <input type="hidden" name="product_state" value="${productVO.product_state}"> --%>
+<!--                     <input type="hidden" name="action" value="ADD" /> -->
+<!--                     <button href="#" type="submit" class="primary-btn pd-cart">加入購物車</button> -->
+                    <button class="primary-btn pd-cart" id="cartBtn">加入購物車</button>
                   </div>
-                  </form>
+<!--                   </form> -->
                   <ul class="pd-tags">
                     <li>
                       <span id="maxRemaining" value="${productVO.product_remaining}">商品數量：${productVO.product_remaining}</span>
                     </li>
                     <!-- <li><span>TAGS</span>: Clothing, T-shirt, Woman</li> -->
                   </ul>
-                
+                  </c:if>
+                   <c:if test="${productVO.product_state != 1}">
+                   <div class="quantity">
+                  	<button  type="button" class="btn btn-danger">此商品已下架</button>
+                  	</div>
+                  </c:if>
                   <div class="pd-share">
                     <div class="pd-social">
                       <a href="#"><i class="ti-facebook"></i></a>
@@ -208,11 +216,13 @@
                     </div>
                   </div>
                   <div class="pd-fungroup">
+                  <c:if test="${productVO.product_state == 1}">
                     <div>
                       <a href="#" class="primary-btn pd-buy">直接購買</a>
                     </div>
+                    </c:if>
                     <div class="pd-function">
-                      <a href="#" class="primary-btn">私訊賣家</a>
+                      <a href="#" class="primary-btn" value="${productVO.product_state}">私訊賣家</a>
                       <c:if test="${seller_followSvc.getTracerNo(userVO.user_id, productVO.user_id) != null}">
                       <div class="primary-btn unFollow" value="${seller_followSvc.getTracerNo(userVO.user_id,productVO.user_id).tracer_no}">取消關注</div>
                       </c:if>
@@ -539,6 +549,7 @@
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
 	<script src="${pageContext.request.contextPath}/front-template/js/ajaxSearch.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
     
     
     	<script>
@@ -553,7 +564,7 @@
 		  success: function(result) { 
 			const obj  = JSON.parse(result);
 				if(obj["results"].length == 0){
-					alert('很抱歉,查無此商品');
+					Swal.fire('很抱歉,查無此商品');
 	            } else {
 	            	var data = JSON.stringify(result);
 <%-- 	            	window.location.href='<%=request.getContextPath()%>/ProductSearch?action=productToShop'; --%>
@@ -563,7 +574,7 @@
 		  }, 
 		  
 		  error:function () {
-			  alert('很抱歉,查無此商品');
+			  Swal.fire('很抱歉,查無此商品');
 		  },
 			
 		 }) 
@@ -580,7 +591,7 @@
 	  //1,燈箱顯示/隱藏
 	  reportLink.addEventListener("click", function () {
 		  if ($('#reportLink').attr("value") === "") {
-				alert("請先登入會員");
+			  Swal.fire('請先登入會員');
 			} else {
 	    report.style.display = "block";
 	    report_bg.style.display = "block";
@@ -625,20 +636,36 @@
 				  "action": "insert"
 			  },
 			  success: function() { 
-						alert('商品檢舉已提交');
+				  Swal.fire({
+					  position: 'top',
+					  icon: 'success',
+					  title: '商品檢舉已提交',
+					  showConfirmButton: false,
+					  timer: 1500
+					});
 					    report.style.display = "none";
 					    report_bg.style.display = "none";
 					    $('input[name="pro_report_content"]').val("");
 		            }, 	  
 			  error:function () {
-				  alert('很抱歉,檢舉提交失敗,請重新提交。');
+		  			Swal.fire({
+			  			  icon: 'error',
+			  			  title: '很抱歉,檢舉提交失敗,請重新提交。',
+			  			  showConfirmButton: false,
+			  			  timer: 1500
+			  			});
 				    report.style.display = "none";
 				    report_bg.style.display = "none";
 				  $('input[name="pro_report_content"]').val("");
 			  },				
 			 });
 		  }  else {
-			  alert("檢舉內容請勿空白")
+				Swal.fire({
+ 					 icon: 'error',
+ 					 title: '檢舉內容請勿空白',
+ 					 showConfirmButton: false,
+ 					 timer: 1500
+			});
 		  };
 	  });
 	  
@@ -647,9 +674,14 @@
 	  		  var user = $('.sellerFollow').attr("value");
 	  		  var sellerid = $('.sellerFollow').attr("id");
 	  		  if (user === "") {
-					alert("請先登入會員");
+	  			Swal.fire('請先登入會員');
 				} else if (user === sellerid){
-					alert("很抱歉,無法關注自己");
+		  			Swal.fire({
+			  			  icon: 'error',
+			  			  title: '很抱歉,無法關注自己',
+			  			  showConfirmButton: false,
+			  			  timer: 1500
+			  			});
 				}else {
 			$.ajax({ 
 			  url:"<%=request.getContextPath()%>/seller_follow/seller_follow.do",
@@ -659,12 +691,16 @@
 				  "seller_id":sellerid,
 				  "action": "insert"
 			  },
-			  success: function() { 
-						alert('已關注賣家');
+			  success: function() {
 						window.location.reload();
 		            }, 	  
 			  error:function () {
-				  alert('很抱歉,關注失敗,請重新點選。');
+				Swal.fire({
+		  			icon: 'error',
+		  			title: '很抱歉,取消失敗,請重新點選。',
+		  			showConfirmButton: false,
+		  			timer: 1500
+		  	    });  
 			  },				
 			 });
 		  }
@@ -681,11 +717,15 @@
 				  "action": "deleteFromProduct"
 			  },
 			  success: function() { 
-						alert('已取消關注');
 						window.location.reload();
 		            }, 	  
 			  error:function () {
-				  alert('很抱歉,取消失敗,請重新點選。');
+		  		Swal.fire({
+			  	   icon: 'error',
+			  	   title: '很抱歉,取消失敗,請重新點選。',
+			  	   showConfirmButton: false,
+			  	   timer: 1500
+			  		});
 			  },				
 			 });
 	  });
@@ -693,8 +733,49 @@
 	  
 	  
        	</script>	
-    
-    
+       	
+       	<!-- 購物車按鈕   -->
+		  <script>
+		  $("#cartBtn").click(function(){
+				$.ajax({ 
+				  type:"POST",
+				  url:"<%=request.getContextPath()%>/ShoppingServlet",
+				  data:{
+					  "product_no": "${productVO.product_no}",
+					  "product_name": "${productVO.product_name}",
+					  "product_price": "${productVO.product_price}",
+					  "proqty": $('#proqty').attr("value"),
+					  "product_remaining": "${productVO.product_remaining}",
+					  "product_state": "${productVO.product_state}",
+					  "action": "ADD"
+				  },
+				  success: function(res) {
+					  
+					  var carRes  = JSON.parse(res)
+					  console.log(carRes["results"].length);
+					  var ibaCount = carRes["results"].length;
+					  $("#iba").html(ibaCount);
+
+					  Swal.fire({
+// 						  position: 'top',
+						  icon: 'success',
+						  title: '商品加入購物車',
+						  showConfirmButton: false,
+						  timer: 1000
+						});
+					  
+			      }, 	  
+				  error:function () {
+			  			Swal.fire({
+				  			  icon: 'error',
+				  			  title: '很抱歉,加入購物車失敗',
+				  			  showConfirmButton: false,
+				  			  timer: 1000
+				  			});
+				  },				
+				 });
+		  });
+		  </script>
     
   </body>
 </html>

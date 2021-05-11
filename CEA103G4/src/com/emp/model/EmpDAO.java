@@ -42,7 +42,7 @@ public class EmpDAO implements EmpDAO_interface {
 	private static final String UPDATE = "UPDATE EMP SET ENAME=?, JOB=?, ID=?, GENDER=?, DOB=?, CITY=?, DIST=?, ADDR=?,EMAIL=?, SAL=?, STATE=?, HIREDATE=?, EMP_PWD=? WHERE EMPNO = ?";
 	private static final String SIGN_IN = "SELECT EMPNO,EMP_PWD,ENAME,STATE FROM EMP WHERE BINARY EMPNO=? AND BINARY EMP_PWD=?";
 	private static final String UPDATE_EMP_PWD = "UPDATE EMP SET EMP_PWD=? WHERE EMPNO = ?";
-	private static final String GET_EMP_BY_EMAIL = "SELECT EMAIL FROM EMP WHERE EMAIL=?";
+	private static final String GET_EMP_BY_EMAIL = "SELECT EMPNO,ENAME,EMAIL FROM EMP WHERE EMAIL=?";
 	
 	
 	@Override
@@ -376,61 +376,6 @@ public class EmpDAO implements EmpDAO_interface {
 		}
 	}
 
-	@Override
-	public void forgotPassword(EmpVO empVO) {
-		String ch_name = empVO.getEname();
-		String emailto = empVO.getEmail();
-		String link = empVO.getLink();
-
-		String subject = "Mode Femme 忘記密碼通知";
-		String messageText = "<h1>Hello! " + ch_name + "<br>" + " (請前往 <a href=\"http://" + link + "/back-end/emp/update_pswd.jsp \"> 修改密碼 </a>) <h1>";
-		try {
-
-			// 設定使用SSL連線至 Gmail smtp Server
-			Properties props = new Properties();
-			props.put("mail.smtp.host", "smtp.gmail.com");
-			props.put("mail.smtp.socketFactory.port", "465");
-			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.port", "465");
-
-			// ●設定 gmail 的帳號 & 密碼 (將藉由你的Gmail來傳送Email)
-			// ●須將myGmail的【安全性較低的應用程式存取權】打開
-			final String myGmail = "gea103g4@gmail.com";
-			final String myGmail_password = "gea103g4gea103g4";
-			Session session = Session.getInstance(props, new Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(myGmail, myGmail_password);
-				}
-			});
-
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(myGmail));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailto));
-
-//			MailService mailService = new MailService();
-//			empVO.sendMail(emailto, subject, messageText);
-
-			// 設定信中的主旨
-			message.setSubject(subject);
-			// 設定信中的內容
-//			message.setText(messageText);
-			message.setContent(messageText, "text/html ;charset=UTF-8");
-			
-			Transport.send(message);
-
-			SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-			Date date = new Date();
-			String strDate = sdFormat.format(date);
-
-			System.out.println(strDate + " forgetPassword mail傳送成功!");
-
-		} catch (MessagingException e) {
-			System.out.println("forgetPassword mail傳送失敗!");
-			e.printStackTrace();
-		}
-
-	}
 
 	@Override
 	public EmpVO getEmail(String email) {
@@ -441,12 +386,14 @@ public class EmpDAO implements EmpDAO_interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_EMP_BY_EMAIL);
-
+			
 			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
 				empVO = new EmpVO();
+				empVO.setEmpno(rs.getInt("empno"));
+				empVO.setEmail(rs.getString("ename"));
 				empVO.setEmail(rs.getString("email"));
 			}
 

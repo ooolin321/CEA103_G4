@@ -6,6 +6,9 @@
 <%@ page import="com.fun.model.*"%>
 <%@ page import="com.auth.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.sql.*" %>
+
+
 <%
     EmpVO empVO = (EmpVO) session.getAttribute("empAccount");
     session.setAttribute("empVO", empVO);

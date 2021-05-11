@@ -187,7 +187,7 @@
                   </div>
                     <ul>
                         <li class="w-icon active" id="SC${productVO.product_no}">
-                            <a href="#"><i class="icon_bag_alt"></i></a>
+                            <a href="javascript:void(0)"><i class="icon_bag_alt"></i></a>
                         </li>   
                         <li class="w-heart" >
                             <i class="icon_heart_alt"  data-no="${productVO.product_no}"></i>
@@ -322,14 +322,24 @@
 					  "product_state": "${productVO.product_state}",
 					  "action": "ADD"
 				  },
-				  success: function() { 
+				  success: function(res) {
+					  
+<%-- 					  const cart=cartProduct(res, "<%=request.getContextPath()%>");  --%>
+// 						$("#carts").html(cart); 
+					  
+					  var carRes  = JSON.parse(res)
+					  console.log(carRes["results"].length);
+					  var ibaCount = carRes["results"].length;
+					  $("#iba").html(ibaCount);
+
 					  Swal.fire({
-						  position: 'top',
+// 						  position: 'top',
 						  icon: 'success',
 						  title: '商品加入購物車',
 						  showConfirmButton: false,
 						  timer: 1000
 						});
+					  
 			      }, 	  
 				  error:function () {
 			  			Swal.fire({

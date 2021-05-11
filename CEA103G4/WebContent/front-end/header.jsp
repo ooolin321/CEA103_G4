@@ -89,24 +89,24 @@
 						<li class="cart-icon"><a
 							href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp">
 								<i class="icon_bag_alt"></i>
-								<c:if test="${buylist.size() > 0 }"> 
-								<span>${buylist.size()}</span>
-								</c:if>
-								<c:if test="${buylist.size() == 0 }"> 
-								<span>0</span>
+								<c:if test="${buylist != null}">
+								<span id="iba">${buylist.size()}</span>
+								</c:if> 
+								<c:if test="${buylist == null}"> 
+								<span id="iba">0</span>
 								</c:if>
 						</a>
-						<c:if test="${buylist != null && (buylist.size() > 0)}">
+						<c:if test="${buylist != null && buylist.size() > 0}">
 							<div class="cart-hover">
 								<div class="select-items">
-									<table>  
+									<table id="carts">  
 									<c:set var="sum" value="0"> </c:set>
 									<c:forEach var="order" items="${buylist}" varStatus="cartstatus">
 										<tbody>
 											<tr>
 												<td class="si-pic"><img
 													src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
-													alt="${order.product_name}" /></td>
+													alt="${order.product_name}" style="width:100px; height:100px;" /></td>
 												<td class="si-text">
 													<div class="product-selected">
 														<p>$${order.product_price } x ${order.product_quantity}</p>
@@ -131,8 +131,9 @@
 										href="${pageContext.request.contextPath}/front-end/protected/check-out.html"
 										class="primary-btn checkout-btn">結帳</a>
 								</div>
-							</div></li>
+							</div>
 							</c:if>
+							</li>
 						<c:if test="${buylist.size() > 0 }"> 
 						<li class="cart-price">$${sum}</li>
 						</c:if>

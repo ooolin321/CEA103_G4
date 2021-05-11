@@ -41,4 +41,30 @@
       	  });
       	  return htmlContent;
       	}
-    
+	
+//	function cartProduct(cartdata, path) {
+//		console.log(cartProduct);
+//		var cart  = JSON.parse(cartdata);
+//	  console.log(cart)
+//		let cartContent = "";
+//	  
+//		cart["results"].forEach(function (carts, index) {
+////		 console.log(item)
+//	    cartContent += `
+//										<tbody>
+//											<tr>
+//												<td class="si-pic"><img
+//													src="${path}/ProductShowPhoto?product_no=${carts.product_no}"
+//													alt="${carts.product_name}" style="width:100px; height:100px;" /></td>
+//												<td class="si-text">
+//													<div class="product-selected">
+//														<p>$${carts.product_price } x ${carts.product_quantity}</p>
+//														<h6>${carts.product_name }</h6>
+//													</div>
+//												</td>
+//											</tr>
+//										</tbody>
+//	      `;
+//	  });
+//	  return cartContent;
+//	}

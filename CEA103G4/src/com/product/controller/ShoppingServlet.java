@@ -5,6 +5,10 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.product.model.*;
 
 @WebServlet("/ShoppingServlet")
@@ -56,12 +60,27 @@ public class ShoppingServlet extends HttpServlet {
 					}
 				}
 			}
-			
 			session.setAttribute("shoppingcart", buylist);
-			String url = "/front-end/productsell/product.jsp";
 			req.setAttribute("productVO", product);
-			RequestDispatcher rd = req.getRequestDispatcher(url);
-			rd.forward(req, res);
+			
+			res.setContentType("text/html; charset=utf-8");
+			PrintWriter out = res.getWriter();
+			JSONObject jsonObj = new JSONObject();
+			try {
+				jsonObj.put("results", buylist);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			out.println(jsonObj.toString());
+			out.flush();
+			out.close();
+			
+			
+			
+//			String url = "/front-end/productsell/product.jsp";
+			
+//			RequestDispatcher rd = req.getRequestDispatcher(url);
+//			rd.forward(req, res);
 		}
 
 //		// 結帳，計算購物車商品價錢總數

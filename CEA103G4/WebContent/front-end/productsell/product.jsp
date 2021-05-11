@@ -181,21 +181,13 @@
                         ${productVO.product_price}</h4>
                   </div>
                   <c:if test="${productVO.product_state == 1}">
-                  <form METHOD="post" action="<%=request.getContextPath()%>/ShoppingServlet">
                   <div class="quantity">
                     <div class="pro-qty">
                      <span id="decProduct" class="dec qtybtn">-</span>
                       <input name="proqty" type="text" value="1" />
                       <span id="addProduct" class="inc qtybtn" style="none">+</span>
                     </div>
-                    <input type="hidden" name="product_no" value="${productVO.product_no}">
-                    <input type="hidden" name="product_name" value="${productVO.product_name}">
-                    <input type="hidden" name="product_price" value="${productVO.product_price}">
-                    <input type="hidden" name="product_remaining" value="${productVO.product_remaining}">
-                    <input type="hidden" name="product_state" value="${productVO.product_state}">
-                    <input type="hidden" name="user_id" value="${productVO.user_id}">
-                    <input type="hidden" name="action" value="ADD" />
-                    <button href="#" type="submit" class="primary-btn pd-cart">加入購物車</button>
+                    <button class="primary-btn pd-cart" id="cartBtn">加入購物車</button>
                   </div>
                   </form>
                   <ul class="pd-tags">
@@ -781,6 +773,46 @@
   			});
 			});
 	  	};
+	  	
+		  $("#cartBtn").click(function(){
+				$.ajax({ 
+				  type:"POST",
+				  url:"<%=request.getContextPath()%>/ShoppingServlet",
+				  data:{
+					  "product_no": "${productVO.product_no}",
+					  "product_name": "${productVO.product_name}",
+					  "product_price": "${productVO.product_price}",
+					  "proqty": $('#proqty').attr("value"),
+					  "product_remaining": "${productVO.product_remaining}",
+					  "product_state": "${productVO.product_state}",
+					  "action": "ADD"
+				  },
+				  success: function(res) {
+					  
+					  var carRes  = JSON.parse(res)
+					  console.log(carRes["results"].length);
+					  var ibaCount = carRes["results"].length;
+					  $("#iba").html(ibaCount);
+
+					  Swal.fire({
+//						  position: 'top',
+						  icon: 'success',
+						  title: '商品加入購物車',
+						  showConfirmButton: false,
+						  timer: 1000
+						});
+					  
+			      }, 	  
+				  error:function () {
+			  			Swal.fire({
+				  			  icon: 'error',
+				  			  title: '很抱歉,加入購物車失敗',
+				  			  showConfirmButton: false,
+				  			  timer: 1000
+				  			});
+				  },				
+				 });
+		  });
 	  
 	  
        	</script>	

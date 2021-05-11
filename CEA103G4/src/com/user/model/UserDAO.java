@@ -43,6 +43,7 @@ public class UserDAO implements UserDAO_interface {
 	private static final String GET_Live_reportByUser_id_STMT = "SELECT LIVE_REPORT_NO,LIVE_REPORT_CONTENT,LIVE_NO,USER_ID,EMPNO,LIVE_REPORT_STATE,REPORT_DATE,PHOTO FROM LIVE_REPORT where USER_ID = ? ORDER BY LIVE_REPORT_NO";
 	private static final String SIGN_IN = "SELECT * FROM USER where BINARY USER_ID=? AND BINARY USER_PWD=?";
 	private static final String UPDATE_NEWPSW = "UPDATE `USER` SET USER_PWD=? WHERE `USER_ID`=?";
+	private static final String UPDATE_USER_REPORT = "UPDATE USER SET USER_STATE =? WHERE USER_ID = ?;";
 
 	@Override
 	public void insert(UserVO userVO) {
@@ -397,14 +398,14 @@ public class UserDAO implements UserDAO_interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(SIGN_IN);
-			
+
 			pstmt.setString(1, user_id);
 			pstmt.setString(2, user_pwd);
-			
+
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
-				
+
 				userVO = new UserVO();
 				userVO.setUser_id(rs.getString("user_id"));
 				userVO.setUser_pwd(rs.getString("user_pwd"));
@@ -454,7 +455,7 @@ public class UserDAO implements UserDAO_interface {
 				}
 			}
 		}
-		
+
 		return userVO;
 
 	}
@@ -524,12 +525,10 @@ public class UserDAO implements UserDAO_interface {
 				// userVo 也稱為 Domain objects
 				userVO.setUser_name(rs.getString("user_name"));
 			}
-		
-		String ch_id = userVO.getUser_name();
-		String passRandom = userVO.getUser_pwd();
-		String messageText = "Hello! " + ch_id + "\n" + "請改用此密碼登入: " + passRandom + "\n" + "並於登入後自行修改密碼！";
 
-		
+			String ch_id = userVO.getUser_name();
+			String passRandom = userVO.getUser_pwd();
+			String messageText = "Hello! " + ch_id + "\n" + "請改用此密碼登入: " + passRandom + "\n" + "並於登入後自行修改密碼！";
 
 			// 設定使用SSL連線至 Gmail smtp Server
 			Properties props = new Properties();
@@ -572,7 +571,7 @@ public class UserDAO implements UserDAO_interface {
 		} catch (MessagingException e) {
 			System.out.println("傳送失敗!");
 			e.printStackTrace();
-		}catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
@@ -616,7 +615,7 @@ public class UserDAO implements UserDAO_interface {
 			pstmt.setString(2, userVO.getUser_id());
 
 			int a = pstmt.executeUpdate();
-			
+
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -637,7 +636,43 @@ public class UserDAO implements UserDAO_interface {
 				}
 			}
 		}
-		
+
 	}
 
+	@Override
+	public void update_user_report(UserVO userVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_USER_REPORT);
+
+			pstmt.setInt(1, userVO.getUser_state());
+//			System.out.println("userDao 653 user_state = " + userVO.getUser_state());
+			pstmt.setString(2, userVO.getUser_id());
+//			System.out.println("userDao 657 userid = " + userVO.getUser_id());
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("database發生錯誤." + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
 }

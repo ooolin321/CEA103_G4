@@ -127,4 +127,14 @@ public UserVO newPassword_Update(String user_id,String user_newNameCheck) {
 		dao.newPassword_Update(userVO);
 		return userVO;
 	}
+
+	public UserVO userRepost(Integer user_state,String user_id) {
+		UserVO userVO = new UserVO();
+		userVO.setUser_state(user_state);
+//System.out.println("Service user_state = "+user_state);
+		userVO.setUser_id(user_id);
+//System.out.println("Service user_id = "+user_id);
+		dao.update_user_report(userVO);		
+		return userVO;
+	}
 }

@@ -215,6 +215,7 @@
     <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
     
     <script>
     // 各商品小計
@@ -251,7 +252,7 @@
     	var maxRemaining = $("#max${order.product_no}").attr("value");
     	if (Count == maxRemaining) {
     		$("#Add${order.product_no}").prop('disabled',true);
-    		alert("商品數量只剩下"+ maxRemaining +"個");	
+    		Swal.fire("商品數量只剩下"+ maxRemaining +"個");
     	} 
     	if (Count < maxRemaining) {
     		$("#Add${order.product_no}").prop('disabled',false);
@@ -262,7 +263,7 @@
 	$("#PC${order.product_no}").change(function() {	
 		
 		var maxRemaining = $("#max${order.product_no}").attr("value");
-		alert("商品數量只剩下"+ maxRemaining +"個");
+// 		alert("商品數量只剩下"+ maxRemaining +"個");
 		$('input[name="${order.product_no}"]').val(maxRemaining);
 	});
 	

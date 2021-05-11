@@ -88,7 +88,13 @@
 						</a></li>
 						<li class="cart-icon"><a
 							href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp">
-								<i class="icon_bag_alt"></i> <span>${buylist.size()}</span>
+								<i class="icon_bag_alt"></i>
+								<c:if test="${buylist.size() > 0 }"> 
+								<span>${buylist.size()}</span>
+								</c:if>
+								<c:if test="${buylist == null }"> 
+								<span>0</span>
+								</c:if>
 						</a>
 							<div class="cart-hover">
 								<div class="select-items">

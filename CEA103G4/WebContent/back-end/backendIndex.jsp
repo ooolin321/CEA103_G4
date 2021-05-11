@@ -275,7 +275,7 @@
 			value : ${rs.rowCount},
 			color : "#46BFBD",
 			highlight : "#5AD3D1",
-			label : "商售商品數"
+			label : "直售商品數"
 		}, {
 			value : ${rs2.rowCount},
 			color : "#F7464A",

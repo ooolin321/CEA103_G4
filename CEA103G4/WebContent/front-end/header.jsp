@@ -92,14 +92,14 @@
 								<c:if test="${buylist.size() > 0 }"> 
 								<span>${buylist.size()}</span>
 								</c:if>
-								<c:if test="${buylist == null }"> 
+								<c:if test="${buylist.size() == 0 }"> 
 								<span>0</span>
 								</c:if>
 						</a>
+						<c:if test="${buylist != null && (buylist.size() > 0)}">
 							<div class="cart-hover">
 								<div class="select-items">
-									<table>
-									<%if (buylist != null && (buylist.size() > 0)) {%>   
+									<table>  
 									<c:set var="sum" value="0"> </c:set>
 									<c:forEach var="order" items="${buylist}" varStatus="cartstatus">
 										<tbody>
@@ -117,7 +117,6 @@
 										</tbody>
 				<c:set var="sum" value="${sum + order.product_price*order.product_quantity}"> </c:set>
                 </c:forEach>
-<%}%>
 									</table>
 								</div>
 								<div class="select-total">
@@ -133,7 +132,10 @@
 										class="primary-btn checkout-btn">結帳</a>
 								</div>
 							</div></li>
+							</c:if>
+						<c:if test="${buylist.size() > 0 }"> 
 						<li class="cart-price">$${sum}</li>
+						</c:if>
 					</ul>
 				</div>
 			</div>

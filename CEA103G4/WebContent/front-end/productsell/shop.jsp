@@ -186,13 +186,8 @@
                     </a>      	
                   </div>
                     <ul>
-                        <li class="w-icon active">
-                    <input type="hidden" id="NO${productVO.product_no}" value="${productVO.product_no}">
-                    <input type="hidden" id="NA${productVO.product_no}" value="${productVO.product_name}">
-                    <input type="hidden" id="PR${productVO.product_no}" value="${productVO.product_price}">
-                    <input type="hidden" id="RE${productVO.product_no}" value="${productVO.product_remaining}">
-                    <input type="hidden" id="ST${productVO.product_no}" value="${productVO.product_state}">
-                            <a href="#" id="SC${productVO.product_no}"><i class="icon_bag_alt"></i></a>
+                        <li class="w-icon active" id="SC${productVO.product_no}">
+                            <a href="#"><i class="icon_bag_alt"></i></a>
                         </li>   
                         <li class="w-heart" >
                             <i class="icon_heart_alt"  data-no="${productVO.product_no}"></i>
@@ -309,20 +304,22 @@
 				Swal.fire('很抱歉,查無此商品');
             }
 		};
+		</script>
 		
-		  //購物車按鈕  
+<!-- 		  購物車按鈕   -->
 		  <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()}">
+		  <script>
 		  $("#SC${productVO.product_no}").click(function(){
 				$.ajax({ 
 				  type:"POST",
 				  url:"<%=request.getContextPath()%>/ShoppingServlet",
 				  data:{
-					  "product_no": $("#NO${productVO.product_no}").attr("value"),
-					  "product_name": $("#NA${productVO.product_no}").attr("value"),
-					  "product_price": $("#PR${productVO.product_no}").attr("value"),
+					  "product_no": "${productVO.product_no}",
+					  "product_name": "${productVO.product_name}",
+					  "product_price": "${productVO.product_price}",
 					  "proqty": "1",
-					  "product_remaining": $("#RE${productVO.product_no}").attr("value"),
-					  "product_state": $("#ST${productVO.product_no}").attr("value"),
+					  "product_remaining": "${productVO.product_remaining}",
+					  "product_state": "${productVO.product_state}",
 					  "action": "ADD"
 				  },
 				  success: function() { 
@@ -331,7 +328,7 @@
 						  icon: 'success',
 						  title: '商品加入購物車',
 						  showConfirmButton: false,
-						  timer: 1500
+						  timer: 1000
 						});
 			      }, 	  
 				  error:function () {
@@ -339,13 +336,13 @@
 				  			  icon: 'error',
 				  			  title: '很抱歉,加入購物車失敗',
 				  			  showConfirmButton: false,
-				  			  timer: 1500
+				  			  timer: 1000
 				  			});
 				  },				
 				 });
 		  });
+		  </script>
 		  </c:forEach>
-	
-       	</script>	
+
   </body>
 </html>

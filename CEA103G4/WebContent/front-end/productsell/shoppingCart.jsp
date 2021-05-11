@@ -187,7 +187,7 @@
                   <ul>
                     <li class="cart-total">合計 <span id="Sum">${sum}</span></li>
                   </ul>
-                  <a href="<%=request.getContextPath()%>/front-end/protected/check-out.html" class="proceed-btn">結帳</a>
+                  <a href="<%=request.getContextPath()%>/front-end/protected/check-out.jsp" class="proceed-btn">結帳</a>
                 </div>
               </div>
             </div>

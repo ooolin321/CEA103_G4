@@ -226,21 +226,21 @@ public class EmpServlet extends HttpServlet {
 						hiredate, empPwd);
 				//再修改權限資料
 				empno = empVO.getEmpno();
-//System.out.println("EmpServlet 228 ="+empno);
+//System.out.println("EmpServlet empno 228 ="+empno);
 				String auth_nos[] = req.getParameterValues("auth_no");// 新增Emp的同時可以新增Auth並轉交給Auth Table
 				String funnos[] = req.getParameterValues("funno");
 
 				AuthVO authVO = new AuthVO();
 				for (int i = 0; i < funnos.length; i++) {
 					int auth_no = new Integer(auth_nos[i]);
-//System.out.println("EmpServlet 235 = "+ auth_nos[i]);
+//System.out.println("EmpServlet authno 235 = "+ auth_nos[i]);
 					int funno = new Integer(funnos[i]);
-//System.out.println("EmpServlet 237 = "+ funnos[i]);
+//System.out.println("EmpServlet funno 237 = "+ funnos[i]);
 					authVO.setEmpno(empno);
 					authVO.setFunno(funno);
 					authVO.setAuth_no(auth_no);
 					AuthService authSvc = new AuthService();
-					authVO = authSvc.updateAuth(empno, funno, auth_no);
+					authVO = authSvc.updateAuth(auth_no, empno, funno);
 				}
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				String url = requestURL;

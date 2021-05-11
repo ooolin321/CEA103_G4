@@ -4,11 +4,15 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.user.model.*"%>
 <%@ page import="com.product_type.model.*"%>
+<%@ page import="com.product.model.*"%>
 <%
 
 	Product_TypeDAO dao2 = new Product_TypeDAO();
      List<Product_TypeVO> list2 = dao2.getAll();
     pageContext.setAttribute("list2",list2);
+    
+    Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
+	pageContext.setAttribute("buylist", buylist);
  %>
 	
 <!-- Page Preloder -->
@@ -84,53 +88,55 @@
 						</a></li>
 						<li class="cart-icon"><a
 							href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp">
-								<i class="icon_bag_alt"></i> <span>3</span>
+								<i class="icon_bag_alt"></i>
+								<c:if test="${buylist != null}">
+								<span id="iba">${buylist.size()}</span>
+								</c:if> 
+								<c:if test="${buylist == null}"> 
+								<span id="iba">0</span>
+								</c:if>
 						</a>
+						<c:if test="${buylist != null && buylist.size() > 0}">
 							<div class="cart-hover">
 								<div class="select-items">
-									<table>
+									<table id="carts">  
+									<c:set var="sum" value="0"> </c:set>
+									<c:forEach var="order" items="${buylist}" varStatus="cartstatus">
 										<tbody>
 											<tr>
 												<td class="si-pic"><img
-													src="${pageContext.request.contextPath}/front-template/images/productsell/select-product-1.jpg"
-													alt="" /></td>
+													src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
+													alt="${order.product_name}" style="width:100px; height:100px;" /></td>
 												<td class="si-text">
 													<div class="product-selected">
-														<p>$60.00 x 1</p>
-														<h6>Kabino Bedside Table</h6>
+														<p>$${order.product_price } x ${order.product_quantity}</p>
+														<h6>${order.product_name }</h6>
 													</div>
 												</td>
-												<td class="si-close"><i class="ti-close"></i></td>
-											</tr>
-											<tr>
-												<td class="si-pic"><img
-													src="${pageContext.request.contextPath}/front-template/images/productsell/select-product-2.jpg"
-													alt="" /></td>
-												<td class="si-text">
-													<div class="product-selected">
-														<p>$60.00 x 1</p>
-														<h6>Kabino Bedside Table</h6>
-													</div>
-												</td>
-												<td class="si-close"><i class="ti-close"></i></td>
 											</tr>
 										</tbody>
+				<c:set var="sum" value="${sum + order.product_price*order.product_quantity}"> </c:set>
+                </c:forEach>
 									</table>
 								</div>
 								<div class="select-total">
 									<span>total:</span>
-									<h5>$120.00</h5>
+									<h5>${sum}</h5>
 								</div>
 								<div class="select-button">
 									<a
 										href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp"
 										class="primary-btn view-card">購物車清單</a>
 									<a
-										href="${pageContext.request.contextPath}/front-end/productsell/check-out.html"
+										href="${pageContext.request.contextPath}/front-end/protected/check-out.html"
 										class="primary-btn checkout-btn">結帳</a>
 								</div>
-							</div></li>
-						<li class="cart-price">$150.00</li>
+							</div>
+							</c:if>
+							</li>
+						<c:if test="${buylist.size() > 0 }"> 
+						<li class="cart-price">$${sum}</li>
+						</c:if>
 					</ul>
 				</div>
 			</div>

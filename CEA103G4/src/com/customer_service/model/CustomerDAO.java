@@ -26,15 +26,15 @@ public class CustomerDAO implements CustomerDAO_interface{
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO CUSTOMER_SERVICE (USER_ID,CONTENT,CASE_STATE,EMPNO,EMP_RESPONSE,CASE_TMIE ) VALUES ( ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO CUSTOMER_SERVICE (USER_ID,CONTENT,CASE_STATE,EMPNO,EMP_RESPONSE,CASE_TIME ) VALUES ( ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT CASENO,USER_ID,CONTENT,CASE_STATE,EMPNO,EMP_RESPONSE,CASE_TMIE FROM CUSTOMER_SERVICE ORDER BY CASENO";
+			"SELECT CASE_NO,USER_ID,CONTENT,CASE_STATE,EMPNO,EMP_RESPONSE,CASE_TIME FROM CUSTOMER_SERVICE ORDER BY CASE_NO";
 	private static final String GET_ONE_STMT = 
-			"SELECT CASENO,USER_ID,CONTENT,CASE_STATE,EMPNO,EMP_RESPONSE,CASE_TMIE FROM CUSTOMER_SERVICE WHERE CASENO = ?";
+			"SELECT CASE_NO,USER_ID,CONTENT,CASE_STATE,EMPNO,EMP_RESPONSE,CASE_TIME FROM CUSTOMER_SERVICE WHERE CASE_NO = ?";
 	private static final String DELETE = 
-			"DELETE FROM CUSTOMER_SERVICE WHERE CASENO = ?";
+			"DELETE FROM CUSTOMER_SERVICE WHERE CASE_NO = ?";
 	private static final String UPDATE = 
-			"UPDATE CUSTOMER_SERVICE SET USER_ID=?, CONTENT=?, CASE_STATE=?, EMPNO=?, EMP_RESPONSE=?, CASE_TMIE=? WHERE EMPNO = ?";
+			"UPDATE CUSTOMER_SERVICE SET USER_ID=?, CONTENT=?, CASE_STATE=?, EMPNO=?, EMP_RESPONSE=?, CASE_TIME=? WHERE CASE_NO = ?";
 	
 	@Override
 	public void insert(CustomerSerVO customerSerVO) {
@@ -216,13 +216,14 @@ public class CustomerDAO implements CustomerDAO_interface{
 			
 			while (rs.next()) {
 				customerSerVO = new CustomerSerVO();
-				customerSerVO.setCaseno(rs.getInt("caseno"));
-				customerSerVO.setUserid(rs.getString("userid"));
+				customerSerVO.setCaseno(rs.getInt("case_no"));
+				customerSerVO.setUserid(rs.getString("user_id"));
 				customerSerVO.setContent(rs.getString("content"));
-				customerSerVO.setCaseState(rs.getInt("caseState"));
+				customerSerVO.setCaseState(rs.getInt("case_State"));
 				customerSerVO.setEmpno(rs.getInt("empno"));
-				customerSerVO.setEmpResponse(rs.getString("empResponse"));
-				customerSerVO.setCaseTime(rs.getDate("caseTime"));
+				customerSerVO.setEmpResponse(rs.getString("emp_Response"));
+				customerSerVO.setCaseTime(rs.getDate("case_Time"));
+				list.add(customerSerVO);
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("database發生錯誤."

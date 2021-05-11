@@ -4,8 +4,8 @@
 <%@ page import="java.util.* , com.product.model.*" %>
 
 <%
-	Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
-	pageContext.setAttribute("buylist", buylist);
+// 	Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
+// 	pageContext.setAttribute("buylist", buylist);
 %>
 
 
@@ -127,7 +127,7 @@
                   <tr>
                     <td class="cart-pic first-row">
                     <a href="<%=request.getContextPath()%>/product/product.do?product_no=${order.product_no}">
-                      <img src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}" alt="${order.product_name}" />
+                      <img src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}" alt="${order.product_name}"  />
                     </td>
                     <td class="p-name first-row">
                       <h5>${order.product_name }</h5>
@@ -185,9 +185,9 @@
               <div class="col-lg-4 offset-lg-4">
                 <div class="proceed-checkout">
                   <ul>
-                    <li class="cart-total">合計 <span id="Sum">$${sum}</span></li>
+                    <li class="cart-total">合計 <span id="Sum">${sum}</span></li>
                   </ul>
-                  <a href="<%=request.getContextPath()%>/front-end/protected/check-out.html" class="proceed-btn">結帳</a>
+                  <a href="<%=request.getContextPath()%>/front-end/protected/check-out.jsp" class="proceed-btn">結帳</a>
                 </div>
               </div>
             </div>

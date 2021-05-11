@@ -4,9 +4,14 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
 <%@ page import="com.user.model.*"%>
+<%@ page import="com.product.model.*"%>
+
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
-<jsp:useBean id="orderSvc" scope="page" class="com.order.model.OrderService" />
+<jsp:useBean id="orderSvc" scope="page"
+	class="com.order.model.OrderService" />
+<jsp:useBean id="productSvc" scope="page"
+	class="com.product.model.ProductService" />
 
 <!DOCTYPE html>
 <html lang="zh-tw">
@@ -28,7 +33,9 @@
 <meta property="og:description"
 	content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
 <title>Mode Femme 直售買家訂單</title>
-<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
+<link rel="icon"
+	href="${pageContext.request.contextPath}/front-template/images/favicon.ico"
+	type="image/x-icon">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,6 +48,14 @@
 <style>
 table td, table tr, table th {
 	white-space: nowrap;
+}
+
+#sratingbox {
+	position: inline-block
+}
+
+ion-icon {
+	font-size: 64px;
 }
 </style>
 </head>
@@ -92,7 +107,8 @@ table td, table tr, table th {
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="orderVO" items="${orderSvc.getAllByID(userVO.user_id)}">
+							<c:forEach var="orderVO"
+								items="${orderSvc.getAllByID(userVO.user_id)}">
 								<tr>
 									<td>${orderVO.order_no}</td>
 									<td><fmt:formatDate value="${orderVO.order_date}"
@@ -107,30 +123,61 @@ table td, table tr, table th {
 										${(orderVO.logisticsstate==1)? '已出貨':''}
 										${(orderVO.logisticsstate==2)? '已取貨':''}</td>
 									<td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/front-end/order/order.do"
-											style="margin-bottom: 0px;">
-											<input type="submit" class="btn btn-info" value="修改"> <input type="hidden"
-												name="order_no" value="${orderVO.order_no}"> <input
-												type="hidden" name="action" value="getOne_For_UpdateA">
-										</FORM>
+										<!-- Button trigger modal -->
+										<button class="btn btn-info" id="srating_btn"
+											data-toggle="modal" data-target="#sratingModalCenter">評價</button>
 									</td>
-									<%-- <td>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/front-end/order/order.do"
-											style="margin-bottom: 0px;">
-											<input type="submit" class="btn btn-danger" value="刪除"> <input type="hidden"
-												name="order_no" value="${orderVO.order_no}"> <input
-												type="hidden" name="action" value="delete">
-										</FORM>
-									</td> --%>
+									<td></td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
+					<FORM METHOD="post" ACTION="order.do" name="form1">
+						<!-- Modal -->
+						<div class="modal fade" id="sratingModalCenter" tabindex="-1"
+							role="dialog" aria-labelledby="exampleModalCenterTitle"
+							aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content" id="sratingbox">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLongTitle">
+											商品:${orderVO.order_no} <input type="hidden" name="order_no"
+												value="0" />
+										</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<input type="hidden" name="srating" value="0" id="con" />
+										<ion-icon name="star" class="star all-star" id="s1"></ion-icon>
+										<ion-icon name="star" class="star all-star" id="s2"></ion-icon>
+										<ion-icon name="star" class="star all-star" id="s3"></ion-icon>
+										<ion-icon name="star" class="star all-star" id="s4"></ion-icon>
+										<ion-icon name="star" class="star all-star" id="s5"></ion-icon>
+										<div>
+											<textarea name="srating_content" rows="10" cols="43"
+												style="resize: none"></textarea>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">Close</button>
+										<button type="button" class="btn btn-primary">Save
+											changes</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</FORM>
 				</div>
 			</div>
 		</div>
+
+
+
+
 
 		<%
 		if (request.getAttribute("listDetails_ByNo") != null) {
@@ -158,5 +205,43 @@ table td, table tr, table th {
 	<!-- Page specific javascripts-->
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
+	<script>
+	$(document).ready(function(){
+		if(${orderVO.state == 1 && orderVO.logisticsstate == 2}){
+			$("button#srating_btn").removeAttr('disabled');
+		}else{
+			/* $("button#srating_btn").prop('disabled',true); */
+		};
+		
+		$("#s1").click(function(){
+			$(".all-star").css("color","black");
+			$("#s1").css("color","#f6d04d");
+			$("#con").val("1");
+		})
+		$("#s2").click(function(){
+			$(".all-star").css("color","black");
+			$("#s1,#s2").css("color","#f6d04d");
+			$("#con").val("2");
+		})
+		$("#s3").click(function(){
+			$(".all-star").css("color","black");
+			$("#s1,#s2,#s3").css("color","#f6d04d");
+			$("#con").val("3");
+		})
+		$("#s4").click(function(){
+			$(".all-star").css("color","black");
+			$("#s1,#s2,#s3,#s4").css("color","#f6d04d");
+			$("#con").val("4");
+		})
+		$("#s5").click(function(){
+			$(".all-star").css("color","black");
+			$(".all-star").css("color","#f6d04d");
+			$("#con").val("5");
+		})
+		
+		
+	})
+	</script>
+	<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 </body>
 </html>

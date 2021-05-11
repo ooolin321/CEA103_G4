@@ -79,7 +79,12 @@
                     <div class="widget-small info coloured-icon"><i class="icon fa fa-thumbs-o-up fa-3x"></i>
                       <div class="info">
                         <h4>賣家評價</h4>
+                        <c:if test="${userVO.user_comment == 0}">
+                        <p><b>無</b></p>
+                        </c:if>
+                        <c:if test="${userVO.user_comment != 0}">
                         <p><b>${userVO.user_comment}顆星</b></p>
+                        </c:if>
                       </div>
                     </div>
                   </div>

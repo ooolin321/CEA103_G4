@@ -295,6 +295,7 @@ h3 {
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
 	<script>
+	$(document).ready(function(){
 		$("#AllCheck").change(function() {
 			if ($("#AllCheck").is(":checked")) {
 				$("input:checkbox").prop("checked", true);
@@ -302,6 +303,7 @@ h3 {
 				$("input:checkbox").prop("checked", false);
 			}
 		});
+	})
 	</script>
 </body>
 </html>

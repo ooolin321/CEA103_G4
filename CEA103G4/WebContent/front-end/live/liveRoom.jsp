@@ -8,6 +8,9 @@
 
 <%
 	LiveVO liveVO = (LiveVO) request.getAttribute("liveVO");
+
+UserVO userVO = (UserVO) session.getAttribute("account"); 
+session.setAttribute("userVO", userVO);
 %>
 
 
@@ -239,6 +242,7 @@ input {
 						<li><a
 							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i
 								class="icon_profile"></i></a></li>
+						<li><a href="#">線上客服&nbsp;<i class="fa fa-comment-o"></i></a></li>		
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -385,6 +389,7 @@ input {
 	src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
 
 
 <script>
@@ -604,9 +609,9 @@ function refresh(){
 	function sendMessage() {
 		var userName = inputUserName.value.trim();
 		if (userName === "") {
-			alert("請登入會員");
+			login();
 			inputUserName.focus();
-			return;
+// 			return;
 		}
 
 		var inputMessage = document.getElementById("message");
@@ -688,6 +693,57 @@ function refresh(){
 	function stopVideo() {
 		player.stopVideo();
 	}
+	
+  	function login(){
+
+		Swal.fire({
+  			title: '請先登入會員',
+  			html:
+    		"帳號"+'<input id="userID" class="swal2-input">' +
+    		"密碼"+'<input id="PWD" class="swal2-input">',
+  				focusConfirm: true,
+  });
+			$(".swal2-confirm").click(function(){
+
+  			$.ajax({ 
+	  			  url:"<%=request.getContextPath()%>/FrondEnd_LoginHandler",
+	  			  type:"POST", 
+	  			  data:{
+	  				  "user_id":$("#userID").val(),
+	  				  "user_pwd":$("#PWD").val(),
+	  				  "action": "signIn_ajax"
+	  			  },
+	  			  success: function(result) {
+
+	  				if (result.length === 0 || result === ""){
+			  			Swal.fire({
+				  			  icon: 'error',
+				  			  title: '帳號或密碼有誤,請重新輸入',
+				  			  showConfirmButton: false,
+				  			  timer: 1500
+				  			});
+	  				} else {
+	  					window.location.reload();
+			  			Swal.fire({
+				  			  icon: 'success',
+				  			  title: '登入成功',
+				  			  showConfirmButton: false,
+				  			  timer: 1500
+				  			});
+	  				}
+	  		            }, 	  
+	  			  error:function () {
+			  			Swal.fire({
+				  			  icon: 'error',
+				  			  title: '登入失敗,請重新登入',
+				  			  showConfirmButton: false,
+				  			  timer: 1500
+				  			});
+	  			  },
+  			});
+			});
+	  	};
+	
 </script>
 
 

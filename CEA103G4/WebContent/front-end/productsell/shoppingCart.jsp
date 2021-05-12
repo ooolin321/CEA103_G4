@@ -123,7 +123,7 @@
 	<c:set var="sum" value="0"> </c:set>
 	<c:forEach var="order" items="${buylist}" varStatus="cartstatus">
                 <tbody>
-                	<tr><td>賣家:${order.product_no}</td></tr>
+                	<tr><td>賣家:${order.user_id}</td></tr>
                   <tr>
                     <td class="cart-pic first-row">
                     <a href="<%=request.getContextPath()%>/product/product.do?product_no=${order.product_no}">
@@ -167,10 +167,12 @@
               </table>
             </div>
             <div class="row">
-              <div class="col-lg-4">
+              <div class="col-lg-2">
                 <div class="cart-buttons">
-                  <a href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp" class="primary-btn continue-shop"
+                  <a href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp" class="btn btn-info"
                     >繼續購物</a>
+<%--                   <a href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp" class="primary-btn continue-shop" --%>
+<!--                     >繼續購物</a> -->
                 </div>
 <!--                 <div class="discount-coupon"> -->
 <!--                   <h6>Discount Codes</h6> -->
@@ -182,12 +184,19 @@
 <!--                   </form> -->
 <!--                 </div> -->
               </div>
-              <div class="col-lg-4 offset-lg-4">
+              <div class="col-lg-2 offset-lg-8">
+              <form action="<%=request.getContextPath()%>/ShoppingServlet" method="POST">
+                    <input type="hidden" name="action"  value="DELETEALL">
+                    <input class="btn btn-info" style="margin-left: 45px;" type="submit" value="清空購物車"
+                    ></input></form>
+              </div>
+              
+              <div class="col-lg-4 offset-lg-8">
                 <div class="proceed-checkout">
                   <ul>
                     <li class="cart-total">合計 <span id="Sum">${sum}</span></li>
                   </ul>
-                  <a href="<%=request.getContextPath()%>/front-end/protected/check-out.html" class="proceed-btn">結帳</a>
+                  <a href="<%=request.getContextPath()%>/front-end/protected/check-out.jsp" class="proceed-btn">結帳</a>
                 </div>
               </div>
             </div>
@@ -215,6 +224,7 @@
     <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
     
     <script>
     // 各商品小計
@@ -251,7 +261,7 @@
     	var maxRemaining = $("#max${order.product_no}").attr("value");
     	if (Count == maxRemaining) {
     		$("#Add${order.product_no}").prop('disabled',true);
-    		alert("商品數量只剩下"+ maxRemaining +"個");	
+    		Swal.fire("商品數量只剩下"+ maxRemaining +"個");
     	} 
     	if (Count < maxRemaining) {
     		$("#Add${order.product_no}").prop('disabled',false);
@@ -262,7 +272,7 @@
 	$("#PC${order.product_no}").change(function() {	
 		
 		var maxRemaining = $("#max${order.product_no}").attr("value");
-		alert("商品數量只剩下"+ maxRemaining +"個");
+// 		alert("商品數量只剩下"+ maxRemaining +"個");
 		$('input[name="${order.product_no}"]').val(maxRemaining);
 	});
 	

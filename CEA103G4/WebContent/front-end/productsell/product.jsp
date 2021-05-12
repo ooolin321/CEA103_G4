@@ -792,7 +792,7 @@
 					  "product_no": "${productVO.product_no}",
 					  "product_name": "${productVO.product_name}",
 					  "product_price": "${productVO.product_price}",
-					  "proqty": $('#proqty').attr("value"),
+					  "proqty": $('#proqty').val(),
 					  "product_remaining": "${productVO.product_remaining}",
 					  "product_state": "${productVO.product_state}",
 					  "user_id": "${productVO.user_id}",
@@ -804,7 +804,7 @@
 					  $("#carts").html(cartproducts); 
 					  
 					  var carRes  = JSON.parse(res)
-					  console.log(carRes["results"].length);
+// 					  console.log(carRes["results"].length);
 					  var ibaCount = carRes["results"].length;
 					  $("#iba").html(ibaCount);
 					  

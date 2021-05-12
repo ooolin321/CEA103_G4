@@ -21,7 +21,7 @@ import com.liveBid.websocket.model.MaxVO;
 import com.liveBid.websocket.model.State;
 import com.liveBid.websocket.model.bidVO;
 
-@ServerEndpoint("/TogetherWS/{userName}/{live_no}")
+@ServerEndpoint("/TogetherWS/{live_no}/{userName}")
 public class TogetherWS {
 	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 	Gson gson = new Gson();
@@ -63,11 +63,11 @@ public class TogetherWS {
 		String type = chatMessage.getType();
 		String sender = chatMessage.getSender();
 		String product_no = chatMessage.getProduct_no();
-		System.out.println("judge" + message);
+
 		if ("history".equals(type)) {
 			// 抓取最高價格MaxVO
 			String historyData = JedisHandleBid.getMaxPrice(live_no, product_no);
-			System.out.println("FFFF" + historyData);
+
 			// historyData=null要判斷
 			if (historyData == null) {
 				MaxVO max0 = new MaxVO("bid", sender, live_no, "", "0", product_no, "", "");
@@ -91,10 +91,9 @@ public class TogetherWS {
 
 		Set<String> others = sessionsMap.keySet();
 
-		System.out.println("I coming" + message);
 		if ("getMax".equals(type)) {
 			// 64有包裝成BIDVO
-			System.out.println("I coming222" + chatMessage.getMessage());
+
 			MaxVO max = gson.fromJson(chatMessage.getMessage(), MaxVO.class);
 			String finalMax = null;
 			// 我拿到前面傳來的maxJSON
@@ -107,7 +106,7 @@ public class TogetherWS {
 				String presentMax = JedisHandleBid.getMaxPrice(max.getLive_no(), max.getProduct_no());
 				MaxVO presentMaxVO = gson.fromJson(presentMax, MaxVO.class);
 				if (presentMaxVO == null) {// 如果最大值空的
-					System.out.println("不用回傳!!還沒競標開始");
+
 					MaxVO bye = new MaxVO("max", sender, live_no, "", "0", product_no, "3", "");
 					finalMax = gson.toJson(bye);
 				} else {

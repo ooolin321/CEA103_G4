@@ -191,6 +191,15 @@
 		<servlet-name>AdServlet</servlet-name>
 		<url-pattern>/back-end/ad/ad.do</url-pattern>
 	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>NameServlet</servlet-name>
+		<servlet-class>com.customer_service.controller.NameServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NameServlet</servlet-name>
+		<url-pattern>/chat.do</url-pattern>
+	</servlet-mapping>
 
 	<filter>
 		<filter-name>setCharacterEncoding</filter-name>

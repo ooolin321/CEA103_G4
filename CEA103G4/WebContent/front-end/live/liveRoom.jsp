@@ -621,7 +621,8 @@ function refresh(){
 		if (message === "") {
 			alert("請輸入訊息");
 			inputMessage.focus();
-		} else {	
+		} else {
+			
 			var jsonObj = {
 				"type":'chat',
 				"sender" : self,
@@ -739,6 +740,64 @@ function refresh(){
 		player.stopVideo();
 	}
 	
+  	function login(){
+
+		Swal.fire({
+  			title: '請先登入會員',
+  			html:
+    		"帳號"+'<input id="userID" class="swal2-input">' +
+    		"密碼"+'<input id="PWD" class="swal2-input">',
+    		showCloseButton: true,
+    		confirmButtonText: `登入`,
+  });
+			$(".swal2-confirm").click(function(){
+			if($("#userID").val().trim().length != 0 && $("#PWD").val().trim().length != 0){				
+  			$.ajax({ 
+	  			  url:"<%=request.getContextPath()%>/FrondEnd_LoginHandler",
+	  			  type:"POST", 
+	  			  data:{
+	  				  "user_id":$("#userID").val(),
+	  				  "user_pwd":$("#PWD").val(),
+	  				  "action": "signIn_ajax"
+	  			  },
+	  			  success: function(result) {
+
+	  				if (result.length === 0 || result === ""){
+			  			Swal.fire({
+				  			  icon: 'error',
+				  			  title: '帳號或密碼有誤,請重新輸入',
+				  			  showConfirmButton: false,
+				  			  timer: 1500
+				  			});
+	  				} else {
+	  					window.location.reload();
+			  			Swal.fire({
+				  			  icon: 'success',
+				  			  title: '登入成功',
+				  			  showConfirmButton: false,
+				  			  timer: 1500
+				  			});
+	  				}
+	  		            }, 	  
+	  			  error:function () {
+			  			Swal.fire({
+				  			  icon: 'error',
+				  			  title: '登入失敗,請重新登入',
+				  			  showConfirmButton: false,
+				  			  timer: 1500
+				  			});
+	  			  },
+  			});
+			} else {
+				Swal.fire({
+					 icon: 'error',
+					 title: '帳號或密碼請勿空白',
+					 showConfirmButton: false,
+					 timer: 1500
+			});
+			}
+			});
+	  	};
 	
 </script>
 

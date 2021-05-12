@@ -10,12 +10,6 @@
 	LiveVO liveVO = (LiveVO) request.getAttribute("liveVO");
 %>
 
-<%
-	ProductDAO dao = new ProductDAO();
-	List<ProductVO> list = dao.getAll();
-	pageContext.setAttribute("list", list);
-%>
-
 
 <jsp:useBean id="liveSvc" scope="page"
 	class="com.live.model.LiveService" />
@@ -313,7 +307,7 @@ input {
 							<th scope="col">直播編號</th>
 							<!-- 									<th scope="col">直播分類</th> -->
 							<th scope="col">商品編號</th>
-							<th scope="col">商品圖片</th>
+							<!-- 							<th scope="col">商品圖片</th> -->
 							<th scope="col">商品名稱</th>
 							<th scope="col">商品描述</th>
 							<th scope="col">起標價</th>
@@ -323,29 +317,20 @@ input {
 						</tr>
 					</thead>
 
-					<tbody>
-						<c:forEach var="productVO" items="${list}" begin="0"
-							end="${list.size()-1}">
-							<c:if
-								test="${productVO.product_state == 2 && productVO.user_id == liveVO.user_id &&productVO.live_no == liveVO.live_no}">
-								<tr id="tr${productVO.product_no}">
-									<th scope="row">${productVO.live_no == 0 ? '未設定':productVO.live_no}</th>
-									<%-- 											<td>${liveSvc.getOneLive(productVO.live_no).live_type}</td> --%>
-									<td>${productVO.product_no}</td>
-									<td><img width="120px" height="100px"
-										src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}"
-										class="rounded mx-auto d-block" alt=""></td>
-									<td>${productVO.product_name}</td>
-									<td class="productInfo">${productVO.product_info}</td>
-									<td>${productVO.start_price}</td>
-									<td>${productVO.product_remaining}</td>
-								</tr>
-							</c:if>
-						</c:forEach>
+					<tbody id="showProduct">
+
+
 					</tbody>
 				</table>
 			</div>
 		</div>
+
+
+		<div class="col-xl-3">
+			<br>現在最高價: <span id="current_price"></span>
+			<br>現在出價人: <span id="current_id"></span>
+		</div>
+
 	</div>
 
 
@@ -401,8 +386,47 @@ input {
 <script
 	src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
 
+
 <script>
-	var MyPoint = "/TogetherWS/james";
+
+
+refresh();
+
+
+
+function refresh(){
+	$.ajax({
+		url:"<%=request.getContextPath()%>/product/product.do",
+		type:'post',
+		data:{
+			action:"getGson",
+		},
+		async:false,
+		success:function(str){	
+			for(let i of str){
+				if(i.product_state == 2 && i.user_id == '${liveVO.user_id}' && i.live_no == ${liveVO.live_no}){
+					let str = "<tr>";
+					str+="<td>"+i.live_no+"</td>";
+					str+="<td>"+i.product_no+"</td>";
+// 					str+="<td>"+i.product_photo+"</td>";
+					str+="<td>"+i.product_name+"</td>";
+					str+="<td>"+i.product_info+"</td>";
+					str+="<td>"+i.start_price+"</td>";
+					str+="<td>"+i.product_remaining+"</td>";
+					str+="</tr>";
+					$("#showProduct").append(str);				
+				}
+			}
+		}
+	})
+}
+
+// alert($("#showProduct").find("td").eq(1).html());
+
+</script>
+<script>
+	let self = '${userVO.user_id}';
+	var MyPoint = "/TogetherWS/"+self+"/${param.live_no}";
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -416,25 +440,164 @@ input {
 		webSocket = new WebSocket(endPointURL);
 
 		webSocket.onopen = function(event) {
-			updateStatus("WebSocket Connected");
-			document.getElementById('sendMessage').disabled = false;
-			document.getElementById('connect').disabled = true;
-			document.getElementById('disconnect').disabled = false;
+			console.log("S");
+// 			updateStatus("WebSocket Connected");
+// 			document.getElementById('sendMessage').disabled = false;
+// 			document.getElementById('connect').disabled = true;
+// 			document.getElementById('disconnect').disabled = false;
 		};
 
 		webSocket.onmessage = function(event) {
 			var messagesArea = document.getElementById("messagesArea");
 			var jsonObj = JSON.parse(event.data);
-			var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
-			messagesArea.value = messagesArea.value + message;
-			messagesArea.scrollTop = messagesArea.scrollHeight;
-		};
+			console.log(jsonObj.type);
+			if ("open" === jsonObj.type) {
+				addListener();
+			}else if("history" === jsonObj.type){
+				//進來的時候
+				console.log(JSON.parse(jsonObj.message));
+				$("#current_price").text(JSON.parse(jsonObj.message).maxPrice);
+				$("#current_id").text(JSON.parse(jsonObj.message).user_id);
+				
+			}else if("chat" === jsonObj.type && ${param.live_no} == jsonObj.live_no){
+				
+				
+				
+				
+				console.log("chat"+jsonObj);
+				//聊天//競標中
+				if(/^\d*$/.test(jsonObj.message)){
+					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
+							'type' : 'max',
+							'sender' : self,
+							'live_no' : '${param.live_no}',
+							'user_id' : '${userVO.user_id}',
+							'maxPrice' : jsonObj.message,
+							'product_no' : $("#showProduct").find("td").eq(1).html(),
+							'timeStart': '1',//0:開始競標 1:競標中 2:結束競標
+							'lastTime': ''
+					};
+					let json = {
+							"type" : "getMax",
+							"sender" : self,
+							"live_no" : '${param.live_no}',
+							"product_no":  $("#showProduct").find("td").eq(1).html(),
+							"message" : JSON.stringify(maxObj)
+					};
+					
+					webSocket.send(JSON.stringify(json));
+					
+				}else if("start"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播煮才可以start
+					//&& ${liveVO.user_id==userVO.user_id}
+					//開始競標
+					alert(${liveVO.user_id==userVO.user_id});
+					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
+						//0給初始直
+							'type' : 'max',
+							'sender' : self,
+							'live_no' : '${param.live_no}',
+							'user_id' : '${userVO.user_id}',
+							'maxPrice' : '0',//這之後可以存設定起標價
+							'product_no' : $("#showProduct").find("td").eq(1).html(),
+							'timeStart': '0',
+							'lastTime': ''
+					};
+					let json = {
+							"type" : "getMax",
+							"sender" : self,
+							"live_no" : '${param.live_no}',
+							"product_no":  $("#showProduct").find("td").eq(1).html(),
+							"message" : JSON.stringify(maxObj)
+					};
+					
+					webSocket.send(JSON.stringify(json));	
+				
+				
+				}else if("over"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播煮才可以end
+					//&& ${liveVO.user_id==userVO.user_id}
+					//結束競標
+					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
+							'type' : 'max',
+							'sender' : self,
+							'live_no' : '${param.live_no}',
+							'user_id' : '${userVO.user_id}',
+							'maxPrice' : '0',//不應該用到
+							'product_no' : $("#showProduct").find("td").eq(1).html(),
+							'timeStart': '2',
+							'lastTime': ''
+							//送這包裹過去  你應該在後台 判斷結束
+							//傳回最終 最高價 回來的時候順便呼叫ajax存到mySQL
+					};
+					let json = {
+							"type" : "getMax",
+							"sender" : self,
+							"live_no" : '${param.live_no}',
+							"product_no":  $("#showProduct").find("td").eq(1).html(),
+							"message" : JSON.stringify(maxObj)
+					};
+					
+					webSocket.send(JSON.stringify(json));
+				}
+				
+				var message = jsonObj.sender + ": " + jsonObj.message + "\r\n";
+				messagesArea.value = messagesArea.value + message;
+				messagesArea.scrollTop = messagesArea.scrollHeight;
+			}else if("max" ==jsonObj.type){
+				if(jsonObj.timeStart =="0"){
+					$("#current_price").text(jsonObj.maxPrice);
+					$("#current_id").text("無人出價");
+				}else if(jsonObj.timeStart== "1"){
+					$("#current_price").text(jsonObj.maxPrice);
+					$("#current_id").text(jsonObj.sender);
+				}else if(jsonObj.timeStart== "2"){
+					$("#current_price").text(jsonObj.maxPrice);
+					$("#current_id").text("結束囉");
+					
+					
+					//ajax  更改狀態
+					//refresh();
+					//注意元素可以抓到
+					
+					
+					
+					
+					
+					
+					
+				}else if(jsonObj.timeStart== "3"){
+					
+				}
+				//開始競標後包裹   alert()開始競標
+				//競標中
+				//競標結束
+				
+			}
+			
+
+		}
+	
 
 		webSocket.onclose = function(event) {
-			updateStatus("WebSocket Disconnected");
+			console.log(event.data);
 		};
+		
 	}
-
+	
+	
+	function addListener() {
+	//進來的時候 取道最新競標價格	
+		let jsonObj = {
+				"type" : "history",
+				"sender" : '',
+				"live_no" : '${param.live_no}',
+				"product_no":  $("#showProduct").find("td").eq(1).html(),
+				"message" : ""
+			};
+		webSocket.send(JSON.stringify(jsonObj));
+	}
+	
+	
+	
 	var inputUserName = document.getElementById("userName");
 	inputUserName.focus();
 
@@ -452,9 +615,12 @@ input {
 		if (message === "") {
 			alert("請輸入訊息");
 			inputMessage.focus();
-		} else {
+		} else {	
 			var jsonObj = {
-				"userName" : userName,
+				"type":'chat',
+				"sender" : self,
+				"live_no": '${param.live_no}',
+				"product_no":  '',
 				"message" : message
 			};
 			webSocket.send(JSON.stringify(jsonObj));
@@ -470,9 +636,13 @@ input {
 		document.getElementById('disconnect').disabled = true;
 	}
 
-	function updateStatus(newStatus) {
-		statusOutput.innerHTML = newStatus;
-	}
+// 	function updateStatus(newStatus) {
+// 		statusOutput.innerHTML = newStatus;
+// 	}
+
+
+
+
 </script>
 <script>
 	// 2. This code loads the IFrame Player API code asynchronously.
@@ -519,4 +689,7 @@ input {
 		player.stopVideo();
 	}
 </script>
+
+
+
 </html>

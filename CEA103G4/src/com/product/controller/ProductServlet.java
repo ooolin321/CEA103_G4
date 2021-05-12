@@ -9,6 +9,7 @@ import javax.servlet.http.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.google.gson.Gson;
 
 import com.live.model.LiveService;
 import com.live.model.LiveVO;
@@ -566,6 +567,17 @@ public class ProductServlet extends HttpServlet {
 						.getRequestDispatcher("/front-end/liveManagement/liveList.jsp");
 				failureView.forward(req, res);
 			}
+		}
+		
+		if("getGson".equals(action)) {
+			ProductService productSvc = new ProductService();
+			List<ProductVO> list = productSvc.getAll();
+			
+			String str = new Gson().toJson(list);
+			res.setContentType("application/json");
+			res.setCharacterEncoding("UTF-8");
+			res.getWriter().print(str);
+			return;
 		}
 
 	}

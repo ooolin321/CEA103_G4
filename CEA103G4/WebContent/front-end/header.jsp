@@ -171,7 +171,12 @@
 							<!-- <li><a href="#">Kid's</a></li> -->
 						</ul></li>
 					<li><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i class="icon_profile"></i></a></li>
-					<li><a href="#">線上客服&nbsp;<i class="fa fa-comment-o"></i></a></li>
+					<li>
+					<form  id="myForm" action="<%=request.getContextPath() %>/chat.do" method="POST">
+					<input value="${userVO.user_id}" name="userName" type="hidden"/>
+					<a href="#" onclick="document.getElementById('myForm').submit();">線上客服&nbsp;<i class="fa fa-comment-o"></i></a>
+					</form>
+					</li>
 					<!-- <li>
                 <a href="#">Pages</a>
                 <ul class="dropdown">

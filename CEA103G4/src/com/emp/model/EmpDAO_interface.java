@@ -5,7 +5,7 @@ import java.util.*;
 
 
 public interface EmpDAO_interface {
-	public Object insert(EmpVO empVO);
+	public void insert(EmpVO empVO);
 	public void update(EmpVO empVO);
 	public void delete(Integer empno);
     public EmpVO findByPrimaryKey(Integer empno);

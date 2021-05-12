@@ -327,6 +327,8 @@
 					  
 <%-- 					  const cart=cartProduct(res, "<%=request.getContextPath()%>");  --%>
 // 						$("#carts").html(cart); 
+					  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>"); 
+					  $("#carts").html(cartproducts); 
 					  
 					  var carRes  = JSON.parse(res)
 // 					  console.log(carRes["results"].length);

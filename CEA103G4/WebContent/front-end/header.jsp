@@ -96,13 +96,13 @@
 								<span id="iba">0</span>
 								</c:if>
 						</a>
-						<c:if test="${buylist != null && buylist.size() > 0}">
+<%-- 						<c:if test="${buylist != null && buylist.size() > 0}"> --%>
 							<div class="cart-hover">
 								<div class="select-items">
-									<table id="carts">  
+									<table>  
+										<tbody id="carts">
 									<c:set var="sum" value="0"> </c:set>
 									<c:forEach var="order" items="${buylist}" varStatus="cartstatus">
-										<tbody>
 											<tr>
 												<td class="si-pic"><img
 													src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
@@ -114,9 +114,9 @@
 													</div>
 												</td>
 											</tr>
+									<c:set var="sum" value="${sum + order.product_price*order.product_quantity}"></c:set>
+                                   </c:forEach>
 										</tbody>
-				<c:set var="sum" value="${sum + order.product_price*order.product_quantity}"> </c:set>
-                </c:forEach>
 									</table>
 								</div>
 								<div class="select-total">
@@ -132,7 +132,7 @@
 										class="primary-btn checkout-btn">結帳</a>
 								</div>
 							</div>
-							</c:if>
+<%-- 							</c:if> --%>
 							</li>
 						<c:if test="${buylist.size() > 0 }"> 
 						<li class="cart-price">$${sum}</li>

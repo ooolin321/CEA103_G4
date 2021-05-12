@@ -620,7 +620,8 @@ function refresh(){
 		if (message === "") {
 			alert("請輸入訊息");
 			inputMessage.focus();
-		} else {	
+		} else {
+			
 			var jsonObj = {
 				"type":'chat',
 				"sender" : self,

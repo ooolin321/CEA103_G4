@@ -137,6 +137,9 @@
 						<c:if test="${buylist.size() > 0 }"> 
 						<li class="cart-price">$${sum}</li>
 						</c:if>
+						<c:if test="${buylist == null}"> 
+						<li class="cart-price">$0</li>
+						</c:if>
 					</ul>
 				</div>
 			</div>

@@ -9,8 +9,9 @@
 <%
 	LiveVO liveVO = (LiveVO) request.getAttribute("liveVO");
 
-UserVO userVO = (UserVO) session.getAttribute("account"); 
-session.setAttribute("userVO", userVO);
+	UserVO userVO = (UserVO) session.getAttribute("account"); 
+	session.setAttribute("userVO", userVO);
+	
 %>
 
 
@@ -291,10 +292,9 @@ input {
 		<div class="col-md-3">
 			<textarea id="messagesArea" class="form-control" readonly></textarea>
 			<div class="input">
-				<input id="userName" class="text-field" type="hidden"
-					value="${userVO.user_id}" /> <input id="message"
-					class="form-control" type="text" placeholder="Message"
-					onkeydown="if (event.keyCode == 13) sendMessage();" />
+				<input id="userName" name="userName" value="" class="text-field" type="hidden"  /> 
+				<input id="message" class="form-control" type="text" placeholder="Message"
+					onkeydown="if (event.keyCode == 13) sendMessage(event);" />
 			</div>
 		</div>
 
@@ -429,7 +429,7 @@ function refresh(){
 </script>
 <script>
 	let self = '${userVO.user_id}';
-	var MyPoint = "/TogetherWS/"+self+"/${param.live_no}";
+	var MyPoint = "/TogetherWS/${param.live_no}/"+self;
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -440,10 +440,11 @@ function refresh(){
 
 	function connect() {
 		// create a websocket
+		
 		webSocket = new WebSocket(endPointURL);
 
 		webSocket.onopen = function(event) {
-			console.log("S");
+
 // 			updateStatus("WebSocket Connected");
 // 			document.getElementById('sendMessage').disabled = false;
 // 			document.getElementById('connect').disabled = true;
@@ -464,9 +465,7 @@ function refresh(){
 				
 			}else if("chat" === jsonObj.type && ${param.live_no} == jsonObj.live_no){
 				
-				
-				
-				
+
 				console.log("chat"+jsonObj);
 				//聊天//競標中
 				if(/^\d*$/.test(jsonObj.message)){
@@ -606,14 +605,16 @@ function refresh(){
 	var inputUserName = document.getElementById("userName");
 	inputUserName.focus();
 
-	function sendMessage() {
+	function sendMessage(e) {
 		var userName = inputUserName.value.trim();
-		if (userName === "") {
-			login();
-			inputUserName.focus();
-// 			return;
+		if (${userVO == null}) {
+// 			e.stopPropagation();
+			setTimeout(function(){
+				login();
+			}, 1);
+			return;
 		}
-
+		
 		var inputMessage = document.getElementById("message");
 		var message = inputMessage.value.trim();
 
@@ -632,6 +633,7 @@ function refresh(){
 			inputMessage.value = "";
 			inputMessage.focus();
 		}
+		
 	}
 
 	function disconnect() {
@@ -641,13 +643,56 @@ function refresh(){
 // 		document.getElementById('disconnect').disabled = true;
 	}
 
-// 	function updateStatus(newStatus) {
-// 		statusOutput.innerHTML = newStatus;
-// 	}
 
 
-
-
+  	function login(){
+		
+		Swal.fire({
+  			title: '請先登入會員',
+  			html:
+    		"帳號"+'<input id="userID" class="swal2-input">' +
+    		"密碼"+'<input id="PWD" class="swal2-input">',
+  			focusConfirm: true,
+  		}).then(function(result) {
+	  		$.ajax({
+				  url:"<%=request.getContextPath()%>/FrondEnd_LoginHandler",
+				  type:"POST",
+				  data:{
+					  "user_id":$("#userID").val(),
+					  "user_pwd":$("#PWD").val(),
+					  "action": "signIn_ajax"
+				  },
+				  success: function(result) {
+	
+					if (result.length === 0 || result === ""){
+			  			Swal.fire({
+				  			  icon: 'error',
+				  			  title: '帳號或密碼有誤,請重新輸入',
+				  			  showConfirmButton: false,
+				  			  timer: 1500
+				  			});
+					} else {
+						window.location.reload();
+			  			Swal.fire({
+				  			  icon: 'success',
+				  			  title: '登入成功',
+				  			  showConfirmButton: false,
+				  			  timer: 1500
+				  			});
+					}
+			            }, 	  
+				  error:function () {
+			  			Swal.fire({
+				  			  icon: 'error',
+				  			  title: '登入失敗,請重新登入',
+				  			  showConfirmButton: false,
+				  			  timer: 1500
+				  			});
+				  },
+			});
+  		});
+		
+	}
 </script>
 <script>
 	// 2. This code loads the IFrame Player API code asynchronously.
@@ -694,55 +739,6 @@ function refresh(){
 		player.stopVideo();
 	}
 	
-  	function login(){
-
-		Swal.fire({
-  			title: '請先登入會員',
-  			html:
-    		"帳號"+'<input id="userID" class="swal2-input">' +
-    		"密碼"+'<input id="PWD" class="swal2-input">',
-  				focusConfirm: true,
-  });
-			$(".swal2-confirm").click(function(){
-
-  			$.ajax({ 
-	  			  url:"<%=request.getContextPath()%>/FrondEnd_LoginHandler",
-	  			  type:"POST", 
-	  			  data:{
-	  				  "user_id":$("#userID").val(),
-	  				  "user_pwd":$("#PWD").val(),
-	  				  "action": "signIn_ajax"
-	  			  },
-	  			  success: function(result) {
-
-	  				if (result.length === 0 || result === ""){
-			  			Swal.fire({
-				  			  icon: 'error',
-				  			  title: '帳號或密碼有誤,請重新輸入',
-				  			  showConfirmButton: false,
-				  			  timer: 1500
-				  			});
-	  				} else {
-	  					window.location.reload();
-			  			Swal.fire({
-				  			  icon: 'success',
-				  			  title: '登入成功',
-				  			  showConfirmButton: false,
-				  			  timer: 1500
-				  			});
-	  				}
-	  		            }, 	  
-	  			  error:function () {
-			  			Swal.fire({
-				  			  icon: 'error',
-				  			  title: '登入失敗,請重新登入',
-				  			  showConfirmButton: false,
-				  			  timer: 1500
-				  			});
-	  			  },
-  			});
-			});
-	  	};
 	
 </script>
 

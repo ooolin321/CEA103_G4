@@ -29,8 +29,8 @@ public class User_LogoutHandler extends HttpServlet {
 			HttpSession session = req.getSession();
 			if(!session.isNew()) {
 				//使用者登出
-//		        session.invalidate();
-		        session.removeAttribute("account");
+		        session.invalidate();
+//		        session.removeAttribute("account");
 		        
 				String url = "/front-end/index.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); //登出後轉至首頁

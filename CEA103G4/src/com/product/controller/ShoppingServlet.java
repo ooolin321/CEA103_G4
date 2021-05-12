@@ -62,11 +62,15 @@ public class ShoppingServlet extends HttpServlet {
 				if (buylist == null) {
 					buylist = new Vector<ProductVO>();
 					buylist.add(product);
-					
 				} else {
 					if (buylist.contains(product)) {
 						ProductVO innerProductVO = buylist.get(buylist.indexOf(product));
 						innerProductVO.setProduct_quantity(innerProductVO.getProduct_quantity() + product.getProduct_quantity());
+						Integer newProductVO = innerProductVO.getProduct_quantity();
+						// 避免重複點擊加入購物車之商品數量大於庫存
+						if(newProductVO > innerProductVO.getProduct_remaining()) {
+							innerProductVO.setProduct_quantity(innerProductVO.getProduct_quantity() - product.getProduct_quantity());
+						}
 					} else {
 						buylist.add(product);
 					}
@@ -104,8 +108,8 @@ public class ShoppingServlet extends HttpServlet {
 //			rd.forward(req, res);
 		}
 
-//		// 結帳，計算購物車商品價錢總數
-//		else if (action.equals("CHECKOUT")) {
+		// 結帳，計算購物車商品價錢總數
+		else if (action.equals("CHECKOUT")) {
 //			double total = 0;
 //			for (int i = 0; i < buylist.size(); i++) {
 //				ProductVO order = buylist.get(i);
@@ -113,13 +117,18 @@ public class ShoppingServlet extends HttpServlet {
 //				Integer quantity = order.getQuantity();
 //				total += (price * quantity);
 //			}
-//
-//			String amount = String.valueOf(total);
-//			req.setAttribute("amount", amount);
-//			String url = "/Checkout.jsp";
-//			RequestDispatcher rd = req.getRequestDispatcher(url);
-//			rd.forward(req, res);
-//		}
+//			===================================================
+//          上方簡化寫法(Lambda)
+			double total = buylist.stream()
+								  .mapToDouble(b -> b.getProduct_price()*b.getProduct_quantity())
+								  .sum();
+//			===================================================
+			String amount = String.valueOf(total);
+			req.setAttribute("amount", amount);
+			String url = "/Checkout.jsp";
+			RequestDispatcher rd = req.getRequestDispatcher(url);
+			rd.forward(req, res);
+		}
 	}
 
 	private ProductVO getProduct(HttpServletRequest req) {

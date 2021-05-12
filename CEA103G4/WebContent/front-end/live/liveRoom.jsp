@@ -701,10 +701,11 @@ function refresh(){
   			html:
     		"帳號"+'<input id="userID" class="swal2-input">' +
     		"密碼"+'<input id="PWD" class="swal2-input">',
-  				focusConfirm: true,
+    		showCloseButton: true,
+    		confirmButtonText: `登入`,
   });
 			$(".swal2-confirm").click(function(){
-
+			if($("#userID").val().trim().length != 0 && $("#PWD").val().trim().length != 0){				
   			$.ajax({ 
 	  			  url:"<%=request.getContextPath()%>/FrondEnd_LoginHandler",
 	  			  type:"POST", 
@@ -741,6 +742,14 @@ function refresh(){
 				  			});
 	  			  },
   			});
+			} else {
+				Swal.fire({
+					 icon: 'error',
+					 title: '帳號或密碼請勿空白',
+					 showConfirmButton: false,
+					 timer: 1500
+			});
+			}
 			});
 	  	};
 	

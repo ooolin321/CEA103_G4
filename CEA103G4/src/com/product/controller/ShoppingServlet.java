@@ -28,7 +28,7 @@ public class ShoppingServlet extends HttpServlet {
 		ProductVO product= new ProductVO();
 		if (!action.equals("CHECKOUT")) {
 
-			// 刪除購物車中的商品
+			// 刪除購物車中的單一商品
 			if (action.equals("DELETE")) {
 				String del = req.getParameter("del");
 				int d = Integer.parseInt(del);
@@ -41,6 +41,18 @@ public class ShoppingServlet extends HttpServlet {
 				rd.forward(req, res);
 				return;
 			}
+			
+			// 清空購物車中的商品
+			if(action.equals("DELETEALL")) {
+				
+				session.removeAttribute("shoppingcart");
+				
+				String url = "/front-end/productsell/shoppingCart.jsp";
+				RequestDispatcher rd = req.getRequestDispatcher(url);
+				rd.forward(req, res);
+				return;
+			}
+			
 			// 新增商品至購物車中
 			else if (action.equals("ADD")) {
 				
@@ -60,6 +72,15 @@ public class ShoppingServlet extends HttpServlet {
 					}
 				}
 			}
+			
+//			Collections.sort(buylist, new Comparator<Object>() {
+//				public int compare(Object a, Object b) {
+//					String one = ((ProductVO) a).getUser_id();
+//					String two = ((ProductVO) b).getUser_id();
+//					return one - two;
+//				}
+//			});
+			
 			session.setAttribute("shoppingcart", buylist);
 			req.setAttribute("productVO", product);
 			
@@ -109,6 +130,7 @@ public class ShoppingServlet extends HttpServlet {
 		String proqty = req.getParameter("proqty");
 		String product_remaining = req.getParameter("product_remaining");
 		String product_state = req.getParameter("product_state");
+		String user_id = req.getParameter("user_id");
 		
 		ProductVO productVO = new ProductVO();
 
@@ -118,6 +140,7 @@ public class ShoppingServlet extends HttpServlet {
 		productVO.setProduct_quantity(new Integer(proqty));
 		productVO.setProduct_remaining(new Integer(product_remaining));
 		productVO.setProduct_state(new Integer(product_state));
+		productVO.setUser_id(user_id);
 		return productVO;
 	}
 	

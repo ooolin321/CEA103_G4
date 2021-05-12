@@ -184,7 +184,7 @@
                   <div class="quantity">
                     <div class="pro-qty">
                      <span id="decProduct" class="dec qtybtn">-</span>
-                      <input name="proqty" type="text" value="1" />
+                      <input name="proqty" id="proqty" type="text" value="1" />
                       <span id="addProduct" class="inc qtybtn" style="none">+</span>
                     </div>
                     <button class="primary-btn pd-cart" id="cartBtn">加入購物車</button>

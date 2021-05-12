@@ -11,6 +11,9 @@
 	ProductDAO dao = new ProductDAO();
 	List<ProductVO> products = dao.getAllShop();
 	pageContext.setAttribute("products",products);
+	
+	UserVO userVO = (UserVO) session.getAttribute("account"); 
+	session.setAttribute("userVO", userVO);
 		
  %>
 

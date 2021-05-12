@@ -14,6 +14,10 @@
 					</div>
     <!-- Sidebar toggle button-->
     <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
+	<div class="nav-item">
+		<div class="headerBtn"><a href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp">商品專區</a></div>
+		<div class="headerBtn"><a href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播專區</a></div>
+	</div>
     <!-- Navbar Right Menu-->
     <ul class="app-nav">
       <!--Notification Menu-->

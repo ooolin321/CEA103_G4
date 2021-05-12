@@ -320,20 +320,29 @@
 					  "proqty": "1",
 					  "product_remaining": "${productVO.product_remaining}",
 					  "product_state": "${productVO.product_state}",
+					  "user_id": "${productVO.user_id}",
 					  "action": "ADD"
 				  },
 				  success: function(res) {
 					  
 <%-- 					  const cart=cartProduct(res, "<%=request.getContextPath()%>");  --%>
 // 						$("#carts").html(cart); 
+					  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>"); 
+					  $("#carts").html(cartproducts); 
 					  
 					  var carRes  = JSON.parse(res)
-					  console.log(carRes["results"].length);
+// 					  console.log(carRes["results"].length);
 					  var ibaCount = carRes["results"].length;
 					  $("#iba").html(ibaCount);
 
+					  var titlePrice = 0
+						carRes["results"].forEach(function (item,index) {
+							titlePrice += (item.product_price * item.product_quantity)
+						});
+					  $(".cart-price").html("$" + titlePrice);
+
+
 					  Swal.fire({
-// 						  position: 'top',
 						  icon: 'success',
 						  title: '商品加入購物車',
 						  showConfirmButton: false,

@@ -28,7 +28,7 @@
      <ul class="app-nav">
         <li class="app-search">
          <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" >
-        <input class="app-search__input" name="empno" value="${empVO.empno}" type="search" placeholder="Search">
+        <input class="app-search__input" name="empno"  type="search" placeholder="Search">
         <input type="hidden" name="action" value="getOne_For_Display">
             <button class="app-search__button">
                 <i class="fa fa-search"></i>
@@ -239,8 +239,14 @@
                 class="app-menu__label">客服管理</span><i
                 class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li><a class="treeview-item" href="#"><i
-                        class="icon fa fa-circle-o"></i> 客服訊息(none)</a></li>
+                <li>		
+                <form  id="myForm" action="<%=request.getContextPath() %>/chat.do" method="POST">
+				<input value="${empVO.empno}" name="userName" type="hidden"/> 
+				<a  class="treeview-item" href="#" onclick="document.getElementById('myForm').submit();">
+				<i  class="icon fa fa-circle-o">
+				</i> 客服訊息</a>
+				</form>
+				</li>
 
             </ul></li>
         <!--        <li><a class="app-menu__item" href="charts.html"><i

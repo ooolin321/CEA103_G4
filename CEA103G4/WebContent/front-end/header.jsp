@@ -13,6 +13,9 @@
     
     Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
 	pageContext.setAttribute("buylist", buylist);
+
+	UserVO userVO2 = (UserVO) session.getAttribute("account"); 
+	session.setAttribute("userVO", userVO2);
  %>
 	
 <!-- Page Preloder -->
@@ -96,13 +99,13 @@
 								<span id="iba">0</span>
 								</c:if>
 						</a>
-						<c:if test="${buylist != null && buylist.size() > 0}">
+<%-- 						<c:if test="${buylist != null && buylist.size() > 0}"> --%>
 							<div class="cart-hover">
 								<div class="select-items">
-									<table id="carts">  
+									<table>  
+										<tbody id="carts">
 									<c:set var="sum" value="0"> </c:set>
 									<c:forEach var="order" items="${buylist}" varStatus="cartstatus">
-										<tbody>
 											<tr>
 												<td class="si-pic"><img
 													src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
@@ -114,9 +117,9 @@
 													</div>
 												</td>
 											</tr>
+									<c:set var="sum" value="${sum + order.product_price*order.product_quantity}"></c:set>
+                                   </c:forEach>
 										</tbody>
-				<c:set var="sum" value="${sum + order.product_price*order.product_quantity}"> </c:set>
-                </c:forEach>
 									</table>
 								</div>
 								<div class="select-total">
@@ -132,10 +135,13 @@
 										class="primary-btn checkout-btn">結帳</a>
 								</div>
 							</div>
-							</c:if>
+<%-- 							</c:if> --%>
 							</li>
 						<c:if test="${buylist.size() > 0 }"> 
-						<li class="cart-price">$${sum}</li>
+						<li class="cart-price" id="totalprice">$${sum}</li>
+						</c:if>
+						<c:if test="${buylist == null}"> 
+						<li class="cart-price">$0</li>
 						</c:if>
 					</ul>
 				</div>
@@ -168,7 +174,12 @@
 							<!-- <li><a href="#">Kid's</a></li> -->
 						</ul></li>
 					<li><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i class="icon_profile"></i></a></li>
-					<li><a href="#">線上客服&nbsp;<i class="fa fa-comment-o"></i></a></li>
+					<li>
+					<form  id="myForm" action="<%=request.getContextPath() %>/chat.do" method="POST">
+					<input value="${userVO.user_id}" name="userName" type="hidden"/>
+					<a href="#" onclick="document.getElementById('myForm').submit();">線上客服&nbsp;<i class="fa fa-comment-o"></i></a>
+					</form>
+					</li>
 					<!-- <li>
                 <a href="#">Pages</a>
                 <ul class="dropdown">

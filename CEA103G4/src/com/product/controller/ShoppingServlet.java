@@ -1,6 +1,7 @@
 package com.product.controller;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +29,7 @@ public class ShoppingServlet extends HttpServlet {
 		ProductVO product= new ProductVO();
 		if (!action.equals("CHECKOUT")) {
 
-			// 刪除購物車中的商品
+			// 刪除購物車中的單一商品
 			if (action.equals("DELETE")) {
 				String del = req.getParameter("del");
 				int d = Integer.parseInt(del);
@@ -41,6 +42,18 @@ public class ShoppingServlet extends HttpServlet {
 				rd.forward(req, res);
 				return;
 			}
+			
+			// 清空購物車中的商品
+			if(action.equals("DELETEALL")) {
+				
+				session.removeAttribute("shoppingcart");
+				
+				String url = "/front-end/productsell/shoppingCart.jsp";
+				RequestDispatcher rd = req.getRequestDispatcher(url);
+				rd.forward(req, res);
+				return;
+			}
+			
 			// 新增商品至購物車中
 			else if (action.equals("ADD")) {
 				
@@ -50,16 +63,41 @@ public class ShoppingServlet extends HttpServlet {
 				if (buylist == null) {
 					buylist = new Vector<ProductVO>();
 					buylist.add(product);
-					
 				} else {
 					if (buylist.contains(product)) {
 						ProductVO innerProductVO = buylist.get(buylist.indexOf(product));
 						innerProductVO.setProduct_quantity(innerProductVO.getProduct_quantity() + product.getProduct_quantity());
+						Integer newProductVO = innerProductVO.getProduct_quantity();
+						// 避免重複點擊加入購物車之商品數量大於庫存
+						if(newProductVO > innerProductVO.getProduct_remaining()) {
+							innerProductVO.setProduct_quantity(innerProductVO.getProduct_quantity() - product.getProduct_quantity());
+						}
 					} else {
 						buylist.add(product);
 					}
 				}
 			}
+			
+
+//			Map<String, List<ProductVO>> groupMap = new HashMap<>();
+//
+//			// Collect CO Executives
+//			groupMap = buylist.stream().collect(Collectors.groupingBy(ProductVO::getUser_id));
+//
+//			System.out.println("\n== ProductVOs by User_id ==");
+//			groupMap.forEach((k, v) -> {
+//				System.out.println("\nUser_id: " + k);
+//				v.forEach(ProductVO::printSummary);
+//			});
+			
+//			Collections.sort(buylist, new Comparator<Object>() {
+//				public int compare(Object a, Object b) {
+//					String one = ((ProductVO) a).getUser_id();
+//					String two = ((ProductVO) b).getUser_id();
+//					return one - two;
+//				}
+//			});
+			
 			session.setAttribute("shoppingcart", buylist);
 			req.setAttribute("productVO", product);
 			
@@ -83,8 +121,8 @@ public class ShoppingServlet extends HttpServlet {
 //			rd.forward(req, res);
 		}
 
-//		// 結帳，計算購物車商品價錢總數
-//		else if (action.equals("CHECKOUT")) {
+		// 結帳，計算購物車商品價錢總數
+		else if (action.equals("CHECKOUT")) {
 //			double total = 0;
 //			for (int i = 0; i < buylist.size(); i++) {
 //				ProductVO order = buylist.get(i);
@@ -92,13 +130,18 @@ public class ShoppingServlet extends HttpServlet {
 //				Integer quantity = order.getQuantity();
 //				total += (price * quantity);
 //			}
-//
-//			String amount = String.valueOf(total);
-//			req.setAttribute("amount", amount);
-//			String url = "/Checkout.jsp";
-//			RequestDispatcher rd = req.getRequestDispatcher(url);
-//			rd.forward(req, res);
-//		}
+//			===================================================
+//          上方簡化寫法(Lambda)
+			double total = buylist.stream()
+								  .mapToDouble(b -> b.getProduct_price()*b.getProduct_quantity())
+								  .sum();
+//			===================================================
+			String amount = String.valueOf(total);
+			req.setAttribute("amount", amount);
+			String url = "/Checkout.jsp";
+			RequestDispatcher rd = req.getRequestDispatcher(url);
+			rd.forward(req, res);
+		}
 	}
 
 	private ProductVO getProduct(HttpServletRequest req) {
@@ -109,6 +152,7 @@ public class ShoppingServlet extends HttpServlet {
 		String proqty = req.getParameter("proqty");
 		String product_remaining = req.getParameter("product_remaining");
 		String product_state = req.getParameter("product_state");
+		String user_id = req.getParameter("user_id");
 		
 		ProductVO productVO = new ProductVO();
 
@@ -118,7 +162,7 @@ public class ShoppingServlet extends HttpServlet {
 		productVO.setProduct_quantity(new Integer(proqty));
 		productVO.setProduct_remaining(new Integer(product_remaining));
 		productVO.setProduct_state(new Integer(product_state));
+		productVO.setUser_id(user_id);
 		return productVO;
 	}
-	
 }

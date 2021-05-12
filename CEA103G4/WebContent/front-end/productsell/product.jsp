@@ -11,6 +11,8 @@
 <%
   ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
+  UserVO userVO = (UserVO) session.getAttribute("account"); 
+  session.setAttribute("userVO", userVO);
 	
 %>
 <jsp:useBean id="product_typeSvc" scope="page" class="com.product_type.model.Product_TypeService" />
@@ -179,23 +181,15 @@
                         ${productVO.product_price}</h4>
                   </div>
                   <c:if test="${productVO.product_state == 1}">
-<%--                   <form METHOD="post" action="<%=request.getContextPath()%>/ShoppingServlet"> --%>
                   <div class="quantity">
                     <div class="pro-qty">
                      <span id="decProduct" class="dec qtybtn">-</span>
                       <input name="proqty" id="proqty" type="text" value="1" />
                       <span id="addProduct" class="inc qtybtn" style="none">+</span>
                     </div>
-<%--                     <input type="hidden" name="product_no" value="${productVO.product_no}"> --%>
-<%--                     <input type="hidden" name="product_name" value="${productVO.product_name}"> --%>
-<%--                     <input type="hidden" name="product_price" value="${productVO.product_price}"> --%>
-<%--                     <input type="hidden" name="product_remaining" value="${productVO.product_remaining}"> --%>
-<%--                     <input type="hidden" name="product_state" value="${productVO.product_state}"> --%>
-<!--                     <input type="hidden" name="action" value="ADD" /> -->
-<!--                     <button href="#" type="submit" class="primary-btn pd-cart">加入購物車</button> -->
                     <button class="primary-btn pd-cart" id="cartBtn">加入購物車</button>
                   </div>
-<!--                   </form> -->
+                  </form>
                   <ul class="pd-tags">
                     <li>
                       <span id="maxRemaining" value="${productVO.product_remaining}">商品數量：${productVO.product_remaining}</span>
@@ -591,7 +585,7 @@
 	  //1,燈箱顯示/隱藏
 	  reportLink.addEventListener("click", function () {
 		  if ($('#reportLink').attr("value") === "") {
-			  Swal.fire('請先登入會員');
+			  login();
 			} else {
 	    report.style.display = "block";
 	    report_bg.style.display = "block";
@@ -674,7 +668,7 @@
 	  		  var user = $('.sellerFollow').attr("value");
 	  		  var sellerid = $('.sellerFollow').attr("id");
 	  		  if (user === "") {
-	  			Swal.fire('請先登入會員');
+	  				login();
 				} else if (user === sellerid){
 		  			Swal.fire({
 			  			  icon: 'error',
@@ -730,12 +724,65 @@
 			 });
 	  });
 	  
-	  
-	  
-       	</script>	
-       	
-       	<!-- 購物車按鈕   -->
-		  <script>
+	  	function login(){
+
+		Swal.fire({
+  			title: '請先登入會員',
+  			html:
+    		"帳號"+'<input id="userID" class="swal2-input">' +
+    		"密碼"+'<input id="PWD" class="swal2-input">',
+    		showCloseButton: true,
+    		confirmButtonText: `登入`,
+  });
+			$(".swal2-confirm").click(function(){
+			if($("#userID").val().trim().length != 0 && $("#PWD").val().trim().length != 0){				
+  			$.ajax({ 
+	  			  url:"<%=request.getContextPath()%>/FrondEnd_LoginHandler",
+	  			  type:"POST", 
+	  			  data:{
+	  				  "user_id":$("#userID").val(),
+	  				  "user_pwd":$("#PWD").val(),
+	  				  "action": "signIn_ajax"
+	  			  },
+	  			  success: function(result) {
+
+	  				if (result.length === 0 || result === ""){
+			  			Swal.fire({
+				  			  icon: 'error',
+				  			  title: '帳號或密碼有誤,請重新輸入',
+				  			  showConfirmButton: false,
+				  			  timer: 1500
+				  			});
+	  				} else {
+	  					window.location.reload();
+			  			Swal.fire({
+				  			  icon: 'success',
+				  			  title: '登入成功',
+				  			  showConfirmButton: false,
+				  			  timer: 1500
+				  			});
+	  				}
+	  		            }, 	  
+	  			  error:function () {
+			  			Swal.fire({
+				  			  icon: 'error',
+				  			  title: '登入失敗,請重新登入',
+				  			  showConfirmButton: false,
+				  			  timer: 1500
+				  			});
+	  			  },
+  			});
+			} else {
+				Swal.fire({
+					 icon: 'error',
+					 title: '帳號或密碼請勿空白',
+					 showConfirmButton: false,
+					 timer: 1500
+			});
+			}
+			});
+	  	};
+	  	
 		  $("#cartBtn").click(function(){
 				$.ajax({ 
 				  type:"POST",
@@ -744,20 +791,26 @@
 					  "product_no": "${productVO.product_no}",
 					  "product_name": "${productVO.product_name}",
 					  "product_price": "${productVO.product_price}",
-					  "proqty": $('#proqty').attr("value"),
+					  "proqty": $('#proqty').val(),
 					  "product_remaining": "${productVO.product_remaining}",
 					  "product_state": "${productVO.product_state}",
+					  "user_id": "${productVO.user_id}",
 					  "action": "ADD"
 				  },
 				  success: function(res) {
 					  
 					  var carRes  = JSON.parse(res)
-					  console.log(carRes["results"].length);
+// 					  console.log(carRes["results"].length);
 					  var ibaCount = carRes["results"].length;
 					  $("#iba").html(ibaCount);
+					  
+					  var titlePrice = 0
+						carRes["results"].forEach(function (item,index) {
+							titlePrice += (item.product_price * item.product_quantity)
+						});
+					  $(".cart-price").html("$" + titlePrice);
 
 					  Swal.fire({
-// 						  position: 'top',
 						  icon: 'success',
 						  title: '商品加入購物車',
 						  showConfirmButton: false,
@@ -775,7 +828,11 @@
 				  },				
 				 });
 		  });
-		  </script>
+	  
+	  
+       	</script>	
+    
+    
     
   </body>
 </html>

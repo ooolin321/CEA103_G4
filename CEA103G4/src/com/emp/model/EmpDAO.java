@@ -46,7 +46,7 @@ public class EmpDAO implements EmpDAO_interface {
 	
 	
 	@Override
-	public Object insert(EmpVO empVO) {
+	public void insert(EmpVO empVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -95,7 +95,7 @@ public class EmpDAO implements EmpDAO_interface {
 				}
 			}
 		}
-		return empVO;
+		
 	}
 
 	@Override

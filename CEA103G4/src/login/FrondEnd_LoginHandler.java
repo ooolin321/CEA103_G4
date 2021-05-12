@@ -1,11 +1,20 @@
 package login;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.product.model.ProductService;
+import com.product.model.ProductVO;
 import com.user.model.*;
 
 
@@ -27,7 +36,7 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 		Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 		req.setAttribute("errorMsgs", errorMsgs);
 		
-		if ("signIn".equals(action))
+		if ("signIn".equals(action)) {
 		// 【取得使用者 帳號(user_id) 密碼(user_pwd)】
 		try {
 			String str = req.getParameter("user_id");
@@ -92,5 +101,44 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 			}catch (Exception e) {
 				
 			}
-	}
+		}
+		
+		
+		if (("signIn_ajax".equals(action)))  {
+
+			try {
+				String user_id = req.getParameter("user_id");
+				String user_pwd = req.getParameter("user_pwd");
+
+				UserVO userVO = new UserVO();
+
+				UserService userSvc = new UserService();
+				userVO = userSvc.selectUser(user_id, user_pwd);
+				if(userVO == null) {
+					errorMsgs.put("user_id","帳號或密碼不正確，請重新輸入！");
+
+				}else if(userVO != null) {
+					HttpSession session = req.getSession();
+					session.setAttribute("account", userVO); 
+					
+					res.setContentType("text/html; charset=utf-8");
+					PrintWriter out1 = res.getWriter();
+					
+					JSONObject jsonObj = new JSONObject();
+					
+					try {
+						jsonObj.put("results", userVO);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					
+					out1.println(jsonObj.toString());
+					out1.flush();
+					out1.close();
+				}
+				}catch (Exception e) {
+					return;
+				}
+			}
+}
 }

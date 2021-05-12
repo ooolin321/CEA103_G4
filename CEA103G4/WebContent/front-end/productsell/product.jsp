@@ -11,8 +11,8 @@
 <%
   ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
-  UserVO userVO = (UserVO) session.getAttribute("account"); 
-  session.setAttribute("userVO", userVO);
+//   UserVO userVO = (UserVO) session.getAttribute("account"); 
+//   session.setAttribute("userVO", userVO);
 	
 %>
 <jsp:useBean id="product_typeSvc" scope="page" class="com.product_type.model.Product_TypeService" />
@@ -544,6 +544,7 @@
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
 	<script src="${pageContext.request.contextPath}/front-template/js/ajaxSearch.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
+	 <script src="${pageContext.request.contextPath}/front-template/js/products-search.js" ></script>
     
     
     	<script>
@@ -799,6 +800,9 @@
 				  },
 				  success: function(res) {
 					  
+					  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>"); 
+					  $("#carts").html(cartproducts); 
+					  
 					  var carRes  = JSON.parse(res)
 					  console.log(carRes["results"].length);
 					  var ibaCount = carRes["results"].length;
@@ -809,6 +813,8 @@
 							titlePrice += (item.product_price * item.product_quantity)
 						});
 					  $(".cart-price").html("$" + titlePrice);
+					  $(".select-total").html(`<h5>${titlePrice}</h5>`);
+					  
 
 					  Swal.fire({
 						  icon: 'success',

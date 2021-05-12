@@ -11,6 +11,8 @@
      List<Product_TypeVO> list2 = dao2.getAll();
     pageContext.setAttribute("list2",list2);
     
+    
+    
     Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
 	pageContext.setAttribute("buylist", buylist);
  %>

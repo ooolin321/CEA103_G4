@@ -6,6 +6,22 @@
 <%
 // 	Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
 // 	pageContext.setAttribute("buylist", buylist);
+
+    Vector<ProductVO> buylist2 = (Vector<ProductVO>) session.getAttribute("shoppingcart");
+    
+    
+	Map<String, Vector<ProductVO>> mBuylist = new HashMap<String, Vector<ProductVO>>();
+	for(ProductVO vo:buylist2) {
+		String user_id = vo.getUser_id();
+		Vector<ProductVO> vector = mBuylist.get(user_id);
+		if(vector == null) {
+			vector = new Vector<ProductVO>();
+		}
+		vector.add(vo);
+		mBuylist.put(user_id, vector);
+	}
+	pageContext.setAttribute("mBuylist", mBuylist);
+
 %>
 
 
@@ -121,9 +137,10 @@
 // 		 pageContext.setAttribute("order", order);
 	%>
 	<c:set var="sum" value="0"> </c:set>
-	<c:forEach var="order" items="${buylist}" varStatus="cartstatus">
+			<c:forEach var="entry" items="${mBuylist}">
                 <tbody>
-                	<tr><td>賣家:${order.user_id}</td></tr>
+                	<tr><td>賣家:${entry.key}</td></tr>
+                  <c:forEach var="order" items="${entry.value}" varStatus="cartstatus">
                   <tr>
                     <td class="cart-pic first-row">
                     <a href="<%=request.getContextPath()%>/product/product.do?product_no=${order.product_no}">
@@ -160,8 +177,9 @@
 		              </td>
 		          	</form></td>
                   </tr>
+                  <c:set var="sum" value="${sum + order.product_price*order.product_quantity}"> </c:set>
+                  </c:forEach>
                 </tbody>
-                <c:set var="sum" value="${sum + order.product_price*order.product_quantity}"> </c:set>
                 </c:forEach>
 <%}%>
               </table>

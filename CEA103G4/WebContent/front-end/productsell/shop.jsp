@@ -324,9 +324,7 @@
 					  "action": "ADD"
 				  },
 				  success: function(res) {
-					  
-<%-- 					  const cart=cartProduct(res, "<%=request.getContextPath()%>");  --%>
-// 						$("#carts").html(cart); 
+					   
 					  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>"); 
 					  $("#carts").html(cartproducts); 
 					  

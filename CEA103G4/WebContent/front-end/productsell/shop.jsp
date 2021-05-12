@@ -320,6 +320,7 @@
 					  "proqty": "1",
 					  "product_remaining": "${productVO.product_remaining}",
 					  "product_state": "${productVO.product_state}",
+					  "user_id": "${productVO.user_id}",
 					  "action": "ADD"
 				  },
 				  success: function(res) {
@@ -328,7 +329,7 @@
 // 						$("#carts").html(cart); 
 					  
 					  var carRes  = JSON.parse(res)
-					  console.log(carRes["results"].length);
+// 					  console.log(carRes["results"].length);
 					  var ibaCount = carRes["results"].length;
 					  $("#iba").html(ibaCount);
 

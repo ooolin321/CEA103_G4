@@ -123,7 +123,7 @@
 	<c:set var="sum" value="0"> </c:set>
 	<c:forEach var="order" items="${buylist}" varStatus="cartstatus">
                 <tbody>
-                	<tr><td>賣家:${order.product_no}</td></tr>
+                	<tr><td>賣家:${order.user_id}</td></tr>
                   <tr>
                     <td class="cart-pic first-row">
                     <a href="<%=request.getContextPath()%>/product/product.do?product_no=${order.product_no}">

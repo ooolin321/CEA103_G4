@@ -747,6 +747,7 @@
 					  "proqty": $('#proqty').attr("value"),
 					  "product_remaining": "${productVO.product_remaining}",
 					  "product_state": "${productVO.product_state}",
+					  "user_id": "${productVO.user_id}",
 					  "action": "ADD"
 				  },
 				  success: function(res) {

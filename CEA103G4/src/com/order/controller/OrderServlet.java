@@ -777,7 +777,7 @@ public class OrderServlet extends HttpServlet{
 						product_state = new Integer(req.getParameter("product_state").trim());
 					} catch (NumberFormatException e) {
 						product_state = 0;
-						errorMsgs.add("產品狀態請選數字.");
+						errorMsgs.add("產品狀態請選擇.");
 					}
 					
 					Integer product_num = null;
@@ -843,24 +843,24 @@ public class OrderServlet extends HttpServlet{
 						logistics = new Integer(req.getParameter("logistics").trim());
 					} catch (NumberFormatException e) {
 						logistics = 0;
-						errorMsgs.add("物流方式請填數字.");
+						errorMsgs.add("物流方式請選擇.");
 					}
 
-					Integer logisticsstate = null;
-					try {
-						logisticsstate = new Integer(req.getParameter("logisticsstate").trim());
-					} catch (NumberFormatException e) {
-						logisticsstate = 0;
-						errorMsgs.add("物流狀態請填數字.");
-					}
+//					Integer logisticsstate = null;
+//					try {
+//						logisticsstate = new Integer(req.getParameter("logisticsstate").trim());
+//					} catch (NumberFormatException e) {
+//						logisticsstate = 0;
+//						errorMsgs.add("物流狀態請填數字.");
+//					}
 					
-					Integer discount = null;
-					try {
-						discount = new Integer(req.getParameter("discount").trim());
-					} catch (NumberFormatException e) {
-						discount = 0;
-						errorMsgs.add("折扣點數請填數字.");
-					}
+//					Integer discount = null;
+//					try {
+//						discount = new Integer(req.getParameter("discount").trim());
+//					} catch (NumberFormatException e) {
+//						discount = 0;
+//						errorMsgs.add("折扣點數請填數字.");
+//					}
 					
 					String user_id = new String(req.getParameter("user_id").trim());
 					
@@ -904,8 +904,8 @@ public class OrderServlet extends HttpServlet{
 					orderVO.setRec_phone(rec_phone);
 					orderVO.setRec_cellphone(rec_cellphone);
 					orderVO.setLogistics(logistics);
-					orderVO.setLogisticsstate(logisticsstate);
-					orderVO.setDiscount(discount);
+//					orderVO.setLogisticsstate(logisticsstate);
+//					orderVO.setDiscount(discount);
 					orderVO.setUser_id(user_id);
 					orderVO.setSeller_id(seller_id);
 					orderVO.setSrating(srating);
@@ -938,7 +938,7 @@ public class OrderServlet extends HttpServlet{
 			
 					/***************************2.開始修改資料***************************************/
 					OrderService orderSvc = new OrderService();
-					orderVO = orderSvc.addOrder(order_state, order_shipping, order_price, pay_method, rec_name, zipcode, city, town, rec_addr, rec_phone, rec_cellphone, logistics, logisticsstate, discount, user_id, seller_id, srating, srating_content, point);
+//					orderVO = orderSvc.addOrder(order_state, order_shipping, order_price, pay_method, rec_name, zipcode, city, town, rec_addr, rec_phone, rec_cellphone, logistics, logisticsstate, discount, user_id, seller_id, srating, srating_content, point);
 					
 					
 					ProductService productSvc = new ProductService();

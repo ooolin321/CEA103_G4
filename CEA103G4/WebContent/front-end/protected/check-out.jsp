@@ -6,22 +6,14 @@
 <%@ page import="com.product.controller.*"%>
 <%@ page import="com.order.model.*"%>
 <%
-<<<<<<< HEAD
-ProductDAO dao = new ProductDAO();
-List<ProductVO> products = dao.getAllShop();
-pageContext.setAttribute("products", products);
-%>
-=======
-	
 	ProductDAO dao = new ProductDAO();
 	List<ProductVO> products = dao.getAllShop();
-	pageContext.setAttribute("products",products);
-	
-	UserVO userVO = (UserVO) session.getAttribute("account"); 
+	pageContext.setAttribute("products", products);
+
+	UserVO userVO = (UserVO) session.getAttribute("account");
 	session.setAttribute("userVO", userVO);
-		
- %>
->>>>>>> 3264f70f175a8ed5a3c01cb0a644d4d660438416
+%>
+
 
 <!DOCTYPE html>
 <html lang="zh-tw">
@@ -68,16 +60,18 @@ pageContext.setAttribute("products", products);
 	href="${pageContext.request.contextPath}/front-template/css/style.css"
 	type="text/css" />
 <style>
-.checkout-section{
+.checkout-section {
 	padding-top: 20px;
 }
-#twzipcode{
+
+#twzipcode {
 	display: inline;
 }
-.select-option{
-text-align: center;
+
+.select-option {
+	text-align: center;
 }
-</style>	
+</style>
 
 </head>
 
@@ -112,21 +106,25 @@ text-align: center;
 						<h4>付款明細</h4>
 						<div class="row">
 							<div class="col-lg-12">
-								<label for="rec_name">收件人姓名:<span>*</span></label> 
-								<input type="text" name="rec_name" id="rec_name" value="${userVO.user_name}"/>
+								<label for="rec_name">收件人姓名:<span>*</span></label> <input
+									type="text" name="rec_name" id="rec_name"
+									value="${userVO.user_name}" />
 							</div>
 							<div class="col-lg-12">
-								<label for="rec_addr">收件人地址:<span>*</span></label> 
+								<label for="rec_addr">收件人地址:<span>*</span></label>
 								<div class="" id="twzipcode"></div>
-								<input type="text" name="rec_addr" id="rec_addr" value="${userVO.user_addr}" />
+								<input type="text" name="rec_addr" id="rec_addr"
+									value="${userVO.user_addr}" />
 							</div>
 							<div class="col-lg-6">
-								<label for="rec_phone">收件人電話:<span>*</span></label> 
-								<input name="rec_phone" type="text" id="rec_phone" value="${userVO.user_phone}"/>
+								<label for="rec_phone">收件人電話:<span>*</span></label> <input
+									name="rec_phone" type="text" id="rec_phone"
+									value="${userVO.user_phone}" />
 							</div>
 							<div class="col-lg-6">
-								<label for="rec_cellphone">收件人手機:<span>*</span></label> 
-								<input name="rec_cellphone" type="text" id="rec_cellphone" value="${userVO.user_mobile}"/>
+								<label for="rec_cellphone">收件人手機:<span>*</span></label> <input
+									name="rec_cellphone" type="text" id="rec_cellphone"
+									value="${userVO.user_mobile}" />
 							</div>
 						</div>
 					</div>
@@ -168,9 +166,8 @@ text-align: center;
 									</div>
 								</div>
 								<div class="order-btn">
-									<button type="submit" class="site-btn place-btn">
-										送出</button>
-										<input type="hidden" value="addOrderList" name="action">
+									<button type="submit" class="site-btn place-btn">送出</button>
+									<input type="hidden" value="addOrderList" name="action">
 								</div>
 							</div>
 						</div>
@@ -187,10 +184,10 @@ text-align: center;
 	<!-- Footer Section End -->
 
 	<!-- Js Plugins -->
-	
+
 	<script
-		src="${pageContext.request.contextPath}/front-template/js/jquery-3.3.1.min.js"></script> 
-	<script 
+		src="${pageContext.request.contextPath}/front-template/js/jquery-3.3.1.min.js"></script>
+	<script
 		src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/front-template/js/bootstrap.min.js"></script>
@@ -211,18 +208,15 @@ text-align: center;
 	<script
 		src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
 	<script type="text/javascript">
-	
-		
 		$("#twzipcode").twzipcode({
-			zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
-			css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 
-			countyName: "city", // 自訂城市 select 標籤的 name 值
-			districtName: "town", // 自訂區別 select 標籤的 name 值
-			countySel: "${userVO.city}",
-			districtSel: "${userVO.town}",
-			zipcodeSel: "${userVO.zipcode}"
-			}); 
-	
+			zipcodeIntoDistrict : true, // 郵遞區號自動顯示在區別選單中
+			css : [ "city form-control", "town form-control" ], // 自訂 "城市"、"地別" class 名稱 
+			countyName : "city", // 自訂城市 select 標籤的 name 值
+			districtName : "town", // 自訂區別 select 標籤的 name 值
+			countySel : "${userVO.city}",
+			districtSel : "${userVO.town}",
+			zipcodeSel : "${userVO.zipcode}"
+		});
 	</script>
 </body>
 </html>

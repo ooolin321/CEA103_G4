@@ -101,7 +101,7 @@ System.out.println("98 = "+ empVO.getEmail());
 	}
 
 	@Override
-	public Object insert(EmpVO empVO) {
+	public void insert(EmpVO empVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -160,7 +160,7 @@ System.out.println("98 = "+ empVO.getEmail());
 					e.printStackTrace(System.err);
 				}
 			}
-		}return empVO;
+		}
 		
 	}
 

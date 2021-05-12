@@ -54,7 +54,7 @@ th, td {
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>得標資料修改 - update_bid_input.jsp</h3>
+				<h3>競標資料修改 - update_bid_input.jsp</h3>
 				<h4>
 					<a href="<%=request.getContextPath()%>/front-end/bid/select_page.jsp"><img src="<%=request.getContextPath()%>/images/back1.gif"
 						width="100" height="32" border="0">回首頁</a>
@@ -80,13 +80,13 @@ th, td {
 
 
 			<tr>
-				<td>得標編號:<font color=red><b>*</b></font></td>
+				<td>競標編號:<font color=red><b>*</b></font></td>
 				<td><%=bidVO.getBid_no()%></td>
 			
 			</tr>
 			<jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
 			<tr>
-				<td>得標會員帳號:<font color=red><b>*</b></font></td>
+				<td>競標會員帳號:<font color=red><b>*</b></font></td>
 				<td><select size="1" name="user_id">
 					<c:forEach var="userVO" items="${userSvc.all}">
 						<option value="${userVO.user_id}" ${(bidVO.user_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
@@ -96,7 +96,7 @@ th, td {
 
 			<jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
 			<tr>
-				<td>得標商品編號:<font color=red><b>*</b></font></td>
+				<td>競標商品編號:<font color=red><b>*</b></font></td>
 				<td><select size="1" name="product_no">
 					<c:forEach var="productVO" items="${productSvc.all}">
 						<option value="${productVO.product_no}" ${(bidVO.product_no==productVO.product_no)? 'selected':'' } >${productVO.product_no}
@@ -106,7 +106,7 @@ th, td {
 
 
 			<tr>
-				<td>得標價格:<font color=red><b>*</b></font></td>
+				<td>競標價格:<font color=red><b>*</b></font></td>
 				<td>
 					<input type="TEXT" name="bid_price" size="45" value="<%= (bidVO==null)? "0" : bidVO.getBid_price()%>" />
 				</td>

@@ -397,8 +397,6 @@ input {
 
 refresh();
 
-
-
 function refresh(){
 	$.ajax({
 		url:"<%=request.getContextPath()%>/product/product.do",
@@ -419,7 +417,7 @@ function refresh(){
 					str+="<td>"+i.start_price+"</td>";
 					str+="<td>"+i.product_remaining+"</td>";
 					str+="</tr>";
-					$("#showProduct").append(str);				
+					$("#showProduct").append(str);
 				}
 			}
 		}
@@ -492,10 +490,10 @@ function refresh(){
 					
 					webSocket.send(JSON.stringify(json));
 					
-				}else if("start"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播煮才可以start
+				}else if("start"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以start
 					//&& ${liveVO.user_id==userVO.user_id}
 					//開始競標
-					alert(${liveVO.user_id==userVO.user_id});
+					alert("開始競標");
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 						//0給初始直
 							'type' : 'max',
@@ -518,9 +516,10 @@ function refresh(){
 					webSocket.send(JSON.stringify(json));	
 				
 				
-				}else if("over"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播煮才可以end
+				}else if("over"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以end
 					//&& ${liveVO.user_id==userVO.user_id}
 					//結束競標
+					alert("結束競標");
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 							'type' : 'max',
 							'sender' : self,
@@ -552,8 +551,7 @@ function refresh(){
 					$("#current_price").text(jsonObj.maxPrice);
 					$("#current_id").text("無人出價");
 				}else if(jsonObj.timeStart== "1"){
-					$("#current_price").text(jsonObj.maxPrice);
-					$("#current_id").text(jsonObj.sender);
+					addListener();
 				}else if(jsonObj.timeStart== "2"){
 					$("#current_price").text(jsonObj.maxPrice);
 					$("#current_id").text("結束囉");
@@ -584,6 +582,8 @@ function refresh(){
 
 		webSocket.onclose = function(event) {
 			console.log(event.data);
+		 	connect();
+			
 		};
 		
 	}
@@ -636,9 +636,9 @@ function refresh(){
 
 	function disconnect() {
 		webSocket.close();
-		document.getElementById('sendMessage').disabled = true;
-		document.getElementById('connect').disabled = false;
-		document.getElementById('disconnect').disabled = true;
+// 		document.getElementById('sendMessage').disabled = true;
+// 		document.getElementById('connect').disabled = false;
+// 		document.getElementById('disconnect').disabled = true;
 	}
 
 // 	function updateStatus(newStatus) {

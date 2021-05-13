@@ -147,9 +147,9 @@ public class ProductVO implements java.io.Serializable{
 		return true;
 	}
 	
-	public void printSummary() {
-		System.out.printf("product_no: " + product_no + " product_name: " + product_name);
-	}
+//	public void printSummary() {
+//		System.out.printf("product_no: " + product_no + " product_name: " + product_name);
+//	}
 
 	
 }

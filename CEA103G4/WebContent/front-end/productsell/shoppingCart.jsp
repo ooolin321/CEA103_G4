@@ -9,7 +9,8 @@
 
     Vector<ProductVO> buylist2 = (Vector<ProductVO>) session.getAttribute("shoppingcart");
     
-    
+    if(buylist2 != null){
+    	
 	Map<String, Vector<ProductVO>> mBuylist = new HashMap<String, Vector<ProductVO>>();
 	for(ProductVO vo:buylist2) {
 		String user_id = vo.getUser_id();
@@ -21,7 +22,7 @@
 		mBuylist.put(user_id, vector);
 	}
 	pageContext.setAttribute("mBuylist", mBuylist);
-
+    }
 %>
 
 

@@ -324,9 +324,7 @@
 					  "action": "ADD"
 				  },
 				  success: function(res) {
-					  
-<%-- 					  const cart=cartProduct(res, "<%=request.getContextPath()%>");  --%>
-// 						$("#carts").html(cart); 
+					   
 					  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>"); 
 					  $("#carts").html(cartproducts); 
 					  
@@ -340,6 +338,7 @@
 							titlePrice += (item.product_price * item.product_quantity)
 						});
 					  $(".cart-price").html("$" + titlePrice);
+					  $("#cartHoverTotal").html("$" + titlePrice);
 
 
 					  Swal.fire({

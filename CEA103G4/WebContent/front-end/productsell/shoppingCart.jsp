@@ -4,8 +4,24 @@
 <%@ page import="java.util.* , com.product.model.*" %>
 
 <%
-// 	Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
-// 	pageContext.setAttribute("buylist", buylist);
+
+
+    Vector<ProductVO> buylist2 = (Vector<ProductVO>) session.getAttribute("shoppingcart");
+    
+    if(buylist2 != null){
+    	
+	Map<String, Vector<ProductVO>> mBuylist = new HashMap<String, Vector<ProductVO>>();
+	for(ProductVO vo:buylist2) {
+		String user_id = vo.getUser_id();
+		Vector<ProductVO> vector = mBuylist.get(user_id);
+		if(vector == null) {
+			vector = new Vector<ProductVO>();
+		}
+		vector.add(vo);
+		mBuylist.put(user_id, vector);
+	}
+	pageContext.setAttribute("mBuylist", mBuylist);
+    }
 %>
 
 
@@ -101,9 +117,12 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
+<%if (buylist != null && (buylist.size() > 0)) {%>   
+          	<c:set var="sum" value="0"> </c:set>
+			<c:forEach var="entry" items="${mBuylist}">
             <div class="cart-table">
-              <table>
-                <thead>
+              <table class="table">
+                <thead class="thead">
                   <tr>
                     <th>商品圖</th>
                     <th>商品名稱</th>
@@ -113,21 +132,14 @@
                     <th>操作</th>
                   </tr>
                 </thead>
-
-<%if (buylist != null && (buylist.size() > 0)) {%>   
-    <%
-// 	 for (int index = 0; index < buylist.size(); index++) {
-// 		 ProductVO order = buylist.get(index);
-// 		 pageContext.setAttribute("order", order);
-	%>
-	<c:set var="sum" value="0"> </c:set>
-	<c:forEach var="order" items="${buylist}" varStatus="cartstatus">
                 <tbody>
-                	<tr><td>賣家:${order.user_id}</td></tr>
+                	<tr><td style="padding-bottom:5px;"><a href="<%=request.getContextPath()%>/SellerProducts?user_id=${entry.key}" target="_blank"><button class="btn btn-outline-warning" type="button">賣家&nbsp;${entry.key}</button></a></td></tr>
+                  <c:forEach var="order" items="${entry.value}" varStatus="cartstatus">
                   <tr>
                     <td class="cart-pic first-row">
                     <a href="<%=request.getContextPath()%>/product/product.do?product_no=${order.product_no}">
                       <img src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}" alt="${order.product_name}"  />
+                    </a>
                     </td>
                     <td class="p-name first-row">
                       <h5>${order.product_name }</h5>
@@ -142,47 +154,33 @@
                       <input name="${order.product_no}" id="PN${order.product_no}" type="text" value="${order.product_quantity}" />
                       <span id="Add${order.product_no}" class="inc qtybtn" style="none">+</span>
                     </div>
-                    
-                    
                       </div>
                       <span id="max${order.product_no}" value="${order.product_remaining}">在庫數量：${order.product_remaining}</span>
-<%--                       <h5 style="color:#FF0000">在庫數量：${order.product_remaining}</h5> --%>
                     </td>
                     <td>
                     <div id="TP${order.product_no}" class="cartProductItemSumPrice" style="margin-top: 30px;color: #e7ab3c;">${order.product_price*order.product_quantity}</div>
-<%--                     <td class="total-price first-row">${order.product_price*order.product_quantity}</td> --%>
 					</td>
+					<td class="close-td first-row">
                     <form action="<%=request.getContextPath()%>/ShoppingServlet" method="POST">
 		              <input type="hidden" name="action"  value="DELETE">
 		              <input type="hidden" name="del" value="${cartstatus.index}">
-		              <td class="close-td first-row">
 		              <input type="submit" class="btn btn-info" value="刪 除">
-		              </td>
-		          	</form></td>
+		          	</form>
+		          	</td>
                   </tr>
+                  <c:set var="sum" value="${sum + order.product_price*order.product_quantity}"> </c:set>
+                  </c:forEach>
                 </tbody>
-                <c:set var="sum" value="${sum + order.product_price*order.product_quantity}"> </c:set>
-                </c:forEach>
-<%}%>
               </table>
             </div>
+            </c:forEach>
+            
             <div class="row">
               <div class="col-lg-2">
                 <div class="cart-buttons">
                   <a href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp" class="btn btn-info"
                     >繼續購物</a>
-<%--                   <a href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp" class="primary-btn continue-shop" --%>
-<!--                     >繼續購物</a> -->
                 </div>
-<!--                 <div class="discount-coupon"> -->
-<!--                   <h6>Discount Codes</h6> -->
-<!--                   <form action="#" class="coupon-form"> -->
-<!--                     <input type="text" placeholder="Enter your codes" /> -->
-<!--                     <button type="submit" class="site-btn coupon-btn"> -->
-<!--                       Apply -->
-<!--                     </button> -->
-<!--                   </form> -->
-<!--                 </div> -->
               </div>
               <div class="col-lg-2 offset-lg-8">
               <form action="<%=request.getContextPath()%>/ShoppingServlet" method="POST">
@@ -190,7 +188,6 @@
                     <input class="btn btn-info" style="margin-left: 45px;" type="submit" value="清空購物車"
                     ></input></form>
               </div>
-              
               <div class="col-lg-4 offset-lg-8">
                 <div class="proceed-checkout">
                   <ul>
@@ -199,6 +196,7 @@
                   <a href="<%=request.getContextPath()%>/front-end/protected/check-out.jsp" class="proceed-btn">結帳</a>
                 </div>
               </div>
+<%}%>
             </div>
           </div>
         </div>

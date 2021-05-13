@@ -43,13 +43,10 @@
       	}
 	
 	function cartProduct(cartdata, path) {
-		console.log(cartProduct);
 		var cart  = JSON.parse(cartdata);
-	  console.log(cart)
 		let cartContent = "";
 	  
 		cart["results"].forEach(function (carts, index) {
-//		 console.log(item)
 	    cartContent += `
 					<tr>
 					  <td class="si-pic"><img

@@ -11,6 +11,8 @@
      List<Product_TypeVO> list2 = dao2.getAll();
     pageContext.setAttribute("list2",list2);
     
+    
+    
     Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
 	pageContext.setAttribute("buylist", buylist);
 
@@ -124,7 +126,7 @@
 								</div>
 								<div class="select-total">
 									<span>total:</span>
-									<h5>${sum}</h5>
+									<h5 id="cartHoverTotal">$${sum}</h5>
 								</div>
 								<div class="select-button">
 									<a

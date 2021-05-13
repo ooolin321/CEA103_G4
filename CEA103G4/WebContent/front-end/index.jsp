@@ -5,6 +5,8 @@
 <%@ page import="com.product.model.*"%>
 <%@ page import="com.product_type.model.*"%>
 <%@ page import="com.product.controller.*"%>
+<%@ page import="com.user.model.*"%>
+<jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
 
 <%
 	

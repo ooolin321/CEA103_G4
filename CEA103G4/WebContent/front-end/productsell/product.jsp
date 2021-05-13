@@ -11,8 +11,14 @@
 <%
 ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
+<<<<<<< HEAD
 UserVO userVO = (UserVO) session.getAttribute("account");
 session.setAttribute("userVO", userVO);
+=======
+//   UserVO userVO = (UserVO) session.getAttribute("account"); 
+//   session.setAttribute("userVO", userVO);
+	
+>>>>>>> 84e3209d01937f935adc9833cf4a422907ed3bfb
 %>
 <jsp:useBean id="product_typeSvc" scope="page"
 	class="com.product_type.model.Product_TypeService" />
@@ -558,6 +564,7 @@ session.setAttribute("userVO", userVO);
 
 	<!-- Footer Section Begin -->
 	<%@include file="/front-end/footer.jsp"%>
+<<<<<<< HEAD
 	<!-- Footer Section End -->
 
 	<!-- Js Plugins -->
@@ -588,6 +595,27 @@ session.setAttribute("userVO", userVO);
 
 
 	<script>
+=======
+    <!-- Footer Section End -->
+    
+    <!-- Js Plugins -->
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery-3.3.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery-ui.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.countdown.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.nice-select.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.zoom.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.dd.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
+	<script src="${pageContext.request.contextPath}/front-template/js/ajaxSearch.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
+	 <script src="${pageContext.request.contextPath}/front-template/js/products-search.js" ></script>
+    
+    
+    	<script>
+>>>>>>> 84e3209d01937f935adc9833cf4a422907ed3bfb
 
 	
 	function sendQuery(datas){ 
@@ -840,6 +868,9 @@ session.setAttribute("userVO", userVO);
 				  },
 				  success: function(res) {
 					  
+					  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>"); 
+					  $("#carts").html(cartproducts); 
+					  
 					  var carRes  = JSON.parse(res)
 // 					  console.log(carRes["results"].length);
 					  var ibaCount = carRes["results"].length;
@@ -850,6 +881,8 @@ session.setAttribute("userVO", userVO);
 							titlePrice += (item.product_price * item.product_quantity)
 						});
 					  $(".cart-price").html("$" + titlePrice);
+					  $(".select-total").html(`<h5>${titlePrice}</h5>`);
+					  
 
 					  Swal.fire({
 						  icon: 'success',

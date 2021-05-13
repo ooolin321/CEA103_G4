@@ -20,8 +20,12 @@ import com.customer_service.model.ChatMessage;
 import com.customer_service.model.State;
 import com.google.gson.Gson;
 
-@ServerEndpoint("/FriendWS/{userName}")
-public class FriendWS {
+import Jedis.JedisHandleMessage;
+
+
+
+@ServerEndpoint("/CustomerWS/{userName}")
+public class CustomerWS {
 	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 	Gson gson = new Gson();
 

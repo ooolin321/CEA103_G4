@@ -4,15 +4,20 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.live.model.*"%>
 <%@ page import="com.user.model.*"%>
+<%@ page import="com.product_type.model.*"%>
 <%@ page import="com.product.model.*"%>
-
 <%
-	LiveVO liveVO = (LiveVO) request.getAttribute("liveVO");
 
-	UserVO userVO = (UserVO) session.getAttribute("account"); 
-	session.setAttribute("userVO", userVO);
-	
-%>
+	Product_TypeDAO dao2 = new Product_TypeDAO();
+     List<Product_TypeVO> list2 = dao2.getAll();
+    pageContext.setAttribute("list2",list2);
+    
+    Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
+	pageContext.setAttribute("buylist", buylist);
+
+	UserVO userVO2 = (UserVO) session.getAttribute("account"); 
+	session.setAttribute("userVO", userVO2);
+ %>
 
 
 <jsp:useBean id="liveSvc" scope="page"
@@ -162,63 +167,69 @@ input {
 							</div>
 						</c:if>
 						<!-- 鈴鐺/購物車顯示的數字+購物車預覽圖要改 -->
-						<ul class="nav-right">
-							<li class="bell-icon"><a href="#"> <svg
-										xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-										fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+					<ul class="nav-right">
+						<li class="bell-icon"><a href="#"> <svg
+									xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+									fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
                       <path
-											d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
+										d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
                     </svg> <span>1</span>
-							</a></li>
-							<li class="cart-icon"><a
-								href="${pageContext.request.contextPath}/front-end/productsell/shopping-cart.html">
-									<i class="icon_bag_alt"></i> <span>3</span>
-							</a>
-								<div class="cart-hover">
-									<div class="select-items">
-										<table>
-											<tbody>
-												<tr>
-													<td class="si-pic"><img
-														src="${pageContext.request.contextPath}/front-template/images/productsell/select-product-1.jpg"
-														alt="" /></td>
-													<td class="si-text">
-														<div class="product-selected">
-															<p>$60.00 x 1</p>
-															<h6>Kabino Bedside Table</h6>
-														</div>
-													</td>
-													<td class="si-close"><i class="ti-close"></i></td>
-												</tr>
-												<tr>
-													<td class="si-pic"><img
-														src="${pageContext.request.contextPath}/front-template/images/productsell/select-product-2.jpg"
-														alt="" /></td>
-													<td class="si-text">
-														<div class="product-selected">
-															<p>$60.00 x 1</p>
-															<h6>Kabino Bedside Table</h6>
-														</div>
-													</td>
-													<td class="si-close"><i class="ti-close"></i></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="select-total">
-										<span>total:</span>
-										<h5>$120.00</h5>
-									</div>
-									<div class="select-button">
-										<a
-											href="${pageContext.request.contextPath}/front-end/productsell/shopping-cart.html"
-											class="primary-btn view-card">購物車清單</a> <a
-											href="${pageContext.request.contextPath}/front-end/productsell/check-out.html"
-											class="primary-btn checkout-btn">結帳</a>
-									</div>
-								</div></li>
-							<li class="cart-price">$150.00</li>
-						</ul>
+						</a></li>
+						<li class="cart-icon"><a
+							href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp">
+								<i class="icon_bag_alt"></i>
+								<c:if test="${buylist != null}">
+								<span id="iba">${buylist.size()}</span>
+								</c:if> 
+								<c:if test="${buylist == null}"> 
+								<span id="iba">0</span>
+								</c:if>
+						</a>
+<%-- 						<c:if test="${buylist != null && buylist.size() > 0}"> --%>
+							<div class="cart-hover">
+								<div class="select-items">
+									<table>  
+										<tbody id="carts">
+									<c:set var="sum" value="0"> </c:set>
+									<c:forEach var="order" items="${buylist}" varStatus="cartstatus">
+											<tr>
+												<td class="si-pic"><img
+													src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
+													alt="${order.product_name}" style="width:100px; height:100px;" /></td>
+												<td class="si-text">
+													<div class="product-selected">
+														<p>$${order.product_price } x ${order.product_quantity}</p>
+														<h6>${order.product_name }</h6>
+													</div>
+												</td>
+											</tr>
+									<c:set var="sum" value="${sum + order.product_price*order.product_quantity}"></c:set>
+                                   </c:forEach>
+										</tbody>
+									</table>
+								</div>
+								<div class="select-total">
+									<span>total:</span>
+									<h5>${sum}</h5>
+								</div>
+								<div class="select-button">
+									<a
+										href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp"
+										class="primary-btn view-card">購物車清單</a>
+									<a
+										href="${pageContext.request.contextPath}/front-end/protected/check-out.html"
+										class="primary-btn checkout-btn">結帳</a>
+								</div>
+							</div>
+<%-- 							</c:if> --%>
+							</li>
+						<c:if test="${buylist.size() > 0 }"> 
+						<li class="cart-price" id="totalprice">$${sum}</li>
+						</c:if>
+						<c:if test="${buylist == null}"> 
+						<li class="cart-price">$0</li>
+						</c:if>
+					</ul>
 					</div>
 				</div>
 			</div>
@@ -492,7 +503,7 @@ function refresh(){
 				}else if("start"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以start
 					//&& ${liveVO.user_id==userVO.user_id}
 					//開始競標
-					alert("開始競標");
+					alert("開始競標#"+$("#showProduct").find("td").eq(1).html());
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 						//0給初始直
 							'type' : 'max',
@@ -518,7 +529,7 @@ function refresh(){
 				}else if("over"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以end
 					//&& ${liveVO.user_id==userVO.user_id}
 					//結束競標
-					alert("結束競標");
+					alert("結束競標#"+$("#showProduct").find("td").eq(1).html());
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 							'type' : 'max',
 							'sender' : self,
@@ -552,13 +563,23 @@ function refresh(){
 				}else if(jsonObj.timeStart== "1"){
 					addListener();
 				}else if(jsonObj.timeStart== "2"){
+					//ajax  更改狀態
+					//refresh();
+					//注意元素可以抓到
+
+					
+					
+					
+					
+					
+					
+					
+					
 					$("#current_price").text(jsonObj.maxPrice);
 					$("#current_id").text("結束囉");
 					
 					
-					//ajax  更改狀態
-					//refresh();
-					//注意元素可以抓到
+
 					
 					
 					
@@ -749,7 +770,7 @@ function refresh(){
     		"密碼"+'<input id="PWD" class="swal2-input">',
     		showCloseButton: true,
     		confirmButtonText: `登入`,
-  });
+ 			 });
 			$(".swal2-confirm").click(function(){
 			if($("#userID").val().trim().length != 0 && $("#PWD").val().trim().length != 0){				
   			$.ajax({ 
@@ -797,7 +818,8 @@ function refresh(){
 			});
 			}
 			});
-	  	};
+  	}
+  	
 	
 </script>
 

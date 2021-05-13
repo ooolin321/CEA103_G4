@@ -15525,7 +15525,7 @@ max-height:100%;
 @media (max-width: 576px) {
 .header-section .logo{
     float: left;
-    width: 31%;
+    width: 33%;
     height: 100%;
     padding: 0px 4%;
     box-sizing: border-box;
@@ -15536,8 +15536,41 @@ max-height:100%;
 margin-top: 65px;
 min-width: 100%;
 }
+.app-sidebar__toggle {
+    padding: 16px 10px 8px 10px;
+    font-family: fontAwesome;
+    color: #fff;
+    line-height: 4;
+    -webkit-transition: background-color 0.3s ease;
+    -o-transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
 }
-
+.header-section .app-nav {
+    padding-top: 37px;
+    padding-right: 5px;
+    float: right;
+    display: inline-block;
+}
+.dropup, .dropright, .dropdown, .dropleft {
+    position: relative;
+    display: inline-block;
+}
+.app-nav__item {
+    display: block;
+    padding: 10px;
+    line-height: 20px;
+    color: #fff;
+    -webkit-transition: background-color 0.3s ease;
+    -o-transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease;
+}
+.nav-item .headerBtn {
+    display: inline-block;
+    font-size: 16px;
+    padding-right: 5px;
+}
+}
 @media only screen and (max-width: 767px) {
 	
 }

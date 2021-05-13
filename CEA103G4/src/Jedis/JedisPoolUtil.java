@@ -1,4 +1,4 @@
-package com.customer_service.controller;
+package Jedis;
 
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;

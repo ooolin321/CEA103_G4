@@ -126,7 +126,7 @@
 								</div>
 								<div class="select-total">
 									<span>total:</span>
-									<h5>${sum}</h5>
+									<h5 id="cartHoverTotal">$${sum}</h5>
 								</div>
 								<div class="select-button">
 									<a

@@ -65,7 +65,7 @@ margin: -30px -30px 0px;
 <!-- 	</ul> -->
 <%-- </c:if>          --%>
          
-<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/front-end/user/user.do" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/front-end/user/user.do" name="form1" enctype = "multipart/form-data">
 <table>
 	<tr>
 		<td>帳號:<font color=red><b>*</b></font></td>
@@ -130,7 +130,12 @@ margin: -30px -30px 0px;
 			value="<%=userVO.getUser_addr()%>"> <font color=red><b>${(empty errorMsgs) ? "" : errorMsgs.user_addr }</b>
 		</th>
 	</tr>
-	
+	<tr>
+		<td>選擇圖片:</td>
+		<td><input type="file" name="user_pic" id="myFile" />
+		<img width="100px" height="100px" id="oldimg" src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${userVO.user_id}">
+		<div id="preview"></div></td>
+	</tr>
 <!-- 	<tr> -->
 <!-- 		<td>註冊日期:</td> -->
 <!-- 		<td><input name="regdate" id="f_date2" type="text" ></td> -->
@@ -245,6 +250,39 @@ margin: -30px -30px 0px;
                ga('send', 'pageview');
              }
            </script>
+           
+           <script>
+         //實現上傳圖片可以預覽所上傳的圖片,若重新上傳其他圖片,可以移除舊的圖片預覽,只顯示最新的狀態
+let myFile = document.getElementById("myFile");
+let preview = document.getElementById('preview');
+let oldimg = document.getElementById('oldimg');
+
+function init() {
+    myFile.addEventListener('change', function(e) {
+    	$("#preview").empty();
+        let files = e.target.files;     
+        if (files !== null) {          
+            let file = files[0];
+            if (file.type.indexOf('image') > -1) {
+                let reader = new FileReader();
+                reader.addEventListener('load', function(e) { 
+                    let result = e.target.result;
+                    let img = document.createElement('img');
+                    img.src = result;
+                    preview.append(img);
+                    oldimg.remove();
+                });
+                reader.readAsDataURL(file);
+            } else {
+            	alert('請上傳圖片！');
+            }
+        }
+    });
+}
+
+window.onload = init;
+
+</script>
 
 </body>
 
@@ -259,6 +297,8 @@ margin: -30px -30px 0px;
         	zipcodeSel: "<%=userVO.getZipcode()%>"
         	});
 </script>
+
+
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 

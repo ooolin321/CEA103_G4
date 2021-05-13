@@ -36,9 +36,9 @@ public class UserDAO implements UserDAO_interface {
 //			"INSERT INTO `USER` (`USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			"INSERT INTO `USER` (`USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), 0, 0, 1, 0, 0, 0)";
 	private static final String GET_ALL_STMT = "SELECT * FROM `USER` ORDER BY `USER_ID`";
-	private static final String GET_ONE_STMT = "SELECT `USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH` FROM USER WHERE `USER_ID` = ?";
+	private static final String GET_ONE_STMT = "SELECT * FROM USER WHERE `USER_ID` = ?";
 	private static final String DELETE = "DELETE FROM USER where USER_ID = ?";
-	private static final String UPDATE = "UPDATE `USER` SET `USER_NAME`=?, `USER_GENDER`=?, `USER_DOB`=?, `USER_MAIL`=?, `USER_PHONE`=?, `USER_MOBILE`=?, `CITY`=?, `TOWN`=?, `ZIPCODE`=?, `USER_ADDR`=? WHERE `USER_ID` = ?";
+	private static final String UPDATE = "UPDATE `USER` SET `USER_NAME`=?, `USER_GENDER`=?, `USER_DOB`=?, `USER_MAIL`=?, `USER_PHONE`=?, `USER_MOBILE`=?, `CITY`=?, `TOWN`=?, `ZIPCODE`=?, `USER_ADDR`=? ,`USER_PIC`=? WHERE `USER_ID` = ?";
 	private static final String UPDATE_PSW = "UPDATE `USER` SET USER_PWD=? WHERE `USER_ID`=?";
 	private static final String GET_Live_reportByUser_id_STMT = "SELECT LIVE_REPORT_NO,LIVE_REPORT_CONTENT,LIVE_NO,USER_ID,EMPNO,LIVE_REPORT_STATE,REPORT_DATE,PHOTO FROM LIVE_REPORT where USER_ID = ? ORDER BY LIVE_REPORT_NO";
 	private static final String SIGN_IN = "SELECT * FROM USER where BINARY USER_ID=? AND BINARY USER_PWD=?";
@@ -107,10 +107,9 @@ public class UserDAO implements UserDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
-
+			
 			pstmt.setString(1, userVO.getUser_name());
 			pstmt.setString(2, userVO.getUser_gender());
 			pstmt.setDate(3, userVO.getUser_dob());
@@ -121,10 +120,11 @@ public class UserDAO implements UserDAO_interface {
 			pstmt.setString(8, userVO.getTown());
 			pstmt.setInt(9, userVO.getZipcode());
 			pstmt.setString(10, userVO.getUser_addr());
-			pstmt.setString(11, userVO.getUser_id());
-
+			pstmt.setBytes(11, userVO.getUser_pic());
+			pstmt.setString(12, userVO.getUser_id());
+			
 			pstmt.executeUpdate();
-
+			
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -226,6 +226,7 @@ public class UserDAO implements UserDAO_interface {
 				userVO.setUser_comment(rs.getInt("user_comment"));
 				userVO.setComment_total(rs.getInt("comment_total"));
 				userVO.setCash(rs.getInt("cash"));
+				userVO.setUser_pic(rs.getBytes("user_pic"));
 			}
 
 			// Handle any driver errors
@@ -674,5 +675,53 @@ public class UserDAO implements UserDAO_interface {
 				}
 			}
 		}
+	}
+
+	@Override
+	public Optional<UserVO> findUserPic(String user_id) {
+		UserVO userVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_STMT);
+			pstmt.setString(1, user_id);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				userVO = new UserVO();
+				userVO.setUser_pic(rs.getBytes("user_pic"));
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return Optional.ofNullable(userVO);
 	}
 }

@@ -4,11 +4,13 @@ import java.io.*;
 import java.util.*;
 
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.live_report.model.*;
 import com.user.model.*;
 
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class UserServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -154,12 +156,11 @@ public class UserServlet extends HttpServlet {
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				String user_id = req.getParameter("user_id").trim();
 //				String user_pwd = new String(req.getParameter("user_pwd").trim());
-
+				
 				String user_name = req.getParameter("user_name");
 				String user_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (user_name == null || user_name.trim().length() == 0) { // user_name == null 防呆用,避免變數打錯
@@ -170,6 +171,7 @@ public class UserServlet extends HttpServlet {
 
 				// 身分證驗證
 				String id_card = req.getParameter("id_card");
+				
 //				String input_id = id_card;
 //				String checkLetter = "ABCDEFGHJKLMNPQRSTUVWXYZIO"; // 首字身分證英文字母代表之意義排序(小到大)
 //				if (input_id.length() == 10){
@@ -245,7 +247,7 @@ public class UserServlet extends HttpServlet {
 				if (user_addr == null || user_addr.trim().length() == 0) {
 					errorMsgs.put("user_addr", "*地址請勿空白");
 				}
-
+				
 //				java.sql.Date regdate = null;
 //				try {
 //				regdate = java.sql.Date.valueOf(req.getParameter("regdate").trim());
@@ -301,9 +303,24 @@ public class UserServlet extends HttpServlet {
 //					cash = 0;
 //					errorMsgs.put("cash","會員錢包請填數字.");
 //				}
-
+				
 				UserVO userVO = new UserVO();
-
+				
+				byte[] user_pic = null;
+				Part part = req.getPart("user_pic");
+				if (part == null || part.getSize() == 0) {
+					req.setAttribute("userVO", userVO);
+					UserService userSvc2 = new UserService();
+					UserVO userVO2 = userSvc2.getOneUser(user_id);
+					user_pic = userVO2.getUser_pic();
+				} else {
+					req.setAttribute("userVO", userVO);
+					InputStream in = part.getInputStream();
+					user_pic = new byte[in.available()];
+					in.read(user_pic);
+					in.close();
+				}
+				
 				userVO.setUser_id(user_id);
 //				userVO.setUser_pwd(user_pwd);
 				userVO.setUser_name(user_name);
@@ -317,6 +334,7 @@ public class UserServlet extends HttpServlet {
 				userVO.setTown(town);
 				userVO.setZipcode(zipcode);
 				userVO.setUser_addr(user_addr);
+				userVO.setUser_pic(user_pic);
 //				userVO.setRegdate(regdate);
 //				userVO.setUser_point(user_point);
 //				userVO.setViolation(violation);
@@ -339,9 +357,9 @@ public class UserServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 *****************************************/
 				UserService userSvc = new UserService();
-
 				userVO = userSvc.updateUser(user_id, user_name, user_gender, user_dob, user_mail, user_phone,
-						user_mobile, city, town, zipcode, user_addr);
+						user_mobile, city, town, zipcode, user_addr, user_pic);
+				
 				userVO.setId_card(idCard);
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("userVO", userVO); // 資料庫update成功後,正確的的userVO物件,存入req

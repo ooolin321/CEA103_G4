@@ -15,6 +15,9 @@
     
     Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
 	pageContext.setAttribute("buylist", buylist);
+
+	UserVO userVO2 = (UserVO) session.getAttribute("account"); 
+	session.setAttribute("userVO", userVO2);
  %>
 	
 <!-- Page Preloder -->

@@ -100,8 +100,8 @@
 		<td>付款方式:</td>
 		<td><select name="pay_method">
 						<option value="0" ${(orderVO.pay_method==0)? 'selected':''}>錢包</option>
-						<option value="0" ${(orderVO.pay_method==1)? 'selected':''}>信用卡</option>
-						<option value="1" ${(orderVO.pay_method==2)? 'selected':''}>轉帳</option>
+						<option value="1" ${(orderVO.pay_method==1)? 'selected':''}>信用卡</option>
+						<option value="2" ${(orderVO.pay_method==2)? 'selected':''}>轉帳</option>
 		</select></td>	
 	<tr>
 		<td>收件人姓名:</td>

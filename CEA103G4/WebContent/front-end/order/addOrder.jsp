@@ -133,6 +133,7 @@
 	<tr>
 		<td>付款方式:</td>
 		<td><select name="pay_method">
+	
 			<option value="0">錢包</option>
 			<option value="1">信用卡</option>
 			<option value="2">轉帳</option>
@@ -302,7 +303,7 @@
 			$("#showOrder_point").text(point);
 		}
 	})
-	$()
+	
 	$("#twzipcode").twzipcode({
 		zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
 		css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 

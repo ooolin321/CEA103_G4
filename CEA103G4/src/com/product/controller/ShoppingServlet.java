@@ -1,6 +1,7 @@
 package com.product.controller;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
@@ -77,6 +78,18 @@ public class ShoppingServlet extends HttpServlet {
 				}
 			}
 			
+
+//			Map<String, List<ProductVO>> groupMap = new HashMap<>();
+//
+//			// Collect CO Executives
+//			groupMap = buylist.stream().collect(Collectors.groupingBy(ProductVO::getUser_id));
+//
+//			System.out.println("\n== ProductVOs by User_id ==");
+//			groupMap.forEach((k, v) -> {
+//				System.out.println("\nUser_id: " + k);
+//				v.forEach(ProductVO::printSummary);
+//			});
+			
 //			Collections.sort(buylist, new Comparator<Object>() {
 //				public int compare(Object a, Object b) {
 //					String one = ((ProductVO) a).getUser_id();
@@ -152,5 +165,4 @@ public class ShoppingServlet extends HttpServlet {
 		productVO.setUser_id(user_id);
 		return productVO;
 	}
-	
 }

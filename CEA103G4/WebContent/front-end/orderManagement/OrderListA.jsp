@@ -57,6 +57,9 @@ table td, table tr, table th {
 ion-icon {
 	font-size: 64px;
 }
+btn-primary{
+	
+}
 </style>
 </head>
 <body class="app sidebar-mini rtl">
@@ -125,57 +128,59 @@ ion-icon {
 									<td>
 										<!-- Button trigger modal -->
 										<button class="btn btn-info" id="srating_btn"
-											data-toggle="modal" data-target="#sratingModalCenter">評價</button>
+											data-toggle="modal" data-target="#${orderVO.order_no}">評價</button>
+										<input type="hidden" value="${orderVO.order_no}">
 									</td>
 									<td></td>
 								</tr>
+
 							</c:forEach>
 						</tbody>
 					</table>
-					<FORM METHOD="post" ACTION="order.do" name="form1">
-						<!-- Modal -->
-						<div class="modal fade" id="sratingModalCenter" tabindex="-1"
-							role="dialog" aria-labelledby="exampleModalCenterTitle"
-							aria-hidden="true">
-							<div class="modal-dialog modal-dialog-centered" role="document">
-								<div class="modal-content" id="sratingbox">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLongTitle">
-											商品:${orderVO.order_no} <input type="hidden" name="order_no"
-												value="0" />
-										</h5>
-										<button type="button" class="close" data-dismiss="modal"
-											aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="modal-body">
-										<input type="hidden" name="srating" value="0" id="con" />
-										<ion-icon name="star" class="star all-star" id="s1"></ion-icon>
-										<ion-icon name="star" class="star all-star" id="s2"></ion-icon>
-										<ion-icon name="star" class="star all-star" id="s3"></ion-icon>
-										<ion-icon name="star" class="star all-star" id="s4"></ion-icon>
-										<ion-icon name="star" class="star all-star" id="s5"></ion-icon>
-										<div>
-											<textarea name="srating_content" rows="10" cols="43"
-												style="resize: none"></textarea>
-										</div>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary"
-											data-dismiss="modal">Close</button>
-										<button type="button" class="btn btn-primary">Save
-											changes</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</FORM>
+
 				</div>
 			</div>
 		</div>
 
-
+		<FORM METHOD="post" ACTION="order.do" name="form1">
+			<!-- Modal -->
+			<div class="modal fade" id="" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content" id="sratingbox">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">
+								商品: <input type="hidden" name="order_no" value="0" />
+							</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<input type="hidden" name="srating" value="0" id="con" />
+							<ion-icon name="star" class="star all-star" id="s1"></ion-icon>
+							<ion-icon name="star" class="star all-star" id="s2"></ion-icon>
+							<ion-icon name="star" class="star all-star" id="s3"></ion-icon>
+							<ion-icon name="star" class="star all-star" id="s4"></ion-icon>
+							<ion-icon name="star" class="star all-star" id="s5"></ion-icon>
+							<div>
+								<textarea name="srating_content" rows="10" cols="43"
+									style="resize: none"></textarea>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<!-- <button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save
+								changes</button> -->
+								<input type="button" class="btn btn-secondary" data-dismiss="modal" value="取消">
+								<input type="submit" class="btn btn-primary" value="送出">
+						</div>
+					</div>
+				</div>
+			</div>
+		</FORM>
 
 
 
@@ -207,6 +212,16 @@ ion-icon {
 		src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
 	<script>
 	$(document).ready(function(){
+		$("button").click(function(){
+			let val =$(this).next('input').val();
+			$(".all-star").css("color","black");
+			$("#con").val("0");
+			
+			$(".fade").attr("id",val);
+			$("h5").text(val);
+		})
+		
+		
 		if(${orderVO.state == 1 && orderVO.logisticsstate == 2}){
 			$("button#srating_btn").removeAttr('disabled');
 		}else{

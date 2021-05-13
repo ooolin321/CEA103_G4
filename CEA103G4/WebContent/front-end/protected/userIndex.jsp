@@ -58,9 +58,6 @@
                   <div>
                     <h1><i class="fa fa-drivers-license-o"></i> 會員首頁</h1>
                     </div>
-                    <div class="SellerHomeBtn">
-                    <a href="<%=request.getContextPath()%>/SellerProducts?user_id=${userVO.user_id}" target="_blank"><button class="btn btn-outline-warning" type="button">前往我的賣場</button></a>
-                  </div>
                   <ul class="app-breadcrumb breadcrumb">
                     <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><i class="fa fa-home fa-lg"></i></a></li>
                     <li class="breadcrumb-item">會員首頁</li>

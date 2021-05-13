@@ -1,30 +1,32 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/customer_service/css/friendchat.css" type="text/css" />
-
+<link rel="stylesheet" href="css/friendchat.css" type="text/css" />
 <style type="text/css">
 
 </style>
-<title>最大私人聊天室</title>
+<title>${seller_id}</title>
 </head>
 <body onload="connect();" onunload="disconnect();">
 	<h3 id="statusOutput" class="statusOutput"></h3>
 	<div id="row"></div>
 	<div id="messagesArea" class="panel message-area" ></div>
 	<div class="panel input-area">
-		<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
+		<input id="message" class="text-field" type="text" placeholder="message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
 		<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
 		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
 	</div>
 </body>
 <script>
-	var MyPoint = "/CustomerWS/${userName}";
+	var MyPoint = "/FriendChatWS/${user_id}";
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -32,7 +34,7 @@
 
 	var statusOutput = document.getElementById("statusOutput");
 	var messagesArea = document.getElementById("messagesArea");
-	var self = '${userName}';
+	var self = '${user_id}';
 	var webSocket;
 
 	function connect() {
@@ -41,9 +43,11 @@
 
 		webSocket.onopen = function(event) {
 			console.log("Connect Success!");
-			document.getElementById('sendMessage').disabled = false;
+			updateFriendName("${seller_id}");
+			
+		/* 	document.getElementById('sendMessage').disabled = false;
 			document.getElementById('connect').disabled = true;
-			document.getElementById('disconnect').disabled = false;
+			document.getElementById('disconnect').disabled = false; */
 		};
 
 		webSocket.onmessage = function(event) {
@@ -109,7 +113,7 @@
 	}
 	
 	// 有好友上線或離線就更新列表
-	function refreshFriendList(jsonObj) {
+	/* function refreshFriendList(jsonObj) {
 		var friends = jsonObj.users;
 		var row = document.getElementById("row");
 		row.innerHTML = '';
@@ -118,7 +122,7 @@
 			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
 		}
 		addListener();
-	}
+	} */
 	// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
 	function addListener() {
 		var container = document.getElementById("row");
@@ -137,9 +141,9 @@
 	
 	function disconnect() {
 		webSocket.close();
-		document.getElementById('sendMessage').disabled = true;
+	/* 	document.getElementById('sendMessage').disabled = true;
 		document.getElementById('connect').disabled = false;
-		document.getElementById('disconnect').disabled = true;
+		document.getElementById('disconnect').disabled = true; */
 	}
 	
 	function updateFriendName(name) {

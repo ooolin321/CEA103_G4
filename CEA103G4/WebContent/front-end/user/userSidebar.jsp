@@ -131,6 +131,7 @@
                       <li>
                     </ul>
                   </li>
+                  <li class="treeview"><a class="app-menu__item" href="<%=request.getContextPath()%>/SellerProducts?user_id=${userVO.user_id}" target="_blank"><i class="app-menu__icon fa fa-diamond"></i><span class="app-menu__label">前往我的賣場</span><i class="treeview-indicator fa fa-angle-right"></i></a></li>
                 </ul>
               </aside>
                

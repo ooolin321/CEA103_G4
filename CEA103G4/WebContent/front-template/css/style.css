@@ -485,6 +485,7 @@ ol {
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
+  border-radius: 10px;
 }
 
 .inner-header .nav-right li.cart-icon .cart-hover .select-items table {
@@ -2755,14 +2756,21 @@ ul.modefemmeinfo {
 .cart-table table {
   width: 100%;
   min-width: 480px;
-  border: 1px solid #ebebeb;
+  border:none;
+  box-shadow: 1px 1px 10px rgb(0 0 0 / 10%);
+  border-radius: 5px;
+}
+.cart-table .thead {
+  box-shadow: 1px 1px 10px rgb(0 0 0 / 10%);
+  border-radius: 5px;
+  border:none;
 }
 
 .cart-table table tr th {
   font-size: 16px;
   color: #252525;
   font-weight: 700;
-  border-bottom: 1px solid #ebebeb;
+  border:none;
   text-align: center;
   padding: 18px 0 19px;
   text-transform: uppercase;
@@ -2774,12 +2782,15 @@ ul.modefemmeinfo {
 
 .cart-table table tr td {
   text-align: center;
-  padding-bottom: 34px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  border: none;
+  vertical-align: text-top;
 }
 
-.cart-table table tr td.first-row {
-  padding-top: 30px;
-}
+/* .cart-table table tr td.first-row { */
+/*   padding-top: 30px; */
+/* } */
 
 .cart-table table tr td.cart-pic {
   width: 21%;
@@ -2795,6 +2806,16 @@ ul.modefemmeinfo {
 
 .cart-table table tr td.p-price {
   width: 16%;
+}
+
+.cart-pic img {
+    border-radius: 10px;
+}
+.cart-table .btn-outline-warning {
+	border:2px solid;
+}
+.cart-table .btn-outline-warning:hover {
+	color:white;
 }
 
 .cart-table table tr td.p-price,

@@ -126,7 +126,7 @@
 								</div>
 								<div class="select-total">
 									<span>total:</span>
-									<h5>${sum}</h5>
+									<h5 id="cartHoverTotal">$${sum}</h5>
 								</div>
 								<div class="select-button">
 									<a
@@ -205,7 +205,7 @@
 	
 	<div class="mini-chat" style="position: fixed; right: 0px; bottom: 0px; z-index: 99999;display:none;">
 		<div class="content">
-
+			
 		</div>
 	</div>
 </header>

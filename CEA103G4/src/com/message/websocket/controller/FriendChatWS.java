@@ -1,4 +1,4 @@
-package com.customer_service.controller;
+package com.message.websocket.controller;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -16,32 +16,34 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-import com.customer_service.model.ChatMessage;
-import com.customer_service.model.State;
 import com.google.gson.Gson;
 
-@ServerEndpoint("/FriendWS/{userName}")
-public class FriendWS {
+import com.message.websocket.jedis.JedisHandleMessage;
+import com.message.websocket.model.ChatMessage;
+import com.message.websocket.model.State;
+
+@ServerEndpoint("/FriendChatWS/{user_id}")
+public class FriendChatWS {
 	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 	Gson gson = new Gson();
 
 	@OnOpen
-	public void onOpen(@PathParam("userName") String userName, Session userSession) throws IOException {
+	public void onOpen(@PathParam("user_id") String user_id, Session userSession) throws IOException {
 		/* save the new user in the map */
-		sessionsMap.put(userName, userSession);
+		sessionsMap.put(user_id, userSession);
 		/* Sends all the connected users to the new user */
-		Set<String> userNames = sessionsMap.keySet();
-		State stateMessage = new State("open", userName, userNames);
+		Set<String> user_ids = sessionsMap.keySet();
+		State stateMessage = new State("open", user_id, user_ids);
 		String stateMessageJson = gson.toJson(stateMessage);
 		Collection<Session> sessions = sessionsMap.values();
 		for (Session session : sessions) {
-			if (session.isOpen()) {
+//			if (session.isOpen()) {
 				session.getAsyncRemote().sendText(stateMessageJson);
-			}
+//			}
 		}
 
-		String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),
-				userName, userNames);
+		String text = String.format("Session ID = %s, connected; user_id = %s%nusers: %s", userSession.getId(),
+				user_id, user_ids);
 		System.out.println(text);
 	}
 
@@ -55,20 +57,20 @@ public class FriendWS {
 			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);
 			String historyMsg = gson.toJson(historyData);
 			ChatMessage cmHistory = new ChatMessage("history", sender, receiver, historyMsg);
-			if (userSession != null && userSession.isOpen()) {
+//			if (userSession != null && userSession.isOpen()) {
 				userSession.getAsyncRemote().sendText(gson.toJson(cmHistory));
 				System.out.println("history = " + gson.toJson(cmHistory));
 				return;
-			}
+//			}
 		}
 		
 		
 		Session receiverSession = sessionsMap.get(receiver);
-		if (receiverSession != null && receiverSession.isOpen()) {
+//		if (receiverSession != null && receiverSession.isOpen()) {
 			receiverSession.getAsyncRemote().sendText(message);
 			userSession.getAsyncRemote().sendText(message);
 			JedisHandleMessage.saveChatMessage(sender, receiver, message);
-		}
+//		}
 		System.out.println("Message received: " + message);
 	}
 
@@ -79,18 +81,18 @@ public class FriendWS {
 
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {
-		String userNameClose = null;
-		Set<String> userNames = sessionsMap.keySet();
-		for (String userName : userNames) {
-			if (sessionsMap.get(userName).equals(userSession)) {
-				userNameClose = userName;
-				sessionsMap.remove(userName);
+		String user_idClose = null;
+		Set<String> user_ids = sessionsMap.keySet();
+		for (String user_id : user_ids) {
+			if (sessionsMap.get(user_id).equals(userSession)) {
+				user_idClose = user_id;
+				sessionsMap.remove(user_id);
 				break;
 			}
 		}
 
-		if (userNameClose != null) {
-			State stateMessage = new State("close", userNameClose, userNames);
+		if (user_idClose != null) {
+			State stateMessage = new State("close", user_idClose, user_ids);
 			String stateMessageJson = gson.toJson(stateMessage);
 			Collection<Session> sessions = sessionsMap.values();
 			for (Session session : sessions) {
@@ -99,7 +101,7 @@ public class FriendWS {
 		}
 
 		String text = String.format("session ID = %s, disconnected; close code = %d%nusers: %s", userSession.getId(),
-				reason.getCloseCode().getCode(), userNames);
+				reason.getCloseCode().getCode(), user_ids);
 		System.out.println(text);
 	}
 }

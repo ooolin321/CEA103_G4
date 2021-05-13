@@ -338,6 +338,7 @@
 							titlePrice += (item.product_price * item.product_quantity)
 						});
 					  $(".cart-price").html("$" + titlePrice);
+					  $("#cartHoverTotal").html("$" + titlePrice);
 
 
 					  Swal.fire({

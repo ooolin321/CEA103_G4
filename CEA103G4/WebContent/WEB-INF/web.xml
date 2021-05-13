@@ -184,6 +184,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>ChatMessageServlet</servlet-name>
+		<servlet-class>com.message.websocket.controller.ChatMessageServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChatMessageServlet</servlet-name>
+		<url-pattern>/front-end/message/chatMessage.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>AdServlet</servlet-name>
 		<servlet-class>com.ad.controller.AdServlet</servlet-class>
 	</servlet>

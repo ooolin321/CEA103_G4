@@ -203,7 +203,7 @@
 	
 	<div class="mini-chat" style="position: fixed; right: 0px; bottom: 0px; z-index: 99999;display:none;">
 		<div class="content">
-
+			
 		</div>
 	</div>
 </header>

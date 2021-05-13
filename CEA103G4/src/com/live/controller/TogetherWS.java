@@ -2,6 +2,7 @@ package com.live.controller;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,14 +24,22 @@ import com.liveBid.websocket.model.bidVO;
 
 @ServerEndpoint("/TogetherWS/{live_no}/{userName}")
 public class TogetherWS {
-	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
+//	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
+	private static Map<String, ConcurrentHashMap> sessionsSet = new HashMap<String, ConcurrentHashMap>();
+
 	Gson gson = new Gson();
 
 	@OnOpen
 	public void onOpen(@PathParam("userName") String userName, @PathParam("live_no") String live_no,
 			Session userSession) throws IOException {
+		ConcurrentHashMap<String, Session> sessionsMap = sessionsSet.get(live_no);
+		if(sessionsMap == null) {
+			sessionsMap = new ConcurrentHashMap<>();
+		}
 		/* save the new user in the map */
 		sessionsMap.put(userName, userSession);
+		sessionsSet.put(live_no, sessionsMap);
+		
 		/* Sends all the connected users to the new user */
 		Set<String> userNames = sessionsMap.keySet();
 
@@ -88,7 +97,12 @@ public class TogetherWS {
 			}
 
 		}
-
+		
+		ConcurrentHashMap<String, Session> sessionsMap = sessionsSet.get(live_no);
+//		if(sessionsMap == null) {
+//			sessionsMap = new ConcurrentHashMap<>();
+//		}
+		
 		Set<String> others = sessionsMap.keySet();
 
 		if ("getMax".equals(type)) {
@@ -147,27 +161,54 @@ public class TogetherWS {
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {
 		String userNameClose = null;
-		Set<String> userNames = sessionsMap.keySet();
-		for (String userName : userNames) {
-			if (sessionsMap.get(userName).equals(userSession)) {
-				userNameClose = userName;
-				sessionsMap.remove(userName);
-				break;
+		
+		for(String key :sessionsSet.keySet()) {
+			ConcurrentHashMap<String, Session> sessionsMap = sessionsSet.get(key);
+			Set<String> userNames = sessionsMap.keySet();
+			for(String userName: userNames) {
+				Session session = sessionsMap.get(userName);
+				if(session == userSession) {
+					sessionsMap.remove(userName);
+					break;
+				}
 			}
-		}
-
-		if (userNameClose != null) {
-			State stateMessage = new State("close", userNameClose, userNames);
-			String stateMessageJson = gson.toJson(stateMessage);
-			Collection<Session> sessions = sessionsMap.values();
-			for (Session session : sessions) {
-				session.getAsyncRemote().sendText(stateMessageJson);
+			
+			
+			if (userNameClose != null) {
+				State stateMessage = new State("close", userNameClose, userNames);
+				String stateMessageJson = gson.toJson(stateMessage);
+				Collection<Session> sessions = sessionsMap.values();
+				for (Session session : sessions) {
+					session.getAsyncRemote().sendText(stateMessageJson);
+				}
 			}
-		}
 
-		String text = String.format("session ID = %s, disconnected; close code = %d%nusers: %s", userSession.getId(),
-				reason.getCloseCode().getCode(), userNames);
-		System.out.println(text);
+			String text = String.format("session ID = %s, disconnected; close code = %d%nusers: %s", userSession.getId(),
+					reason.getCloseCode().getCode(), userNames);
+			System.out.println(text);
+		}
+		
+//		Set<String> userNames = sessionsMap.keySet();
+//		for (String userName : userNames) {
+//			if (sessionsMap.get(userName).equals(userSession)) {
+//				userNameClose = userName;
+//				sessionsMap.remove(userName);
+//				break;
+//			}
+//		}
+
+//		if (userNameClose != null) {
+//			State stateMessage = new State("close", userNameClose, userNames);
+//			String stateMessageJson = gson.toJson(stateMessage);
+//			Collection<Session> sessions = sessionsMap.values();
+//			for (Session session : sessions) {
+//				session.getAsyncRemote().sendText(stateMessageJson);
+//			}
+//		}
+//
+//		String text = String.format("session ID = %s, disconnected; close code = %d%nusers: %s", userSession.getId(),
+//				reason.getCloseCode().getCode(), userNames);
+//		System.out.println(text);
 	}
 
 }

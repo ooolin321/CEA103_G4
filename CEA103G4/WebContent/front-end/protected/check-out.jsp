@@ -6,13 +6,7 @@
 <%@ page import="com.product.controller.*"%>
 <%@ page import="com.order.model.*"%>
 <%
-<<<<<<< HEAD
-ProductDAO dao = new ProductDAO();
-List<ProductVO> products = dao.getAllShop();
-pageContext.setAttribute("products", products);
-%>
-=======
-	
+
 	ProductDAO dao = new ProductDAO();
 	List<ProductVO> products = dao.getAllShop();
 	pageContext.setAttribute("products",products);
@@ -21,7 +15,7 @@ pageContext.setAttribute("products", products);
 	session.setAttribute("userVO", userVO);
 		
  %>
->>>>>>> 3264f70f175a8ed5a3c01cb0a644d4d660438416
+
 
 <!DOCTYPE html>
 <html lang="zh-tw">

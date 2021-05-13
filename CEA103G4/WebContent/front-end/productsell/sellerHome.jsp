@@ -72,7 +72,7 @@
 			<div class="card mb-3" style="width: 400px;height: 200px;">
   			<div class="row g-0">
    			 <div class="col-md-6">
-      			<img width="200px" height="200px" src="${pageContext.request.contextPath}/" class="rounded mx-auto d-block" alt="">
+      			<img width="200px" height="200px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${userVO.user_id}" class="rounded mx-auto d-block" alt="">
    			 </div>
     			<div class="col-md-6">
      		 <div class="card-body">

@@ -1,6 +1,7 @@
 package com.user.model;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import com.live_report.model.*;
@@ -29,4 +30,6 @@ public interface UserDAO_interface {
 	public void newPassword_Update(UserVO userVO);
 
 	public void update_user_report(UserVO userVO);
+	
+	Optional<UserVO> findUserPic(String user_id);
 }

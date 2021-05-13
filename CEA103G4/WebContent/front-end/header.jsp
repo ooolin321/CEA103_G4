@@ -65,7 +65,7 @@
 						<div class="header-right">
 						<FORM id="userLogOut" METHOD="post" class="logout-form" action="<%=request.getContextPath()%>/User_LogoutHandler">
 						<a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">
-						<span class="userLogin"style="cursor: pointer"><img class="rounded-circle" width="45px" height="40px" src=""/>&nbsp;               
+						<span class="userLogin"style="cursor: pointer"><img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${userVO.user_id}"/>&nbsp;               
 						${userVO.user_name}
                          </span></a>
 						 <input type="hidden" name="action" value="signOut">
@@ -205,7 +205,7 @@
 	
 	<div class="mini-chat" style="position: fixed; right: 0px; bottom: 0px; z-index: 99999;display:none;">
 		<div class="content">
-
+			
 		</div>
 	</div>
 </header>

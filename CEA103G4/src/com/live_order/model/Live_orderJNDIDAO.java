@@ -443,6 +443,8 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 			String cols[] = {"LIVE_ORDER_NO"};
 			pstmt = con.prepareStatement(INSERT_STMT , cols);			
 			pstmt.setInt(1, live_orderVO.getOrder_state());
+			
+			
 			pstmt.setInt(2, live_orderVO.getOrder_shipping());
 			pstmt.setInt(3, live_orderVO.getOrder_price());
 			pstmt.setInt(4, live_orderVO.getPay_method());
@@ -456,12 +458,15 @@ public class Live_orderJNDIDAO implements Live_orderDAO_interface{
 			pstmt.setInt(12, live_orderVO.getLive_no());
 			pstmt.setString(13, live_orderVO.getUser_id());
 			pstmt.setString(14, live_orderVO.getSeller_id());
-			pstmt.setInt(15, live_orderVO.getSrating());
+			pstmt.setInt(15, 5);
+
+			
 			pstmt.setString(16, live_orderVO.getSrating_content());
 			pstmt.setInt(17, live_orderVO.getPoint());
 			pstmt.setString(18, live_orderVO.getCity());
 			pstmt.setString(19, live_orderVO.getTown());
 			pstmt.setInt(20, live_orderVO.getZipcode());
+			
 			
 			Statement stmt=	con.createStatement();
 //			stmt.executeUpdate("set auto_increment_offset=9001;");    //自增主鍵-初始值

@@ -1,13 +1,13 @@
 package com.liveBid.websocket.model;
 
-public class bidVO {
+public class BidVO {
 	private String type;
 	private String sender;
 	private String live_no;
 	private String product_no;
 	private String message;
 
-	public bidVO(String type, String sender, String live_no, String product_no, String message) {
+	public BidVO(String type, String sender, String live_no, String product_no, String message) {
 		super();
 		this.type = type;
 		this.sender = sender;

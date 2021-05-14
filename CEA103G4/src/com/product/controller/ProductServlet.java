@@ -521,7 +521,7 @@ public class ProductServlet extends HttpServlet {
 		}
 		
 		
-		if ("offShelf".equals(action)) { // 來自update_product_input.jsp的請求
+		if ("offShelf".equals(action)) {
 			
 			List<String> errorMsgs = new LinkedList<String>();
 
@@ -529,7 +529,6 @@ public class ProductServlet extends HttpServlet {
 		
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-
 				ProductVO productVO = null;
 				ProductService productSvc = new ProductService();	
 				String[] product_no = req.getParameterValues("product_no");
@@ -541,7 +540,6 @@ public class ProductServlet extends HttpServlet {
 					productVO.setProduct_no(p_no);
 					list.add(productSvc.getOneProduct(p_no));
 					System.out.println(s1);
-										
 				}
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("productVO", productVO); // 含有輸入格式錯誤的productVO物件,也存入req

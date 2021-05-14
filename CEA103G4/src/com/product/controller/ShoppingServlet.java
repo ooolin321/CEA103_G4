@@ -25,6 +25,7 @@ public class ShoppingServlet extends HttpServlet {
 		
 		@SuppressWarnings("unchecked")
 		List<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
+
 		String action = req.getParameter("action");
 		ProductVO product= new ProductVO();
 		if (!action.equals("CHECKOUT")) {
@@ -55,11 +56,10 @@ public class ShoppingServlet extends HttpServlet {
 			}
 			
 			// 新增商品至購物車中
-			else if (action.equals("ADD")) {
+			else if (action.equals("ADD") || action.equals("updateCount")) {
 				
 				// 取得後來新增的商品
 				product = getProduct(req);
-
 				if (buylist == null) {
 					buylist = new Vector<ProductVO>();
 					buylist.add(product);
@@ -119,10 +119,17 @@ public class ShoppingServlet extends HttpServlet {
 			
 //			RequestDispatcher rd = req.getRequestDispatcher(url);
 //			rd.forward(req, res);
-		}
-
+		}		
 		// 結帳，計算購物車商品價錢總數
-		else if (action.equals("CHECKOUT")) {
+//		else if (action.equals("CHECKOUT")) {
+//			product = getProduct(req);
+//			System.out.println(product);
+//			List<ProductVO> cheakOut = (Vector<ProductVO>) session.getAttribute("shoppingcart");
+//			checkOut.add(product);
+//			session.setAttribute("shoppingcart", checkOut);
+
+			
+
 //			double total = 0;
 //			for (int i = 0; i < buylist.size(); i++) {
 //				ProductVO order = buylist.get(i);
@@ -132,16 +139,16 @@ public class ShoppingServlet extends HttpServlet {
 //			}
 //			===================================================
 //          上方簡化寫法(Lambda)
-			double total = buylist.stream()
-								  .mapToDouble(b -> b.getProduct_price()*b.getProduct_quantity())
-								  .sum();
+//			double total = buylist.stream()
+//								  .mapToDouble(b -> b.getProduct_price()*b.getProduct_quantity())
+//								  .sum();
 //			===================================================
-			String amount = String.valueOf(total);
-			req.setAttribute("amount", amount);
-			String url = "/Checkout.jsp";
-			RequestDispatcher rd = req.getRequestDispatcher(url);
-			rd.forward(req, res);
-		}
+//			String amount = String.valueOf(total);
+//			req.setAttribute("amount", amount);
+//			String url = "/Checkout.jsp";
+//			RequestDispatcher rd = req.getRequestDispatcher(url);
+//			rd.forward(req, res);
+//		}
 	}
 
 	private ProductVO getProduct(HttpServletRequest req) {
@@ -151,7 +158,6 @@ public class ShoppingServlet extends HttpServlet {
 		String product_price = req.getParameter("product_price");
 		String proqty = req.getParameter("proqty");
 		String product_remaining = req.getParameter("product_remaining");
-		String product_state = req.getParameter("product_state");
 		String user_id = req.getParameter("user_id");
 		
 		ProductVO productVO = new ProductVO();
@@ -161,8 +167,8 @@ public class ShoppingServlet extends HttpServlet {
 		productVO.setProduct_price(new Integer(product_price));
 		productVO.setProduct_quantity(new Integer(proqty));
 		productVO.setProduct_remaining(new Integer(product_remaining));
-		productVO.setProduct_state(new Integer(product_state));
 		productVO.setUser_id(user_id);
 		return productVO;
 	}
+	
 }

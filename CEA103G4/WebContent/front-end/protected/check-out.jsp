@@ -6,22 +6,34 @@
 <%@ page import="com.product.controller.*"%>
 <%@ page import="com.order.model.*"%>
 <%
-<<<<<<< HEAD
 
-=======
->>>>>>> 0c436139e782cae0723232efefae221d3b6fb572
 	ProductDAO dao = new ProductDAO();
 	List<ProductVO> products = dao.getAllShop();
 	pageContext.setAttribute("products", products);
 
 	UserVO userVO = (UserVO) session.getAttribute("account");
 	session.setAttribute("userVO", userVO);
-<<<<<<< HEAD
+
+    Vector<ProductVO> buylist3 = (Vector<ProductVO>) session.getAttribute("shoppingcart");
+    
+    if(buylist3 != null){
+    	
+	Map<String, Vector<ProductVO>> mBuylist = new HashMap<String, Vector<ProductVO>>();
+	for(ProductVO vo:buylist3) {
+		String user_id = vo.getUser_id();
+		Vector<ProductVO> vector = mBuylist.get(user_id);
+		if(vector == null) {
+			vector = new Vector<ProductVO>();
+		}
+		vector.add(vo);
+		mBuylist.put(user_id, vector);
+	}
+	pageContext.setAttribute("mBuylist", mBuylist);
+    }
+	
 		
  %>
-=======
-%>
->>>>>>> 0c436139e782cae0723232efefae221d3b6fb572
+
 
 
 <!DOCTYPE html>
@@ -140,45 +152,89 @@
 					<div class="col-lg-6">
 						<div class="place-order">
 							<h4>你的訂單</h4>
-							<div class="order-total">
-								<ul class="order-table">
-									<li>產品 <span>總金額</span></li>
-									<li class="fw-normal">Combination x 1 <span>$60.00</span>
-									</li>
-									<li class="fw-normal">Combination x 1 <span>$60.00</span>
-									</li>
-									<li class="fw-normal">Combination x 1 <span>$120.00</span>
-									</li>
-									<li class="total-price">總金額 <span>$240.00</span></li>
-								</ul>
-								<div class="product-show-option">
-									<div class="row">
-										<div class="col-lg-6 col-md-6">
-											<div class="select-option">
-												<select name="pay_method" class="p-show" id="pay_method">
-													<option value="">選擇付款方式</option>
-													<option value="0">錢包</option>
-													<option value="1">信用卡</option>
-													<option value="2">轉帳</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-lg-6 col-md-6">
-											<div class="select-option">
-												<select name="logistics" class="p-show" id="logistics">
-													<option value="">選擇物流方式</option>
-													<option value="0">超商</option>
-													<option value="1">宅配</option>
-												</select>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="order-btn">
-									<button type="submit" class="site-btn place-btn">送出</button>
-									<input type="hidden" value="addOrderList" name="action">
-								</div>
-							</div>
+							
+		  <c:set var="sum" value="0"> </c:set>
+			<c:forEach var="entry" items="${mBuylist}">
+            <div class="cart-table">
+              <table class="table">
+                <thead class="thead">
+                  <tr>
+                    <th>商品圖</th>
+                    <th>商品名稱</th>
+                    <th>單價</th>
+                    <th>數量</th>
+                    <th>總計</th>
+                  </tr>
+                </thead>
+                <tbody>
+                	<tr><td style="padding-bottom:0px;" colspan="5"><a href="<%=request.getContextPath()%>/SellerProducts?user_id=${entry.key}" target="_blank"><button class="btn btn-outline-warning" type="button"><i class="fa fa-diamond" style="display:inline-block;"></i>&nbsp;${entry.key}</button></a></td></tr>
+                  <c:forEach var="order" items="${entry.value}" varStatus="cartstatus">
+                  <tr>
+                    <td class="cart-pic first-row">
+                    <a href="<%=request.getContextPath()%>/product/product.do?product_no=${order.product_no}">
+                      <img src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}" alt="${order.product_name}"  />
+                    </a>
+                    </td>
+                    <td class="p-name first-row">
+                      <h5>${order.product_name }</h5>
+                    </td>
+                    <td class="PP${order.product_no} first-row" value="${order.product_price}">$${order.product_price }</td>
+                    <td class="qua-col first-row">
+                      <div class="quantity" style="margin-top: 30px;">
+                      <div>${order.product_quantity}</div>
+                      </div>
+                    </td>
+                    <td>
+                    <div id="TP${order.product_no}" class="cartProductItemSumPrice" style="margin-top: 30px;color: #e7ab3c;">${order.product_price*order.product_quantity}</div>
+					</td>
+                  </tr>
+                  <c:set var="sum" value="${sum + order.product_price*order.product_quantity}"> </c:set>
+                  </c:forEach>
+                </tbody>
+              </table>
+            </div>
+            </c:forEach>
+							
+<!-- 							<div class="order-total"> -->
+<!-- 								<ul class="order-table"> -->
+<!-- 									<li>產品 <span>總金額</span></li> -->
+<!-- 									<li class="fw-normal">Combination x 1 <span>$60.00</span> -->
+<!-- 									</li> -->
+<!-- 									<li class="fw-normal">Combination x 1 <span>$60.00</span> -->
+<!-- 									</li> -->
+<!-- 									<li class="fw-normal">Combination x 1 <span>$120.00</span> -->
+<!-- 									</li> -->
+<!-- 									<li class="total-price">總金額 <span>$240.00</span></li> -->
+<!-- 								</ul> -->
+<!-- 								<div class="product-show-option"> -->
+<!-- 									<div class="row"> -->
+<!-- 										<div class="col-lg-6 col-md-6"> -->
+<!-- 											<div class="select-option"> -->
+<!-- 												<select name="pay_method" class="p-show" id="pay_method"> -->
+<!-- 													<option value="">選擇付款方式</option> -->
+<!-- 													<option value="0">錢包</option> -->
+<!-- 													<option value="1">信用卡</option> -->
+<!-- 													<option value="2">轉帳</option> -->
+<!-- 												</select> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 										<div class="col-lg-6 col-md-6"> -->
+<!-- 											<div class="select-option"> -->
+<!-- 												<select name="logistics" class="p-show" id="logistics"> -->
+<!-- 													<option value="">選擇物流方式</option> -->
+<!-- 													<option value="0">超商</option> -->
+<!-- 													<option value="1">宅配</option> -->
+<!-- 												</select> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 								<div class="order-btn"> -->
+<!-- 									<button type="submit" class="site-btn place-btn">送出</button> -->
+<!-- 									<input type="hidden" value="addOrderList" name="action"> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+							
 						</div>
 					</div>
 				</div>

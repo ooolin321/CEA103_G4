@@ -767,7 +767,7 @@ function refresh(){
   			title: '請先登入會員',
   			html:
     		"帳號"+'<input id="userID" class="swal2-input">' +
-    		"密碼"+'<input id="PWD" class="swal2-input">',
+    		"密碼"+'<input id="PWD" class="swal2-input" type="password">',
     		showCloseButton: true,
     		confirmButtonText: `登入`,
  			 });

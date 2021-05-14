@@ -114,4 +114,8 @@ public class Live_orderService {
 	public void updateShipment(List<Live_orderVO> live_order_no){
 		dao.updateShipment(live_order_no);
 	}
+	
+	public void insertWithDetails (Live_orderVO live_orderVO,List<Live_order_detailVO> list) {
+		dao.insertWithDetails(live_orderVO, list);
+	}
 }

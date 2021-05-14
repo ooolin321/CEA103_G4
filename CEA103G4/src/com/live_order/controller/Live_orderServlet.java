@@ -6,13 +6,16 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import com.live.model.LiveService;
-import com.live.model.LiveVO;
+
 import com.live_order.model.Live_orderService;
 import com.live_order.model.Live_orderVO;
+import com.live_order_detail.model.Live_order_detailService;
 import com.live_order_detail.model.Live_order_detailVO;
 import com.product.model.ProductService;
 import com.product.model.ProductVO;
+import com.user.model.UserService;
+import com.user.model.UserVO;
+
 
 public class Live_orderServlet extends HttpServlet {
 
@@ -574,6 +577,82 @@ public class Live_orderServlet extends HttpServlet {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/front-end/liveOrderManagement/liveOrderListB.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		
+		
+		if ("order_ajax".equals(action)) { 
+			
+			List<String> errorMsgs = new LinkedList<String>();
+
+			req.setAttribute("errorMsgs", errorMsgs);
+		
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				
+				String user_id = req.getParameter("user_id");
+				
+				UserService userSvc = new UserService();
+				UserVO userVO = userSvc.getOneUser(user_id);
+				
+				
+				Live_orderVO live_orderVO = new Live_orderVO();
+
+				Integer order_price = new Integer(req.getParameter("bidPrice").trim());
+				Integer live_no = new Integer(req.getParameter("live_no").trim());
+				String seller_id = req.getParameter("seller_id");
+
+				live_orderVO.setOrder_state(0);
+				live_orderVO.setOrder_shipping(0);
+				live_orderVO.setOrder_price(order_price);
+				live_orderVO.setPay_method(0);
+				live_orderVO.setRec_name(userVO.getUser_name());
+				live_orderVO.setRec_addr(userVO.getUser_addr());
+				live_orderVO.setRec_phone(userVO.getUser_phone());
+				live_orderVO.setRec_cellphone(userVO.getUser_mobile());
+				live_orderVO.setLogistics(0);
+				live_orderVO.setLogistics_state(0);
+				live_orderVO.setDiscount(0);
+				live_orderVO.setLive_no(live_no);
+				live_orderVO.setUser_id(user_id);
+				live_orderVO.setSeller_id(seller_id);
+				live_orderVO.setPoint(0);
+				live_orderVO.setCity(userVO.getCity());
+				live_orderVO.setTown(userVO.getTown());
+				live_orderVO.setZipcode(userVO.getZipcode());
+				System.out.println(live_orderVO.getZipcode());
+
+				
+				Live_order_detailVO live_order_detailVO = new Live_order_detailVO();
+				List<Live_order_detailVO> list = new ArrayList<Live_order_detailVO>();
+				String[] product_no = req.getParameterValues("product_no");
+				
+				
+				
+				
+				
+				
+				live_order_detailVO.setProduct_no(new Integer(product_no[0]));
+				live_order_detailVO.setPrice(order_price);
+				live_order_detailVO.setProduct_num(1);
+				list.add(live_order_detailVO);
+				System.out.println(live_order_detailVO.getProduct_no());
+				
+				ProductService productSvc = new ProductService();
+				Live_orderService live_orderSvc = new Live_orderService();
+				/***************************2.開始修改資料*****************************************/
+				productSvc.updateState(new Integer(product_no[0]), 3);
+				live_orderSvc.insertWithDetails(live_orderVO, list);
+				
+
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				
+				errorMsgs.add("修改資料失敗:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/liveManagement/liveList.jsp");
 				failureView.forward(req, res);
 			}
 		}

@@ -57,7 +57,7 @@ public class ProductDAO implements ProductDAO_interface {
 	//賣家賣場頁面
 	private static final String GET_SELLER_PRODUCTS = "select product_no, product_name, product_info,product_price, product_quantity,product_remaining,product_state,user_id,pdtype_no from PRODUCT where product_photo IS NOT NULL AND product_state = 1 AND user_id = ?";
 	
-	
+	private static final String SOLD = "UPDATE PRODUCT SET PRODUCT_STATE=3 WHERE PRODUCT_NO = ?";
 	@Override
 	public void insert(ProductVO productVO){
 
@@ -974,5 +974,4 @@ public class ProductDAO implements ProductDAO_interface {
 		}
 		return list;
 	}
-
 }

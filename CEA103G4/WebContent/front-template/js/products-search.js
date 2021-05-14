@@ -51,7 +51,7 @@
 					<tr>
 					  <td class="si-pic"><img
 						src="${path}/ProductShowPhoto?product_no=${carts.product_no}"
-						alt="${carts.product_name}" style="width:100px; height:100px;" /></td>
+						alt="${carts.product_name}" style="width:100px; height:100px; border-radius:10px;" /></td>
 					<td class="si-text">
 				<div class="product-selected">
 					<p>$${carts.product_price } x ${carts.product_quantity}</p>

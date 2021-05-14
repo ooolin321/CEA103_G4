@@ -120,15 +120,6 @@ public class ShoppingServlet extends HttpServlet {
 //			RequestDispatcher rd = req.getRequestDispatcher(url);
 //			rd.forward(req, res);
 		}		
-		// 結帳，計算購物車商品價錢總數
-//		else if (action.equals("CHECKOUT")) {
-//			product = getProduct(req);
-//			System.out.println(product);
-//			List<ProductVO> cheakOut = (Vector<ProductVO>) session.getAttribute("shoppingcart");
-//			checkOut.add(product);
-//			session.setAttribute("shoppingcart", checkOut);
-
-			
 
 //			double total = 0;
 //			for (int i = 0; i < buylist.size(); i++) {

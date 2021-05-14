@@ -634,8 +634,7 @@ ProductVO productVO = (ProductVO) request.getAttribute("productVO");
     		"密碼"+'<input id="PWD" class="swal2-input"  type="password">',
     		showCloseButton: true,
     		confirmButtonText: `登入`,
-  });
-			$(".swal2-confirm").click(function(){
+  }).then(function(result){
 			if($("#userID").val().trim().length != 0 && $("#PWD").val().trim().length != 0){				
   			$.ajax({ 
 	  			  url:"<%=request.getContextPath()%>/FrondEnd_LoginHandler",

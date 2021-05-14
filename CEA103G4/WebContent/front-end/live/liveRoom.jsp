@@ -676,110 +676,15 @@ function refresh(){
 
 
   	function login(){
-		
-		Swal.fire({
-  			title: '請先登入會員',
-  			html:
-    		"帳號"+'<input id="userID" class="swal2-input">' +
-    		"密碼"+'<input id="PWD" class="swal2-input">',
-  			focusConfirm: true,
-  		}).then(function(result) {
-	  		$.ajax({
-				  url:"<%=request.getContextPath()%>/FrondEnd_LoginHandler",
-				  type:"POST",
-				  data:{
-					  "user_id":$("#userID").val(),
-					  "user_pwd":$("#PWD").val(),
-					  "action": "signIn_ajax"
-				  },
-				  success: function(result) {
-	
-					if (result.length === 0 || result === ""){
-			  			Swal.fire({
-				  			  icon: 'error',
-				  			  title: '帳號或密碼有誤,請重新輸入',
-				  			  showConfirmButton: false,
-				  			  timer: 1500
-				  			});
-					} else {
-						window.location.reload();
-			  			Swal.fire({
-				  			  icon: 'success',
-				  			  title: '登入成功',
-				  			  showConfirmButton: false,
-				  			  timer: 1500
-				  			});
-					}
-			            }, 	  
-				  error:function () {
-			  			Swal.fire({
-				  			  icon: 'error',
-				  			  title: '登入失敗,請重新登入',
-				  			  showConfirmButton: false,
-				  			  timer: 1500
-				  			});
-				  },
-			});
-  		});
-		
-	}
-</script>
-<script>
-	// 2. This code loads the IFrame Player API code asynchronously.
-	var tag = document.createElement('script');
-
-	tag.src = "https://www.youtube.com/iframe_api";
-	var firstScriptTag = document.getElementsByTagName('script')[0];
-	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-	// 3. This function creates an <iframe> (and YouTube player)
-	//    after the API code downloads.
-	var player;
-	function onYouTubeIframeAPIReady() {
-		player = new YT.Player('player', {
-			height : "100%",
-			width : '100%',
-			videoId : "${liveVO.live_id}",
-			playerVars : {
-				'playsinline' : 1
-			},
-			events : {
-				'onReady' : onPlayerReady,
-				'onStateChange' : onPlayerStateChange
-			}
-		});
-	}
-
-	// 4. The API will call this function when the video player is ready.
-	function onPlayerReady(event) {
-		event.target.playVideo();
-	}
-
-	// 5. The API calls this function when the player's state changes.
-	//    The function indicates that when playing a video (state=1),
-	//    the player should play for six seconds and then stop.
-	var done = false;
-	function onPlayerStateChange(event) {
-		if (event.data == YT.PlayerState.PLAYING && !done) {
-			// 			setTimeout(stopVideo, 6000);
-			done = true;
-		}
-	}
-	function stopVideo() {
-		player.stopVideo();
-	}
-	
-  	function login(){
 
 		Swal.fire({
   			title: '請先登入會員',
   			html:
     		"帳號"+'<input id="userID" class="swal2-input">' +
-    		"密碼"+'<input id="PWD" class="swal2-input" type="password">',
+    		"密碼"+'<input id="PWD" class="swal2-input"  type="password">',
     		showCloseButton: true,
     		confirmButtonText: `登入`,
- 			 });
-			$(".swal2-confirm").click(function(){
+  }).then(function(result){
 			if($("#userID").val().trim().length != 0 && $("#PWD").val().trim().length != 0){				
   			$.ajax({ 
 	  			  url:"<%=request.getContextPath()%>/FrondEnd_LoginHandler",
@@ -826,7 +731,53 @@ function refresh(){
 			});
 			}
 			});
-  	}
+	  	};
+</script>
+<script>
+	// 2. This code loads the IFrame Player API code asynchronously.
+	var tag = document.createElement('script');
+
+	tag.src = "https://www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+	// 3. This function creates an <iframe> (and YouTube player)
+	//    after the API code downloads.
+	var player;
+	function onYouTubeIframeAPIReady() {
+		player = new YT.Player('player', {
+			height : "100%",
+			width : '100%',
+			videoId : "${liveVO.live_id}",
+			playerVars : {
+				'playsinline' : 1
+			},
+			events : {
+				'onReady' : onPlayerReady,
+				'onStateChange' : onPlayerStateChange
+			}
+		});
+	}
+
+	// 4. The API will call this function when the video player is ready.
+	function onPlayerReady(event) {
+		event.target.playVideo();
+	}
+
+	// 5. The API calls this function when the player's state changes.
+	//    The function indicates that when playing a video (state=1),
+	//    the player should play for six seconds and then stop.
+	var done = false;
+	function onPlayerStateChange(event) {
+		if (event.data == YT.PlayerState.PLAYING && !done) {
+			// 			setTimeout(stopVideo, 6000);
+			done = true;
+		}
+	}
+	function stopVideo() {
+		player.stopVideo();
+	}
+	
   	
 	
 </script>

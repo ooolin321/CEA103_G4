@@ -111,7 +111,7 @@
 											<tr>
 												<td class="si-pic"><img
 													src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
-													alt="${order.product_name}" style="width:100px; height:100px;" /></td>
+													alt="${order.product_name}" style="width:100px; height:100px; border-radius:10px;" /></td>
 												<td class="si-text">
 													<div class="product-selected">
 														<p>$${order.product_price } x ${order.product_quantity}</p>

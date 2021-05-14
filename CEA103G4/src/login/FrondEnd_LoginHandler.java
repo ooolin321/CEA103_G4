@@ -91,8 +91,8 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 					}
 				} catch (Exception ignored) {
 				}
-				res.sendRedirect(req.getContextPath() + "/front-end/protected/userIndex.jsp"); // *工作3:
-				// (-->如無來源網頁:則重導至userIndex.jsp)
+				res.sendRedirect(req.getContextPath() + "/front-end/index.jsp"); // *工作3:
+				// (-->如無來源網頁:則重導至首頁)
 			}if(!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/userLogin.jsp");
 				failureView.forward(req, res);

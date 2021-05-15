@@ -9,16 +9,10 @@
 <%@ page import="com.seller_follow.model.*"%>
 
 <%
-ProductVO productVO = (ProductVO) request.getAttribute("productVO");
+	ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
-<<<<<<< HEAD
-UserVO userVO = (UserVO) session.getAttribute("account");
-session.setAttribute("userVO", userVO);
-=======
-//   UserVO userVO = (UserVO) session.getAttribute("account"); 
-//   session.setAttribute("userVO", userVO);
-	
->>>>>>> 84e3209d01937f935adc9833cf4a422907ed3bfb
+	UserVO userVO = (UserVO) session.getAttribute("account");
+	session.setAttribute("userVO", userVO);
 %>
 <jsp:useBean id="product_typeSvc" scope="page"
 	class="com.product_type.model.Product_TypeService" />

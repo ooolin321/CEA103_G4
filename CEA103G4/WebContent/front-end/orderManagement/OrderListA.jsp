@@ -49,7 +49,6 @@
 table td, table tr, table th {
 	white-space: nowrap;
 }
-
 #sratingbox {
 	position: inline-block
 }
@@ -57,8 +56,12 @@ table td, table tr, table th {
 ion-icon {
 	font-size: 64px;
 }
-btn-primary{
-	
+.modal-body{
+	width:100%;
+	display:flex;
+	justify-content: center;
+	flex-direction:column;
+	align-items:center
 }
 </style>
 </head>
@@ -89,8 +92,6 @@ btn-primary{
 				<li class="breadcrumb-item"><a href="#">直售訂單管理</a></li>
 			</ul>
 		</div>
-
-
 
 		<div class="row">
 			<div class="col-xl-12">
@@ -127,6 +128,7 @@ btn-primary{
 										${(orderVO.logisticsstate==2)? '已取貨':''}</td>
 									<td>
 										<!-- Button trigger modal -->
+										<input type="hidden" value="${orderVO.seller_id}">
 										<button class="btn btn-info" id="srating_btn"
 											data-toggle="modal" data-target="#${orderVO.order_no}">評價</button>
 										<input type="hidden" value="${orderVO.order_no}">
@@ -142,15 +144,15 @@ btn-primary{
 			</div>
 		</div>
 
-		<FORM METHOD="post" ACTION="order.do" name="form1">
 			<!-- Modal -->
+		<FORM METHOD="post" ACTION="order.do">
 			<div class="modal fade" id="" tabindex="-1" role="dialog"
 				aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content" id="sratingbox">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLongTitle">
-								商品: <input type="hidden" name="order_no" value="0" />
+							
 							</h5>
 							<button type="button" class="close" data-dismiss="modal"
 								aria-label="Close">
@@ -158,15 +160,16 @@ btn-primary{
 							</button>
 						</div>
 						<div class="modal-body">
-							<input type="hidden" name="srating" value="0" id="con" />
+							<div>	<input type="hidden" name="srating" value="0" id="con"/>
 							<ion-icon name="star" class="star all-star" id="s1"></ion-icon>
 							<ion-icon name="star" class="star all-star" id="s2"></ion-icon>
 							<ion-icon name="star" class="star all-star" id="s3"></ion-icon>
 							<ion-icon name="star" class="star all-star" id="s4"></ion-icon>
 							<ion-icon name="star" class="star all-star" id="s5"></ion-icon>
+							</div>
+						
 							<div>
-								<textarea name="srating_content" rows="10" cols="43"
-									style="resize: none"></textarea>
+								<textarea name="srating_content" rows="10" cols="43" style="resize: none"></textarea>
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -174,6 +177,10 @@ btn-primary{
 								data-dismiss="modal">Close</button>
 							<button type="button" class="btn btn-primary">Save
 								changes</button> -->
+								
+								<input type="hidden" name="seller_id" value="" id="seller_id">
+								<input type="hidden" name="order_no" value="" id="order_no">
+								<input type="hidden" name="action" value="updateSrating">
 								<input type="button" class="btn btn-secondary" data-dismiss="modal" value="取消">
 								<input type="submit" class="btn btn-primary" value="送出">
 						</div>
@@ -187,7 +194,6 @@ btn-primary{
 		<%
 		if (request.getAttribute("listDetails_ByNo") != null) {
 		%>
-		<jsp:include page="listDetails_ByNo.jsp" />
 		<%
 		}
 		%>
@@ -214,11 +220,14 @@ btn-primary{
 	$(document).ready(function(){
 		$("button").click(function(){
 			let val =$(this).next('input').val();
+			let seller =$(this).prev('input').val();
 			$(".all-star").css("color","black");
 			$("#con").val("0");
 			
 			$(".fade").attr("id",val);
 			$("h5").text(val);
+			$("#order_no").val(val);
+			$("#seller_id").val(seller);
 		})
 		
 		

@@ -29,4 +29,6 @@ public interface UserDAO_interface {
 	public void newPassword_Update(UserVO userVO);
 
 	public void update_user_report(UserVO userVO);
+	
+	public void updateUserRating(UserVO userVO);
 }

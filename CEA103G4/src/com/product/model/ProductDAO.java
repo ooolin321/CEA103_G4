@@ -58,6 +58,8 @@ public class ProductDAO implements ProductDAO_interface {
 	private static final String GET_SELLER_PRODUCTS = "select product_no, product_name, product_info,product_price, product_quantity,product_remaining,product_state,user_id,pdtype_no from PRODUCT where product_photo IS NOT NULL AND product_state = 1 AND user_id = ?";
 	
 	private static final String SOLD = "UPDATE PRODUCT SET PRODUCT_STATE=3 WHERE PRODUCT_NO = ?";
+	
+	private static final String GET_FAVORITE = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no FROM PRODUCT where product_no = ?";
 	@Override
 	public void insert(ProductVO productVO){
 
@@ -705,24 +707,6 @@ public class ProductDAO implements ProductDAO_interface {
 		return list;
 	}
 	
-
-
-	//照片
-//	public static byte[] getPictureByteArray(String path) throws IOException {
-//		File file = new File(path);
-//		FileInputStream fis = new FileInputStream(file);
-//		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//		byte[] buffer = new byte[8192];
-//		int i;
-//		while ((i = fis.read(buffer)) != -1) {
-//			bos.write(buffer, 0, i);
-//			bos.flush();
-//		}
-//		bos.close();
-//		fis.close();
-//
-//		return bos.toByteArray();
-//	}
 	
 	//獲取某商品編號的圖片
 	@Override
@@ -973,5 +957,65 @@ public class ProductDAO implements ProductDAO_interface {
 			}
 		}
 		return list;
+	}
+	
+	@Override
+	public ProductVO getFavorite(Integer product_no){
+
+		ProductVO productVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_FAVORITE );
+			pstmt.setInt(1, product_no);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+		
+				productVO = new ProductVO();
+				productVO.setProduct_no(rs.getInt("product_no"));
+				productVO.setProduct_name(rs.getString("product_name"));
+				productVO.setProduct_info(rs.getString("product_info"));
+				productVO.setProduct_price(rs.getInt("product_price"));
+				productVO.setProduct_quantity(rs.getInt("product_quantity"));
+				productVO.setProduct_remaining(rs.getInt("product_remaining"));
+				productVO.setProduct_state(rs.getInt("product_state"));
+				productVO.setUser_id(rs.getString("user_id"));
+				productVO.setPdtype_no(rs.getInt("pdtype_no"));				
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return productVO;
 	}
 }

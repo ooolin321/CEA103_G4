@@ -2,19 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.product.model.*"%>
-<%@ page import="com.product_type.model.*"%>
-<%@ page import="com.product.controller.*"%>
-
-<%
-	ProductDAO dao = new ProductDAO();
-	Object prouducts = request.getAttribute("products")==null? dao.getAllShop():request.getAttribute("products");
-	pageContext.setAttribute("products",prouducts);
-	
-%>
-<%-- <jsp:useBean id="products" scope="page" type="java.util.List<ProductVO>" /> <!-- 於EL此行可省略 --> --%>
-<jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
-
 
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -42,6 +29,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/slicknav.min.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/style.css" type="text/css" />
     
+    
   </head>
 
   <body>
@@ -57,7 +45,8 @@
           <div class="col-lg-12">
             <div class="breadcrumb-text">
               <a href="${pageContext.request.contextPath}/front-end/index.jsp"><i class="fa fa-home"></i> Home</a>
-              <span>Shop</span>
+              <a href="${pageContext.request.contextPath}/front-end/productsell/shop.jsp">Shop</a>
+              <span>Favorite</span>
             </div>
           </div>
         </div>
@@ -65,8 +54,10 @@
     </div>
     <!-- Breadcrumb Section Begin -->
     
-<!--     <div class="product-list"> -->
-<!--             <div class="row" id="products">             -->
+    <div class="product-Favorite">
+            <div class="row" id="favorite">
+            </div>
+          </div>              
 
 
     <!-- Footer Section Begin -->
@@ -76,20 +67,6 @@
 
 
     <!-- Js Plugins -->
-  
-    
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-      integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-      crossorigin="anonymous"
-    ></script>
-
 
     <script src="${pageContext.request.contextPath}/front-template/js/jquery-3.3.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/bootstrap.min.js"></script>
@@ -101,4 +78,74 @@
     <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
-    <script src="${pageContext.request.contextPath}/front-template/js/productFavorite.js" ></script>  
+    <script src="${pageContext.request.contextPath}/front-template/js/productFavorite.js" ></script>
+   	<script src="${pageContext.request.contextPath}/front-template/js/ajaxSearch.js"></script>
+   	 <script src="${pageContext.request.contextPath}/front-template/js/products-search.js" ></script>
+   	 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
+
+ <script>
+ 
+ 
+	function removeSession (index) {
+
+		$.ajax({ 
+			  type:"POST",
+			  url:"<%=request.getContextPath()%>/Favorite",
+			  data:{
+				  "index":index,
+				  "action": "remove"
+			  },
+			  success: function(res) {
+
+				  }	        
+	});
+}
+
+	function addCart(id){
+		$.ajax({ 
+			  type:"POST",
+			  url:"<%=request.getContextPath()%>/ShoppingServlet",
+			  data:{
+				  "product_no": id,
+				  "action": "ADDFromFav"
+			  },
+			  success: function(res) {
+				   
+				  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>"); 
+				  $("#carts").html(cartproducts); 
+				  
+				  var carRes  = JSON.parse(res)
+//				  console.log(carRes["results"].length);
+				  var ibaCount = carRes["results"].length;
+				  $("#iba").html(ibaCount);
+
+				  var titlePrice = 0
+					carRes["results"].forEach(function (item,index) {
+						titlePrice += (item.product_price * item.product_quantity)
+					});
+				  $(".cart-price").html("$" + titlePrice);
+				  $("#cartHoverTotal").html("$" + titlePrice);
+
+
+				  Swal.fire({
+					  icon: 'success',
+					  title: '商品加入購物車',
+					  showConfirmButton: false,
+					  timer: 1000
+					});
+				  
+		      }, 	  
+			  error:function () {
+		  			Swal.fire({
+			  			  icon: 'error',
+			  			  title: '很抱歉,加入購物車失敗',
+			  			  showConfirmButton: false,
+			  			  timer: 1000
+			  			});
+			  },				
+			 });
+	}
+ 
+ </script>
+    
+      

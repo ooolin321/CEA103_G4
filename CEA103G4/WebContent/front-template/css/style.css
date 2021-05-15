@@ -4697,4 +4697,17 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill{
   	font-size:26px;
   	color:pink;
   }
+  
+        /*product-Favorite*/
+.product-Favorite {
+	padding: 45px;
+    box-sizing: border-box;
+}
+
+.product-Favorite .card {
+	border-radius:10px;
+	border:none;
+	box-shadow: 1px 1px 10px rgb(0 0 0 / 10%);
+}
+
         

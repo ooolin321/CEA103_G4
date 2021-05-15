@@ -56,10 +56,16 @@ public class ShoppingServlet extends HttpServlet {
 			}
 			
 			// 新增商品至購物車中
-			else if (action.equals("ADD") || action.equals("updateCount")) {
+			else if (action.equals("ADD") || action.equals("updateCount") || action.equals("ADDFromFav")) {
 				
-				// 取得後來新增的商品
-				product = getProduct(req);
+				if (action.equals("ADDFromFav")) {
+					Integer product_no = new Integer(req.getParameter("product_no"));
+					ProductService productSvc = new ProductService();
+					product = productSvc.getFavorite(product_no);
+				}else {
+					product = getProduct(req);
+				}
+				
 				if (buylist == null) {
 					buylist = new Vector<ProductVO>();
 					buylist.add(product);
@@ -77,6 +83,7 @@ public class ShoppingServlet extends HttpServlet {
 					}
 				}
 			}
+			
 			
 
 //			Map<String, List<ProductVO>> groupMap = new HashMap<>();
@@ -113,12 +120,6 @@ public class ShoppingServlet extends HttpServlet {
 			out.flush();
 			out.close();
 			
-			
-			
-//			String url = "/front-end/productsell/product.jsp";
-			
-//			RequestDispatcher rd = req.getRequestDispatcher(url);
-//			rd.forward(req, res);
 		}		
 
 //			double total = 0;

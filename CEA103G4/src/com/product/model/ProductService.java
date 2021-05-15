@@ -135,9 +135,12 @@ public class ProductService {
 	public List<ProductVO> getSellerProducts(String user_id) {
 		return dao.getSellerProducts(user_id);
 	}
+	
+	public ProductVO getFavorite(Integer product_no) {
+		return dao.getFavorite(product_no);
+		}
+	}
 
-
-}
 
 
 

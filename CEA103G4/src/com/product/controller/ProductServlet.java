@@ -168,12 +168,6 @@ public class ProductServlet extends HttpServlet {
 				if (product_info == null || product_info.trim().length() == 0) {
 					errorMsgs.add("商品說明請勿空白");
 				}
-//				while (product_info.indexOf("\n") != -1) {
-//					product_info = product_info.replace("\n","<br>");
-//				}
-//				while (product_info.indexOf(" ") != -1) {
-//					product_info = product_info.replace(" ","&nbsp;");
-//				}
 				
 				Integer product_price = null;
 				try {
@@ -182,13 +176,6 @@ public class ProductServlet extends HttpServlet {
 					errorMsgs.add("商品價格請填數字");
 				}
 				
-//				Integer product_quantity = null;
-//				try {
-//					product_quantity = new Integer(req.getParameter("product_quantity").trim());
-//				} catch (NumberFormatException e) {
-//					product_quantity = 1;
-//					errorMsgs.add("商品數量請填數字");
-//				}
 				
 				Integer product_remaining = null;
 				try {
@@ -225,26 +212,7 @@ public class ProductServlet extends HttpServlet {
 				} catch (NumberFormatException e) {
 					errorMsgs.add("商品類別請勿空白");
 				}
-				
-//				Integer start_price = null;
-//				try {
-//					start_price = new Integer(req.getParameter("start_price").trim());
-//				} catch (NumberFormatException e) {
-//					start_price = 1;
-//					errorMsgs.add("起標價請填數字");
-//				}
-//				
-//				Integer live_no = null;
-//				try {
-//					live_no = new Integer(req.getParameter("live_no").trim());
-//				} catch (NumberFormatException e) {
-//					live_no = 1;
-//					errorMsgs.add("直播編號請填寫");
-//				}
 
-				
-
-			
 				
 				productVO.setProduct_no(product_no);
 				productVO.setProduct_name(product_name);
@@ -255,8 +223,6 @@ public class ProductServlet extends HttpServlet {
 				productVO.setProduct_photo(product_photo);
 				productVO.setUser_id(user_id);
 				productVO.setPdtype_no(pdtype_no);
-//				productVO.setStart_price(start_price);
-//				productVO.setLive_no(live_no);
 
 
 				if (!errorMsgs.isEmpty()) {
@@ -435,28 +401,6 @@ public class ProductServlet extends HttpServlet {
 			}
 		}   
 		
-//		if("getJson".equals(action)) {
-//			ProductService productSvc = new ProductService();
-//			List<ProductVO> list = productSvc.getAllWithoutPhoto();
-//			JSONObject jsonObj = new JSONObject();
-//			
-//			try {
-//				jsonObj.put("results", list);
-//
-//			} catch (JSONException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//			res.setContentType("text/html; charset=UTF-8");
-//		
-//			PrintWriter out = res.getWriter();
-//			
-//			out.println(jsonObj.toString());
-//		}
-		
-		
-		
 		if ("goLive".equals(action)) { // 來自update_product_input.jsp的請求
 			
 			List<String> errorMsgs = new LinkedList<String>();
@@ -577,7 +521,6 @@ public class ProductServlet extends HttpServlet {
 			res.getWriter().print(str);
 			return;
 		}
-
 	}
 }
 

@@ -3,8 +3,8 @@
 	const data = [];
     const products = document.getElementById('products');
 
-    const searchForm = document.getElementById('search');
-    const searchInput = document.getElementById('search-input');
+//    const searchForm = document.getElementById('search');
+//    const searchInput = document.getElementById('search-input');
 
     const pagination = document.getElementById('pagination');
     const ITEM_PER_PAGE = 12;
@@ -34,7 +34,7 @@
         addFavoriteItem(event.target.dataset.id)
     }
 })
-/*
+
 		//如果點擊到 a 標籤，則透過將頁碼傳入 getPageData 來切換分頁。
 		// listen to pagination click event
 		pagination.addEventListener('click', event => {
@@ -45,7 +45,7 @@
 })
 	function getTotalPages(data) {
         let totalPages = Math.ceil(data.length / ITEM_PER_PAGE) || 1
-        let pageItemContent = ''
+        let pageItemContent = "";
         //註明這個 a 標籤會觸發 JavaScript 程式。
         for (let i = 0; i < totalPages; i++) {
             pageItemContent += `
@@ -63,19 +63,19 @@
         let pageData = paginationData.slice(offset, offset + ITEM_PER_PAGE);
     }
 
-*/
+
 
     //撰寫新的 addFavoriteItem()，將使用者想收藏的電影送進 local storage 儲存起來
     function addFavoriteItem(id) {
         //若使用者是第一次使用收藏功能，則 localStorage.getItem('favoriteProducts') 會找不到東西，所以需要建立一個空 Array。
         const list = JSON.parse(localStorage.getItem('favoriteProducts')) || []
-        const movie = data.find(item => item.id === Number(id))
+        const product = data.find(item => item.id === Number(id))
         //some 測試陣列中是否至少有一個元素,回傳布林值,相等的結果給item,if(some = true)
         if (list.some(item => item.id === Number(id))) {
-            alert(`${movie.title} 已經加到清單囉~`)
+            alert(`${product.title} 已經加到清單囉~`)
         } else {
-            list.push(movie)
-            alert(`已新增 ${movie.title} 到收藏清單 `)
+            list.push(product)
+            alert(`已新增 ${product.title} 到收藏清單 `)
         }
         localStorage.setItem('favoriteProducts', JSON.stringify(list))
     }	

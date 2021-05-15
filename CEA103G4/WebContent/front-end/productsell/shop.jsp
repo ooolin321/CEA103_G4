@@ -187,10 +187,10 @@
                   </div>
                     <ul>
                         <li class="w-icon active" id="SC${productVO.product_no}">
-                            <a href="javascript:void(0)"><i class="icon_bag_alt"></i></a>
+                            <a href="javascript:void(0)"><i class="icon_bag_alt" data-id="${productVO.product_no}"></i></a>
                         </li>   
-                        <li class="w-heart" >
-                            <i class="icon_heart_alt"  data-no="${productVO.product_no}"></i>
+                        <li class="w-heart">
+                            <i class="icon_heart_alt" data-id="${productVO.product_no}"></i>
                         </li>
                     </ul>
                 </div>
@@ -258,8 +258,6 @@
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/products-search.js" ></script>
-<%--     <script src="${pageContext.request.contextPath}/front-template/js/shop.js" ></script>   --%>
-<%--     <script src="${pageContext.request.contextPath}/front-template/js/productFavorite.js" ></script>   --%>
 	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/front-template/js/ajaxSearch.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
@@ -303,62 +301,159 @@
 			if(fromProduct.length === 0){
 				Swal.fire('很抱歉,查無此商品');
             }
-		};
+		};		
+				
 		</script>
 		
 <!-- 		  購物車按鈕   -->
 		  <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()}">
 		  <script>
-		  $("#SC${productVO.product_no}").click(function(){
+		  
+			//點選加入購物車呼叫的function
+			function addCart(id){
 				$.ajax({ 
-				  type:"POST",
-				  url:"<%=request.getContextPath()%>/ShoppingServlet",
-				  data:{
-					  "product_no": "${productVO.product_no}",
-					  "product_name": "${productVO.product_name}",
-					  "product_price": "${productVO.product_price}",
-					  "proqty": "1",
-					  "product_remaining": "${productVO.product_remaining}",
-					  "product_state": "${productVO.product_state}",
-					  "user_id": "${productVO.user_id}",
-					  "action": "ADD"
-				  },
-				  success: function(res) {
+					  type:"POST",
+					  url:"<%=request.getContextPath()%>/ShoppingServlet",
+					  data:{
+						  "product_no": id,
+						  "action": "ADDFromFav"
+					  },
+					  success: function(res) {
+						   
+						  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>"); 
+						  $("#carts").html(cartproducts); 
+						  
+						  var carRes  = JSON.parse(res)
+//						  console.log(carRes["results"].length);
+						  var ibaCount = carRes["results"].length;
+						  $("#iba").html(ibaCount);
+
+						  var titlePrice = 0
+							carRes["results"].forEach(function (item,index) {
+								titlePrice += (item.product_price * item.product_quantity)
+							});
+						  $(".cart-price").html("$" + titlePrice);
+						  $("#cartHoverTotal").html("$" + titlePrice);
+
+
+						  Swal.fire({
+							  icon: 'success',
+							  title: '商品加入購物車',
+							  showConfirmButton: false,
+							  timer: 1000
+							});
+						  
+				      }, 	  
+					  error:function () {
+				  			Swal.fire({
+					  			  icon: 'error',
+					  			  title: '很抱歉,加入購物車失敗',
+					  			  showConfirmButton: false,
+					  			  timer: 1000
+					  			});
+					  },				
+					 });
+			}
+		  
+		  
+		  
+// 		  $("#SC${productVO.product_no}").click(function(){
+// 				$.ajax({ 
+// 				  type:"POST",
+<%-- 				  url:"<%=request.getContextPath()%>/ShoppingServlet", --%>
+// 				  data:{
+// 					  "product_no": "${productVO.product_no}",
+// 					  "product_name": "${productVO.product_name}",
+// 					  "product_price": "${productVO.product_price}",
+// 					  "proqty": "1",
+// 					  "product_remaining": "${productVO.product_remaining}",
+// 					  "product_state": "${productVO.product_state}",
+// 					  "user_id": "${productVO.user_id}",
+// 					  "action": "ADD"
+// 				  },
+// 				  success: function(res) {
 					   
-					  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>"); 
-					  $("#carts").html(cartproducts); 
+<%-- 					  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>");  --%>
+// 					  $("#carts").html(cartproducts); 
 					  
-					  var carRes  = JSON.parse(res)
-// 					  console.log(carRes["results"].length);
-					  var ibaCount = carRes["results"].length;
-					  $("#iba").html(ibaCount);
+// 					  var carRes  = JSON.parse(res)
+// // 					  console.log(carRes["results"].length);
+// 					  var ibaCount = carRes["results"].length;
+// 					  $("#iba").html(ibaCount);
 
-					  var titlePrice = 0
-						carRes["results"].forEach(function (item,index) {
-							titlePrice += (item.product_price * item.product_quantity)
-						});
-					  $(".cart-price").html("$" + titlePrice);
-					  $("#cartHoverTotal").html("$" + titlePrice);
-
-
-					  Swal.fire({
-						  icon: 'success',
-						  title: '商品加入購物車',
-						  showConfirmButton: false,
-						  timer: 1000
-						});
+// 					  var titlePrice = 0
+// 						carRes["results"].forEach(function (item,index) {
+// 							titlePrice += (item.product_price * item.product_quantity)
+// 						});
+// 					  $(".cart-price").html("$" + titlePrice);
+// 					  $("#cartHoverTotal").html("$" + titlePrice);
 					  
-			      }, 	  
-				  error:function () {
-			  			Swal.fire({
-				  			  icon: 'error',
-				  			  title: '很抱歉,加入購物車失敗',
-				  			  showConfirmButton: false,
-				  			  timer: 1000
-				  			});
-				  },				
-				 });
-		  });
+// 			      }, 	  
+// 				  error:function () {
+// 			  			Swal.fire({
+// 				  			  icon: 'error',
+// 				  			  title: '很抱歉,加入購物車失敗',
+// 				  			  showConfirmButton: false,
+// 				  			  timer: 1000
+// 				  			});
+// 				  },				
+// 				 });
+				
+// 		  });
+		  
+function addFavorite(id){
+	const data =  JSON.parse(localStorage.getItem("favorite"));
+	if (data == null){
+		$.ajax({ 
+			  type:"POST",
+			  url:"<%=request.getContextPath()%>/Favorite",
+			  data:{
+				  "product_no":id,
+				  "action": "addFavorite"
+			  },
+			  success: function(res) {
+				  localStorage.setItem('favorite', res)
+				  Swal.fire({
+					  icon: 'success',
+					  title: `${productVO.product_name}已加入收藏清單`,
+					  showConfirmButton: false,
+					  timer: 1500
+					});
+				  },
+	})
+	} else {
+
+    const index = data["results"].findIndex(item => item.product_no === Number(id))
+    if (index !== -1){
+		  Swal.fire({
+			  icon: 'error',
+			  title: `${productVO.product_name}已在收藏清單`,
+			  showConfirmButton: false,
+			  timer: 1500
+			});
+    } else {
+		$.ajax({ 
+			  type:"POST",
+			  url:"<%=request.getContextPath()%>/Favorite",
+			  data:{
+				  "product_no": id,
+				  "action": "addFavorite"
+			  },
+			  success: function(res) {
+				  localStorage.setItem('favorite', res)
+				  Swal.fire({
+					  icon: 'success',
+					  title: `${productVO.product_name}已加入收藏清單`,
+					  showConfirmButton: false,
+					  timer: 1500
+					});
+				  },
+	})
+ }
+} 
+}
+	
+
 		  </script>
 		  </c:forEach>
 

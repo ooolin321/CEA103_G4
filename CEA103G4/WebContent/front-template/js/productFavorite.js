@@ -1,36 +1,30 @@
-(function () {
+	const favorite = document.getElementById('favorite')
+	const data =  JSON.parse(localStorage.getItem("favorite"));
+	const path = "http://localhost:8081/CEA103G4"
+	favoriteContent(data,path);
 
-  const dataPanel = document.getElementById('data-panel')
-  const data = JSON.parse(localStorage.getItem('favoriteProducts')) || []
+	function favoriteContent(data,path) {
+		
 
-  displayDataList(data)
+      		let htmlContent = "";
+      	  
+		data["results"].forEach(function (item, index) {
 
-    dataPanel.addEventListener('click', (event) => {
-    if (event.target.matches('.btn-show-movie')) {
-      showMovie(event.target.dataset.id)
-    } else if (event.target.matches('.btn-remove-favorite')) {
-      removeFavoriteItem(event.target.dataset.id)
-    }
-  })
-
-  function displayDataList (data) {
-    let htmlContent = ''
-    data.forEach(function (item, index) {
-      htmlContent += `
-        <div class="col-lg-3 col-sm-6">
-          <div class="card mb-2">
-             <div class="product-item" >
-      	    <div class="pi-pic">
-      	    <div class="pi-img">
-          <a href="${path}/product/product.do?product_no=${item.product_no}">
-            <img class="card-img-top" src="${path}/ProductShowPhoto?product_no=${item.product_no}" alt=""></a>
-            </div>
-            <ul>
-                        <li class="w-icon active">
-                            <a href="#"><i class="icon_bag_alt"></i></a>
+      	    htmlContent += `
+      	    <div class="col-lg-3 col-sm-6">
+      	        <div class="card mb-2 productcard">
+      	           <div class="product-item" >
+      	    		 <div class="pi-pic">
+      	    		  <div class="pi-img">
+      	                 <a href="${path}/product/product.do?product_no=${item.product_no}">
+      	                    <img class="card-img-top" src="${path}/ProductShowPhoto?product_no=${item.product_no}" alt=""></a>
+      	                    </div>
+      	    				<ul>
+                        <li class="w-icon active" id="SC${item.product_no}">
+                            <a href="javascript:void(0)"><i class="icon_bag_alt" data-id="${item.product_no}"></i></a>
                         </li>   
                         <li class="w-heart" >
-      	                            <i class="icon_heart_alt"  data-id="${item.product_no}"></i>
+      	                            <i class="fa fa-close"  data-id="${item.product_no}"></i>
       	                        </li>
       	                    </ul>
       	                </div>
@@ -41,58 +35,34 @@
       	                        ${item.product_price}
       	                    </div>
       	                </div></a>
-            <div class="card-footer">
-              <button class="btn btn-primary btn-show-movie" data-toggle="modal" data-target="#show-movie-modal" data-id="${item.id}">More</button>
-              <button class="btn btn-danger btn-remove-favorite" data-id="${item.id}">X</button>
-            </div>
-          </div>
-        </div>
-      `
-    })
-    dataPanel.innerHTML = htmlContent
-  }
+      	            </div>
+      	        </div>
+      	    </div>
+      	   </div>
+      	      `;
+      	  });
+      	favorite.innerHTML = htmlContent;
+      	}
+	
+		favorite.addEventListener('click', event => {
+		if (event.target.matches('.fa-close')) {
+    	removeFavoriteItem(event.target.dataset.id)
+		}else if (event.target.matches('.icon_bag_alt')){
+    	addCart(event.target.dataset.id);	
+    	}
+});
 
 
-
-function showMovie (id) {
-    // get elements
-    const modalTitle = document.getElementById('show-movie-title');
-    const modalImage = document.getElementById('show-movie-image');
-    const modalDate = document.getElementById('show-movie-date');
-    const modalDescription = document.getElementById('show-movie-description');
-
-     // set request url
-    const url = INDEX_URL + id
-    console.log(url)
-
-    // send request to show api
-    axios.get(url).then(response => {
-      const data = response.data.results
-      console.log(data)
-
-      // insert data into modal ui
-      modalTitle.textContent = data.title
-      modalImage.innerHTML = `<img src="${POSTER_URL}${data.image}" class="img-fluid" alt="Responsive image">`
-      modalDate.textContent = `release at : ${data.release_date}`
-      modalDescription.textContent = `${data.description}`
-    })
-  }
-
-//運用 id 值刪除電影
   function removeFavoriteItem (id) {
-    // find movie by id
-    //若 item.id === Number(id) 回傳 True，那麼 findIndex 則會回傳該項目的 index。若掃描了整個 Array 都沒有 Object 相符，則會回傳 -1。
-    const index = data.findIndex(item => item.id === Number(id))
-    if (index === -1) return //若無找到此筆資料 則停止此函式
+    const index = data["results"].findIndex(item => item.product_no === Number(id))
+    if (index === -1) return 
 
-    // remove movie and update localStorage
-    data.splice(index, 1) // 找到此筆資料後，並將從資料庫中刪除
-    //將data這組資料([{...}]) 從Object 轉換成  String 後，重新存回 LocalStorage
-    localStorage.setItem('favoriteProducts', JSON.stringify(data))
+    data["results"].splice(index, 1)
+    localStorage.setItem('favorite', JSON.stringify(data))
 
-    // repaint dataList
-    //重新渲染 FAVORITE 這個頁面(此時的 data 已是最新的資料)
-    displayDataList(data)
+    favoriteContent(data,path);
+    removeSession(index);
+    
   }
+	
 
-})()

@@ -141,4 +141,12 @@ public UserVO newPassword_Update(String user_id,String user_newNameCheck) {
 	public Optional<UserVO> getUserPic(String user_id){
 		return dao.findUserPic(user_id);
 	}
+	
+	public UserVO updateCash(Integer cash,String user_id) {
+		UserVO userVO = new UserVO();
+		userVO.setCash(cash);
+		userVO.setUser_id(user_id);
+		dao.updateCash(userVO);
+		return userVO;
+	}
 }

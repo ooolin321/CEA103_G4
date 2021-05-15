@@ -596,15 +596,15 @@ public class Live_orderServlet extends HttpServlet {
 				
 				UserService userSvc = new UserService();
 				UserVO userVO = userSvc.getOneUser(user_id);
-				
-				
+				Integer nowMoney = userVO.getCash();
+	
 				Live_orderVO live_orderVO = new Live_orderVO();
 
 				Integer order_price = new Integer(req.getParameter("bidPrice").trim());
 				Integer live_no = new Integer(req.getParameter("live_no").trim());
 				String seller_id = req.getParameter("seller_id");
 
-				live_orderVO.setOrder_state(0);
+				live_orderVO.setOrder_state(1);
 				live_orderVO.setOrder_shipping(0);
 				live_orderVO.setOrder_price(order_price);
 				live_orderVO.setPay_method(0);
@@ -629,10 +629,7 @@ public class Live_orderServlet extends HttpServlet {
 				List<Live_order_detailVO> list = new ArrayList<Live_order_detailVO>();
 				String[] product_no = req.getParameterValues("product_no");
 				
-				
-				
-				
-				
+
 				
 				live_order_detailVO.setProduct_no(new Integer(product_no[0]));
 				live_order_detailVO.setPrice(order_price);
@@ -641,8 +638,11 @@ public class Live_orderServlet extends HttpServlet {
 				System.out.println(live_order_detailVO.getProduct_no());
 				
 				ProductService productSvc = new ProductService();
+				
 				Live_orderService live_orderSvc = new Live_orderService();
 				/***************************2.開始修改資料*****************************************/
+				nowMoney -= order_price;
+				userVO = userSvc.updateCash(nowMoney, user_id);
 				productSvc.updateState(new Integer(product_no[0]), 3);
 				live_orderSvc.insertWithDetails(live_orderVO, list);
 				

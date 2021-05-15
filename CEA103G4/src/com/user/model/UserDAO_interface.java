@@ -32,4 +32,6 @@ public interface UserDAO_interface {
 	public void update_user_report(UserVO userVO);
 	
 	Optional<UserVO> findUserPic(String user_id);
+	
+	public void updateCash(UserVO userVO);
 }

@@ -44,6 +44,9 @@ public class UserDAO implements UserDAO_interface {
 	private static final String SIGN_IN = "SELECT * FROM USER where BINARY USER_ID=? AND BINARY USER_PWD=?";
 	private static final String UPDATE_NEWPSW = "UPDATE `USER` SET USER_PWD=? WHERE `USER_ID`=?";
 	private static final String UPDATE_USER_REPORT = "UPDATE USER SET USER_STATE =? WHERE USER_ID = ?;";
+	private static final String UPDATE_CASH = "UPDATE USER SET CASH=? WHERE USER_ID=?";
+
+	private static final String UPDATE_USER_RATING = "UPDATE USER SET USER_COMMENT = USER_COMMENT + ?, COMMENT_TOTAL = COMMENT_TOTAL + ?  WHERE USER_ID = ?";
 
 	@Override
 	public void insert(UserVO userVO) {
@@ -109,7 +112,7 @@ public class UserDAO implements UserDAO_interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
-			
+
 			pstmt.setString(1, userVO.getUser_name());
 			pstmt.setString(2, userVO.getUser_gender());
 			pstmt.setDate(3, userVO.getUser_dob());
@@ -122,9 +125,9 @@ public class UserDAO implements UserDAO_interface {
 			pstmt.setString(10, userVO.getUser_addr());
 			pstmt.setBytes(11, userVO.getUser_pic());
 			pstmt.setString(12, userVO.getUser_id());
-			
+
 			pstmt.executeUpdate();
-			
+
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -678,6 +681,42 @@ public class UserDAO implements UserDAO_interface {
 	}
 
 	@Override
+	public void updateUserRating(UserVO userVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_USER_RATING);
+
+			pstmt.setInt(1, userVO.getUser_comment());
+			pstmt.setInt(2, userVO.getComment_total());
+			pstmt.setString(3, userVO.getUser_id());
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("database發生錯誤." + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	@Override
 	public Optional<UserVO> findUserPic(String user_id) {
 		UserVO userVO = null;
 		Connection con = null;
@@ -722,6 +761,45 @@ public class UserDAO implements UserDAO_interface {
 				}
 			}
 		}
+
 		return Optional.ofNullable(userVO);
+	}
+
+	@Override
+	public void updateCash(UserVO userVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_CASH);
+
+			pstmt.setInt(1, userVO.getCash());
+			pstmt.setString(2, userVO.getUser_id());
+
+			int a = pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
 	}
 }

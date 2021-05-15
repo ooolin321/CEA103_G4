@@ -78,6 +78,11 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 				String url = "/front-end/userLogin.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
+			}else if(userVO.getUser_state() == 0) {
+				errorMsgs.put("user_id","很抱歉，此帳號永久停權已無法使用！");
+				String url = "/front-end/userLogin.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				successView.forward(req, res);
 			}else if(userVO != null) {
 				HttpSession session = req.getSession();
 				session.setAttribute("account", userVO); // *工作1: 才在session內做已經登入過的標識
@@ -91,8 +96,8 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 					}
 				} catch (Exception ignored) {
 				}
-				res.sendRedirect(req.getContextPath() + "/front-end/protected/userIndex.jsp"); // *工作3:
-				// (-->如無來源網頁:則重導至userIndex.jsp)
+				res.sendRedirect(req.getContextPath() + "/front-end/index.jsp"); // *工作3:
+				// (-->如無來源網頁:則重導至首頁)
 			}if(!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/userLogin.jsp");
 				failureView.forward(req, res);

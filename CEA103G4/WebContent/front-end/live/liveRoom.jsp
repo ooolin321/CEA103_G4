@@ -344,6 +344,7 @@ input {
 		<div class="col-xl-3">
 			<br>現在最高價: <span id="current_price"></span>
 			<br>現在出價人: <span id="current_id"></span>
+			
 		</div>
 
 	</div>
@@ -416,9 +417,7 @@ function refresh(){
 			action:"getGson",
 		},
 		
-		success:function(str){	
-
-			$("#showProduct").empty();
+		success:function(str){
 			
 			for(let i of str){
 				if(i.product_state == 2 && i.user_id == '${liveVO.user_id}' && i.live_no == ${liveVO.live_no}){
@@ -507,6 +506,8 @@ function refresh(){
 					//&& ${liveVO.user_id==userVO.user_id}
 					//開始競標
 					alert("開始競標#"+$("#showProduct").find("td").eq(1).html());
+					
+					
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 						//0給初始直
 							'type' : 'max',
@@ -570,27 +571,34 @@ function refresh(){
 					//ajax  更改狀態
 					//refresh();
 					//注意元素可以抓到
-				$.ajax({ 
-					  type:"POST",
-					  url:"<%=request.getContextPath()%>/live_order/live_order.do",
-					 	 data:{
-				  		  	 "user_id":$("#current_id").html(),
-						 	 "bidPrice":$("#current_price").html(),
-						 	 "live_no":'${liveVO.live_no}',
-						 	 "seller_id":'${liveVO.user_id}',
-						 	 "product_no":$("#showProduct").find("td").eq(1).html(),
-							 "action": "order_ajax"
-					  },
-					  success: function(res) {
-							alert("已產生訂單");
-							refresh();
-						  
-				      }, 	  
-				
-				 });
-
-				
+				if(jsonObj.sender == '${userVO.user_id}'){
 					
+					$.ajax({ 
+						  type:"POST",
+						  url:"<%=request.getContextPath()%>/live_order/live_order.do",
+						 	 data:{
+					  		  	 "user_id":$("#current_id").html(),
+							 	 "bidPrice":$("#current_price").html(),
+							 	 "live_no":'${liveVO.live_no}',
+							 	 "seller_id":'${liveVO.user_id}',
+							 	 "product_no":$("#showProduct").find("td").eq(1).html(),
+								 "action": "order_ajax"
+						  },
+						  success: function(res) {
+								alert("已產生訂單");
+								refresh();
+					      }, 	  
+					
+					 });
+				}
+					
+				$("#showProduct").empty();
+
+// 				setTimeout(function(){
+// 					$("#showProduct").empty();
+// 					refresh();
+// 				}, 10);
+
 				$("#current_price").text(jsonObj.maxPrice);
 				$("#current_id").text("結束囉");
 

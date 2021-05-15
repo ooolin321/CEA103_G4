@@ -26,6 +26,8 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 	}
 	private static final String INSERT_STMT = 
 			"INSERT INTO `ORDER` (`ORDER_NO`,`ORDER_STATE`,`ORDER_SHIPPING`,`ORDER_PRICE`,`PAY_METHOD`,`PAY_DEADLINE`,`REC_NAME`,`ZIPCODE`,`CITY`,`TOWN`,`REC_ADDR`,`REC_PHONE`,`REC_CELLPHONE`,`LOGISTICS`,`LOGISTICSSTATE`,`DISCOUNT`,`USER_ID`,`SELLER_ID`,`SRATING`,`SRATING_CONTENT`,`POINT`) VALUES (null, ?, ?, ?, ?, DATE_ADD(CURRENT_TIMESTAMP() , INTERVAL 3 HOUR), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT2 = 
+			"INSERT INTO `ORDER` (`ORDER_NO`,`ORDER_STATE`,`ORDER_SHIPPING`,`ORDER_PRICE`,`PAY_METHOD`,`PAY_DEADLINE`,`REC_NAME`,`ZIPCODE`,`CITY`,`TOWN`,`REC_ADDR`,`REC_PHONE`,`REC_CELLPHONE`,`LOGISTICS`,`DISCOUNT`,`USER_ID`,`SELLER_ID`,`POINT`) VALUES (null, ?, ?, ?, ?, DATE_ADD(CURRENT_TIMESTAMP() , INTERVAL 3 HOUR), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT `ORDER_NO`,`ORDER_DATE`,`ORDER_STATE`,`ORDER_SHIPPING`,`ORDER_PRICE`,`PAY_METHOD`,`PAY_DEADLINE`,`REC_NAME`,`ZIPCODE`,`CITY`,`TOWN`,`REC_ADDR`,`REC_PHONE`,`REC_CELLPHONE`,`LOGISTICS`,`LOGISTICSSTATE`,`DISCOUNT`,`USER_ID`,`SELLER_ID`,`SRATING`,`SRATING_CONTENT`,`POINT` FROM `ORDER` ORDER BY `ORDER_NO`";
 	private static final String GET_ONE_STMT = 
@@ -42,6 +44,8 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			"UPDATE `ORDER` SET `LOGISTICSSTATE`=1 WHERE `ORDER_NO` = ?";
 	private static final String UPDATE_UNSHIPPED =
 			"UPDATE `ORDER` SET `LOGISTICSSTATE`=0 WHERE `ORDER_NO` = ?";
+	private static final String UPDATE_SRATING =
+			"UPDATE `ORDER` SET `SRATING` = ?, `SRATING_CONTENT` = ? WHERE `ORDER_NO` = ?";
 	
 	
 	@Override
@@ -81,6 +85,7 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			rs.next();
 			Integer order_no = rs.getInt(1);
 			orderVO.setOrder_no(order_no);
+			
 			con.commit();
 			// Handle any SQL errors
 		} catch (SQLException se) {
@@ -578,6 +583,110 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 				}
 			}
 		}
+	}
+	@Override
+	public Object insert2(OrderVO orderVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			pstmt = con.prepareStatement(INSERT_STMT2,PreparedStatement.RETURN_GENERATED_KEYS);
+
+			pstmt.setInt(1, orderVO.getOrder_state());
+			pstmt.setInt(2, orderVO.getOrder_shipping());			
+			pstmt.setInt(3, orderVO.getOrder_price());
+			pstmt.setInt(4, orderVO.getPay_method());
+			pstmt.setString(5, orderVO.getRec_name());
+			pstmt.setString(6, orderVO.getZipcode());
+			pstmt.setString(7, orderVO.getCity());
+			pstmt.setString(8, orderVO.getTown());
+			pstmt.setString(9, orderVO.getRec_addr());
+			pstmt.setString(10, orderVO.getRec_phone());
+			pstmt.setString(11, orderVO.getRec_cellphone());
+			pstmt.setInt(12, orderVO.getLogistics());
+			pstmt.setInt(13, orderVO.getDiscount());
+			pstmt.setString(14, orderVO.getUser_id());
+			pstmt.setString(15, orderVO.getSeller_id());
+			pstmt.setInt(16, orderVO.getPoint());
+		
+			pstmt.executeUpdate();
+			
+			ResultSet rs = pstmt.getGeneratedKeys();
+			rs.next();
+			Integer order_no = rs.getInt(1);
+			orderVO.setOrder_no(order_no);
+			con.commit();
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}return orderVO;
+	}
+	@Override
+	public void updateSrating(OrderVO orderVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_SRATING);
+
+			pstmt.setInt(1, orderVO.getSrating());
+			pstmt.setString(2, orderVO.getSrating_content());
+			pstmt.setInt(3, orderVO.getOrder_no());
+
+			pstmt.executeUpdate();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
 	}
 
 }

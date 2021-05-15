@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.user.model.*"%>
 <%@ page import="com.seller_follow.model.*"%>
 
@@ -75,12 +76,22 @@
                   <div class="col-md-6 col-lg-3">
                     <div class="widget-small info coloured-icon"><i class="icon fa fa-thumbs-o-up fa-3x"></i>
                       <div class="info">
-                        <h4>賣家評價</h4>
                         <c:if test="${userVO.user_comment == 0}">
+                        <h4>賣家評價</h4>
                         <p><b>無</b></p>
                         </c:if>
                         <c:if test="${userVO.user_comment != 0}">
-                        <p><b>${userVO.user_comment}顆星</b></p>
+                        <h4>賣家評價(人數)</h4>
+<%--                         <p><b>${userVO.user_comment/userVO.comment_total}顆星</b></p> --%>
+                        <p><b><fmt:formatNumber type="number" value="${userVO.user_comment/userVO.comment_total}" maxFractionDigits="0"/>
+                        	  <input type="hidden" name="srating" value="<fmt:formatNumber type="number" value="${userVO.user_comment/userVO.comment_total}" maxFractionDigits="0"/>" id="con"/>
+                        	  <ion-icon name="star" class="star all-star" id="s1"></ion-icon>
+							  <ion-icon name="star" class="star all-star" id="s2"></ion-icon>
+							  <ion-icon name="star" class="star all-star" id="s3"></ion-icon>
+							  <ion-icon name="star" class="star all-star" id="s4"></ion-icon>
+							  <ion-icon name="star" class="star all-star" id="s5"></ion-icon>
+							  (${userVO.comment_total})
+						</b></p>
                         </c:if>
                       </div>
                     </div>
@@ -173,5 +184,29 @@
 <!--                   </div> -->
 <!--                 </div> -->
          <jsp:include page="/front-end/protected/userIndex_footer.jsp" />
+         <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
          </body>
+         <script>
+         $(document).ready(function(){
+        		switch($("#con").val()){
+        		case "1":
+        			$("#s1").css("color","#f6d04d");
+        			break;
+        		case "2":
+        			$("#s1,#s2").css("color","#f6d04d");
+        			break;
+        		case "3":
+        			$("#s1,#s2,#s3").css("color","#f6d04d");
+        			break;
+        		case "4":
+        			$("#s1,#s2,#s3,#s4").css("color","#f6d04d");
+        			break;
+        		case "5":
+        			$(".all-star").css("color","#f6d04d");
+        			break;
+        		default:
+        			$(".all-star").css("color","black");
+        		}
+        	})
+         </script>
          </html>

@@ -46,6 +46,7 @@ public class UserDAO implements UserDAO_interface {
 	private static final String UPDATE_USER_REPORT = "UPDATE USER SET USER_STATE =? WHERE USER_ID = ?;";
 	private static final String UPDATE_CASH = "UPDATE USER SET CASH=? WHERE USER_ID=?";
 	
+	private static final String UPDATE_USER_RATING = "UPDATE USER SET USER_COMMENT = USER_COMMENT + ?, COMMENT_TOTAL = COMMENT_TOTAL + ?  WHERE USER_ID = ?";
 	@Override
 	public void insert(UserVO userVO) {
 		Connection con = null;
@@ -677,6 +678,26 @@ public class UserDAO implements UserDAO_interface {
 			}
 		}
 	}
+	
+	@Override
+	public void updateUserRating(UserVO userVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_USER_RATING);
+
+			pstmt.setInt(1, userVO.getUser_comment());
+			pstmt.setInt(2, userVO.getComment_total());
+			pstmt.setString(3, userVO.getUser_id());
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("database發生錯誤." + se.getMessage());
+		} finally {
 
 	@Override
 	public Optional<UserVO> findUserPic(String user_id) {
@@ -723,6 +744,8 @@ public class UserDAO implements UserDAO_interface {
 				}
 			}
 		}
+	}
+	
 		return Optional.ofNullable(userVO);
 	}
 
@@ -764,3 +787,7 @@ public class UserDAO implements UserDAO_interface {
 
 	}
 }
+=======
+>>>>>>> 979906c5eeb856a32d6b3fc49e7eaa7bad92fb79
+}
+>>>>>>> 7266e378c1223d5a7349115c10c21fa16f4aaf9e

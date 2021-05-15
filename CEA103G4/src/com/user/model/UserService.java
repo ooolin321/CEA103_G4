@@ -138,8 +138,20 @@ public UserVO newPassword_Update(String user_id,String user_newNameCheck) {
 		return userVO;
 	}
 	
+<<<<<<< HEAD
+	public UserVO updateUserRating(Integer user_comment,Integer comment_total,String user_id) {
+		UserVO userVO = new UserVO();
+		
+		userVO.setUser_comment(user_comment);
+		userVO.setComment_total(comment_total);		
+		userVO.setUser_id(user_id);
+		
+		dao.updateUserRating(userVO);
+		return userVO;
+=======
 	public Optional<UserVO> getUserPic(String user_id){
 		return dao.findUserPic(user_id);
+>>>>>>> 979906c5eeb856a32d6b3fc49e7eaa7bad92fb79
 	}
 	
 	public UserVO updateCash(Integer cash,String user_id) {

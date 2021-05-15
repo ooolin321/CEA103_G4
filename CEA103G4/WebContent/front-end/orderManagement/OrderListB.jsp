@@ -271,7 +271,6 @@ h3 {
 		<%
 		if (request.getAttribute("listDetails_ByNo") != null) {
 		%>
-		<jsp:include page="listDetails_ByNo.jsp" />
 		<%
 		}
 		%>

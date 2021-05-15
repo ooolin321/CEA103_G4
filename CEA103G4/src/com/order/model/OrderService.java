@@ -73,6 +73,44 @@ public class OrderService {
 		dao.update(orderVO);
 		return orderVO;
 	}
+	
+	public OrderVO updateSrating(Integer srating, String srating_content, Integer order_no) {
+		
+		OrderVO orderVO = new OrderVO();
+		
+		orderVO.setSrating(srating);
+		orderVO.setSrating_content(srating_content);
+		orderVO.setOrder_no(order_no);
+		
+		dao.updateSrating(orderVO);
+		return orderVO;
+	}
+	
+	public OrderVO addOrderList(Integer order_state, Integer order_shipping,  Integer order_price, Integer pay_method, String rec_name, String zipcode, String city, String town,  String rec_addr, String rec_phone, String rec_cellphone, Integer logistics, Integer discount, String user_id, String seller_id, Integer point) {
+
+		OrderVO orderVO = new OrderVO();
+
+		orderVO.setOrder_state(order_state);
+		orderVO.setOrder_shipping(order_shipping);
+		orderVO.setOrder_price(order_price);
+		orderVO.setPay_method(pay_method);
+		orderVO.setRec_name(rec_name);
+		orderVO.setZipcode(zipcode);
+		orderVO.setCity(city);
+		orderVO.setTown(town);
+		orderVO.setRec_addr(rec_addr);
+		orderVO.setRec_phone(rec_phone);
+		orderVO.setRec_cellphone(rec_cellphone);
+		orderVO.setLogistics(logistics);
+		orderVO.setDiscount(discount);
+		orderVO.setUser_id(user_id);
+		orderVO.setSeller_id(seller_id);
+		orderVO.setPoint(point);
+		
+		dao.insert2(orderVO);
+
+		return orderVO;
+	}
 
 	public void deleteOrder(Integer order_no) {
 		dao.delete(order_no);
@@ -99,4 +137,5 @@ public class OrderService {
 		dao.updateUnshipped(list);
 		
 	}
+	
 }

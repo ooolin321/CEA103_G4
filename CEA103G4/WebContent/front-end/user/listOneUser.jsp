@@ -100,6 +100,10 @@ margin: -30px -30px 0px;
 		<th>地址:</th>
 		<td>${userVO.city}${userVO.town}${userVO.zipcode}${userVO.user_addr}</td>
 	</tr>	
+	<tr>
+		<th>個人照:</th>
+		<td><img width="100px" height="100px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id=<%=userVO.getUser_id()%>"></td>
+	</tr>
 <!-- 	<tr> -->
 <!-- 		<th>狀態</th> -->
 <%-- 		<td>${(userVO.user_state==0)? '停權':''}${(userVO.user_state==1)? '正常':''}</td> --%>

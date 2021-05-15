@@ -2,6 +2,7 @@ package com.user.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import com.live_report.model.*;
@@ -48,7 +49,7 @@ public class UserService {
 	}
 
 	public UserVO updateUser(String user_id, String user_name, String user_gender, Date user_dob, String user_mail, String user_phone, 
-			String user_mobile, String city, String town, Integer zipcode, String user_addr) {
+			String user_mobile, String city, String town, Integer zipcode, String user_addr, byte[] user_pic) {
 		
 		UserVO userVO = new UserVO();
 
@@ -65,6 +66,7 @@ public class UserService {
 		userVO.setTown(town);
 		userVO.setZipcode(zipcode);
 		userVO.setUser_addr(user_addr);
+		userVO.setUser_pic(user_pic);
 //		userVO.setRegdate(regdate);
 //		userVO.setUser_point(user_point);
 //		userVO.setViolation(violation);
@@ -131,13 +133,12 @@ public UserVO newPassword_Update(String user_id,String user_newNameCheck) {
 	public UserVO userRepost(Integer user_state,String user_id) {
 		UserVO userVO = new UserVO();
 		userVO.setUser_state(user_state);
-//System.out.println("Service user_state = "+user_state);
 		userVO.setUser_id(user_id);
-//System.out.println("Service user_id = "+user_id);
 		dao.update_user_report(userVO);		
 		return userVO;
 	}
 	
+<<<<<<< HEAD
 	public UserVO updateUserRating(Integer user_comment,Integer comment_total,String user_id) {
 		UserVO userVO = new UserVO();
 		
@@ -147,5 +148,9 @@ public UserVO newPassword_Update(String user_id,String user_newNameCheck) {
 		
 		dao.updateUserRating(userVO);
 		return userVO;
+=======
+	public Optional<UserVO> getUserPic(String user_id){
+		return dao.findUserPic(user_id);
+>>>>>>> 979906c5eeb856a32d6b3fc49e7eaa7bad92fb79
 	}
 }

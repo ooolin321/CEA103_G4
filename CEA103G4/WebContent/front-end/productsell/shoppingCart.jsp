@@ -133,7 +133,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                	<tr><td style="padding-bottom:5px;"><a href="<%=request.getContextPath()%>/SellerProducts?user_id=${entry.key}" target="_blank"><button class="btn btn-outline-warning" type="button">賣家&nbsp;${entry.key}</button></a></td></tr>
+                	<tr><td style="padding-bottom:5px;"><a href="<%=request.getContextPath()%>/SellerProducts?user_id=${entry.key}" target="_blank"><button class="btn btn-outline-warning" type="button"><i class="fa fa-diamond" style="display:inline-block;"></i>&nbsp;${entry.key}</button></a></td></tr>
                   <c:forEach var="order" items="${entry.value}" varStatus="cartstatus">
                   <tr>
                     <td class="cart-pic first-row">
@@ -193,7 +193,7 @@
                   <ul>
                     <li class="cart-total">合計 <span id="Sum">${sum}</span></li>
                   </ul>
-                  <a href="<%=request.getContextPath()%>/front-end/protected/check-out.jsp" class="proceed-btn">結帳</a>
+                  <a href="<%=request.getContextPath()%>/front-end/protected/check-out.jsp" class="proceed-btn" id="checkOut">結帳</a>
                 </div>
               </div>
 <%}%>
@@ -257,24 +257,40 @@
 	$('#Add${order.product_no}').on('click', function () {
     	var Count = $('input[name="${order.product_no}"]').val();
     	var maxRemaining = $("#max${order.product_no}").attr("value");
-    	if (Count == maxRemaining) {
-    		$("#Add${order.product_no}").prop('disabled',true);
-    		Swal.fire("商品數量只剩下"+ maxRemaining +"個");
-    	} 
-    	if (Count < maxRemaining) {
-    		$("#Add${order.product_no}").prop('disabled',false);
-    	}
+   	
+			$.ajax({ 
+		  type:"POST",
+			  url:"<%=request.getContextPath()%>/ShoppingServlet",
+		  data:{
+			  "product_no": "${order.product_no}",
+			  "product_name": "${order.product_name}",
+			  "product_price": "${order.product_price}",
+			  "proqty": $('input[name="${order.product_no}"]').val(),
+			  "product_remaining": "${order.product_remaining}",
+			  "user_id": "${order.user_id}",
+			  "action": "updateCount"
+		  },
+		  success: function() {
+			  }
+		  });
+			
+	    	if (Count == maxRemaining) {
+	    		$("#Add${order.product_no}").prop('disabled',true);
+	    		Swal.fire("商品數量只剩下"+ maxRemaining +"個");
+	    	} 
+	    	if (Count < maxRemaining) {
+	    		$("#Add${order.product_no}").prop('disabled',false);
+	    	}
 
 	});
 	
 	$("#PC${order.product_no}").change(function() {	
 		
 		var maxRemaining = $("#max${order.product_no}").attr("value");
-// 		alert("商品數量只剩下"+ maxRemaining +"個");
 		$('input[name="${order.product_no}"]').val(maxRemaining);
+		
 	});
-	
-	
+
 	 </c:forEach>
 	 
 		//計算合計方法
@@ -287,6 +303,7 @@
 	             })
 	             $("#Sum").text(zong);
 		}
+						  
 	 
     </script>
     

@@ -65,7 +65,7 @@
 						<div class="header-right">
 						<FORM id="userLogOut" METHOD="post" class="logout-form" action="<%=request.getContextPath()%>/User_LogoutHandler">
 						<a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">
-						<span class="userLogin"style="cursor: pointer"><img class="rounded-circle" width="45px" height="40px" src=""/>&nbsp;               
+						<span class="userLogin"style="cursor: pointer"><img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${userVO.user_id}"/>&nbsp;               
 						${userVO.user_name}
                          </span></a>
 						 <input type="hidden" name="action" value="signOut">
@@ -78,7 +78,7 @@
 						<a
 							href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button
 								type="button" class="btn">註冊</button></a> <a
-							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp" target="_blank"><button
+							href="<%=request.getContextPath()%>/front-end/userLogin.jsp" target="_blank"><button
 								type="button" class="btn">登入</button></a>
 					</div>
         		</c:if>
@@ -111,7 +111,7 @@
 											<tr>
 												<td class="si-pic"><img
 													src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
-													alt="${order.product_name}" style="width:100px; height:100px;" /></td>
+													alt="${order.product_name}" style="width:100px; height:100px; border-radius:10px;" /></td>
 												<td class="si-text">
 													<div class="product-selected">
 														<p>$${order.product_price } x ${order.product_quantity}</p>

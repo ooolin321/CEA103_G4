@@ -415,8 +415,11 @@ function refresh(){
 		data:{
 			action:"getGson",
 		},
-		async:false,
+		
 		success:function(str){	
+
+			$("#showProduct").empty();
+			
 			for(let i of str){
 				if(i.product_state == 2 && i.user_id == '${liveVO.user_id}' && i.live_no == ${liveVO.live_no}){
 					let str = "<tr>";
@@ -465,26 +468,25 @@ function refresh(){
 		webSocket.onmessage = function(event) {
 			var messagesArea = document.getElementById("messagesArea");
 			var jsonObj = JSON.parse(event.data);
-			console.log(jsonObj.type);
+			
 			if ("open" === jsonObj.type) {
 				addListener();
 			}else if("history" === jsonObj.type){
 				//進來的時候
-				console.log(JSON.parse(jsonObj.message));
+				
 				$("#current_price").text(JSON.parse(jsonObj.message).maxPrice);
 				$("#current_id").text(JSON.parse(jsonObj.message).user_id);
 				
 			}else if("chat" === jsonObj.type && ${param.live_no} == jsonObj.live_no){
-				
 
-				console.log("chat"+jsonObj);
+				
 				//聊天//競標中
 				if(/^\d*$/.test(jsonObj.message)){
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 							'type' : 'max',
-							'sender' : self,
+							'sender' : jsonObj.sender,
 							'live_no' : '${param.live_no}',
-							'user_id' : '${userVO.user_id}',
+							'user_id' : jsonObj.sender,
 							'maxPrice' : jsonObj.message,
 							'product_no' : $("#showProduct").find("td").eq(1).html(),
 							'timeStart': '1',//0:開始競標 1:競標中 2:結束競標
@@ -492,12 +494,13 @@ function refresh(){
 					};
 					let json = {
 							"type" : "getMax",
-							"sender" : self,
+							"sender" : jsonObj.sender,
 							"live_no" : '${param.live_no}',
 							"product_no":  $("#showProduct").find("td").eq(1).html(),
 							"message" : JSON.stringify(maxObj)
 					};
-					
+					console.log('GGGGGG');
+					console.log(json);
 					webSocket.send(JSON.stringify(json));
 					
 				}else if("start"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以start
@@ -515,6 +518,7 @@ function refresh(){
 							'timeStart': '0',
 							'lastTime': ''
 					};
+					//
 					let json = {
 							"type" : "getMax",
 							"sender" : self,
@@ -522,7 +526,7 @@ function refresh(){
 							"product_no":  $("#showProduct").find("td").eq(1).html(),
 							"message" : JSON.stringify(maxObj)
 					};
-					
+	
 					webSocket.send(JSON.stringify(json));	
 				
 				
@@ -566,27 +570,31 @@ function refresh(){
 					//ajax  更改狀態
 					//refresh();
 					//注意元素可以抓到
+				$.ajax({ 
+					  type:"POST",
+					  url:"<%=request.getContextPath()%>/live_order/live_order.do",
+					 	 data:{
+				  		  	 "user_id":$("#current_id").html(),
+						 	 "bidPrice":$("#current_price").html(),
+						 	 "live_no":'${liveVO.live_no}',
+						 	 "seller_id":'${liveVO.user_id}',
+						 	 "product_no":$("#showProduct").find("td").eq(1).html(),
+							 "action": "order_ajax"
+					  },
+					  success: function(res) {
+							alert("已產生訂單");
+							refresh();
+						  
+				      }, 	  
+				
+				 });
 
+				
 					
-					
-					
-					
-					
-					
-					
-					
-					$("#current_price").text(jsonObj.maxPrice);
-					$("#current_id").text("結束囉");
-					
-					
+				$("#current_price").text(jsonObj.maxPrice);
+				$("#current_id").text("結束囉");
 
-					
-					
-					
-					
-					
-					
-					
+				
 				}else if(jsonObj.timeStart== "3"){
 					
 				}
@@ -668,110 +676,15 @@ function refresh(){
 
 
   	function login(){
-		
-		Swal.fire({
-  			title: '請先登入會員',
-  			html:
-    		"帳號"+'<input id="userID" class="swal2-input">' +
-    		"密碼"+'<input id="PWD" class="swal2-input">',
-  			focusConfirm: true,
-  		}).then(function(result) {
-	  		$.ajax({
-				  url:"<%=request.getContextPath()%>/FrondEnd_LoginHandler",
-				  type:"POST",
-				  data:{
-					  "user_id":$("#userID").val(),
-					  "user_pwd":$("#PWD").val(),
-					  "action": "signIn_ajax"
-				  },
-				  success: function(result) {
-	
-					if (result.length === 0 || result === ""){
-			  			Swal.fire({
-				  			  icon: 'error',
-				  			  title: '帳號或密碼有誤,請重新輸入',
-				  			  showConfirmButton: false,
-				  			  timer: 1500
-				  			});
-					} else {
-						window.location.reload();
-			  			Swal.fire({
-				  			  icon: 'success',
-				  			  title: '登入成功',
-				  			  showConfirmButton: false,
-				  			  timer: 1500
-				  			});
-					}
-			            }, 	  
-				  error:function () {
-			  			Swal.fire({
-				  			  icon: 'error',
-				  			  title: '登入失敗,請重新登入',
-				  			  showConfirmButton: false,
-				  			  timer: 1500
-				  			});
-				  },
-			});
-  		});
-		
-	}
-</script>
-<script>
-	// 2. This code loads the IFrame Player API code asynchronously.
-	var tag = document.createElement('script');
-
-	tag.src = "https://www.youtube.com/iframe_api";
-	var firstScriptTag = document.getElementsByTagName('script')[0];
-	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-	// 3. This function creates an <iframe> (and YouTube player)
-	//    after the API code downloads.
-	var player;
-	function onYouTubeIframeAPIReady() {
-		player = new YT.Player('player', {
-			height : "100%",
-			width : '100%',
-			videoId : "${liveVO.live_id}",
-			playerVars : {
-				'playsinline' : 1
-			},
-			events : {
-				'onReady' : onPlayerReady,
-				'onStateChange' : onPlayerStateChange
-			}
-		});
-	}
-
-	// 4. The API will call this function when the video player is ready.
-	function onPlayerReady(event) {
-		event.target.playVideo();
-	}
-
-	// 5. The API calls this function when the player's state changes.
-	//    The function indicates that when playing a video (state=1),
-	//    the player should play for six seconds and then stop.
-	var done = false;
-	function onPlayerStateChange(event) {
-		if (event.data == YT.PlayerState.PLAYING && !done) {
-			// 			setTimeout(stopVideo, 6000);
-			done = true;
-		}
-	}
-	function stopVideo() {
-		player.stopVideo();
-	}
-	
-  	function login(){
 
 		Swal.fire({
   			title: '請先登入會員',
   			html:
     		"帳號"+'<input id="userID" class="swal2-input">' +
-    		"密碼"+'<input id="PWD" class="swal2-input">',
+    		"密碼"+'<input id="PWD" class="swal2-input"  type="password">',
     		showCloseButton: true,
     		confirmButtonText: `登入`,
- 			 });
-			$(".swal2-confirm").click(function(){
+  }).then(function(result){
 			if($("#userID").val().trim().length != 0 && $("#PWD").val().trim().length != 0){				
   			$.ajax({ 
 	  			  url:"<%=request.getContextPath()%>/FrondEnd_LoginHandler",
@@ -818,7 +731,53 @@ function refresh(){
 			});
 			}
 			});
-  	}
+	  	};
+</script>
+<script>
+	// 2. This code loads the IFrame Player API code asynchronously.
+	var tag = document.createElement('script');
+
+	tag.src = "https://www.youtube.com/iframe_api";
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+	// 3. This function creates an <iframe> (and YouTube player)
+	//    after the API code downloads.
+	var player;
+	function onYouTubeIframeAPIReady() {
+		player = new YT.Player('player', {
+			height : "100%",
+			width : '100%',
+			videoId : "${liveVO.live_id}",
+			playerVars : {
+				'playsinline' : 1
+			},
+			events : {
+				'onReady' : onPlayerReady,
+				'onStateChange' : onPlayerStateChange
+			}
+		});
+	}
+
+	// 4. The API will call this function when the video player is ready.
+	function onPlayerReady(event) {
+		event.target.playVideo();
+	}
+
+	// 5. The API calls this function when the player's state changes.
+	//    The function indicates that when playing a video (state=1),
+	//    the player should play for six seconds and then stop.
+	var done = false;
+	function onPlayerStateChange(event) {
+		if (event.data == YT.PlayerState.PLAYING && !done) {
+			// 			setTimeout(stopVideo, 6000);
+			done = true;
+		}
+	}
+	function stopVideo() {
+		player.stopVideo();
+	}
+	
   	
 	
 </script>

@@ -11,8 +11,11 @@
 <%
 	ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
+<<<<<<< HEAD
 	UserVO userVO = (UserVO) session.getAttribute("account");
 	session.setAttribute("userVO", userVO);
+=======
+>>>>>>> 979906c5eeb856a32d6b3fc49e7eaa7bad92fb79
 %>
 <jsp:useBean id="product_typeSvc" scope="page"
 	class="com.product_type.model.Product_TypeService" />
@@ -237,13 +240,13 @@
 										</div>
 									</c:if>
 									<div class="pd-function">
-										<%-- <a href="#" class="primary-btn" value="${productVO.product_state}">私訊賣家</a> --%>
-										<FORM METHOD="post"
-											ACTION="<%=request.getContextPath()%>/front-end/message/chatMessage.do">
-											<input type="hidden" name="user_id" value="${userVO.user_id}">
-											<input type="hidden" name="seller_id" value="${productVO.user_id}">
-											<input type="submit" class="primary-btn" value="私訊賣家">
-										</FORM>
+										<a href="#" class="primary-btn" value="${productVO.product_state}">私訊賣家</a>
+<!-- 										<FORM METHOD="post" -->
+<%-- 											ACTION="<%=request.getContextPath()%>/front-end/message/chatMessage.do"> --%>
+<%-- 											<input type="hidden" name="user_id" value="${userVO.user_id}"> --%>
+<%-- 											<input type="hidden" name="seller_id" value="${productVO.user_id}"> --%>
+<!-- 											<input type="submit" class="primary-btn" value="私訊賣家"> -->
+<!-- 										</FORM> -->
 										<c:if
 											test="${seller_followSvc.getTracerNo(userVO.user_id, productVO.user_id) != null}">
 											<div class="primary-btn unFollow"
@@ -429,168 +432,9 @@
 	</section>
 	<!-- Product Shop Section End -->
 
-	<!-- Related Products Section End -->
-	<!--     <div class="related-products spad"> -->
-	<!--       <div class="container"> -->
-	<!--         <div class="row"> -->
-	<!--           <div class="col-lg-12"> -->
-	<!--             <div class="section-title"> -->
-	<!--               <h2>Related Products</h2> -->
-	<!--             </div> -->
-	<!--           </div> -->
-	<!--         </div> -->
-	<!--         <div class="row"> -->
-	<%--         <c:forEach var="productVO" items="${product_typeSvc.ProductsByPdtype_no(4003)}" begin="0" end="3"> --%>
-	<!--           <div class="col-lg-3 col-sm-6"> -->
-	<!--        <div class="card mb-2 productcard"> -->
-	<!--             <div class="product-item" > -->
-	<!--                 <div class="pi-pic"> -->
-	<!--                 <div class="pi-img"> -->
-	<%--                 <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}"> --%>
-	<%--                     <img class="card-img-top"  src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" alt="${productVO.product_name}">            --%>
-	<!--                     </a>      	 -->
-	<!--                   </div> -->
-	<!--                     <ul> -->
-	<!--                         <li class="w-icon active"> -->
-	<!--                             <a href="#"><i class="icon_bag_alt"></i></a> -->
-	<!--                         </li>    -->
-	<!--                         <li class="w-heart" > -->
-	<%--                             <i class="icon_heart_alt"  data-no="${productVO.product_no}"></i> --%>
-	<!--                         </li> -->
-	<!--                     </ul> -->
-	<!--                 </div> -->
-	<!--                 <div class="pi-text"> -->
-	<%--                   <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}">                   --%>
-	<%--                         <h5>${productVO.product_name}</h5>     --%>
-	<!--                     	 <div class="product-price"><span>$</span> -->
-	<%--                           ${productVO.product_price} --%>
-	<!--                     	</div> -->
-	<!--                     </a> -->
-	<!--                 </div> -->
-	<!--             </div> -->
-	<!--         </div> -->
-	<!--         </div> -->
-	<%--           </c:forEach> --%>
-	<!--           </div> -->
-	<!--           <div class="col-lg-3 col-sm-6"> -->
-	<!--             <div class="product-item"> -->
-	<!--               <div class="pi-pic"> -->
-	<%--                 <img src="${pageContext.request.contextPath}/front-template/images/productsell/women-2.jpg" alt="" /> --%>
-	<!--                 <div class="icon"> -->
-	<!--                   <i class="icon_heart_alt"></i> -->
-	<!--                 </div> -->
-	<!--                 <ul> -->
-	<!--                   <li class="w-icon active"> -->
-	<!--                     <a href="#"><i class="icon_bag_alt"></i></a> -->
-	<!--                   </li> -->
-	<!--                   <li class="quick-view"><a href="#">+ Quick View</a></li> -->
-	<!--                   <li class="w-icon"> -->
-	<!--                     <a href="#"><i class="fa fa-random"></i></a> -->
-	<!--                   </li> -->
-	<!--                 </ul> -->
-	<!--               </div> -->
-	<!--               <div class="pi-text"> -->
-	<!--                 <div class="catagory-name">Shoes</div> -->
-	<!--                 <a href="#"> -->
-	<!--                   <h5>Guangzhou sweater</h5> -->
-	<!--                 </a> -->
-	<!--                 <div class="product-price">$13.00</div> -->
-	<!--               </div> -->
-	<!--             </div> -->
-	<!--           </div> -->
-	<!--           <div class="col-lg-3 col-sm-6"> -->
-	<!--             <div class="product-item"> -->
-	<!--               <div class="pi-pic"> -->
-	<%--                 <img src="${pageContext.request.contextPath}/front-template/images/productsell/women-3.jpg" alt="" /> --%>
-	<!--                 <div class="icon"> -->
-	<!--                   <i class="icon_heart_alt"></i> -->
-	<!--                 </div> -->
-	<!--                 <ul> -->
-	<!--                   <li class="w-icon active"> -->
-	<!--                     <a href="#"><i class="icon_bag_alt"></i></a> -->
-	<!--                   </li> -->
-	<!--                   <li class="quick-view"><a href="#">+ Quick View</a></li> -->
-	<!--                   <li class="w-icon"> -->
-	<!--                     <a href="#"><i class="fa fa-random"></i></a> -->
-	<!--                   </li> -->
-	<!--                 </ul> -->
-	<!--               </div> -->
-	<!--               <div class="pi-text"> -->
-	<!--                 <div class="catagory-name">Towel</div> -->
-	<!--                 <a href="#"> -->
-	<!--                   <h5>Pure Pineapple</h5> -->
-	<!--                 </a> -->
-	<!--                 <div class="product-price">$34.00</div> -->
-	<!--               </div> -->
-	<!--             </div> -->
-	<!--           </div> -->
-	<!--           <div class="col-lg-3 col-sm-6"> -->
-	<!--             <div class="product-item"> -->
-	<!--               <div class="pi-pic"> -->
-	<%--                 <img src="${pageContext.request.contextPath}/front-template/images/productsell/women-4.jpg" alt="" /> --%>
-	<!--                 <div class="icon"> -->
-	<!--                   <i class="icon_heart_alt"></i> -->
-	<!--                 </div> -->
-	<!--                 <ul> -->
-	<!--                   <li class="w-icon active"> -->
-	<!--                     <a href="#"><i class="icon_bag_alt"></i></a> -->
-	<!--                   </li> -->
-	<!--                   <li class="quick-view"><a href="#">+ Quick View</a></li> -->
-	<!--                   <li class="w-icon"> -->
-	<!--                     <a href="#"><i class="fa fa-random"></i></a> -->
-	<!--                   </li> -->
-	<!--                 </ul> -->
-	<!--               </div> -->
-	<!--               <div class="pi-text"> -->
-	<!--                 <div class="catagory-name">Towel</div> -->
-	<!--                 <a href="#"> -->
-	<!--                   <h5>Converse Shoes</h5> -->
-	<!--                 </a> -->
-	<!--                 <div class="product-price">$34.00</div> -->
-	<!--               </div> -->
-	<!--             </div> -->
-	<!--           </div> -->
-	<!--         </div> -->
-	<!--       </div> -->
-	<!--     </div> -->
-	<!-- Related Products Section End -->
-
-
 	<!-- Footer Section Begin -->
 	<%@include file="/front-end/footer.jsp"%>
-<<<<<<< HEAD
 	<!-- Footer Section End -->
-
-	<!-- Js Plugins -->
-	<script
-		src="${pageContext.request.contextPath}/front-template/js/jquery-3.3.1.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/front-template/js/bootstrap.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/front-template/js/jquery-ui.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/front-template/js/jquery.countdown.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/front-template/js/jquery.nice-select.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/front-template/js/jquery.zoom.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/front-template/js/jquery.dd.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/front-template/js/ajaxSearch.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
-
-
-	<script>
-=======
-    <!-- Footer Section End -->
     
     <!-- Js Plugins -->
     <script src="${pageContext.request.contextPath}/front-template/js/jquery-3.3.1.min.js"></script>
@@ -609,7 +453,6 @@
     
     
     	<script>
->>>>>>> 84e3209d01937f935adc9833cf4a422907ed3bfb
 
 	
 	function sendQuery(datas){ 
@@ -793,11 +636,10 @@
   			title: '請先登入會員',
   			html:
     		"帳號"+'<input id="userID" class="swal2-input">' +
-    		"密碼"+'<input id="PWD" class="swal2-input">',
+    		"密碼"+'<input id="PWD" class="swal2-input"  type="password">',
     		showCloseButton: true,
     		confirmButtonText: `登入`,
-  });
-			$(".swal2-confirm").click(function(){
+  }).then(function(result){
 			if($("#userID").val().trim().length != 0 && $("#PWD").val().trim().length != 0){				
   			$.ajax({ 
 	  			  url:"<%=request.getContextPath()%>/FrondEnd_LoginHandler",
@@ -856,7 +698,6 @@
 					  "product_price": "${productVO.product_price}",
 					  "proqty": $('#proqty').val(),
 					  "product_remaining": "${productVO.product_remaining}",
-					  "product_state": "${productVO.product_state}",
 					  "user_id": "${productVO.user_id}",
 					  "action": "ADD"
 				  },
@@ -875,7 +716,7 @@
 							titlePrice += (item.product_price * item.product_quantity)
 						});
 					  $(".cart-price").html("$" + titlePrice);
-					  $(".select-total").html(`<h5>${titlePrice}</h5>`);
+					  $("#cartHoverTotal").html("$" + titlePrice);
 					  
 
 					  Swal.fire({

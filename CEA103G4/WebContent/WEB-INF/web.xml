@@ -186,6 +186,10 @@
 		<servlet-name>OrderServlet</servlet-name>
 		<url-pattern>/front-end/orderManagement/order.do</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>OrderServlet</servlet-name>
+		<url-pattern>/front-end/protected/order.do</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>ChatMessageServlet</servlet-name>

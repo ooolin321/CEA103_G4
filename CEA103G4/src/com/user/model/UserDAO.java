@@ -679,6 +679,7 @@ public class UserDAO implements UserDAO_interface {
 			}
 		}
 	}
+	
 
 	@Override
 	public void updateUserRating(UserVO userVO) {
@@ -700,6 +701,18 @@ public class UserDAO implements UserDAO_interface {
 			throw new RuntimeException("database發生錯誤." + se.getMessage());
 		} finally {
 			if (pstmt != null) {
+		}
+			try {
+				pstmt.close();
+			} catch (SQLException se) {
+				se.printStackTrace(System.err);
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace(System.err);
 				try {
 					pstmt.close();
 				} catch (SQLException se) {

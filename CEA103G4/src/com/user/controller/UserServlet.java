@@ -858,7 +858,7 @@ public class UserServlet extends HttpServlet {
 				userVO = userSvc.userRepost(user_state,user_id);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("userVO", userVO);// 資料庫insert成功後,正確的userVO物件,存入req
-				String url = "/front-end/user/listAllUser.jsp";
+				String url = "/back-end/user/listAllUser.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交userLogin.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/

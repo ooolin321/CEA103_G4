@@ -637,7 +637,9 @@
     		"密碼"+'<input id="PWD" class="swal2-input"  type="password">',
     		showCloseButton: true,
     		confirmButtonText: `登入`,
-  }).then(function(result){
+  });
+  		$(".swal2-confirm").click(function(){
+  			
 			if($("#userID").val().trim().length != 0 && $("#PWD").val().trim().length != 0){				
   			$.ajax({ 
 	  			  url:"<%=request.getContextPath()%>/FrondEnd_LoginHandler",

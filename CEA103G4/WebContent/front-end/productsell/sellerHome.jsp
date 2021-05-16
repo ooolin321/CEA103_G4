@@ -67,7 +67,7 @@
 <!-- seller Info Begin -->
           
 		<section>
-           <div class="sellerHome">
+           <div class="sellerHome" id="sellerHome">
          <div class="row sellerInfo">
 			<div class="card mb-3" style="width: 400px;height: 200px;">
   			<div class="row g-0">
@@ -98,11 +98,11 @@
                     </a>      	
                   </div>
                     <ul>
-                        <li class="w-icon active">
-                            <a href="#"><i class="icon_bag_alt"></i></a>
+                        <li class="w-icon">
+                            <i class="icon_bag_alt" data-id="${productVO.product_no}"></i>
                         </li>   
                         <li class="w-heart" >
-                            <i class="icon_heart_alt"  data-no="${productVO.product_no}"></i>
+                            <i class="icon_heart_alt"  data-id="${productVO.product_no}"></i>
                         </li>
                     </ul>
                 </div>
@@ -143,6 +143,7 @@
     <script src="${pageContext.request.contextPath}/front-template/js/products-search.js" ></script>
 	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/front-template/js/ajaxSearch.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
 	
 	<script>
 	var url = window.location.search;
@@ -155,7 +156,112 @@
 		$(".text-muted").text("加入時間"+ user_regdate);
 	}
 	
+	const sellerHome = document.getElementById('sellerHome');
+	sellerHome.addEventListener('click', event => {
+		if (event.target.matches('.icon_bag_alt')) {
+	    	addCart(event.target.dataset.id);	
+		}else if (event.target.matches('.icon_heart_alt')){
+			addFavorite(event.target.dataset.id);
+    	}
+});
 	
+	//點選加入購物車呼叫的function
+	function addCart(id){
+		$.ajax({ 
+			  type:"POST",
+			  url:"<%=request.getContextPath()%>/ShoppingServlet",
+			  data:{
+				  "product_no": id,
+				  "action": "ADDFromFav"
+			  },
+			  success: function(res) {
+				   
+				  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>"); 
+				  $("#carts").html(cartproducts); 
+				  
+				  var carRes  = JSON.parse(res)
+//				  console.log(carRes["results"].length);
+				  var ibaCount = carRes["results"].length;
+				  $("#iba").html(ibaCount);
+
+				  var titlePrice = 0
+					carRes["results"].forEach(function (item,index) {
+						titlePrice += (item.product_price * item.product_quantity)
+					});
+				  $(".cart-price").html("$" + titlePrice);
+				  $("#cartHoverTotal").html("$" + titlePrice);
+
+
+				  Swal.fire({
+					  icon: 'success',
+					  title: '商品加入購物車',
+					  showConfirmButton: false,
+					  timer: 1000
+					});
+				  
+		      }, 	  
+			  error:function () {
+		  			Swal.fire({
+			  			  icon: 'error',
+			  			  title: '很抱歉,加入購物車失敗',
+			  			  showConfirmButton: false,
+			  			  timer: 1000
+			  			});
+			  },				
+			 });
+	}
+	
+	function addFavorite(id){
+		const data =  JSON.parse(localStorage.getItem("favorite"));
+		if (data == null){
+			$.ajax({ 
+				  type:"POST",
+				  url:"<%=request.getContextPath()%>/Favorite",
+				  data:{
+					  "product_no":id,
+					  "action": "addFavorite"
+				  },
+				  success: function(res) {
+					  localStorage.setItem('favorite', res)
+					  Swal.fire({
+						  icon: 'success',
+						  title: `已加入收藏清單`,
+						  showConfirmButton: false,
+						  timer: 1500
+						});
+					  },
+		})
+		} else {
+
+	    const index = data["results"].findIndex(item => item.product_no === Number(id))
+	    if (index !== -1){
+			  Swal.fire({
+				  icon: 'error',
+				  title: `已在收藏清單`,
+				  showConfirmButton: false,
+				  timer: 1500
+				});
+	    } else {
+			$.ajax({ 
+				  type:"POST",
+				  url:"<%=request.getContextPath()%>/Favorite",
+				  data:{
+					  "product_no": id,
+					  "action": "addFavorite"
+				  },
+				  success: function(res) {
+					  localStorage.setItem('favorite', res)
+					  Swal.fire({
+						  icon: 'success',
+						  title: `已加入收藏清單`,
+						  showConfirmButton: false,
+						  timer: 1500
+						});
+					  },
+		})
+	 }
+	} 
+	}
 	
 	
 	</script>

@@ -1,5 +1,7 @@
 package com.user.controller;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Optional;
 
@@ -24,15 +26,26 @@ public class UserShowPhoto extends HttpServlet {
 		UserService userSvc = new UserService();
 		Optional<UserVO> userVO = userSvc.getUserPic(user_id);
 		
-		if (userVO.isPresent()) {
+		if (userVO.isPresent()) {		
+			
 			OutputStream out = response.getOutputStream();
-			out.write(userVO.get().getUser_pic());
-			out.flush();
-			out.close();
-		}
-	} 
-}
+			if (userVO.get().getUser_pic() != null) {
+				out.write(userVO.get().getUser_pic());
+				out.flush();
+				out.close();
+			} else {
+				InputStream in = getServletContext().getResourceAsStream("/front-template/images/favicon.ico");
+				byte[] b = new byte[in.available()];
+				in.read(b);
+				out.write(b);
+				in.close();
+			}
 
+		} 
+	}
+		
+}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doGet(request, response);

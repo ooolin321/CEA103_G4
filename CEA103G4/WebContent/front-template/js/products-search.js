@@ -18,10 +18,10 @@
       	                    <img class="card-img-top" src="${path}/ProductShowPhoto?product_no=${item.product_no}" alt=""></a>
       	                    </div>
       	    				<ul>
-                        <li class="w-icon active">
-                            <a href="#"><i class="icon_bag_alt"></i></a>
+                        <li class="w-icon" id="SC${item.product_no}">
+                            <i class="icon_bag_alt" data-id="${item.product_no}"></i>
                         </li>   
-                        <li class="w-heart" >
+                        <li class="w-heart">
       	                            <i class="icon_heart_alt"  data-id="${item.product_no}"></i>
       	                        </li>
       	                    </ul>
@@ -41,6 +41,7 @@
       	  });
       	  return htmlContent;
       	}
+
 	
 	function cartProduct(cartdata, path) {
 		var cart  = JSON.parse(cartdata);

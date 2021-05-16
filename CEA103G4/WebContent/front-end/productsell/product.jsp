@@ -11,8 +11,12 @@
 <%
 	ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
+<<<<<<< HEAD
 	UserVO userVO = (UserVO) session.getAttribute("account");
 	session.setAttribute("userVO", userVO);
+=======
+
+>>>>>>> ece7fdec4742d177eb166b21fbfb33ef7a13d72b
 %>
 <jsp:useBean id="product_typeSvc" scope="page"
 	class="com.product_type.model.Product_TypeService" />
@@ -70,6 +74,17 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/front-template/css/style.css"
 	type="text/css" />
+	
+	<style>
+	.red_heart {
+		color:red;
+	
+	}
+	
+	
+	</style>
+	
+	
 </head>
 
 <body>
@@ -192,8 +207,8 @@
 								<div class="pd-title">
 									<!-- 動態串商品名 -->
 									<h3>${productVO.product_name}</h3>
-									<a href="#" class="heart-icon"><i
-										class="icon_heart_alt"></i></a>
+									<a href="javascript:void(0)" class="heart-icon"><i
+										class="icon_heart_alt" data-id="${productVO.product_no}"></i></a>
 								</div>
 								<div class="pd-desc">
 
@@ -734,6 +749,63 @@
 				  },				
 				 });
 		  });
+		  
+		  $(".icon_heart_alt").click(function(e){
+			  addFavorite(e.target.dataset.id)
+			  $(this).addClass("red_heart");
+		  });
+		  
+		  function addFavorite(id){
+				const data =  JSON.parse(localStorage.getItem("favorite"));
+				if (data == null){
+					$.ajax({ 
+						  type:"POST",
+						  url:"<%=request.getContextPath()%>/Favorite",
+						  data:{
+							  "product_no":id,
+							  "action": "addFavorite"
+						  },
+						  success: function(res) {
+							  localStorage.setItem('favorite', res)
+							  Swal.fire({
+								  icon: 'success',
+								  title: `${productVO.product_name}已加入收藏清單`,
+								  showConfirmButton: false,
+								  timer: 1500
+								});
+							  },
+				})
+				} else {
+
+			    const index = data["results"].findIndex(item => item.product_no === Number(id))
+			    if (index !== -1){
+					  Swal.fire({
+						  icon: 'error',
+						  title: `${productVO.product_name}已在收藏清單`,
+						  showConfirmButton: false,
+						  timer: 1500
+						});
+			    } else {
+					$.ajax({ 
+						  type:"POST",
+						  url:"<%=request.getContextPath()%>/Favorite",
+						  data:{
+							  "product_no": id,
+							  "action": "addFavorite"
+						  },
+						  success: function(res) {
+							  localStorage.setItem('favorite', res)
+							  Swal.fire({
+								  icon: 'success',
+								  title: `${productVO.product_name}已加入收藏清單`,
+								  showConfirmButton: false,
+								  timer: 1500
+								});
+							  },
+				})
+			 }
+			} 
+			}
 	  
 	  
        	</script>

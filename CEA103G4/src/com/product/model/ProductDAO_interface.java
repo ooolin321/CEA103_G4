@@ -26,4 +26,5 @@ public interface ProductDAO_interface {
           //多個商品下架並清空live_no
           public void offShelf(List<ProductVO> list);
           public List<ProductVO> getSellerProducts(String user_id);
+          public ProductVO getFavorite(Integer product_no);
 }

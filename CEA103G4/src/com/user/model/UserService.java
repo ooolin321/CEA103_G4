@@ -138,6 +138,10 @@ public UserVO newPassword_Update(String user_id,String user_newNameCheck) {
 		return userVO;
 	}
 	
+<<<<<<< HEAD
+=======
+
+>>>>>>> ece7fdec4742d177eb166b21fbfb33ef7a13d72b
 	public UserVO updateUserRating(Integer user_comment,Integer comment_total,String user_id) {
 		UserVO userVO = new UserVO();
 		
@@ -148,7 +152,22 @@ public UserVO newPassword_Update(String user_id,String user_newNameCheck) {
 		dao.updateUserRating(userVO);
 		return userVO;
 	}
+<<<<<<< HEAD
 	public Optional<UserVO> getUserPic(String user_id){
 		return dao.findUserPic(user_id);
+=======
+	
+	public Optional<UserVO> getUserPic(String user_id){
+		return dao.findUserPic(user_id);
+
+	}
+	
+	public UserVO updateCash(Integer cash,String user_id) {
+		UserVO userVO = new UserVO();
+		userVO.setCash(cash);
+		userVO.setUser_id(user_id);
+		dao.updateCash(userVO);
+		return userVO;
+>>>>>>> ece7fdec4742d177eb166b21fbfb33ef7a13d72b
 	}
 }

@@ -41,6 +41,30 @@ public class ProductSearch extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		
+		req.setCharacterEncoding("UTF-8");
+		String action = req.getParameter("action");
+		
+		if("getJson".equals(action)) {
+			ProductService productSvc = new ProductService();
+			List<ProductVO> list = productSvc.getAllShop();
+			JSONObject jsonObj = new JSONObject();
+			
+			try {
+				jsonObj.put("results", list);
+
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			res.setContentType("text/html; charset=UTF-8");
+		
+			PrintWriter out = res.getWriter();
+			
+			out.println(jsonObj.toString());
+			out.close();
+		}
+		
 		doPost(req, res);		
 
 	}
@@ -195,32 +219,7 @@ public class ProductSearch extends HttpServlet {
 		}
 		
 		
-//		if (("productToShop".equals(action)))  {
-//
-//			List<String> errorMsgs = new LinkedList<String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//
-//			try {
-//				/*************************** 1.接收請求參數 ****************************************/
-//				HttpSession session = req.getSession();
-//				ProductVO products = (ProductVO) session.getAttribute("products");
-//				
-//				/*************************** 2.開始查詢資料 ****************************************/
-//
-//				/***************************3.查詢完成,準備轉交(Send the Success view)************/	
-//				
-//				req.setAttribute("products", products);
-//				RequestDispatcher successView = req.getRequestDispatcher(SUCESS_URL); 
-//				successView.forward(req, res);
-//
-//				/***************************其他可能的錯誤處理*************************************/
-//			} catch (Exception e) {
-//				errorMsgs.add("無法取得資料:" + e.getMessage());
-//				RequestDispatcher failureView = req
-//						.getRequestDispatcher(ERROR_URL);
-//				failureView.forward(req, res);
-//			}
-//		}
+
 }			
 }
 

@@ -1246,12 +1246,25 @@ ol {
   border-top-right-radius: 6px;
 }
 
-.product-item .pi-pic ul li.w-icon.active a {
+/* .product-item .pi-pic ul li.w-icon.active a { */
+/*   background: #e7ab3c; */
+/*   color: #ffffff; */
+/*   border-top-left-radius: 6px; */
+/*   border-top-right-radius: 6px; */
+/* } */
+
+.product-item .pi-pic ul li.w-icon i {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  display: block;
+  padding: 8px 12px 10px 12px;
   background: #e7ab3c;
-  color: #ffffff;
+  cursor: pointer;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
 }
+
 
 .product-item .pi-pic ul li.w-heart i {
   font-size: 16px;
@@ -1265,13 +1278,13 @@ ol {
   border-top-right-radius: 6px;
 }
 
-.product-item .pi-pic ul li a {
-  font-size: 16px;
-  font-weight: 700;
-  color: #252525;
-  display: block;
-  padding: 16px 18px 12px 19px;
-}
+/* .product-item .pi-pic ul li a { */
+/*   font-size: 16px; */
+/*   font-weight: 700; */
+/*   color: #252525; */
+/*   display: block; */
+/*   padding: 16px 18px 12px 19px; */
+/* } */
 
 .product-item .pi-text {
   text-align: center;

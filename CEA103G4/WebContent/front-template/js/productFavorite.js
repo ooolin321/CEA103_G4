@@ -20,8 +20,8 @@
       	                    <img class="card-img-top" src="${path}/ProductShowPhoto?product_no=${item.product_no}" alt=""></a>
       	                    </div>
       	    				<ul>
-                        <li class="w-icon active" id="SC${item.product_no}">
-                            <a href="javascript:void(0)"><i class="icon_bag_alt" data-id="${item.product_no}"></i></a>
+                        <li class="w-icon" id="SC${item.product_no}">
+                            <i class="icon_bag_alt" data-id="${item.product_no}"></i>
                         </li>   
                         <li class="w-heart" >
       	                            <i class="fa fa-close"  data-id="${item.product_no}"></i>

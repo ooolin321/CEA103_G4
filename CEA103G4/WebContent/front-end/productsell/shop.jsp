@@ -12,7 +12,6 @@
 	pageContext.setAttribute("products",prouducts);
 	
 %>
-<%-- <jsp:useBean id="products" scope="page" type="java.util.List<ProductVO>" /> <!-- 於EL此行可省略 --> --%>
 <jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
 
 
@@ -186,8 +185,8 @@
                     </a>      	
                   </div>
                     <ul>
-                        <li class="w-icon active" id="SC${productVO.product_no}">
-                            <a href="javascript:void(0)"><i class="icon_bag_alt" data-id="${productVO.product_no}"></i></a>
+                        <li class="w-icon" id="SC${productVO.product_no}">
+                            <i class="icon_bag_alt" data-id="${productVO.product_no}"></i>
                         </li>   
                         <li class="w-heart">
                             <i class="icon_heart_alt" data-id="${productVO.product_no}"></i>
@@ -232,20 +231,7 @@
 
 
     <!-- Js Plugins -->
-  
-    
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
-      integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
-      crossorigin="anonymous"
-    ></script>
-
+ 
 
     <script src="${pageContext.request.contextPath}/front-template/js/jquery-3.3.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/bootstrap.min.js"></script>
@@ -263,6 +249,15 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
 	
 	<script>
+	
+	const productsAdd = document.getElementById('products');
+	productsAdd.addEventListener('click', event => {
+		if (event.target.matches('.icon_bag_alt')) {
+	    	addCart(event.target.dataset.id);	
+		}else if (event.target.matches('.icon_heart_alt')){
+			addFavorite(event.target.dataset.id);
+    	}
+});
 
 	//AJAX
 	
@@ -301,13 +296,18 @@
 			if(fromProduct.length === 0){
 				Swal.fire('很抱歉,查無此商品');
             }
-		};		
+		};	
+
+
 				
 		</script>
 		
 <!-- 		  購物車按鈕   -->
 		  <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()}">
 		  <script>
+		  
+
+
 		  
 			//點選加入購物車呼叫的function
 			function addCart(id){
@@ -415,7 +415,7 @@ function addFavorite(id){
 				  localStorage.setItem('favorite', res)
 				  Swal.fire({
 					  icon: 'success',
-					  title: `${productVO.product_name}已加入收藏清單`,
+					  title: `已加入收藏清單`,
 					  showConfirmButton: false,
 					  timer: 1500
 					});
@@ -427,7 +427,7 @@ function addFavorite(id){
     if (index !== -1){
 		  Swal.fire({
 			  icon: 'error',
-			  title: `${productVO.product_name}已在收藏清單`,
+			  title: `已在收藏清單`,
 			  showConfirmButton: false,
 			  timer: 1500
 			});
@@ -443,7 +443,7 @@ function addFavorite(id){
 				  localStorage.setItem('favorite', res)
 				  Swal.fire({
 					  icon: 'success',
-					  title: `${productVO.product_name}已加入收藏清單`,
+					  title: `已加入收藏清單`,
 					  showConfirmButton: false,
 					  timer: 1500
 					});

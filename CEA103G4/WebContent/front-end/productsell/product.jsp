@@ -202,7 +202,7 @@
 								<div class="pd-title">
 									<!-- 動態串商品名 -->
 									<h3>${productVO.product_name}</h3>
-									<a href="#" class="heart-icon"><i
+									<a href="javascript:void(0)" class="heart-icon"><i
 										class="icon_heart_alt" data-id="${productVO.product_no}"></i></a>
 								</div>
 								<div class="pd-desc">

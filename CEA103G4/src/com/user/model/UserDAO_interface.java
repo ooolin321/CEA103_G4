@@ -32,12 +32,8 @@ public interface UserDAO_interface {
 	public void update_user_report(UserVO userVO);
 	
 	public void updateUserRating(UserVO userVO);
-<<<<<<< HEAD
 	
-	Optional<UserVO> findUserPic(String user_id);
-=======
 	Optional<UserVO> findUserPic(String user_id);
 	
 	public void updateCash(UserVO userVO);
->>>>>>> ece7fdec4742d177eb166b21fbfb33ef7a13d72b
 }

@@ -11,12 +11,9 @@
 <%
 	ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
-<<<<<<< HEAD
 	UserVO userVO = (UserVO) session.getAttribute("account");
 	session.setAttribute("userVO", userVO);
-=======
 
->>>>>>> ece7fdec4742d177eb166b21fbfb33ef7a13d72b
 %>
 <jsp:useBean id="product_typeSvc" scope="page"
 	class="com.product_type.model.Product_TypeService" />

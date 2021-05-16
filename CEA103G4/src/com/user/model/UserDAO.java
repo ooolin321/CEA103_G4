@@ -679,11 +679,8 @@ public class UserDAO implements UserDAO_interface {
 			}
 		}
 	}
-<<<<<<< HEAD
 	
-=======
 
->>>>>>> ece7fdec4742d177eb166b21fbfb33ef7a13d72b
 	@Override
 	public void updateUserRating(UserVO userVO) {
 
@@ -704,7 +701,6 @@ public class UserDAO implements UserDAO_interface {
 			throw new RuntimeException("database發生錯誤." + se.getMessage());
 		} finally {
 			if (pstmt != null) {
-<<<<<<< HEAD
 		}
 			try {
 				pstmt.close();
@@ -717,7 +713,6 @@ public class UserDAO implements UserDAO_interface {
 				con.close();
 			} catch (Exception e) {
 				e.printStackTrace(System.err);
-=======
 				try {
 					pstmt.close();
 				} catch (SQLException se) {
@@ -730,7 +725,6 @@ public class UserDAO implements UserDAO_interface {
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
 				}
->>>>>>> ece7fdec4742d177eb166b21fbfb33ef7a13d72b
 			}
 		}
 	}
@@ -765,12 +759,6 @@ public class UserDAO implements UserDAO_interface {
 					se.printStackTrace(System.err);
 				}
 			}
-<<<<<<< HEAD
-		}
-	
-		return Optional.ofNullable(userVO);
-	}
-=======
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -827,5 +815,4 @@ public class UserDAO implements UserDAO_interface {
 		}
 
 	}
->>>>>>> ece7fdec4742d177eb166b21fbfb33ef7a13d72b
 }

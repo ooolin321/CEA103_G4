@@ -818,7 +818,8 @@ public class OrderServlet extends HttpServlet{
 
 				try {
 					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-					Integer product_no = new Integer(req.getParameter("product_no").trim());
+//					Integer product_no = new Integer(req.getParameter("product_no").trim());
+					String product_no[]=req.getParameterValues("product_no");
 					
 					Integer product_remaining = new Integer(req.getParameter("product_remaining").trim());
 					
@@ -898,10 +899,11 @@ public class OrderServlet extends HttpServlet{
 						errorMsgs.add("折扣點數請填數字.");
 					}
 					
-					String user_id = new String(req.getParameter("user_id").trim());
+					String user_id = req.getParameter("user_id");
 					
-					String seller_id = new String(req.getParameter("seller_id").trim());
-
+//					String seller_id = new String(req.getParameter("seller_id").trim());
+					String seller_id[]= req.getParameterValues("seller_id");
+					
 					Integer point = null;
 					try {
 						point = new Integer(req.getParameter("point").trim());
@@ -932,11 +934,11 @@ public class OrderServlet extends HttpServlet{
 					orderVO.setLogistics(logistics);
 					orderVO.setDiscount(discount);
 					orderVO.setUser_id(user_id);
-					orderVO.setSeller_id(seller_id);
+					orderVO.setSeller_id(seller_id[0]);
 					orderVO.setPoint(point);
 
 					ProductVO productVO = new ProductVO();
-					productVO.setProduct_no(product_no);
+					productVO.setProduct_no(new Integer(product_no[0]));
 					productVO.setProduct_remaining(product_remaining);
 					productVO.setProduct_state(product_state);
 
@@ -953,21 +955,27 @@ public class OrderServlet extends HttpServlet{
 			
 					/***************************2.開始修改資料***************************************/
 					OrderService orderSvc = new OrderService();
-					orderVO = orderSvc.addOrderList(order_state, order_shipping, order_price, pay_method, rec_name, zipcode, city, town, rec_addr, rec_phone, rec_cellphone, logistics, discount, user_id, seller_id, point);
+					for(String sellers:seller_id) {
+						orderVO = orderSvc.addOrderList(order_state, order_shipping, order_price, pay_method, rec_name, zipcode, city, town, rec_addr, rec_phone, rec_cellphone, logistics, discount, user_id, sellers, point);
+					}
 					
 					ProductService productSvc = new ProductService();
-					productVO = productSvc.updateProductRemaining(product_no, product_remaining, product_state);
+					for(String products : product_no) {
+						productVO = productSvc.updateProductRemaining(new Integer(products), product_remaining, product_state);
+					}
 
 					Order_detailVO order_detailVO = new Order_detailVO();
 					Integer order_no = orderVO.getOrder_no();
-					order_detailVO.setOrder_no(order_no);
-					order_detailVO.setOrder_price(order_price);
-					order_detailVO.setProduct_no(product_no);
-					order_detailVO.setProduct_num(product_num);
+					
+						order_detailVO.setOrder_no(order_no);
+						order_detailVO.setOrder_price(order_price);
+						order_detailVO.setProduct_no(new Integer(product_no[0]));
+						order_detailVO.setProduct_num(product_num);
 					
 					Order_detailService order_detailSvc = new Order_detailService();
-					order_detailVO = order_detailSvc.addOrder_detail(order_no, product_no, product_num, order_price);
-					
+					for(String products: product_no) {
+					order_detailVO = order_detailSvc.addOrder_detail(order_no, new Integer(products), product_num, order_price);
+					}
 					/***************************3.修改完成,準備轉交(Send the Success view)***********/
 					String url = "/front-end/index.jsp";
 					RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交index.jsp

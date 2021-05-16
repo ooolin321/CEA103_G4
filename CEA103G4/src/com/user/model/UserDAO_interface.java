@@ -31,9 +31,7 @@ public interface UserDAO_interface {
 
 	public void update_user_report(UserVO userVO);
 	
-<<<<<<< HEAD
 	public void updateUserRating(UserVO userVO);
-=======
+	
 	Optional<UserVO> findUserPic(String user_id);
->>>>>>> 979906c5eeb856a32d6b3fc49e7eaa7bad92fb79
 }

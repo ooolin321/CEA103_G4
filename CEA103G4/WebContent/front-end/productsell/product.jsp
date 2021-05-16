@@ -11,11 +11,8 @@
 <%
 	ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 
-<<<<<<< HEAD
 	UserVO userVO = (UserVO) session.getAttribute("account");
 	session.setAttribute("userVO", userVO);
-=======
->>>>>>> 979906c5eeb856a32d6b3fc49e7eaa7bad92fb79
 %>
 <jsp:useBean id="product_typeSvc" scope="page"
 	class="com.product_type.model.Product_TypeService" />
@@ -240,13 +237,13 @@
 										</div>
 									</c:if>
 									<div class="pd-function">
-										<a href="#" class="primary-btn" value="${productVO.product_state}">私訊賣家</a>
-<!-- 										<FORM METHOD="post" -->
-<%-- 											ACTION="<%=request.getContextPath()%>/front-end/message/chatMessage.do"> --%>
-<%-- 											<input type="hidden" name="user_id" value="${userVO.user_id}"> --%>
-<%-- 											<input type="hidden" name="seller_id" value="${productVO.user_id}"> --%>
-<!-- 											<input type="submit" class="primary-btn" value="私訊賣家"> -->
-<!-- 										</FORM> -->
+<%-- 										<a href="#" class="primary-btn" value="${productVO.product_state}">私訊賣家</a> --%>
+										<FORM METHOD="post"
+											ACTION="<%=request.getContextPath()%>/front-end/message/chatMessage.do">
+											<input type="hidden" name="user_id" value="${userVO.user_id}">
+											<input type="hidden" name="seller_id" value="${productVO.user_id}">
+											<input type="submit" class="primary-btn" value="私訊賣家">
+										</FORM>
 										<c:if
 											test="${seller_followSvc.getTracerNo(userVO.user_id, productVO.user_id) != null}">
 											<div class="primary-btn unFollow"

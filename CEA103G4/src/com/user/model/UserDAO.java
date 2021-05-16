@@ -677,7 +677,6 @@ public class UserDAO implements UserDAO_interface {
 			}
 		}
 	}
-<<<<<<< HEAD
 	
 	@Override
 	public void updateUserRating(UserVO userVO) {
@@ -698,7 +697,22 @@ public class UserDAO implements UserDAO_interface {
 		} catch (SQLException se) {
 			throw new RuntimeException("database發生錯誤." + se.getMessage());
 		} finally {
-=======
+			if (pstmt != null) {
+		}
+			try {
+				pstmt.close();
+			} catch (SQLException se) {
+				se.printStackTrace(System.err);
+			}
+		}
+		if (con != null) {
+			try {
+				con.close();
+			} catch (Exception e) {
+				e.printStackTrace(System.err);
+			}
+		}
+	}
 
 	@Override
 	public Optional<UserVO> findUserPic(String user_id) {
@@ -730,27 +744,8 @@ public class UserDAO implements UserDAO_interface {
 					se.printStackTrace(System.err);
 				}
 			}
->>>>>>> 979906c5eeb856a32d6b3fc49e7eaa7bad92fb79
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
 		}
-<<<<<<< HEAD
-	}
 	
-=======
 		return Optional.ofNullable(userVO);
 	}
->>>>>>> 979906c5eeb856a32d6b3fc49e7eaa7bad92fb79
 }

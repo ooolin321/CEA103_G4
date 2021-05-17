@@ -126,7 +126,11 @@
               		  		</label>
            				</div>          					 
      				 </th>
-     				 <td><img width="200px" height="200px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" class="rounded mx-auto d-block" alt=""></td>
+     				 <td>
+     				 <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}" target="_blank">
+     				 <img width="200px" height="200px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" class="rounded mx-auto d-block" alt="">
+     				 </a>
+     				 </td>
       				 <td>${productVO.product_name}</td>
       				 <td class="productInfo"><textarea class="form-control"  maxlength="300" rows="6" readonly>${productVO.product_info}</textarea></td>
      				 <td>${productVO.product_price}</td>
@@ -189,7 +193,11 @@
               		  		</label>
            				</div>	 
      				 </th>
-     				 <td><img width="200px" height="200px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" class="rounded mx-auto d-block" alt=""></td>
+     				 <td>
+     				 <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}" target="_blank">
+     				 <img width="200px" height="200px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" class="rounded mx-auto d-block" alt="">
+     				 </a>
+     				 </td>
       				 <td>${productVO.product_name}</td>
      				 <td class="productInfo"><textarea class="form-control"  maxlength="300" rows="6" readonly>${productVO.product_info}</textarea></td>
      				 <td>${productVO.product_price}</td>
@@ -198,8 +206,7 @@
    					 <td>
    					   <a href="<%=request.getContextPath()%>/ProductChange?action=getOne_For_Update&product_no=${productVO.product_no}" style="display:block;"><button type="button" class="btn btn-info">修改</button></a>
    					   <button type="button" class="btn btn-danger"  data-id="${productVO.product_no}">刪除</button>
-   					 </td>
-   					
+   					 </td>   					
    				 </tr>
    				 	</c:if>
    				 </c:forEach>
@@ -267,7 +274,11 @@
  				 <c:forEach var="productVO" items="${list}" begin="0" end="${list.size()}">
    				 	<c:if test="${productVO.user_id == userVO.getUser_id() && productVO.product_state == 3}"> 
    				 <tr>
-     				 <td><img width="200px" height="200px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" class="rounded mx-auto d-block" alt=""></td>
+     				 <td>
+     				 <a href="<%=request.getContextPath()%>/product/product.do?product_no=${productVO.product_no}" target="_blank">
+     				 <img width="200px" height="200px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" class="rounded mx-auto d-block" alt="">
+     				 </a>
+     				 </td>
       				 <td>${productVO.product_name}</td>
      				 <td class="productInfo"><textarea class="form-control"  maxlength="300" rows="6" readonly>${productVO.product_info}</textarea></td>
      				 <td>${productVO.product_price}</td>

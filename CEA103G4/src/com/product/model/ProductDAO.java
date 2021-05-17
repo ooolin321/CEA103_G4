@@ -1019,9 +1019,6 @@ public class ProductDAO implements ProductDAO_interface {
 		return productVO;
 	}
 
-<<<<<<< HEAD
-=======
-
 @Override
 public void updateState(Integer product_state , List<ProductVO> list) {
 	
@@ -1065,5 +1062,4 @@ public void updateState(Integer product_state , List<ProductVO> list) {
 		}
 
 	}
->>>>>>> cf5e0c5b54301928beca3c27781a867f7f67bc71
 }

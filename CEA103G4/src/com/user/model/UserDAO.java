@@ -819,34 +819,54 @@ public class UserDAO implements UserDAO_interface {
 	}
 
 	@Override
-<<<<<<< HEAD
 	public void addCash(UserVO userVO) {
-		
-=======
-	public void updateUserViolation(String user_id, Integer violation) {
-
->>>>>>> cf5e0c5b54301928beca3c27781a867f7f67bc71
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
-
+			
 			con = ds.getConnection();
-<<<<<<< HEAD
 			pstmt = con.prepareStatement(ADD_CASH);
 
 			pstmt.setInt(1, userVO.getCash());
 			pstmt.setString(2, userVO.getUser_id());
 
 			pstmt.executeUpdate();
-=======
+			// Handle any driver errors
+					} catch (SQLException se) {
+						throw new RuntimeException("A database error occured. " + se.getMessage());
+						// Clean up JDBC resources
+					} finally {
+						if (pstmt != null) {
+							try {
+								pstmt.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (con != null) {
+							try {
+								con.close();
+							} catch (Exception e) {
+								e.printStackTrace(System.err);
+							}
+						}
+					}
+		}
+	public void updateUserViolation(String user_id, Integer violation) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_USER_VIOLATION);
 
 			pstmt.setInt(1, violation);
 			pstmt.setString(2, user_id);
 
 			int a = pstmt.executeUpdate();
->>>>>>> cf5e0c5b54301928beca3c27781a867f7f67bc71
 
 			// Handle any driver errors
 		} catch (SQLException se) {
@@ -868,9 +888,6 @@ public class UserDAO implements UserDAO_interface {
 				}
 			}
 		}
-<<<<<<< HEAD
-=======
 
->>>>>>> cf5e0c5b54301928beca3c27781a867f7f67bc71
 	}
 }

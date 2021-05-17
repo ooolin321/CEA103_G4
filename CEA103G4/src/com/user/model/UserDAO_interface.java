@@ -37,9 +37,7 @@ public interface UserDAO_interface {
 	
 	public void updateCash(UserVO userVO);
 	
-<<<<<<< HEAD
 	public void addCash(UserVO userVO);
-=======
+	
 	public void updateUserViolation(String user_id, Integer violation);
->>>>>>> cf5e0c5b54301928beca3c27781a867f7f67bc71
 }

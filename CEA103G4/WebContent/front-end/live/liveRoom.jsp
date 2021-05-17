@@ -472,7 +472,7 @@ function refresh(){
 				addListener();
 			}else if("history" === jsonObj.type){
 				//進來的時候
-				
+				addListener();
 				$("#current_price").text(JSON.parse(jsonObj.message).maxPrice);
 				$("#current_id").text(JSON.parse(jsonObj.message).user_id);
 				
@@ -498,8 +498,7 @@ function refresh(){
 							"product_no":  $("#showProduct").find("td").eq(1).html(),
 							"message" : JSON.stringify(maxObj)
 					};
-					console.log('GGGGGG');
-					console.log(json);
+
 					webSocket.send(JSON.stringify(json));
 					
 				}else if("start"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以start

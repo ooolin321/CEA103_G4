@@ -43,7 +43,7 @@ public class ProductDAO implements ProductDAO_interface {
 	//修改商品 買家使用
 	private static final String UPDATE_REMAINING = "UPDATE PRODUCT set product_remaining=?, product_state=? where product_no = ?";
 	
-	//後台檢舉通過,狀態改為檢舉下架 or 商品狀太修改
+	//後台檢舉通過,狀態改為檢舉下架 or 商品狀態修改
 	private static final String UPDATESTATE = "UPDATE PRODUCT set product_state=? where product_no = ?";
 	//設定商品為直播並帶入直播編號
 	private static final String UPDATELIVE = "UPDATE PRODUCT SET PRODUCT_STATE=2 , LIVE_NO=? WHERE PRODUCT_NO = ?";

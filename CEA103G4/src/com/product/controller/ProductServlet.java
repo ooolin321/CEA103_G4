@@ -132,7 +132,6 @@ public class ProductServlet extends HttpServlet {
 					url = "/front-end/liveManagement/productUpdate.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_product_input.jsp
 				successView.forward(req, res);
-				return;
 
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
@@ -521,7 +520,6 @@ public class ProductServlet extends HttpServlet {
 			res.setContentType("application/json");
 			res.setCharacterEncoding("UTF-8");
 			res.getWriter().print(str);
-			return;
 		}
 		
 		if ("updateState".equals(action)) { 

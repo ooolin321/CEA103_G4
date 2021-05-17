@@ -35,7 +35,7 @@ public class UserDAO implements UserDAO_interface {
 	private static final String INSERT_STMT =
 //			"INSERT INTO `USER` (`USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			"INSERT INTO `USER` (`USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), 0, 0, 1, 0, 0, 0)";
-	private static final String GET_ALL_STMT = "SELECT * FROM `USER` ORDER BY `USER_ID`";
+	private static final String GET_ALL_STMT = "SELECT * FROM `USER` ORDER BY `VIOLATION` DESC";
 	private static final String GET_ONE_STMT = "SELECT * FROM USER WHERE `USER_ID` = ?";
 	private static final String DELETE = "DELETE FROM USER where USER_ID = ?";
 	private static final String UPDATE = "UPDATE `USER` SET `USER_NAME`=?, `USER_GENDER`=?, `USER_DOB`=?, `USER_MAIL`=?, `USER_PHONE`=?, `USER_MOBILE`=?, `CITY`=?, `TOWN`=?, `ZIPCODE`=?, `USER_ADDR`=? ,`USER_PIC`=? WHERE `USER_ID` = ?";
@@ -47,6 +47,7 @@ public class UserDAO implements UserDAO_interface {
 	private static final String UPDATE_CASH = "UPDATE USER SET CASH=? WHERE USER_ID=?";
 
 	private static final String UPDATE_USER_RATING = "UPDATE USER SET USER_COMMENT = USER_COMMENT + ?, COMMENT_TOTAL = COMMENT_TOTAL + ?  WHERE USER_ID = ?";
+	private static final String UPDATE_USER_VIOLATION = "UPDATE USER SET VIOLATION=? WHERE USER_ID = ?";
 
 	@Override
 	public void insert(UserVO userVO) {
@@ -790,6 +791,45 @@ public class UserDAO implements UserDAO_interface {
 
 			pstmt.setInt(1, userVO.getCash());
 			pstmt.setString(2, userVO.getUser_id());
+
+			int a = pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+
+	@Override
+	public void updateUserViolation(String user_id, Integer violation) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_USER_VIOLATION);
+
+			pstmt.setInt(1, violation);
+			pstmt.setString(2, user_id);
 
 			int a = pstmt.executeUpdate();
 

@@ -36,4 +36,6 @@ public interface UserDAO_interface {
 	Optional<UserVO> findUserPic(String user_id);
 	
 	public void updateCash(UserVO userVO);
+	
+	public void addCash(UserVO userVO);
 }

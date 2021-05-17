@@ -41,7 +41,7 @@ public class TogetherWS {
 		sessionsSet.put(live_no, sessionsMap);
 		
 		/* Sends all the connected users to the new user */
-		Set<String> userNames = sessionsMap.keySet();
+		Set<String> userNames = sessionsMap.keySet(); 
 
 		State stateMessage = new State("open", userName, userNames);
 

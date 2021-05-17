@@ -159,4 +159,11 @@ public UserVO newPassword_Update(String user_id,String user_newNameCheck) {
 		dao.updateCash(userVO);
 		return userVO;
 	}
+	public UserVO addCash(Integer cash,String user_id) {
+		UserVO userVO = new UserVO();
+		userVO.setCash(cash);
+		userVO.setUser_id(user_id);
+		dao.addCash(userVO);
+		return userVO;
+	}
 }

@@ -868,5 +868,48 @@ public class UserServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		if ("addUserCash".equals(action)) { // 來自update_user_input.jsp的請求
+
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				
+				String user_id = req.getParameter("user_id").trim();
+				Integer cash = new Integer(req.getParameter("cash"));
+				
+				UserVO userVO = new UserVO();
+				userVO.setUser_id(user_id);
+				userVO.setCash(cash);
+
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("userVO", userVO); // 含有輸入格式錯誤的userVO物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/user/update_user_input.jsp");
+					failureView.forward(req, res);
+					return; // 程式中斷
+				}
+
+				/*************************** 2.開始修改資料 *****************************************/
+				UserService userSvc = new UserService();
+				userVO = userSvc.addCash(cash, user_id);
+				
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				
+				req.setAttribute("userVO", userVO); // 資料庫update成功後,正確的的userVO物件,存入req
+				String url = "/front-end/protected/userIndex.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneUser.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.put("Exception", e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/user/addUserCash.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		
 	}
 }

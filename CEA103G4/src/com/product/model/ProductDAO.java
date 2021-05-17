@@ -1018,4 +1018,5 @@ public class ProductDAO implements ProductDAO_interface {
 		}
 		return productVO;
 	}
+
 }

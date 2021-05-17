@@ -16,7 +16,6 @@
 	Vector<ProductVO> buylist3 = (Vector<ProductVO>) session.getAttribute("shoppingcart");
 
 	if (buylist3 != null) {
-
 		Map<String, Vector<ProductVO>> mBuylist = new HashMap<String, Vector<ProductVO>>();
 		for (ProductVO vo : buylist3) {
 			String user_id = vo.getUser_id();
@@ -28,6 +27,7 @@
 			mBuylist.put(user_id, vector);
 		}
 		pageContext.setAttribute("mBuylist", mBuylist);
+		session.setAttribute("list",mBuylist);
 }
 %>
 
@@ -195,30 +195,34 @@
 											</tr>
 											<c:forEach var="order" items="${entry.value}"
 												varStatus="cartstatus">
+												<c:set var="row_count" value="${row_count+1}" />
 												<tr>
 													<td class="cart-pic first-row"><a
 														href="<%=request.getContextPath()%>/product/product.do?product_no=${order.product_no}">
 															<img
 															src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
 															alt="${order.product_name}" />
-															<input type="hidden" value="${order.product_no}" name="product_no">
-															<input type="hidden" value="${entry.key}" name="seller_id">
+															
+															<input type="hidden" value="${order.product_remaining}" name="product_remaining">
 													</a></td>
 													<td class="p-name first-row">
 														<h5>${order.product_name}</h5>
 													</td>
 													<td class="PP${order.product_no} first-row"
 														value="${order.product_price}">$${order.product_price
-														}</td>
+														}<input type="hidden" value="${order.product_no}" name="product_no"></td>
 													<td class="qua-col first-row">
 														<div class="quantity" style="margin-top: 30px;">
 															<div>${order.product_quantity}</div>
 														</div>
+														<input type="hidden" value="${order.product_quantity}" name="product_num">
 													</td>
 													<td>
 														<div id="TP${order.product_no}"
 															class="cartProductItemSumPrice"
 															style="margin-top: 30px; color: #e7ab3c;">${order.product_price*order.product_quantity}</div>
+															<input type="hidden" name="orderDetailPrice" value="${sum}">
+															
 													</td>
 												</tr>
 												<c:set var="sum"
@@ -229,6 +233,9 @@
 									</table>
 								</div>
 							</c:forEach>
+							<input type="hidden" name="order_price" value="${sum}">
+							<input type="hidden" name="user_id" value="${userVO.user_id}">
+							<input type="hidden" name="row_count" value="${row_count}">
 							<input type="hidden" name="action" value="addOrderList">
 							<button type="submit" class="site-btn place-btn">送出</button>
 						</div>

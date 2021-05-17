@@ -34,7 +34,7 @@ public class UserShowPhoto extends HttpServlet {
 				out.flush();
 				out.close();
 			} else {
-				InputStream in = getServletContext().getResourceAsStream("/front-template/images/favicon.ico");
+				InputStream in = getServletContext().getResourceAsStream("/front-template/images/defaultPic.png");
 				byte[] b = new byte[in.available()];
 				in.read(b);
 				out.write(b);

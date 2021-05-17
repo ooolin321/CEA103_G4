@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.product.model.*"%>
 <%@ page import="com.product_type.model.*"%>
@@ -8,8 +9,6 @@
 
 <%
 		Object SellerProducts = request.getAttribute("SellerProducts");
-		pageContext.setAttribute("SellerProducts", SellerProducts);
-
 	
 %>
 <jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
@@ -43,6 +42,25 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/slicknav.min.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/style.css" type="text/css" />
     
+    <style>
+    
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 0rem;
+    padding-top: 25px;
+}
+
+.seller-star i{
+  font-size: 16px;
+  display: inline-block;
+  color: #fac451;
+}
+       
+    </style>
+    
+    
   </head>
 
   <body>
@@ -69,15 +87,17 @@
 		<section>
            <div class="sellerHome" id="sellerHome">
          <div class="row sellerInfo">
+         <c:if test="${SellerProducts.size() == 0}">
 			<div class="card mb-3" style="width: 400px;height: 200px;">
   			<div class="row g-0">
-   			 <div class="col-md-6">
-      			<img width="200px" height="200px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${userVO.user_id}" class="rounded mx-auto d-block" alt="">
+   			 <div class="col-md-6" id="sellerImg">
+      			<img  width="200px" height="200px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${seller.user_id}" class="rounded mx-auto d-block" alt="">
    			 </div>
     			<div class="col-md-6">
      		 <div class="card-body">
        		 <h5 class="card-title"></h5>
        			<p class="card-text"><small class="text-muted"></small></p>
+
        			<div class="seller-btn">
        			<div><a href="#"><i class="fa fa-commenting-o"></i>&nbsp;<p style="display:inline-block; color:pink;">私訊賣家</p></a></div>
        			</div>
@@ -85,6 +105,49 @@
     		</div>
  		 </div>
        </div>
+         </c:if>
+         <c:forEach var="seller" items="${SellerProducts}" begin="0" end="0">	
+			<div class="card mb-3" style="width: 400px;height: 200px;">
+  			<div class="row g-0">
+   			 <div class="col-md-6">
+      			<img width="200px" height="200px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${seller.user_id}" class="rounded mx-auto d-block" alt="">
+   			 </div>
+    			<div class="col-md-6">
+     		 <div class="card-body">
+       		 <h5 class="card-title"></h5>
+       			<p class="card-text"><small class="text-muted"></small></p>
+       			<c:if test="${userSvc.getOneUser(seller.user_id).user_comment == 0}">
+       			<div class="seller-star">
+       			<p class="card-text">
+       			              <i class="fa fa-star-o" ></i>
+							  <i class="fa fa-star-o" ></i>
+							  <i class="fa fa-star-o" ></i>
+							  <i class="fa fa-star-o" ></i>
+							  <i class="fa fa-star-o" ></i>
+       			</p>
+       			</div>
+       			</c:if>					
+       			<c:if test="${userSvc.getOneUser(seller.user_id).user_comment != 0}">
+				  <div class="seller-star">
+				  <p class="card-text">
+                     <input type="hidden" name="srating" value="<fmt:formatNumber type="number" value="${userSvc.getOneUser(seller.user_id).user_comment/userSvc.getOneUser(seller.user_id).comment_total}" maxFractionDigits="0"/>" id="con"/>
+                        <i class="fa fa-star-o" id="s1"></i>
+						<i class="fa fa-star-o" id="s2"></i>
+						<i class="fa fa-star-o" id="s3"></i>
+						<i class="fa fa-star-o" id="s4"></i>
+						<i class="fa fa-star-o" id="s5"></i>
+						<span>(${userSvc.getOneUser(seller.user_id).comment_total})</span>
+					</p>	
+					</div>
+               </c:if>
+       			<div class="seller-btn">
+       			<div><a href="#"><i class="fa fa-commenting-o"></i>&nbsp;<p style="display:inline-block; color:pink;">私訊賣家</p></a></div>
+       			</div>
+     		 </div>
+    		</div>
+ 		 </div>
+       </div>
+       </c:forEach>
       </div>
          <div class="row">  
             <c:forEach var="productVO" items="${SellerProducts}" begin="0" end="${SellerProducts.size()}">
@@ -150,10 +213,10 @@
 	var str = url.split('?')[1];
 	var sellerID = str.split('=')[1];
 	$(".card-title").text("賣家帳號"+ sellerID);
-	
+	$("#sellerImg").html('<img width="200px" height="200px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id='+sellerID+ '" class="rounded mx-auto d-block" >');
 	var user_regdate = $(".user_regdate").attr("value");
 	if (user_regdate !== undefined){
-		$(".text-muted").text("加入時間"+ user_regdate);
+		$(".text-muted").html("加入時間"+ user_regdate);
 	}
 	
 	const sellerHome = document.getElementById('sellerHome');
@@ -263,6 +326,27 @@
 	} 
 	}
 	
+    $(document).ready(function(){
+		switch($("#con").val()){
+		case "1":
+			$("#s1").removeClass("fa fa-star-o").addClass("fa fa-star");
+			break;
+		case "2":
+			$("#s1,#s2").removeClass("fa fa-star-o").addClass("fa fa-star");
+			break;
+		case "3":
+			$("#s1,#s2,#s3").removeClass("fa fa-star-o").addClass("fa fa-star");
+			break;
+		case "4":
+			$("#s1,#s2,#s3,#s4").removeClass("fa fa-star-o").addClass("fa fa-star");
+			break;
+		case "5":
+			$("#s1,#s2,#s3,#s4,#s5").removeClass("fa fa-star-o").addClass("fa fa-star");
+			break;
+		default:
+
+		}
+	})
 	
 	</script>
 

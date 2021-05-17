@@ -49,9 +49,11 @@ public class TogetherWS {
 
 		Collection<Session> sessions = sessionsMap.values();
 		for (Session session : sessions) {
-			if (session.isOpen()) {
-				session.getAsyncRemote().sendText(stateMessageJson);
-			}
+			
+				if (session.isOpen()) {
+					session.getAsyncRemote().sendText(stateMessageJson);
+				}
+			
 		}
 
 		String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),
@@ -83,16 +85,32 @@ public class TogetherWS {
 				String max0S = gson.toJson(max0);
 				BidVO bid = new BidVO("history", sender, live_no, product_no, max0S);
 				String currentBid = gson.toJson(bid);
-				if (userSession != null && userSession.isOpen()) {
-					userSession.getAsyncRemote().sendText(currentBid);
-					return;
-				}
+				
+					if (userSession != null && userSession.isOpen()) {
+						try {
+							userSession.getBasicRemote().sendText(currentBid);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						return;
+					}
+				
 			} else {
 				if (userSession != null && userSession.isOpen()) {
 					BidVO bid = new BidVO("history", sender, live_no, product_no, historyData);
 					String currentBid = gson.toJson(bid);
-					userSession.getAsyncRemote().sendText(currentBid);
-					return;
+					
+						if (userSession != null && userSession.isOpen()) {
+							try {
+								userSession.getBasicRemote().sendText(currentBid);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							return;
+						}
+					
 				}
 			}
 
@@ -134,18 +152,31 @@ public class TogetherWS {
 			}
 			for (String other : others) {
 				Session receiverSession = sessionsMap.get(other);
-				if (userSession != null && userSession.isOpen()) {
-					receiverSession.getAsyncRemote().sendText(finalMax);
-				}
+				
+					if (receiverSession != null && receiverSession.isOpen()) {
+						try {
+							receiverSession.getBasicRemote().sendText(finalMax);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				
 			}
 
 		} else {
 			for (String other : others) {
 				Session receiverSession = sessionsMap.get(other);
-				if (userSession != null && userSession.isOpen()) {
-					receiverSession.getAsyncRemote().sendText(message);
-
-				}
+				
+					if (receiverSession != null && receiverSession.isOpen()) {
+						try {
+							receiverSession.getBasicRemote().sendText(message);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				
 			}
 
 		}

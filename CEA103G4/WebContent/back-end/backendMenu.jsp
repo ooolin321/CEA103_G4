@@ -167,7 +167,7 @@
                 class="app-menu__label">會員管理</span><i
                 class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
-                <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/listAllUser.jsp"><i
+                <li><a class="treeview-item" href="<%=request.getContextPath()%>/back-end/user/listAllUser.jsp"><i
                         class="icon fa fa-circle-o"></i>所有會員</a></li>
             </ul></li>
 

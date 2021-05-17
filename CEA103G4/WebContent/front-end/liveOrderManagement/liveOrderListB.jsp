@@ -155,20 +155,20 @@ table td, table tr, table th {
 												<td></td>
 												<td></td>
 												<td></td>
+												<td><FORM METHOD="post"
+														ACTION="<%=request.getContextPath()%>/live_order/live_order.do"
+														style="margin-bottom: 0px;">
 
 												<c:forEach var="live_orderVO"
 													items="${live_orderSvc.getAllByID2(userVO.user_id)}">
 													<c:if test="${live_orderVO.order_state ==1}">
-														<td><FORM METHOD="post"
-																ACTION="<%=request.getContextPath()%>/live_order/live_order.do"
-																style="margin-bottom: 0px;">
-																<input type="submit" class="btn btn-info" value="出貨">
 																<input type="hidden" id="HB${live_orderVO.live_order_no}" name="live_order_no"
 																	value="${live_orderVO.live_order_no}" disabled> <input
 																	type="hidden" name="action" value="updateShipment">
-															</FORM></td>
 													</c:if>
 												</c:forEach>
+																<input type="submit" class="btn btn-info" value="出貨">
+												</FORM></td>
 											</tr>
 										</tbody>
 									</table>

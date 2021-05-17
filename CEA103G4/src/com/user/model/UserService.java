@@ -159,6 +159,7 @@ public UserVO newPassword_Update(String user_id,String user_newNameCheck) {
 		dao.updateCash(userVO);
 		return userVO;
 	}
+<<<<<<< HEAD
 	public UserVO addCash(Integer cash,String user_id) {
 		UserVO userVO = new UserVO();
 		userVO.setCash(cash);
@@ -166,4 +167,11 @@ public UserVO newPassword_Update(String user_id,String user_newNameCheck) {
 		dao.addCash(userVO);
 		return userVO;
 	}
+=======
+	
+	public void updateUserViolation(String user_id, Integer violation) {
+		dao.updateUserViolation(user_id, violation);
+	}
+	
+>>>>>>> cf5e0c5b54301928beca3c27781a867f7f67bc71
 }

@@ -120,9 +120,19 @@ ol {
   Helper CSS
 -----------------------*/
 
+
 .section-title {
   margin-bottom: 40px;
   text-align: center;
+}
+
+.deal-of-week .section-title {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.deal-of-week .liveTime{
+	margin-bottom: 20px;
 }
 
 .section-title .product-price {

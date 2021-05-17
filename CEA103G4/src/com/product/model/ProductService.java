@@ -139,7 +139,12 @@ public class ProductService {
 	public ProductVO getFavorite(Integer product_no) {
 		return dao.getFavorite(product_no);
 		}
+	
+	public void updateState(Integer product_state, List<ProductVO> product_no) {
+		
+		dao.updateState(product_state, product_no);
 	}
+}
 
 
 

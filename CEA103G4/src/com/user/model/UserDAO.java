@@ -35,7 +35,7 @@ public class UserDAO implements UserDAO_interface {
 	private static final String INSERT_STMT =
 //			"INSERT INTO `USER` (`USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			"INSERT INTO `USER` (`USER_ID`,`USER_PWD`,`USER_NAME`,`ID_CARD`,`USER_GENDER`,`USER_DOB`,`USER_MAIL`,`USER_PHONE`,`USER_MOBILE`,`CITY`,`TOWN`,`ZIPCODE`,`USER_ADDR`,`REGDATE`,`USER_POINT`,`VIOLATION`,`USER_STATE`,`USER_COMMENT`,`COMMENT_TOTAL`,`CASH`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), 0, 0, 1, 0, 0, 0)";
-	private static final String GET_ALL_STMT = "SELECT * FROM `USER` ORDER BY `USER_ID`";
+	private static final String GET_ALL_STMT = "SELECT * FROM `USER` ORDER BY `VIOLATION` DESC";
 	private static final String GET_ONE_STMT = "SELECT * FROM USER WHERE `USER_ID` = ?";
 	private static final String DELETE = "DELETE FROM USER where USER_ID = ?";
 	private static final String UPDATE = "UPDATE `USER` SET `USER_NAME`=?, `USER_GENDER`=?, `USER_DOB`=?, `USER_MAIL`=?, `USER_PHONE`=?, `USER_MOBILE`=?, `CITY`=?, `TOWN`=?, `ZIPCODE`=?, `USER_ADDR`=? ,`USER_PIC`=? WHERE `USER_ID` = ?";
@@ -48,6 +48,7 @@ public class UserDAO implements UserDAO_interface {
 	private static final String ADD_CASH = "UPDATE `USER` SET `CASH` = `CASH` + ? WHERE `USER_ID` = ?";
 
 	private static final String UPDATE_USER_RATING = "UPDATE USER SET USER_COMMENT = USER_COMMENT + ?, COMMENT_TOTAL = COMMENT_TOTAL + ?  WHERE USER_ID = ?";
+	private static final String UPDATE_USER_VIOLATION = "UPDATE USER SET VIOLATION=? WHERE USER_ID = ?";
 
 	@Override
 	public void insert(UserVO userVO) {
@@ -818,20 +819,34 @@ public class UserDAO implements UserDAO_interface {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public void addCash(UserVO userVO) {
 		
+=======
+	public void updateUserViolation(String user_id, Integer violation) {
+
+>>>>>>> cf5e0c5b54301928beca3c27781a867f7f67bc71
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
 
 			con = ds.getConnection();
+<<<<<<< HEAD
 			pstmt = con.prepareStatement(ADD_CASH);
 
 			pstmt.setInt(1, userVO.getCash());
 			pstmt.setString(2, userVO.getUser_id());
 
 			pstmt.executeUpdate();
+=======
+			pstmt = con.prepareStatement(UPDATE_USER_VIOLATION);
+
+			pstmt.setInt(1, violation);
+			pstmt.setString(2, user_id);
+
+			int a = pstmt.executeUpdate();
+>>>>>>> cf5e0c5b54301928beca3c27781a867f7f67bc71
 
 			// Handle any driver errors
 		} catch (SQLException se) {
@@ -853,5 +868,9 @@ public class UserDAO implements UserDAO_interface {
 				}
 			}
 		}
+<<<<<<< HEAD
+=======
+
+>>>>>>> cf5e0c5b54301928beca3c27781a867f7f67bc71
 	}
 }

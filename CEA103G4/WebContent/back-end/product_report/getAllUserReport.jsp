@@ -105,7 +105,11 @@
      				 <th scope="row">${product_reportVO.pro_report_no}</th>
      				 <td>${product_reportVO.pro_report_content}</td>
      				 <td>${product_reportVO.product_no}</td>
-     				 <td><img width="100px" height="100px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${product_reportVO.product_no}" class="rounded mx-auto d-block" alt=""></td>
+     				 <td>
+     				 <a href="<%=request.getContextPath()%>/product/product.do?product_no=${product_reportVO.product_no}" target="_blank">
+     				 <img width="100px" height="100px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${product_reportVO.product_no}" class="rounded mx-auto d-block" alt="">
+     				 </a>
+     				 </td>
       				 <td>${productSvc.getOneProduct(product_reportVO.product_no).user_id}</td>
       				 <td>${product_reportVO.user_id}</td>
       				 <td>${product_reportVO.report_date}</td>
@@ -151,7 +155,11 @@
      				 <th scope="row">${product_reportVO.pro_report_no}</th>
      				 <td>${product_reportVO.pro_report_content}</td>
      				 <td>${product_reportVO.product_no}</td>
-     				 <td><img width="100px" height="100px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${product_reportVO.product_no}" class="rounded mx-auto d-block" alt=""></td>
+     				 <td>
+     				 <a href="<%=request.getContextPath()%>/product/product.do?product_no=${product_reportVO.product_no}" target="_blank">
+     				 <img width="100px" height="100px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${product_reportVO.product_no}" class="rounded mx-auto d-block" alt="">
+     				 </a>
+     				 </td>
       				 <td>${productSvc.getOneProduct(product_reportVO.product_no).user_id}</td>
       				 <td>${product_reportVO.user_id}</td>
       				 <td>${product_reportVO.report_date}</td>
@@ -198,7 +206,11 @@
      				 <th scope="row">${product_reportVO.pro_report_no}</th>
      				 <td>${product_reportVO.pro_report_content}</td>
      				 <td>${product_reportVO.product_no}</td>
-     				 <td><img width="100px" height="100px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${product_reportVO.product_no}" class="rounded mx-auto d-block" alt=""></td>
+     				 <td>
+     				 <a href="<%=request.getContextPath()%>/product/product.do?product_no=${product_reportVO.product_no}" target="_blank">
+     				 <img width="100px" height="100px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${product_reportVO.product_no}" class="rounded mx-auto d-block" alt="">
+     				 </a>
+     				 </td>
       				 <td>${productSvc.getOneProduct(product_reportVO.product_no).user_id}</td>
       				 <td>${product_reportVO.user_id}</td>
       				 <td>${product_reportVO.report_date}</td>

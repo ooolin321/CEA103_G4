@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
 import javax.websocket.CloseReason;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -16,45 +15,52 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import org.json.JSONException;
 import com.customer_service.model.ChatMessage;
 import com.customer_service.model.State;
 import com.google.gson.Gson;
 
 import Jedis.JedisHandleMessage;
 
-
-
 @ServerEndpoint("/CustomerWS/{userName}")
 public class CustomerWS {
 	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
+
 	Gson gson = new Gson();
-
-	@OnOpen
-	public void onOpen(@PathParam("userName") String userName, Session userSession) throws IOException {
-		/* save the new user in the map */
-		sessionsMap.put(userName, userSession);
-		/* Sends all the connected users to the new user */
-		Set<String> userNames = sessionsMap.keySet();
-		State stateMessage = new State("open", userName, userNames);
-		String stateMessageJson = gson.toJson(stateMessage);
-		Collection<Session> sessions = sessionsMap.values();
-		for (Session session : sessions) {
-			if (session.isOpen()) {
-				session.getAsyncRemote().sendText(stateMessageJson);
+		@OnOpen
+		public void onOpen(@PathParam("userName") String userName, Session userSession) throws IOException {
+//			if (userName.contains("USER")) {
+//				String str = userName;
+//				String[] str2 = str.split("_");
+//				String userNames = null;
+//				for (int i = 1; i < str2.length; i++) {
+//					userNames = str2[1];
+//				}
+//			}
+			/* save the new user in the map */
+			sessionsMap.put(userName, userSession);
+			/* Sends all the connected users to the new user */
+			Set<String> userNames = sessionsMap.keySet();
+			State stateMessage = new State("open", userName, userNames);
+			String stateMessageJson = gson.toJson(stateMessage);
+			Collection<Session> sessions = sessionsMap.values();
+			for (Session session : sessions) {
+				if (session.isOpen()) {
+					session.getAsyncRemote().sendText(stateMessageJson);
+				}
 			}
-		}
 
-		String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),
-				userName, userNames);
-		System.out.println(text);
-	}
+			String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),
+					userName, userNames);
+			System.out.println(text);
+		}
 
 	@OnMessage
 	public void onMessage(Session userSession, String message) {
 		ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
 		String sender = chatMessage.getSender();
 		String receiver = chatMessage.getReceiver();
-		
+
 		if ("history".equals(chatMessage.getType())) {
 			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);
 			String historyMsg = gson.toJson(historyData);
@@ -65,8 +71,7 @@ public class CustomerWS {
 				return;
 			}
 		}
-		
-		
+
 		Session receiverSession = sessionsMap.get(receiver);
 		if (receiverSession != null && receiverSession.isOpen()) {
 			receiverSession.getAsyncRemote().sendText(message);

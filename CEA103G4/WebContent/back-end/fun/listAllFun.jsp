@@ -96,26 +96,22 @@
 											<FORM METHOD="post"
 												ACTION="<%=request.getContextPath()%>/fun/fun.do"
 												style="margin-bottom: 0px;">
-												<input type="submit" value="修改"> <input
+												<input type="submit" value="查詢"> <input
 													type="hidden" name="funno" value="${funVO.funno}">
 												<input type="hidden" name="action" value="getOne_For_Update">
-												<input type="hidden" name="requestURL"
-													value="<%=request.getParameter("requestURL")%>"> <input
-													type="hidden" name="whichPage"
-													value="<%=request.getParameter("whichPage")%>">
 										</FORM>
 										</td>
 
 
-										<td>
-											<FORM METHOD="post"
-												ACTION="<%=request.getContextPath()%>/fun/fun.do"
-												style="margin-bottom: 0px;">
-												<input type="submit" value="刪除"> <input
-													type="hidden" name="funno" value="${funVO.funno}">
-												<input type="hidden" name="action" value="delete">
-											</FORM>
-										</td>
+<!-- 										<td> -->
+<!-- 											<FORM METHOD="post" -->
+<%-- 												ACTION="<%=request.getContextPath()%>/fun/fun.do" --%>
+<!-- 												style="margin-bottom: 0px;"> -->
+<!-- 												<input type="submit" value="刪除"> <input -->
+<%-- 													type="hidden" name="funno" value="${funVO.funno}"> --%>
+<!-- 												<input type="hidden" name="action" value="delete"> -->
+<!-- 											</FORM> -->
+<!-- 										</td> -->
 									</tr>
 								</c:forEach>
 							</tbody>

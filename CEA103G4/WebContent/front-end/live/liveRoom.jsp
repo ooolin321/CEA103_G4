@@ -7,17 +7,16 @@
 <%@ page import="com.product_type.model.*"%>
 <%@ page import="com.product.model.*"%>
 <%
-
 	Product_TypeDAO dao2 = new Product_TypeDAO();
-     List<Product_TypeVO> list2 = dao2.getAll();
-    pageContext.setAttribute("list2",list2);
-    
-    Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
+	List<Product_TypeVO> list2 = dao2.getAll();
+	pageContext.setAttribute("list2", list2);
+
+	Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
 	pageContext.setAttribute("buylist", buylist);
 
-	UserVO userVO2 = (UserVO) session.getAttribute("account"); 
+	UserVO userVO2 = (UserVO) session.getAttribute("account");
 	session.setAttribute("userVO", userVO2);
- %>
+%>
 
 
 <jsp:useBean id="liveSvc" scope="page"
@@ -140,93 +139,97 @@ input {
 						</div>
 					</div>
 					<div class="col-lg-7 col-md-7"></div>
-				<div class="col-lg-3 text-right col-md-3">
-					<c:if test="${not empty userVO.user_id}">
-						<div class="header-right">
-						<FORM id="userLogOut" METHOD="post" class="logout-form" action="<%=request.getContextPath()%>/User_LogoutHandler">
-						<a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">
-						<span class="userLogin"style="cursor: pointer"><img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${userVO.user_id}"/>&nbsp;               
-						${userVO.user_name}
-                         </span></a>
-						 <input type="hidden" name="action" value="signOut">
-						 <a href="#" onclick="document.getElementById('userLogOut').submit();"><button type="button" class="btn">登出</button></a>
-						 </FORM>
-						</div>
-    				</c:if>
-       			 <c:if test="${empty userVO.user_name}">
-					<div class="header-right">
-						<a
-							href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button
-								type="button" class="btn">註冊</button></a> <a
-							href="<%=request.getContextPath()%>/front-end/userLogin.jsp" target="_blank"><button
-								type="button" class="btn">登入</button></a>
-					</div>
-        		</c:if>
-					<!-- 鈴鐺/購物車顯示的數字+購物車預覽圖要改 -->
-					<ul class="nav-right">
-						<li class="bell-icon"><a href="#"> <svg
-									xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-									fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
-                      <path
-										d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
-                    </svg> <span>1</span>
-						</a></li>
-						<li class="cart-icon"><a
-							href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp">
-								<i class="icon_bag_alt"></i>
-								<c:if test="${buylist != null}">
-								<span id="iba">${buylist.size()}</span>
-								</c:if> 
-								<c:if test="${buylist == null}"> 
-								<span id="iba">0</span>
-								</c:if>
-						</a>
-<%-- 						<c:if test="${buylist != null && buylist.size() > 0}"> --%>
-							<div class="cart-hover">
-								<div class="select-items">
-									<table>  
-										<tbody id="carts">
-									<c:set var="sum" value="0"> </c:set>
-									<c:forEach var="order" items="${buylist}" varStatus="cartstatus">
-											<tr>
-												<td class="si-pic"><img
-													src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
-													alt="${order.product_name}" style="width:100px; height:100px; border-radius:10px;" /></td>
-												<td class="si-text">
-													<div class="product-selected">
-														<p>$${order.product_price } x ${order.product_quantity}</p>
-														<h6>${order.product_name }</h6>
-													</div>
-												</td>
-											</tr>
-									<c:set var="sum" value="${sum + order.product_price*order.product_quantity}"></c:set>
-                                   </c:forEach>
-										</tbody>
-									</table>
-								</div>
-								<div class="select-total">
-									<span>total:</span>
-									<h5 id="cartHoverTotal">$${sum}</h5>
-								</div>
-								<div class="select-button">
+					<div class="col-lg-3 text-right col-md-3">
+						<c:if test="${not empty userVO.user_id}">
+							<div class="header-right">
+								<FORM id="userLogOut" METHOD="post" class="logout-form"
+									action="<%=request.getContextPath()%>/User_LogoutHandler">
 									<a
-										href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp"
-										class="primary-btn view-card">購物車清單</a>
-									<a
-										href="${pageContext.request.contextPath}/front-end/protected/check-out.jsp"
-										class="primary-btn checkout-btn">結帳</a>
-								</div>
+										href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">
+										<span class="userLogin" style="cursor: pointer"><img
+											class="rounded-circle" width="45px" height="40px"
+											src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${userVO.user_id}" />&nbsp;
+											${userVO.user_name} </span>
+									</a> <input type="hidden" name="action" value="signOut"> <a
+										href="#"
+										onclick="document.getElementById('userLogOut').submit();"><button
+											type="button" class="btn">登出</button></a>
+								</FORM>
 							</div>
-<%-- 							</c:if> --%>
-							</li>
-						<c:if test="${buylist.size() > 0 }"> 
-						<li class="cart-price" id="totalprice">$${sum}</li>
 						</c:if>
-						<c:if test="${buylist == null}"> 
-						<li class="cart-price">$0</li>
+						<c:if test="${empty userVO.user_name}">
+							<div class="header-right">
+								<a
+									href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button
+										type="button" class="btn">註冊</button></a> <a
+									href="<%=request.getContextPath()%>/front-end/userLogin.jsp"
+									target="_blank"><button type="button" class="btn">登入</button></a>
+							</div>
 						</c:if>
-					</ul>
-				</div>
+						<!-- 鈴鐺/購物車顯示的數字+購物車預覽圖要改 -->
+						<ul class="nav-right">
+							<li class="bell-icon"><a href="#"> <svg
+										xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+										fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                      <path
+											d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
+                    </svg> <span>1</span>
+							</a></li>
+							<li class="cart-icon"><a
+								href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp">
+									<i class="icon_bag_alt"></i> <c:if test="${buylist != null}">
+										<span id="iba">${buylist.size()}</span>
+									</c:if> <c:if test="${buylist == null}">
+										<span id="iba">0</span>
+									</c:if>
+							</a> <%-- 						<c:if test="${buylist != null && buylist.size() > 0}"> --%>
+								<div class="cart-hover">
+									<div class="select-items">
+										<table>
+											<tbody id="carts">
+												<c:set var="sum" value="0">
+												</c:set>
+												<c:forEach var="order" items="${buylist}"
+													varStatus="cartstatus">
+													<tr>
+														<td class="si-pic"><img
+															src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
+															alt="${order.product_name}"
+															style="width: 100px; height: 100px; border-radius: 10px;" /></td>
+														<td class="si-text">
+															<div class="product-selected">
+																<p>$${order.product_price } x
+																	${order.product_quantity}</p>
+																<h6>${order.product_name }</h6>
+															</div>
+														</td>
+													</tr>
+													<c:set var="sum"
+														value="${sum + order.product_price*order.product_quantity}"></c:set>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+									<div class="select-total">
+										<span>total:</span>
+										<h5 id="cartHoverTotal">$${sum}</h5>
+									</div>
+									<div class="select-button">
+										<a
+											href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp"
+											class="primary-btn view-card">購物車清單</a> <a
+											href="${pageContext.request.contextPath}/front-end/protected/check-out.jsp"
+											class="primary-btn checkout-btn">結帳</a>
+									</div>
+								</div> <%-- 							</c:if> --%></li>
+							<c:if test="${buylist.size() > 0 }">
+								<li class="cart-price" id="totalprice">$${sum}</li>
+							</c:if>
+							<c:if test="${buylist == null}">
+								<li class="cart-price">$0</li>
+							</c:if>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -250,7 +253,7 @@ input {
 						<li><a
 							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i
 								class="icon_profile"></i></a></li>
-						<li><a href="#">線上客服&nbsp;<i class="fa fa-comment-o"></i></a></li>		
+						<li><a href="#">線上客服&nbsp;<i class="fa fa-comment-o"></i></a></li>
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -299,9 +302,10 @@ input {
 		<div class="col-md-3">
 			<textarea id="messagesArea" class="form-control" readonly></textarea>
 			<div class="input">
-				<input id="userName" name="userName" value="" class="text-field" type="hidden"  /> 
-				<input id="message" class="form-control" type="text" placeholder="Message"
-					onkeydown="if (event.keyCode == 13) sendMessage(event);" />
+				<input id="userName" name="userName" value="" class="text-field"
+					type="hidden" /> <input id="message" class="form-control"
+					type="text" placeholder="Message"
+					onkeydown="if (event.keyCode == 13) sendMessage(event);" disabled/>
 			</div>
 		</div>
 
@@ -338,9 +342,9 @@ input {
 
 
 		<div class="col-xl-3">
-			<br>現在最高價: <span id="current_price"></span>
-			<br>現在出價人: <span id="current_id"></span>
-			
+			<br>現在最高價: <span id="current_price"></span> <br>現在出價人: <span
+				id="current_id"></span>
+
 		</div>
 
 	</div>
@@ -397,7 +401,8 @@ input {
 	src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
 
 
 <script>
@@ -415,6 +420,9 @@ function refresh(){
 		
 		success:function(str){
 			
+			var inputMessage = document.getElementById("message");
+			inputMessage.disabled=false;
+			//聊天室可以輸入
 			for(let i of str){
 				if(i.product_state == 2 && i.user_id == '${liveVO.user_id}' && i.live_no == ${liveVO.live_no}){
 					let str = "<tr>";
@@ -449,7 +457,7 @@ function refresh(){
 
 	function connect() {
 		// create a websocket
-		
+		console.log(endPointURL);
 		webSocket = new WebSocket(endPointURL);
 
 		webSocket.onopen = function(event) {
@@ -468,15 +476,15 @@ function refresh(){
 				addListener();
 			}else if("history" === jsonObj.type){
 				//進來的時候
-				addListener();
+				// addListener();
 				$("#current_price").text(JSON.parse(jsonObj.message).maxPrice);
 				$("#current_id").text(JSON.parse(jsonObj.message).user_id);
 				
 			}else if("chat" === jsonObj.type && ${param.live_no} == jsonObj.live_no){
 
-				
+				debugger;
 				//聊天//競標中
-				if(/^\d*$/.test(jsonObj.message)){
+				if(/^\d*$/.test(jsonObj.message)  && "${userVO.user_id}" == jsonObj.sender){
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 							'type' : 'max',
 							'sender' : jsonObj.sender,
@@ -496,6 +504,8 @@ function refresh(){
 					};
 
 					webSocket.send(JSON.stringify(json));
+					
+					
 					
 				}else if("start"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以start
 					//&& ${liveVO.user_id==userVO.user_id}
@@ -557,11 +567,14 @@ function refresh(){
 				messagesArea.value = messagesArea.value + message;
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			}else if("max" ==jsonObj.type){
+				debugger;
 				if(jsonObj.timeStart =="0"){
 					$("#current_price").text(jsonObj.maxPrice);
 					$("#current_id").text("無人出價");
 				}else if(jsonObj.timeStart== "1"){
-					addListener();
+					// addListener();
+					$("#current_price").text(jsonObj.maxPrice);
+					$("#current_id").text(jsonObj.user_id);
 				}else if(jsonObj.timeStart== "2"){
 					//ajax  更改狀態
 					//refresh();
@@ -609,8 +622,6 @@ function refresh(){
 			
 
 		}
-	
-
 		webSocket.onclose = function(event) {
 			console.log(event.data);
 		 	connect();
@@ -640,7 +651,6 @@ function refresh(){
 	function sendMessage(e) {
 		var userName = inputUserName.value.trim();
 		if (${userVO == null}) {
-// 			e.stopPropagation();
 			setTimeout(function(){
 				login();
 			}, 1);
@@ -654,7 +664,12 @@ function refresh(){
 			alert("請輸入訊息");
 			inputMessage.focus();
 		} else {
+			if(parseInt(message) > "${userVO.cash}"){
+				alert("錢包餘額不足，目前餘額為"+"${userVO.cash}");
+				return;
+			}
 			
+			console.log(55555);
 			var jsonObj = {
 				"type":'chat',
 				"sender" : self,
@@ -665,6 +680,10 @@ function refresh(){
 			webSocket.send(JSON.stringify(jsonObj));
 			inputMessage.value = "";
 			inputMessage.focus();
+				
+			
+			
+			
 		}
 		
 	}

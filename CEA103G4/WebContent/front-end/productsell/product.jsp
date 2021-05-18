@@ -113,8 +113,8 @@
 	<section class="product-shop spad page-details">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-3">
-					<div class="filter-widget">
+				<div class="col-lg-3 productLeft">
+					<div class="filter-widget col-md-12 col-4" id="RWDpd">
 						<h4 class="fw-title">商品分類</h4>
 						<ul class="filter-catagories">
 							<c:forEach var="product_typeVO" items="${list2}" begin="0"
@@ -124,7 +124,7 @@
 							</c:forEach>
 						</ul>
 					</div>
-					<div class="filter-widget">
+					<div class="filter-widget col-md-12 col-7" id="RWDsm">
 						<h4 class="fw-title">Price</h4>
 						<div class="filter-range-wrap">
 							<div class="range-slider">
@@ -149,7 +149,7 @@
 					<div class="filter-widget">
 						<h4 class="fw-title">進階查詢</h4>
 						<div class="fw-all-choose" id="fw-all-choose">
-							<div class="fw-cs" id="fw-cs">
+							<div class="fw-cs col-md-6 col-4" id="fw-cs">
 								<c:forEach var="product_typeVO" items="${list2}" begin="0"
 									end="${list2.size()}">
 									<div class="cs-item">
@@ -162,7 +162,7 @@
 									</div>
 								</c:forEach>
 							</div>
-							<div class="fw-price">
+							<div class="fw-price col-md-6 col-6">
 								<div class="sc-item">
 									<input type="radio" id="a-price" name="productPrice" value="A" />
 									<label for="a-price">$300<i
@@ -192,7 +192,7 @@
 				<!-- 左邊功能列結束 -->
 
 				<!-- 右邊商品區塊 -->
-				<div class="col-lg-9">
+				<div class="col-lg-9 productRight">
 					<div class="row">
 						<div class="col-lg-6">
 							<div class="product-pic-zoom">
@@ -237,13 +237,13 @@
 										<button type="button" class="btn btn-danger">此商品已下架</button>
 									</div>
 								</c:if>
-								<div class="pd-share">
-									<div class="pd-social">
-										<a href="#"><i class="ti-facebook"></i></a> <a href="#"><i
-											class="ti-twitter-alt"></i></a> <a href="#"><i
-											class="ti-linkedin"></i></a>
-									</div>
-								</div>
+<!-- 								<div class="pd-share"> -->
+<!-- 									<div class="pd-social"> -->
+<!-- 										<a href="#"><i class="ti-facebook"></i></a> <a href="#"><i -->
+<!-- 											class="ti-twitter-alt"></i></a> <a href="#"><i -->
+<!-- 											class="ti-linkedin"></i></a> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 								<div class="pd-fungroup">
 									<c:if test="${productVO.product_state == 1}">
 										<div>

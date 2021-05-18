@@ -96,33 +96,29 @@
 					</div>
 
 					<div class="col-lg-7 col-md-7"></div>
-					<div class="col-lg-3 text-right col-md-3">
-						<c:if test="${ not empty userVO.user_name}">
-							<div class="header-right">
-								<FORM id="userLogOut" METHOD="post" class="logout-form"
-									action="<%=request.getContextPath()%>/User_LogoutHandler">
-									<a
-										href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">
-										<span class="userLogin" style="cursor: pointer"><img
-											class="rounded-circle" width="45px" height="40px" src="" />&nbsp;
-											${userVO.user_name} </span>
-									</a> <input type="hidden" name="action" value="signOut"> <a
-										href="#"
-										onclick="document.getElementById('userLogOut').submit();"><button
-											type="button" class="btn">登出</button></a>
-								</FORM>
-							</div>
-						</c:if>
-						<c:if test="${empty userVO.user_name}">
-							<div class="header-right">
-								<a
-									href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button
-										type="button" class="btn">註冊</button></a> <a
-									href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><button
-										type="button" class="btn">登入</button></a>
-							</div>
-						</c:if>
-						<!-- 鈴鐺/購物車顯示的數字+購物車預覽圖要改 -->
+				<div class="col-lg-3 text-right col-md-3">
+					<c:if test="${not empty userVO.user_id}">
+						<div class="header-right">
+						<FORM id="userLogOut" METHOD="post" class="logout-form" action="<%=request.getContextPath()%>/User_LogoutHandler">
+						<a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">
+						<span class="userLogin"style="cursor: pointer"><img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${userVO.user_id}"/>&nbsp;               
+						${userVO.user_name}
+                         </span></a>
+						 <input type="hidden" name="action" value="signOut">
+						 <a href="#" onclick="document.getElementById('userLogOut').submit();"><button type="button" class="btn">登出</button></a>
+						 </FORM>
+						</div>
+    				</c:if>
+       			 <c:if test="${empty userVO.user_name}">
+					<div class="header-right">
+						<a
+							href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button
+								type="button" class="btn">註冊</button></a> <a
+							href="<%=request.getContextPath()%>/front-end/userLogin.jsp" target="_blank"><button
+								type="button" class="btn">登入</button></a>
+					</div>
+        		</c:if>
+					<!-- 鈴鐺/購物車顯示的數字+購物車預覽圖要改 -->
 					<ul class="nav-right">
 						<li class="bell-icon"><a href="#"> <svg
 									xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -151,7 +147,7 @@
 											<tr>
 												<td class="si-pic"><img
 													src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
-													alt="${order.product_name}" style="width:100px; height:100px;" /></td>
+													alt="${order.product_name}" style="width:100px; height:100px; border-radius:10px;" /></td>
 												<td class="si-text">
 													<div class="product-selected">
 														<p>$${order.product_price } x ${order.product_quantity}</p>
@@ -166,14 +162,14 @@
 								</div>
 								<div class="select-total">
 									<span>total:</span>
-									<h5>${sum}</h5>
+									<h5 id="cartHoverTotal">$${sum}</h5>
 								</div>
 								<div class="select-button">
 									<a
 										href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp"
 										class="primary-btn view-card">購物車清單</a>
 									<a
-										href="${pageContext.request.contextPath}/front-end/protected/check-out.html"
+										href="${pageContext.request.contextPath}/front-end/protected/check-out.jsp"
 										class="primary-btn checkout-btn">結帳</a>
 								</div>
 							</div>
@@ -186,7 +182,7 @@
 						<li class="cart-price">$0</li>
 						</c:if>
 					</ul>
-					</div>
+				</div>
 				</div>
 			</div>
 		</div>

@@ -29,7 +29,7 @@
 	<div class="container">
 		<div class="inner-header">
 			<div class="row">
-				<div class="col-lg-2 col-md-2">
+				<div class="col-lg-2 col-md-2" id="topLogo">
 					<div class="logo">
 						<a href="${pageContext.request.contextPath}/front-end/index.jsp">
 							<h2>
@@ -198,6 +198,10 @@
 			<div id="mobile-menu-wrap"></div>
 		</div>
 	</div>
+	<div id="goTop" style="position: fixed; right: 0px; bottom: 45px; z-index: 99999;">
+		<a href="#topLogo"><img style="height:75px;" src="<%=request.getContextPath()%>/front-template/images/top.gif" title="回上方"></a>
+	</div>
+	
 	<div id="chatBtn" style="position: fixed; right: 8px; bottom: 0px; z-index: 99999;">
 		<div class="chat-notice">1</div>
 		<div class="chat-btn" >私訊&nbsp;<i class="fa fa-commenting-o"></i></div>

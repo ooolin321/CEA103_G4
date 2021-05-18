@@ -8,6 +8,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.order_detail.model.Order_detailDAO;
+import com.order_detail.model.Order_detailVO;
+import com.product.model.ProductDAO;
 import com.product.model.ProductVO;
 
 
@@ -687,6 +690,89 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			}
 		}
 		
+	}
+
+	@Override
+	public void insertWithOrderList(OrderVO orderVO, List<Order_detailVO> list) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			String cols[] = {"ORDER_NO"};
+			pstmt = con.prepareStatement(INSERT_STMT2,cols);
+			
+			pstmt.setInt(1, orderVO.getOrder_state());
+			pstmt.setInt(2, orderVO.getOrder_shipping());
+			pstmt.setInt(3, orderVO.getOrder_price());
+			pstmt.setInt(4, orderVO.getPay_method());
+			pstmt.setString(5, orderVO.getRec_name());
+			pstmt.setString(6, orderVO.getZipcode());
+			pstmt.setString(7, orderVO.getCity());
+			pstmt.setString(8, orderVO.getTown());
+			pstmt.setString(9, orderVO.getRec_addr());
+			pstmt.setString(10, orderVO.getRec_phone());
+			pstmt.setString(11, orderVO.getRec_cellphone());
+			pstmt.setInt(12, orderVO.getLogistics());
+			pstmt.setInt(13, orderVO.getDiscount());
+			pstmt.setString(14, orderVO.getUser_id());
+			pstmt.setString(15, orderVO.getSeller_id());
+			pstmt.setInt(16, orderVO.getPoint());
+			
+			pstmt.executeUpdate();
+			String next_No = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				next_No = rs.getString(1);
+				System.out.println("自增主鍵值= " + next_No +"(剛新增成功的訂單編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			rs.close();
+			
+			Order_detailDAO dao = new Order_detailDAO();
+			System.out.println("list.size()-A="+list.size());
+			for (Order_detailVO aDetail : list) {
+				aDetail.setOrder_no(new Integer(next_No)) ;
+				dao.insert2(aDetail,con);
+			}
+
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			System.out.println("list.size()-B="+list.size());
+			System.out.println("新增訂單編號" + next_No + "時,共有明細" + list.size()
+			+ "筆同時被新增");
+			
+			// Handle any driver errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 	}
 
 }

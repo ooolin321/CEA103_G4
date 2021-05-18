@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.live_order.model.Live_orderVO;
+import com.order_detail.model.Order_detailVO;
 
 public class OrderService {
 
@@ -89,7 +90,7 @@ public class OrderService {
 	public OrderVO addOrderList(Integer order_state, Integer order_shipping,  Integer order_price, Integer pay_method, String rec_name, String zipcode, String city, String town,  String rec_addr, String rec_phone, String rec_cellphone, Integer logistics, Integer discount, String user_id, String seller_id, Integer point) {
 
 		OrderVO orderVO = new OrderVO();
-
+		System.out.println("check OrderService");
 		orderVO.setOrder_state(order_state);
 		orderVO.setOrder_shipping(order_shipping);
 		orderVO.setOrder_price(order_price);
@@ -136,6 +137,9 @@ public class OrderService {
 	public void updateUnshipped(List<Integer> list){
 		dao.updateUnshipped(list);
 		
+	}
+	public void insertWithDetails (OrderVO orderVO,List<Order_detailVO> list) {
+		dao.insertWithOrderList(orderVO, list);
 	}
 	
 }

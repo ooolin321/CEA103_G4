@@ -1019,7 +1019,6 @@ public class ProductDAO implements ProductDAO_interface {
 		return productVO;
 	}
 
-
 @Override
 public void updateState(Integer product_state , List<ProductVO> list) {
 	

@@ -45,6 +45,7 @@ public class UserDAO implements UserDAO_interface {
 	private static final String UPDATE_NEWPSW = "UPDATE `USER` SET USER_PWD=? WHERE `USER_ID`=?";
 	private static final String UPDATE_USER_REPORT = "UPDATE USER SET USER_STATE =? WHERE USER_ID = ?;";
 	private static final String UPDATE_CASH = "UPDATE USER SET CASH=? WHERE USER_ID=?";
+	private static final String ADD_CASH = "UPDATE `USER` SET `CASH` = `CASH` + ? WHERE `USER_ID` = ?";
 
 	private static final String UPDATE_USER_RATING = "UPDATE USER SET USER_COMMENT = USER_COMMENT + ?, COMMENT_TOTAL = COMMENT_TOTAL + ?  WHERE USER_ID = ?";
 	private static final String UPDATE_USER_VIOLATION = "UPDATE USER SET VIOLATION=? WHERE USER_ID = ?";
@@ -818,13 +819,47 @@ public class UserDAO implements UserDAO_interface {
 	}
 
 	@Override
+	public void addCash(UserVO userVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(ADD_CASH);
+
+			pstmt.setInt(1, userVO.getCash());
+			pstmt.setString(2, userVO.getUser_id());
+
+			pstmt.executeUpdate();
+			// Handle any driver errors
+					} catch (SQLException se) {
+						throw new RuntimeException("A database error occured. " + se.getMessage());
+						// Clean up JDBC resources
+					} finally {
+						if (pstmt != null) {
+							try {
+								pstmt.close();
+							} catch (SQLException se) {
+								se.printStackTrace(System.err);
+							}
+						}
+						if (con != null) {
+							try {
+								con.close();
+							} catch (Exception e) {
+								e.printStackTrace(System.err);
+							}
+						}
+					}
+		}
 	public void updateUserViolation(String user_id, Integer violation) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		try {
-
+			
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_USER_VIOLATION);
 

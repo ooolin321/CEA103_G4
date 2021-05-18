@@ -71,7 +71,7 @@
           <div
             class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter"
           >
-            <div class="filter-widget">
+            <div class="filter-widget col-md-12 col-4" id="RWDpd">
               <h4 class="fw-title">商品分類</h4>
               <ul class="filter-catagories">
               <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()}">
@@ -79,7 +79,7 @@
                 </c:forEach>
               </ul>
             </div>
-            <div class="filter-widget">
+            <div class="filter-widget col-md-12 col-7" id="RWDsm">
               <h4 class="fw-title">Price</h4>
               <div class="filter-range-wrap">
                 <div class="range-slider">
@@ -112,7 +112,7 @@
             <div class="filter-widget">
               <h4 class="fw-title">進階查詢</h4>
               <div class="fw-all-choose" id="fw-all-choose">
-              <div class="fw-cs" id="fw-cs">
+              <div class="fw-cs col-md-6 col-4" id="fw-cs">
                <c:forEach var="product_typeVO" items="${list2}" begin="0" end="${list2.size()}">
                 <div class="cs-item">
                  <label for="${product_typeVO.pdtype_name}">
@@ -123,7 +123,7 @@
                  </div>
                 </c:forEach>
                 </div>
-                <div class="fw-price">
+                <div class="fw-price col-md-6 col-6">
                 <div class="sc-item">
                   <input type="radio" id="a-price" name="productPrice" value="A"/>
                   <label for="a-price">$300<i class="fa fa-arrow-circle-down"></i></label>

@@ -88,7 +88,7 @@
            <div class="sellerHome" id="sellerHome">
          <div class="row sellerInfo">
          <c:if test="${SellerProducts.size() == 0}">
-			<div class="card mb-3" style="width: 400px;height: 200px;">
+			<div class="card mb-3" id="sellerPic">
   			<div class="row g-0">
    			 <div class="col-md-6" id="sellerImg">
       			<img  width="200px" height="200px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${seller.user_id}" class="rounded mx-auto d-block" alt="">
@@ -213,7 +213,7 @@
 	var str = url.split('?')[1];
 	var sellerID = str.split('=')[1];
 	$(".card-title").text("賣家帳號"+ sellerID);
-	$("#sellerImg").html('<img width="200px" height="200px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id='+sellerID+ '" class="rounded mx-auto d-block" >');
+	$("#sellerImg").html('<img src="${pageContext.request.contextPath}/UserShowPhoto?user_id='+sellerID+ '" class="rounded mx-auto d-block" >');
 	var user_regdate = $(".user_regdate").attr("value");
 	if (user_regdate !== undefined){
 		$(".text-muted").html("加入時間"+ user_regdate);

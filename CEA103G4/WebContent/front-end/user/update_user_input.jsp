@@ -43,7 +43,7 @@ margin: -30px -30px 0px;
 </style>
 
 </head>
-<body bgcolor='white'>
+<body bgcolor='white' class="app sidebar-mini rtl">
 <jsp:include page="/front-end/user/userSidebar.jsp" />
 <main class="app-content">
                 <div class="app-title">

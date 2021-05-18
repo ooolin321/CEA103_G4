@@ -210,7 +210,10 @@
             <ul class="treeview-menu">
                 <li><a class="treeview-item"
                     href="<%=request.getContextPath()%>/back-end/live_report/listAllLive_report.jsp"><i
-                        class="icon fa fa-circle-o"></i> 直播檢舉管理</a></li>
+                        class="icon fa fa-circle-o"></i> 所有直播檢舉</a></li>
+                <li><a class="treeview-item"
+                    href="<%=request.getContextPath()%>/back-end/live_report/addLive_report.jsp"><i
+                        class="icon fa fa-circle-o"></i> 新增直播檢舉</a></li>
             </ul></li>
         <li class="treeview"><a class="app-menu__item" href="#"
             data-toggle="treeview"><i class="app-menu__icon fa fa-file-text"></i><span

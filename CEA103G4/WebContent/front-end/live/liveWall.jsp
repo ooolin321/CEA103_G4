@@ -73,6 +73,14 @@
 	href="${pageContext.request.contextPath}/front-template/css/style.css"
 	type="text/css" />
 
+<style>
+.nav-item .nav-menu {
+margin-left: 85px;
+}
+
+
+</style>
+
 </head>
 
 <body>
@@ -192,7 +200,7 @@
 				<nav class="nav-menu mobile-menu">
 					<ul>
 						<li class="active" id="nav-index"><a
-							href="${pageContext.request.contextPath}/front-end/index.jsp">首頁</a></li>
+							href="${pageContext.request.contextPath}/front-end/index.jsp" style="border-left: 2px solid #3b3b3b;">首頁</a></li>
 						<li><a
 							href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp">商品專區</a></li>
 						<li><a

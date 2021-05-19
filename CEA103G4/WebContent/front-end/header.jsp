@@ -78,7 +78,7 @@
 						<a
 							href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button
 								type="button" class="btn">註冊</button></a> <a
-							href="<%=request.getContextPath()%>/front-end/userLogin.jsp" target="_blank"><button
+							href="<%=request.getContextPath()%>/front-end/userLogin.jsp" ><button
 								type="button" class="btn">登入</button></a>
 					</div>
         		</c:if>

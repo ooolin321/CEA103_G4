@@ -311,7 +311,46 @@ input {
 	<div class="row">
 		<div class="col-xl-9">
 			<div class="tile">
-				<h3 class="tile-title">直播拍賣商品</h3>
+				<h3 class="tile-title">直播拍賣商品
+					<button id="reportLink" class="primary-btn userReport"
+						style="margin-left: 770px;" value="${userVO.user_id}">直播檢舉</button>
+				</h3>
+				<!--檢舉燈箱 -->
+				<div class="report-bg">
+					<div class="report" style="height: 387px;">
+						<div class="report-title" value="${liveVO.live_no}">
+							檢舉直播編號：${liveVO.live_no} <span><a
+								href="javascript:;" id="closeBtn">關閉</a></span>
+						</div>
+
+						<div class="report-input-content">
+							<div class="report-input">
+								<label for="">檢舉內容</label> <input type="text"
+									placeholder="請輸入檢舉原因" style="background-color:white;" name="pro_report_content" size="50"
+									required>
+							</div>
+						</div>
+						<div class="report-input-pic">
+							<div class="report-input">
+								<label for="">檢舉圖片</label> 
+								<form enctype="multipart/form-data" id="uploadForm">
+								<input name="photo" type="file" style="background-color:white;" id="imgInp" accept="image/gif, image/jpeg, image/png">
+								</form>
+							</div>
+						</div>
+						<div class="report-input-pic">
+							<div class="report-input">
+								<label for="">圖片預覽</label>
+								<img id="preview_img" src="#" style="display: none;" />
+							</div>
+						</div>
+						<div class="report-button">
+							<div id="report-submit">提交檢舉</div>
+						</div>
+					</div>
+				</div>
+				<!--遮蓋層-->
+				<!--燈箱結束 -->
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -783,6 +822,121 @@ function refresh(){
 	
   	
 	
+</script>
+
+<script>
+
+//檢舉燈箱js 
+
+var reportLink = document.querySelector("#reportLink");
+ var closeBtn = document.querySelector("#closeBtn");
+ var report = document.querySelector(".report");
+ var report_bg = document.querySelector(".report-bg");
+
+ //1,燈箱顯示/隱藏
+ reportLink.addEventListener("click", function () {
+	  if ($('#reportLink').attr("value") === "") {
+		  login();
+		} else {
+   report.style.display = "block";
+   report_bg.style.display = "block";
+		}
+ });
+ closeBtn.addEventListener("click", function () {
+   report.style.display = "none";
+   report_bg.style.display = "none";
+   $('input[name="pro_report_content"]').val("");
+ });
+
+ //2，拖曳
+ var report_title = document.querySelector(".report-title");
+ report_title.addEventListener("mousedown", function (e) {
+   //鼠標按下的時候,得到鼠標在框裡的座標
+   var x = e.pageX - report.offsetLeft;
+   var y = e.pageY - report.offsetTop;
+   document.addEventListener("mousemove", move); //鼠標移動的時候，得到狀態框座標
+   function move(e) {
+     report.style.left = e.pageX - x + "px";
+     report.style.top = e.pageY - y + "px";
+   }
+   document.addEventListener("mouseup", function () {
+     //鼠標彈起,解除移動事件
+     document.removeEventListener("mousemove", move);
+   });
+ });
+ 
+
+ 
+ //直播檢舉AJAX  
+
+ $(".report-button").click(function(){
+	  if(($('input[name="pro_report_content"]').val().trim().length != 0) && ($('input[name="photo"]').val().length != 0) ){
+		var formData = new FormData($("#uploadForm")[0])  //创建一个formData 
+		formData.append('photo', $('#imgInp')[0].files[0]) //把file添加进去  name命名为photo
+		formData.append('live_report_content', $('input[name="pro_report_content"]').val())
+		formData.append('live_no', $(".report-title").attr("value"))
+		formData.append('user_id', $('#reportLink').attr('value'))
+		formData.append('empno', "14001")
+		formData.append('live_report_state', "0")
+		formData.append('action', "insert")
+		console.log(formData);
+		$.ajax({ 
+		  url:"<%=request.getContextPath()%>/live_report/live_report.do",
+		  type:"POST", 
+		  data:formData,
+		  async: false, // 同步請求
+		  cache: false, // 不快取頁面
+		  contentType: false, // 當form以multipart/form-data方式上傳檔案時，需要設定為false
+		  processData: false, // 如果要傳送Dom樹資訊或其他不需要轉換的資訊，請設定為false
+		  success: function() { 
+			  Swal.fire({
+				  position: 'top',
+				  icon: 'success',
+				  title: '直播檢舉已提交',
+				  showConfirmButton: false,
+				  timer: 1500
+				});
+				    report.style.display = "none";
+				    report_bg.style.display = "none";
+				    $('input[name="pro_report_content"]').val("");
+	            }, 	  
+		  error:function () {
+	  			Swal.fire({
+		  			  icon: 'error',
+		  			  title: '很抱歉,檢舉提交失敗,請重新提交。',
+		  			  showConfirmButton: false,
+		  			  timer: 1500
+		  			});
+			    report.style.display = "none";
+			    report_bg.style.display = "none";
+			  $('input[name="pro_report_content"]').val("");
+		  },				
+		 });
+	  }  else {
+			Swal.fire({
+				 icon: 'error',
+				 title: '檢舉內容或圖片請勿空白',
+				 showConfirmButton: false,
+				 timer: 1500
+		});
+	  };
+ });
+
+// 檢舉燈箱圖片
+function readURL(input){
+	  if(input.files && input.files[0]){
+	    var reader = new FileReader();
+	    reader.onload = function (e) {
+	       $("#preview_img").attr('src', e.target.result);
+	       $("#preview_img").attr('width', "150px");
+	       $("#preview_img").attr('style', "display:block");
+	    }
+	    reader.readAsDataURL(input.files[0]);
+	  }
+	}
+$("#imgInp").change(function() {
+	  readURL(this);
+	});
 </script>
 
 

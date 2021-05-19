@@ -320,13 +320,15 @@ input {
 	<div class="row">
 		<div class="col-xl-9">
 			<div class="tile">
-				<h3 class="tile-title">直播拍賣商品
+			<div style="margin-top:10px;">
+				<h3 class="tile-title" style="display:inline-block">直播拍賣商品</h3>
 					<button id="reportLink" class="primary-btn userReport"
-						style="margin-left: 770px;" value="${userVO.user_id}">直播檢舉</button>
-				</h3>
+						style="float:right;border:none;border-radius: 10px;" value="${userVO.user_id}">直播檢舉</button>
+				
+			</div>	
 				<!--檢舉燈箱 -->
 				<div class="report-bg">
-					<div class="report" style="height: 387px;">
+					<div class="report" style="height: 410px;">
 						<div class="report-title" value="${liveVO.live_no}">
 							檢舉直播編號：${liveVO.live_no} <span><a
 								href="javascript:;" id="closeBtn">關閉</a></span>
@@ -335,7 +337,7 @@ input {
 						<div class="report-input-content">
 							<div class="report-input">
 								<label for="">檢舉內容</label> <input type="text"
-									placeholder="請輸入檢舉原因" style="background-color:white;" name="pro_report_content" size="50"
+									placeholder="請輸入檢舉原因" style="background-color:white;color:black;" name="pro_report_content" size="50"
 									required>
 							</div>
 						</div>

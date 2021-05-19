@@ -74,7 +74,7 @@
                     <a data-toggle="tab" href="#tab-2" role="tab">上架中</a>
                   </li>
                   <li>
-                    <a data-toggle="tab" href="#tab-3" role="tab">待直播商品</a>
+                    <a data-toggle="tab" href="#tab-3" role="tab">直播商品</a>
                   </li>
                   <li>
                     <a data-toggle="tab" href="#tab-4" role="tab">已售出</a>

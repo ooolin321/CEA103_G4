@@ -237,8 +237,6 @@
     	
     	shopping_cart.addEventListener('click', event => {
     		if (event.target.matches('.dec${order.product_no}')) {
-    			console.log("${order.product_no}");
-    			console.log($('input[name="${order.product_no}"]').val());
     			
     			$.ajax({ 
    	 		  type:"POST",
@@ -256,8 +254,7 @@
    	 			  }
    	 		  });
     		}else if (event.target.matches('.Add${order.product_no}')){
-    			console.log("${order.product_no}");
-    			console.log($('input[name="${order.product_no}"]').val());
+
     			$.ajax({ 
    	 		  type:"POST",
     				  url:"<%=request.getContextPath()%>/ShoppingServlet",
@@ -301,23 +298,7 @@
 	//數量按鈕前端控制不可大於商品數量
 	$('#Add${order.product_no}').on('click', function () {
     	var Count = $('input[name="${order.product_no}"]').val();
-    	var maxRemaining = $("#max${order.product_no}").attr("value");
-   	
-// 			$.ajax({ 
-// 		  type:"POST",
-<%-- 			  url:"<%=request.getContextPath()%>/ShoppingServlet", --%>
-// 		  data:{
-// 			  "product_no": "${order.product_no}",
-// 			  "product_name": "${order.product_name}",
-// 			  "product_price": "${order.product_price}",
-// 			  "proqty": $('input[name="${order.product_no}"]').val(),
-// 			  "product_remaining": "${order.product_remaining}",
-// 			  "user_id": "${order.user_id}",
-// 			  "action": "updateCount"
-// 		  },
-// 		  success: function() {
-// 			  }
-// 		  });
+    	var maxRemaining = $("#max${order.product_no}").attr("value"); 	
 			
 	    	if (Count == maxRemaining) {
 	    		$("#Add${order.product_no}").prop('disabled',true);
@@ -330,8 +311,6 @@
 	});
 	
 
-	
-	
 	
 	$("#PC${order.product_no}").change(function() {	
 		

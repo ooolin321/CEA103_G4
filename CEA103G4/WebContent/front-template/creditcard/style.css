@@ -96,6 +96,7 @@ input {
     max-height: 251px;
     height: 54vw;
     padding: 20px;
+    margin-bottom: 25px;
 }
 
 #ccsingle {

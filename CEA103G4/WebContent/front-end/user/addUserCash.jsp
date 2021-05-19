@@ -80,27 +80,13 @@ button.btn.btn-info {
 		<div class="row">
 			<div class="col-md-12 productsAdd">
 				<div class="form-group">
-					<label for="user_pwd" class="col-sm-6 col-form-label">錢包金額</label>
-					<div>${userVO.cash}元</div>
+					<label for="user_pwd" class="col-sm-3 col-form-label">目前錢包餘額 &nbsp;: &nbsp;${userVO.cash}元</label>
+					<button class="btn btn-info" id="clickCredit">信用卡儲值</button>
 				</div>
-				<form action="user.do" method="post">
-					<div class="form-group">
-						<label for="cash" class="col-sm-6 col-form-label">儲值金額</label>
-						<div class="col-sm-10">
-							<select name="cash">
-								<option value="100">100</option>
-								<option value="500">500</option>
-								<option value="1000">1000</option>
-							</select>
 
-						</div>
-					</div>
-					<input type="hidden" name="user_id" value="${userVO.user_id} ">
-					<input type="hidden" name="action" value="addUserCash">
-					<button type="submit" class="btn btn-info" id="demoSwal">確認更改</button>
-				</form>
 			</div>
 		</div>
+		<div id="showUp" style="display:none">
 		<div class="container preload">
 			<div class="creditcard">
 				<div class="front">
@@ -270,6 +256,18 @@ button.btn.btn-info {
 					id="securitycode" type="text" pattern="[0-9]*" inputmode="numeric">
 			</div>
 		</div>
+		<div>
+
+					<div class="form-group">
+						<label for="cash" class="col-sm-6 col-form-label">儲值金額</label>
+						<div class="col-sm-10">
+							<input type="text" id="cash">
+						</div>
+					</div>
+					<button class="btn btn-info" id="addMoney">確認儲值</button>
+		</div>
+		</div>
+
 		<!-- partial -->
 		<script
 			src='https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js'></script>
@@ -292,9 +290,6 @@ button.btn.btn-info {
 			src="<%=request.getContextPath()%>/back-template/docs/js/plugins/bootstrap-notify.min.js"></script>
 		<script type="text/javascript"
 			src="<%=request.getContextPath()%>/back-template/docs/js/plugins/sweetalert.min.js"></script>
-		<script type="text/javascript">
-			
-		</script>
 		<!-- Google analytics script-->
 		<script type="text/javascript">
 			if (document.location.hostname == 'pratikborsadiya.in') {
@@ -312,6 +307,27 @@ button.btn.btn-info {
 				ga('create', 'UA-72504830-1', 'auto');
 				ga('send', 'pageview');
 			}
+		</script>
+		<script>
+			$("#clickCredit").click(function(){
+				$("#showUp").css("display","inline");
+			});
+			
+			$("#addMoney").click(function(){
+				$.ajax({ 
+					  type:"POST",
+					  url:"<%=request.getContextPath()%>/front-end/user/user.do",
+					 	 data:{
+					 		 "cash":$("#cash").val(),
+							 "user_id": "${userVO.user_id}",
+							 "action": "addUserCash"
+					  },
+					  success: function(res) {
+							alert("儲值成功");
+				      }, 	  
+				
+				 });
+			});
 		</script>
 </body>
 </html>

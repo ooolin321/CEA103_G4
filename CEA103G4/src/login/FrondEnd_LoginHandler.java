@@ -119,29 +119,33 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 
 				UserService userSvc = new UserService();
 				userVO = userSvc.selectUser(user_id, user_pwd);
-				if(userVO == null) {
-					errorMsgs.put("user_id","帳號或密碼不正確，請重新輸入！");
+				
 
-				}else if(userVO != null) {
+				if(userVO != null && userVO.getUser_state() == 1) {
 					HttpSession session = req.getSession();
 					session.setAttribute("account", userVO); 
 					
 					res.setContentType("text/html; charset=utf-8");
 					PrintWriter out1 = res.getWriter();
 					
-					JSONObject jsonObj = new JSONObject();
-					
-					try {
-						jsonObj.put("results", userVO);
-					} catch (JSONException e) {
-						e.printStackTrace();
+					JSONObject jsonObj = new JSONObject();					
+						
+						try {
+							jsonObj.put("results", userVO);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						
+						out1.println(jsonObj.toString());
+						out1.flush();
+						out1.close();
+						
+					}else {
+						return;
 					}
-					
-					out1.println(jsonObj.toString());
-					out1.flush();
-					out1.close();
-				}
+
 				}catch (Exception e) {
+					System.out.println("3");
 					return;
 				}
 			}

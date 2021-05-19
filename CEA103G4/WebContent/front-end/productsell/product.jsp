@@ -650,7 +650,6 @@
 	  				  "action": "signIn_ajax"
 	  			  },
 	  			  success: function(result) {
-
 	  				if (result.length === 0 || result === ""){
 			  			Swal.fire({
 				  			  icon: 'error',

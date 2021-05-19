@@ -113,7 +113,7 @@
     <!-- Breadcrumb Section Begin -->
 
     <!-- Shopping Cart Section Begin -->
-    <section class="shopping-cart spad">
+    <section class="shopping-cart spad" id="shopping_cart">
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
@@ -150,9 +150,9 @@
                       
                       
                      <div id="PC${order.product_no}" class="productCounts" >
-                     <span id="decProduct" class="dec qtybtn">-</span>
+                     <span id="dec${order.product_no}" class="dec qtybtn dec${order.product_no}" >-</span>
                       <input name="${order.product_no}" id="PN${order.product_no}" type="text" value="${order.product_quantity}" />
-                      <span id="Add${order.product_no}" class="inc qtybtn" style="none">+</span>
+                      <span id="Add${order.product_no}" class="inc qtybtn Add${order.product_no}" style="none">+</span>
                     </div>
                       </div>
                       <span id="max${order.product_no}" value="${order.product_remaining}">在庫數量：${order.product_remaining}</span>
@@ -224,7 +224,8 @@
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
     
-    <script>
+    <script>		
+    const shopping_cart = document.getElementById('shopping_cart')
     // 各商品小計
      <c:forEach var="order" items="${buylist}" varStatus="cartstatus">
     	$("#PC${order.product_no}").click(function(e){
@@ -232,6 +233,50 @@
 			$("#TP${order.product_no}").text(totalPrice);
 			sum();
 	});
+    	
+    	
+    	shopping_cart.addEventListener('click', event => {
+    		if (event.target.matches('.dec${order.product_no}')) {
+    			console.log("${order.product_no}");
+    			console.log($('input[name="${order.product_no}"]').val());
+    			
+    			$.ajax({ 
+   	 		  type:"POST",
+    				  url:"<%=request.getContextPath()%>/ShoppingServlet",
+   	 		  data:{
+   	 			  "product_no": "${order.product_no}",
+   	 			  "product_name": "${order.product_name}",
+   	 			  "product_price": "${order.product_price}",
+   	 			  "proqty": $('input[name="${order.product_no}"]').val(),
+   	 			  "product_remaining": "${order.product_remaining}",
+   	 			  "user_id": "${order.user_id}",
+   	 			  "action": "updateCount"
+   	 		  },
+   	 		  success: function() {
+   	 			  }
+   	 		  });
+    		}else if (event.target.matches('.Add${order.product_no}')){
+    			console.log("${order.product_no}");
+    			console.log($('input[name="${order.product_no}"]').val());
+    			$.ajax({ 
+   	 		  type:"POST",
+    				  url:"<%=request.getContextPath()%>/ShoppingServlet",
+   	 		  data:{
+   	 			  "product_no": "${order.product_no}",
+   	 			  "product_name": "${order.product_name}",
+   	 			  "product_price": "${order.product_price}",
+   	 			  "proqty": $('input[name="${order.product_no}"]').val(),
+   	 			  "product_remaining": "${order.product_remaining}",
+   	 			  "user_id": "${order.user_id}",
+   	 			  "action": "updateCount"
+   	 		  },
+   	 		  success: function() {
+   	 			  }
+   	 		  });	
+        	}
+    	});
+    	
+    	
     </c:forEach>
 	
     <c:forEach var="order" items="${buylist}" varStatus="cartstatus">
@@ -258,21 +303,21 @@
     	var Count = $('input[name="${order.product_no}"]').val();
     	var maxRemaining = $("#max${order.product_no}").attr("value");
    	
-			$.ajax({ 
-		  type:"POST",
-			  url:"<%=request.getContextPath()%>/ShoppingServlet",
-		  data:{
-			  "product_no": "${order.product_no}",
-			  "product_name": "${order.product_name}",
-			  "product_price": "${order.product_price}",
-			  "proqty": $('input[name="${order.product_no}"]').val(),
-			  "product_remaining": "${order.product_remaining}",
-			  "user_id": "${order.user_id}",
-			  "action": "updateCount"
-		  },
-		  success: function() {
-			  }
-		  });
+// 			$.ajax({ 
+// 		  type:"POST",
+<%-- 			  url:"<%=request.getContextPath()%>/ShoppingServlet", --%>
+// 		  data:{
+// 			  "product_no": "${order.product_no}",
+// 			  "product_name": "${order.product_name}",
+// 			  "product_price": "${order.product_price}",
+// 			  "proqty": $('input[name="${order.product_no}"]').val(),
+// 			  "product_remaining": "${order.product_remaining}",
+// 			  "user_id": "${order.user_id}",
+// 			  "action": "updateCount"
+// 		  },
+// 		  success: function() {
+// 			  }
+// 		  });
 			
 	    	if (Count == maxRemaining) {
 	    		$("#Add${order.product_no}").prop('disabled',true);
@@ -283,6 +328,10 @@
 	    	}
 
 	});
+	
+
+	
+	
 	
 	$("#PC${order.product_no}").change(function() {	
 		

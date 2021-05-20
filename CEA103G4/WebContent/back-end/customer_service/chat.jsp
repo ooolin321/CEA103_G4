@@ -32,8 +32,8 @@ session.setAttribute("userVO", userVO2);
 	<div class="panel input-area">
 		<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
 		<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
-		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
-		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
+<!-- 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" />  -->
+<!-- 		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" /> -->
 		<input type ="button" onclick="history.back()" value="回到上一頁"></input>
 	</div>
 </body>
@@ -56,8 +56,8 @@ session.setAttribute("userVO", userVO2);
 		webSocket.onopen = function(event) {
 			console.log("Connect Success!");
 			document.getElementById('sendMessage').disabled = false;
-			document.getElementById('connect').disabled = true;
-			document.getElementById('disconnect').disabled = false;
+// 			document.getElementById('connect').disabled = true;
+// 			document.getElementById('disconnect').disabled = false;
 		};
 
 		webSocket.onmessage = function(event) {
@@ -69,9 +69,10 @@ session.setAttribute("userVO", userVO2);
 				ul.id = "area";
 				messagesArea.appendChild(ul);
 				var li = document.createElement('li');
-				var messages = JSON.parse(jsonObj.message);
-console.log(messages);				
-				li.innerHTML = messages;
+// 				var messages = JSON.parse(jsonObj.message);
+// console.log(messages);	
+				li.className = 'me'			
+				li.innerHTML = "您好，我是客服專員，請問有什麼能幫忙的呢？";
 				ul.appendChild(li);
 			}
 			else if("empNotAvailable"===jsonObj.type){
@@ -81,10 +82,12 @@ var ul = document.createElement('ul');
 ul.id = "area";
 messagesArea.appendChild(ul);
 var li = document.createElement('li');
+li.className = 'me'
 li.innerHTML = "目前客服不在線，請稍侯";
 ul.appendChild(li);
 			}
 			else if ("history" === jsonObj.type) {
+				
 				messagesArea.innerHTML = '';
 				var ul = document.createElement('ul');
 				ul.id = "area";
@@ -124,18 +127,23 @@ ul.appendChild(li);
 		var inputMessage = document.getElementById("message");
 		var friend = statusOutput.textContent;
 		var message = inputMessage.value.trim();
-
+		let time = new Date();
+		let timeStr = time.getFullYear() + "-" + (time.getMonth()+1).toString().padStart(2, "0") + "-" 
+					+ time.getDate() + " " + time.getHours().toString().padStart(2, "0") + ":" + time.getMinutes().toString().padStart(2, "0");
 		if (message === "") {
 			alert("Input a message");
 			inputMessage.focus();
-		} else if (friend === "") {
-			alert("Choose a friend");
-		} else {
+		} 
+// 		else if (friend === "") {
+// 			alert("Choose a friend");
+// 		} 
+		else {
 			var jsonObj = {
 				"type" : "chat",
 				"sender" : self,
 				"receiver" : friend,
 				"message" : message,
+				"time":timeStr
  			};
 			webSocket.send(JSON.stringify(jsonObj));
 			inputMessage.value = "";
@@ -165,7 +173,7 @@ ul.appendChild(li);
 					"sender" : self,
 					"receiver" : friend,
 					"message" : "",
-	
+					"time" :time
 				};
 			webSocket.send(JSON.stringify(jsonObj));
 		});

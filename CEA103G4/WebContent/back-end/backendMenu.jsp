@@ -155,7 +155,7 @@
             <ul class="treeview-menu">
 
                 <li><a class="treeview-item"
-                    href="<%=request.getContextPath()%>/back-end/auth/listAllAuth.jsp"><i
+                    href="<%=request.getContextPath()%>/back-end/fun/listAllFun.jsp"><i
                         class="icon fa fa-laptop"></i>員工權限管理</a></li>
                 <!--                <li><a class="treeview-item" -->
                 <%--                    href="<%=request.getContextPath()%>/back-end/fun/listAllFun.jsp"><i --%>

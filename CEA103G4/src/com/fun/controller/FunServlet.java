@@ -29,16 +29,18 @@ public class FunServlet extends HttpServlet{
 		if ("getOne_For_Update".equals(action)) {// 來自listAllFun.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			String requestURL = req.getParameter("requestURL");
+//			String requestURL = req.getParameter("requestURL");
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer funno = new Integer(req.getParameter("funno"));
 				/*************************** 2.開始查詢資料 ****************************************/
 				AuthService authSvc = new AuthService();
 				Set<AuthVO> set = authSvc.getAllAuthByFunno(funno);
-				for(AuthVO auth:set) {
-System.out.println(auth.getEmpno()+",");
-			}
+//				for(AuthVO auth:set) {
+//System.out.println(auth.getFunno()+",");
+//System.out.println(auth.getEmpno()+",");
+//System.out.println(auth.getAuth_no());
+//			}
 		
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("getOne_For_Update", set);

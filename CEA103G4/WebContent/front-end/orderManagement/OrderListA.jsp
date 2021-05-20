@@ -127,7 +127,7 @@ ion-icon {
 										<tbody>
 											<c:forEach var="orderVO"
 												items="${orderSvc.getAllByID(userVO.user_id)}">
-												<c:if test="${orderVO.logisticsstate==2 && orderVO.srating ==0 }">
+												<c:if test="${orderVO.logisticsstate==2 && orderVO.srating == 0 }">
 												<tr>
 													<td>${orderVO.order_no}</td>
 													<td><fmt:formatDate value="${orderVO.order_date}"
@@ -181,7 +181,7 @@ ion-icon {
 										<tbody>
 											<c:forEach var="orderVO"
 												items="${orderSvc.getAllByID(userVO.user_id)}">
-<%-- 												<c:if test="${orderVO.logisticsstate==2 && orderVO.srating != 0}"> --%>
+												<c:if test="${orderVO.logisticsstate==2 && orderVO.srating > 0}">
 												<tr>
 													<td>${orderVO.order_no}</td>
 													<td>${orderVO.srating}</td>
@@ -199,7 +199,7 @@ ion-icon {
 													<td>
 													</td>
 												</tr>
-<%-- 												</c:if> --%>
+												</c:if>
 											</c:forEach>
 										</tbody>
 									</table>
@@ -244,7 +244,8 @@ ion-icon {
 								data-dismiss="modal">Close</button>
 							<button type="button" class="btn btn-primary">Save
 								changes</button> -->
-
+										
+										<input type="hidden" name="product_name" value="" id="seller_id">
 										<input type="hidden" name="seller_id" value="" id="seller_id">
 										<input type="hidden" name="order_no" value="" id="order_no">
 										<input type="hidden" name="action" value="updateSrating">

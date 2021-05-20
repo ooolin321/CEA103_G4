@@ -21,94 +21,6 @@ session.setAttribute("userVO", userVO2);
 <div id="preloder">
 	<div class="loader"></div>
 </div>
-<style>
-#chatBtn {
-	position: fixed;
-	right: 10px;
-	bottom: 0px;
-	z-index: 99999;
-}
-
-.mini-chat {
-	position: fixed;
-	right: 10px;
-	bottom: 0px;
-	z-index: 99999;
-	visibility: hidden;
-	border-radius: 10px;
-}
-
-.chat {
-	position: absolute;
-	bottom: 0.5px;
-	border-radius: 10px;
-}
-
-.friend_id {
-	display: inline-block;
-	position: absolute;
-	right: 50%;
-}
-
-.cancel {
-	position: absolute;
-	right: 1px;
-	display: inline-block;
-}
-
-/* .plane { */
-/* 	position: absolute; */
-/* 	display: inline-block; */
-/* 	margin-right: 1px; */
-/* 	border-radius: 10px; */
-/* } */
-.chat-input {
-	border: 1px;
-	display: inline-block;
-	border-radius: 10px;
-}
-
-.middle {
-	position: absolute;
-	display: block;
-	margin: 3px auto;
-	top: 20px;
-	width: 238px;
-	heigh: 245px;
-	background: white;
-	resize: none;
-	padding: 5px;
-	overflow: auto;
-}
-
-.me {
-	float: right;
-	background: #0084ff;
-	margin-right: 4px;
-	border-radius: 6px 6px 0px 6px;
-}
-
-.friend {
-	float: left;
-	background: #0084ff;
-	margin-left: 4px;
-	border-radius: 6px 6px 6px 0px;
-}
-
-#messagesArea ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-#messagesArea ul li {
-	display: inline-block;
-	clear: both;
-	padding: 2px;
-	margin-bottom: 2px;
-	font-family: Helvetica, Arial, sans-serif;
-}
-</style>
 <!-- Header Section Begin -->
 <header class="header-section">
 	<div class="container">
@@ -161,7 +73,16 @@ session.setAttribute("userVO", userVO2);
 										type="button" class="btn">登出</button></a>
 							</FORM>
 						</div>
-					</c:if>
+    				</c:if>
+       			 <c:if test="${empty userVO.user_id}">
+					<div class="header-right">
+						<a
+							href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button
+								type="button" class="btn">註冊</button></a> <a
+							href="<%=request.getContextPath()%>/front-end/userLogin.jsp" ><button
+								type="button" class="btn">登入</button></a>
+					</div>
+        		</c:if>
 					<c:if test="${empty userVO.user_name}">
 						<div class="header-right">
 							<a
@@ -178,7 +99,8 @@ session.setAttribute("userVO", userVO2);
 									fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
                       <path
 										d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
-                    </svg> <span>1</span>
+                    </svg> 
+                    <span>0</span>
 						</a></li>
 						<li class="cart-icon"><a
 							href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp">
@@ -228,7 +150,8 @@ session.setAttribute("userVO", userVO2);
 										href="${pageContext.request.contextPath}/front-end/protected/check-out.html"
 										class="primary-btn checkout-btn">結帳</a>
 								</div>
-							</div> <%-- 							</c:if> --%></li>
+							</div>
+							</li>
 						<c:if test="${buylist.size() > 0 }">
 							<li class="cart-price" id="totalprice">$${sum}</li>
 						</c:if>
@@ -268,7 +191,7 @@ session.setAttribute("userVO", userVO2);
 								href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播牆</a></li>
 							<li><a
 								href="<%=request.getContextPath()%>/front-end/live/livePreview.jsp">直播預告</a></li>
-							<!-- <li><a href="#">Kid's</a></li> -->
+				
 						</ul></li>
 					<li><a
 						href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i
@@ -297,7 +220,11 @@ session.setAttribute("userVO", userVO2);
 			<div id="mobile-menu-wrap"></div>
 		</div>
 	</div>
-
+	<div id="goTop" style="position: fixed; right: 0px; bottom: 45px; z-index: 99999;">
+		<a href="#topLogo"><img style="height:75px;" src="<%=request.getContextPath()%>/front-template/images/top.gif" title="回上方"></a>
+	</div>
+	
+<c:if test="${not empty userVO.user_id}">	
 	<div id="chatBtn">
 		<!-- <div class="chat-notice">1</div> -->
 		<div class="chat-btn">
@@ -326,7 +253,7 @@ session.setAttribute("userVO", userVO2);
 
 		</div>
 	</div>
-
+</c:if>
 
 </header>
 <!-- Header End -->
@@ -407,6 +334,62 @@ session.setAttribute("userVO", userVO2);
 					}
 					messagesArea.scrollTop = messagesArea.scrollHeight;
 				} else if ("chat" === jsonObj.type) {
+});
+closeChatBtn.addEventListener("click", function() {
+	miniChat.style.visibility = "hidden";
+	chatBtn.style.visibility = "visible";
+})
+
+//  function getSellerId(){
+
+// 	seller = "${productVO.user_id}";
+// // 	if(seller == "${userVO.user_id}"){
+// // 		this.disabled=true;
+// // 		window.alert("請勿私聊自己");
+// // 	}else{
+// 	chatBtn.style.visibility="hidden";
+// 	miniChat.style.visibility="visible";
+// 	connect();
+// // 	}
+// };
+//     	if("${userVO.user_id}" == ""){
+// 		    document.getElementById("chatBtn").style.visibility="hidden";
+//     	}
+    var MyPoint = "/FriendChatWS/${userVO.user_id}";
+    var host = window.location.host;
+    var path = window.location.pathname;
+    var webCtx = path.substring(0, path.indexOf('/', 1));
+    var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+			
+    const statusOutput = document.getElementById("statusOutput");
+    const messagesArea = document.getElementById("messagesArea");
+    var self = '${userVO.user_id}';
+    var webSocket;
+    		
+   
+    function connect(seller) {
+		// create a websocket
+		webSocket = new WebSocket(endPointURL);
+		webSocket.onopen = function(event) {
+			console.log("Connect Success!");
+			updateFriendName(seller);
+		};
+
+		webSocket.onmessage = function(event) {
+			var jsonObj = JSON.parse(event.data);
+			if ("open" === jsonObj.type) {
+// 				refreshFriendList(jsonObj);
+				addListener(seller);
+			} else if ("history" === jsonObj.type) {
+				statusOutput.innerHTML = seller;
+				const ul = document.createElement('ul');
+				ul.id = "area";
+				messagesArea.appendChild(ul);
+				// 這行的jsonObj.message是從redis撈出跟好友的歷史訊息，再parse成JSON格式處理
+				var messages = JSON.parse(jsonObj.message);
+				for (var i = 0; i < messages.length; i++) {
+					var historyData = JSON.parse(messages[i]);
+					var showMsg = historyData.message;
 					var li = document.createElement('li');
 					jsonObj.sender === self ? li.className += 'me'
 							: li.className += 'friend';
@@ -494,15 +477,14 @@ session.setAttribute("userVO", userVO2);
 					alert('很抱歉,查無此商品');
 	            } else {
 	            	var data = JSON.stringify(result);
-					window.location.href='<%=request.getContextPath()%>
-	/front-end/productsell/shop.jsp?data='
-									+ encodeURI(data);
-						}
-					},
-					error : function() {
-						alert('很抱歉,查無此商品');
-					},
-
-				})
+					window.location.href='<%=request.getContextPath()%>/front-end/productsell/shop.jsp?data='+encodeURI(data);
+	            }
+		  }, 
+		  error:function () {
+			  alert('很抱歉,查無此商品');
+		  },
+			
+		 }) 
 	}
+	
 </script>

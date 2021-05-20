@@ -7,12 +7,12 @@ public class ChatMessage {
 	private String message;
 	private String time;
 
-	public ChatMessage(String type, String sender, String receiver, String message) {
+	public ChatMessage(String type, String sender, String receiver, String message, String time) {
 		this.type = type;
 		this.sender = sender;
 		this.receiver = receiver;
 		this.message = message;
-
+		this.setTime(time);
 	}
 
 	public String getSender() {

@@ -252,6 +252,7 @@
 									</c:if>
 									<div class="pd-function">
 										<a href="#" class="primary-btn" id="chat-seller" onclick="getSellerId();">私訊賣家</a>
+										<a href="javascript:void(0)" class="primary-btn chat-seller" id="chat_seller">私訊賣家</a>
 <!-- 										<FORM METHOD="post" -->
 <%-- 											ACTION="<%=request.getContextPath()%>/front-end/message/chatMessage.do"> --%>
 <%-- 											<input type="hidden" name="user_id" value="${userVO.user_id}"> --%>
@@ -451,14 +452,25 @@
     
     
     	<script>
-// 	function getSellerId(){
-// 		seller = "${productVO.user_id}";
-// 		var chatBtn = document.querySelector(".chat-btn");
-// 		var miniChat = document.querySelector(".mini-chat");
-// 		chatBtn.style.visibility="hidden";
-// 		miniChat.style.visibility="visible";
-// 		connect(seller);
-// 	}
+    	
+    	$("#chat_seller").click(function(){
+    		if("${userVO.user_id}" == ""){
+    			login();
+    		}else {
+    			getSellerId();
+    		}
+    	});
+    	
+    	
+	function getSellerId(){
+		seller = "${productVO.user_id}";
+		var chatBtn = document.querySelector(".chat-btn");
+		var miniChat = document.querySelector(".mini-chat");
+		chatBtn.style.visibility="hidden";
+		miniChat.style.visibility="visible";
+		connect(seller);
+	}
+	
 	
 	function sendQuery(datas){ 
 		

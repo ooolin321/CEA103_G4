@@ -85,7 +85,7 @@
               <aside class="app-sidebar">
                 <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" style="width:100px;height:100px;" src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${userVO.user_id}" alt="User Image">
                   <div>
-                    <p class="app-sidebar__user-designation">Welcome</p>
+                    <p class="app-sidebar__user-designation" style="font-size:20px;">Welcome</p>
                     <p class="app-sidebar__user-name">${userVO.user_name}</p>
                   </div>
                 </div>

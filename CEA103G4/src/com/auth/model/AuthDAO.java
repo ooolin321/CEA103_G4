@@ -208,7 +208,7 @@ public class AuthDAO implements AuthDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_BY_FUNNO_STMT);
 			pstmt.setInt(1, funno);	
-System.out.println("authDAo funno = "+ funno);
+
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {

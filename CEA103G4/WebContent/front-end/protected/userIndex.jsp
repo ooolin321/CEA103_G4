@@ -2,6 +2,7 @@
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@ page import="com.user.model.*"%>
 <%@ page import="com.seller_follow.model.*"%>
 
@@ -71,10 +72,17 @@
                 </div>
                 <div class="row">
                   <div class="col-md-6 col-lg-3">
-                    <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
+                    <div class="widget-small primary coloured-icon"><i class="icon fa fa-product-hunt fa-3x"></i>
                       <div class="info">
-                        <h4>點數</h4>
-                        <p><b>${userVO.user_point}點</b></p>
+                        <h4>會員點數</h4>
+						<sql:setDataSource dataSource="jdbc/admin" var="xxx"
+							scope="application" />
+						<sql:query var="rs" dataSource="${xxx}" startRow="0">
+    						 SELECT USER_POINT FROM CEA103_G4.USER WHERE USER_ID='${userVO.user_id}'
+ 						 </sql:query>
+ 						 <c:forEach var="row" items="${rs.rows}">
+						<p><b>${row.user_point}點</b></p>
+						</c:forEach>
                       </div>
                     </div>
                   </div>
@@ -87,33 +95,47 @@
                         </c:if>
                         <c:if test="${userVO.user_comment != 0}">
                         <h4>賣家評價</h4>
-<%--                         <p><b>${userVO.user_comment/userVO.comment_total}顆星</b></p> --%>
+                        <sql:query var="rs" dataSource="${xxx}" startRow="0">
+    						 SELECT USER_COMMENT,COMMENT_TOTAL FROM CEA103_G4.USER WHERE USER_ID='${userVO.user_id}'
+ 						 </sql:query>
+ 						 <c:forEach var="row" items="${rs.rows}">
                         <p><b>
-                        	  <input type="hidden" name="srating" value="<fmt:formatNumber type="number" value="${userVO.user_comment/userVO.comment_total}" maxFractionDigits="0"/>" id="con"/>
+                        	  <input type="hidden" name="srating" value="<fmt:formatNumber type="number" value="${row.user_comment/row.comment_total}" maxFractionDigits="0"/>" id="con"/>
                         	  <ion-icon name="star" class="star all-star" id="s1"></ion-icon>
 							  <ion-icon name="star" class="star all-star" id="s2"></ion-icon>
 							  <ion-icon name="star" class="star all-star" id="s3"></ion-icon>
 							  <ion-icon name="star" class="star all-star" id="s4"></ion-icon>
 							  <ion-icon name="star" class="star all-star" id="s5"></ion-icon>
-							  (${userVO.comment_total})
+							  (${row.comment_total})
 						</b></p>
+						</c:forEach>
                         </c:if>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-6 col-lg-3">
-                    <div class="widget-small warning coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
+                    <div class="widget-small warning coloured-icon"><i class="icon fa fa-dollar fa-3x"></i>
                       <div class="info">
-                        <h4>錢包</h4>
-                        <p><b>${userVO.cash}元</b></p>
+                        <h4>會員錢包</h4>
+                         <sql:query var="rs" dataSource="${xxx}" startRow="0">
+    						 SELECT CASH FROM CEA103_G4.USER WHERE USER_ID='${userVO.user_id}'
+ 						 </sql:query>
+ 						 <c:forEach var="row" items="${rs.rows}">
+                        <p><b>${row.cash}元</b></p>
+                        </c:forEach>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-6 col-lg-3">
-                    <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
+                    <div class="widget-small danger coloured-icon"><i class="icon fa fa-thumbs-o-down fa-3x"></i>
                       <div class="info">
                         <h4>違約次數</h4>
-                        <p><b>${userVO.violation}次</b></p>
+                         <sql:query var="rs" dataSource="${xxx}" startRow="0">
+    						 SELECT VIOLATION FROM CEA103_G4.USER WHERE USER_ID='${userVO.user_id}'
+ 						 </sql:query>
+ 						 <c:forEach var="row" items="${rs.rows}">
+                        <p><b>${row.violation}次</b></p>
+                        </c:forEach>
                       </div>
                     </div>
                   </div>
@@ -122,9 +144,14 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="tile">
-                      <h3 class="tile-title">購物車明細</h3>
+                      <h3 class="tile-title">商品概況
+                      <a class="btn btn-primary" type="button" style="background-color : #F9F900; color : black;padding: 1;" href="<%=request.getContextPath()%>/front-end/productManagement/productList.jsp">未上架</a>
+                      <a class="btn btn-primary" type="button" style="background-color : #46BFBD; color : black;padding: 1;" href="<%=request.getContextPath()%>/front-end/productManagement/productList.jsp">直售商品</a>
+                      <a class="btn btn-primary" type="button" style="background-color : #B766AD; color : black;padding: 1;" href="<%=request.getContextPath()%>/front-end/productManagement/productList.jsp">已售出</a>
+                      <a class="btn btn-primary" type="button" style="background-color : #F7464A; color : black;padding: 1;" href="<%=request.getContextPath()%>/front-end/productManagement/productList.jsp">違規下架</a>
+                      </h3>
                       <div class="embed-responsive embed-responsive-16by9">
-                        <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
+                        <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
                       </div>
                     </div>
                   </div>
@@ -213,5 +240,49 @@
         			$(".all-star").css("color","black");
         		}
         	})
+        </script>
+        
+        <script>
+        // 會員首頁圓餅圖
+        <sql:query var="rs" dataSource="${xxx}" startRow="0">
+			SELECT PRODUCT_STATE FROM CEA103_G4.PRODUCT WHERE USER_ID = '${userVO.user_id}' and PRODUCT_STATE = 1 ;
+ 		</sql:query>
+ 		
+        <sql:query var="rs2" dataSource="${xxx}" startRow="0">
+		SELECT PRODUCT_STATE FROM CEA103_G4.PRODUCT WHERE USER_ID = '${userVO.user_id}' and PRODUCT_STATE = 0 ;
+		</sql:query>
+		
+        <sql:query var="rs3" dataSource="${xxx}" startRow="0">
+		SELECT PRODUCT_STATE FROM CEA103_G4.PRODUCT WHERE USER_ID = '${userVO.user_id}' and PRODUCT_STATE = 3 ;
+		</sql:query>
+		
+        <sql:query var="rs4" dataSource="${xxx}" startRow="0">
+		SELECT PRODUCT_STATE FROM CEA103_G4.PRODUCT WHERE USER_ID = '${userVO.user_id}' and PRODUCT_STATE = 5 ;
+		</sql:query>
+ 				
+		var pdata = [ {
+			value : ${rs.rowCount},
+			color : "#46BFBD",
+			highlight : "#5AD3D1",
+			label : "直售商品"
+		}, {
+			value : ${rs3.rowCount},
+			color : "#B766AD",
+			highlight : "#CA8EC2",
+			label : "已售出"
+		}, {
+			value : ${rs2.rowCount},
+			color : "#F9F900",
+			highlight : "#FFFF93",
+			label : "未上架"
+		}, {
+			value : ${rs4.rowCount},
+			color : "#F7464A",
+			highlight : "#FF5A5E",
+			label : "違規下架"
+		}  ]
+
+        var ctxp = $("#pieChartDemo").get(0).getContext("2d");
+		var pieChart = new Chart(ctxp).Pie(pdata);
          </script>
          </html>

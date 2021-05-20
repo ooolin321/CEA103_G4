@@ -410,7 +410,7 @@
         } 
 
 
-<<<<<<< HEAD
+
 		webSocket.onmessage = function(event) {
 			var jsonObj = JSON.parse(event.data);
 			if ("open" === jsonObj.type) {
@@ -501,10 +501,7 @@
 			statusOutput.innerHTML = friend;
 		}
 
-		function sendQuery(datas){ 
-=======
 	function sendQuery(datas){ 
->>>>>>> 0df14f40ff72a7bdf69d18c22539dbcf90442ff7
 		
 		$.ajax({ 
 		  url:"<%=request.getContextPath()%>/ProductSearch",

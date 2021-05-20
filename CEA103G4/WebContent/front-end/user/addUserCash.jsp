@@ -85,7 +85,7 @@ margin: -30px -30px 0px;
 
 			</div>
 		</div>
-	<input type="hidden" name="user_id" value="${userVO.user_id} ">
+	<input type="hidden" name="user_id" value="${userVO.user_id}">
 	<input type="hidden" name="action"	value="addUserCash">   
 	<button type="submit" class="btn btn-info" id="demoSwal">確認更改</button>
 	</form>    

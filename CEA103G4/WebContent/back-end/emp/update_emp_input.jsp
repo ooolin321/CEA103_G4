@@ -116,9 +116,12 @@ justify-content: center;
 												</div>
 											<div class="col-md-5">
 													<div class="form-group">
-														<label><i class="fas fa-user-alt"></i>職位:</label> <input
-															class="form-control" type="TEXT" name="job" size="45"
-															value="<%=(empVO == null) ? "" : empVO.getJob()%>" />
+														<label><i class="fas fa-user-alt"></i>職位:</label>
+															<select
+															class="form-control" size="1" name="job">
+															<option value="一般管理員" ${(empVO.job==empVO.job)? 'selected':''}>一般管理員</option>
+															<option value="高級管理員" ${(empVO.job==empVO.job)? 'selected':''}>高級管理員</option>
+														</select>
 													</div>
 												</div>
 											</div>
@@ -176,7 +179,7 @@ justify-content: center;
 													<div class="form-group">
 														<label><i class="fas fa-user-alt"></i>狀態:</label> <select
 															class="form-control" size="1" name="state">
-															<option value="1" ${(empVO.state==0)? 'selected':''}>在職</option>
+															<option value="1" ${(empVO.state==1)? 'selected':''}>在職</option>
 															<option value="0" ${(empVO.state==0)? 'selected':''}>離職</option>
 														</select>
 													</div>

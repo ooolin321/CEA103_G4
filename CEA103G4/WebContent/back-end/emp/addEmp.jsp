@@ -99,9 +99,12 @@ justify-content: center;
 								</div>
 								<div class="col-md-5">
 									<div class="form-group">
-										<label><i class="fas fa-user-alt"></i>職位:</label><input
-											class="form-control" type="TEXT" name="job" size="45"
-											value="<%=(empVO == null) ? "" : empVO.getJob()%>" />
+										<label><i class="fas fa-user-alt"></i>職位:</label>
+										<select
+											class="form-control" size="1" name="job">
+											<option value="<%=(empVO == null) ? "一般管理員" : empVO.getJob()%>">一般管理員</option>
+											<option value="<%=(empVO == null) ? "高級管理員" : empVO.getJob()%>">高級管理員</option>
+										</select>	
 									</div>
 								</div>
 							</div>
@@ -110,7 +113,7 @@ justify-content: center;
 									<div class="form-group">
 										<label><i class="fas fa-user-alt"></i>身份證字號:</label><input
 											class="form-control" type="TEXT" name="id" size="45"
-											value="<%=(empVO == null) ? "A123456789" : empVO.getId()%>" />
+											value="<%=(empVO == null) ? "" : empVO.getId()%>" />
 									</div>
 								</div>
 
@@ -118,7 +121,7 @@ justify-content: center;
 									<div class="form-group">
 										<label><i class="fas fa-user-alt"></i>性別:</label><select
 											class="form-control" size="1" name="gender">
-											<option value="1" ${(empVO.gender==0)? 'selected':''}>男</option>
+											<option value="1" ${(empVO.gender==1)? 'selected':''}>男</option>
 											<option value="0" ${(empVO.gender==0)? 'selected':''}>女</option>
 										</select>
 									</div>

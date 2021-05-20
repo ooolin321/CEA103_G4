@@ -1,6 +1,7 @@
 package com.customer_service.controller;
 
 import java.io.IOException;
+import java.io.PushbackInputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -16,44 +17,99 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.customer_service.model.ChatMessage;
 import com.customer_service.model.State;
+import com.emp.model.EmpService;
 import com.google.gson.Gson;
 
 import Jedis.JedisHandleMessage;
 
-@ServerEndpoint("/CustomerWS/{userName}")
+@ServerEndpoint("/CustomerWS/{userNameOrEmpno}")
 public class CustomerWS {
 	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
-
+	private static Map<String, Session> sessionsMapForMember = new ConcurrentHashMap<>();
+	private static Map<String, Session> sessionsMapForEmp = new ConcurrentHashMap<>();
 	Gson gson = new Gson();
-		@OnOpen
-		public void onOpen(@PathParam("userName") String userName, Session userSession) throws IOException {
-//			if (userName.contains("USER")) {
-//				String str = userName;
-//				String[] str2 = str.split("_");
-//				String userNames = null;
-//				for (int i = 1; i < str2.length; i++) {
-//					userNames = str2[1];
+
+	@OnOpen
+	public void onOpen(@PathParam("userNameOrEmpno") String userName, Session userSession)
+			throws IOException, JSONException {
+//		if (!userName.contains("14")) {// 會員連線
+//			/* save the new user in the map */
+//			sessionsMap.put(userName, userSession);
+//			/* Sends all the connected users to the new user */
+//			Collection<Session> empSessions = sessionsMap.values();
+//			if (empSessions.size() < 2) {
+//				JSONObject jsonObj = new JSONObject();
+//				jsonObj.put("type", "empNotAvailable");
+//				userSession.getAsyncRemote().sendText(jsonObj.toString());
+//			} 
+//		}if(userName.contains("14")) {
+//			String memberID = userName;
+//System.out.println("++++++++++++++++++++");
+//			Collection<Session> empSessions = sessionsMapForEmp.values();
+//			if (empSessions.size() > 0) { // 如果員工在線就發送通知
+//				sessionsMapForMember.put(memberID, userSession);
+//				Set<String> memberIDs = sessionsMapForMember.keySet();
+//				Set<String> empIDs = sessionsMapForEmp.keySet();
+//				State stateMessage = new State("open", memberID, memberIDs);
+//				String stateMessageJson = gson.toJson(stateMessage);
+//				for (Session session : empSessions) {
+//					if (session.isOpen()) {
+//						session.getAsyncRemote().sendText(stateMessageJson);
+//						for (String empID : empIDs) {
+//							if (sessionsMapForEmp.get(empID).equals(session)) {
+//								JSONObject jsonObj = new JSONObject();
+//								EmpService empSvc = new EmpService();
+//								String empName = empSvc.getOneEmp(new Integer(empID)).getEname();
+//								jsonObj.put("empID", empID);
+//								jsonObj.put("empName", empName);
+//								jsonObj.put("type", "open");
+//								jsonObj.put("message", "您好，我是戴蒙客服專員" + empName + "，請問有什麼能幫忙的呢？");
+//								userSession.getAsyncRemote().sendText(jsonObj.toString());
+//							}
+//						}
+//					}
 //				}
 //			}
-			/* save the new user in the map */
-			sessionsMap.put(userName, userSession);
-			/* Sends all the connected users to the new user */
-			Set<String> userNames = sessionsMap.keySet();
-			State stateMessage = new State("open", userName, userNames);
-			String stateMessageJson = gson.toJson(stateMessage);
-			Collection<Session> sessions = sessionsMap.values();
-			for (Session session : sessions) {
-				if (session.isOpen()) {
-					session.getAsyncRemote().sendText(stateMessageJson);
-				}
-			}
+//		}
+		/* save the new user in the map */
+		sessionsMap.put(userName, userSession);
+		/* Sends all the connected users to the new user */
+		Collection<Session> empSessions = sessionsMap.values();
+		if (empSessions.size() < 2) {
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("type", "empNotAvailable");
+			userSession.getAsyncRemote().sendText(jsonObj.toString());
+		} else {
+if(userName.contains("14")) {
+	Integer empno = new Integer(userName);
+System.out.println(empno);
+String memberID = userName;
+System.out.println(memberID);
+				Set<String> userNames = sessionsMap.keySet();
+				State stateMessage = new State("open", userName, userNames);
+				String stateMessageJson = gson.toJson(stateMessage);
+				Collection<Session> sessions = sessionsMap.values();
+				for (Session session : sessions) {
+					if (session.isOpen()) {
+						JSONObject jsonObj = new JSONObject();
+						jsonObj.put("empno",empno);
+						jsonObj.put("type", "open");
+						jsonObj.put("message", "您好，我是客服專員"+empno+"，請問有什麼能幫忙的呢？");
+						session.getAsyncRemote().sendText(stateMessageJson);
+					}
 
-			String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),
-					userName, userNames);
-			System.out.println(text);
+					 String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s",
+							userSession.getId(), userName, userNames);
+					System.out.println(text);
+				}
 		}
+		}
+		}
+	
 
 	@OnMessage
 	public void onMessage(Session userSession, String message) {

@@ -29,7 +29,7 @@
 	<div class="container">
 		<div class="inner-header">
 			<div class="row">
-				<div class="col-lg-2 col-md-2" id="topLogo">
+				<div class="col-lg-2 col-md-2">
 					<div class="logo">
 						<a href="${pageContext.request.contextPath}/front-end/index.jsp">
 							<h2>
@@ -78,7 +78,7 @@
 						<a
 							href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button
 								type="button" class="btn">註冊</button></a> <a
-							href="<%=request.getContextPath()%>/front-end/userLogin.jsp" ><button
+							href="<%=request.getContextPath()%>/front-end/userLogin.jsp" target="_blank"><button
 								type="button" class="btn">登入</button></a>
 					</div>
         		</c:if>
@@ -133,7 +133,7 @@
 										href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp"
 										class="primary-btn view-card">購物車清單</a>
 									<a
-										href="${pageContext.request.contextPath}/front-end/protected/check-out.jsp"
+										href="${pageContext.request.contextPath}/front-end/protected/check-out.html"
 										class="primary-btn checkout-btn">結帳</a>
 								</div>
 							</div>
@@ -198,10 +198,6 @@
 			<div id="mobile-menu-wrap"></div>
 		</div>
 	</div>
-	<div id="goTop" style="position: fixed; right: 0px; bottom: 45px; z-index: 99999;">
-		<a href="#topLogo"><img style="height:75px;" src="<%=request.getContextPath()%>/front-template/images/top.gif" title="回上方"></a>
-	</div>
-	
 	<div id="chatBtn" style="position: fixed; right: 8px; bottom: 0px; z-index: 99999;">
 		<div class="chat-notice">1</div>
 		<div class="chat-btn" >私訊&nbsp;<i class="fa fa-commenting-o"></i></div>

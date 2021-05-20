@@ -280,8 +280,7 @@
 			value : ${rs3.rowCount},
 			color : "#46BFBD",
 			highlight : "#5AD3D1",
-			label : "商品總上架數"
-		}, {
+			label : "商品總上架數"}, {
 			value : ${rs2.rowCount},
 			color : "#F7464A",
 			highlight : "#FF5A5E",

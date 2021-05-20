@@ -19,7 +19,7 @@ session.setAttribute("userVO", userVO2);
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/customer_service/css/friendchat.css" type="text/css" />
 <%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/customer_service/assets/css/amazeui.min.css"> --%>
-<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/customer_service/assets/css/app.css"> --%>
+
 <style type="text/css">
 </style>
 <title>最大私人聊天室</title>

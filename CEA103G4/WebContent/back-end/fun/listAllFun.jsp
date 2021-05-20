@@ -96,7 +96,7 @@
 											<FORM METHOD="post"
 												ACTION="<%=request.getContextPath()%>/fun/fun.do"
 												style="margin-bottom: 0px;">
-												<input　class="btn btn-primary" type="submit" value="查詢"> <input
+												<input class="btn btn-primary" type="submit" value="查詢"> <input
 													type="hidden" name="funno" value="${funVO.funno}">
 												<input type="hidden" name="action" value="getOne_For_Update">
 										</FORM>

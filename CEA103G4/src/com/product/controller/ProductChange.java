@@ -42,7 +42,7 @@ public class ProductChange  extends HttpServlet {
 			try {
 				/***************************1.接收請求參數****************************************/
 				Integer product_no = new Integer(req.getParameter("product_no"));
-				System.out.println(product_no);
+
 				/***************************2.開始查詢資料****************************************/
 				ProductService productSvc = new ProductService();
 				ProductVO productVO = productSvc.getOneProduct(product_no);

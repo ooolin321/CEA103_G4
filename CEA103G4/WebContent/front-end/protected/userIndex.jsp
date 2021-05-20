@@ -49,6 +49,11 @@
 
 }
 
+.widget-small .info p {
+    margin: 0;
+    font-size: 14px;
+}
+
 </style>
 
 </head>
@@ -81,9 +86,9 @@
                         <p><b>無</b></p>
                         </c:if>
                         <c:if test="${userVO.user_comment != 0}">
-                        <h4>賣家評價(人數)</h4>
+                        <h4>賣家評價</h4>
 <%--                         <p><b>${userVO.user_comment/userVO.comment_total}顆星</b></p> --%>
-                        <p><b><fmt:formatNumber type="number" value="${userVO.user_comment/userVO.comment_total}" maxFractionDigits="0"/>
+                        <p><b>
                         	  <input type="hidden" name="srating" value="<fmt:formatNumber type="number" value="${userVO.user_comment/userVO.comment_total}" maxFractionDigits="0"/>" id="con"/>
                         	  <ion-icon name="star" class="star all-star" id="s1"></ion-icon>
 							  <ion-icon name="star" class="star all-star" id="s2"></ion-icon>

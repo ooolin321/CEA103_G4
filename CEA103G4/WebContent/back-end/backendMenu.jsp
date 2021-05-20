@@ -128,7 +128,7 @@
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <aside class="app-sidebar">
     <div class="app-sidebar__user">
-        <img class="app-sidebar__user-avatar" src="#" alt="User Image">
+        <img class="app-sidebar__user-avatar" width="45px" height="40px" src="<%=request.getContextPath()%>/back-end/emp/img/empImg.png" alt="User Image">
         <div>
             <p class="app-sidebar__user-name">${empVO.ename}</p>
             <p class="app-sidebar__user-designation"></p>
@@ -210,7 +210,10 @@
             <ul class="treeview-menu">
                 <li><a class="treeview-item"
                     href="<%=request.getContextPath()%>/back-end/live_report/listAllLive_report.jsp"><i
-                        class="icon fa fa-circle-o"></i> 直播檢舉管理</a></li>
+                        class="icon fa fa-circle-o"></i> 所有直播檢舉</a></li>
+                <li><a class="treeview-item"
+                    href="<%=request.getContextPath()%>/back-end/live_report/addLive_report.jsp"><i
+                        class="icon fa fa-circle-o"></i> 新增直播檢舉</a></li>
             </ul></li>
         <li class="treeview"><a class="app-menu__item" href="#"
             data-toggle="treeview"><i class="app-menu__icon fa fa-file-text"></i><span
@@ -240,8 +243,9 @@
                 class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <li>		
-                <form  id="myForm" action="<%=request.getContextPath() %>/chat.do" method="POST">
+                <form  id="myForm" action="<%=request.getContextPath() %>/chat.do" method="POST"	>
 				<input value="${empVO.empno}" name="userName" type="hidden"/> 
+<%-- 				<a  class="treeview-item" href="<%=request.getContextPath()%>/back-end/customer_service/chat.jsp"> --%>
 				<a  class="treeview-item" href="#" onclick="document.getElementById('myForm').submit();">
 				<i  class="icon fa fa-circle-o">
 				</i> 客服訊息</a>

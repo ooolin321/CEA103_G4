@@ -67,6 +67,7 @@
 				<li class="breadcrumb-item"><a href="#">商品管理</a></li>
 			</ul>
 		</div>
+		<c:if test="${userVO.user_id == productVO.user_id}">
 		<div class="row">
 		<div class="col-md-12 productsAdd">
 		<form METHOD="post" ACTION="<%=request.getContextPath()%>/product/product.do" name="form1" enctype="multipart/form-data">
@@ -136,7 +137,7 @@
 </form>
 	</div>
 	</div>
-
+</c:if>
 	</main>
 	<!-- Essential javascripts for application to work-->
 	<script

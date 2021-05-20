@@ -1,11 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.fun.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.auth.model.*"%>
 
-<%
-	FunVO funVO = (FunVO) request.getAttribute("funVO"); //EmpServlet.java(Concroller), 存入req的funVO物件
-%>
 
+<jsp:useBean id="getOne_For_Update" scope="request" type="java.util.Set<AuthVO>" />
+
+<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
+<jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
+<jsp:useBean id="authSvc" scope="page" class="com.auth.model.AuthService" />
 <html>
 <head>
 <title>員工資料 - listOneEmp.jsp</title>
@@ -69,24 +72,39 @@ table th .AutoNewline {
 
 	<table>
 		<tr>
-			<th>功能編號</th>
-			<th>功能名稱</th>
-			<th>功能狀態</th>
+				<th>員工編號</th>
+				<th>員工姓名</th>
+				<th>狀態</th>
 	
 		</tr>
 		<tr>
-			<td>${funVO.funno}</td>
-			<td>${funVO.funName}</td>
-			<c:choose>
-					<c:when test="${funVO.state==0}">
-						<td>關閉</td>
-					</c:when>
-					<c:when test="${funVO.state==1}">
-						<td>開啟</td>
-					</c:when>
-				</c:choose>
+<%-- 										<td>${authVO.funno}</td> --%>
+<%-- 										<td>${funSvc.getOneFun(authVO.funno).funName}</td> --%>
+										<c:forEach var="authVO" items="${authSvc.all}">
+										<td>${empVO.empno}</td>
+										<td>${empSvc.getOneEmp(authVO.empno).ename}</td>
+										</c:forEach>
+<%-- 											<c:choose> --%>
+<%-- 											<c:when test="${authVO.auth_no==0}"> --%>
+<!-- 												<td>無權限</td> -->
+<%-- 											</c:when> --%>
+<%-- 											<c:when test="${authVO.auth_no==1}"> --%>
+<!-- 												<td>正常</td> -->
+<%-- 											</c:when> --%>
+<%-- 										</c:choose> --%>
+		<tr>
+<%-- 			<td>${funVO.funno}</td> --%>
+<%-- 			<td>${funVO.funName}</td> --%>
+<%-- 			<c:choose> --%>
+<%-- 					<c:when test="${funVO.state==0}"> --%>
+<!-- 						<td>關閉</td> -->
+<%-- 					</c:when> --%>
+<%-- 					<c:when test="${funVO.state==1}"> --%>
+<!-- 						<td>開啟</td> -->
+<%-- 					</c:when> --%>
+<%-- 				</c:choose> --%>
 			
-		</tr>
+<!-- 		</tr> -->
 	</table>
 
 </body>

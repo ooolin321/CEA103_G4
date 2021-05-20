@@ -213,18 +213,25 @@ public class Live_reportServlet extends HttpServlet {
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String live_report_content = req.getParameter("live_report_content");
+				if(live_report_content == null || live_report_content.trim().length() == 0) {
+					errorMsgs.add("內容請勿空白");
+				}
 				Integer live_no = new Integer(req.getParameter("live_no").trim());
 				String user_id = req.getParameter("user_id");
 				Integer empno = new Integer(req.getParameter("empno").trim());
 				Integer live_report_state = new Integer(req.getParameter("live_report_state").trim());
 
+				byte[] photo = null;
 				Part part = req.getPart("photo");
+				if (part == null || part.getSize() == 0) {
+					errorMsgs.add("請上傳一張檢舉照片");
+				} else {
 				InputStream in = part.getInputStream();
-				byte[] photo = new byte[in.available()];
-
+				photo = new byte[in.available()];
 				in.read(photo);
 				in.close();
-
+				}
+				
 				Live_reportVO live_reportVO = new Live_reportVO();
 				live_reportVO.setLive_report_content(live_report_content);
 				live_reportVO.setLive_no(live_no);
@@ -237,7 +244,7 @@ public class Live_reportServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("live_reportVO", live_reportVO); // 含有輸入格式錯誤的live_reportVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/back-end/live_report/update_live_report_input.jsp");
+							.getRequestDispatcher("/back-end/live_report/addLive_report.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}

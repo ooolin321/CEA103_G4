@@ -7,17 +7,16 @@
 <%@ page import="com.product_type.model.*"%>
 <%@ page import="com.product.model.*"%>
 <%
-
 	Product_TypeDAO dao2 = new Product_TypeDAO();
-     List<Product_TypeVO> list2 = dao2.getAll();
-    pageContext.setAttribute("list2",list2);
-    
-    Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
+	List<Product_TypeVO> list2 = dao2.getAll();
+	pageContext.setAttribute("list2", list2);
+
+	Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
 	pageContext.setAttribute("buylist", buylist);
 
-	UserVO userVO2 = (UserVO) session.getAttribute("account"); 
+	UserVO userVO2 = (UserVO) session.getAttribute("account");
 	session.setAttribute("userVO", userVO2);
- %>
+%>
 
 
 <jsp:useBean id="liveSvc" scope="page"
@@ -68,6 +67,11 @@
 	href="${pageContext.request.contextPath}/front-template/css/style.css"
 	type="text/css" />
 <style>
+.nav-item .nav-menu {
+margin-left: 85px;
+}
+
+
 #messagesArea {
 	height: 500px;
 	width: 100%;
@@ -141,14 +145,15 @@ input {
 					</div>
 					<div class="col-lg-7 col-md-7"></div>
 					<div class="col-lg-3 text-right col-md-3">
-						<c:if test="${ not empty userVO.user_name}">
+						<c:if test="${not empty userVO.user_id}">
 							<div class="header-right">
 								<FORM id="userLogOut" METHOD="post" class="logout-form"
 									action="<%=request.getContextPath()%>/User_LogoutHandler">
 									<a
 										href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">
 										<span class="userLogin" style="cursor: pointer"><img
-											class="rounded-circle" width="45px" height="40px" src="" />&nbsp;
+											class="rounded-circle" width="45px" height="40px"
+											src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${userVO.user_id}" />&nbsp;
 											${userVO.user_name} </span>
 									</a> <input type="hidden" name="action" value="signOut"> <a
 										href="#"
@@ -162,74 +167,73 @@ input {
 								<a
 									href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button
 										type="button" class="btn">註冊</button></a> <a
-									href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><button
-										type="button" class="btn">登入</button></a>
+									href="<%=request.getContextPath()%>/front-end/userLogin.jsp"
+									target="_blank"><button type="button" class="btn">登入</button></a>
 							</div>
 						</c:if>
 						<!-- 鈴鐺/購物車顯示的數字+購物車預覽圖要改 -->
-					<ul class="nav-right">
-						<li class="bell-icon"><a href="#"> <svg
-									xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-									fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+						<ul class="nav-right">
+							<li class="bell-icon"><a href="#"> <svg
+										xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+										fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
                       <path
-										d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
+											d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
                     </svg> <span>1</span>
-						</a></li>
-						<li class="cart-icon"><a
-							href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp">
-								<i class="icon_bag_alt"></i>
-								<c:if test="${buylist != null}">
-								<span id="iba">${buylist.size()}</span>
-								</c:if> 
-								<c:if test="${buylist == null}"> 
-								<span id="iba">0</span>
-								</c:if>
-						</a>
-<%-- 						<c:if test="${buylist != null && buylist.size() > 0}"> --%>
-							<div class="cart-hover">
-								<div class="select-items">
-									<table>  
-										<tbody id="carts">
-									<c:set var="sum" value="0"> </c:set>
-									<c:forEach var="order" items="${buylist}" varStatus="cartstatus">
-											<tr>
-												<td class="si-pic"><img
-													src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
-													alt="${order.product_name}" style="width:100px; height:100px;" /></td>
-												<td class="si-text">
-													<div class="product-selected">
-														<p>$${order.product_price } x ${order.product_quantity}</p>
-														<h6>${order.product_name }</h6>
-													</div>
-												</td>
-											</tr>
-									<c:set var="sum" value="${sum + order.product_price*order.product_quantity}"></c:set>
-                                   </c:forEach>
-										</tbody>
-									</table>
-								</div>
-								<div class="select-total">
-									<span>total:</span>
-									<h5>${sum}</h5>
-								</div>
-								<div class="select-button">
-									<a
-										href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp"
-										class="primary-btn view-card">購物車清單</a>
-									<a
-										href="${pageContext.request.contextPath}/front-end/protected/check-out.html"
-										class="primary-btn checkout-btn">結帳</a>
-								</div>
-							</div>
-<%-- 							</c:if> --%>
-							</li>
-						<c:if test="${buylist.size() > 0 }"> 
-						<li class="cart-price" id="totalprice">$${sum}</li>
-						</c:if>
-						<c:if test="${buylist == null}"> 
-						<li class="cart-price">$0</li>
-						</c:if>
-					</ul>
+							</a></li>
+							<li class="cart-icon"><a
+								href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp">
+									<i class="icon_bag_alt"></i> <c:if test="${buylist != null}">
+										<span id="iba">${buylist.size()}</span>
+									</c:if> <c:if test="${buylist == null}">
+										<span id="iba">0</span>
+									</c:if>
+							</a> <%-- 						<c:if test="${buylist != null && buylist.size() > 0}"> --%>
+								<div class="cart-hover">
+									<div class="select-items">
+										<table>
+											<tbody id="carts">
+												<c:set var="sum" value="0">
+												</c:set>
+												<c:forEach var="order" items="${buylist}"
+													varStatus="cartstatus">
+													<tr>
+														<td class="si-pic"><img
+															src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
+															alt="${order.product_name}"
+															style="width: 100px; height: 100px; border-radius: 10px;" /></td>
+														<td class="si-text">
+															<div class="product-selected">
+																<p>$${order.product_price } x
+																	${order.product_quantity}</p>
+																<h6>${order.product_name }</h6>
+															</div>
+														</td>
+													</tr>
+													<c:set var="sum"
+														value="${sum + order.product_price*order.product_quantity}"></c:set>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+									<div class="select-total">
+										<span>total:</span>
+										<h5 id="cartHoverTotal">$${sum}</h5>
+									</div>
+									<div class="select-button">
+										<a
+											href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp"
+											class="primary-btn view-card">購物車清單</a> <a
+											href="${pageContext.request.contextPath}/front-end/protected/check-out.jsp"
+											class="primary-btn checkout-btn">結帳</a>
+									</div>
+								</div> <%-- 							</c:if> --%></li>
+							<c:if test="${buylist.size() > 0 }">
+								<li class="cart-price" id="totalprice">$${sum}</li>
+							</c:if>
+							<c:if test="${buylist == null}">
+								<li class="cart-price">$0</li>
+							</c:if>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -240,7 +244,7 @@ input {
 				<nav class="nav-menu mobile-menu">
 					<ul>
 						<li class="active" id="nav-index"><a
-							href="${pageContext.request.contextPath}/front-end/index.jsp">首頁</a></li>
+							href="${pageContext.request.contextPath}/front-end/index.jsp" style="border-left: 2px solid #3b3b3b;">首頁</a></li>
 						<li><a
 							href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp">商品專區</a></li>
 						<li><a
@@ -254,7 +258,7 @@ input {
 						<li><a
 							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i
 								class="icon_profile"></i></a></li>
-						<li><a href="#">線上客服&nbsp;<i class="fa fa-comment-o"></i></a></li>		
+						<li><a href="#">線上客服&nbsp;<i class="fa fa-comment-o"></i></a></li>
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -303,9 +307,10 @@ input {
 		<div class="col-md-3">
 			<textarea id="messagesArea" class="form-control" readonly></textarea>
 			<div class="input">
-				<input id="userName" name="userName" value="" class="text-field" type="hidden"  /> 
-				<input id="message" class="form-control" type="text" placeholder="Message"
-					onkeydown="if (event.keyCode == 13) sendMessage(event);" />
+				<input id="userName" name="userName" value="" class="text-field"
+					type="hidden" /> <input id="message" class="form-control"
+					type="text" placeholder="Message"
+					onkeydown="if (event.keyCode == 13) sendMessage(event);" disabled/>
 			</div>
 		</div>
 
@@ -315,7 +320,48 @@ input {
 	<div class="row">
 		<div class="col-xl-9">
 			<div class="tile">
-				<h3 class="tile-title">直播拍賣商品</h3>
+			<div style="margin-top:10px;">
+				<h3 class="tile-title" style="display:inline-block">直播拍賣商品</h3>
+					<button id="reportLink" class="primary-btn userReport"
+						style="float:right;border:none;border-radius: 10px;" value="${userVO.user_id}">直播檢舉</button>
+				
+			</div>	
+				<!--檢舉燈箱 -->
+				<div class="report-bg">
+					<div class="report" style="height: 410px;">
+						<div class="report-title" value="${liveVO.live_no}">
+							檢舉直播編號：${liveVO.live_no} <span><a
+								href="javascript:;" id="closeBtn">關閉</a></span>
+						</div>
+
+						<div class="report-input-content">
+							<div class="report-input">
+								<label for="">檢舉內容</label> <input type="text"
+									placeholder="請輸入檢舉原因" style="background-color:white;color:black;" name="pro_report_content" size="50"
+									required>
+							</div>
+						</div>
+						<div class="report-input-pic">
+							<div class="report-input">
+								<label for="">檢舉圖片</label> 
+								<form enctype="multipart/form-data" id="uploadForm">
+								<input name="photo" type="file" style="background-color:white;" id="imgInp" accept="image/gif, image/jpeg, image/png">
+								</form>
+							</div>
+						</div>
+						<div class="report-input-pic">
+							<div class="report-input">
+								<label for="">圖片預覽</label>
+								<img id="preview_img" src="#" style="display: none;" />
+							</div>
+						</div>
+						<div class="report-button">
+							<div id="report-submit">提交檢舉</div>
+						</div>
+					</div>
+				</div>
+				<!--遮蓋層-->
+				<!--燈箱結束 -->
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -342,9 +388,9 @@ input {
 
 
 		<div class="col-xl-3">
-			<br>現在最高價: <span id="current_price"></span>
-			<br>現在出價人: <span id="current_id"></span>
-			
+			<br>現在最高價: <span id="current_price"></span> <br>現在出價人: <span
+				id="current_id"></span>
+
 		</div>
 
 	</div>
@@ -401,7 +447,8 @@ input {
 	src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
 
 
 <script>
@@ -419,6 +466,9 @@ function refresh(){
 		
 		success:function(str){
 			
+			var inputMessage = document.getElementById("message");
+			inputMessage.disabled=false;
+			//聊天室可以輸入
 			for(let i of str){
 				if(i.product_state == 2 && i.user_id == '${liveVO.user_id}' && i.live_no == ${liveVO.live_no}){
 					let str = "<tr>";
@@ -453,7 +503,7 @@ function refresh(){
 
 	function connect() {
 		// create a websocket
-		
+		console.log(endPointURL);
 		webSocket = new WebSocket(endPointURL);
 
 		webSocket.onopen = function(event) {
@@ -472,15 +522,15 @@ function refresh(){
 				addListener();
 			}else if("history" === jsonObj.type){
 				//進來的時候
-				addListener();
+				// addListener();
 				$("#current_price").text(JSON.parse(jsonObj.message).maxPrice);
 				$("#current_id").text(JSON.parse(jsonObj.message).user_id);
 				
 			}else if("chat" === jsonObj.type && ${param.live_no} == jsonObj.live_no){
 
-				
+
 				//聊天//競標中
-				if(/^\d*$/.test(jsonObj.message)){
+				if(/^\d*$/.test(jsonObj.message)  && "${userVO.user_id}" == jsonObj.sender){
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 							'type' : 'max',
 							'sender' : jsonObj.sender,
@@ -501,11 +551,23 @@ function refresh(){
 
 					webSocket.send(JSON.stringify(json));
 					
+					
+					
 				}else if("start"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以start
 					//&& ${liveVO.user_id==userVO.user_id}
 					//開始競標
-					alert("開始競標#"+$("#showProduct").find("td").eq(1).html());
-					
+					Swal.fire({
+						  title: "開始競標#"+$("#showProduct").find("td").eq(1).html(),
+						  width: 600,
+						  padding: '3em',
+						  background: '#fff url(/images/trees.png)',
+						  backdrop: `
+						    rgba(0,0,123,0.4)
+						    url(${pageContext.request.contextPath}/images/nyan-cat.gif)
+						    left top
+						    no-repeat
+						  `
+						})
 					
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 						//0給初始直
@@ -533,7 +595,7 @@ function refresh(){
 				}else if("over"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以end
 					//&& ${liveVO.user_id==userVO.user_id}
 					//結束競標
-					alert("結束競標#"+$("#showProduct").find("td").eq(1).html());
+					Swal.fire("結束競標#"+$("#showProduct").find("td").eq(1).html())
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 							'type' : 'max',
 							'sender' : self,
@@ -561,11 +623,14 @@ function refresh(){
 				messagesArea.value = messagesArea.value + message;
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			}else if("max" ==jsonObj.type){
+				debugger;
 				if(jsonObj.timeStart =="0"){
 					$("#current_price").text(jsonObj.maxPrice);
 					$("#current_id").text("無人出價");
 				}else if(jsonObj.timeStart== "1"){
-					addListener();
+					// addListener();
+					$("#current_price").text(jsonObj.maxPrice);
+					$("#current_id").text(jsonObj.user_id);
 				}else if(jsonObj.timeStart== "2"){
 					//ajax  更改狀態
 					//refresh();
@@ -584,7 +649,7 @@ function refresh(){
 								 "action": "order_ajax"
 						  },
 						  success: function(res) {
-								alert("已產生訂單");
+
 								refresh();
 					      }, 	  
 					
@@ -613,8 +678,6 @@ function refresh(){
 			
 
 		}
-	
-
 		webSocket.onclose = function(event) {
 			console.log(event.data);
 		 	connect();
@@ -644,7 +707,6 @@ function refresh(){
 	function sendMessage(e) {
 		var userName = inputUserName.value.trim();
 		if (${userVO == null}) {
-// 			e.stopPropagation();
 			setTimeout(function(){
 				login();
 			}, 1);
@@ -658,7 +720,12 @@ function refresh(){
 			alert("請輸入訊息");
 			inputMessage.focus();
 		} else {
+			if(parseInt(message) > "${userVO.cash}"){
+				alert("錢包餘額不足，目前餘額為"+"${userVO.cash}");
+				return;
+			}
 			
+			console.log(55555);
 			var jsonObj = {
 				"type":'chat',
 				"sender" : self,
@@ -669,6 +736,10 @@ function refresh(){
 			webSocket.send(JSON.stringify(jsonObj));
 			inputMessage.value = "";
 			inputMessage.focus();
+				
+			
+			
+			
 		}
 		
 	}
@@ -787,6 +858,121 @@ function refresh(){
 	
   	
 	
+</script>
+
+<script>
+
+//檢舉燈箱js 
+
+var reportLink = document.querySelector("#reportLink");
+ var closeBtn = document.querySelector("#closeBtn");
+ var report = document.querySelector(".report");
+ var report_bg = document.querySelector(".report-bg");
+
+ //1,燈箱顯示/隱藏
+ reportLink.addEventListener("click", function () {
+	  if ($('#reportLink').attr("value") === "") {
+		  login();
+		} else {
+   report.style.display = "block";
+   report_bg.style.display = "block";
+		}
+ });
+ closeBtn.addEventListener("click", function () {
+   report.style.display = "none";
+   report_bg.style.display = "none";
+   $('input[name="pro_report_content"]').val("");
+ });
+
+ //2，拖曳
+ var report_title = document.querySelector(".report-title");
+ report_title.addEventListener("mousedown", function (e) {
+   //鼠標按下的時候,得到鼠標在框裡的座標
+   var x = e.pageX - report.offsetLeft;
+   var y = e.pageY - report.offsetTop;
+   document.addEventListener("mousemove", move); //鼠標移動的時候，得到狀態框座標
+   function move(e) {
+     report.style.left = e.pageX - x + "px";
+     report.style.top = e.pageY - y + "px";
+   }
+   document.addEventListener("mouseup", function () {
+     //鼠標彈起,解除移動事件
+     document.removeEventListener("mousemove", move);
+   });
+ });
+ 
+
+ 
+ //直播檢舉AJAX  
+
+ $(".report-button").click(function(){
+	  if(($('input[name="pro_report_content"]').val().trim().length != 0) && ($('input[name="photo"]').val().length != 0) ){
+		var formData = new FormData($("#uploadForm")[0])  //创建一个formData 
+		formData.append('photo', $('#imgInp')[0].files[0]) //把file添加进去  name命名为photo
+		formData.append('live_report_content', $('input[name="pro_report_content"]').val())
+		formData.append('live_no', $(".report-title").attr("value"))
+		formData.append('user_id', $('#reportLink').attr('value'))
+		formData.append('empno', "14001")
+		formData.append('live_report_state', "0")
+		formData.append('action', "insert")
+		console.log(formData);
+		$.ajax({ 
+		  url:"<%=request.getContextPath()%>/live_report/live_report.do",
+		  type:"POST", 
+		  data:formData,
+		  async: false, // 同步請求
+		  cache: false, // 不快取頁面
+		  contentType: false, // 當form以multipart/form-data方式上傳檔案時，需要設定為false
+		  processData: false, // 如果要傳送Dom樹資訊或其他不需要轉換的資訊，請設定為false
+		  success: function() { 
+			  Swal.fire({
+				  position: 'top',
+				  icon: 'success',
+				  title: '直播檢舉已提交',
+				  showConfirmButton: false,
+				  timer: 1500
+				});
+				    report.style.display = "none";
+				    report_bg.style.display = "none";
+				    $('input[name="pro_report_content"]').val("");
+	            }, 	  
+		  error:function () {
+	  			Swal.fire({
+		  			  icon: 'error',
+		  			  title: '很抱歉,檢舉提交失敗,請重新提交。',
+		  			  showConfirmButton: false,
+		  			  timer: 1500
+		  			});
+			    report.style.display = "none";
+			    report_bg.style.display = "none";
+			  $('input[name="pro_report_content"]').val("");
+		  },				
+		 });
+	  }  else {
+			Swal.fire({
+				 icon: 'error',
+				 title: '檢舉內容或圖片請勿空白',
+				 showConfirmButton: false,
+				 timer: 1500
+		});
+	  };
+ });
+
+// 檢舉燈箱圖片
+function readURL(input){
+	  if(input.files && input.files[0]){
+	    var reader = new FileReader();
+	    reader.onload = function (e) {
+	       $("#preview_img").attr('src', e.target.result);
+	       $("#preview_img").attr('width', "150px");
+	       $("#preview_img").attr('style', "display:block");
+	    }
+	    reader.readAsDataURL(input.files[0]);
+	  }
+	}
+$("#imgInp").change(function() {
+	  readURL(this);
+	});
 </script>
 
 

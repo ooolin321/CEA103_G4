@@ -222,8 +222,14 @@ ul li {
 								<div class="select-button">
 									<a
 										href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp"
+<<<<<<< HEAD
 										class="primary-btn view-card">購物車清單</a> <a
 										href="${pageContext.request.contextPath}/front-end/protected/check-out.jsp"
+=======
+										class="primary-btn view-card">購物車清單</a>
+									<a
+										href="${pageContext.request.contextPath}/front-end/protected/check-out.html"
+>>>>>>> b81e7df55e21aa42830abd929d20726bdd1d2dc8
 										class="primary-btn checkout-btn">結帳</a>
 								</div>
 							</div> <%-- 							</c:if> --%></li>
@@ -272,12 +278,19 @@ ul li {
 						href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i
 							class="icon_profile"></i></a></li>
 					<li>
+<<<<<<< HEAD
 						<form id="myForm" action="<%=request.getContextPath()%>/chat.do"
 							method="POST">
 							<input value="${userVO.user_id}" name="userName" type="hidden" />
 							<a href="#" onclick="document.getElementById('myForm').submit();">線上客服&nbsp;<i
 								class="fa fa-comment-o"></i></a>
 						</form>
+=======
+					<form  id="myForm" action="<%=request.getContextPath() %>/chat.do" method="POST">
+					<input value="${userVO.user_name}" name="userName" type="hidden"/>
+					<a href="#" onclick="document.getElementById('myForm').submit();">線上客服&nbsp;<i class="fa fa-comment-o"></i></a>
+					</form>
+>>>>>>> b81e7df55e21aa42830abd929d20726bdd1d2dc8
 					</li>
 					<!-- <li>
                 <a href="#">Pages</a>

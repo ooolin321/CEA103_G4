@@ -73,7 +73,7 @@
 						 </FORM>
 						</div>
     				</c:if>
-       			 <c:if test="${empty userVO.user_name}">
+       			 <c:if test="${empty userVO.user_id}">
 					<div class="header-right">
 						<a
 							href="<%=request.getContextPath()%>/front-end/user/register.jsp"><button

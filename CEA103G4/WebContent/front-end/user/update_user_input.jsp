@@ -40,6 +40,13 @@ padding: 15px 20px 5px 0px;
 .app-title {
 margin: -30px -30px 0px;
 }
+.address .form-control {
+    display:inline-block;
+    width: 117.5%;
+}
+.form-control {
+	width: 70.5%;
+}
 </style>
 
 </head>
@@ -117,17 +124,21 @@ margin: -30px -30px 0px;
 	</tr>
 	<tr>
 		<td>手機號碼:</td>
-		<td><input type="TEXT" class="form-control" name="user_mobile" size="45" value="<%=userVO.getUser_mobile()%>" />
+		<td style="padding-bottom: 15px;">
+		<input type="TEXT" class="form-control" name="user_mobile" size="45" value="<%=userVO.getUser_mobile()%>" />
 		<font color=red><b>${(empty errorMsgs) ? "" : errorMsgs.user_mobile }</b></td>
 	</tr>
 	<tr>
 		<td>地址:</td>
-		<th>
-			<div id="twzipcode">
-							<font color=red><b>${(empty errorMsgs) ? "" : errorMsgs.city }</b>
-						</div> 
+		<th><div class="row address">
+			<div id="twzipcode" class="form-group col-md-10" style="margin-bottom: 0px;">
+			</div>
+			<div class="form-group col-md-10" style="margin-bottom: 0px;"><font color=red><b>${(empty errorMsgs) ? "" : errorMsgs.city }</b></div>
+			<div class="form-group col-md-12">
 			<input type="TEXT" class="form-control" name="user_addr" size="45"
 			value="<%=userVO.getUser_addr()%>"> <font color=red><b>${(empty errorMsgs) ? "" : errorMsgs.user_addr }</b>
+			</div>
+			</div>
 		</th>
 	</tr>
 	<tr>
@@ -289,7 +300,7 @@ window.onload = init;
 <script>
         $("#twzipcode").twzipcode({
         	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在區別選單中
-        	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地別" class 名稱 
+        	css: ["city form-control col-md-5", "town form-control col-md-5"], // 自訂 "城市"、"地別" class 名稱 
         	countyName: "city", // 自訂城市 select 標籤的 name 值
         	districtName: "town", // 自訂區別 select 標籤的 name 值
         	countySel: "<%=userVO.getCity()%>",

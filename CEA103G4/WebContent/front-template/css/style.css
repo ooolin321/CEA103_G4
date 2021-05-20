@@ -318,7 +318,7 @@ ol {
     height: 300px;
     box-sizing: border-box;
     border: 1px solid #dcdce0;
-    background:red;
+    background:whitesmoke;
     transition: width .25s cubic-bezier(.4,.8,.74,1),height .25s cubic-bezier(.4,.8,.74,1);
 }
 .header-section {

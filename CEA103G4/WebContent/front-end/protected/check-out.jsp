@@ -235,9 +235,8 @@
 							</c:forEach>
 							<input type="hidden" name="order_price" value="${sum}">
 							<input type="hidden" name="user_id" value="${userVO.user_id}">
-							<input type="hidden" name="row_count" value="${row_count}">
 							<input type="hidden" name="action" value="addOrderList">
-							<button type="submit" class="site-btn place-btn">送出</button>
+							<button class="site-btn place-btn" id="submit">送出</button>
 						</div>
 					</div>
 				</div>
@@ -276,6 +275,15 @@
 	<script
 		src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
 	<script type="text/javascript">
+		$("#submit").click(function(){ //尚未修正
+			if($("#pay_method").val() == 'null'){
+				window.alert("未選擇付款方式");
+			}else if($("#logistics").val() == 'null'){
+				window.alert("未選擇物流方式");
+			}else{
+				$("#submit").submit();
+			}
+		})
 		$("#twzipcode").twzipcode({
 			zipcodeIntoDistrict : true, // 郵遞區號自動顯示在區別選單中
 			css : [ "city form-control", "town form-control" ], // 自訂 "城市"、"地別" class 名稱 
@@ -285,6 +293,8 @@
 			districtSel : "${userVO.town}",
 			zipcodeSel : "${userVO.zipcode}"
 		});
+		
+		
 	</script>
 </body>
 </html>

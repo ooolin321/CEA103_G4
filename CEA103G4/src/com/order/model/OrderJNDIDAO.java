@@ -736,7 +736,7 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 				aDetail.setOrder_no(new Integer(next_No)) ;
 				dao.insert2(aDetail,con);
 			}
-
+			
 			// 2●設定於 pstm.executeUpdate()之後
 			con.commit();
 			con.setAutoCommit(true);

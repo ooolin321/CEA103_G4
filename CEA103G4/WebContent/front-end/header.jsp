@@ -213,6 +213,8 @@ session.setAttribute("userVO", userVO2);
 	<div id="goTop" style="position: fixed; right: 0px; bottom: 45px; z-index: 99999;">
 		<a href="#topLogo"><img style="height:75px;" src="<%=request.getContextPath()%>/front-template/images/top.gif" title="回上方"></a>
 	</div>
+	
+<c:if test="${not empty userVO.user_id}">	
 	<div id="chatBtn">
 		<!-- <div class="chat-notice">1</div> -->
 		<div class="chat-btn">
@@ -241,7 +243,7 @@ session.setAttribute("userVO", userVO2);
 
 		</div>
 	</div>
-
+</c:if>
 
 </header>
 <!-- Header End -->
@@ -272,9 +274,9 @@ closeChatBtn.addEventListener("click", function() {
 // 	connect();
 // // 	}
 // };
-    	if("${userVO.user_id}" == ""){
-		    document.getElementById("chatBtn").style.visibility="hidden";
-    	}
+//     	if("${userVO.user_id}" == ""){
+// 		    document.getElementById("chatBtn").style.visibility="hidden";
+//     	}
     var MyPoint = "/FriendChatWS/${userVO.user_id}";
     var host = window.location.host;
     var path = window.location.pathname;

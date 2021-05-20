@@ -7,7 +7,7 @@
           <div class="col-lg-2 col-4">
             <div class="footer-left">
               <div class="footer-logo">
-                <a href="${pageContext.request.contextPath}/front-end/index.jsp"><img src="${pageContext.request.contextPath}/front-template/images/01.ico" alt="" /></a>
+                <a href="${pageContext.request.contextPath}/front-end/index.jsp"><img src="${pageContext.request.contextPath}/front-template/images/01.png" alt="" /></a>
               </div>
 <!--               <div class="footer-social"> -->
 <!--                 <a href="#"><i class="fa fa-facebook"></i></a> -->

@@ -760,13 +760,18 @@ public class OrderServlet extends HttpServlet {
 				}
 
 				String srating_content = req.getParameter("srating_content");
-
+				
 				/*************************** 2.開始修改資料 *****************************************/
 				OrderService orderSvc = new OrderService();
-				orderSvc.updateSrating(srating, srating_content, order_no);
-
+				orderSvc.updateSrating(srating, srating_content, order_no);//更新評價
+				
 				UserService userSvc = new UserService();
 				userSvc.updateUserRating(srating, 1, seller_id); // seller_id轉user_id
+				
+				OrderVO orderVO = orderSvc.getOneOrder(order_no);
+				Integer price =orderVO.getOrder_price();
+				userSvc.addCash(price, seller_id);//訂單完成撥款給賣家
+				
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				String url = "/front-end/orderManagement/OrderListA.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
@@ -854,6 +859,12 @@ public class OrderServlet extends HttpServlet {
 					OrderService orderSvc = new OrderService();
 					orderSvc.insertWithDetails(orderVO, list);
 					
+					UserService userSvc = new UserService();
+					UserVO userVO = userSvc.getOneUser(seller_id);
+					Integer nowMoney = userVO.getCash();
+					nowMoney -= order_price;
+					userSvc.updateCash(nowMoney, user_id);
+					//買家扣款
 				}
 				
 				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/

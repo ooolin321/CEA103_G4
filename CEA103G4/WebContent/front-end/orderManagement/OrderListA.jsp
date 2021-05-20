@@ -49,6 +49,7 @@
 table td, table tr, table th {
 	white-space: nowrap;
 }
+
 #sratingbox {
 	position: inline-block
 }
@@ -56,12 +57,13 @@ table td, table tr, table th {
 ion-icon {
 	font-size: 64px;
 }
-.modal-body{
-	width:100%;
-	display:flex;
+
+.modal-body {
+	width: 100%;
+	display: flex;
 	justify-content: center;
-	flex-direction:column;
-	align-items:center
+	flex-direction: column;
+	align-items: center
 }
 </style>
 </head>
@@ -92,105 +94,176 @@ ion-icon {
 				<li class="breadcrumb-item"><a href="#">直售訂單管理</a></li>
 			</ul>
 		</div>
+		<div class="col-xl-12">
+			<div class="bs-component">
+				<ul class="nav nav-tabs">
+					<li class="nav-item"><a class="nav-link active show"
+						data-toggle="tab" href="#unsrating">未完成訂單</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#history">購買紀錄</a></li>
+				</ul>
 
-		<div class="row">
-			<div class="col-xl-12">
-				<div class="tile">
-					<h3 class="tile-title">我的購買訂單</h3>
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>訂單時間</th>
-								<th>訂單狀態</th>
-								<th>訂單金額</th>
-								<th>付款方式</th>
-								<th>物流方式</th>
-								<th>物流狀態</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="orderVO"
-								items="${orderSvc.getAllByID(userVO.user_id)}">
-								<tr>
-									<td>${orderVO.order_no}</td>
-									<td><fmt:formatDate value="${orderVO.order_date}"
-											pattern="yyyy-MM-dd" /></td>
-									<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>
-									<td>${orderVO.order_price}</td>
-									<td>${(orderVO.pay_method==0)? '錢包':''}
-										${(orderVO.pay_method==1)? '信用卡':''}
-										${(orderVO.pay_method==2)? '轉帳':''}</td>
-									<td>${(orderVO.logistics==0)? '超商':'宅配'}</td>
-									<td>${(orderVO.logisticsstate==0)? '未出貨':''}
-										${(orderVO.logisticsstate==1)? '已出貨':''}
-										${(orderVO.logisticsstate==2)? '已取貨':''}</td>
-									<td>
-										<!-- Button trigger modal -->
-										<input type="hidden" value="${orderVO.seller_id}">
-										<button class="btn btn-info" id="srating_btn"
-											data-toggle="modal" data-target="#${orderVO.order_no}">評價</button>
-										<input type="hidden" value="${orderVO.order_no}">
-									</td>
-									<td></td>
-								</tr>
 
-							</c:forEach>
-						</tbody>
-					</table>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade active show" id="unsrating">
+						<div class="row">
+							<div class="col-xl-12">
+								<!-- 			form -->
+								<div class="tile">
+									<h3 class="tile-title">我的未完成訂單</h3>
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>訂單時間</th>
+												<th>訂單狀態</th>
+												<th>訂單金額</th>
+												<th>付款方式</th>
+												<th>物流方式</th>
+												<th>物流狀態</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach var="orderVO"
+												items="${orderSvc.getAllByID(userVO.user_id)}">
+												<c:if test="${orderVO.logisticsstate==2 && orderVO.srating == 0 }">
+												<tr>
+													<td>${orderVO.order_no}</td>
+													<td><fmt:formatDate value="${orderVO.order_date}"
+															pattern="yyyy-MM-dd" /></td>
+													<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>
+													<td>${orderVO.order_price}</td>
+													<td>${(orderVO.pay_method==0)? '錢包':''}
+														${(orderVO.pay_method==1)? '信用卡':''}
+														${(orderVO.pay_method==2)? '轉帳':''}</td>
+													<td>${(orderVO.logistics==0)? '超商':'宅配'}</td>
+													<td>${(orderVO.logisticsstate==0)? '未出貨':''}
+														${(orderVO.logisticsstate==1)? '已出貨':''}
+														${(orderVO.logisticsstate==2)? '已取貨':''}</td>
+													<td>
+														<!-- Button trigger modal --> <input type="hidden"
+														value="${orderVO.seller_id}">
+														<button class="btn btn-info" id="srating_btn"
+															data-toggle="modal" data-target="#${orderVO.order_no}">評價</button>
+														<input type="hidden" value="${orderVO.order_no}">
+													</td>
+												</tr>
+												</c:if>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+								<!-- 				form -->
+							</div>
+						</div>
+					</div>
+					
+					<div class="tab-pane fade" id="history">
+						<div class="row">
+							<div class="col-xl-12">
+								<!-- 			form -->
+								<div class="tile">
+									<h3 class="tile-title">我的購買紀錄</h3>
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>訂單時間</th>
+												<th>訂單狀態</th>
+												<th>訂單金額</th>
+												<th>付款方式</th>
+												<th>物流方式</th>
+												<th>物流狀態</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach var="orderVO"
+												items="${orderSvc.getAllByID(userVO.user_id)}">
+												<c:if test="${orderVO.logisticsstate==2 && orderVO.srating > 0}">
+												<tr>
+													<td>${orderVO.order_no}</td>
+													<td>${orderVO.srating}</td>
+													<td><fmt:formatDate value="${orderVO.order_date}"
+															pattern="yyyy-MM-dd" /></td>
+													<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>
+													<td>${orderVO.order_price}</td>
+													<td>${(orderVO.pay_method==0)? '錢包':''}
+														${(orderVO.pay_method==1)? '信用卡':''}
+														${(orderVO.pay_method==2)? '轉帳':''}</td>
+													<td>${(orderVO.logistics==0)? '超商':'宅配'}</td>
+													<td>${(orderVO.logisticsstate==0)? '未出貨':''}
+														${(orderVO.logisticsstate==1)? '已出貨':''}
+														${(orderVO.logisticsstate==2)? '已取貨':''}</td>
+													<td>
+													</td>
+												</tr>
+												</c:if>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+								<!-- 				form -->
+							</div>
+						</div>
+					</div>
+					
+					
+					
+					<!-- Modal -->
+					<FORM METHOD="post" ACTION="order.do">
+						<div class="modal fade modalStar" id="" tabindex="-1" role="dialog"
+							aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content" id="sratingbox">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLongTitle"></h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<div>
+											<input type="hidden" name="srating" value="0" id="con" />
+											<ion-icon name="star" class="star all-star" id="s1"></ion-icon>
+											<ion-icon name="star" class="star all-star" id="s2"></ion-icon>
+											<ion-icon name="star" class="star all-star" id="s3"></ion-icon>
+											<ion-icon name="star" class="star all-star" id="s4"></ion-icon>
+											<ion-icon name="star" class="star all-star" id="s5"></ion-icon>
+										</div>
+
+										<div>
+											<textarea name="srating_content" rows="10" cols="43"
+												style="resize: none"></textarea>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<!-- <button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save
+								changes</button> -->
+										
+										<input type="hidden" name="product_name" value="" id="seller_id">
+										<input type="hidden" name="seller_id" value="" id="seller_id">
+										<input type="hidden" name="order_no" value="" id="order_no">
+										<input type="hidden" name="action" value="updateSrating">
+										<input type="button" class="btn btn-secondary"
+											data-dismiss="modal" value="取消"> <input type="submit"
+											class="btn btn-primary" value="送出">
+									</div>
+								</div>
+							</div>
+						</div>
+					</FORM>
+
+
+
 
 				</div>
 			</div>
 		</div>
-
-			<!-- Modal -->
-		<FORM METHOD="post" ACTION="order.do">
-			<div class="modal fade" id="" tabindex="-1" role="dialog"
-				aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content" id="sratingbox">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLongTitle">
-							
-							</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<div>	<input type="hidden" name="srating" value="0" id="con"/>
-							<ion-icon name="star" class="star all-star" id="s1"></ion-icon>
-							<ion-icon name="star" class="star all-star" id="s2"></ion-icon>
-							<ion-icon name="star" class="star all-star" id="s3"></ion-icon>
-							<ion-icon name="star" class="star all-star" id="s4"></ion-icon>
-							<ion-icon name="star" class="star all-star" id="s5"></ion-icon>
-							</div>
-						
-							<div>
-								<textarea name="srating_content" rows="10" cols="43" style="resize: none"></textarea>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<!-- <button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save
-								changes</button> -->
-								
-								<input type="hidden" name="seller_id" value="" id="seller_id">
-								<input type="hidden" name="order_no" value="" id="order_no">
-								<input type="hidden" name="action" value="updateSrating">
-								<input type="button" class="btn btn-secondary" data-dismiss="modal" value="取消">
-								<input type="submit" class="btn btn-primary" value="送出">
-						</div>
-					</div>
-				</div>
-			</div>
-		</FORM>
-
-
-
 		<%
 		if (request.getAttribute("listDetails_ByNo") != null) {
 		%>
@@ -224,7 +297,7 @@ ion-icon {
 			$(".all-star").css("color","black");
 			$("#con").val("0");
 			
-			$(".fade").attr("id",val);
+			$(".modalStar").attr("id",val);
 			$("h5").text(val);
 			$("#order_no").val(val);
 			$("#seller_id").val(seller);

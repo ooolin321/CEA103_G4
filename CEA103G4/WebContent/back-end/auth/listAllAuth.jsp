@@ -82,7 +82,7 @@
 
 						<table class="col-md-12" id="sampleTable" style="font-size: 120%">
 							<thead>
-								<tr  role="row" class="table-info" ${(authVO.auth_no==param.auth_no) ? 'bgcolor=#CCCCFF':''}>
+								<tr  role="row" class="table-info" ${(authVO.funno==param.funno) ? 'bgcolor=#CCCCFF':''}>
 									<th>員工編號</th>
 									<th>員工姓名</th>
 									<th>功能編號</th>

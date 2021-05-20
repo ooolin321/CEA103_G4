@@ -6,15 +6,15 @@
 <%@ page import="com.product_type.model.*"%>
 <%@ page import="com.product.model.*"%>
 <%
-Product_TypeDAO dao2 = new Product_TypeDAO();
-List<Product_TypeVO> list2 = dao2.getAll();
-pageContext.setAttribute("list2", list2);
-
-Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
-pageContext.setAttribute("buylist", buylist);
-
-UserVO userVO2 = (UserVO) session.getAttribute("account");
-session.setAttribute("userVO", userVO2);
+	Product_TypeDAO dao2 = new Product_TypeDAO();
+	List<Product_TypeVO> list2 = dao2.getAll();
+	pageContext.setAttribute("list2", list2);
+	
+	Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
+	pageContext.setAttribute("buylist", buylist);
+	
+	UserVO userVO2 = (UserVO) session.getAttribute("account");
+	session.setAttribute("userVO", userVO2);
 %>
 
 <!-- Page Preloder -->
@@ -250,6 +250,17 @@ session.setAttribute("userVO", userVO2);
 <!-- Header End -->
 <!-- heade搜尋 -->
 <script>
+// 	const chatBtn = document.querySelector(".chat-btn");
+// 	const miniChat = document.querySelector(".mini-chat");
+// 	const closeChatBtn = document.querySelector(".ti-close");
+// 	chatBtn.addEventListener("click", function() {
+// 	miniChat.style.visibility = "visible";
+// 	chatBtn.style.visibility = "hidden";
+// 	});
+// 	closeChatBtn.addEventListener("click", function() {
+// 		miniChat.style.visibility = "hidden";
+// 		chatBtn.style.visibility = "visible";
+// 	})
 
    const chatBtn = document.querySelector(".chat-btn");
     const miniChat = document.querySelector(".mini-chat");
@@ -398,6 +409,97 @@ session.setAttribute("userVO", userVO2);
             statusOutput.innerHTML = friend;
         } 
 
+
+
+		webSocket.onmessage = function(event) {
+			var jsonObj = JSON.parse(event.data);
+			if ("open" === jsonObj.type) {
+// 				refreshFriendList(jsonObj);
+				addListener(seller);
+			} else if ("history" === jsonObj.type) {
+				statusOutput.innerHTML = seller;
+				const ul = document.createElement('ul');
+				ul.id = "area";
+				messagesArea.appendChild(ul);
+				// 這行的jsonObj.message是從redis撈出跟好友的歷史訊息，再parse成JSON格式處理
+				var messages = JSON.parse(jsonObj.message);
+				for (var i = 0; i < messages.length; i++) {
+					var historyData = JSON.parse(messages[i]);
+					var showMsg = historyData.message;
+					var li = document.createElement('li');
+					jsonObj.sender === self ? li.className += 'me'
+							: li.className += 'friend';
+					li.innerHTML = jsonObj.message;
+					console.log(li);
+					document.getElementById("area").appendChild(li);
+					messagesArea.scrollTop = messagesArea.scrollHeight;
+				} else if ("close" === jsonObj.type) {
+					refreshFriendList(jsonObj);
+				}
+	
+			};
+	
+			webSocket.onclose = function(event) {
+				console.log("Disconnected!");
+			};
+		}
+	
+		function sendMessage() {
+			var inputMessage = document.getElementById("message");
+			let friend = statusOutput.textContent;
+			var message = inputMessage.value.trim();
+	
+			if (message === "") {
+				alert("Input a message");
+				inputMessage.focus();
+			} else if (friend === "") {
+				alert("Choose a friend");
+			} else {
+				var jsonObj = {
+					"type" : "chat",
+					"sender" : self,
+					"receiver" : friend,
+					"message" : message
+				};
+				webSocket.send(JSON.stringify(jsonObj));
+				inputMessage.value = "";
+				inputMessage.focus();
+			}
+		}
+	
+		// 有好友上線或離線就更新列表
+		/* function refreshFriendList(jsonObj) {
+			var friends = jsonObj.users;
+			var row = document.getElementById("row");
+			row.innerHTML = '';
+			for (var i = 0; i < friends.length; i++) {
+				if (friends[i] === self) { continue; }
+				row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
+			}
+			addListener();
+		} */
+		// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
+		function addListener(seller) {
+	// 		const friend = seller;
+	// 		updateFriendName(friend);
+			
+			var jsonObj = {
+				"type" : "history",
+				"sender" : self,
+				"receiver" : seller,
+				"message" : ""
+			};
+			webSocket.send(JSON.stringify(jsonObj));
+		}
+	
+		function disconnect() {
+			webSocket.close();
+		}
+	
+		function updateFriendName(id) {
+			const friend = id;
+			statusOutput.innerHTML = friend;
+		}
 
 	function sendQuery(datas){ 
 		

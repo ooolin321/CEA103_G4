@@ -1667,7 +1667,8 @@ ol {
 }
 
 .footer-logo img {
-    height: 140px;
+  height: 120px;
+  margin-bottom: 15px;
 }
 
 .footer-widget .modefemmeinfo li{

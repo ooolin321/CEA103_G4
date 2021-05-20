@@ -161,8 +161,8 @@ h3 {
 									<div class="tile">
 										<h3 class="tile-title">我的已出貨商品</h3>
 										<div id="change">
-											<input type="submit" class="btn btn-info" value="取消出貨">
-											<input type="hidden" name="action" value="unshipped">
+<!-- 											<input type="submit" class="btn btn-info" value="取消出貨"> -->
+<!-- 											<input type="hidden" name="action" value="unshipped"> -->
 										</div>
 										<table class="table table-hover">
 											<thead>

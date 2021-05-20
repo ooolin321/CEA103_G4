@@ -6,15 +6,15 @@
 <%@ page import="com.product_type.model.*"%>
 <%@ page import="com.product.model.*"%>
 <%
-Product_TypeDAO dao2 = new Product_TypeDAO();
-List<Product_TypeVO> list2 = dao2.getAll();
-pageContext.setAttribute("list2", list2);
-
-Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
-pageContext.setAttribute("buylist", buylist);
-
-UserVO userVO2 = (UserVO) session.getAttribute("account");
-session.setAttribute("userVO", userVO2);
+	Product_TypeDAO dao2 = new Product_TypeDAO();
+	List<Product_TypeVO> list2 = dao2.getAll();
+	pageContext.setAttribute("list2", list2);
+	
+	Vector<ProductVO> buylist = (Vector<ProductVO>) session.getAttribute("shoppingcart");
+	pageContext.setAttribute("buylist", buylist);
+	
+	UserVO userVO2 = (UserVO) session.getAttribute("account");
+	session.setAttribute("userVO", userVO2);
 %>
 
 <!-- Page Preloder -->
@@ -259,13 +259,9 @@ session.setAttribute("userVO", userVO2);
 <!-- Header End -->
 <!-- heade搜尋 -->
 <script>
-// window.onload=function (){
-	
-	/* document.getElementById("chat-seller").addEventListener("click",getSellerId()); */
 	const chatBtn = document.querySelector(".chat-btn");
 	const miniChat = document.querySelector(".mini-chat");
 	const closeChatBtn = document.querySelector(".ti-close");
-	// let seller;
 	chatBtn.addEventListener("click", function() {
 	miniChat.style.visibility = "visible";
 	chatBtn.style.visibility = "hidden";
@@ -464,8 +460,8 @@ closeChatBtn.addEventListener("click", function() {
 			const friend = id;
 			statusOutput.innerHTML = friend;
 		}
-// }
-	function sendQuery(datas){ 
+
+		function sendQuery(datas){ 
 		
 		$.ajax({ 
 		  url:"<%=request.getContextPath()%>/ProductSearch",

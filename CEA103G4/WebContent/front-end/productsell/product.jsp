@@ -463,9 +463,9 @@
     	
     	
 	function getSellerId(){
-		seller = "${productVO.user_id}";
-		var chatBtn = document.querySelector(".chat-btn");
-		var miniChat = document.querySelector(".mini-chat");
+		let seller = "${productVO.user_id}";
+		let chatBtn = document.querySelector(".chat-btn");
+		let miniChat = document.querySelector(".mini-chat");
 		chatBtn.style.visibility="hidden";
 		miniChat.style.visibility="visible";
 		connect(seller);

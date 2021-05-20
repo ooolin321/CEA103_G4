@@ -95,13 +95,13 @@ session.setAttribute("userVO", userVO2);
 	border-radius: 6px 6px 6px 0px;
 }
 
-ul {
+#messagesArea ul {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 
-ul li {
+#messagesArea ul li {
 	display: inline-block;
 	clear: both;
 	padding: 2px;
@@ -276,19 +276,10 @@ ul li {
 						href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i
 							class="icon_profile"></i></a></li>
 					<li>
-<<<<<<< HEAD
-						<form id="myForm" action="<%=request.getContextPath()%>/chat.do"
-							method="POST">
-							<input value="${userVO.user_id}" name="userName" type="hidden" />
-							<a href="#" onclick="document.getElementById('myForm').submit();">線上客服&nbsp;<i
-								class="fa fa-comment-o"></i></a>
-						</form>
-=======
 					<form  id="myForm" action="<%=request.getContextPath() %>/chat.do" method="POST">
 					<input value="${userVO.user_name}" name="userName" type="hidden"/>
 					<a href="#" onclick="document.getElementById('myForm').submit();">線上客服&nbsp;<i class="fa fa-comment-o"></i></a>
 					</form>
->>>>>>> b81e7df55e21aa42830abd929d20726bdd1d2dc8
 					</li>
 					<!-- <li>
                 <a href="#">Pages</a>
@@ -365,7 +356,7 @@ closeChatBtn.addEventListener("click", function() {
 	miniChat.style.visibility="visible";
 	connect();
 // 	}
-}
+};
     	if("${userVO.user_id}" == ""){
 		    document.getElementById("chatBtn").style.visibility="hidden";
     	}

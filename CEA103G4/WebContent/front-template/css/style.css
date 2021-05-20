@@ -285,6 +285,13 @@ ol {
   Header
 -----------------------*/
 
+#chatBtn {
+	position: fixed;
+	right: 8px;
+	bottom: 0px;
+	z-index: 99999;	
+}
+
 #chatBtn .chat-btn{
 	display: inline-block;
     font-size: 14px;
@@ -296,6 +303,7 @@ ol {
     border-radius: 5px;
     cursor: pointer;
     box-shadow: 1px 1px 10px rgb(0 0 0 / 10%);
+    visibility: visible;
 }
 
 #chatBtn .chat-notice{
@@ -320,7 +328,101 @@ ol {
     border: 1px solid #dcdce0;
     background:whitesmoke;
     transition: width .25s cubic-bezier(.4,.8,.74,1),height .25s cubic-bezier(.4,.8,.74,1);
+    position: fixed;
+	right: 8px;
+	bottom: 0px;
+	z-index: 99999;
+	visibility: hidden;
+	border-radius: 10px;
 }
+
+/* .mini-chat { */
+/* 	position: fixed; */
+/* 	right: 10px; */
+/* 	bottom: 0px; */
+/* 	z-index: 99999; */
+/* 	visibility: hidden; */
+/* 	border-radius: 10px; */
+/* } */
+
+.mini-chat .chat {
+	position: absolute;
+	bottom: 0.5px;
+	border-radius: 10px;
+	padding-left: 5px;
+}
+
+.friend_id {
+	display: inline-block;
+	position: absolute;
+	right: 50%;
+}
+
+.cancel {
+	position: absolute;
+	right: 3px;
+	display: inline-block;
+	cursor: pointer; 
+}
+
+/* .plane { */
+/* 	position: absolute; */
+/* 	display: inline-block; */
+/* 	margin-right: 1px; */
+/* 	border-radius: 10px; */
+/* } */
+.mini-chat .chat-input {
+	border: 1px;
+	display: inline-block;
+	border-radius: 10px;
+	padding-left: 5px;
+}
+
+.mini-chat .middle {
+	position: absolute;
+	display: block;
+	margin: 3px auto;
+	top: 20px;
+	width: 238px;
+	heigh: 245px;
+	background: white;
+	resize: none;
+	padding: 5px;
+	overflow: auto;
+}
+
+.me {
+	float: right;
+	background: #0084ff;
+	margin-right: 4px;
+	border-radius: 6px 6px 0px 6px;
+}
+
+.friend {
+	float: left;
+	background: #0084ff;
+	margin-left: 4px;
+	border-radius: 6px 6px 6px 0px;
+}
+
+#messagesArea ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#messagesArea ul li {
+	display: inline-block;
+	clear: both;
+	padding: 2px;
+	margin-bottom: 2px;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+.mini-chat #sendMessage{
+	cursor: pointer; 
+}
+
 .header-section {
   background-color: pink;
 }

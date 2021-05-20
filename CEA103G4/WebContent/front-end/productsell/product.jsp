@@ -451,14 +451,15 @@
     
     
     	<script>
-// 	function getSellerId(){
-// 		seller = "${productVO.user_id}";
-// 		var chatBtn = document.querySelector(".chat-btn");
-// 		var miniChat = document.querySelector(".mini-chat");
-// 		chatBtn.style.visibility="hidden";
-// 		miniChat.style.visibility="visible";
-// 		connect(seller);
-// 	}
+	function getSellerId(){
+		seller = "${productVO.user_id}";
+		var chatBtn = document.querySelector(".chat-btn");
+		var miniChat = document.querySelector(".mini-chat");
+		chatBtn.style.visibility="hidden";
+		miniChat.style.visibility="visible";
+		connect(seller);
+	}
+	
 	
 	function sendQuery(datas){ 
 		

@@ -21,94 +21,6 @@ session.setAttribute("userVO", userVO2);
 <div id="preloder">
 	<div class="loader"></div>
 </div>
-<style>
-#chatBtn {
-	position: fixed;
-	right: 10px;
-	bottom: 0px;
-	z-index: 99999;
-}
-
-.mini-chat {
-	position: fixed;
-	right: 10px;
-	bottom: 0px;
-	z-index: 99999;
-	visibility: hidden;
-	border-radius: 10px;
-}
-
-.chat {
-	position: absolute;
-	bottom: 0.5px;
-	border-radius: 10px;
-}
-
-.friend_id {
-	display: inline-block;
-	position: absolute;
-	right: 50%;
-}
-
-.cancel {
-	position: absolute;
-	right: 1px;
-	display: inline-block;
-}
-
-/* .plane { */
-/* 	position: absolute; */
-/* 	display: inline-block; */
-/* 	margin-right: 1px; */
-/* 	border-radius: 10px; */
-/* } */
-.chat-input {
-	border: 1px;
-	display: inline-block;
-	border-radius: 10px;
-}
-
-.middle {
-	position: absolute;
-	display: block;
-	margin: 3px auto;
-	top: 20px;
-	width: 238px;
-	heigh: 245px;
-	background: white;
-	resize: none;
-	padding: 5px;
-	overflow: auto;
-}
-
-.me {
-	float: right;
-	background: #0084ff;
-	margin-right: 4px;
-	border-radius: 6px 6px 0px 6px;
-}
-
-.friend {
-	float: left;
-	background: #0084ff;
-	margin-left: 4px;
-	border-radius: 6px 6px 6px 0px;
-}
-
-#messagesArea ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-#messagesArea ul li {
-	display: inline-block;
-	clear: both;
-	padding: 2px;
-	margin-bottom: 2px;
-	font-family: Helvetica, Arial, sans-serif;
-}
-</style>
 <!-- Header Section Begin -->
 <header class="header-section">
 	<div class="container">
@@ -230,7 +142,8 @@ session.setAttribute("userVO", userVO2);
 										href="${pageContext.request.contextPath}/front-end/protected/check-out.html"
 										class="primary-btn checkout-btn">結帳</a>
 								</div>
-							</div> <%-- 							</c:if> --%></li>
+							</div>
+							</li>
 						<c:if test="${buylist.size() > 0 }">
 							<li class="cart-price" id="totalprice">$${sum}</li>
 						</c:if>
@@ -270,7 +183,7 @@ session.setAttribute("userVO", userVO2);
 								href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp">直播牆</a></li>
 							<li><a
 								href="<%=request.getContextPath()%>/front-end/live/livePreview.jsp">直播預告</a></li>
-							<!-- <li><a href="#">Kid's</a></li> -->
+				
 						</ul></li>
 					<li><a
 						href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i
@@ -297,7 +210,9 @@ session.setAttribute("userVO", userVO2);
 			<div id="mobile-menu-wrap"></div>
 		</div>
 	</div>
-
+	<div id="goTop" style="position: fixed; right: 0px; bottom: 45px; z-index: 99999;">
+		<a href="#topLogo"><img style="height:75px;" src="<%=request.getContextPath()%>/front-template/images/top.gif" title="回上方"></a>
+	</div>
 	<div id="chatBtn">
 		<!-- <div class="chat-notice">1</div> -->
 		<div class="chat-btn">
@@ -345,18 +260,18 @@ closeChatBtn.addEventListener("click", function() {
 	chatBtn.style.visibility = "visible";
 })
 
- function getSellerId(){
+//  function getSellerId(){
 
-	seller = "${productVO.user_id}";
-// 	if(seller == "${userVO.user_id}"){
-// 		this.disabled=true;
-// 		window.alert("請勿私聊自己");
-// 	}else{
-	chatBtn.style.visibility="hidden";
-	miniChat.style.visibility="visible";
-	connect();
-// 	}
-};
+// 	seller = "${productVO.user_id}";
+// // 	if(seller == "${userVO.user_id}"){
+// // 		this.disabled=true;
+// // 		window.alert("請勿私聊自己");
+// // 	}else{
+// 	chatBtn.style.visibility="hidden";
+// 	miniChat.style.visibility="visible";
+// 	connect();
+// // 	}
+// };
     	if("${userVO.user_id}" == ""){
 		    document.getElementById("chatBtn").style.visibility="hidden";
     	}
@@ -372,7 +287,7 @@ closeChatBtn.addEventListener("click", function() {
     var webSocket;
     		
    
-    function connect() {
+    function connect(seller) {
 		// create a websocket
 		webSocket = new WebSocket(endPointURL);
 		webSocket.onopen = function(event) {
@@ -491,15 +406,14 @@ closeChatBtn.addEventListener("click", function() {
 					alert('很抱歉,查無此商品');
 	            } else {
 	            	var data = JSON.stringify(result);
-					window.location.href='<%=request.getContextPath()%>
-	/front-end/productsell/shop.jsp?data='
-									+ encodeURI(data);
-						}
-					},
-					error : function() {
-						alert('很抱歉,查無此商品');
-					},
-
-				})
+					window.location.href='<%=request.getContextPath()%>/front-end/productsell/shop.jsp?data='+encodeURI(data);
+	            }
+		  }, 
+		  error:function () {
+			  alert('很抱歉,查無此商品');
+		  },
+			
+		 }) 
 	}
+	
 </script>

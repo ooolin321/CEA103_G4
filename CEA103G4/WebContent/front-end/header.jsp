@@ -222,14 +222,11 @@ ul li {
 								<div class="select-button">
 									<a
 										href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp"
-<<<<<<< HEAD
 										class="primary-btn view-card">購物車清單</a> <a
 										href="${pageContext.request.contextPath}/front-end/protected/check-out.jsp"
-=======
 										class="primary-btn view-card">購物車清單</a>
 									<a
 										href="${pageContext.request.contextPath}/front-end/protected/check-out.html"
->>>>>>> b81e7df55e21aa42830abd929d20726bdd1d2dc8
 										class="primary-btn checkout-btn">結帳</a>
 								</div>
 							</div> <%-- 							</c:if> --%></li>

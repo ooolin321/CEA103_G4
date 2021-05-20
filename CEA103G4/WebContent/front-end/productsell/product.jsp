@@ -251,7 +251,7 @@
 										</div>
 									</c:if>
 									<div class="pd-function">
-										<a href="#" class="primary-btn chat-seller" onclick="getSellerId();">私訊賣家</a>
+										<a href="javascript:void(0)" class="primary-btn chat-seller" onclick="getSellerId();">私訊賣家</a>
 <!-- 										<FORM METHOD="post" -->
 <%-- 											ACTION="<%=request.getContextPath()%>/front-end/message/chatMessage.do"> --%>
 <%-- 											<input type="hidden" name="user_id" value="${userVO.user_id}"> --%>

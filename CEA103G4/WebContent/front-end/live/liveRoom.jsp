@@ -120,6 +120,26 @@ input {
 		}
 	}
 }
+
+@media only screen and (max-width: 479px) {
+#player{
+ height: 240px;
+ margin-left: 12px;
+}
+#messagesArea {
+    height: 350px;
+    width: 100%;
+    border: 1px solid #bbbbbb;
+    overflow-y: scroll;
+    display: inline-block;
+    right: 30px;
+    margin-top: 10px;
+    margin-left: 11px;
+}
+
+}
+
+
 </style>
 </head>
 
@@ -300,7 +320,7 @@ input {
 		</script>
 	</div>
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-9 col-12">
 			<div id="player"></div>
 		</div>
 

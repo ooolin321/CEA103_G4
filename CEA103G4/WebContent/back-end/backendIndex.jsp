@@ -81,8 +81,8 @@
 	<main class="app-content">
 		<div class="app-title">
 			<div>
-				<img class="rounded-circle" width="45px" height="40px"
-					src="../front-template/images/favicon.ico" />
+				<img class="rounded-circle" width="45px" height="40px" style="margin-right: 10px;"
+					src="../front-template/images/01.png" />
 				<h1 style="display: inline-block;">Mode Femme</h1>
 			</div>
 			<ul class="app-breadcrumb breadcrumb">

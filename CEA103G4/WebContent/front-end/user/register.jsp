@@ -85,22 +85,22 @@
 	<tr>
 		<td>帳號 </td>
 		<td><input type="TEXT" class="form-control" name="user_id" size="45" 
-			 value="<%= (userVO==null)? "abcd01" : userVO.getUser_id()%>" /></td>
+			 value="<%= (userVO==null)? "" : userVO.getUser_id()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_id}</b></td></tr>
 	<tr>
 		<td>密碼 </td>
 		<td><input type="password" class="form-control" name="user_pwd" size="45" 
-			 value="<%= (userVO==null)? "abcd01" : userVO.getUser_pwd()%>" /></td>
+			 value="<%= (userVO==null)? "" : userVO.getUser_pwd()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_pwd}</b></td></tr>
 	<tr>
 		<td>姓名 </td>
 		<td><input type="TEXT" class="form-control" name="user_name" size="45" 
-			 value="<%= (userVO==null)? "漢斯" : userVO.getUser_name()%>" /></td>
+			 value="<%= (userVO==null)? "" : userVO.getUser_name()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_name}</b></td></tr>
 	<tr>
 		<td>身分證字號 </td>
 		<td><input type="TEXT" class="form-control" name="id_card" size="45"
-			 value="<%= (userVO==null)? "A123456789" : userVO.getId_card()%>" /></td>
+			 value="<%= (userVO==null)? "" : userVO.getId_card()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.id_card}</b></td></tr>
 	<tr>
 	<td>性別 </td>
@@ -117,7 +117,7 @@
 	<tr>
 		<td>Email</td>
 		<td><input type="TEXT" class="form-control" name="user_mail" size="45"
-			 value="<%= (userVO==null)? "joy15132000@hotmail.com" : userVO.getUser_mail()%>" /></td>
+			 value="<%= (userVO==null)? "" : userVO.getUser_mail()%>" /></td>
 	</tr><tr><td></td><td><font color=red><b>${errorMsgs.user_mail}</b></td></tr>
 	<tr>
 		<td>電話</td>

@@ -6,6 +6,7 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+import com.ad.model.AdDAO;
 import com.auth.model.AuthService;
 import com.auth.model.AuthVO;
 import com.emp.model.*;

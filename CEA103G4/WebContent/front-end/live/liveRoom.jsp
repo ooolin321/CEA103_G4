@@ -528,7 +528,7 @@ function refresh(){
 				
 			}else if("chat" === jsonObj.type && ${param.live_no} == jsonObj.live_no){
 
-				debugger;
+
 				//聊天//競標中
 				if(/^\d*$/.test(jsonObj.message)  && "${userVO.user_id}" == jsonObj.sender){
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
@@ -556,8 +556,18 @@ function refresh(){
 				}else if("start"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以start
 					//&& ${liveVO.user_id==userVO.user_id}
 					//開始競標
-					alert("開始競標#"+$("#showProduct").find("td").eq(1).html());
-					
+					Swal.fire({
+						  title: "開始競標#"+$("#showProduct").find("td").eq(1).html(),
+						  width: 600,
+						  padding: '3em',
+						  background: '#fff url(/images/trees.png)',
+						  backdrop: `
+						    rgba(0,0,123,0.4)
+						    url(${pageContext.request.contextPath}/images/nyan-cat.gif)
+						    left top
+						    no-repeat
+						  `
+						})
 					
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 						//0給初始直
@@ -585,7 +595,7 @@ function refresh(){
 				}else if("over"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以end
 					//&& ${liveVO.user_id==userVO.user_id}
 					//結束競標
-					alert("結束競標#"+$("#showProduct").find("td").eq(1).html());
+					Swal.fire("結束競標#"+$("#showProduct").find("td").eq(1).html())
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 							'type' : 'max',
 							'sender' : self,
@@ -639,7 +649,7 @@ function refresh(){
 								 "action": "order_ajax"
 						  },
 						  success: function(res) {
-								alert("已產生訂單");
+
 								refresh();
 					      }, 	  
 					

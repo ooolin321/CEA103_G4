@@ -64,9 +64,25 @@ session.setAttribute("userVO", userVO2);
 			var jsonObj = JSON.parse(event.data);
 			if ("open" === jsonObj.type) {
 				refreshFriendList(jsonObj);
-				
-			} else if ("empNotAvailable" === jsonObj.type){
-				consloe.log("目前客服人員均忙線中，請稍候。", "emp")
+				messagesArea.innerHTML = '';
+				var ul = document.createElement('ul');
+				ul.id = "area";
+				messagesArea.appendChild(ul);
+				var li = document.createElement('li');
+				var messages = JSON.parse(jsonObj.message);
+console.log(messages);				
+				li.innerHTML = messages;
+				ul.appendChild(li);
+			}
+			else if("empNotAvailable"===jsonObj.type){
+console.log(123);
+messagesArea.innerHTML = '';
+var ul = document.createElement('ul');
+ul.id = "area";
+messagesArea.appendChild(ul);
+var li = document.createElement('li');
+li.innerHTML = "目前客服不在線，請稍侯";
+ul.appendChild(li);
 			}
 			else if ("history" === jsonObj.type) {
 				messagesArea.innerHTML = '';
@@ -88,7 +104,7 @@ session.setAttribute("userVO", userVO2);
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
 				var li = document.createElement('li');
-				jsonObj.sender === self ? li.className = 'me' : li.className = 'friend' +time;
+				jsonObj.sender === self ? li.className = 'me' : li.className = 'friend';
 				li.innerHTML = jsonObj.message;
 				console.log(li);
 				document.getElementById("area").appendChild(li);
@@ -120,7 +136,6 @@ session.setAttribute("userVO", userVO2);
 				"sender" : self,
 				"receiver" : friend,
 				"message" : message,
-
  			};
 			webSocket.send(JSON.stringify(jsonObj));
 			inputMessage.value = "";

@@ -787,12 +787,9 @@ public class OrderServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
-				@SuppressWarnings("unchecked")
 
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-				Integer count = new Integer(req.getParameter("row_count"));
-
-				Integer order_price = new Integer(req.getParameter("order_price"));
+				Integer order_price = new Integer(req.getParameter("order_price")); //抓取金額還不正確
 				Integer logistics = new Integer(req.getParameter("logistics"));
 				Integer pay_method = new Integer(req.getParameter("pay_method"));
 				String rec_name = req.getParameter("rec_name");
@@ -803,29 +800,16 @@ public class OrderServlet extends HttpServlet {
 				String rec_phone = req.getParameter("rec_phone");
 				String rec_cellphone = req.getParameter("rec_cellphone");
 				String user_id = req.getParameter("user_id");
-				Integer point = 0;
-				Integer discount = 0;
-				Integer order_state = 0;
-				Integer order_shipping = 0;
-				String product_num[] = req.getParameterValues("product_num");
-				String product_no[] = req.getParameterValues("product_no");
-				String orderDetailPrice[] = req.getParameterValues("orderDetailPrice");
-				ProductService productSvc = new ProductService();
+				Integer point = 0; //判斷 依照總金額傳送點數到後端
+				Integer discount = 0; //前端取值 顧客用多少點數折抵（最後實現）
+				Integer order_state = 0; //判斷 付款方式若為信用卡、錢包 狀態為0 
+				Integer order_shipping = 0; //判斷 超商、宅配為不同運費值（可從前端取值）
 
-//					for(int i=0; i<count; i++) {
+				@SuppressWarnings("unchecked")
 				Map<String, Vector<ProductVO>> mBuylist = (Map<String, Vector<ProductVO>>) req.getSession()
 						.getAttribute("list");
 
 				for (String seller_id : mBuylist.keySet()) {
-//						Integer product_remaining = productInf.getProduct_remaining();
-//						Integer product_price = productInf.getProduct_price();
-
-//					if((product_remaining - product_num) > 0) {
-//						product_remaining -= product_num; 
-//					}else if((product_remaining[0] - product_num) == 0) {
-//						product_remaining -= product_num;
-//						product_state = 3; //售完狀態變更為已售出
-//					}
 
 					OrderVO orderVO = new OrderVO();
 					orderVO.setOrder_state(order_state);
@@ -847,7 +831,7 @@ public class OrderServlet extends HttpServlet {
 					List<Order_detailVO> list = new ArrayList<Order_detailVO>();
 
 					Vector<ProductVO> productlist = mBuylist.get(seller_id);
-					System.out.println(productlist.size());
+					System.out.println("訂單筆數為:"+productlist.size());
 					for (ProductVO asd : productlist) {
 						Order_detailVO order_detailVO = new Order_detailVO();
 						int price	= asd.getProduct_price() * asd.getProduct_quantity();
@@ -855,32 +839,23 @@ public class OrderServlet extends HttpServlet {
 						order_detailVO.setProduct_no(asd.getProduct_no());
 						order_detailVO.setProduct_num(asd.getProduct_quantity());
 						list.add(order_detailVO);
+						
+						Integer remaining = null;
+						ProductService productSvc = new ProductService();
+						if(asd.getProduct_remaining()-asd.getProduct_quantity()>0) {
+							remaining = asd.getProduct_remaining() - asd.getProduct_quantity();
+							productSvc.updateProductRemaining(asd.getProduct_no(), remaining , asd.getProduct_state());
+						}else {
+							remaining = asd.getProduct_remaining() - asd.getProduct_quantity();
+							productSvc.updateProductRemaining(asd.getProduct_no(), remaining , 3);//售完狀態變更為已售出
+						}
 					}
 					/*************************** 2.開始修改資料 ***************************************/
 					OrderService orderSvc = new OrderService();
 					orderSvc.insertWithDetails(orderVO, list);
-
+					
 				}
-
-
-//					ProductVO productVO = new ProductVO();
-//					productVO.setProduct_no(new Integer(product_no[i]));
-//					productVO.setProduct_remaining(new Integer (product_remaining[i]));
-//					productVO.setProduct_state(product_state);
-				// Send the use back to the form, if there were errors
-//					if (!errorMsgs.isEmpty()) {
-//						req.setAttribute("orderVO", orderVO); // 資料庫取出的orderVO物件,存入req
-////						req.setAttribute("productVO", productVO);
-//						RequestDispatcher failureView = req
-//								.getRequestDispatcher("/front-end/index.jsp");
-//						failureView.forward(req, res);
-//						return;
-//					}
-
 				
-//					ProductService productSvc = new ProductService();
-//					productVO = productSvc.updateProductRemaining(new Integer(product_no[i]), new Integer(product_remaining[i]), product_state);
-
 				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
 				String url = "/front-end/orderManagement/OrderListA.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交index.jsp

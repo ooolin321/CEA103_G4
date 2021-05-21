@@ -146,25 +146,25 @@
 									value="${userVO.user_mobile}"/>
 							</div>
 						</div>
-						<div class="col-lg-6">
-							<div class="select-option">
-								<select name="pay_method" class="p-show" id="pay_method">
-									<option value="null">選擇付款方式</option>
-									<option value="0">錢包</option>
-									<option value="1">信用卡</option>
-									<option value="2">轉帳</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="select-option">
-								<select name="logistics" class="" id="logistics">
-									<option value="null">選擇物流方式</option>
-									<option value="0">超商</option>
-									<option value="1">宅配</option>
-								</select>
-							</div>
-						</div>
+<!-- 						<div class="col-lg-6"> -->
+<!-- 							<div class="select-option"> -->
+<!-- 								<select name="pay_method" class="p-show" id="pay_method"> -->
+<!-- 									<option value="null">選擇付款方式</option> -->
+<!-- 									<option value="0">錢包</option> -->
+<!-- 									<option value="1">信用卡</option> -->
+<!-- 									<option value="2">轉帳</option> -->
+<!-- 								</select> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="col-lg-6"> -->
+<!-- 							<div class="select-option"> -->
+<!-- 								<select name="logistics" class="" id="logistics"> -->
+<!-- 									<option value="null">選擇物流方式</option> -->
+<!-- 									<option value="0">超商</option> -->
+<!-- 									<option value="1">宅配</option> -->
+<!-- 								</select> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
 					</div>
 					<div class="col-lg-6">
 						<div class="place-order">

@@ -763,7 +763,7 @@ public class OrderServlet extends HttpServlet {
 				
 				/*************************** 2.開始修改資料 *****************************************/
 				OrderService orderSvc = new OrderService();
-				orderSvc.updateSrating(srating, srating_content, order_no);//更新評價
+				orderSvc.updateSrating(srating, srating_content, order_no);//更新評價 已取貨預留更改
 				
 				UserService userSvc = new UserService();
 				userSvc.updateUserRating(srating, 1, seller_id); // seller_id轉user_id
@@ -794,9 +794,8 @@ public class OrderServlet extends HttpServlet {
 			try {
 
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+				
 				Integer order_price = new Integer(req.getParameter("order_price")); //抓取金額還不正確
-				Integer logistics = new Integer(req.getParameter("logistics"));
-				Integer pay_method = new Integer(req.getParameter("pay_method"));
 				String rec_name = req.getParameter("rec_name");
 				String zipcode = req.getParameter("zipcode");
 				String city = req.getParameter("city");
@@ -807,9 +806,14 @@ public class OrderServlet extends HttpServlet {
 				String user_id = req.getParameter("user_id");
 				Integer point = 0; //判斷 依照總金額傳送點數到後端
 				Integer discount = 0; //前端取值 顧客用多少點數折抵（最後實現）
-				Integer order_state = 0; //判斷 付款方式若為信用卡、錢包 狀態為0 
-				Integer order_shipping = 0; //判斷 超商、宅配為不同運費值（可從前端取值）
-
+				Integer order_state = 1; // 訂單狀態 預設已付款
+				Integer order_shipping = 1; // 物流方式 預設宅配
+//				Integer logistics = new Integer(req.getParameter("logistics"));
+				Integer logistics = 1;
+//				Integer pay_method = new Integer(req.getParameter("pay_method"));
+				Integer pay_method = 1;
+				
+				
 				@SuppressWarnings("unchecked")
 				Map<String, Vector<ProductVO>> mBuylist = (Map<String, Vector<ProductVO>>) req.getSession()
 						.getAttribute("list");
@@ -880,5 +884,45 @@ public class OrderServlet extends HttpServlet {
 			}
 		}
 
+//		if ("pay".equals(action)) { //付款方式有多種在修正
+//
+//			List<String> errorMsgs = new LinkedList<String>();
+//			// Store this set in the request scope, in case we need to
+//			// send the ErrorPage view.
+//			req.setAttribute("errorMsgs", errorMsgs);
+//
+//			try {
+//				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+//
+//				String user_id = req.getParameter("user_id");
+//
+//				Integer order_no = new Integer(req.getParameter("order_no"));;
+//
+//				Integer order_price = new Integer(req.getParameter("order_price"));
+//				
+//				/*************************** 2.開始修改資料 *****************************************/
+//				OrderService orderSvc = new OrderService();
+//				orderSvc.updateSrating(srating, srating_content, order_no);//更新評價
+//				
+//				UserService userSvc = new UserService();
+//				userSvc.updateUserRating(srating, 1, seller_id); // seller_id轉user_id
+//				
+//				OrderVO orderVO = orderSvc.getOneOrder(order_no);
+//				Integer price =orderVO.getOrder_price();
+//				userSvc.addCash(price, seller_id);//訂單完成撥款給賣家
+//				
+//				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+//				String url = "/front-end/orderManagement/OrderListA.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+//				successView.forward(req, res);
+//
+//				/*************************** 其他可能的錯誤處理 *************************************/
+//			} catch (Exception e) {
+//				errorMsgs.add("無法取得資料:" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/orderManagement/OrderListA.jsp");
+//				failureView.forward(req, res);
+//			}
+//		}
+		
 	}
 }

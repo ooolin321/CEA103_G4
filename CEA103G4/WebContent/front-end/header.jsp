@@ -27,7 +27,7 @@
 		<div class="inner-header">
 			<div class="row">
 				<div class="col-lg-2 col-md-2">
-					<div class="logo">
+					<div class="logo" id="topLogo">
 						<a href="${pageContext.request.contextPath}/front-end/index.jsp">
 							<h2>
 								Mode femme <br /> <small>Second&nbsp;Hand </small>

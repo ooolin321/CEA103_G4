@@ -127,7 +127,7 @@
 										href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp"
 										class="primary-btn view-card">購物車清單</a> <a
 										href="${pageContext.request.contextPath}/front-end/protected/check-out.jsp"
-										class="primary-btn view-card">結帳</a>
+										class="primary-btn checkout-btn">結帳</a>
 								</div>
 							</div>
 							</li>

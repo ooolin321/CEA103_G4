@@ -31,7 +31,7 @@
               <h5>Information</h5>
               <ul>
                 <li><a href="#">關於Mode Femme</a></li>
-                <li><a href="#">常見問題</a></li>
+                <li><a href="<%=request.getContextPath()%>/front-end/qa/qna.jsp">常見問題</a></li>
                 <li><a href="#">聯絡我們</a></li>
 <!--                 <li><a href="#">Serivius</a></li> -->
               </ul>

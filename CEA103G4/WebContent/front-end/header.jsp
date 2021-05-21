@@ -27,7 +27,7 @@
 		<div class="inner-header">
 			<div class="row">
 				<div class="col-lg-2 col-md-2">
-					<div class="logo">
+					<div class="logo" id="topLogo">
 						<a href="${pageContext.request.contextPath}/front-end/index.jsp">
 							<h2>
 								Mode femme <br /> <small>Second&nbsp;Hand </small>
@@ -35,16 +35,6 @@
 						</a>
 					</div>
 				</div>
-				<!-- 				<div class="col-lg-7 col-md-7"> -->
-				<!-- 					<div class="advanced-search"> -->
-				<%-- 						<form class="input-group" id="search" METHOD="post" ACTION="<%=request.getContextPath()%>/ProductSearch"> --%>
-				<!-- 							<input type="text" id="search-input" name="product_name" placeholder="What do you need?" />  -->
-				<!-- 							<input type="hidden" name="action" value="search" /> -->
-				<!-- 							<button type="submit"><i class="ti-search"></i></button> -->
-				<!-- 						</form> -->
-				<!-- 					</div> -->
-				<!-- 				</div> -->
-				<!-- ------------JSP先不用↑------------ -->
 				<div class="col-lg-7 col-md-7">
 					<div class="advanced-search">
 						<form class="input-group" id="search">
@@ -100,7 +90,7 @@
 								</c:if> <c:if test="${buylist == null}">
 									<span id="iba">0</span>
 								</c:if>
-						</a> <%-- 						<c:if test="${buylist != null && buylist.size() > 0}"> --%>
+						</a> 
 							<div class="cart-hover">
 								<div class="select-items">
 									<table>
@@ -159,7 +149,6 @@
 			<div class="nav-depart">
 				<div class="depart-btn">
 					<i class="ti-menu"></i> <span>商品分類</span>
-					<!-- 					<i class="fa fa-hand-o-down" id="ti-fa-hand"></i> -->
 					<ul class="depart-hover">
 						<c:forEach var="product_typeVO" items="${list2}" begin="0"
 							end="${list2.size()}">
@@ -195,17 +184,7 @@
 								class="fa fa-comment-o"></i></a>
 						</form>
 					</li>
-					<!-- <li>
-                <a href="#">Pages</a>
-                <ul class="dropdown">
-                  <li><a href="./blog-details.html">Blog Details</a></li>
-                  <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                  <li><a href="./check-out.html">Checkout</a></li>
-                  <li><a href="./faq.html">Faq</a></li>
-                  <li><a href="./register.html">Register</a></li>
-                  <li><a href="./login.html">Login</a></li>
-                </ul>
-              </li> -->
+					<li><a href="<%=request.getContextPath()%>/front-end/qa/qna.jsp">常見問題</a></li>
 				</ul>
 			</nav>
 			<div id="mobile-menu-wrap"></div>

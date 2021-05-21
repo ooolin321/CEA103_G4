@@ -63,7 +63,7 @@
               <main class="app-content">
                 <div class="app-title">
                   <div>
-                    <h1><i class="fa fa-drivers-license-o"></i> 會員首頁</h1>
+                    <h1><i class="fa fa-user fa-lg"></i> 會員首頁</h1>
                     </div>
                   <ul class="app-breadcrumb breadcrumb">
                     <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><i class="fa fa-home fa-lg"></i></a></li>
@@ -78,7 +78,7 @@
 						<sql:setDataSource dataSource="jdbc/admin" var="xxx"
 							scope="application" />
 						<sql:query var="rs" dataSource="${xxx}" startRow="0">
-    						 SELECT USER_POINT FROM CEA103_G4.USER WHERE USER_ID='${userVO.user_id}'
+    						 SELECT USER_POINT FROM cea103_g4.USER WHERE USER_ID='${userVO.user_id}'
  						 </sql:query>
  						 <c:forEach var="row" items="${rs.rows}">
 						<p><b>${row.user_point}點</b></p>
@@ -96,7 +96,7 @@
                         <c:if test="${userVO.user_comment != 0}">
                         <h4>賣家評價</h4>
                         <sql:query var="rs" dataSource="${xxx}" startRow="0">
-    						 SELECT USER_COMMENT,COMMENT_TOTAL FROM CEA103_G4.USER WHERE USER_ID='${userVO.user_id}'
+    						 SELECT USER_COMMENT,COMMENT_TOTAL FROM cea103_g4.USER WHERE USER_ID='${userVO.user_id}'
  						 </sql:query>
  						 <c:forEach var="row" items="${rs.rows}">
                         <p><b>
@@ -118,7 +118,7 @@
                       <div class="info">
                         <h4>會員錢包</h4>
                          <sql:query var="rs" dataSource="${xxx}" startRow="0">
-    						 SELECT CASH FROM CEA103_G4.USER WHERE USER_ID='${userVO.user_id}'
+    						 SELECT CASH FROM cea103_g4.USER WHERE USER_ID='${userVO.user_id}'
  						 </sql:query>
  						 <c:forEach var="row" items="${rs.rows}">
                         <p><b>${row.cash}元</b></p>
@@ -131,7 +131,7 @@
                       <div class="info">
                         <h4>違約次數</h4>
                          <sql:query var="rs" dataSource="${xxx}" startRow="0">
-    						 SELECT VIOLATION FROM CEA103_G4.USER WHERE USER_ID='${userVO.user_id}'
+    						 SELECT VIOLATION FROM cea103_g4.USER WHERE USER_ID='${userVO.user_id}'
  						 </sql:query>
  						 <c:forEach var="row" items="${rs.rows}">
                         <p><b>${row.violation}次</b></p>
@@ -249,15 +249,15 @@
  		</sql:query>
  		
         <sql:query var="rs2" dataSource="${xxx}" startRow="0">
-		SELECT PRODUCT_STATE FROM CEA103_G4.PRODUCT WHERE USER_ID = '${userVO.user_id}' and PRODUCT_STATE = 0 ;
+		SELECT PRODUCT_STATE FROM cea103_g4.PRODUCT WHERE USER_ID = '${userVO.user_id}' and PRODUCT_STATE = 0 ;
 		</sql:query>
 		
         <sql:query var="rs3" dataSource="${xxx}" startRow="0">
-		SELECT PRODUCT_STATE FROM CEA103_G4.PRODUCT WHERE USER_ID = '${userVO.user_id}' and PRODUCT_STATE = 3 ;
+		SELECT PRODUCT_STATE FROM cea103_g4.PRODUCT WHERE USER_ID = '${userVO.user_id}' and PRODUCT_STATE = 3 ;
 		</sql:query>
 		
         <sql:query var="rs4" dataSource="${xxx}" startRow="0">
-		SELECT PRODUCT_STATE FROM CEA103_G4.PRODUCT WHERE USER_ID = '${userVO.user_id}' and PRODUCT_STATE = 5 ;
+		SELECT PRODUCT_STATE FROM cea103_g4.PRODUCT WHERE USER_ID = '${userVO.user_id}' and PRODUCT_STATE = 5 ;
 		</sql:query>
  				
 		var pdata = [ {

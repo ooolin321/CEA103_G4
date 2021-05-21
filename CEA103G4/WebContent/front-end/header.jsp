@@ -242,15 +242,46 @@
 						onclick="sendMessage();"></i>
 				</div>
 			</div>
-
 		</div>
 	</div>
+<%-- 			<jsp:useBean id="jedisSvc" scope="page" --%>
+<%-- 	class="com.message.websocket.jedis.JedisHandleMessage" /> --%>
+<%-- 			<c:forEach var="s" item="${jedisSvc.getFriendList(userVO.user_id)}"> --%>
+<%-- 			<div>"${s}"</div> --%>
+<%-- 			</c:forEach> --%>
+	
+	<div class="friendlist">
+		<div class="content">
+			<div class="top-bar">
+				<div class="list">TOP</div>
+				<div class="cancel">
+				<i class="ti-close" onclick="closefriendlist();"></i>
+				</div>
+			</div>
+			<div class="friendArea" id="friendArea">
+			</div>
+		</div>
+	</div>
+	
 </c:if>
 
 </header>
 <!-- Header End -->
 <!-- heade搜尋 -->
 <script>
+var friendlist = document.querySelector(".friendlist");
+function closefriendlist(){
+	friendlist.style.visibility="hidden";
+
+}
+
+// 	const closeChatBtn = document.querySelector(".ti-close");
+// 	closeChatBtn.addEventListener("click", function() {
+// 		console.log("hey");
+// // 		        miniChat.style.visibility = "hidden";
+// // 		        chatBtn.style.visibility = "visible";
+// 		    })
+
 
 //    	const chatBtn = document.querySelector(".chat-btn");
 //     const miniChat = document.querySelector(".mini-chat");

@@ -451,7 +451,7 @@
 	 <script src="${pageContext.request.contextPath}/front-template/js/products-search.js" ></script>
     
     
-    	<script>
+    <script>
     	const chatSeller = document.getElementById("chat-seller");
     	const chatBtn = document.querySelector(".chat-btn");
     	const miniChat = document.querySelector(".mini-chat");
@@ -476,10 +476,11 @@
 	        miniChat.style.visibility = "hidden";
             chatBtn.style.visibility = "visible";
         })
-    	$("#chat_seller").click(function(){
+    	$("#chat-seller").click(function(){
     		if("${userVO.user_id}" == ""){
     			login();
     		}else {
+    			console.log("this is in chat_sellerBTN")
     			getSellerId();
     		}
     	});
@@ -504,7 +505,7 @@
 	var self = '${userVO.user_id}';
 	var webSocket;
 	                
-	       
+	       connect(seller); //測試
 	        function connect(seller) {
 	            // create a websocket
 	            webSocket = new WebSocket(endPointURL);
@@ -516,7 +517,7 @@
 	            webSocket.onmessage = function(event) {
 	                var jsonObj = JSON.parse(event.data);
 	                if ("open" === jsonObj.type) {
-	//                     refreshFriendList(jsonObj);
+	                    refreshFriendList(jsonObj);
 	                    addListener(seller);
 	                } else if ("history" === jsonObj.type) {
 	                    statusOutput.innerHTML = name;
@@ -560,12 +561,10 @@
 	            var friend = statusOutput.textContent;
 	            var message = inputMessage.value.trim();
 				console.log(seller);
-// 	            if (message === "") {
-// 	                alert("Input a message");
-// 	                inputMessage.focus();
-// 	            } else if (friend === "") {
-// 	                alert("Choose a friend");
-// 	            } else {
+	            if (message === "") {
+	                alert("Input a message");
+	                inputMessage.focus();
+	            } else {
 	                var jsonObj = {
 	                    "type" : "chat",
 	                    "sender" : self,
@@ -579,28 +578,29 @@
 	        }
 
 	        // 有好友上線或離線就更新列表
-	        /* function refreshFriendList(jsonObj) {
+	         function refreshFriendList(jsonObj) {
 	            var friends = jsonObj.users;
-	            var row = document.getElementById("row");
-	            row.innerHTML = '';
+	            var friendArea = document.getElementById("friendArea");
+	            friendArea.innerHTML = '';
 	            for (var i = 0; i < friends.length; i++) {
 	                if (friends[i] === self) { continue; }
-	                row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
+					friendName = "${userSvc.getOneUser(productVO.user_id).user_id}"
+	                friendArea.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
 	            }
 	            addListener();
-	        } */
+	        } 
 	        // 註冊列表點擊事件並抓取好友名字以取得歷史訊息
 	        function addListener(seller) {
 	//             const friend = seller;
 	//             updateFriendName(friend);
 	            
-	            var jsonObj = {
-	                "type" : "history",
-	                "sender" : self,
-	                "receiver" : seller,
-	                "message" : ""
-	            };
-	            webSocket.send(JSON.stringify(jsonObj));
+// 	            var jsonObj = {
+// 	                "type" : "history",
+// 	                "sender" : self,
+// 	                "receiver" : seller,
+// 	                "message" : ""
+// 	            };
+// 	            webSocket.send(JSON.stringify(jsonObj));
 	        }
 
 	        function disconnect() {
@@ -610,8 +610,10 @@
 	        function updateFriendName() {
 	            statusOutput.innerHTML = name;
 	        } 
-
-
+			function updateFriendList() {
+				
+			}
+	
 
 	
 	
@@ -802,7 +804,7 @@
     		"密碼"+'<input id="PWD" class="swal2-input"  type="password">',
     		showCloseButton: true,
     		confirmButtonText: `登入`,
-  });
+  		});
   		$(".swal2-confirm").click(function(){
   			
 			if($("#userID").val().trim().length != 0 && $("#PWD").val().trim().length != 0){				
@@ -981,7 +983,7 @@
 	        		}
 	        	})
 	  
-       	</script>
+    </script>
 	
 	<c:forEach var="seller" items="${orderSvc.getAllByID2(productVO.user_id)}" begin="0" end="${list2.size()}">
 	<script>

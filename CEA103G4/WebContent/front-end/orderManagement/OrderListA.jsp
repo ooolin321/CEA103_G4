@@ -142,11 +142,19 @@ ion-icon {
 														${(orderVO.logisticsstate==1)? '已出貨':''}
 														${(orderVO.logisticsstate==2)? '已取貨':''}</td>
 													<td>
-														<!-- Button trigger modal --> <input type="hidden"
-														value="${orderVO.seller_id}">
-														<button class="btn btn-info" id="srating_btn"
-															data-toggle="modal" data-target="#${orderVO.order_no}">評價</button>
+														<!-- Button trigger modal --> 
+														<input type="hidden" value="${orderVO.seller_id}">
+														<button class="btn btn-info" id="srating_btn" data-toggle="modal" data-target="#${orderVO.order_no}">評價</button>
 														<input type="hidden" value="${orderVO.order_no}">
+<%-- 													<c:if test="${orderVO.order_state == 0}"> --%>
+<!-- 													<form action="order.do" method="post"> -->
+<%-- 														<input type="hidden" value="${orderVO.order_no}" name="order_no"> --%>
+<%-- 														<input type="hidden" value="${orderVO.order_price}" name="order_price"> --%>
+<%-- 														<input type="hidden" value="${userVO.user_id}" name="user_id"> --%>
+<!-- 														<input type="hidden" value="pay" name="action"> -->
+<!-- 														<button class="btn btn-info" id="pay">付款</button> -->
+<!-- 													</form> -->
+<%-- 													</c:if> --%>
 													</td>
 												</tr>
 												</c:if>
@@ -181,10 +189,9 @@ ion-icon {
 										<tbody>
 											<c:forEach var="orderVO"
 												items="${orderSvc.getAllByID(userVO.user_id)}">
-												<c:if test="${orderVO.logisticsstate==2 && orderVO.srating > 0}">
+												<c:if test="${orderVO.logisticsstate==2 && orderVO.srating != 0}">
 												<tr>
 													<td>${orderVO.order_no}</td>
-													<td>${orderVO.srating}</td>
 													<td><fmt:formatDate value="${orderVO.order_date}"
 															pattern="yyyy-MM-dd" /></td>
 													<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>

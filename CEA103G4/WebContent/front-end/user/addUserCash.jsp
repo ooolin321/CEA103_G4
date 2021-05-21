@@ -83,7 +83,7 @@ button.btn.btn-info {
 			<div class="col-md-12 productsAdd">
 				<div class="form-group">
 					<sql:query var="rs" dataSource="${xxx}" startRow="0">
-    						 SELECT CASH FROM CEA103_G4.USER WHERE USER_ID='${userVO.user_id}'
+    						 SELECT CASH FROM cea103_g4.USER WHERE USER_ID='${userVO.user_id}'
  						 </sql:query>
 					<c:forEach var="row" items="${rs.rows}">
 

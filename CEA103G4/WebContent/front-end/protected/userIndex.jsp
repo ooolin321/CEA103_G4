@@ -245,7 +245,7 @@
         <script>
         // 會員首頁圓餅圖
         <sql:query var="rs" dataSource="${xxx}" startRow="0">
-			SELECT PRODUCT_STATE FROM CEA103_G4.PRODUCT WHERE USER_ID = '${userVO.user_id}' and PRODUCT_STATE = 1 ;
+			SELECT PRODUCT_STATE FROM cea103_g4.PRODUCT WHERE USER_ID = '${userVO.user_id}' and PRODUCT_STATE = 1 ;
  		</sql:query>
  		
         <sql:query var="rs2" dataSource="${xxx}" startRow="0">

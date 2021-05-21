@@ -184,7 +184,7 @@
 								class="fa fa-comment-o"></i></a>
 						</form>
 					</li>
-					<li><a href="#">常見問題</a></li>
+					<li><a href="<%=request.getContextPath()%>/front-end/qa/qna.jsp">常見問題</a></li>
 				</ul>
 			</nav>
 			<div id="mobile-menu-wrap"></div>

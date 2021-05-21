@@ -352,10 +352,10 @@ ol {
 	padding-left: 5px;
 }
 
-.friend_id {
+#statusOutput {
 	display: inline-block;
 	position: absolute;
-	right: 50%;
+	right: 40%;
 }
 
 .cancel {
@@ -373,9 +373,10 @@ ol {
 /* } */
 .mini-chat .chat-input {
 	border: 1px;
-	display: inline-block;
-	border-radius: 10px;
+	display: inline;
+	border-radius: 15px;
 	padding-left: 5px;
+	margin-bottom: 3px;
 }
 
 .mini-chat .middle {
@@ -384,7 +385,7 @@ ol {
 	margin: 3px auto;
 	top: 20px;
 	width: 238px;
-	heigh: 245px;
+	height: 245px;
 	background: white;
 	resize: none;
 	padding: 5px;
@@ -393,16 +394,26 @@ ol {
 
 .me {
 	float: right;
-	background: #0084ff;
-	margin-right: 4px;
-	border-radius: 6px 6px 0px 6px;
+	background-color: lightblue;
+	margin-right: 5px;
+	margin-bottom:10px;
+	padding:5px;
+	border-radius: 10px 10px 0px 10px;
+	width: 60%;
+	text-align:right;
+	padding-right: 10px; 
 }
 
 .friend {
 	float: left;
-	background: #0084ff;
-	margin-left: 4px;
-	border-radius: 6px 6px 6px 0px;
+	background-color: lightgray;
+	margin-left: 5px;
+	margin-bottom:10px;
+	padding:5px;
+	border-radius: 10px 10px 10px 0px;
+	width: 60%;
+	text-align:left;
+	padding-left: 10px;
 }
 
 #messagesArea ul {
@@ -414,9 +425,8 @@ ol {
 #messagesArea ul li {
 	display: inline-block;
 	clear: both;
-	padding: 2px;
-	margin-bottom: 2px;
 	font-family: Helvetica, Arial, sans-serif;
+	color: white;
 }
 
 .mini-chat #sendMessage{
@@ -724,7 +734,7 @@ ol {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding-left: 150px;
+  padding-left: 70px;
 }
 
 .nav-item .nav-depart {

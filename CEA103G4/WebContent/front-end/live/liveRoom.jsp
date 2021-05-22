@@ -198,7 +198,7 @@ input {
 										fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
                       <path
 											d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
-                    </svg> <span>1</span>
+                    </svg> <span>0</span>
 							</a></li>
 							<li class="cart-icon"><a
 								href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp">
@@ -570,9 +570,7 @@ function refresh(){
 					};
 
 					webSocket.send(JSON.stringify(json));
-					
-					
-					
+	
 				}else if("start"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以start
 					//&& ${liveVO.user_id==userVO.user_id}
 					//開始競標
@@ -587,7 +585,7 @@ function refresh(){
 						    left top
 						    no-repeat
 						  `
-						})
+						});
 					
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 						//0給初始直
@@ -615,7 +613,22 @@ function refresh(){
 				}else if("over"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以end
 					//&& ${liveVO.user_id==userVO.user_id}
 					//結束競標
-					Swal.fire("結束競標#"+$("#showProduct").find("td").eq(1).html())
+					Swal.fire({
+						  title: "結束競標#"+$("#showProduct").find("td").eq(1).html(),
+						  text:"得標者:"+$("#current_id").html() +"\t得標價:"+$("#current_price").html(),
+						  width: 600,
+						  padding: '3em',
+						  background: '#fff',
+						  backdrop: `
+						    rgba(0,0,123,0.4)
+						    url(${pageContext.request.contextPath}/images/nyan-cat.gif)
+						    left top
+						    no-repeat
+						  `
+					});
+					
+					
+					
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 							'type' : 'max',
 							'sender' : self,
@@ -744,8 +757,7 @@ function refresh(){
 				alert("錢包餘額不足，目前餘額為"+"${userVO.cash}");
 				return;
 			}
-			
-			console.log(55555);
+
 			var jsonObj = {
 				"type":'chat',
 				"sender" : self,

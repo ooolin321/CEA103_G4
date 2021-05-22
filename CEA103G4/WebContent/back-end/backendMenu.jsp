@@ -232,7 +232,7 @@
             <ul class="treeview-menu">
                 <li>		
                 <form  id="myForm" action="<%=request.getContextPath() %>/chat.do" method="POST"	>
-				<input value="${empVO.empno}" name="userName" type="hidden"/> 
+				<input value="${empVO.empno}" name="empName" type="hidden"/> 
 <%-- 				<a  class="treeview-item" href="<%=request.getContextPath()%>/back-end/customer_service/chat.jsp"> --%>
 				<a  class="treeview-item" href="#" onclick="document.getElementById('myForm').submit();">
 				<i  class="icon fa fa-circle-o">

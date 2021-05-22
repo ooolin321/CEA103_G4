@@ -455,7 +455,7 @@ ol {
 	display: inline-block;
 }
 .top-bar .list{
-	right:50px;
+	left:0px;
 	position: absolute;
 }
 .friendArea{

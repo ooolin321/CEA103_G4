@@ -795,7 +795,6 @@ public class OrderServlet extends HttpServlet {
 
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				
-				Integer order_price = new Integer(req.getParameter("order_price")); //抓取金額還不正確
 				String rec_name = req.getParameter("rec_name");
 				String zipcode = req.getParameter("zipcode");
 				String city = req.getParameter("city");
@@ -823,7 +822,7 @@ public class OrderServlet extends HttpServlet {
 					OrderVO orderVO = new OrderVO();
 					orderVO.setOrder_state(order_state);
 					orderVO.setOrder_shipping(order_shipping);
-					orderVO.setOrder_price(order_price);
+					
 					orderVO.setPay_method(pay_method);
 					orderVO.setRec_name(rec_name);
 					orderVO.setZipcode(zipcode);
@@ -838,12 +837,16 @@ public class OrderServlet extends HttpServlet {
 					orderVO.setSeller_id(seller_id);
 					orderVO.setPoint(point);
 					List<Order_detailVO> list = new ArrayList<Order_detailVO>();
-
+					Integer order_price = 0;
+					
 					Vector<ProductVO> productlist = mBuylist.get(seller_id);
 					System.out.println("訂單筆數為:"+productlist.size());
 					for (ProductVO asd : productlist) {
 						Order_detailVO order_detailVO = new Order_detailVO();
+						
 						int price	= asd.getProduct_price() * asd.getProduct_quantity();
+						order_price += price;
+						
 						order_detailVO.setOrder_price(price);
 						order_detailVO.setProduct_no(asd.getProduct_no());
 						order_detailVO.setProduct_num(asd.getProduct_quantity());
@@ -861,6 +864,7 @@ public class OrderServlet extends HttpServlet {
 					}
 					/*************************** 2.開始修改資料 ***************************************/
 					OrderService orderSvc = new OrderService();
+					orderVO.setOrder_price(order_price); //單筆訂單金額
 					orderSvc.insertWithDetails(orderVO, list);
 					
 					UserService userSvc = new UserService();

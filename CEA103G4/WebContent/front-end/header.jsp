@@ -225,7 +225,7 @@
 	<div class="friendlist" id="friendlist">
 		<div class="content">
 			<div class="top-bar">
-				<div class="list">TOP</div>
+				<div class="list">聊天室</div>
 				<div class="cancel">
 				<i class="ti-close" onclick="closefriendlist();"></i>
 				</div>
@@ -259,13 +259,10 @@
 		 miniChat.style.visibility = "visible";
 		 listFriend();
 		 addListener();
-// 		 miniChat.style.visibility = "visible";
-// 	     chatBtn.style.visibility = "hidden";
 	});
 	closeChatBtn.addEventListener("click", function() {
 		 closefriendlist();
 	     miniChat.style.visibility = "hidden";
-// 	     chatBtn.style.visibility = "visible";
 	})
 	//WebSocket開始
 	var MyPoint = "/FriendChatWS/${userVO.user_id}";

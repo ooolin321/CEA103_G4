@@ -124,7 +124,7 @@ table td, table tr, table th {
 												style="margin-bottom: 0px;">
 												<input type="submit" value="修改" class="btn btn-info">
 												<input type="hidden" name="live_no"
-													value="${liveVO.live_no}"> <input type="hidden"
+													value="${liveVO.live_no}"> <input type=hidden
 													name="action" value="getOne_For_Update">
 											</FORM>
 										</td>

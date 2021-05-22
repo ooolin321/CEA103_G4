@@ -99,7 +99,7 @@
 				     <li><a class="treeview-item" href="#" onclick="document.getElementById('getOneUser').submit();"><i class="icon fa fa-circle-o"></i> 個人檔案</a></li>
 				     </FORM>
                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/updateUserPwd.jsp"><i class="icon fa fa-circle-o"></i> 更改密碼</a></li>        
-                     <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/addUserCash.jsp"><i class="icon fa fa-circle-o"></i>新增錢包</a></li>        
+                     <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/addUserCash.jsp"><i class="icon fa fa-circle-o"></i>我的錢包</a></li>        
                     </ul>     
                   </li>       
                   <li class="treeview"><a class="app-menu__item" href="<%=request.getContextPath()%>/front-end/seller/productList.jsp" data-toggle="treeview"><i class="app-menu__icon fa fa-shopping-bag"></i><span class="app-menu__label">商品管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>

@@ -44,7 +44,6 @@ public class JedisHandleMessage {
 		Set<String> set =jedis.keys(key);
 		for(String keys: set) {
 			friends.add(keys.substring(size+1));
-			System.out.println(keys.substring(size+1));
 		}
 		jedis.close();
 		return friends;

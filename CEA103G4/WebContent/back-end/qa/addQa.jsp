@@ -62,86 +62,76 @@ margin: -30px -30px 0px;
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/QaServlet" name="form1">
 		<table>
 			<tr>
-				<td>直播檢舉內容:</td>
-				<td><input type="TEXT" class="form-control" name="live_report_content" size="45"
-					value="" /></td>
+				<td>Q&A類型：</td>
+				<td>
+				<select name="qa_type">
+					<option value="1" ${(qaVO.qa_type==1)? 'selected':''}>帳務相關</option>
+					<option value="2" ${(qaVO.qa_type==2)? 'selected':''}>商品相關</option>
+					<option value="3" ${(qaVO.qa_type==3)? 'selected':''}>訂單相關</option>
+					<option value="4" ${(qaVO.qa_type==4)? 'selected':''}>會員相關</option>
+				</select>
+				</td>
 			</tr>
-
-			<jsp:useBean id="liveSvc" scope="page" class="com.live.model.LiveService" />
-			<tr>
-				<td>直播編號:<font color=red><b>*</b></font></td>
-				<td><select size="1" name="live_no">
-					<c:forEach var="liveVO" items="${liveSvc.all}">
-						<option value="${liveVO.live_no}" ${(qaVO.live_no==liveVO.live_no)? 'selected':'' } >${liveVO.live_no}
-					</c:forEach>
-				</select></td>
-			</tr>
-
-			<jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
-			<tr>
-				<td>檢舉者帳號:<font color=red><b>*</b></font></td>
-				<td><select size="1" name="user_id">
-					<c:forEach var="userVO" items="${userSvc.all}">
-						<option value="${userVO.user_id}" ${(qaVO.user_id==userVO.user_id)? 'selected':'' } >${userVO.user_id}
-					</c:forEach>
-				</select></td>
-			</tr>
-			
 			<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 			<tr>
-				<td>管理員編號:<font color=red><b>*</b></font></td>
+				<td>管理員編號：</td>
 				<td><select size="1" name="empno">
 					<c:forEach var="empVO" items="${empSvc.all}">
-						<option value="${empVO.empno}" ${(liveVO.empno==empVO.empno)? 'selected':'' } >${empVO.empno}
+						<option value="${empVO.empno}" ${(qaVO.empno==empVO.empno)? 'selected':'' } >${empVO.empno}</option>
 					</c:forEach>
 				</select></td>
 			</tr>
-
 			<tr>
-				<td>檢舉處理狀態:</td>
-				<td><select name="live_report_state">
-						<option value="0">未處理</option>
-						<option value="1">審核處理</option>
-						<option value="2">審核不通過</option>
-				</select></td>
+				<td>日期:</td>
+				<td><input name="qa_date" class="form-control" size="45" id="f_date1" type="text" ></td>
 			</tr>
-
 			<tr>
-				<td>圖片上傳:</td>
-				<td><input name="photo" type="file" id="imgInp" accept="image/gif, image/jpeg, image/png" /></td>
-				
+				<td>問題：</td>
+				<td><input name="question" class="form-control" size="45" type="text" value="<%=(qaVO == null) ? "" : qaVO.getQuestion()%>"  >
+				</td>
 			</tr>
-			
 			<tr>
-				<td>圖片預覽:</td>
-			    <td>
-			    <img id="preview_img" src="#" style="display: none;" />
-			    </td>
+				<td>解答：</td>
+				<td>
+				<textarea class="form-control" id="answer" style="resize:none; white-space:pre-wrap;" maxlength="300" rows="6" name="answer"><%=(qaVO == null) ? "" : qaVO.getAnswer()%></textarea>
+				</td>
 			</tr>
 
 		</table>
-		<br> <input type="hidden" name="action" value="insert"> <input
-			type="submit" class="btn btn-primary" value="送出新增">
+		<br> 
+		<input type="hidden" name="action" value="insert"> 
+<%-- 		<input type="hidden" name="empno" value="${empVO.empno }">  --%>
+		<input type="submit" class="btn btn-primary" value="送出新增">
 	</FORM>
 	</main>
 	<jsp:include page="/back-end/backendfooter.jsp" />
 </body>
+<!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
+<% 
+  java.sql.Date qa_date = null;
+  try {
+	  qa_date = qaVO.getQa_date();
+   } catch (Exception e) {
+	   qa_date = new java.sql.Date(System.currentTimeMillis());
+   }
+%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <script>
-function readURL(input){
-	  if(input.files && input.files[0]){
-	    var reader = new FileReader();
-	    reader.onload = function (e) {
-	       $("#preview_img").attr('src', e.target.result);
-	       $("#preview_img").attr('width', "250px");
-	       $("#preview_img").attr('style', "display:block");
-	    }
-	    reader.readAsDataURL(input.files[0]);
-	  }
-	}
-$("#imgInp").change(function() {
-	  readURL(this);
-	});
+        $.datetimepicker.setLocale('zh');
+        $('#f_date1').datetimepicker({
+           theme: '',              //theme: 'dark',
+ 	       timepicker:false,       //timepicker:true,
+ 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+ 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+ 		   value: '<%=qa_date%>', // value:   new Date(),
+           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+           //startDate:	            '2017/07/10',  // 起始日
+           //minDate:               '-1970-01-01', // 去除今日(不含)之前
+           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+        });
+     
 </script>
-
 </html>

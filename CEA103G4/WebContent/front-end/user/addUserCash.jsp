@@ -341,7 +341,7 @@ button.btn.btn-info {
 							  title: "儲值金額:"+$("#cash").val()+"元成功",
 							  width: 600,
 							  padding: '3em',
-							  background: '#fff url(/images/trees.png)',
+							  background: '#fff',
 							  backdrop: `
 							    rgba(0,0,123,0.4)
 							    url(${pageContext.request.contextPath}/images/money.gif)

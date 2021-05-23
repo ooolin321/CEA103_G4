@@ -144,6 +144,7 @@ public class TogetherWS {
 						finalMax = chatBid.getMessage();// 之後上面改寫 這行要移到else以外
 					} else {
 						max.setMaxPrice(presentMaxVO.getMaxPrice());
+						max.setUser_id(presentMaxVO.getUser_id());
 						finalMax =  gson.toJson(max);
 					}
 

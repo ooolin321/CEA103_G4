@@ -574,18 +574,28 @@ function refresh(){
 				}else if("start"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以start
 					//&& ${liveVO.user_id==userVO.user_id}
 					//開始競標
+					if($("#showProduct").find("td").eq(1).html()==undefined){
+						Swal.fire({
+							  icon: 'error',
+							  title: 'Oops...',
+							  text: '目前商品皆已售完!',
+							})
+						return;
+					}
+					
+					
 					Swal.fire({
 						  title: "開始競標#"+$("#showProduct").find("td").eq(1).html(),
 						  width: 600,
 						  padding: '3em',
-						  background: '#fff url(/images/trees.png)',
+						  background: '#fff',
 						  backdrop: `
 						    rgba(0,0,123,0.4)
 						    url(${pageContext.request.contextPath}/images/nyan-cat.gif)
 						    left top
 						    no-repeat
 						  `
-						});
+						})
 					
 					let maxObj = {//type要改  因為他對到MaxVO 但這樣取會混淆
 						//0給初始直
@@ -613,6 +623,16 @@ function refresh(){
 				}else if("over"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以end
 					//&& ${liveVO.user_id==userVO.user_id}
 					//結束競標
+					if($("#showProduct").find("td").eq(1).html()==undefined){
+						Swal.fire({
+							  icon: 'error',
+							  title: 'Oops...',
+							  text: '目前商品皆已售完!',
+							})
+						return;
+					}
+					
+					
 					Swal.fire({
 						  title: "結束競標#"+$("#showProduct").find("td").eq(1).html(),
 						  text:"得標者:"+$("#current_id").html() +"\t得標價:"+$("#current_price").html(),
@@ -662,6 +682,7 @@ function refresh(){
 					$("#current_id").text("無人出價");
 				}else if(jsonObj.timeStart== "1"){
 					// addListener();
+					console.log(jsonObj);
 					$("#current_price").text(jsonObj.maxPrice);
 					$("#current_id").text(jsonObj.user_id);
 				}else if(jsonObj.timeStart== "2"){
@@ -682,19 +703,16 @@ function refresh(){
 								 "action": "order_ajax"
 						  },
 						  success: function(res) {
-
-								refresh();
+								alert("產生訂單");
+								
 					      }, 	  
 					
 					 });
 				}
 					
 				$("#showProduct").empty();
-
-// 				setTimeout(function(){
-// 					$("#showProduct").empty();
-// 					refresh();
-// 				}, 10);
+				refresh();
+				
 
 				$("#current_price").text(jsonObj.maxPrice);
 				$("#current_id").text("結束囉");
@@ -738,6 +756,7 @@ function refresh(){
 	inputUserName.focus();
 
 	function sendMessage(e) {
+		
 		var userName = inputUserName.value.trim();
 		if (${userVO == null}) {
 			setTimeout(function(){

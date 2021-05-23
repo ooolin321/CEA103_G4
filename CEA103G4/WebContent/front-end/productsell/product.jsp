@@ -460,7 +460,7 @@
 		var friend = "${productVO.user_id}";
 // 		var name = "${userSvc.getOneUser(productVO.user_id).user_name}";
 		
-		addListener(friend);
+		addListener2(friend);
 	});
 
 	function sendQuery(datas){ 

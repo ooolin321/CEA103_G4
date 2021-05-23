@@ -253,6 +253,8 @@
 	}
 	function listFriend(){
 		openlist.style.visibility="visible";
+		disconnect();
+		connect();
 	}
 
 	chatBtn.addEventListener("click", function() {
@@ -378,7 +380,16 @@
             webSocket.send(JSON.stringify(jsonObj));
 			})
         }
-
+		function addListener2(friend) {
+		             updateFriendName(friend);
+		            var jsonObj = {
+		                "type" : "history",
+		                "sender" : self,
+		                "receiver" : friend,
+		                "message" : ""
+		            };
+		            webSocket.send(JSON.stringify(jsonObj));
+        }
         function disconnect() {
             webSocket.close();
         };

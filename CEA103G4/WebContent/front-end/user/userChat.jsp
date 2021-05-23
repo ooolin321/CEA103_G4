@@ -42,7 +42,11 @@
     display: inline-block;
     margin-right: 15px;
 }
-
+h2, .h2{
+font-size: 1.75rem;
+    background-color: pink;
+}
+    
 .SellerHomeBtn .btn-outline-warning:hover {
 	color:white;
 
@@ -53,10 +57,119 @@
     font-size: 14px;
 }
 
+
+
+
+.message-area {
+	height: 70%;
+	resize: none;
+	box-sizing: border-box;
+	overflow: auto;
+	background-color: #ffffff;
+}
+
+.input-area {
+	background: pink;
+	box-shadow: inset 0 0 10px #8c002e;
+	
+}
+
+.input-area input {
+	margin: 0.5em 0em 0.5em 0.5em;
+}
+
+.text-field {
+	border: 1px solid grey;
+	padding: 0.2em;
+	box-shadow: 0 0 5px #000000;
+}
+
+h1 {
+	font-size: 1.5em;
+	padding: 5px;
+	margin: 5px;
+}
+
+#message {
+	min-width: 50%;
+	max-width: 60%;
+}
+
+.statusOutput {
+	background: pink;
+	text-align: center;
+	color: #ffffff;
+	border: 1px solid grey;
+	padding: 0.2em;
+	box-shadow: 0 0 5px #000000;
+	width: 30%;
+	margin-top: 10%;
+	margin-left: 60%;
+}
+.column {
+  float: left;
+  width: 50%;
+  padding: 5%;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+}
+
+#area{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#lis{
+  display:inline;
+  clear: both;
+  padding: 20px;
+  border-radius: 30px;
+  margin-bottom: 2px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+#time{
+width:100%;
+float: right;
+color: black;
+text-align: right;
+}
+
+#friendtime {
+width:100%;
+float: left;
+color: black;
+}
+
+
+.friend{
+  background: #eee;
+  float: left;
+}
+
+.me{
+  float: right;
+  background: pink;
+  color: black;
+}
+
+.friend + .me{
+  border-bottom-right-radius: 5px;
+}
+
+.me + .me{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.me:last-of-type {
+  border-bottom-right-radius: 30px;
+}
 </style>
 
 </head>
-<body class="app sidebar-mini rtl" onload="connect(),ShowTime();" onunload="disconnect(); ">
+<body class="app sidebar-mini rtl" onload="connect()" onunload="disconnect(); ">
  <%@include file="/front-end/user/userSidebar.jsp"%>
               <main class="app-content">
                 <div class="app-title">
@@ -68,7 +181,7 @@
                     <li class="breadcrumb-item">會員首頁</li>
                   </ul>
                 </div>
-	<div id="showbox"></div>
+<!-- 	<div id="showbox"></div> -->
 	<h3 id="statusOutput" class="statusOutput"></h3>
 	<div id="row"></div>
 	<div id="messagesArea" class="panel message-area"></div>
@@ -78,10 +191,11 @@
 			onkeydown="if (event.keyCode == 13) sendMessage();" /> <input
 			type="submit" id="sendMessage" class="button" value="Send"
 			onclick="sendMessage();" /> <input type="button" id="connect"
-			class="button" value="Connect" onclick="connect();" /> <input
-			type="button" id="disconnect" class="button" value="Disconnect"
-			onclick="disconnect();" /> <input type="button"
-			onclick="history.back()" value="回到上一頁"></input>
+			class="button" value="連線" onclick="connect();" /> <input
+			type="button" id="disconnect" class="button" value="離開"
+			onclick="disconnect();" /> 
+<!-- 			<input type="button" -->
+<!-- 			onclick="history.back()" value="回到上一頁"></input> -->
 	</div>
          <jsp:include page="/front-end/protected/userIndex_footer.jsp" />
          <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
@@ -142,8 +256,9 @@ console.log("222");
 				ul.id = "area";
 				messagesArea.appendChild(ul);
 				var li = document.createElement('li');
+				li.id = "lis";
 				li.className = 'me'
-				li.innerHTML = "目前客服不在線，請稍侯";
+				li.innerHTML = "目前客服不在線";
 				ul.appendChild(li);
 			}
 			else if ("history" === jsonObj.type) {
@@ -161,10 +276,12 @@ console.log("222");
 					var showMsg = historyData.message;
 					
 					var li = document.createElement('li');
+					li.id = "lis";
 					var span = document.createElement('span');
+					span.id = "time";
 					// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
 					historyData.sender === self ? li.className = 'me' : li.className = 'friend' ;
-					historyData.time === self ? span.className = 'me' : span.className = 'friend' ;
+					historyData.time === self ? span.id = 'time' : span.id = 'friendtime' ;
 					li.innerHTML = showMsg;
 					span.innnerHTML = showMsg;
 					ul.appendChild(li);
@@ -173,12 +290,14 @@ console.log("222");
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
 				var li = document.createElement('li');
+				li.id = "lis";
 				var span = document.createElement('span');
+				span.id = "time";
 				jsonObj.sender === self ? li.className = 'me' : li.className = 'friend';
-				jsonObj.sender === self ? span.className = 'me' : span.className = 'friend';
+				jsonObj.sender === self ? span.id = 'time' : span.id = 'friendtime';
 				li.innerHTML = jsonObj.message;
 				span.innerHTML = jsonObj.time;
-				console.log(span);
+console.log(span);
 				document.getElementById("area").appendChild(li);
 				document.getElementById("area").appendChild(span);
 				messagesArea.scrollTop = messagesArea.scrollHeight;
@@ -262,14 +381,14 @@ console.log(jsonObj);
 		statusOutput.innerHTML = name;
 	}
 
-	function ShowTime(){
-		　var NowDate=new Date();
-		　var h=NowDate.getHours();
-		　var m=NowDate.getMinutes();
-		　var s=NowDate.getSeconds();　
-		　document.getElementById('showbox').innerHTML = h+'時'+m+'分'+s+'秒';
-		　setTimeout('ShowTime()',1000);
-		}
+// 	function ShowTime(){
+// 		　var NowDate=new Date();
+// 		　var h=NowDate.getHours();
+// 		　var m=NowDate.getMinutes();
+// 		　var s=NowDate.getSeconds();　
+// 		　document.getElementById('showbox').innerHTML = h+'時'+m+'分'+s+'秒';
+// 		　setTimeout('ShowTime()',1000);
+// 		}
 </script>
 
 </html>

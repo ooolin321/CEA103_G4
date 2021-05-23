@@ -24,7 +24,7 @@ public class Schedule extends Timer{
     	LiveTask liveTask = new LiveTask(liveVO);
     	this.taskMap.put(liveVO.getLive_no(),liveTask);
     	System.out.println("啟動排程");
-    	System.out.println(liveVO.getLive_id()+"將於"+liveVO.getLive_time()+"開始直播");
+    	System.out.println(liveVO.getLive_no()+"將於"+liveVO.getLive_time()+"開始直播");
     	this.schedule(liveTask, liveVO.getLive_time());
     	
     }

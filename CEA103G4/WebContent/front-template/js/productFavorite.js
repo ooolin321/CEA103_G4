@@ -1,13 +1,7 @@
-	const favorite = document.getElementById('favorite')
-	const data =  JSON.parse(localStorage.getItem("favorite"));
-	const path = "http://localhost:8081/CEA103G4"
-	favoriteContent(data,path);
-
-	function favoriteContent(data,path) {
-		
-
-      		let htmlContent = "";
-      	  
+	const favorite = document.getElementById('favorite');
+	
+	function favoriteContent(data,path) {		
+      		let htmlContent = "";     	  
 		data["results"].forEach(function (item, index) {
 
       	    htmlContent += `

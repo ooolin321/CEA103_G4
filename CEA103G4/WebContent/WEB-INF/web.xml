@@ -56,6 +56,7 @@
 	<servlet>
 		<servlet-name>LiveServlet</servlet-name>
 		<servlet-class>com.live.controller.LiveServlet</servlet-class>
+	    <load-on-startup>10</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LiveServlet</servlet-name>

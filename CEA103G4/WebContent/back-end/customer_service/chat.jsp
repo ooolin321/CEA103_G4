@@ -40,17 +40,132 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back-template/docs/css/main.css">
 <!-- Font-icon css-->
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- <link rel="stylesheet" -->
-<%-- 	href="<%=request.getContextPath()%>/back-end/customer_service/css/friendchat.css" --%>
-<!-- 	type="text/css" /> -->
 <%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/customer_service/assets/css/amazeui.min.css"> --%>
 
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/back-end/customer_service/css/friendchat.css"
+	type="text/css" />
+
 <style type="text/css">
+* {
+	margin: auto;
+	padding: 0px;
+}
+
+html, body {
+	font: 15px verdana, Times New Roman, arial, helvetica, sans-serif,
+		Microsoft JhengHei;
+	width: 90%;
+	height: 90%;
+	background: #eeeeda;
+}
+
+.panel {
+	float: right;
+	border: 2px solid #0078ae;
+	border-radius: 5px;
+	width: 50%;
+}
+
+.message-area {
+	height: 70%;
+	resize: none;
+	box-sizing: border-box;
+	overflow: auto;
+	background-color: #ffffff;
+}
+
+.input-area {
+	background: #007d71	;
+	box-shadow: inset 0 0 10px #00568c;
+}
+
+.input-area input {
+	margin: 0.5em 0em 0.5em 0.5em;
+}
+
+.text-field {
+	border: 1px solid grey;
+	padding: 0.2em;
+	box-shadow: 0 0 5px #000000;
+}
+
+h1 {
+	font-size: 1.5em;
+	padding: 5px;
+	margin: 5px;
+}
+
+#message {
+	min-width: 50%;
+	max-width: 60%;
+}
+
+.statusOutput {
+	background: #007d71;
+	text-align: center;
+	color: #ffffff;
+	border: 1px solid grey;
+	padding: 0.2em;
+	box-shadow: 0 0 5px #000000;
+	width: 30%;
+	margin-top: 10%;
+	margin-left: 60%;
+}
+.column {
+  float: left;
+  width: 50%;
+  padding: 5%;
+  margin-bottom: 5px;
+  background-color: #007d71;
+}
+
+#area{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#lis{
+  display:inline-block;
+  clear: both;
+  padding: 20px;
+  border-radius: 30px;
+  margin-bottom: 2px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.friend{
+  background: #eee;
+  float: left;
+}
+
+.me{
+  float: right;
+  background: #007d71;
+  color: #fff;
+}
+
+.friend + .me{
+  border-bottom-right-radius: 5px;
+}
+
+.me + .me{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.me:last-of-type {
+  border-bottom-right-radius: 30px;
+}
+
+
+
 
 </style>
 <title>Made Femme 客服聊天室</title>
 </head>
-<body onload="connect(),ShowTime();" onunload="disconnect(); ">
+<body class="app sidebar-mini rtl  pace-done" onload="connect()	" onunload="disconnect(); ">
 <jsp:include page="/back-end/backendMenu.jsp" />
 <main class="app-content">
 	<div class="app-title">
@@ -62,62 +177,26 @@
 		
 		<ul class="app-breadcrumb breadcrumb">
 			<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-			<li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">回到首頁</a></li>
+			<li class="breadcrumb-item"><a
+				href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">回到首頁</a></li>
 		</ul>
 	</div>
 	
-	<div id="showbox">
+<!-- 	<div id="showbox"> -->
 	
-	</div>
-	<h3 id="statusOutput" class="statusOutput"></h3>
-<div id="row" >
-	<div id="messagesArea" class="panel message-area">
-		<div class="col-md-6">
-          <div class="tile">
-            <h3 class="tile-title">Chat</h3>
-            <div class="messanger">
-              <div class="messages">
-                <div class="message"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/tonypeterson/48.jpg">
-                  <p class="info">Hello there!<br>Good Morning</p>
-                </div>
-                <div class="message me"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg">
-                  <p class="info">Hi<br>Good Morning</p>
-                </div>
-                <div class="message"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/tonypeterson/48.jpg">
-                  <p class="info">How are you?</p>
-                </div>
-                <div class="message me"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg">
-                  <p class="info">I'm Fine.</p>
-                </div>
-              </div>
-              <div class="sender">
-                <input type="text" placeholder="Send Message">
-                <button class="btn btn-primary" type="button"><i class="fa fa-lg fa-fw fa-paper-plane"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-	</div>
-</div>
-<div class="panel input-area">
-		<div class="sender">
-             <input id="message" class="text-field" type="text" placeholder="Send Message" onkeydown="if (event.keyCode == 13) sendMessage();">
-             <button id="sendMessage" class="btn btn-primary" type="button" onclick="sendMessage();"><i class="fa fa-lg fa-fw fa-paper-plane"></i></button>
-        </div>
-
-<!--  <input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();"> <input type="button" id="connect" class="button" value="Connect" onclick="connect();" disabled=""> <input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();"> <input type="button" onclick="history.back()" value="回到上一頁"> -->
-	</div>
-<!-- 		<input id="message" class="text-field" type="text" -->
-<!-- 			placeholder="Message" -->
-<!-- 			onkeydown="if (event.keyCode == 13) sendMessage();" /> <input -->
-<!-- 			type="submit" id="sendMessage" class="button" value="Send" -->
-<!-- 			onclick="sendMessage();" /> <input type="button" id="connect" -->
-<!-- 			class="button" value="Connect" onclick="connect();" /> <input -->
-<!-- 			type="button" id="disconnect" class="button" value="Disconnect" -->
-<!-- 			onclick="disconnect();" /> <input type="button" -->
-<!-- 			onclick="history.back()" value="回到上一頁"></input> -->
 <!-- 	</div> -->
-
+	<h3 id="statusOutput" class="statusOutput"></h3>
+	<div id="row"></div>
+	<div id="messagesArea" class="panel message-area" ></div>
+	<div class="panel input-area">
+		<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
+		<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
+		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
+		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
+		<input type="button" onclick="history.back()" value="回到上一頁"></input>
+	</div>
+ </main>
+	<jsp:include page="/back-end/backendfooter.jsp" />
 <script>
 	var MyPoint = "/CustomerWS/${empName}";
 	var host = window.location.host;
@@ -152,6 +231,7 @@ console.log("222");
 				ul.id = "area";
 				messagesArea.appendChild(ul);
 				var li = document.createElement('li');
+				li.id = "lis";
 				li.className = 'me'
 				li.innerHTML = "您好，我是客服專員，請問有什麼能幫忙的呢？";
 				ul.appendChild(li);
@@ -174,8 +254,9 @@ console.log("222");
 				ul.id = "area";
 				messagesArea.appendChild(ul);
 				var li = document.createElement('li');
+				li.id = "lis";
 				li.className = 'me'
-				li.innerHTML = "目前客服不在線，請稍侯";
+				li.innerHTML = "目前客服不在線";
 				ul.appendChild(li);
 			}
 			else if ("history" === jsonObj.type) {
@@ -193,6 +274,7 @@ console.log("222");
 					var showMsg = historyData.message;
 					
 					var li = document.createElement('li');
+					li.id = "lis";
 					var span = document.createElement('span');
 					// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
 					historyData.sender === self ? li.className = 'me' : li.className = 'friend' ;
@@ -205,6 +287,7 @@ console.log("222");
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
 				var li = document.createElement('li');
+				li.id = "lis";
 				var span = document.createElement('span');
 				jsonObj.sender === self ? li.className = 'me' : li.className = 'friend';
 				jsonObj.sender === self ? span.className = 'me' : span.className = 'friend';
@@ -303,8 +386,7 @@ console.log(jsonObj);
 		　setTimeout('ShowTime()',1000);
 		}
 </script>
- </main>
-	<jsp:include page="/back-end/backendfooter.jsp" />
+
 
 </body>
 

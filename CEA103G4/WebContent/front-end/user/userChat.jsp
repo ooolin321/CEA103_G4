@@ -42,7 +42,11 @@
     display: inline-block;
     margin-right: 15px;
 }
-
+h2, .h2{
+font-size: 1.75rem;
+    background-color: pink;
+}
+    
 .SellerHomeBtn .btn-outline-warning:hover {
 	color:white;
 
@@ -116,7 +120,7 @@ h1 {
   padding: 0;
 }
 
-li{
+#lis{
   display:inline-block;
   clear: both;
   padding: 20px;
@@ -133,7 +137,7 @@ li{
 .me{
   float: right;
   background: pink;
-  color: #fff;
+  color: black;
 }
 
 .friend + .me{
@@ -238,8 +242,9 @@ console.log("222");
 				ul.id = "area";
 				messagesArea.appendChild(ul);
 				var li = document.createElement('li');
+				li.id = "lis";
 				li.className = 'me'
-				li.innerHTML = "目前客服不在線，請稍侯";
+				li.innerHTML = "目前客服不在線";
 				ul.appendChild(li);
 			}
 			else if ("history" === jsonObj.type) {
@@ -257,6 +262,7 @@ console.log("222");
 					var showMsg = historyData.message;
 					
 					var li = document.createElement('li');
+					li.id = "lis";
 					var span = document.createElement('span');
 					// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
 					historyData.sender === self ? li.className = 'me' : li.className = 'friend' ;
@@ -264,11 +270,12 @@ console.log("222");
 					li.innerHTML = showMsg;
 					span.innnerHTML = showMsg;
 					ul.appendChild(li);
-					ul.appendChild(span);
+					li.appendChild(span);
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
 				var li = document.createElement('li');
+				li.id = "lis";
 				var span = document.createElement('span');
 				jsonObj.sender === self ? li.className = 'me' : li.className = 'friend';
 				jsonObj.sender === self ? span.className = 'me' : span.className = 'friend';

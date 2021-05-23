@@ -262,7 +262,6 @@ console.log("222");
 				ul.appendChild(li);
 			}
 			else if ("history" === jsonObj.type) {
-
 				messagesArea.innerHTML = '';
 				var ul = document.createElement('ul');
 				ul.id = "area";
@@ -274,7 +273,6 @@ console.log("222");
 				for (var i = 0; i < messages.length; i++) {
 					var historyData = JSON.parse(messages[i]);
 					var showMsg = historyData.message;
-					
 					var li = document.createElement('li');
 					li.id = "lis";
 					var span = document.createElement('span');
@@ -282,10 +280,14 @@ console.log("222");
 					// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
 					historyData.sender === self ? li.className = 'me' : li.className = 'friend' ;
 					historyData.time === self ? span.id = 'time' : span.id = 'friendtime' ;
+// 					historyData.time === self ? span.id = 'time' : span.id = 'friendtime' ;
 					li.innerHTML = showMsg;
-					span.innnerHTML = showMsg;
+// 					span.innnerHTML = showMsg;
+					$(span).text(historyData.time);
+// 					$('friend').text(historyData.time);
 					ul.appendChild(li);
-					ul.appendChild(span);
+					li.appendChild(span);
+					// console.log(historyData.time);
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
@@ -297,7 +299,6 @@ console.log("222");
 				jsonObj.sender === self ? span.id = 'time' : span.id = 'friendtime';
 				li.innerHTML = jsonObj.message;
 				span.innerHTML = jsonObj.time;
-console.log(span);
 				document.getElementById("area").appendChild(li);
 				document.getElementById("area").appendChild(span);
 				messagesArea.scrollTop = messagesArea.scrollHeight;
@@ -348,7 +349,7 @@ console.log(jsonObj);
 		row.innerHTML = '';
 		for (var i = 0; i < friends.length; i++) {
 			if (friends[i] === self) { continue; }//從所有好友列表排除自己的帳號
-			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
+			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><img class="rounded-circle" width="45px" height="40px" style="margin-right: 10px;" src="<%=request.getContextPath()%>/front-template/images/01.png" /><h2>' + friends[i] + '</h2></div>';
 		}
 		addListener();
 	}
@@ -357,15 +358,16 @@ console.log(jsonObj);
 		var container = document.getElementById("row");
 		container.addEventListener("click", function(e) {
 			var friend = e.srcElement.textContent;
+console.log(friend);		
 			updateFriendName(friend);
 			var jsonObj = {
 					"type" : "history",
 					"sender" : self,
 					"receiver" : friend,
 					"message" : "",
-					"time":""
+					"time": ""
 				};
-			console.log(jsonObj);
+console.log(jsonObj.time);
 			webSocket.send(JSON.stringify(jsonObj));
 		});
 	}

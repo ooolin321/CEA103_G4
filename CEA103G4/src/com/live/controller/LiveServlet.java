@@ -44,16 +44,18 @@ public class LiveServlet extends HttpServlet {
 	}
 	
 	
-	private Schedule schedule = new Schedule();
+	private Schedule schedule;
 	
 	public void init() throws ServletException{
-		this.schedule = new Schedule();
 
+		this.schedule = new Schedule();
 	}
 	
-	public void destory() {
+	public void destroy() {
+
 		schedule.cancel();
 	}
+	
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
@@ -62,7 +64,6 @@ public class LiveServlet extends HttpServlet {
 		
 
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
-
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.

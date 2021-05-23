@@ -48,7 +48,7 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 	private static final String UPDATE_UNSHIPPED =
 			"UPDATE `ORDER` SET `LOGISTICSSTATE`=0 WHERE `ORDER_NO` = ?";
 	private static final String UPDATE_SRATING =
-			"UPDATE `ORDER` SET `SRATING` = ?, `SRATING_CONTENT` = ? WHERE `ORDER_NO` = ?";
+			"UPDATE `ORDER` SET `SRATING` = ?, `SRATING_CONTENT` = ?, `LOGISTICSSTATE` = ? WHERE `ORDER_NO` = ?";
 	
 	
 	@Override
@@ -665,7 +665,8 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 
 			pstmt.setInt(1, orderVO.getSrating());
 			pstmt.setString(2, orderVO.getSrating_content());
-			pstmt.setInt(3, orderVO.getOrder_no());
+			pstmt.setInt(3, orderVO.getLogisticsstate());
+			pstmt.setInt(4, orderVO.getOrder_no());
 
 			pstmt.executeUpdate();
 

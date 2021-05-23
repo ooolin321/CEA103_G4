@@ -322,36 +322,38 @@ ol {
     transition: opacity .27s linear .03s;
 }
 
-.friendlist{
+.friendlist, .mini-chat{
 	
 	width: 240px;
     height: 300px;
     box-sizing: border-box;
-    border: 1px solid #dcdce0;
-    background:	whitesmoke;
+    border: 1px solid azure;
+    background:	pink;
     transition: width .25s cubic-bezier(.4,.8,.74,1),height .25s cubic-bezier(.4,.8,.74,1);
     position: fixed;
-	right: 8px;
-	bottom: 0px;
+	right: 66px;
+	bottom: 50px;
 	z-index: 99999;
 	visibility: hidden;
 	border-radius: 10px;
+	color: white;
 }
 
-.mini-chat {
-	width: 240px;
-    height: 300px;
-    box-sizing: border-box;
-    border: 1px solid #dcdce0;
-    background:whitesmoke;
-    transition: width .25s cubic-bezier(.4,.8,.74,1),height .25s cubic-bezier(.4,.8,.74,1);
-    position: fixed;
-	right: 8px;
-	bottom: 0px;
-	z-index: 99999;
-	visibility: hidden;
-	border-radius: 10px;
-}
+/* .mini-chat { */
+/* 	width: 240px; */
+/*     height: 300px; */
+/*     box-sizing: border-box; */
+/*     border: 1px solid azure; */
+/*     background:pink; */
+/*     transition: width .25s cubic-bezier(.4,.8,.74,1),height .25s cubic-bezier(.4,.8,.74,1); */
+/*     position: fixed; */
+/* 	right: 66px; */
+/* 	bottom: 50px; */
+/* 	z-index: 99999; */
+/* 	visibility: hidden; */
+/* 	border-radius: 10px; */
+/* 	color: white; */
+/* } */
 
 
 /* .mini-chat { */
@@ -422,6 +424,7 @@ ol {
 	padding-right: 10px; 
 }
 
+
 .friend {
 	float: left;
 	background-color: lightgray;
@@ -433,6 +436,7 @@ ol {
 	text-align:left;
 	padding-left: 10px;
 }
+
 
 #messagesArea ul {
 	list-style: none;
@@ -450,25 +454,42 @@ ol {
 .mini-chat #sendMessage{
 	cursor: pointer; 
 }
+.top-bar{
+	font-weight: 700px;
+}
 
 .top-bar .list, .ti-close{
 	display: inline-block;
 }
 .top-bar .list{
-	left:0px;
+	left:40%;
 	position: absolute;
+	font-weight: 500;
 }
+
 .friendArea{
 	position: absolute;
 	display: block;
 	margin: 3px auto;
 	top: 20px;
 	width: 238px;
-	height: 270px;
+	height: 100%;
 	background: white;
 	resize: none;
 	padding: 5px;
 	overflow: auto;
+	border-radius: 0 0 10px 10px
+}
+
+div.column{
+	background: lightgray;
+	border:2px solid gray;
+	display: inline-flex;
+	width: 100%;
+	border-radius: 10px;
+}
+.column h2{
+	color: gray;
 }
 .header-section {
   background-color: pink;

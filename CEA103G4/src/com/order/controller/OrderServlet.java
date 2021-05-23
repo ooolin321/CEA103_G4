@@ -24,6 +24,7 @@ public class OrderServlet extends HttpServlet {
 		doPost(req, res);
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
@@ -761,9 +762,10 @@ public class OrderServlet extends HttpServlet {
 
 				String srating_content = req.getParameter("srating_content");
 				
+				Integer logisticsstate = 2;
 				/*************************** 2.開始修改資料 *****************************************/
 				OrderService orderSvc = new OrderService();
-				orderSvc.updateSrating(srating, srating_content, order_no);//更新評價 已取貨預留更改
+				orderSvc.updateSrating(srating, srating_content,logisticsstate ,order_no);//更新評價 已取貨預留更改
 				
 				UserService userSvc = new UserService();
 				userSvc.updateUserRating(srating, 1, seller_id); // seller_id轉user_id
@@ -812,7 +814,6 @@ public class OrderServlet extends HttpServlet {
 //				Integer pay_method = new Integer(req.getParameter("pay_method"));
 				Integer pay_method = 1;
 				
-				
 				@SuppressWarnings("unchecked")
 				Map<String, Vector<ProductVO>> mBuylist = (Map<String, Vector<ProductVO>>) req.getSession()
 						.getAttribute("list");
@@ -822,7 +823,6 @@ public class OrderServlet extends HttpServlet {
 					OrderVO orderVO = new OrderVO();
 					orderVO.setOrder_state(order_state);
 					orderVO.setOrder_shipping(order_shipping);
-					
 					orderVO.setPay_method(pay_method);
 					orderVO.setRec_name(rec_name);
 					orderVO.setZipcode(zipcode);
@@ -876,6 +876,7 @@ public class OrderServlet extends HttpServlet {
 				}
 				
 				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
+				mBuylist.remove(mBuylist);//刪除購物車
 				String url = "/front-end/orderManagement/OrderListA.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交index.jsp
 				successView.forward(req, res);
@@ -885,6 +886,7 @@ public class OrderServlet extends HttpServlet {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/index.jsp");
 				failureView.forward(req, res);
+				System.out.println(errorMsgs);
 			}
 		}
 

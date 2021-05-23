@@ -296,7 +296,7 @@
                     refreshFriendList(jsonObj);
                     //addList
                 } else if ("history" === jsonObj.type) {
-					messagesArea.innetHTML = "";
+					messagesArea.innerHTML = "";
                     var ul = document.createElement('ul');
                     ul.id = "area";
                     messagesArea.appendChild(ul);
@@ -354,11 +354,12 @@
             var friends = jsonObj.users;
             var friendArea = document.getElementById("friendArea");
             friendArea.innerHTML = '';
+			messagesArea.innerHTML ='';
             for (var i = 0; i < friends.length; i++) {
                 if (friends[i] === self) { continue; }
-                friendArea.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + '><h2>' + friends[i] + '</h2></div>';
+                friendArea.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + '><img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id='+friends[i]+'" /><h2>' + friends[i] + '</h2></div>';
             }
-//             addListener();
+//             addListener(); //註解掉好像沒差
         } 
         // 註冊列表點擊事件並抓取好友名字以取得歷史訊息
        function addListener(friend) {

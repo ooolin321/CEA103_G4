@@ -75,12 +75,13 @@ public class OrderService {
 		return orderVO;
 	}
 	
-	public OrderVO updateSrating(Integer srating, String srating_content, Integer order_no) {
+	public OrderVO updateSrating(Integer srating, String srating_content,Integer logisticsstate , Integer order_no) {
 		
 		OrderVO orderVO = new OrderVO();
 		
 		orderVO.setSrating(srating);
 		orderVO.setSrating_content(srating_content);
+		orderVO.setLogisticsstate(logisticsstate);
 		orderVO.setOrder_no(order_no);
 		
 		dao.updateSrating(orderVO);

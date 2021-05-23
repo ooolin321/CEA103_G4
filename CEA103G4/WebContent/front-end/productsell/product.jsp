@@ -251,7 +251,7 @@
 										</div>
 									</c:if>
 									<div class="pd-function">
-										<a href="#" class="primary-btn" id="chat-seller">私訊賣家</a>
+										<a href="javascript:void(0)" class="primary-btn" id="chat-seller">私訊賣家</a>
 <!-- 										<a href="javascript:void(0)" class="primary-btn chat-seller" id="chat_seller">私訊賣家</a> -->
 <!-- 										<FORM METHOD="post" -->
 <%-- 											ACTION="<%=request.getContextPath()%>/front-end/message/chatMessage.do"> --%>

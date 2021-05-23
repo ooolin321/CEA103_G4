@@ -37,9 +37,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Main CSS-->
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back-template/docs/css/main.css">
+<%-- <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back-template/docs/css/main.css"> --%>
 <!-- Font-icon css-->
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 <%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/customer_service/assets/css/amazeui.min.css"> --%>
 
 <link rel="stylesheet"
@@ -47,18 +47,7 @@
 	type="text/css" />
 
 <style type="text/css">
-* {
-	margin: auto;
-	padding: 0px;
-}
 
-html, body {
-	font: 15px verdana, Times New Roman, arial, helvetica, sans-serif,
-		Microsoft JhengHei;
-	width: 90%;
-	height: 90%;
-	background: #eeeeda;
-}
 
 .panel {
 	float: right;
@@ -127,12 +116,26 @@ h1 {
 }
 
 #lis{
-  display:inline-block;
+  display:inline;
   clear: both;
   padding: 20px;
   border-radius: 30px;
   margin-bottom: 2px;
   font-family: Helvetica, Arial, sans-serif;
+}
+
+#time{
+width:100%;
+float: right;
+color: black;
+text-align: right;
+
+}
+
+#friendtime {
+width:100%;
+float: left;
+color: black;
 }
 
 .friend{
@@ -158,15 +161,11 @@ h1 {
 .me:last-of-type {
   border-bottom-right-radius: 30px;
 }
-
-
-
-
 </style>
 <title>Made Femme 客服聊天室</title>
 </head>
 <body class="app sidebar-mini rtl  pace-done" onload="connect()	" onunload="disconnect(); ">
-<jsp:include page="/back-end/backendMenu.jsp" />
+<%-- <jsp:include page="/back-end/backendMenu.jsp" /> --%>
 <main class="app-content">
 	<div class="app-title">
 		<div>
@@ -224,30 +223,7 @@ h1 {
 			var jsonObj = JSON.parse(event.data);
 			if("openEmp"===jsonObj.type){
 				refreshFriendList(jsonObj);
-			}else if("empAvailable"===jsonObj.type){
-console.log("222");
-				messagesArea.innerHTML = '';
-				var ul = document.createElement('ul');
-				ul.id = "area";
-				messagesArea.appendChild(ul);
-				var li = document.createElement('li');
-				li.id = "lis";
-				li.className = 'me'
-				li.innerHTML = "您好，我是客服專員，請問有什麼能幫忙的呢？";
-				ul.appendChild(li);
-				refreshFriendList(jsonObj);
 			}
-// 			else if("noMems"){
-// 				messagesArea.innerHTML = '';
-// 				var ul = document.createElement('ul');
-// 				ul.id = "area";
-// 				messagesArea.appendChild(ul);
-// 				var li = document.createElement('li');
-// 				li.className = 'friend'
-// 				li.innerHTML = "沒有新訊息";
-// 				ul.appendChild(li);
-// 				refreshFriendList(jsonObj);
-// 			}
 			else if("empNotAvailable"===jsonObj.type){
 				messagesArea.innerHTML = '';
 				var ul = document.createElement('ul');
@@ -267,8 +243,6 @@ console.log("222");
 				messagesArea.appendChild(ul);
 				// 這行的jsonObj.message是從redis撈出跟好友的歷史訊息，再parse成JSON格式處理
 				var messages = JSON.parse(jsonObj.message);
-// 				var time = JSON.parse(jsonObj.time);
-// console.log(time);
 				for (var i = 0; i < messages.length; i++) {
 					var historyData = JSON.parse(messages[i]);
 					var showMsg = historyData.message;
@@ -276,24 +250,25 @@ console.log("222");
 					var li = document.createElement('li');
 					li.id = "lis";
 					var span = document.createElement('span');
+					span.id = "time";
 					// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
 					historyData.sender === self ? li.className = 'me' : li.className = 'friend' ;
-					historyData.time === self ? span.className = 'me' : span.className = 'friend' ;
+					historyData.time === self ? span.id = 'time' : span.id = 'friendtime' ;
 					li.innerHTML = showMsg;
-					span.innnerHTML = showMsg;
+					$(span).text(historyData.time);
 					ul.appendChild(li);
-					ul.appendChild(span);
+					li.appendChild(span);
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
 				var li = document.createElement('li');
 				li.id = "lis";
 				var span = document.createElement('span');
+				span.id = "time";
 				jsonObj.sender === self ? li.className = 'me' : li.className = 'friend';
-				jsonObj.sender === self ? span.className = 'me' : span.className = 'friend';
+				jsonObj.sender === self ? span.id = 'time' : span.id = 'friendtime';
 				li.innerHTML = jsonObj.message;
 				span.innerHTML = jsonObj.time;
-				console.log(span);
 				document.getElementById("area").appendChild(li);
 				document.getElementById("area").appendChild(span);
 				messagesArea.scrollTop = messagesArea.scrollHeight;
@@ -319,9 +294,9 @@ console.log("222");
 			alert("Input a message");
 			inputMessage.focus();
 		} 
-// 		else if (friend === "") {
-// 			alert("Choose a friend");
-// 		} 
+		else if (friend === "") {
+			alert("Choose a friend");
+		} 
 		else {
 			var jsonObj = {
 				"type" : "chat",
@@ -344,7 +319,7 @@ console.log(jsonObj);
 		row.innerHTML = '';
 		for (var i = 0; i < friends.length; i++) {
 			if (friends[i] === self) { continue; }//從所有好友列表排除自己的帳號
-			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
+			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' >  <h2>' + friends[i] + '</h2></div>';
 		}
 		addListener();
 	}

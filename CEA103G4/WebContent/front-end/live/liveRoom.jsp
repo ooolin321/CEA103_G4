@@ -433,18 +433,18 @@ input {
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 	crossorigin="anonymous">
-<!--
+
 	
 </script>
--->
+
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
 	integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
 	crossorigin="anonymous">
-<!--
+
 	
 </script>
--->
+
 
 
 <script
@@ -682,7 +682,7 @@ function refresh(){
 					$("#current_id").text("無人出價");
 				}else if(jsonObj.timeStart== "1"){
 					// addListener();
-					console.log(jsonObj);
+// 					console.log(jsonObj);
 					$("#current_price").text(jsonObj.maxPrice);
 					$("#current_id").text(jsonObj.user_id);
 				}else if(jsonObj.timeStart== "2"){
@@ -703,7 +703,7 @@ function refresh(){
 								 "action": "order_ajax"
 						  },
 						  success: function(res) {
-								alert("產生訂單");
+								refresh();
 								
 					      }, 	  
 					
@@ -711,7 +711,6 @@ function refresh(){
 				}
 					
 				$("#showProduct").empty();
-				refresh();
 				
 
 				$("#current_price").text(jsonObj.maxPrice);
@@ -966,7 +965,7 @@ var reportLink = document.querySelector("#reportLink");
 		formData.append('empno', "14001")
 		formData.append('live_report_state', "0")
 		formData.append('action', "insert")
-		console.log(formData);
+// 		console.log(formData);
 		$.ajax({ 
 		  url:"<%=request.getContextPath()%>/live_report/live_report.do",
 		  type:"POST", 

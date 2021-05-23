@@ -129,6 +129,19 @@ h1 {
   font-family: Helvetica, Arial, sans-serif;
 }
 
+#time{
+width:100%;
+float: right;
+color: black;
+text-align: right;
+}
+
+#friendtime {
+width:100%;
+float: left;
+color: black;
+}
+
 
 .friend{
   background: #eee;
@@ -265,9 +278,10 @@ console.log("222");
 					var li = document.createElement('li');
 					li.id = "lis";
 					var span = document.createElement('span');
+					span.id = "time";
 					// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
 					historyData.sender === self ? li.className = 'me' : li.className = 'friend' ;
-					historyData.time === self ? span.className = 'me' : span.className = 'friend' ;
+					historyData.time === self ? span.id = 'time' : span.id = 'friendtime' ;
 					li.innerHTML = showMsg;
 					span.innnerHTML = showMsg;
 					ul.appendChild(li);
@@ -278,8 +292,9 @@ console.log("222");
 				var li = document.createElement('li');
 				li.id = "lis";
 				var span = document.createElement('span');
+				span.id = "time";
 				jsonObj.sender === self ? li.className = 'me' : li.className = 'friend';
-				jsonObj.sender === self ? span.className = 'me' : span.className = 'friend';
+				jsonObj.sender === self ? span.id = 'time' : span.id = 'friendtime';
 				li.innerHTML = jsonObj.message;
 				span.innerHTML = jsonObj.time;
 console.log(span);

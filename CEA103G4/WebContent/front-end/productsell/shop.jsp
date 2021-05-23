@@ -422,7 +422,6 @@ function addFavorite(id){
 				  },
 	})
 	} else {
-
     const index = data["results"].findIndex(item => item.product_no === Number(id))
     if (index !== -1){
 		  Swal.fire({

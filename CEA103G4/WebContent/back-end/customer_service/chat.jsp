@@ -42,11 +42,31 @@
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/customer_service/assets/css/amazeui.min.css"> --%>
 
-<!-- <link rel="stylesheet" -->
-<%-- 	href="<%=request.getContextPath()%>/back-end/customer_service/css/friendchat.css" --%>
-<!-- 	type="text/css" /> -->
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/back-end/customer_service/css/friendchat.css"
+	type="text/css" />
 
 <style type="text/css">
+* {
+	margin: auto;
+	padding: 0px;
+}
+
+html, body {
+	font: 15px verdana, Times New Roman, arial, helvetica, sans-serif,
+		Microsoft JhengHei;
+	width: 90%;
+	height: 90%;
+	background: #eeeeda;
+}
+
+.panel {
+	float: right;
+	border: 2px solid #0078ae;
+	border-radius: 5px;
+	width: 50%;
+}
+
 .message-area {
 	height: 70%;
 	resize: none;
@@ -56,7 +76,7 @@
 }
 
 .input-area {
-	background: #0078ae;
+	background: #007d71	;
 	box-shadow: inset 0 0 10px #00568c;
 }
 
@@ -82,7 +102,7 @@ h1 {
 }
 
 .statusOutput {
-	background: #0078ae;
+	background: #007d71;
 	text-align: center;
 	color: #ffffff;
 	border: 1px solid grey;
@@ -97,7 +117,7 @@ h1 {
   width: 50%;
   padding: 5%;
   margin-bottom: 5px;
-  background-color: #ffffff;
+  background-color: #007d71;
 }
 
 #area{
@@ -106,7 +126,7 @@ h1 {
   padding: 0;
 }
 
-#area li{
+#lis{
   display:inline-block;
   clear: both;
   padding: 20px;
@@ -122,7 +142,7 @@ h1 {
 
 .me{
   float: right;
-  background: #0084ff;
+  background: #007d71;
   color: #fff;
 }
 
@@ -138,10 +158,14 @@ h1 {
 .me:last-of-type {
   border-bottom-right-radius: 30px;
 }
+
+
+
+
 </style>
 <title>Made Femme 客服聊天室</title>
 </head>
-<body onload="connect(),ShowTime();" onunload="disconnect(); ">
+<body class="app sidebar-mini rtl  pace-done" onload="connect(),ShowTime();" onunload="disconnect(); ">
 <jsp:include page="/back-end/backendMenu.jsp" />
 <main class="app-content">
 	<div class="app-title">
@@ -158,9 +182,9 @@ h1 {
 		</ul>
 	</div>
 	
-	<div id="showbox">
+<!-- 	<div id="showbox"> -->
 	
-	</div>
+<!-- 	</div> -->
 	<h3 id="statusOutput" class="statusOutput"></h3>
 	<div id="row"></div>
 	<div id="messagesArea" class="panel message-area" ></div>
@@ -169,6 +193,7 @@ h1 {
 		<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
 		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
+		<input type="button" onclick="history.back()" value="回到上一頁"></input>
 	</div>
  </main>
 	<jsp:include page="/back-end/backendfooter.jsp" />
@@ -206,6 +231,7 @@ console.log("222");
 				ul.id = "area";
 				messagesArea.appendChild(ul);
 				var li = document.createElement('li');
+				li.id = "lis";
 				li.className = 'me'
 				li.innerHTML = "您好，我是客服專員，請問有什麼能幫忙的呢？";
 				ul.appendChild(li);
@@ -228,8 +254,9 @@ console.log("222");
 				ul.id = "area";
 				messagesArea.appendChild(ul);
 				var li = document.createElement('li');
+				li.id = "lis";
 				li.className = 'me'
-				li.innerHTML = "目前客服不在線，請稍侯";
+				li.innerHTML = "目前客服不在線";
 				ul.appendChild(li);
 			}
 			else if ("history" === jsonObj.type) {
@@ -247,6 +274,7 @@ console.log("222");
 					var showMsg = historyData.message;
 					
 					var li = document.createElement('li');
+					li.id = "lis";
 					var span = document.createElement('span');
 					// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
 					historyData.sender === self ? li.className = 'me' : li.className = 'friend' ;
@@ -259,7 +287,7 @@ console.log("222");
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
 				var li = document.createElement('li');
-				
+				li.id = "lis";
 				var span = document.createElement('span');
 				jsonObj.sender === self ? li.className = 'me' : li.className = 'friend';
 				jsonObj.sender === self ? span.className = 'me' : span.className = 'friend';

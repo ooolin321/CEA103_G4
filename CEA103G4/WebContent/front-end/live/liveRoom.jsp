@@ -330,7 +330,7 @@ input {
 				<input id="userName" name="userName" value="" class="text-field"
 					type="hidden" /> <input id="message" class="form-control"
 					type="text" placeholder="Message"
-					onkeydown="if (event.keyCode == 13) sendMessage(event);" disabled/>
+					onkeydown="if (event.keyCode == 13) sendMessage(event);" />
 			</div>
 		</div>
 
@@ -408,6 +408,7 @@ input {
 
 
 		<div class="col-xl-3">
+			<div id="some_div"></div>
 			<br>現在最高價: <span id="current_price"></span> <br>現在出價人: <span
 				id="current_id"></span>
 
@@ -620,6 +621,84 @@ function refresh(){
 					webSocket.send(JSON.stringify(json));	
 				
 				
+				}else if("countdown"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){
+					
+					var timeLeft = 30;
+					var elem = document.getElementById('some_div');
+					var timerId = setInterval(countdown, 1000);
+
+					function countdown() {
+					    if (timeLeft == -1) {
+					        clearTimeout(timerId);
+					        doSomething();
+					    } else {
+					        elem.innerHTML = ' 最後倒數中 ' +timeLeft +' 秒';
+					        timeLeft--;
+					    }
+					}
+
+					function doSomething() {
+						
+						Swal.fire({
+							  title: "結束競標#"+$("#showProduct").find("td").eq(1).html(),
+							  text:"得標者:"+$("#current_id").html() +"\t得標價:"+$("#current_price").html(),
+							  width: 600,
+							  padding: '3em',
+							  background: '#fff',
+							  backdrop: `
+							    rgba(0,0,123,0.4)
+							    url(${pageContext.request.contextPath}/images/nyan-cat.gif)
+							    left top
+							    no-repeat
+							  `
+						});
+						
+						let maxObj = {//產生timeStart2
+								'type' : 'max',
+								'sender' : self,
+								'live_no' : '${param.live_no}',
+								'user_id' : '${userVO.user_id}',
+								'maxPrice' : '0',//不應該用到
+								'product_no' : $("#showProduct").find("td").eq(1).html(),
+								'timeStart': '2',
+								'lastTime': ''
+
+						};
+						let json = {
+								"type" : "getMax",
+								"sender" : self,
+								"live_no" : '${param.live_no}',
+								"product_no":  $("#showProduct").find("td").eq(1).html(),
+								"message" : JSON.stringify(maxObj)
+						};
+						
+						webSocket.send(JSON.stringify(json));
+					}
+					
+					let timerInterval
+					Swal.fire({
+					  title: '競標倒數三十秒!',
+					  html: '剩餘時間 <b></b> 毫秒',
+					  timer: 30000,
+					  timerProgressBar: true,
+					  didOpen: () => {
+					    Swal.showLoading()
+					    timerInterval = setInterval(() => {
+					      const content = Swal.getHtmlContainer()
+					      if (content) {
+					        const b = content.querySelector('b')
+					        if (b) {
+					          b.textContent = Swal.getTimerLeft()
+					        }
+					      }
+					    }, 100)
+					  },
+					  willClose: () => {
+					    clearInterval(timerInterval)
+					  }
+					})
+					
+				
 				}else if("over"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以end
 					//&& ${liveVO.user_id==userVO.user_id}
 					//結束競標
@@ -711,7 +790,7 @@ function refresh(){
 				}
 					
 				$("#showProduct").empty();
-				
+				$('#some_div').empty();
 
 				$("#current_price").text(jsonObj.maxPrice);
 				$("#current_id").text("結束囉");
@@ -768,11 +847,15 @@ function refresh(){
 		var message = inputMessage.value.trim();
 
 		if (message === "") {
-			alert("請輸入訊息");
+			setTimeout(function(){
+				Swal.fire('請輸入訊息')
+			}, 1);
 			inputMessage.focus();
 		} else {
 			if(parseInt(message) > "${userVO.cash}"){
-				alert("錢包餘額不足，目前餘額為"+"${userVO.cash}");
+				setTimeout(function(){
+					Swal.fire('錢包餘額不足，目前餘額為  ${userVO.cash} 元')
+				}, 1);
 				return;
 			}
 
@@ -796,9 +879,7 @@ function refresh(){
 
 	function disconnect() {
 		webSocket.close();
-// 		document.getElementById('sendMessage').disabled = true;
-// 		document.getElementById('connect').disabled = false;
-// 		document.getElementById('disconnect').disabled = true;
+
 	}
 
 

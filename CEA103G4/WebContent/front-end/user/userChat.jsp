@@ -121,13 +121,14 @@ h1 {
 }
 
 #lis{
-  display:inline-block;
+  display:inline;
   clear: both;
   padding: 20px;
   border-radius: 30px;
   margin-bottom: 2px;
   font-family: Helvetica, Arial, sans-serif;
 }
+
 
 .friend{
   background: #eee;
@@ -155,7 +156,7 @@ h1 {
 </style>
 
 </head>
-<body class="app sidebar-mini rtl" onload="connect(),ShowTime();" onunload="disconnect(); ">
+<body class="app sidebar-mini rtl" onload="connect()" onunload="disconnect(); ">
  <%@include file="/front-end/user/userSidebar.jsp"%>
               <main class="app-content">
                 <div class="app-title">
@@ -270,7 +271,7 @@ console.log("222");
 					li.innerHTML = showMsg;
 					span.innnerHTML = showMsg;
 					ul.appendChild(li);
-					li.appendChild(span);
+					ul.appendChild(span);
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
@@ -281,7 +282,7 @@ console.log("222");
 				jsonObj.sender === self ? span.className = 'me' : span.className = 'friend';
 				li.innerHTML = jsonObj.message;
 				span.innerHTML = jsonObj.time;
-				console.log(span);
+console.log(span);
 				document.getElementById("area").appendChild(li);
 				document.getElementById("area").appendChild(span);
 				messagesArea.scrollTop = messagesArea.scrollHeight;
@@ -365,14 +366,14 @@ console.log(jsonObj);
 		statusOutput.innerHTML = name;
 	}
 
-	function ShowTime(){
-		　var NowDate=new Date();
-		　var h=NowDate.getHours();
-		　var m=NowDate.getMinutes();
-		　var s=NowDate.getSeconds();　
-		　document.getElementById('showbox').innerHTML = h+'時'+m+'分'+s+'秒';
-		　setTimeout('ShowTime()',1000);
-		}
+// 	function ShowTime(){
+// 		　var NowDate=new Date();
+// 		　var h=NowDate.getHours();
+// 		　var m=NowDate.getMinutes();
+// 		　var s=NowDate.getSeconds();　
+// 		　document.getElementById('showbox').innerHTML = h+'時'+m+'分'+s+'秒';
+// 		　setTimeout('ShowTime()',1000);
+// 		}
 </script>
 
 </html>

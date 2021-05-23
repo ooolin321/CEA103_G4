@@ -165,7 +165,7 @@ h1 {
 </style>
 <title>Made Femme 客服聊天室</title>
 </head>
-<body class="app sidebar-mini rtl  pace-done" onload="connect(),ShowTime();" onunload="disconnect(); ">
+<body class="app sidebar-mini rtl  pace-done" onload="connect()	" onunload="disconnect(); ">
 <jsp:include page="/back-end/backendMenu.jsp" />
 <main class="app-content">
 	<div class="app-title">

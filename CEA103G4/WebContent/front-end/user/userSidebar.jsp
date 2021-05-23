@@ -99,7 +99,7 @@
 				     <li><a class="treeview-item" href="#" onclick="document.getElementById('getOneUser').submit();"><i class="icon fa fa-circle-o"></i> 個人檔案</a></li>
 				     </FORM>
                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/updateUserPwd.jsp"><i class="icon fa fa-circle-o"></i> 更改密碼</a></li>        
-                     <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/addUserCash.jsp"><i class="icon fa fa-circle-o"></i>新增錢包</a></li>        
+                     <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/addUserCash.jsp"><i class="icon fa fa-circle-o"></i>我的錢包</a></li>        
                     </ul>     
                   </li>       
                   <li class="treeview"><a class="app-menu__item" href="<%=request.getContextPath()%>/front-end/seller/productList.jsp" data-toggle="treeview"><i class="app-menu__icon fa fa-shopping-bag"></i><span class="app-menu__label">商品管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
@@ -132,7 +132,16 @@
                       <li>
                     </ul>
                   </li>
-                  <li class="treeview"><a class="app-menu__item" href="<%=request.getContextPath()%>/SellerProducts?user_id=${userVO.user_id}" target="_blank"><i class="app-menu__icon fa fa-diamond"></i><span class="app-menu__label">前往我的賣場</span><i class="treeview-indicator fa fa-angle-right"></i></a></li>
+                  <li class="treeview">
+                  <a class="app-menu__item" href="<%=request.getContextPath()%>/SellerProducts?user_id=${userVO.user_id}" target="_blank"><i class="app-menu__icon fa fa-diamond"></i><span class="app-menu__label">前往我的賣場</span><i class="treeview-indicator fa fa-angle-right"></i></a></li>
+				<li class="treeview">
+						<form id="myForm" action="<%=request.getContextPath()%>/userChat.do"
+							method="POST">
+							<input value="${userVO.user_name}" name="userName" type="hidden" />
+							<a class="app-menu__item" href="#" onclick="document.getElementById('myForm').submit();"><i
+								class="fa fa-comment-o">&nbsp;&nbsp;&nbsp;</i><span class="app-menu__label">線上客服&nbsp;</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+						</form>
+					</li>
                 </ul>
               </aside>
                

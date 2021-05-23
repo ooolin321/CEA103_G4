@@ -3,8 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.qa.model.*"%>
 
+
 <%
-// 	UserVO userVO = (UserVO) request.getAttribute("userVO");
+	QaService qaSvc = new QaService();
+	List<QaVO> list = qaSvc.getAll();
+	pageContext.setAttribute("list", list);
 %>
 
 <!DOCTYPE html>
@@ -53,12 +56,116 @@
 			</div>
 		</div>
 		<hr _ngcontent-sc209="" class="my-0">
-		<div _ngcontent-sc209="" class="card-body p-5">
-			
-			
-			
-			
-			
+		<div _ngcontent-sc209="" class="card-body" style="padding-top: 0px;">
+		
+		<div class="row backProductList">
+			<div class="container col-lg-12">
+				<div class="tab-item">
+					<ul class="nav" role="tablist">
+						<li><a class="active" data-toggle="tab" href="#tab-1" role="tab">帳務相關</a></li>
+						<li><a data-toggle="tab" href="#tab-2" role="tab">商品相關</a></li>
+						<li><a data-toggle="tab" href="#tab-3" role="tab">訂單相關</a></li>
+						<li><a data-toggle="tab" href="#tab-4" role="tab">會員相關</a></li>
+					</ul>
+				</div>
+				<div class="tab-item-content">
+					<div class="tab-content">
+						<div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+							<table class="table">
+								<thead class="thead">
+									<tr>
+										<th scope="col">日期</th>
+										<th scope="col">問題</th>
+										<th scope="col">解答</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<c:forEach var="qaVO" items="${list}" begin="0" end="${list.size()-1}">
+										<c:if test="${qaVO.qa_type == 1}">
+											<tr>
+												<td>${qaVO.qa_date}</td>
+												<td>${qaVO.question}</td>
+												<td>${qaVO.answer}</td>
+											</tr>
+										</c:if>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+						<div class="tab-pane fade-in" id="tab-2" role="tabpanel">
+							<table class="table">
+								<thead class="thead">
+									<tr>
+										<th scope="col">日期</th>
+										<th scope="col">問題</th>
+										<th scope="col">解答</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<c:forEach var="qaVO" items="${list}" begin="0" end="${list.size()-1}">
+										<c:if test="${qaVO.qa_type == 2}">
+											<tr>
+												<td>${qaVO.qa_date}</td>
+												<td>${qaVO.question}</td>
+												<td>${qaVO.answer}</td>
+											</tr>
+										</c:if>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+						<div class="tab-pane fade-in" id="tab-3" role="tabpanel">
+							<table class="table">
+								<thead class="thead">
+									<tr>
+										<th scope="col">日期</th>
+										<th scope="col">問題</th>
+										<th scope="col">解答</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<c:forEach var="qaVO" items="${list}" begin="0" end="${list.size()-1}">
+										<c:if test="${qaVO.qa_type == 3}">
+											<tr>
+												<td>${qaVO.qa_date}</td>
+												<td>${qaVO.question}</td>
+												<td>${qaVO.answer}</td>
+											</tr>
+										</c:if>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+						<div class="tab-pane fade-in" id="tab-4" role="tabpanel">
+							<table class="table">
+								<thead class="thead">
+									<tr>
+										<th scope="col">日期</th>
+										<th scope="col">問題</th>
+										<th scope="col">解答</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<c:forEach var="qaVO" items="${list}" begin="0" end="${list.size()-1}">
+										<c:if test="${qaVO.qa_type == 4}">
+											<tr>
+												<td>${qaVO.qa_date}</td>
+												<td>${qaVO.question}</td>
+												<td>${qaVO.answer}</td>
+											</tr>
+										</c:if>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+              </div>
+            </div>
+           </div>
+          </div>
 		</div>
 		<hr _ngcontent-sc209="" class="my-0">
 		<div _ngcontent-sc209="" class="card-body px-5 py-4">

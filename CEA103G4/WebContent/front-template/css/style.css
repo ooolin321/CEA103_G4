@@ -321,6 +321,23 @@ ol {
     background: #ee4d2d;
     transition: opacity .27s linear .03s;
 }
+
+.friendlist{
+	
+	width: 240px;
+    height: 300px;
+    box-sizing: border-box;
+    border: 1px solid #dcdce0;
+    background:	whitesmoke;
+    transition: width .25s cubic-bezier(.4,.8,.74,1),height .25s cubic-bezier(.4,.8,.74,1);
+    position: fixed;
+	right: 8px;
+	bottom: 0px;
+	z-index: 99999;
+	visibility: hidden;
+	border-radius: 10px;
+}
+
 .mini-chat {
 	width: 240px;
     height: 300px;
@@ -335,6 +352,7 @@ ol {
 	visibility: hidden;
 	border-radius: 10px;
 }
+
 
 /* .mini-chat { */
 /* 	position: fixed; */
@@ -433,6 +451,25 @@ ol {
 	cursor: pointer; 
 }
 
+.top-bar .list, .ti-close{
+	display: inline-block;
+}
+.top-bar .list{
+	left:0px;
+	position: absolute;
+}
+.friendArea{
+	position: absolute;
+	display: block;
+	margin: 3px auto;
+	top: 20px;
+	width: 238px;
+	height: 270px;
+	background: white;
+	resize: none;
+	padding: 5px;
+	overflow: auto;
+}
 .header-section {
   background-color: pink;
 }

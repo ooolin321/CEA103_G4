@@ -100,7 +100,7 @@
 						<sql:setDataSource dataSource="jdbc/admin" var="xxx"
 							scope="application" />
 						<sql:query var="rs" dataSource="${xxx}" startRow="0">
-    						 SELECT USER_ID FROM CEA103_G4.USER
+    						 SELECT USER_ID FROM USER
  						 </sql:query>
 						<p>
 							<b>${rs.rowCount}</b>
@@ -114,7 +114,7 @@
 					<div class="info">
 						<h4>直播間</h4>
 						<sql:query var="rs" dataSource="${xxx}" startRow="0">
-    						 SELECT LIVE_ID FROM CEA103_G4.LIVE
+    						 SELECT LIVE_ID FROM LIVE
  						 </sql:query>
 						<p>
 							<b>${rs.rowCount}</b>
@@ -128,7 +128,7 @@
 					<div class="info">
 						<h4>直售上架商品數</h4>
 						<sql:query var="rs" dataSource="${xxx}" startRow="0">
-    						 SELECT PRODUCT_NO FROM CEA103_G4.PRODUCT where PRODUCT_STATE = 1;
+    						 SELECT PRODUCT_NO FROM PRODUCT where PRODUCT_STATE = 1;
  						 </sql:query>
 						<p>
 							<b>${rs.rowCount}</b>
@@ -270,11 +270,11 @@
 // 		};
 				
 				<sql:query var="rs3" dataSource="${xxx}" startRow="0">
-				SELECT * FROM CEA103_G4.PRODUCT ;
+				SELECT * FROM PRODUCT ;
  				</sql:query>
  				
 				<sql:query var="rs2" dataSource="${xxx}" startRow="0">
-				SELECT * FROM CEA103_G4.PRODUCT where PRODUCT_STATE = 3;
+				SELECT * FROM PRODUCT where PRODUCT_STATE = 3;
  				</sql:query>
 		var pdata = [ {
 			value : ${rs3.rowCount},

@@ -13,40 +13,49 @@
 	// out.println(empVO.getEname());
 %>
 
-<!DOCTYPE html>
 <html lang="zh-tw">
 <head>
-<meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-<!-- Twitter meta-->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:site" content="@pratikborsadiya">
-<meta property="twitter:creator" content="@pratikborsadiya">
-<!-- Open Graph Meta-->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Vali Admin">
-<meta property="og:title" content="Vali - Free Bootstrap 4 admin theme">
-<meta property="og:url"
-	content="http://pratikborsadiya.in/blog/vali-admin">
-<meta property="og:image"
-	content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
-<meta property="og:description"
-	content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-<title>所有員工資料</title>
-<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Main CSS-->
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back-template/docs/css/main.css">
-<!-- Font-icon css-->
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/customer_service/assets/css/amazeui.min.css"> --%>
+  <meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
+  <!-- Twitter meta-->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:site" content="@pratikborsadiya">
+  <meta property="twitter:creator" content="@pratikborsadiya">
+  <!-- Open Graph Meta-->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Vali Admin">
+  <meta property="og:title" content="Vali - Free Bootstrap 4 admin theme">
+  <meta property="og:url" content="http://pratikborsadiya.in/blog/vali-admin">
+  <meta property="og:image" content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
+  <meta property="og:description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
+  <title>Mode Femme 會員專區</title>
+  <link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<%--   <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/customer_service/css/friendchat.css" type="text/css" /> --%>
+  <!-- Main CSS-->
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-template/css/usermain.css">
+  <!-- Font-icon css-->
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.app-title h1 {
+    display: inline-block;
+    margin-right: 15px;
+}
 
-<!-- <link rel="stylesheet" -->
-<%-- 	href="<%=request.getContextPath()%>/back-end/customer_service/css/friendchat.css" --%>
-<!-- 	type="text/css" /> -->
+.SellerHomeBtn .btn-outline-warning:hover {
+	color:white;
 
-<style type="text/css">
+}
+
+.widget-small .info p {
+    margin: 0;
+    font-size: 14px;
+}
+
+
+
+
 .message-area {
 	height: 70%;
 	resize: none;
@@ -56,8 +65,9 @@
 }
 
 .input-area {
-	background: #0078ae;
-	box-shadow: inset 0 0 10px #00568c;
+	background: pink;
+	box-shadow: inset 0 0 10px #8c002e;
+	
 }
 
 .input-area input {
@@ -82,7 +92,7 @@ h1 {
 }
 
 .statusOutput {
-	background: #0078ae;
+	background: pink;
 	text-align: center;
 	color: #ffffff;
 	border: 1px solid grey;
@@ -106,7 +116,7 @@ h1 {
   padding: 0;
 }
 
-#area li{
+li{
   display:inline-block;
   clear: both;
   padding: 20px;
@@ -122,7 +132,7 @@ h1 {
 
 .me{
   float: right;
-  background: #0084ff;
+  background: pink;
   color: #fff;
 }
 
@@ -139,41 +149,41 @@ h1 {
   border-bottom-right-radius: 30px;
 }
 </style>
-<title>Made Femme 客服聊天室</title>
+
 </head>
-<body onload="connect(),ShowTime();" onunload="disconnect(); ">
-<jsp:include page="/back-end/backendMenu.jsp" />
-<main class="app-content">
-	<div class="app-title">
-		<div>
-			<h1>
-				<i class="fa fa-group"></i> 客服訊息
-			</h1>			
-		</div>
-		
-		<ul class="app-breadcrumb breadcrumb">
-			<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-			<li class="breadcrumb-item"><a
-				href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">回到首頁</a></li>
-		</ul>
-	</div>
-	
-	<div id="showbox">
-	
-	</div>
+<body class="app sidebar-mini rtl" onload="connect(),ShowTime();" onunload="disconnect(); ">
+ <%@include file="/front-end/user/userSidebar.jsp"%>
+              <main class="app-content">
+                <div class="app-title">
+                  <div>
+                    <h1><i class="fa fa-user fa-lg"></i> 會員首頁</h1>
+                    </div>
+                  <ul class="app-breadcrumb breadcrumb">
+                    <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><i class="fa fa-home fa-lg"></i></a></li>
+                    <li class="breadcrumb-item">會員首頁</li>
+                  </ul>
+                </div>
+<!-- 	<div id="showbox"></div> -->
 	<h3 id="statusOutput" class="statusOutput"></h3>
 	<div id="row"></div>
-	<div id="messagesArea" class="panel message-area" ></div>
+	<div id="messagesArea" class="panel message-area"></div>
 	<div class="panel input-area">
-		<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
-		<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
-		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
-		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
+		<input id="message" class="text-field" type="text"
+			placeholder="Message"
+			onkeydown="if (event.keyCode == 13) sendMessage();" /> <input
+			type="submit" id="sendMessage" class="button" value="Send"
+			onclick="sendMessage();" /> <input type="button" id="connect"
+			class="button" value="連線" onclick="connect();" /> <input
+			type="button" id="disconnect" class="button" value="離開"
+			onclick="disconnect();" /> 
+<!-- 			<input type="button" -->
+<!-- 			onclick="history.back()" value="回到上一頁"></input> -->
 	</div>
- </main>
-	<jsp:include page="/back-end/backendfooter.jsp" />
+         <jsp:include page="/front-end/protected/userIndex_footer.jsp" />
+         <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+         </body>
 <script>
-	var MyPoint = "/CustomerWS/${empName}";
+	var MyPoint = "/CustomerWS/${userName}";
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -181,7 +191,7 @@ h1 {
 
 	var statusOutput = document.getElementById("statusOutput");
 	var messagesArea = document.getElementById("messagesArea");
-	var self = '${empName}';
+	var self = '${userName}';
 	var webSocket;
 	
 	function connect() {
@@ -259,7 +269,6 @@ console.log("222");
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
 				var li = document.createElement('li');
-				
 				var span = document.createElement('span');
 				jsonObj.sender === self ? li.className = 'me' : li.className = 'friend';
 				jsonObj.sender === self ? span.className = 'me' : span.className = 'friend';
@@ -358,8 +367,5 @@ console.log(jsonObj);
 		　setTimeout('ShowTime()',1000);
 		}
 </script>
-
-
-</body>
 
 </html>

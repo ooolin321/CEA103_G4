@@ -32,16 +32,23 @@ public class FriendChatWS {
 		/* save the new user in the map */
 		sessionsMap.put(user_id, userSession);
 		/* Sends all the connected users to the new user */
-		Set<String> user_ids = sessionsMap.keySet();
+		
+//		Set<String> user_ids = sessionsMap.keySet();
+		Set<String> user_ids = JedisHandleMessage.getFriendList(user_id); //好友名單
+		
 		State stateMessage = new State("open", user_id, user_ids);
 		String stateMessageJson = gson.toJson(stateMessage);
 		Collection<Session> sessions = sessionsMap.values();
+		
+//		State stateFriends = new State("list",user_id, friends);
+//		String stateFriendsJson = gson.toJson(stateFriends);
 		for (Session session : sessions) {
 			if (session.isOpen()) {
 				session.getAsyncRemote().sendText(stateMessageJson);
+//				session.getAsyncRemote().sendText(stateFriendsJson);
 			}
 		}
-
+		
 		String text = String.format("Session ID = %s, connected; user_id = %s%nusers: %s", userSession.getId(),
 				user_id, user_ids);
 		System.out.println(text);

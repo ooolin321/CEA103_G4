@@ -6,13 +6,27 @@ public class ChatMessage {
 	private String receiver;
 	private String message;
 	private String time;
+	
+	
+	
+	public ChatMessage() {
+		super();
+	}
 
-	public ChatMessage(String type, String sender, String receiver, String message, String time) {
+	public ChatMessage(String type, String sender, String receiver, String message) {
+		super();
 		this.type = type;
 		this.sender = sender;
 		this.receiver = receiver;
 		this.message = message;
-		this.setTime(time);
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getSender() {
@@ -39,14 +53,6 @@ public class ChatMessage {
 		this.message = message;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
 	public String getTime() {
 		return time;
 	}
@@ -54,4 +60,6 @@ public class ChatMessage {
 	public void setTime(String time) {
 		this.time = time;
 	}
+	
+
 }

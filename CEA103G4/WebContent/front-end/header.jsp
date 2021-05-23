@@ -174,14 +174,14 @@
 					<li><a
 						href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i
 							class="icon_profile"></i></a></li>
-					<li>
-						<form id="myForm" action="<%=request.getContextPath()%>/chat.do"
-							method="POST">
-							<input value="${userVO.user_name}" name="userName" type="hidden" />
-							<a href="#" onclick="document.getElementById('myForm').submit();">線上客服&nbsp;<i
-								class="fa fa-comment-o"></i></a>
-						</form>
-					</li>
+<!-- 					<li> -->
+<%-- 						<form id="myForm" action="<%=request.getContextPath()%>/chat.do" --%>
+<!-- 							method="POST"> -->
+<%-- 							<input value="${userVO.user_name}" name="userName" type="hidden" /> --%>
+<!-- 							<a href="#" onclick="document.getElementById('myForm').submit();">線上客服&nbsp;<i -->
+<!-- 								class="fa fa-comment-o"></i></a> -->
+<!-- 						</form> -->
+<!-- 					</li> -->
 					<li><a href="<%=request.getContextPath()%>/front-end/qa/qna.jsp">常見問題</a></li>
 				</ul>
 			</nav>
@@ -203,7 +203,7 @@
 	<div class="mini-chat">
 		<div class="content">
 			<div class="top-bar">
-				<i class="ti-angle-left"></i>
+				<i class="ti-angle-left" onclick="listFriend();"></i>
 				<div id="statusOutput"></div>
 				<div class="cancel">
 					<i class="ti-close"></i>
@@ -219,254 +219,172 @@
 						onclick="sendMessage();"></i>
 				</div>
 			</div>
-
 		</div>
 	</div>
+	
+	<div class="friendlist" id="friendlist">
+		<div class="content">
+			<div class="top-bar">
+				<div class="list">聊天室</div>
+				<div class="cancel">
+				<i class="ti-close" onclick="closefriendlist();"></i>
+				</div>
+			</div>
+			<div class="friendArea" id="friendArea">
+			</div>
+		</div>
+	</div>
+	
 </c:if>
 
 </header>
 <!-- Header End -->
 <!-- heade搜尋 -->
 <script>
+	const closelist = document.querySelector(".friendlist");
+	const openlist = document.querySelector(".friendlist");
+	const chatBtn = document.querySelector(".chat-btn");
+	const miniChat = document.querySelector(".mini-chat");
+	const closeChatBtn = document.querySelector(".ti-close");
+	
+	function closefriendlist(){
+		closelist.style.visibility="hidden";
+		miniChat.style.visibility="hidden";
+	}
+	function listFriend(){
+		openlist.style.visibility="visible";
+	}
 
-//    	const chatBtn = document.querySelector(".chat-btn");
-//     const miniChat = document.querySelector(".mini-chat");
-//     const closeChatBtn = document.querySelector(".ti-close");
-//     chatBtn.addEventListener("click", function() {
-//         miniChat.style.visibility = "visible";
-//         chatBtn.style.visibility = "hidden";
-//     });
-//     closeChatBtn.addEventListener("click", function() {
-//         miniChat.style.visibility = "hidden";
-//         chatBtn.style.visibility = "visible";
-//     })
+	chatBtn.addEventListener("click", function() {
+		 miniChat.style.visibility = "visible";
+		 listFriend();
+		 addListener();
+	});
+	closeChatBtn.addEventListener("click", function() {
+		 closefriendlist();
+	     miniChat.style.visibility = "hidden";
+	})
+	//WebSocket開始
+	var MyPoint = "/FriendChatWS/${userVO.user_id}";
+	var host = window.location.host;
+	var path = window.location.pathname;
+	var webCtx = path.substring(0, path.indexOf('/', 1));
+	var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+	                
+	const statusOutput = document.getElementById("statusOutput");
+	const messagesArea = document.getElementById("messagesArea");
+	var self = '${userVO.user_id}';
+	
+// 	if("${productVO.user_id}"!=""){
+// 		var friend = '${productVO.user_id}'
+// 	}else{
+		
+// 	};
+	var webSocket;
+        connect();
+        function connect() {
+            // create a websocket
+            webSocket = new WebSocket(endPointURL);
+            webSocket.onopen = function(event) {
+                console.log("Connect Success!");
+            };
+			// OnMessaage
+            webSocket.onmessage = function(event) {
+                var jsonObj = JSON.parse(event.data);
 
-//      function getSellerId(){
+                if ("open" === jsonObj.type) {
+                    refreshFriendList(jsonObj);
+                    //addList
+                } else if ("history" === jsonObj.type) {
+					messagesArea.innetHTML = "";
+                    var ul = document.createElement('ul');
+                    ul.id = "area";
+                    messagesArea.appendChild(ul);
+                    // 這行的jsonObj.message是從redis撈出跟好友的歷史訊息，再parse成JSON格式處理
+                    var messages = JSON.parse(jsonObj.message);
+                    for (var i = 0; i < messages.length; i++) {
+                        var historyData = JSON.parse(messages[i]);
+                        var showMsg = historyData.message;
+                        var li = document.createElement('li');
+                        // 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
+                        historyData.sender === self ? li.className += 'me' : li.className += 'friend';
+                        li.innerHTML = showMsg;
+                        ul.appendChild(li);
+                    }
+                    messagesArea.scrollTop = messagesArea.scrollHeight;
+                } else if ("chat" === jsonObj.type) {
+                    var li = document.createElement('li');
+                    jsonObj.sender === self ? li.className += 'me' : li.className += 'friend';
+                    li.innerHTML = jsonObj.message;
+                    console.log(li);
+                    document.getElementById("area").appendChild(li);
+                    messagesArea.scrollTop = messagesArea.scrollHeight;
+                } else if ("close" === jsonObj.type) {
+                    refreshFriendList(jsonObj);
+                }
 
-//         seller = "${productVO.user_id}";
-// //         if(seller == "${userVO.user_id}"){
-// //             this.disabled=true;
-// //             window.alert("請勿私聊自己");
-// //         }else{
-//         chatBtn.style.visibility="hidden";
-//         miniChat.style.visibility="visible";
-//         connect();
-// //         }
-//     }
-//             if("${userVO.user_id}" == ""){
-//                 document.getElementById("chatBtn").style.visibility="hidden";
-//             }
-//         var MyPoint = "/FriendChatWS/${userVO.user_id}";
-//         var host = window.location.host;
-//         var path = window.location.pathname;
-//         var webCtx = path.substring(0, path.indexOf('/', 1));
-//         var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
-//                 
-//         const statusOutput = document.getElementById("statusOutput");
-//         const messagesArea = document.getElementById("messagesArea");
-//         var self = '${userVO.user_id}';
-//         var webSocket;
-//                 
-//        
-//         function connect(seller) {
-//             // create a websocket
-// 			console.log("this is in connect");
-//             webSocket = new WebSocket(endPointURL);
-//             webSocket.onopen = function(event) {
-//                 console.log("Connect Success!");
-//                 updateFriendName(seller);
-//             };
-
-//             webSocket.onmessage = function(event) {
-//                 var jsonObj = JSON.parse(event.data);
-//                 if ("open" === jsonObj.type) {
-// //                     refreshFriendList(jsonObj);
-//                     addListener(seller);
-//                 } else if ("history" === jsonObj.type) {
-//                     statusOutput.innerHTML = seller;
-//                     const ul = document.createElement('ul');
-//                     ul.id = "area";
-//                     messagesArea.appendChild(ul);
-//                     // 這行的jsonObj.message是從redis撈出跟好友的歷史訊息，再parse成JSON格式處理
-//                     var messages = JSON.parse(jsonObj.message);
-//                     for (var i = 0; i < messages.length; i++) {
-//                         var historyData = JSON.parse(messages[i]);
-//                         var showMsg = historyData.message;
-//                         var li = document.createElement('li');
-//                         // 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
-//                         historyData.sender === self ? li.className += 'me'
-//                                 : li.className += 'friend';
-//                         li.innerHTML = showMsg;
-//                         ul.appendChild(li);
-//                     }
-//                     messagesArea.scrollTop = messagesArea.scrollHeight;
-//                 } else if ("chat" === jsonObj.type) {
-//                     var li = document.createElement('li');
-//                     jsonObj.sender === self ? li.className += 'me'
-//                             : li.className += 'friend';
-//                     li.innerHTML = jsonObj.message;
-//                     console.log(li);
-//                     document.getElementById("area").appendChild(li);
-//                     messagesArea.scrollTop = messagesArea.scrollHeight;
-//                 } else if ("close" === jsonObj.type) {
-//                     refreshFriendList(jsonObj);
-//                 }
-
-//             };
-
-//             webSocket.onclose = function(event) {
-//                 console.log("Disconnected!");
-//             };
-//         }
-
-//         function sendMessage() {
-//             var inputMessage = document.getElementById("message");
-//             let friend = statusOutput.textContent;
-//             var message = inputMessage.value.trim();
-
-//             if (message === "") {
-//                 alert("Input a message");
-//                 inputMessage.focus();
-//             } else if (friend === "") {
-//                 alert("Choose a friend");
-//             } else {
-//                 var jsonObj = {
-//                     "type" : "chat",
-//                     "sender" : self,
-//                     "receiver" : friend,
-//                     "message" : message
-//                 };
-//                 webSocket.send(JSON.stringify(jsonObj));
-//                 inputMessage.value = "";
-//                 inputMessage.focus();
-//             }
-//         }
-
-//         // 有好友上線或離線就更新列表
-//         /* function refreshFriendList(jsonObj) {
-//             var friends = jsonObj.users;
-//             var row = document.getElementById("row");
-//             row.innerHTML = '';
-//             for (var i = 0; i < friends.length; i++) {
-//                 if (friends[i] === self) { continue; }
-//                 row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
-//             }
+            };
+			//OnClose
+            webSocket.onclose = function(event) {
+                console.log("Disconnected!");
+            };
+        }
+		
+        function sendMessage() {
+            var inputMessage = document.getElementById("message");
+            var friend = statusOutput.textContent;
+            var message = inputMessage.value.trim();
+            if (message === "") {
+                alert("Input a message");
+                inputMessage.focus();
+            } else {
+                var jsonObj = {
+                    "type" : "chat",
+                    "sender" : self,
+                    "receiver" : friend,
+                    "message" : message
+                };
+                webSocket.send(JSON.stringify(jsonObj));
+                inputMessage.value = "";
+                inputMessage.focus();
+            }
+        }
+        // 有好友上線或離線就更新列表
+         function refreshFriendList(jsonObj) {
+            var friends = jsonObj.users;
+            var friendArea = document.getElementById("friendArea");
+            friendArea.innerHTML = '';
+            for (var i = 0; i < friends.length; i++) {
+                if (friends[i] === self) { continue; }
+                friendArea.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + '><h2>' + friends[i] + '</h2></div>';
+            }
 //             addListener();
-//         } */
-//         // 註冊列表點擊事件並抓取好友名字以取得歷史訊息
-//         function addListener(seller) {
-// //             const friend = seller;
-// //             updateFriendName(friend);
-//             
-//             var jsonObj = {
-//                 "type" : "history",
-//                 "sender" : self,
-//                 "receiver" : seller,
-//                 "message" : ""
-//             };
-//             webSocket.send(JSON.stringify(jsonObj));
-//         }
+        } 
+        // 註冊列表點擊事件並抓取好友名字以取得歷史訊息
+       function addListener(friend) {
+			var container = document.getElementById("friendArea");
+			container.addEventListener("click",function(e){
+			closefriendlist();
+			miniChat.style.visibility = "visible";
+			var friend = e.srcElement.textContent;
+             updateFriendName(friend);
+            var jsonObj = {
+                "type" : "history",
+                "sender" : self,
+                "receiver" : friend,
+                "message" : ""
+            };
+            webSocket.send(JSON.stringify(jsonObj));
+			})
+        }
 
-//         function disconnect() {
-//             webSocket.close();
-//         }
+        function disconnect() {
+            webSocket.close();
+        };
 
-//         function updateFriendName(id) {
-//             const friend = id;
-//             statusOutput.innerHTML = friend;
-//         } 
-
-
-
-// 		webSocket.onmessage = function(event) {
-// 			var jsonObj = JSON.parse(event.data);
-// 			if ("open" === jsonObj.type) {
-// // 				refreshFriendList(jsonObj);
-// 				addListener(seller);
-// 			} else if ("history" === jsonObj.type) {
-// 				statusOutput.innerHTML = seller;
-// 				const ul = document.createElement('ul');
-// 				ul.id = "area";
-// 				messagesArea.appendChild(ul);
-// 				// 這行的jsonObj.message是從redis撈出跟好友的歷史訊息，再parse成JSON格式處理
-// 				var messages = JSON.parse(jsonObj.message);
-// 				for (var i = 0; i < messages.length; i++) {
-// 					var historyData = JSON.parse(messages[i]);
-// 					var showMsg = historyData.message;
-// 					var li = document.createElement('li');
-// 					jsonObj.sender === self ? li.className += 'me'
-// 							: li.className += 'friend';
-// 					li.innerHTML = jsonObj.message;
-// 					console.log(li);
-// 					document.getElementById("area").appendChild(li);
-// 					messagesArea.scrollTop = messagesArea.scrollHeight;
-// 				} else if ("close" === jsonObj.type) {
-// 					refreshFriendList(jsonObj);
-// 				}
-	
-// 			};
-	
-// 			webSocket.onclose = function(event) {
-// 				console.log("Disconnected!");
-// 			};
-// 		}
-	
-// 		function sendMessage() {
-// 			var inputMessage = document.getElementById("message");
-// 			let friend = statusOutput.textContent;
-// 			var message = inputMessage.value.trim();
-	
-// 			if (message === "") {
-// 				alert("Input a message");
-// 				inputMessage.focus();
-// 			} else if (friend === "") {
-// 				alert("Choose a friend");
-// 			} else {
-// 				var jsonObj = {
-// 					"type" : "chat",
-// 					"sender" : self,
-// 					"receiver" : friend,
-// 					"message" : message
-// 				};
-// 				webSocket.send(JSON.stringify(jsonObj));
-// 				inputMessage.value = "";
-// 				inputMessage.focus();
-// 			}
-// 		}
-	
-// 		// 有好友上線或離線就更新列表
-// 		/* function refreshFriendList(jsonObj) {
-// 			var friends = jsonObj.users;
-// 			var row = document.getElementById("row");
-// 			row.innerHTML = '';
-// 			for (var i = 0; i < friends.length; i++) {
-// 				if (friends[i] === self) { continue; }
-// 				row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
-// 			}
-// 			addListener();
-// 		} */
-// 		// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
-// 		function addListener(seller) {
-// 	// 		const friend = seller;
-// 	// 		updateFriendName(friend);
-			
-// 			var jsonObj = {
-// 				"type" : "history",
-// 				"sender" : self,
-// 				"receiver" : seller,
-// 				"message" : ""
-// 			};
-// 			webSocket.send(JSON.stringify(jsonObj));
-// 		}
-	
-// 		function disconnect() {
-// 			webSocket.close();
-// 		}
-	
-// 		function updateFriendName(id) {
-// 			const friend = id;
-// 			statusOutput.innerHTML = friend;
-// 		}
+        function updateFriendName(name) {
+            statusOutput.innerHTML = name;
+        };
 
 	function sendQuery(datas){ 
 		

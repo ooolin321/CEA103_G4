@@ -53,6 +53,101 @@
     font-size: 14px;
 }
 
+
+
+
+.message-area {
+	height: 70%;
+	resize: none;
+	box-sizing: border-box;
+	overflow: auto;
+	background-color: #ffffff;
+}
+
+.input-area {
+	background: pink;
+	box-shadow: inset 0 0 10px #8c002e;
+	
+}
+
+.input-area input {
+	margin: 0.5em 0em 0.5em 0.5em;
+}
+
+.text-field {
+	border: 1px solid grey;
+	padding: 0.2em;
+	box-shadow: 0 0 5px #000000;
+}
+
+h1 {
+	font-size: 1.5em;
+	padding: 5px;
+	margin: 5px;
+}
+
+#message {
+	min-width: 50%;
+	max-width: 60%;
+}
+
+.statusOutput {
+	background: pink;
+	text-align: center;
+	color: #ffffff;
+	border: 1px solid grey;
+	padding: 0.2em;
+	box-shadow: 0 0 5px #000000;
+	width: 30%;
+	margin-top: 10%;
+	margin-left: 60%;
+}
+.column {
+  float: left;
+  width: 50%;
+  padding: 5%;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+}
+
+#area{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li{
+  display:inline-block;
+  clear: both;
+  padding: 20px;
+  border-radius: 30px;
+  margin-bottom: 2px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.friend{
+  background: #eee;
+  float: left;
+}
+
+.me{
+  float: right;
+  background: pink;
+  color: #fff;
+}
+
+.friend + .me{
+  border-bottom-right-radius: 5px;
+}
+
+.me + .me{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.me:last-of-type {
+  border-bottom-right-radius: 30px;
+}
 </style>
 
 </head>
@@ -68,7 +163,7 @@
                     <li class="breadcrumb-item">會員首頁</li>
                   </ul>
                 </div>
-	<div id="showbox"></div>
+<!-- 	<div id="showbox"></div> -->
 	<h3 id="statusOutput" class="statusOutput"></h3>
 	<div id="row"></div>
 	<div id="messagesArea" class="panel message-area"></div>
@@ -78,10 +173,11 @@
 			onkeydown="if (event.keyCode == 13) sendMessage();" /> <input
 			type="submit" id="sendMessage" class="button" value="Send"
 			onclick="sendMessage();" /> <input type="button" id="connect"
-			class="button" value="Connect" onclick="connect();" /> <input
-			type="button" id="disconnect" class="button" value="Disconnect"
-			onclick="disconnect();" /> <input type="button"
-			onclick="history.back()" value="回到上一頁"></input>
+			class="button" value="連線" onclick="connect();" /> <input
+			type="button" id="disconnect" class="button" value="離開"
+			onclick="disconnect();" /> 
+<!-- 			<input type="button" -->
+<!-- 			onclick="history.back()" value="回到上一頁"></input> -->
 	</div>
          <jsp:include page="/front-end/protected/userIndex_footer.jsp" />
          <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>

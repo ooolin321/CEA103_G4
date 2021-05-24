@@ -1,17 +1,17 @@
 	const favorite = document.getElementById('favorite');
 	
-	function favoriteContent(data,path) {		
+	function favoriteContent(data,favfavPath) {		
       		let htmlContent = "";     	  
 		data["results"].forEach(function (item, index) {
 
       	    htmlContent += `
-      	    <div class="col-lg-3 col-sm-6">
+      	    <div class="col-lg-3 col-sm-6 productBox">
       	        <div class="card mb-2 productcard">
       	           <div class="product-item" >
       	    		 <div class="pi-pic">
       	    		  <div class="pi-img">
-      	                 <a href="${path}/product/product.do?product_no=${item.product_no}">
-      	                    <img class="card-img-top" src="${path}/ProductShowPhoto?product_no=${item.product_no}" alt=""></a>
+      	                 <a href="${favPath}/product/product.do?product_no=${item.product_no}">
+      	                    <img class="card-img-top" src="${favPath}/ProductShowPhoto?product_no=${item.product_no}" alt=""></a>
       	                    </div>
       	    				<ul>
                         <li class="w-icon" id="SC${item.product_no}">
@@ -23,7 +23,7 @@
       	                    </ul>
       	                </div>
       	                <div class="pi-text">
-      	                <a href="${path}/product/product.do?product_no=${item.product_no}">                
+      	                <a href="${favPath}/product/product.do?product_no=${item.product_no}">                
       	                        <h5>${item.product_name}</h5>    
       	                    <div class="product-price"><span>$</span>
       	                        ${item.product_price}
@@ -54,7 +54,7 @@
     data["results"].splice(index, 1)
     localStorage.setItem('favorite', JSON.stringify(data))
 
-    favoriteContent(data,path);
+    favoriteContent(data,favPath);
     removeSession(index);
     
   }

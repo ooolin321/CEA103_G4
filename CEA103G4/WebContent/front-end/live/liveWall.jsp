@@ -247,7 +247,7 @@ margin-left: 85px;
 				<div class="product-list">
 					<div class="row" id="products">
 						<c:forEach var="liveVO" items="${lives}" begin="0"
-							end="${lives.size()-1}">
+							end="${lives.size()}">
 							<c:if test="${liveVO.live_state==2}">
 								<div class="col-lg-3 col-md-4 col-sm-6">
 									<div class="card mb-2 productcard">

@@ -572,6 +572,23 @@ function refresh(){
 
 					webSocket.send(JSON.stringify(json));
 
+				}else if("/stopstream"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){
+					$.ajax({ 
+						  type:"POST",
+						  url:"<%=request.getContextPath()%>/live/live.do",
+						 	 data:{
+						 		 
+							 	 "live_no":'${liveVO.live_no}',
+								 "action": "over"
+						  },
+						  success: function(res) {
+							  Swal.fire('直播已結束').then(function(){
+								  window.location.href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp"
+							  })
+								
+					      }  
+					
+					 });
 				}else if("/start"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以start
 					//&& ${liveVO.user_id==userVO.user_id}
 					//開始競標
@@ -623,19 +640,7 @@ function refresh(){
 				
 				}else if("/countdown"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){
 					
-					var timeLeft = 29;
-					var elem = document.getElementById('some_div');
-					var timerId = setInterval(countdown, 1000);
 
-					function countdown() {
-					    if (timeLeft == -1) {
-					        clearTimeout(timerId);
-					        doSomething();
-					    } else {
-					        elem.innerHTML = ' 最後倒數中 ' +timeLeft +' 秒';
-					        timeLeft--;
-					    }
-					}
 
 					function doSomething() {
 						
@@ -681,7 +686,44 @@ function refresh(){
 					  timer: 30000,
 					  timerProgressBar: true,
 					  didOpen: () => {
+						
 					    Swal.showLoading()
+					    
+   					var timeLeft = 29;
+					var elem = document.getElementById('some_div');
+					var timerId = setInterval(countdown, 1000);
+
+					function countdown() {
+					    if (timeLeft == -1) {
+					        clearTimeout(timerId);
+					        if(+$("#current_price").html() !== 0){
+					        	
+						        doSomething();
+					        }else{
+					        	Swal.fire({
+									  title: "本次無人出價，流標",
+									  width: 600,
+									  padding: '3em',
+									  background: '#fff',
+									  backdrop: `
+									    rgba(0,0,123,0.4)
+									    url(${pageContext.request.contextPath}/images/nyan-cat.gif)
+									    left top
+									    no-repeat
+									  `
+								});
+					        	return;
+					        }
+					    } else {
+					        elem.innerHTML = ' 最後倒數中 ' +timeLeft +' 秒';
+					        timeLeft--;
+					    }
+					}
+					    
+					    
+					    
+					    
+					    
 					    timerInterval = setInterval(() => {
 					      const content = Swal.getHtmlContainer()
 					      if (content) {
@@ -858,7 +900,7 @@ function refresh(){
 				if("${userVO.user_id}" == "${liveVO.user_id}"){
 					
 				setTimeout(function(){
-					Swal.fire('直播主指令:\n/start:開始競標 \n/countdown:競標倒數三十秒\n/over:結束競標並產生訂單')
+					Swal.fire('直播主指令:\n/start:開始競標 \n/countdown:競標倒數三十秒\n/over:結束競標並產生訂單\n/stopstream:結束直播')
 				}, 1);
 				inputMessage.value = "";
 				return;

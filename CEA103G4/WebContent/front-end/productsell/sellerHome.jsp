@@ -107,7 +107,7 @@
        </div>
          </c:if>
          <c:forEach var="seller" items="${SellerProducts}" begin="0" end="0">	
-			<div class="card mb-3" style="width: 400px;height: 200px;">
+			<div class="card mb-3">
   			<div class="row g-0">
    			 <div class="col-md-6">
       			<img width="200px" height="200px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${seller.user_id}" class="rounded mx-auto d-block" alt="">
@@ -151,7 +151,7 @@
       </div>
          <div class="row">  
             <c:forEach var="productVO" items="${SellerProducts}" begin="0" end="${SellerProducts.size()}">
-          <div class="col-lg-3 col-sm-6">
+          <div class="col-lg-3 col-sm-6 productBox">
         <div class="card mb-2 productcard">
             <div class="product-item" >
                 <div class="pi-pic">

@@ -245,11 +245,6 @@
 <!-- 									</div> -->
 <!-- 								</div> -->
 								<div class="pd-fungroup">
-									<c:if test="${productVO.product_state == 1}">
-										<div>
-											<a href="#" class="primary-btn pd-buy">直接購買</a>
-										</div>
-									</c:if>
 									<div class="pd-function">
 										<a href="javascript:void(0)" class="primary-btn" id="chat-seller">私訊賣家</a>
 <!-- 										<a href="javascript:void(0)" class="primary-btn chat-seller" id="chat_seller">私訊賣家</a> -->

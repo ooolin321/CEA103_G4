@@ -275,14 +275,14 @@ font-size: 1.75rem;
 					var li = document.createElement('li');
 					li.id = "lis";
 					var span = document.createElement('span');
-					span.id = "time";
+
 					// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
 					historyData.sender === self ? li.className = 'me' : li.className = 'friend' ;
-					historyData.time === self ? span.id = 'time' : span.id = 'friendtime' ;
+					historyData.sender === self ? span.id = 'time' : span.id = 'friendtime' ;
 					li.innerHTML = showMsg;
 					$(span).text(historyData.time);
 					ul.appendChild(li);
-					li.appendChild(span);
+					ul.appendChild(span);
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
@@ -302,7 +302,7 @@ font-size: 1.75rem;
 				var li = document.createElement('li');
 				li.id = "lis";
 				var span = document.createElement('span');
-				span.id = "time";
+
 				jsonObj.sender === self ? li.className = 'me' : li.className = 'friend';
 				jsonObj.sender === self ? span.id = 'time' : span.id = 'friendtime';
 				li.innerHTML = jsonObj.message;

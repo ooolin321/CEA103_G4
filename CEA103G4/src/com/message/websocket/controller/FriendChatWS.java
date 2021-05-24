@@ -40,12 +40,9 @@ public class FriendChatWS {
 		String stateMessageJson = gson.toJson(stateMessage);
 		Collection<Session> sessions = sessionsMap.values();
 		
-//		State stateFriends = new State("list",user_id, friends);
-//		String stateFriendsJson = gson.toJson(stateFriends);
 		for (Session session : sessions) {
 			if (session.isOpen()) {
 				session.getAsyncRemote().sendText(stateMessageJson);
-//				session.getAsyncRemote().sendText(stateFriendsJson);
 			}
 		}
 		

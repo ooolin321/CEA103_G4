@@ -99,7 +99,7 @@
        			<p class="card-text"><small class="text-muted"></small></p>
 
        			<div class="seller-btn">
-       			<div><a href="#"><i class="fa fa-commenting-o"></i>&nbsp;<p style="display:inline-block; color:pink;">私訊賣家</p></a></div>
+       			<div><a href="#" id="chat-seller"><i class="fa fa-commenting-o"></i>&nbsp;<p style="display:inline-block; color:pink;">私訊賣家</p></a></div>
        			</div>
      		 </div>
     		</div>
@@ -141,7 +141,7 @@
 					</div>
                </c:if>
        			<div class="seller-btn">
-       			<div><a href="#"><i class="fa fa-commenting-o"></i>&nbsp;<p style="display:inline-block; color:pink;">私訊賣家</p></a></div>
+       			<div><a href="#" id="chat-seller"><i class="fa fa-commenting-o"></i>&nbsp;<p style="display:inline-block; color:pink;">私訊賣家</p></a></div>
        			</div>
      		 </div>
     		</div>
@@ -209,6 +209,28 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
 	
 	<script>
+	var chatSeller = document.getElementById("chat-seller");
+//	 var miniChat = document.querySelector(".mini-chat");
+	 chatSeller.addEventListener("click",function(){
+		closelist.style.visibility="hidden";
+		if("${userVO.user_id}" == ""){
+			login();
+		}else if("${userVO.user_id}" == "${productVO.user_id}"){
+			Swal.fire({
+	  			  icon: 'error',
+	  			  title: '很抱歉,無法私訊自己',
+	  			  showConfirmButton: false,
+	  			  timer: 1500
+	  			});
+		}else{
+		miniChat.style.visibility="visible";
+		var friend = "${productVO.user_id}";
+		addListener2(friend);
+			
+		}
+	});
+	
+	
 	var url = window.location.search;
 	var str = url.split('?')[1];
 	var sellerID = str.split('=')[1];

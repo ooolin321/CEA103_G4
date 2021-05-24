@@ -255,6 +255,7 @@
 		openlist.style.visibility="visible";
 		disconnect();
 		connect();
+		
 	}
 
 	chatBtn.addEventListener("click", function() {
@@ -283,7 +284,7 @@
 		
 // 	};
 	var webSocket;
-        connect();
+        connect(); //websocket直接啟動
         function connect() {
             // create a websocket
             webSocket = new WebSocket(endPointURL);
@@ -296,7 +297,6 @@
 
                 if ("open" === jsonObj.type) {
                     refreshFriendList(jsonObj);
-                    //addList
                 } else if ("history" === jsonObj.type) {
 					messagesArea.innerHTML = "";
                     var ul = document.createElement('ul');
@@ -316,9 +316,10 @@
                     messagesArea.scrollTop = messagesArea.scrollHeight;
                 } else if ("chat" === jsonObj.type) {
                     var li = document.createElement('li');
-                    jsonObj.sender === self ? li.className += 'me' : li.className += 'friend';
-                    li.innerHTML = jsonObj.message;
-                    console.log(li);
+					if(jsonObj.sender === statusOutput.textContent || jsonObj.sender ===self){ //完善版本 不會看到別人訊息
+                    jsonObj.sender === self ? li.className += 'me' : li.className += 'friend'; 
+					}
+					li.innerHTML = jsonObj.message;
                     document.getElementById("area").appendChild(li);
                     messagesArea.scrollTop = messagesArea.scrollHeight;
                 } else if ("close" === jsonObj.type) {
@@ -356,7 +357,6 @@
             var friends = jsonObj.users;
 			var friendArea = document.getElementById("friendArea");
             friendArea.innerHTML = '';
-			messagesArea.innerHTML ='';
 			if(friends != ""){
 	            for (var i = 0; i < friends.length; i++) {
 	                if (friends[i] === self) { continue; }
@@ -365,8 +365,7 @@
 			}else{
 				friendArea.innerHTML +='<h3>請選擇聊天對象<h3>'
 			}
-
-//             addListener(); //註解掉好像沒差
+            addListener(); //註解掉好像沒差
         } 
         // 註冊列表點擊事件並抓取好友名字以取得歷史訊息
        function addListener(friend) {

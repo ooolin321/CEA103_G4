@@ -349,7 +349,8 @@ console.log(jsonObj);
 		row.innerHTML = '';
 		for (var i = 0; i < friends.length; i++) {
 			if (friends[i] === self) { continue; }//從所有好友列表排除自己的帳號
-			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><img class="rounded-circle" width="45px" height="40px" style="margin-right: 10px;" src="<%=request.getContextPath()%>/front-template/images/01.png" /><h2>' + friends[i] + '</h2></div>';
+// 			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
+		row.innerHTML = <img class="rounded-circle" width="45px" height="40px" style="margin-right: 10px;" src="<%=request.getContextPath()%>/front-template/images/01.png" />
 		}
 		addListener();
 	}

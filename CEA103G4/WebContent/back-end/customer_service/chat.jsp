@@ -1,214 +1,239 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.emp.model.*"%>
 <%@ page import="com.user.model.*"%>
 
 <%
-	EmpVO empVO = (EmpVO) session.getAttribute("empAccount");
-	session.setAttribute("empVO", empVO);
-	UserVO userVO2 = (UserVO) session.getAttribute("account");
-	session.setAttribute("userVO", userVO2);
+EmpVO empVO = (EmpVO) session.getAttribute("empAccount");
+session.setAttribute("empVO", empVO);
+UserVO userVO2 = (UserVO) session.getAttribute("account");
+session.setAttribute("userVO", userVO2);
 	// out.println(userVO2.getUser_name());
 	// out.println(empVO.getEname());
 %>
 
+
 <!DOCTYPE html>
 <html lang="zh-tw">
 <head>
-<meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-<!-- Twitter meta-->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:site" content="@pratikborsadiya">
-<meta property="twitter:creator" content="@pratikborsadiya">
-<!-- Open Graph Meta-->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Vali Admin">
-<meta property="og:title" content="Vali - Free Bootstrap 4 admin theme">
-<meta property="og:url"
+	<meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
+	<!-- Twitter meta-->
+	<meta property="twitter:card" content="summary_large_image">
+	<meta property="twitter:site" content="@pratikborsadiya">
+	<meta property="twitter:creator" content="@pratikborsadiya">
+	<!-- Open Graph Meta-->
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Vali Admin">
+	<meta property="og:title" content="Vali - Free Bootstrap 4 admin theme">
+	<meta property="og:url"
 	content="http://pratikborsadiya.in/blog/vali-admin">
-<meta property="og:image"
+	<meta property="og:image"
 	content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
-<meta property="og:description"
+	<meta property="og:description"
 	content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-<title>所有員工資料</title>
-<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Main CSS-->
-<%-- <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back-template/docs/css/main.css"> --%>
-<!-- Font-icon css-->
-<!-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/customer_service/assets/css/amazeui.min.css"> --%>
+	<title>所有員工資料</title>
+	<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Main CSS-->
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back-template/docs/css/main.css">
+	<!-- Font-icon css-->
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/back-end/customer_service/css/friendchat.css"
-	type="text/css" />
+	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/customer_service/assets/css/amazeui.min.css"> --%>
 
-<style type="text/css">
+	<!-- <link rel="stylesheet" -->
+	<%-- 	href="<%=request.getContextPath()%>/back-end/customer_service/css/friendchat.css" --%>
+	<!-- 	type="text/css" /> -->
 
-
-.panel {
-	float: right;
-	border: 2px solid #0078ae;
-	border-radius: 5px;
-	width: 50%;
+	<style type="text/css">
+.app-title h1 {
+    display: inline-block;
+    margin-right: 15px;
 }
-
-.message-area {
-	height: 70%;
-	resize: none;
-	box-sizing: border-box;
-	overflow: auto;
-	background-color: #ffffff;
+h2, .h2{
+font-size: 1.75rem;
+    background-color: #007d71;
 }
-
-.input-area {
-	background: #007d71	;
-	box-shadow: inset 0 0 10px #00568c;
-}
-
-.input-area input {
-	margin: 0.5em 0em 0.5em 0.5em;
-}
-
-.text-field {
-	border: 1px solid grey;
-	padding: 0.2em;
-	box-shadow: 0 0 5px #000000;
-}
-
-h1 {
-	font-size: 1.5em;
-	padding: 5px;
-	margin: 5px;
-}
-
-#message {
-	min-width: 50%;
-	max-width: 60%;
-}
-
-.statusOutput {
-	background: #007d71;
-	text-align: center;
-	color: #ffffff;
-	border: 1px solid grey;
-	padding: 0.2em;
-	box-shadow: 0 0 5px #000000;
-	width: 30%;
-	margin-top: 10%;
-	margin-left: 60%;
-}
-.column {
-  float: left;
-  width: 50%;
-  padding: 5%;
-  margin-bottom: 5px;
-  background-color: #007d71;
-}
-
-#area{
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-#lis{
-  display:inline;
-  clear: both;
-  padding: 20px;
-  border-radius: 30px;
-  margin-bottom: 2px;
-  font-family: Helvetica, Arial, sans-serif;
-}
-
-#time{
-width:100%;
-float: right;
-color: black;
-text-align: right;
+    
+.SellerHomeBtn .btn-outline-warning:hover {
+	color:white;
 
 }
 
-#friendtime {
-width:100%;
-float: left;
-color: black;
+.widget-small .info p {
+    margin: 0;
+    font-size: 14px;
 }
 
-.friend{
-  background: #eee;
-  float: left;
-}
 
-.me{
-  float: right;
-  background: #007d71;
-  color: #fff;
-}
+/*  		.panel {  */
+/* 			overflow: right;  */
+/*  			border: 2px solid #0078ae;  */
+/* 			border-radius: 5px;  */
+/* 			width: 50%; */
+/* 		}  */
 
-.friend + .me{
-  border-bottom-right-radius: 5px;
-}
+		.message-area {
+			height: 400px;
+			resize: none;
+			box-sizing: border-box;
+			overflow: auto;
+			background-color: #ffffff;
+		}
 
-.me + .me{
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
+		.input-area {
+			background: #007d71	;
+			box-shadow: inset 0 0 10px #00568c;
+		}
 
-.me:last-of-type {
-  border-bottom-right-radius: 30px;
-}
-</style>
-<title>Made Femme 客服聊天室</title>
+		.input-area input {
+			margin: 0.5em 0em 0.5em 0.5em;
+			
+		}
+
+		.text-field {
+			border: 1px solid grey;
+			padding: 0.2em;
+			box-shadow: 0 0 5px #000000;
+		}
+
+		h1 {
+			font-size: 1.5em;
+			padding: 5px;
+			margin: 5px;
+		}
+
+		#message {
+			min-width: 50%;
+			max-width: 60%;
+		}
+
+		.statusOutput {
+			background: #007d71;
+			text-align: center;
+			color: #ffffff;
+			border: 1px solid grey;
+			padding: 0.2em;
+			box-shadow: 0 0 5px #000000;
+			width: 30%;
+			margin-top: 10%;
+			margin-left: 60%;
+		}
+		.column {
+			float: left;
+			width: 50%;
+			padding: 5%;
+			margin-bottom: 5px;
+			background-color: #fff;
+		}
+
+		#area{
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		#lis{
+			display:inline;
+			clear: both;
+			padding: 20px;
+			border-radius: 30px;
+			margin-bottom: 2px;
+			font-family: Helvetica, Arial, sans-serif;
+		}
+
+		#time{
+			width:100%;
+			float: right;
+			color: black;
+			text-align: right;
+
+		}
+
+		#friendtime {
+			width:100%;
+			float: left;
+			color: black;
+		}
+
+		.friend{
+			background: #eee;
+			float: left;
+		}
+
+		.me{
+			float: right;
+			background: #007d71;
+			color: #fff;
+		}
+
+		.friend + .me{
+			border-bottom-right-radius: 5px;
+		}
+
+		.me + .me{
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+		}
+
+		.me:last-of-type {
+			border-bottom-right-radius: 30px;
+		}
+
+
+	</style>
+	<title>Made Femme 客服聊天室</title>
 </head>
 <body class="app sidebar-mini rtl  pace-done" onload="connect()	" onunload="disconnect(); ">
-<%-- <jsp:include page="/back-end/backendMenu.jsp" /> --%>
-<main class="app-content">
-	<div class="app-title">
-		<div>
-			<h1>
-				<i class="fa fa-group"></i> 客服訊息
-			</h1>			
-		</div>
-		
-		<ul class="app-breadcrumb breadcrumb">
-			<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-			<li class="breadcrumb-item"><a
-				href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">回到首頁</a></li>
-		</ul>
-	</div>
-	
-<!-- 	<div id="showbox"> -->
-	
-<!-- 	</div> -->
-	<h3 id="statusOutput" class="statusOutput"></h3>
-	<div id="row"></div>
-	<div id="messagesArea" class="panel message-area" ></div>
-	<div class="panel input-area">
-		<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
-		<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
-		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
-		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
-		<input type="button" onclick="history.back()" value="回到上一頁"></input>
-	</div>
- </main>
-	<jsp:include page="/back-end/backendfooter.jsp" />
-<script>
-	var MyPoint = "/CustomerWS/${empName}";
-	var host = window.location.host;
-	var path = window.location.pathname;
-	var webCtx = path.substring(0, path.indexOf('/', 1));
-	var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+	<jsp:include page="/back-end/backendMenu.jsp" />
+	<main class="app-content">
+		<div class="app-title">
+			<div>
+				<h1>
+					<i class="fa fa-group"></i> 客服訊息
+				</h1>			
+			</div>
 
-	var statusOutput = document.getElementById("statusOutput");
-	var messagesArea = document.getElementById("messagesArea");
-	var self = '${empName}';
-	var webSocket;
+			<ul class="app-breadcrumb breadcrumb">
+				<li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+				<li class="breadcrumb-item"><a
+					href="<%=request.getContextPath()%>/back-end/backendIndex.jsp">回到首頁</a></li>
+				</ul>
+			</div>
+
+			<!-- 	<div id="showbox"> -->
+
+				<!-- 	</div> -->
+				<h3 id="statusOutput" class="statusOutput"></h3>
+				<div id="row"></div>
+				<div id="messagesArea" class="panel message-area" >
 	
-	function connect() {
+				</div>
+				<div class="panel input-area">
+					<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
+					<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
+					<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
+					<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
+					<input type="button" onclick="history.back()" value="回到上一頁"></input>
+				</div>
+			</main>
+			<jsp:include page="/back-end/backendfooter.jsp" />
+			<script>
+				var MyPoint = "/CustomerWS/${empName}";
+				var host = window.location.host;
+				var path = window.location.pathname;
+				var webCtx = path.substring(0, path.indexOf('/', 1));
+				var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+
+				var statusOutput = document.getElementById("statusOutput");
+				var messagesArea = document.getElementById("messagesArea");
+				var self = '${empName}';
+				var webSocket;
+
+				function connect() {
 		// create a websocket
 		webSocket = new WebSocket(endPointURL);
 
@@ -261,6 +286,19 @@ color: black;
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
+
+				// var li = document.getElementsByClassName("msg-left");
+				// var div = document.getElementsByClassName("msg-left-sub");
+				// var div = document.getElementsByClassName("msg-desc");
+				// var small = document.createElement("small");
+				// jsonObj.sender === self?li.className="msg-left":li.className="msg-right";
+				// jsonObj.sender === self?small.className='time' :li.className='friendtime';
+				// li.innerHTML === jsonObj.message;
+				// small.innerHTML === jsonObj.time;
+				// document.getElementById("area").appendChild("li");
+				// document.getElementById("area").appendChild("small");
+				// messagesArea.scrollTop = messagesArea.scrollHeight;
+
 				var li = document.createElement('li');
 				li.id = "lis";
 				var span = document.createElement('span');
@@ -289,7 +327,7 @@ color: black;
 		var message = inputMessage.value.trim();
 		var time = new Date();
 		var timeStr = time.getFullYear() + "-" + (time.getMonth()+1).toString().padStart(2, "0") + "-" 
-					+ time.getDate() + " " + time.getHours().toString().padStart(2, "0") + ":" + time.getMinutes().toString().padStart(2, "0");
+		+ time.getDate() + " " + time.getHours().toString().padStart(2, "0") + ":" + time.getMinutes().toString().padStart(2, "0");
 		if (message === "") {
 			alert("Input a message");
 			inputMessage.focus();
@@ -304,7 +342,7 @@ color: black;
 				"receiver" : friend,
 				"message" : message,
 				"time":timeStr
- 			};
+			};
 			webSocket.send(JSON.stringify(jsonObj));
 			inputMessage.value = "";
 			inputMessage.focus();
@@ -314,7 +352,7 @@ color: black;
 	// 有好友上線或離線就更新列表
 	function refreshFriendList(jsonObj) {
 		var friends = jsonObj.users;
-console.log(jsonObj);
+		console.log(jsonObj);
 		var row = document.getElementById("row");
 		row.innerHTML = '';
 		for (var i = 0; i < friends.length; i++) {
@@ -330,12 +368,12 @@ console.log(jsonObj);
 			var friend = e.srcElement.textContent;
 			updateFriendName(friend);
 			var jsonObj = {
-					"type" : "history",
-					"sender" : self,
-					"receiver" : friend,
-					"message" : "",
-					"time":""
-				};
+				"type" : "history",
+				"sender" : self,
+				"receiver" : friend,
+				"message" : "",
+				"time":""
+			};
 			console.log(jsonObj);
 			webSocket.send(JSON.stringify(jsonObj));
 		});
@@ -359,7 +397,7 @@ console.log(jsonObj);
 		　var s=NowDate.getSeconds();　
 		　document.getElementById('showbox').innerHTML = h+'時'+m+'分'+s+'秒';
 		　setTimeout('ShowTime()',1000);
-		}
+	}
 </script>
 
 

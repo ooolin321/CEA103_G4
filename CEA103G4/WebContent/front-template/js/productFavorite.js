@@ -5,7 +5,7 @@
 		data["results"].forEach(function (item, index) {
 
       	    htmlContent += `
-      	    <div class="col-lg-3 col-sm-6">
+      	    <div class="col-lg-3 col-sm-6 productBox">
       	        <div class="card mb-2 productcard">
       	           <div class="product-item" >
       	    		 <div class="pi-pic">

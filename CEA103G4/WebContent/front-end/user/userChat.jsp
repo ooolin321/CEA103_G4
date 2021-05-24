@@ -268,33 +268,34 @@ console.log("222");
 				messagesArea.appendChild(ul);
 				// 這行的jsonObj.message是從redis撈出跟好友的歷史訊息，再parse成JSON格式處理
 				var messages = JSON.parse(jsonObj.message);
-// 				var time = JSON.parse(jsonObj.time);
-// console.log(time);
+
+
 				for (var i = 0; i < messages.length; i++) {
 					var historyData = JSON.parse(messages[i]);
 					var showMsg = historyData.message;
+
 					var li = document.createElement('li');
 					li.id = "lis";
 					var span = document.createElement('span');
-					span.id = "time";
+
 					// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
 					historyData.sender === self ? li.className = 'me' : li.className = 'friend' ;
-					historyData.time === self ? span.id = 'time' : span.id = 'friendtime' ;
-// 					historyData.time === self ? span.id = 'time' : span.id = 'friendtime' ;
+					historyData.sender === self ? span.id = 'time' : span.id = 'friendtime' ;
+
 					li.innerHTML = showMsg;
-// 					span.innnerHTML = showMsg;
+
 					$(span).text(historyData.time);
-// 					$('friend').text(historyData.time);
+
 					ul.appendChild(li);
-					li.appendChild(span);
-					// console.log(historyData.time);
+					ul.appendChild(span);
+
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
 				var li = document.createElement('li');
 				li.id = "lis";
 				var span = document.createElement('span');
-				span.id = "time";
+
 				jsonObj.sender === self ? li.className = 'me' : li.className = 'friend';
 				jsonObj.sender === self ? span.id = 'time' : span.id = 'friendtime';
 				li.innerHTML = jsonObj.message;

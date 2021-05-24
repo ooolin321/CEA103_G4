@@ -72,24 +72,6 @@
             </div>
           </div>
         </div>
-<%--         <div class="single-hero-items set-bg" data-setbg="${pageContext.request.contextPath}/front-template/images/index/hero-2.jpg"> --%>
-<!--           <div class="container"> -->
-<!--             <div class="row"> -->
-<!--               <div class="col-lg-5"> -->
-<!--                 <span>Bag,kids</span> -->
-<!--                 <h1>Black friday</h1> -->
-<!--                 <p> -->
-<!--                   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed -->
-<!--                   do eiusmod tempor incididunt ut labore et dolore -->
-<!--                 </p> -->
-<!--                 <a href="#" class="primary-btn">Shop Now</a> -->
-<!--               </div> -->
-<!--             </div> -->
-<!--             <div class="off-card"> -->
-<!--               <h2>Sale <span>50%</span></h2> -->
-<!--             </div> -->
-<!--           </div> -->
-<!--         </div> -->
       </div>
     </section>
     <!-- Hero Section End -->
@@ -110,7 +92,9 @@
           <div class="product-slider-pdtype"><a class="cative" href="<%=request.getContextPath()%>/product_type/product_type.do?action=getProductsByPdtype&pdtype_no=4001">Clothes</a></div>
             <div class="product-slider owl-carousel">
             <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()}">
-            <c:if test="${productVO.pdtype_no == 4001}"> 
+            <c:if test="${productVO.pdtype_no == 4001}">
+       <div class="productBox">
+          <div class="productcard"> 
             <div class="product-item" >
                 <div class="pi-pic">
                 <div class="pi-img">
@@ -136,6 +120,8 @@
                     </a>
                 </div>
             </div>
+         </div>
+      </div>
             </c:if>
             </c:forEach>
             </div>
@@ -143,6 +129,8 @@
            <div class="product-slider owl-carousel">  
             <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()}">
             <c:if test="${productVO.pdtype_no == 4004}"> 
+         <div class="productBox">
+          <div class="productcard"> 
             <div class="product-item" >
                 <div class="pi-pic">
                 <div class="pi-img">
@@ -168,6 +156,8 @@
                     </a>
                 </div>
             </div>
+          </div>
+         </div>
             </c:if>
             </c:forEach>
             </div>

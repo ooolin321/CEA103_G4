@@ -175,7 +175,7 @@
            <div class="product-list">
             <div class="row" id="products">            
             <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()}">
-          <div class="col-lg-4 col-sm-6">
+          <div class="col-lg-4 col-sm-6 productBox">
         <div class="card mb-2 productcard">
             <div class="product-item" >
                 <div class="pi-pic">

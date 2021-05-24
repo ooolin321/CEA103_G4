@@ -541,8 +541,8 @@ function refresh(){
 			
 			if ("open" === jsonObj.type) {
 				addListener();
-			}else if("history" === jsonObj.type){
 				//進來的時候
+			}else if("history" === jsonObj.type){
 				// addListener();
 				$("#current_price").text(JSON.parse(jsonObj.message).maxPrice);
 				$("#current_id").text(JSON.parse(jsonObj.message).user_id);
@@ -571,15 +571,15 @@ function refresh(){
 					};
 
 					webSocket.send(JSON.stringify(json));
-	
-				}else if("start"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以start
+
+				}else if("/start"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以start
 					//&& ${liveVO.user_id==userVO.user_id}
 					//開始競標
 					if($("#showProduct").find("td").eq(1).html()==undefined){
 						Swal.fire({
 							  icon: 'error',
-							  title: 'Oops...',
-							  text: '目前商品皆已售完!',
+							  title: 'Soldout',
+							  text: '目前沒有商品!',
 							})
 						return;
 					}
@@ -621,7 +621,7 @@ function refresh(){
 					webSocket.send(JSON.stringify(json));	
 				
 				
-				}else if("countdown"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){
+				}else if("/countdown"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){
 					
 					var timeLeft = 30;
 					var elem = document.getElementById('some_div');
@@ -699,7 +699,7 @@ function refresh(){
 					})
 					
 				
-				}else if("over"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以end
+				}else if("/over"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){//直播主才可以end
 					//&& ${liveVO.user_id==userVO.user_id}
 					//結束競標
 					if($("#showProduct").find("td").eq(1).html()==undefined){
@@ -713,8 +713,7 @@ function refresh(){
 					
 					
 					Swal.fire({
-						  title: "結束競標#"+$("#showProduct").find("td").eq(1).html(),
-						  text:"得標者:"+$("#current_id").html() +"\t得標價:"+$("#current_price").html(),
+						  title: "結束競標#"+$("#showProduct").find("td").eq(1).html()+"\n得標者:"+$("#current_id").html()+"\n得標價:"+$("#current_price").html(),
 						  width: 600,
 						  padding: '3em',
 						  background: '#fff',
@@ -768,26 +767,26 @@ function refresh(){
 					//ajax  更改狀態
 					//refresh();
 					//注意元素可以抓到
-				if(jsonObj.sender == '${userVO.user_id}'){
-					
-					$.ajax({ 
-						  type:"POST",
-						  url:"<%=request.getContextPath()%>/live_order/live_order.do",
-						 	 data:{
-					  		  	 "user_id":$("#current_id").html(),
-							 	 "bidPrice":$("#current_price").html(),
-							 	 "live_no":'${liveVO.live_no}',
-							 	 "seller_id":'${liveVO.user_id}',
-							 	 "product_no":$("#showProduct").find("td").eq(1).html(),
-								 "action": "order_ajax"
-						  },
-						  success: function(res) {
-								refresh();
-								
-					      }, 	  
-					
-					 });
-				}
+					if(jsonObj.sender == '${userVO.user_id}'){
+						
+						$.ajax({ 
+							  type:"POST",
+							  url:"<%=request.getContextPath()%>/live_order/live_order.do",
+							 	 data:{
+						  		  	 "user_id":$("#current_id").html(),
+								 	 "bidPrice":$("#current_price").html(),
+								 	 "live_no":'${liveVO.live_no}',
+								 	 "seller_id":'${liveVO.user_id}',
+								 	 "product_no":$("#showProduct").find("td").eq(1).html(),
+									 "action": "order_ajax"
+							  },
+							  success: function(res) {
+									refresh();
+									
+						      }, 	  
+						
+						 });
+					}
 					
 				$("#showProduct").empty();
 				$('#some_div').empty();
@@ -857,6 +856,27 @@ function refresh(){
 					Swal.fire('錢包餘額不足，目前餘額為  ${userVO.cash} 元')
 				}, 1);
 				return;
+			}else if(message == "/help"){
+				if("${userVO.user_id}" == "${liveVO.user_id}"){
+					
+				setTimeout(function(){
+					Swal.fire('直播主指令:\n/start:開始競標 \n/countdown:競標倒數三十秒\n/over:結束競標並產生訂單')
+				}, 1);
+				inputMessage.value = "";
+				return;
+				}else{
+					setTimeout(function(){
+						Swal.fire('一般指令:\n/whatsnow:現在拍賣的商品')
+					}, 1);
+					inputMessage.value = "";
+					return;
+				}
+			}else if(message == "/whatsnow"){
+				setTimeout(function(){
+					Swal.fire('現在拍賣的商品:\n#'+$("#showProduct").find("td").eq(1).html()+'\n商品名稱:'+$("#showProduct").find("td").eq(2).html()+"\n最高出價者:"+$("#current_id").html()+"\n目前最高價:"+$("#current_price").html())
+				}, 1);
+				inputMessage.value = "";
+				return;
 			}
 
 			var jsonObj = {
@@ -870,9 +890,6 @@ function refresh(){
 			inputMessage.value = "";
 			inputMessage.focus();
 				
-			
-			
-			
 		}
 		
 	}

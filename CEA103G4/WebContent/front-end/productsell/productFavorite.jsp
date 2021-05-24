@@ -87,9 +87,9 @@
  
 
 	const data =  JSON.parse(localStorage.getItem("favorite"));
-	const path = "<%=request.getContextPath()%>";
+	const favPath = "<%=request.getContextPath()%>";
 	if (data !== null) {
-		favoriteContent(data,path);
+		favoriteContent(data,favPath);
 	}
 	
 	

@@ -354,13 +354,18 @@
         // 有好友上線或離線就更新列表
          function refreshFriendList(jsonObj) {
             var friends = jsonObj.users;
-            var friendArea = document.getElementById("friendArea");
+			var friendArea = document.getElementById("friendArea");
             friendArea.innerHTML = '';
 			messagesArea.innerHTML ='';
-            for (var i = 0; i < friends.length; i++) {
-                if (friends[i] === self) { continue; }
-                friendArea.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + '><img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id='+friends[i]+'" /><h2>' + friends[i] + '</h2></div>';
-            }
+			if(friends != ""){
+	            for (var i = 0; i < friends.length; i++) {
+	                if (friends[i] === self) { continue; }
+	                friendArea.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + '><img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id='+friends[i]+'" /><h2>' + friends[i] + '</h2></div>';
+	            }
+			}else{
+				friendArea.innerHTML +='<h3>請選擇聊天對象<h3>'
+			}
+
 //             addListener(); //註解掉好像沒差
         } 
         // 註冊列表點擊事件並抓取好友名字以取得歷史訊息
@@ -380,7 +385,7 @@
             webSocket.send(JSON.stringify(jsonObj));
 			})
         }
-		function addListener2(friend) {
+		function addListener2(friend) { //給私訊賣家用
 		             updateFriendName(friend);
 		            var jsonObj = {
 		                "type" : "history",

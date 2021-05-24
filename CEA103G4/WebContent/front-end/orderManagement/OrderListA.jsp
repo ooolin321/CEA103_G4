@@ -53,6 +53,10 @@ table td, table tr, table th {
 #sratingbox {
 	position: inline-block
 }
+#exampleModalLongTitle{
+	text-align: center;
+	margin: auto;
+}
 
 ion-icon {
 	font-size: 64px;
@@ -218,9 +222,9 @@ ion-icon {
 							<div class="modal-dialog modal-dialog-centered" role="document">
 								<div class="modal-content" id="sratingbox">
 									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLongTitle"></h5>
-										<button type="button" class="close" data-dismiss="modal"
-											aria-label="Close">
+										<h3 class="modal-title" id="exampleModalLongTitle">請為此次購物體驗評價</h3>
+<!-- 										<button type="button" class="close" data-dismiss="modal" -->
+<!-- 											aria-label="Close"> -->
 											<span aria-hidden="true">&times;</span>
 										</button>
 									</div>
@@ -235,16 +239,11 @@ ion-icon {
 										</div>
 
 										<div>
-											<textarea name="srating_content" rows="10" cols="43"
+											<textarea name="srating_content" rows="6" cols="43"
 												style="resize: none"></textarea>
 										</div>
 									</div>
 									<div class="modal-footer">
-										<!-- <button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary">Save
-								changes</button> -->
-										
 										<input type="hidden" name="product_name" value="" id="seller_id">
 										<input type="hidden" name="seller_id" value="" id="seller_id">
 										<input type="hidden" name="order_no" value="" id="order_no">
@@ -291,14 +290,14 @@ ion-icon {
 		src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
 	<script>
 	$(document).ready(function(){
-		$("button").click(function(){
+		$("button").click(function(){ //呼叫燈箱
 			let val =$(this).next('input').val();
 			let seller =$(this).prev('input').val();
 			$(".all-star").css("color","black");
 			$("#con").val("0");
 			
 			$(".modalStar").attr("id",val);
-			$("h5").text(val);
+// 			$("h5").text(val);
 			$("#order_no").val(val);
 			$("#seller_id").val(seller);
 		})

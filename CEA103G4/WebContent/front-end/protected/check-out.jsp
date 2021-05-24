@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.product.*"%>
 <%@ page import="com.product.controller.*"%>
@@ -224,38 +225,37 @@ if (buylist3 != null) {
 									value="${userVO.user_phone}" /> <input name="rec_cellphone"
 									type="text" id="rec_cellphone" value="${userVO.user_mobile}" />
 							</div>
-
-							<div class="col-lg-12">
+									<sql:query var="rs" dataSource="${xxx}" startRow="0">
+			    					SELECT CASH FROM cea103_g4.USER WHERE USER_ID='${userVO.user_id}'
+			 						</sql:query>
+								<div class="col-lg-12">
 								<div class="proceed-checkout">
+									<ul>
+									<li>我的錢包 <span>
+			 						 <c:forEach var="row" items="${rs.rows}">
+                      				  ${row.cash}元
+                      				  <c:set var="cash" value="${row.cash}"></c:set>
+                        			</c:forEach>
+									</span></li>
+									</ul>
 									<ul>
 										<li class="cart-total">合計 <span id="Sum">${sum}</span></li>
 									</ul>
 <%-- 								<input type="hidden" name="order_price" value="${sum}"> --%>
+								
+								<c:if test="${sum < cash}">
 								<input type="hidden" name="user_id" value="${userVO.user_id}">
 								<input type="hidden" name="action" value="addOrderList">
 								<button class="site-btn orderBtn" id="submit">送出</button>
+								</c:if>
+								<c:if test="${sum > cash}">
+									<a href="<%=request.getContextPath()%>/front-end/user/addUserCash.jsp">
+									<h4 style="color:#e7ab3c; text-align: center; margin-top:10px;">餘額不足 請點選我儲值</h4>
+									</a>
+								</c:if>
 								</div>
 							</div>
 						</div>
-						<!-- 						<div class="col-lg-6"> -->
-						<!-- 							<div class="select-option"> -->
-						<!-- 								<select name="pay_method" class="p-show" id="pay_method"> -->
-						<!-- 									<option value="null">選擇付款方式</option> -->
-						<!-- 									<option value="0">錢包</option> -->
-						<!-- 									<option value="1">信用卡</option> -->
-						<!-- 									<option value="2">轉帳</option> -->
-						<!-- 								</select> -->
-						<!-- 							</div> -->
-						<!-- 						</div> -->
-						<!-- 						<div class="col-lg-6"> -->
-						<!-- 							<div class="select-option"> -->
-						<!-- 								<select name="logistics" class="" id="logistics"> -->
-						<!-- 									<option value="null">選擇物流方式</option> -->
-						<!-- 									<option value="0">超商</option> -->
-						<!-- 									<option value="1">宅配</option> -->
-						<!-- 								</select> -->
-						<!-- 							</div> -->
-						<!-- 						</div> -->
 
 					</div>
 				</div>
@@ -295,13 +295,7 @@ if (buylist3 != null) {
 		src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
 	<script type="text/javascript">
 		$("#submit").click(function() { //尚未修正
-			if ($("#pay_method").val() == 'null') {
-				window.alert("未選擇付款方式");
-			} else if ($("#logistics").val() == 'null') {
-				window.alert("未選擇物流方式");
-			} else {
 				$("#submit").submit();
-			}
 		})
 		$("#twzipcode").twzipcode({
 			zipcodeIntoDistrict : true, // 郵遞區號自動顯示在區別選單中

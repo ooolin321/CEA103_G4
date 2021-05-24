@@ -793,6 +793,8 @@ public class OrderServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
+			HttpSession session = req.getSession();
+			session.removeAttribute("shoppingcart");
 			try {
 
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
@@ -866,11 +868,13 @@ public class OrderServlet extends HttpServlet {
 					OrderService orderSvc = new OrderService();
 					orderVO.setOrder_price(order_price); //單筆訂單金額
 					orderSvc.insertWithDetails(orderVO, list);
+					System.out.println("訂單金額"+order_price);
 					
 					UserService userSvc = new UserService();
-					UserVO userVO = userSvc.getOneUser(seller_id);
+					UserVO userVO = userSvc.getOneUser(user_id);
 					Integer nowMoney = userVO.getCash();
 					nowMoney -= order_price;
+					System.out.println("現在錢包"+nowMoney);
 					userSvc.updateCash(nowMoney, user_id);
 					//買家扣款
 				}

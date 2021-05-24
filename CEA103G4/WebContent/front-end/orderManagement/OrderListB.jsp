@@ -167,7 +167,7 @@ h3 {
 										<table class="table table-hover">
 											<thead>
 												<tr>
-													<th scope="col"><input type="checkbox" id="AllCheck"></th>
+<!-- 													<th scope="col"><input type="checkbox" id="AllCheck"></th> -->
 													<th scope="col">#</th>
 													<th scope="col">訂單時間</th>
 													<th scope="col">訂單狀態</th>
@@ -184,8 +184,8 @@ h3 {
 													items="${orderSvc.getAllByID2(userVO.user_id)}">
 													<c:if test="${orderVO.logisticsstate==1}">
 														<tr>
-															<td><input type="checkbox" name="order_no"
-																value="${orderVO.order_no}"></td>
+<!-- 															<td><input type="checkbox" name="order_no" -->
+<%-- 																value="${orderVO.order_no}"></td> --%>
 															<td>${orderVO.order_no}</td>
 															<td><fmt:formatDate value="${orderVO.order_date}"
 																	pattern="yyyy-MM-dd" /></td>

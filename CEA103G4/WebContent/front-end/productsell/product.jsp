@@ -455,12 +455,22 @@
 	 var chatSeller = document.getElementById("chat-seller");
 // 	 var miniChat = document.querySelector(".mini-chat");
 	 chatSeller.addEventListener("click",function(){
-// 		chatBtn.style.visibility="hidden";
+		closelist.style.visibility="hidden";
+		if("${userVO.user_id}" == ""){
+			login();
+		}else if("${userVO.user_id}" == "${productVO.user_id}"){
+			Swal.fire({
+	  			  icon: 'error',
+	  			  title: '很抱歉,無法私訊自己',
+	  			  showConfirmButton: false,
+	  			  timer: 1500
+	  			});
+		}else{
 		miniChat.style.visibility="visible";
 		var friend = "${productVO.user_id}";
-// 		var name = "${userSvc.getOneUser(productVO.user_id).user_name}";
-		
 		addListener2(friend);
+			
+		}
 	});
 
 	function sendQuery(datas){ 

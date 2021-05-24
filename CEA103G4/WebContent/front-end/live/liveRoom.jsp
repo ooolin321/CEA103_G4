@@ -623,7 +623,7 @@ function refresh(){
 				
 				}else if("/countdown"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){
 					
-					var timeLeft = 30;
+					var timeLeft = 29;
 					var elem = document.getElementById('some_div');
 					var timerId = setInterval(countdown, 1000);
 
@@ -640,8 +640,7 @@ function refresh(){
 					function doSomething() {
 						
 						Swal.fire({
-							  title: "結束競標#"+$("#showProduct").find("td").eq(1).html(),
-							  text:"得標者:"+$("#current_id").html() +"\t得標價:"+$("#current_price").html(),
+							  title: "結束競標#"+$("#showProduct").find("td").eq(1).html()+"\n得標者:"+$("#current_id").html()+"\n得標價:"+$("#current_price").html(),
 							  width: 600,
 							  padding: '3em',
 							  background: '#fff',
@@ -705,8 +704,7 @@ function refresh(){
 					if($("#showProduct").find("td").eq(1).html()==undefined){
 						Swal.fire({
 							  icon: 'error',
-							  title: 'Oops...',
-							  text: '目前商品皆已售完!',
+							  title: '目前無拍賣商品!'
 							})
 						return;
 					}
@@ -872,9 +870,19 @@ function refresh(){
 					return;
 				}
 			}else if(message == "/whatsnow"){
-				setTimeout(function(){
-					Swal.fire('現在拍賣的商品:\n#'+$("#showProduct").find("td").eq(1).html()+'\n商品名稱:'+$("#showProduct").find("td").eq(2).html()+"\n最高出價者:"+$("#current_id").html()+"\n目前最高價:"+$("#current_price").html())
-				}, 1);
+				if($("#showProduct").find("td").eq(1).html() == undefined){
+					setTimeout(function(){
+						Swal.fire({
+							  icon: 'error',
+							  title: '目前無拍賣商品!'
+							})
+					}, 1);
+				}else{
+					
+					setTimeout(function(){
+						Swal.fire('現在拍賣的商品:\n#'+$("#showProduct").find("td").eq(1).html()+'\n商品名稱:'+$("#showProduct").find("td").eq(2).html()+"\n最高出價者:"+$("#current_id").html()+"\n目前最高價:"+$("#current_price").html())
+					}, 1);
+				}
 				inputMessage.value = "";
 				return;
 			}

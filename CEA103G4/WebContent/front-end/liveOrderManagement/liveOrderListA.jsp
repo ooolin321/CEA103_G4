@@ -84,7 +84,7 @@ table td, table tr, table th {
 							<tr>
 								<th>#</th>
 								<!-- 								<th>訂單時間</th> -->
-								<th>付款截止時間</th>
+								<th>收貨地址</th>
 								<th>訂單狀態</th>
 								<th>訂單金額</th>
 								<th>訂單運費</th>
@@ -128,8 +128,11 @@ table td, table tr, table th {
 									</td>
 									<%-- 									<td><fmt:formatDate value="${live_orderVO.order_date}" --%>
 									<%-- 											pattern="yyyy-MM-dd HH:mm:ss" /></td> --%>
-									<td><fmt:formatDate value="${live_orderVO.pay_deadline}"
-											pattern="yyyy-MM-dd HH:mm:ss" /></td>
+									<td>
+<%-- 									<fmt:formatDate value="${live_orderVO.pay_deadline}" --%>
+<%-- 											pattern="yyyy-MM-dd HH:mm:ss" /> --%>
+										${live_orderVO.zipcode}${live_orderVO.city}${live_orderVO.town}${live_orderVO.rec_addr}
+									</td>
 									<td>${(live_orderVO.order_state==0)? '未付款':''}
 										${(live_orderVO.order_state==1)? '已付款':''}
 										${(live_orderVO.order_state==2)? '棄單':''}</td>

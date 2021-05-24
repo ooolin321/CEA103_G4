@@ -137,7 +137,7 @@
 				<li class="treeview">
 						<form id="myForm" action="<%=request.getContextPath()%>/userChat.do"
 							method="POST">
-							<input value="${userVO.user_name}" name="userName" type="hidden" />
+							<input value="${userVO.user_id}" name="userName" type="hidden" />
 							<a class="app-menu__item" href="#" onclick="document.getElementById('myForm').submit();"><i
 								class="fa fa-comment-o">&nbsp;&nbsp;&nbsp;</i><span class="app-menu__label">線上客服&nbsp;</span><i class="treeview-indicator fa fa-angle-right"></i></a>
 						</form>

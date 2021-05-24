@@ -15,16 +15,10 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-import org.apache.catalina.ha.session.SessionMessage;
 import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.customer_service.model.ChatMessage;
 import com.customer_service.model.State;
-import com.emp.model.EmpService;
 import com.google.gson.Gson;
-import com.liveBid.websocket.model.MaxVO;
-
 import Jedis.JedisHandleMessage;
 
 @ServerEndpoint("/CustomerWS/{userNameOrEmpno}")
@@ -47,12 +41,12 @@ public class CustomerWS {
 				stateMessage.setType("openEmp");
 				String stateMessageJson = gson.toJson(stateMessage);
 				userSession.getAsyncRemote().sendText(stateMessageJson);
-			}else {
+			}else{
 				State stateMessage = new State();
 				stateMessage.setUsers(emps);
 				stateMessage.setType("noMems");
 				String stateMessageJson = gson.toJson(stateMessage);
-				userSession.getAsyncRemote().sendText(stateMessageJson);
+				userSession.getAsyncRemote().sendText(stateMessageJson);				
 			}		
 		}else {
 			Set<String> empNames = sessionsMapForEmp.keySet();
@@ -73,37 +67,7 @@ public class CustomerWS {
 		}
 	
 	}	
-//		/* save the new user in the map */
-//		sessionsMap.put(userName, userSession);
-//		/* Sends all the connected users to the new user */
-//		Collection<Session> empSessions = sessionsMap.values();
-//		if (empSessions.size() < 2) {
-//			JSONObject jsonObj = new JSONObject();
-//			jsonObj.put("type", "empNotAvailable");
-//			userSession.getAsyncRemote().sendText(jsonObj.toString());
-//		} else {
-//			if (userName.contains("14")) {
-//				Integer empno = new Integer(userName);
-//				System.out.println(empno);
-//				String memberID = userName;
-//				System.out.println(memberID);
-//				Set<String> userNames = sessionsMap.keySet();
-//				State stateMessage = new State("open", userName, userNames);
-//				String stateMessageJson = gson.toJson(stateMessage);
-//				Collection<Session> sessions = sessionsMap.values();
-//				for (Session session : sessions) {
-//					if (session.isOpen()) {
-//						JSONObject jsonObj = new JSONObject();
-//						jsonObj.put("type", "open");
-//						jsonObj.put("message", "您好，我是客服專員，請問有什麼能幫忙的呢？");
-//						session.getAsyncRemote().sendText(stateMessageJson);
-//					}
-//					String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s",
-//							userSession.getId(), userName, userNames);
-//					System.out.println(text);
-//				}
-//			}
-//		}
+
         
 	@OnMessage
 	public void onMessage(Session userSession, String message) {

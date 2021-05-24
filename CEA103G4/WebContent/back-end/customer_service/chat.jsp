@@ -4,35 +4,13 @@ pageEncoding="UTF-8"%>
 <%@ page import="com.emp.model.*"%>
 <%@ page import="com.user.model.*"%>
 
-<%
-EmpVO empVO = (EmpVO) session.getAttribute("empAccount");
-session.setAttribute("empVO", empVO);
-UserVO userVO2 = (UserVO) session.getAttribute("account");
-session.setAttribute("userVO", userVO2);
-	// out.println(userVO2.getUser_name());
-	// out.println(empVO.getEname());
-%>
-
 
 <!DOCTYPE html>
 <html lang="zh-tw">
 <head>
-	<meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-	<!-- Twitter meta-->
-	<meta property="twitter:card" content="summary_large_image">
-	<meta property="twitter:site" content="@pratikborsadiya">
-	<meta property="twitter:creator" content="@pratikborsadiya">
-	<!-- Open Graph Meta-->
-	<meta property="og:type" content="website">
-	<meta property="og:site_name" content="Vali Admin">
-	<meta property="og:title" content="Vali - Free Bootstrap 4 admin theme">
-	<meta property="og:url"
-	content="http://pratikborsadiya.in/blog/vali-admin">
-	<meta property="og:image"
-	content="http://pratikborsadiya.in/blog/vali-admin/hero-social.png">
-	<meta property="og:description"
-	content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
-	<title>所有員工資料</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>客服聊天室</title>
 	<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,148 +20,138 @@ session.setAttribute("userVO", userVO2);
 	<!-- Font-icon css-->
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<%-- <link rel="stylesheet" href="<%=request.getContextPath()%>/back-end/customer_service/assets/css/amazeui.min.css"> --%>
-
 	<!-- <link rel="stylesheet" -->
 	<%-- 	href="<%=request.getContextPath()%>/back-end/customer_service/css/friendchat.css" --%>
 	<!-- 	type="text/css" /> -->
 
 	<style type="text/css">
-.app-title h1 {
-    display: inline-block;
-    margin-right: 15px;
-}
-h2, .h2{
-font-size: 1.75rem;
-    background-color: #007d71;
-}
-    
-.SellerHomeBtn .btn-outline-warning:hover {
-	color:white;
 
+
+html, body {
+	font: 15px verdana, Times New Roman, arial, helvetica, sans-serif,
+		Microsoft JhengHei;
+	background: #fff;
 }
 
-.widget-small .info p {
-    margin: 0;
-    font-size: 14px;
+.panel {
+    /* float: right; */
+    border: 2px solid #0078ae;
+    border-radius: 5px;
+    width: 50%;
+    display: table-header-group;
+}
+
+.message-area {
+	height: 70%;
+	resize: none;
+	box-sizing: border-box;
+	overflow: auto;
+	background-color: #ffffff;
+}
+
+.input-area {
+	background: #0078ae;
+	box-shadow: inset 0 0 10px #00568c;
+}
+
+.input-area input {
+	margin: 0.5em 0em 0.5em 0.5em;
+}
+
+.text-field {
+	border: 1px solid grey;
+	padding: 0.2em;
+	box-shadow: 0 0 5px #000000;
+}
+
+h1 {
+	font-size: 1.5em;
+	padding: 5px;
+	margin: 5px;
+}
+
+#message {
+	min-width: 50%;
+	max-width: 60%;
+}
+
+.statusOutput {
+	background: #007d71;
+	text-align: center;
+	color: #ffffff;
+	border: 1px solid grey;
+	padding: 0.2em;
+	box-shadow: 0 0 5px #000000;
+	width: 30%;
+	margin-top: 10%;
+	margin-left: 60%;
+}
+
+#row {
+	float: left;
+	width: 50%;
+}
+
+.column {
+  float: left;
+  width: 50%;
+  padding: 5%;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+}
+
+#area{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#lis{
+  display:inline;
+  clear: both;
+  padding: 20px;
+  border-radius: 30px;
+  margin-bottom: 2px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+#time{
+width:100%;
+float: right;
+color: black;
+text-align: right;
+}
+
+#friendtime {
+width:100%;
+float: left;
+color: black;
 }
 
 
-/*  		.panel {  */
-/* 			overflow: right;  */
-/*  			border: 2px solid #0078ae;  */
-/* 			border-radius: 5px;  */
-/* 			width: 50%; */
-/* 		}  */
+.friend{
+  background: #eee;
+  float: left;
+}
 
-		.message-area {
-			height: 400px;
-			resize: none;
-			box-sizing: border-box;
-			overflow: auto;
-			background-color: #ffffff;
-		}
+.me{
+  float: right;
+  background: #0084ff;
+  color: #fff;
+}
 
-		.input-area {
-			background: #007d71	;
-			box-shadow: inset 0 0 10px #00568c;
-		}
+.friend + .me{
+  border-bottom-right-radius: 5px;
+}
 
-		.input-area input {
-			margin: 0.5em 0em 0.5em 0.5em;
-			
-		}
+.me + .me{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
 
-		.text-field {
-			border: 1px solid grey;
-			padding: 0.2em;
-			box-shadow: 0 0 5px #000000;
-		}
-
-		h1 {
-			font-size: 1.5em;
-			padding: 5px;
-			margin: 5px;
-		}
-
-		#message {
-			min-width: 50%;
-			max-width: 60%;
-		}
-
-		.statusOutput {
-			background: #007d71;
-			text-align: center;
-			color: #ffffff;
-			border: 1px solid grey;
-			padding: 0.2em;
-			box-shadow: 0 0 5px #000000;
-			width: 30%;
-			margin-top: 10%;
-			margin-left: 60%;
-		}
-		.column {
-			float: left;
-			width: 50%;
-			padding: 5%;
-			margin-bottom: 5px;
-			background-color: #fff;
-		}
-
-		#area{
-			list-style: none;
-			margin: 0;
-			padding: 0;
-		}
-
-		#lis{
-			display:inline;
-			clear: both;
-			padding: 20px;
-			border-radius: 30px;
-			margin-bottom: 2px;
-			font-family: Helvetica, Arial, sans-serif;
-		}
-
-		#time{
-			width:100%;
-			float: right;
-			color: black;
-			text-align: right;
-
-		}
-
-		#friendtime {
-			width:100%;
-			float: left;
-			color: black;
-		}
-
-		.friend{
-			background: #eee;
-			float: left;
-		}
-
-		.me{
-			float: right;
-			background: #007d71;
-			color: #fff;
-		}
-
-		.friend + .me{
-			border-bottom-right-radius: 5px;
-		}
-
-		.me + .me{
-			border-top-right-radius: 5px;
-			border-bottom-right-radius: 5px;
-		}
-
-		.me:last-of-type {
-			border-bottom-right-radius: 30px;
-		}
-
-
+.me:last-of-type {
+  border-bottom-right-radius: 30px;
+}
 	</style>
 	<title>Made Femme 客服聊天室</title>
 </head>
@@ -209,10 +177,11 @@ font-size: 1.75rem;
 				<!-- 	</div> -->
 				<h3 id="statusOutput" class="statusOutput"></h3>
 				<div id="row"></div>
+
 				<div id="messagesArea" class="panel message-area" >
 	
 				</div>
-				<div class="panel input-area">
+				<div class="panel input-area col-12">
 					<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
 					<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
 					<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
@@ -354,10 +323,10 @@ font-size: 1.75rem;
 		var friends = jsonObj.users;
 		console.log(jsonObj);
 		var row = document.getElementById("row");
-		row.innerHTML = '';
+		
 		for (var i = 0; i < friends.length; i++) {
 			if (friends[i] === self) { continue; }//從所有好友列表排除自己的帳號
-			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' >  <h2>' + friends[i] + '</h2></div>';
+			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' > <img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id='+friends[i]+'" /> <h2>' + friends[i] + '</h2></div>';
 		}
 		addListener();
 	}

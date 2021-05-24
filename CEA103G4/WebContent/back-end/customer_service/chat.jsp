@@ -27,18 +27,16 @@ pageEncoding="UTF-8"%>
 	<style type="text/css">
 
 
-html, body {
-	font: 15px verdana, Times New Roman, arial, helvetica, sans-serif,
-		Microsoft JhengHei;
-	background: #fff;
-}
-
 .panel {
-    /* float: right; */
-    border: 2px solid #0078ae;
-    border-radius: 5px;
-    width: 50%;
-    display: table-header-group;
+	float: right;
+	border: 5px solid rgb(0 0 0 / 15%);
+	border-radius: 5px;
+	width: 50%;
+}
+.panel1 {
+	border: 5px solid rgb(0 0 0 / 15%);
+	border-radius: 5px;
+	width:50%;
 }
 
 .message-area {
@@ -47,11 +45,16 @@ html, body {
 	box-sizing: border-box;
 	overflow: auto;
 	background-color: #ffffff;
+	min-width: 60%;
+	width:66%;
+	float:right;
 }
 
 .input-area {
-	background: #0078ae;
-	box-shadow: inset 0 0 10px #00568c;
+	background: #007d71;
+/* 	box-shadow: inset 0 0 10px #00568c; */
+	min-width: 60%;
+	width:66%;
 }
 
 .input-area input {
@@ -63,6 +66,9 @@ html, body {
 	padding: 0.2em;
 	box-shadow: 0 0 5px #000000;
 }
+.button{
+/* 	background: yellow; */
+}
 
 h1 {
 	font-size: 1.5em;
@@ -71,7 +77,7 @@ h1 {
 }
 
 #message {
-	min-width: 50%;
+	min-width: 62%;
 	max-width: 60%;
 }
 
@@ -83,23 +89,24 @@ h1 {
 	padding: 0.2em;
 	box-shadow: 0 0 5px #000000;
 	width: 30%;
-	margin-top: 10%;
-	margin-left: 60%;
+	margin-top: 1%;
+	margin-left: 48%;
 }
 
 #row {
 	float: left;
-	width: 50%;
+	width: 33%;
+	height:70%;
+/* 	background-color:lightblue; */
 }
 
 .column {
-  float: left;
+  float: initial;
   width: 50%;
   padding: 5%;
   margin-bottom: 5px;
   background-color: #ffffff;
 }
-
 #area{
   list-style: none;
   margin: 0;
@@ -136,7 +143,7 @@ color: black;
 
 .me{
   float: right;
-  background: #0084ff;
+  background: #007d71;
   color: #fff;
 }
 
@@ -151,6 +158,10 @@ color: black;
 
 .me:last-of-type {
   border-bottom-right-radius: 30px;
+}
+.mem-block{
+	border: 1px solid rgb(0 0 0 / 15%);
+	
 }
 	</style>
 	<title>Made Femme 客服聊天室</title>

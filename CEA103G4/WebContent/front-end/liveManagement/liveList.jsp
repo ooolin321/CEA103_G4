@@ -188,7 +188,7 @@ table td, table tr, table th {
 												style="margin-bottom: 0px;">
 
 												<c:forEach var="productVO" items="${list}" begin="0"
-													end="${list.size()-1}">
+													end="${list.size()}">
 													<c:if
 														test="${productVO.product_state == 0 && productVO.user_id == userVO.user_id}">
 
@@ -274,7 +274,7 @@ table td, table tr, table th {
 												ACTION="<%=request.getContextPath()%>/product/product.do"
 												style="margin-bottom: 0px;">
 												<c:forEach var="productVO" items="${list}" begin="0"
-													end="${list.size()-1}">
+													end="${list.size()}">
 													<c:if
 														test="${productVO.product_state == 2 && productVO.user_id == userVO.user_id}">
 														<tr id="tr${productVO.product_no}">

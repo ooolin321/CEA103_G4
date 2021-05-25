@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,15 +35,17 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 	
 	
 	@Override
-	public void insert(LiveVO liveVO) {
+	public Integer insert(LiveVO liveVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		ResultSet rs ;
+		Integer live_no = null;
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT);
+			pstmt = con.prepareStatement(INSERT_STMT,Statement.RETURN_GENERATED_KEYS);
 
+			
 			pstmt.setString(1, liveVO.getLive_type());
 			pstmt.setString(2, liveVO.getLive_name());
 			pstmt.setTimestamp(3, liveVO.getLive_time());
@@ -52,6 +55,13 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 			pstmt.setBytes(7, liveVO.getLive_photo());
 			pstmt.setString(8, liveVO.getLive_id());
 			pstmt.executeUpdate();
+			
+			rs = pstmt.getGeneratedKeys();
+			
+			if(rs.next()) {
+				live_no = rs.getInt(1);
+			}
+			
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -71,6 +81,7 @@ public class LiveJNDIDAO implements LiveDAO_interface {
 				}
 			}
 		}
+		return live_no;
 	}
 
 	@Override

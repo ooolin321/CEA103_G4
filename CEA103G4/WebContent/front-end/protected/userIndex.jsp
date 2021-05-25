@@ -79,8 +79,9 @@
 #statusOutput {
 	display: inline-block;
 	position: absolute;
-	right: 43%;
+	right: 39%;
 	font-weight: 700;
+	font-size: 16px;
 }
 .cancel {
 	position: absolute;
@@ -94,6 +95,8 @@
 	border-radius: 15px;
 	padding-left: 5px;
 	margin-bottom: 3px;
+	width:200px;
+	font-size: 16px;
 }
 .mini-chat .middle {
 	position: absolute;
@@ -134,6 +137,10 @@
 .mini-chat #sendMessage, .ti-angle-left{
 	cursor: pointer; 
 }
+ .chat input {
+ outline: none;
+
+} 
 
 .top-bar{
 	font-weight: 700px;
@@ -141,7 +148,7 @@
 
 .top-bar .list, .ti-close{
 	display: inline-block;
-	font-size:10%;
+	font-size:20px;
 }
 .top-bar .list{
 	left:40%;
@@ -267,7 +274,7 @@
                         <c:if test="${sellerFollow.user_id == userVO.getUser_id()}">
                           <tr>
                            <td><a href="<%=request.getContextPath()%>/SellerProducts?user_id=${sellerFollow.seller_id}" target="_blank">${sellerFollow.seller_id}</a></td>
-                           <td><a href="#"><i id="chat-seller" class="fa fa-commenting-o"></i><input type="hidden" value="${sellerFollow.seller_id}"></a></td>
+                           <td><a href="javascript:void(0)"><i id="chat-seller" class="fa fa-commenting-o"></i><input type="hidden" value="${sellerFollow.seller_id}"></a></td>
                           
                            <td>
                             <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/seller_follow/seller_follow.do" style="margin-bottom: 0px;">

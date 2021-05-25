@@ -305,7 +305,7 @@ public class ProductServlet extends HttpServlet {
 					product_remaining = 1;
 					errorMsgs.add("商品數量請填數字");
 				}
-
+				
 				
 				Integer product_state = new Integer(req.getParameter("product_state").trim());
 				
@@ -325,11 +325,11 @@ public class ProductServlet extends HttpServlet {
 
 				
 				Integer pdtype_no = null;
-				try {
-					pdtype_no = new Integer(req.getParameter("pdtype_no").trim());
-				} catch (NumberFormatException e) {
-					errorMsgs.add("商品類別請勿空白");
-				}				
+				pdtype_no = new Integer(req.getParameter("pdtype_no").trim());
+				if(pdtype_no == 0) {
+				    errorMsgs.add("商品類別請勿空白");
+				    System.out.println(pdtype_no);
+				}
 				
 
 				ProductVO productVO = new ProductVO();
@@ -383,7 +383,7 @@ public class ProductServlet extends HttpServlet {
 			try {
 				/***************************1.接收請求參數***************************************/
 				Integer product_no = new Integer(req.getParameter("product_no"));
-				
+				System.out.println(product_no);
 				/***************************2.開始刪除資料***************************************/
 				ProductService productSvc = new ProductService();
 				productSvc.deleteProduct(product_no);

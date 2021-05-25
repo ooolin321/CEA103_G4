@@ -138,7 +138,7 @@
      				 <td>${product_typeSvc.getOneProduct_Type(productVO.pdtype_no).pdtype_name}</td>
    					 <td>
    					   <a href="<%=request.getContextPath()%>/ProductChange?action=getOne_For_Update&product_no=${productVO.product_no}" style="display:block;"><button type="button" class="btn btn-info">修改</button></a>
-   					   <button type="button" class="btn btn-danger"  data-id="${productVO.product_no}">刪除</button>
+<%--    					   <button type="button" class="btn btn-danger"  data-id="${productVO.product_no}">刪除</button> --%>
    					 </td>
    				 </tr>
    				 	</c:if>
@@ -205,7 +205,7 @@
      				 <td>${product_typeSvc.getOneProduct_Type(productVO.pdtype_no).pdtype_name}</td>
    					 <td>
    					   <a href="<%=request.getContextPath()%>/ProductChange?action=getOne_For_Update&product_no=${productVO.product_no}" style="display:block;"><button type="button" class="btn btn-info">修改</button></a>
-   					   <button type="button" class="btn btn-danger"  data-id="${productVO.product_no}">刪除</button>
+<%--    					   <button type="button" class="btn btn-danger"  data-id="${productVO.product_no}">刪除</button> --%>
    					 </td>   					
    				 </tr>
    				 	</c:if>
@@ -339,42 +339,42 @@
               
               <script>
               
-          	const productList = document.getElementById('productList');
-          	productList.addEventListener('click', event => {
-				if (event.target.matches('.btn.btn-danger')){
-        			ajaxDelete(event.target.dataset.id);
-            	}
-        });
+//           	const productList = document.getElementById('productList');
+//           	productList.addEventListener('click', event => {
+// 				if (event.target.matches('.btn.btn-danger')){
+//         			ajaxDelete(event.target.dataset.id);
+//             	}
+//         });
 
     			  
-    		function ajaxDelete (productNo) {
+//     		function ajaxDelete (productNo) {
     			
-  				$.ajax({ 
-  				  type:"POST",
-  				  url:"<%=request.getContextPath()%>/product/product.do",
-  				  data:{
-  					  "product_no": productNo,
-  					  "action": "delete"
-  				  },
-  				  success: function() {
-  					window.location.reload();
-		  			Swal.fire({
-			  			  icon: 'success',
-			  			  title: '刪除成功',
-			  			  showConfirmButton: false,
-			  			  timer: 1500
-			  			});
-  			      }, 	  
-  				  error:function () {
-  			  			Swal.fire({
-  				  			  icon: 'error',
-  				  			  title: '很抱歉,請重新點選',
-  				  			  showConfirmButton: false,
-  				  			  timer: 1000
-  				  			});
-  				  },				
-  				 });
-    		}	
+//   				$.ajax({ 
+//   				  type:"POST",
+<%--   				  url:"<%=request.getContextPath()%>/product/product.do", --%>
+//   				  data:{
+//   					  "product_no": productNo,
+//   					  "action": "delete"
+//   				  },
+//   				  success: function() {
+//   					window.location.reload();
+// 		  			Swal.fire({
+// 			  			  icon: 'success',
+// 			  			  title: '刪除成功',
+// 			  			  showConfirmButton: false,
+// 			  			  timer: 1500
+// 			  			});
+//   			      }, 	  
+//   				  error:function () {
+//   			  			Swal.fire({
+//   				  			  icon: 'error',
+//   				  			  title: '很抱歉,請重新點選',
+//   				  			  showConfirmButton: false,
+//   				  			  timer: 1000
+//   				  			});
+//   				  },				
+//   				 });
+//     		}	
   		  
     		var choseAll1 = document.getElementById("choseAll1");
     		var choseAll_b = document.getElementById("choseAll_b");

@@ -43,6 +43,7 @@ public class FriendChatWS {
 		for (Session session : sessions) {
 			if (session.isOpen()) {
 				session.getAsyncRemote().sendText(stateMessageJson);
+				System.out.println(stateMessageJson);
 			}
 		}
 		

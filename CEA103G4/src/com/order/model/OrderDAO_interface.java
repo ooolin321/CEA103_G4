@@ -17,4 +17,5 @@ public interface OrderDAO_interface {
 	public void updateUnshipped(List<Integer> list);
 	public void updateSrating(OrderVO orderVO);
 	public void insertWithOrderList(OrderVO orderVO , List<Order_detailVO> list);
+	public Set<Order_detailVO> getDetailsByNo(Integer order_no);
 }

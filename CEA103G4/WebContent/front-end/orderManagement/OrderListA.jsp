@@ -132,6 +132,14 @@ ion-icon {
 												items="${orderSvc.getAllByID(userVO.user_id)}">
 												<c:if test="${orderVO.srating == 0 }">
 												<tr>
+													<td>
+													<FORM id="${orderVO.order_no}" METHOD="post" ACTION="<%=request.getContextPath()%>/order/order.do"
+														style="margin-bottom: 0px;">
+														<input type="hidden" name="order_no" value="${orderVO.order_no}"> 
+														<input type="hidden" name="action" value="listDetails_ByNo">
+														<a href="#" onclick="document.getElementById('${orderVO.order_no}').submit();">${orderVO.order_no}</a>
+													</FORM>
+													</td>
 													<td>${orderVO.order_no}</td>
 													<td><fmt:formatDate value="${orderVO.order_date}"
 															pattern="yyyy-MM-dd" /></td>
@@ -154,6 +162,7 @@ ion-icon {
 														</c:if>
 													</td>
 												</tr>
+<%-- 												<tr><jsp:include page="listDetails_ByNo.jsp" /></tr> --%>
 												</c:if>
 											</c:forEach>
 										</tbody>
@@ -200,9 +209,9 @@ ion-icon {
 													<td>${(orderVO.logisticsstate==0)? '未出貨':''}
 														${(orderVO.logisticsstate==1)? '已出貨':''}
 														${(orderVO.logisticsstate==2)? '已取貨':''}</td>
-													<td>
-													</td>
+													<td></td>
 												</tr>
+<%-- 												<tr><jsp:include page="listDetails_ByNo.jsp" /></tr> --%>
 												</c:if>
 											</c:forEach>
 										</tbody>

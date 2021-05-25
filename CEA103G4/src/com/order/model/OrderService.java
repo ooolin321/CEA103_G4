@@ -3,8 +3,10 @@ package com.order.model;
 //import java.sql.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.live_order.model.Live_orderVO;
+import com.live_order_detail.model.Live_order_detailVO;
 import com.order_detail.model.Order_detailVO;
 
 public class OrderService {
@@ -113,7 +115,10 @@ public class OrderService {
 
 		return orderVO;
 	}
-
+	public Set<Order_detailVO> getDetailsByNo(Integer order_no){
+		return dao.getDetailsByNo(order_no);
+	}
+	
 	public void deleteOrder(Integer order_no) {
 		dao.delete(order_no);
 	}

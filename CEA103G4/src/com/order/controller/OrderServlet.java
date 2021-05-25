@@ -9,6 +9,8 @@ import javax.servlet.http.*;
 
 import org.json.JSONObject;
 
+import com.live_order.model.Live_orderService;
+import com.live_order_detail.model.Live_order_detailVO;
 import com.order.model.OrderService;
 import com.order.model.OrderVO;
 import com.order_detail.model.Order_detailService;
@@ -436,7 +438,7 @@ public class OrderServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-
+		
 		if ("insert".equals(action)) { // 來自addOrder.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -663,6 +665,38 @@ public class OrderServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if ("listDetails_ByNo".equals(action) || "listDetails_ByNo_B".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer order_no = new Integer(req.getParameter("order_no"));
+
+				/*************************** 2.開始查詢資料 ****************************************/
+				OrderService deptSvc = new OrderService();
+				Set<Order_detailVO> set = deptSvc.getDetailsByNo(order_no);
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("listDetails_ByNo", set);    // 資料庫取出的list物件,存入request
+
+				String url = null;
+				if ("listDetails_ByNo".equals(action))
+					url = "/front-end/liveOrderManagement/liveOrderListA.jsp";              // 成功轉交 dept/listAllDept.jsp
+				else if ("listDetails_ByNo_B".equals(action))
+					url = "/front-end/liveOrderManagement/liveOrderListB.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 ***********************************/
+			} catch (Exception e) {
+				throw new ServletException(e);
+			}
+		}
+		
+		
 		if ("shipped".equals(action)) { // 來自update_order_input.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();

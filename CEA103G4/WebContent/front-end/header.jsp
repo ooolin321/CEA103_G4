@@ -240,6 +240,7 @@
 </header>
 <!-- Header End -->
 <!-- heade搜尋 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
 <script>
 	const closelist = document.querySelector(".friendlist");
 	const openlist = document.querySelector(".friendlist");
@@ -338,7 +339,12 @@
             var friend = statusOutput.textContent;
             var message = inputMessage.value.trim();
             if (message === "") {
-                alert("Input a message");
+				Swal.fire({
+			  		icon: 'error',
+			 		 title: '請輸入訊息',
+			 		 showConfirmButton: false,
+			 		 timer: 1000
+				});
                 inputMessage.focus();
             } else {
                 var jsonObj = {
@@ -411,14 +417,24 @@
 		  success: function(result) { 
 			const obj  = JSON.parse(result);
 				if(obj["results"].length == 0){
-					alert('很抱歉,查無此商品');
+		  			Swal.fire({
+			  			  icon: 'error',
+			  			  title: '很抱歉,查無此商品',
+			  			  showConfirmButton: false,
+			  			  timer: 1000
+			  			});
 	            } else {
 	            	var data = JSON.stringify(result);
 					window.location.href='<%=request.getContextPath()%>/front-end/productsell/shop.jsp?data='+encodeURI(data);
 	            }
 		  }, 
 		  error:function () {
-			  alert('很抱歉,查無此商品');
+	  			Swal.fire({
+		  			  icon: 'error',
+		  			  title: '很抱歉,查無此商品',
+		  			  showConfirmButton: false,
+		  			  timer: 1000
+		  			});
 		  },
 			
 		 }) 

@@ -4,14 +4,6 @@
 <%@ page import="com.emp.model.*"%>
 <%@ page import="com.user.model.*"%>
 
-<%
-	EmpVO empVO = (EmpVO) session.getAttribute("empAccount");
-	session.setAttribute("empVO", empVO);
-	UserVO userVO2 = (UserVO) session.getAttribute("account");
-	session.setAttribute("userVO", userVO2);
-	// out.println(userVO2.getUser_name());
-	// out.println(empVO.getEname());
-%>
 
 <html lang="zh-tw">
 <head>
@@ -56,14 +48,25 @@ font-size: 1.75rem;
     margin: 0;
     font-size: 14px;
 }
-
+.panel {
+	float: right;
+	border: 5px solid rgb(0 0 0 / 15%);
+	border-radius: 5px;
+	width: 66%;
+}
+.panel1 {
+	border: 5px solid rgb(0 0 0 / 15%);
+	border-radius: 5px;
+	width:50%;
+}
 
 .message-area {
-	height: 70%;
+	height: 350px;
 	resize: none;
 	box-sizing: border-box;
 	overflow: auto;
 	background-color: #ffffff;
+	width:66%;
 }
 
 .input-area {
@@ -89,7 +92,7 @@ h1 {
 }
 
 #message {
-	min-width: 50%;
+	min-width: 62%;
 	max-width: 60%;
 }
 
@@ -101,16 +104,29 @@ h1 {
 	padding: 0.2em;
 	box-shadow: 0 0 5px #000000;
 	width: 30%;
-	margin-left: 60%;
+	margin-top: 1%;
+	margin-left: 52%;
+	height:45px;
+}
+
+#row {
+	float: left;
+	width: 33%;
+	height:70%;
+/* 	background-color:lightblue; */
 }
 .column {
-  float: left;
-  width: 50%;
+/*   float: left; */
+  width: 100%;
   padding: 5%;
   margin-bottom: 5px;
   background-color: #ffffff;
 }
 
+button.btn.btn-outline-info {
+    margin-top: 5px;
+    margin-left: 5px;
+}
 #area{
   list-style: none;
   margin: 0;

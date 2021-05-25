@@ -776,4 +776,10 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 		}
 	}
 
+	@Override
+	public Set<Order_detailVO> getDetailsByNo(Integer order_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

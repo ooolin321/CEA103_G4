@@ -134,9 +134,8 @@ if (buylist3 != null) {
 		<div class="container">
 			<form method="post" action="order.do" class="checkout-form">
 				<div class="row">
-							<c:set var="sum" value="0">
-							</c:set>
-				<c:if test="${sum > 0}">
+				<c:set var="sum" value="0">
+				</c:set>
 					<div class="col-lg-6">
 						<div class="place-order">
 							<h4>你的訂單</h4>
@@ -162,6 +161,8 @@ if (buylist3 != null) {
 															<i class="fa fa-diamond" style="display: inline-block;"></i>&nbsp;${entry.key}
 														</button></a></td>
 											</tr>
+															
+											
 											<c:forEach var="order" items="${entry.value}"
 												varStatus="cartstatus">
 												<c:set var="row_count" value="${row_count+1}" />
@@ -205,9 +206,10 @@ if (buylist3 != null) {
 									</table>
 								</div>
 							</c:forEach>
+													
 						</div>
 					</div>
-					
+<c:if test="${sum > 0}">
 					<div class="col-lg-6">
 						<h4>付款明細</h4>
 						<div class="row">
@@ -244,7 +246,6 @@ if (buylist3 != null) {
 									<ul>
 										<li class="cart-total">合計 <span id="Sum">${sum}</span></li>
 									</ul>
-<%-- 								<input type="hidden" name="order_price" value="${sum}"> --%>
 								
 								<c:if test="${sum < cash}">
 								<input type="hidden" name="user_id" value="${userVO.user_id}">
@@ -259,7 +260,7 @@ if (buylist3 != null) {
 								</div>
 							</div>
 						</div>
-						</c:if>
+</c:if>
 					</div>
 				</div>
 			</form>
@@ -299,7 +300,6 @@ if (buylist3 != null) {
 	<script type="text/javascript">
 		$("#submit").click(function() { //尚未修正
 				$("#submit").submit();
-				
 		})
 		$("#twzipcode").twzipcode({
 			zipcodeIntoDistrict : true, // 郵遞區號自動顯示在區別選單中

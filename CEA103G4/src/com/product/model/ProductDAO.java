@@ -33,7 +33,7 @@ public class ProductDAO implements ProductDAO_interface {
 	//新增商品 賣家上架功能
 	private static final String INSERT_STMT = "INSERT INTO PRODUCT (product_name,product_info,product_price,product_remaining,product_state,product_photo,user_id,pdtype_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	//查詢所有商品(後台/賣家查詢使用)
-	private static final String GET_ALL_STMT = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";	
+	private static final String GET_ALL_STMT = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";	
 	private static final String GET_ONE_STMT = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no FROM PRODUCT where product_no = ?";
 	//刪除商品 賣家使用
 	private static final String DELETE = "DELETE FROM PRODUCT where product_no = ?";
@@ -328,7 +328,6 @@ public class ProductDAO implements ProductDAO_interface {
 				productVO.setProduct_quantity(rs.getInt("product_quantity"));
 				productVO.setProduct_remaining(rs.getInt("product_remaining"));
 				productVO.setProduct_state(rs.getInt("product_state"));
-				productVO.setProduct_photo(rs.getBytes("product_photo"));
 				productVO.setUser_id(rs.getString("user_id"));
 				productVO.setPdtype_no(rs.getInt("pdtype_no"));
 				productVO.setStart_price(rs.getInt("start_price"));

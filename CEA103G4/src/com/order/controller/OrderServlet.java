@@ -651,8 +651,7 @@ public class OrderServlet extends HttpServlet {
 				Integer order_price = new Integer(req.getParameter("order_price"));
 				Integer cash = new Integer(req.getParameter("cash"));
 				String user_id = req.getParameter("user_id");
-//				String product_no[] = req.getParameterValues("product_no");
-//				String product_num [] = req.getParameterValues("product_num");
+				
 				/*************************** 2.開始刪除資料 ***************************************/
 				OrderService orderSvc = new OrderService();
 				orderSvc.deleteOrder(order_no); //刪除該筆訂單
@@ -865,9 +864,7 @@ public class OrderServlet extends HttpServlet {
 				Integer discount = 0; //前端取值 顧客用多少點數折抵（最後實現）
 				Integer order_state = 1; // 訂單狀態 預設已付款
 				Integer order_shipping = 1; // 物流方式 預設宅配
-//				Integer logistics = new Integer(req.getParameter("logistics"));
 				Integer logistics = 1;
-//				Integer pay_method = new Integer(req.getParameter("pay_method"));
 				Integer pay_method = 1;
 				
 				@SuppressWarnings("unchecked")

@@ -35,15 +35,13 @@ public class FriendChatWS {
 		
 //		Set<String> user_ids = sessionsMap.keySet();
 		Set<String> user_ids = JedisHandleMessage.getFriendList(user_id); //好友名單
-		
 		State stateMessage = new State("open", user_id, user_ids);
 		String stateMessageJson = gson.toJson(stateMessage);
 		Collection<Session> sessions = sessionsMap.values();
-		
 		for (Session session : sessions) {
 			if (session.isOpen()) {
 				session.getAsyncRemote().sendText(stateMessageJson);
-				System.out.println(stateMessageJson);
+				System.out.println("Sessions "+stateMessageJson);
 			}
 		}
 		

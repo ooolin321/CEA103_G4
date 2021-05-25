@@ -374,7 +374,8 @@ ol {
 #statusOutput {
 	display: inline-block;
 	position: absolute;
-	right: 43%;
+	right: 39%;
+	font-size: 16px;
 }
 
 .cancel {

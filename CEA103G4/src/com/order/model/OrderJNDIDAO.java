@@ -49,6 +49,8 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			"UPDATE `ORDER` SET `LOGISTICSSTATE`=0 WHERE `ORDER_NO` = ?";
 	private static final String UPDATE_SRATING =
 			"UPDATE `ORDER` SET `SRATING` = ?, `SRATING_CONTENT` = ?, `LOGISTICSSTATE` = ? WHERE `ORDER_NO` = ?";
+	private static final String GET_Details_ByNo_STMT =
+			"SELECT * FROM `ORDER_DETAIL` WHERE `ORDER_NO` = ? ORDER BY `PRODUCT_NO`";
 	
 	
 	@Override
@@ -194,6 +196,8 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 
 			pstmt.executeUpdate();
 
+			Order_detailDAO dao = new Order_detailDAO();
+			dao.delete(order_no);
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -778,8 +782,57 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 
 	@Override
 	public Set<Order_detailVO> getDetailsByNo(Integer order_no) {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Order_detailVO> set = new LinkedHashSet<Order_detailVO>();
+		Order_detailVO order_detailVO = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+	
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_Details_ByNo_STMT);
+			pstmt.setInt(1, order_no);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				order_detailVO = new Order_detailVO();
+				order_detailVO.setOrder_no(rs.getInt("order_no"));
+				order_detailVO.setProduct_no(rs.getInt("product_no"));
+				order_detailVO.setProduct_num(rs.getInt("product_num"));
+				order_detailVO.setOrder_price(rs.getInt("order_price"));
+				set.add(order_detailVO); // Store the row in the vector
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return set;
 	}
 
 }

@@ -128,46 +128,65 @@ ion-icon {
 										</thead>
 										<tbody>
 										
-											<c:forEach var="orderVO"
-												items="${orderSvc.getAllByID(userVO.user_id)}">
+											<c:forEach var="orderVO" items="${orderSvc.getAllByID(userVO.user_id)}">
 												<c:if test="${orderVO.srating == 0 }">
 												<tr>
-													<td>
-													<FORM id="${orderVO.order_no}" METHOD="post" ACTION="<%=request.getContextPath()%>/order/order.do"
-														style="margin-bottom: 0px;">
-														<input type="hidden" name="order_no" value="${orderVO.order_no}"> 
-														<input type="hidden" name="action" value="listDetails_ByNo">
-														<a href="#" onclick="document.getElementById('${orderVO.order_no}').submit();">${orderVO.order_no}</a>
-													</FORM>
-													</td>
-													<td>${orderVO.order_no}</td>
-													<td><fmt:formatDate value="${orderVO.order_date}"
-															pattern="yyyy-MM-dd" /></td>
+												<td> 
+											<FORM id="${orderVO.order_no}" METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do" style="margin-bottom: 0px;">
+											<input type="hidden" name="order_no" value="${orderVO.order_no}"> 
+											<input type="hidden" name="action" value="listDetails_ByNo">
+											<a href="#" onclick="document.getElementById('${orderVO.order_no}').submit();">${orderVO.order_no}</a>
+											</FORM>
+											
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do" >
+												</td>
+													<td><fmt:formatDate value="${orderVO.order_date}" pattern="yyyy-MM-dd" /></td>
 													<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>
 													<td>${orderVO.order_price}</td>
 													<td>${(orderVO.logisticsstate==0)? '未出貨':''}
 														${(orderVO.logisticsstate==1)? '已出貨':''}
-														${(orderVO.logisticsstate==2)? '已取貨':''}</td>
-														
+														${(orderVO.logisticsstate==2)? '已取貨':''}
+													</td>
 													<td>
+														<input type="hidden" value="${orderVO.order_no}" name="order_no">
+														<input type="hidden" value="${orderVO.order_price}" name="order_price">
+														<input type="hidden" value="${userVO.cash}" name="cash">
+														<input type="hidden" value="${userVO.user_id}" name="user_id">
+													</td>
+													<td style="text-align: center;">
 														<!-- Button trigger modal --> 
   														<c:if test="${orderVO.logisticsstate==1}">
 														<input type="hidden" value="${orderVO.seller_id}">
 														<button class="btn btn-info" id="srating_btn" data-toggle="modal" data-target="#${orderVO.order_no}">評價</button>
 														<input type="hidden" value="${orderVO.order_no}">
+														
+														<input type="hidden" name="action" value="delete">
+														<button class="btn btn-danger">取消</button>
+														
 														</c:if>
 														
 														<c:if test="${orderVO.logisticsstate!=1}">
 														<button class="btn btn-info" id="srating_btn" disabled>評價</button>
+														
+														<input type="hidden" name="action" value="delete">
+														<button class="btn btn-danger">取消</button>
 														</c:if>
 													</td>
+												</FORM>
 												</tr>
-<%-- 												<tr><jsp:include page="listDetails_ByNo.jsp" /></tr> --%>
+												<tr>
+												</tr>
 												</c:if>
 											</c:forEach>
 										</tbody>
 									</table>
 								</div>
+								<% if (request.getAttribute("listDetails_ByNo") != null) { %>
+								<jsp:include page="listDetails_ByNo.jsp" />
+								<% 	}  %>
+								
+		
+								
 								<!-- 				form -->
 							</div>
 						</div>
@@ -221,7 +240,7 @@ ion-icon {
 							</div>
 						</div>
 					</div>
-					
+		
 					
 					
 					<!-- Modal -->
@@ -234,7 +253,7 @@ ion-icon {
 										<h3 class="modal-title" id="exampleModalLongTitle">請為此次購物體驗評價</h3>
 <!-- 										<button type="button" class="close" data-dismiss="modal" -->
 <!-- 											aria-label="Close"> -->
-											<span aria-hidden="true">&times;</span>
+											
 										</button>
 									</div>
 									<div class="modal-body">
@@ -253,7 +272,7 @@ ion-icon {
 										</div>
 									</div>
 									<div class="modal-footer">
-										<input type="hidden" name="product_name" value="" id="seller_id">
+										<input type="hidden" name="product_name" value="" id="product_name">
 										<input type="hidden" name="seller_id" value="" id="seller_id">
 										<input type="hidden" name="order_no" value="" id="order_no">
 										<input type="hidden" name="action" value="updateSrating">
@@ -272,12 +291,7 @@ ion-icon {
 				</div>
 			</div>
 		</div>
-		<%
-		if (request.getAttribute("listDetails_ByNo") != null) {
-		%>
-		<%
-		}
-		%>
+		
 
 
 
@@ -302,6 +316,7 @@ ion-icon {
 		$("button").click(function(){ //呼叫燈箱
 			let val =$(this).next('input').val();
 			let seller =$(this).prev('input').val();
+			console.log(seller);
 			$(".all-star").css("color","black");
 			$("#con").val("0");
 			

@@ -47,7 +47,7 @@ public class UserDAO implements UserDAO_interface {
 	private static final String UPDATE_CASH = "UPDATE USER SET CASH=? WHERE USER_ID=?";
 	private static final String ADD_CASH = "UPDATE `USER` SET `CASH` = `CASH` + ? WHERE `USER_ID` = ?";
 
-	private static final String UPDATE_USER_RATING = "UPDATE USER SET USER_COMMENT = USER_COMMENT + ?, COMMENT_TOTAL = COMMENT_TOTAL + ?  WHERE USER_ID = ?";
+	private static final String UPDATE_USER_RATING = "UPDATE `USER` SET `USER_COMMENT` = `USER_COMMENT` + ?, `COMMENT_TOTAL` = `COMMENT_TOTAL` + ?  WHERE `USER_ID` = ?";
 	private static final String UPDATE_USER_VIOLATION = "UPDATE USER SET VIOLATION=? WHERE USER_ID = ?";
 
 	@Override
@@ -692,7 +692,7 @@ public class UserDAO implements UserDAO_interface {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_USER_RATING);
-
+			
 			pstmt.setInt(1, userVO.getUser_comment());
 			pstmt.setInt(2, userVO.getComment_total());
 			pstmt.setString(3, userVO.getUser_id());

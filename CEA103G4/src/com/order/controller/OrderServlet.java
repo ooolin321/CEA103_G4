@@ -648,45 +648,65 @@ public class OrderServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ***************************************/
 				Integer order_no = new Integer(req.getParameter("order_no"));
-
+				Integer order_price = new Integer(req.getParameter("order_price"));
+				Integer cash = new Integer(req.getParameter("cash"));
+				String user_id = req.getParameter("user_id");
+//				String product_no[] = req.getParameterValues("product_no");
+//				String product_num [] = req.getParameterValues("product_num");
 				/*************************** 2.開始刪除資料 ***************************************/
 				OrderService orderSvc = new OrderService();
-				orderSvc.deleteOrder(order_no);
-
+				orderSvc.deleteOrder(order_no); //刪除該筆訂單
+				
+				UserService userSvc = new UserService();
+				cash +=order_price;
+				userSvc.updateCash(cash,user_id); //返還金額
+				
+				Order_detailService order_detailSvc = new Order_detailService();
+				List<Order_detailVO> list= order_detailSvc.getAll();
+				
+				ProductService productSvc = new ProductService();
+				
+				for(Order_detailVO odv: list) {
+					Integer product_remaining = productSvc.getOneProduct(odv.getProduct_no()).getProduct_remaining();
+					Integer product_state = productSvc.getOneProduct(odv.getProduct_no()).getProduct_state();
+					product_remaining +=  odv.getProduct_num();
+					if(product_state == 3) {
+						product_state = 1;
+					}
+					productSvc.updateProductRemaining(odv.getProduct_no(), product_remaining, product_state);
+				} //更換商品狀態及庫存復原
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/front-end/order/listAllOrder.jsp";
+				String url = "/front-end/orderManagement/OrderListA.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/order/listAllOrder.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/orderManagement/OrderListA.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
 		if ("listDetails_ByNo".equals(action) || "listDetails_ByNo_B".equals(action)) {
-
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer order_no = new Integer(req.getParameter("order_no"));
-
+				
 				/*************************** 2.開始查詢資料 ****************************************/
-				OrderService deptSvc = new OrderService();
-				Set<Order_detailVO> set = deptSvc.getDetailsByNo(order_no);
-
+				OrderService orderSvc = new OrderService();
+				Set<Order_detailVO> set = orderSvc.getDetailsByNo(order_no);
+				
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("listDetails_ByNo", set);    // 資料庫取出的list物件,存入request
-
 				String url = null;
 				if ("listDetails_ByNo".equals(action))
-					url = "/front-end/liveOrderManagement/liveOrderListA.jsp";              // 成功轉交 dept/listAllDept.jsp
+					url = "/front-end/orderManagement/OrderListA.jsp";              // 成功轉交 dept/listAllDept.jsp
 				else if ("listDetails_ByNo_B".equals(action))
-					url = "/front-end/liveOrderManagement/liveOrderListB.jsp";
+					url = "/front-end/orderManagement/OrderListB.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 

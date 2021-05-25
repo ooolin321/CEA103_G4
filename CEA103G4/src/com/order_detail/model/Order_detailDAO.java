@@ -127,7 +127,7 @@ public class Order_detailDAO implements Order_detailDAO_interface{
 		}
 
 		@Override
-		public void delete(Integer notice_no) {
+		public void delete(Integer order_no) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 
@@ -136,7 +136,7 @@ public class Order_detailDAO implements Order_detailDAO_interface{
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(DELETE);
 
-				pstmt.setInt(1, notice_no);
+				pstmt.setInt(1, order_no);
 
 				pstmt.executeUpdate();
 
@@ -217,6 +217,8 @@ public class Order_detailDAO implements Order_detailDAO_interface{
 			return order_detailVO;
 		}
 
+		
+		
 		@Override
 		public List<Order_detailVO> getAll() {
 			List<Order_detailVO> list = new ArrayList<Order_detailVO>();

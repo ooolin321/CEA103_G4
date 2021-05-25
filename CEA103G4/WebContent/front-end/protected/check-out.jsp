@@ -31,8 +31,8 @@ if (buylist3 != null) {
 	session.setAttribute("list", mBuylist);
 }
 %>
-
-
+<jsp:useBean id="userSvc" scope="page"
+	class="com.user.model.UserService" />
 
 <!DOCTYPE html>
 <html lang="zh-tw">
@@ -161,27 +161,21 @@ if (buylist3 != null) {
 															<i class="fa fa-diamond" style="display: inline-block;"></i>&nbsp;${entry.key}
 														</button></a></td>
 											</tr>
-															
-											
 											<c:forEach var="order" items="${entry.value}"
 												varStatus="cartstatus">
 												<c:set var="row_count" value="${row_count+1}" />
 												<tr>
 													<td class="cart-pic first-row"><a
 														href="<%=request.getContextPath()%>/product/product.do?product_no=${order.product_no}">
-															<img
-															src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
-															alt="${order.product_name}" /> <input type="hidden"
-															value="${order.product_remaining}"
-															name="product_remaining">
+															<img src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order.product_no}"
+															alt="${order.product_name}" /> 
+															<input type="hidden" value="${order.product_remaining}" name="product_remaining">
 													</a></td>
 													<td class="p-name first-row">
 														<h5>${order.product_name}</h5>
 													</td>
-													<td class="PP${order.product_no} first-row"
-														value="${order.product_price}">$${order.product_price
-														}<input type="hidden" value="${order.product_no}"
-														name="product_no">
+													<td class="PP${order.product_no} first-row" value="${order.product_price}">$${order.product_price}
+													<input type="hidden" value="${order.product_no}" name="product_no">
 													</td>
 													<td class="qua-col first-row">
 														<div class="quantity" style="margin-top: 30px;">
@@ -193,8 +187,7 @@ if (buylist3 != null) {
 														<div id="TP${order.product_no}"
 															class="cartProductItemSumPrice"
 															style="margin-top: 30px; color: #e7ab3c;">${order.product_price*order.product_quantity}</div>
-														<input type="hidden" name="orderDetailPrice"
-														value="${sum}">
+														<input type="hidden" name="orderDetailPrice" value="${sum}">
 
 													</td>
 												</tr>
@@ -209,7 +202,6 @@ if (buylist3 != null) {
 													
 						</div>
 					</div>
-<c:if test="${sum > 0}">
 					<div class="col-lg-6">
 						<h4>付款明細</h4>
 						<div class="row">
@@ -230,18 +222,15 @@ if (buylist3 != null) {
 									value="${userVO.user_phone}" /> <input name="rec_cellphone"
 									type="text" id="rec_cellphone" value="${userVO.user_mobile}" />
 							</div>
-									<sql:query var="rs" dataSource="${xxx}" startRow="0">
-			    					SELECT CASH FROM cea103_g4.USER WHERE USER_ID='${userVO.user_id}'
-			 						</sql:query>
+								
 								<div class="col-lg-12">
 								<div class="proceed-checkout">
+								 <c:set var="cash" value="${userSvc.getOneUser(userVO.user_id).cash}"></c:set>
 									<ul>
 									<li>我的錢包 <span>
-			 						 <c:forEach var="row" items="${rs.rows}">
-                      				  ${row.cash}元
-                      				  <c:set var="cash" value="${row.cash}"></c:set>
-                        			</c:forEach>
+									${cash}
 									</span></li>
+									
 									</ul>
 									<ul>
 										<li class="cart-total">合計 <span id="Sum">${sum}</span></li>
@@ -260,7 +249,6 @@ if (buylist3 != null) {
 								</div>
 							</div>
 						</div>
-</c:if>
 					</div>
 				</div>
 			</form>

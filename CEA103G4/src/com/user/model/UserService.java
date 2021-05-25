@@ -140,7 +140,6 @@ public UserVO newPassword_Update(String user_id,String user_newNameCheck) {
 	
 	public UserVO updateUserRating(Integer user_comment,Integer comment_total,String user_id) {
 		UserVO userVO = new UserVO();
-		
 		userVO.setUser_comment(user_comment);
 		userVO.setComment_total(comment_total);		
 		userVO.setUser_id(user_id);

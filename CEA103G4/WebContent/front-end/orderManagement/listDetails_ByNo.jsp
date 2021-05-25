@@ -12,18 +12,8 @@
 
 </head>
 <body bgcolor='white'>
-
-
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
-
+<jsp:useBean id="productSvc" scope="page"
+	class="com.product.model.ProductService" />
 
 	<div class="row">
 		<div class="col-xl-12">
@@ -32,21 +22,23 @@
 				<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>訂單編號</th>
+<!-- 						<th>訂單編號</th> -->
 						<th>商品編號</th>
+						<th>商品圖片</th>
+						<th>商品名稱</th>
 						<th>價格</th>
 						<th>數量</th>
-						<th></th>
-						<th></th>
 					</tr>
 				</thead>
 					<c:forEach var="order_detailVO" items="${listDetails_ByNo}">
-						<tr
-							${(order_detailVO.order_no==param.order_no)&&((order_detailVO.product_no==param.product_no)) ? 'bgcolor=#CCCCFF':''}>
-							<!--將修改的那一筆加入對比色-->
-							<td>${order_detailVO.order_no}</td>
+						<tr>
+<%-- 							<td>${order_detailVO.order_no}</td> --%>
 							<td>${order_detailVO.product_no}</td>
-							<td>${order_detailVO.price}</td>
+							<td><img width="120px" height="100px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order_detailVO.product_no}"
+							class="rounded d-block" alt="" style="margin:0px; "></td>
+							
+							<td>${productSvc.getOneProduct(order_detailVO.product_no).product_name}</td>
+							<td>${order_detailVO.order_price}</td>
 							<td>${order_detailVO.product_num}</td>
 						</tr>
 					</c:forEach>

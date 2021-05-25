@@ -84,7 +84,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Order_detailServlet</servlet-name>
-		<url-pattern>/front-end/order_detail/order_detail.do</url-pattern>
+		<url-pattern>/order_detail/order_detail.do</url-pattern>
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>Live_orderServlet</servlet-name>
@@ -191,7 +191,7 @@
 		<servlet-name>OrderServlet</servlet-name>
 		<url-pattern>/front-end/protected/order.do</url-pattern>
 	</servlet-mapping>
-
+	
 	<servlet>
 		<servlet-name>ChatMessageServlet</servlet-name>
 		<servlet-class>com.message.websocket.controller.ChatMessageServlet</servlet-class>

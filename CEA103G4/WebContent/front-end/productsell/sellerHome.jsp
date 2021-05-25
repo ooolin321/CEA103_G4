@@ -9,7 +9,7 @@
 
 <%
 		Object SellerProducts = request.getAttribute("SellerProducts");
-	
+		ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 %>
 <jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
 <jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
@@ -99,7 +99,7 @@
        			<p class="card-text"><small class="text-muted"></small></p>
 
        			<div class="seller-btn">
-       			<div><a href="#"><i class="fa fa-commenting-o"></i>&nbsp;<p style="display:inline-block; color:pink;">私訊賣家</p></a></div>
+       			<div><a href="#" id="chat-seller"><i class="fa fa-commenting-o"></i>&nbsp;<p style="display:inline-block; color:pink;">私訊賣家</p></a></div>
        			</div>
      		 </div>
     		</div>
@@ -107,7 +107,7 @@
        </div>
          </c:if>
          <c:forEach var="seller" items="${SellerProducts}" begin="0" end="0">	
-			<div class="card mb-3" style="width: 400px;height: 200px;">
+			<div class="card mb-3">
   			<div class="row g-0">
    			 <div class="col-md-6">
       			<img width="200px" height="200px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${seller.user_id}" class="rounded mx-auto d-block" alt="">
@@ -141,7 +141,7 @@
 					</div>
                </c:if>
        			<div class="seller-btn">
-       			<div><a href="#"><i class="fa fa-commenting-o"></i>&nbsp;<p style="display:inline-block; color:pink;">私訊賣家</p></a></div>
+       			<div><a href="#" id="chat-seller"><i class="fa fa-commenting-o"></i>&nbsp;<p style="display:inline-block; color:pink;">私訊賣家</p></a></div>
        			</div>
      		 </div>
     		</div>
@@ -151,7 +151,7 @@
       </div>
          <div class="row">  
             <c:forEach var="productVO" items="${SellerProducts}" begin="0" end="${SellerProducts.size()}">
-          <div class="col-lg-3 col-sm-6">
+          <div class="col-lg-3 col-sm-6 productBox">
         <div class="card mb-2 productcard">
             <div class="product-item" >
                 <div class="pi-pic">
@@ -175,11 +175,13 @@
                     	 <div class="product-price"><span>$</span>
                           ${productVO.product_price}
                     	</div>
+                    	
                     </a>
                 </div>
             </div>
         </div>
     </div>
+    <c:set var="seller" value="${productVO.user_id}"></c:set>
     <input class="user_id" type="hidden" value="${productVO.user_id}">
     <input class="user_regdate" type="hidden" value="${userSvc.getOneUser(productVO.user_id).regdate}">
           </c:forEach>
@@ -209,6 +211,28 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
 	
 	<script>
+	var chatSeller = document.getElementById("chat-seller");
+//	 var miniChat = document.querySelector(".mini-chat");
+	 chatSeller.addEventListener("click",function(){
+		closelist.style.visibility="hidden";
+		if("${userVO.user_id}" == ""){
+			login();
+		}else if("${userVO.user_id}" == "${productVO.user_id}"){
+			Swal.fire({
+	  			  icon: 'error',
+	  			  title: '很抱歉,無法私訊自己',
+	  			  showConfirmButton: false,
+	  			  timer: 1500
+	  			});
+		}else{
+		miniChat.style.visibility="visible";
+		var friend = "${seller}";
+		addListener2(friend);
+			
+		}
+	});
+	
+	
 	var url = window.location.search;
 	var str = url.split('?')[1];
 	var sellerID = str.split('=')[1];

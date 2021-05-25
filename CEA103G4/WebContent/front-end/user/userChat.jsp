@@ -58,8 +58,6 @@ font-size: 1.75rem;
 }
 
 
-
-
 .message-area {
 	height: 70%;
 	resize: none;
@@ -103,7 +101,6 @@ h1 {
 	padding: 0.2em;
 	box-shadow: 0 0 5px #000000;
 	width: 30%;
-	margin-top: 10%;
 	margin-left: 60%;
 }
 .column {
@@ -166,6 +163,22 @@ color: black;
 .me:last-of-type {
   border-bottom-right-radius: 30px;
 }
+
+.primary-btn {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 8px 23px;
+    color: #ffffff;
+    border-radius: 8px;
+    background: pink;
+}
+.primary-btn:hover {
+	font-size: 18px;
+	cursor: pointer;
+}
+
+
 </style>
 
 </head>
@@ -268,33 +281,34 @@ console.log("222");
 				messagesArea.appendChild(ul);
 				// 這行的jsonObj.message是從redis撈出跟好友的歷史訊息，再parse成JSON格式處理
 				var messages = JSON.parse(jsonObj.message);
-// 				var time = JSON.parse(jsonObj.time);
-// console.log(time);
+
+
 				for (var i = 0; i < messages.length; i++) {
 					var historyData = JSON.parse(messages[i]);
 					var showMsg = historyData.message;
+
 					var li = document.createElement('li');
 					li.id = "lis";
 					var span = document.createElement('span');
-					span.id = "time";
+
 					// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
 					historyData.sender === self ? li.className = 'me' : li.className = 'friend' ;
-					historyData.time === self ? span.id = 'time' : span.id = 'friendtime' ;
-// 					historyData.time === self ? span.id = 'time' : span.id = 'friendtime' ;
+					historyData.sender === self ? span.id = 'time' : span.id = 'friendtime' ;
+
 					li.innerHTML = showMsg;
-// 					span.innnerHTML = showMsg;
+
 					$(span).text(historyData.time);
-// 					$('friend').text(historyData.time);
+
 					ul.appendChild(li);
-					li.appendChild(span);
-					// console.log(historyData.time);
+					ul.appendChild(span);
+
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
 				var li = document.createElement('li');
 				li.id = "lis";
 				var span = document.createElement('span');
-				span.id = "time";
+
 				jsonObj.sender === self ? li.className = 'me' : li.className = 'friend';
 				jsonObj.sender === self ? span.id = 'time' : span.id = 'friendtime';
 				li.innerHTML = jsonObj.message;
@@ -349,7 +363,7 @@ console.log(jsonObj);
 		row.innerHTML = '';
 		for (var i = 0; i < friends.length; i++) {
 			if (friends[i] === self) { continue; }//從所有好友列表排除自己的帳號
-			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><img class="rounded-circle" width="45px" height="40px" style="margin-right: 10px;" src="<%=request.getContextPath()%>/front-template/images/01.png" /><h2>' + friends[i] + '</h2></div>';
+			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><img class="rounded-circle" width="45px" height="40px" style="margin-right: 10px;" src="<%=request.getContextPath()%>/front-template/images/01.png" /><div class="primary-btn">' + friends[i] + '</div></div>';
 		}
 		addListener();
 	}

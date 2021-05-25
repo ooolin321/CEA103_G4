@@ -209,7 +209,7 @@
 					<i class="ti-close"></i>
 				</div>
 			</div>
-			<div class="middle" id="messagesArea" style="height: 240px"></div>
+		<div class="middle" id="messagesArea" style="height: 240px"></div>
 			<div class="bottom-bar">
 				<div class="chat">
 					<input id="message" class="chat-input" type="text"
@@ -240,6 +240,7 @@
 </header>
 <!-- Header End -->
 <!-- heade搜尋 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
 <script>
 	const closelist = document.querySelector(".friendlist");
 	const openlist = document.querySelector(".friendlist");
@@ -253,8 +254,9 @@
 	}
 	function listFriend(){
 		openlist.style.visibility="visible";
-		disconnect();
-		connect();
+// 		disconnect();
+// 		connect();
+		
 	}
 
 	chatBtn.addEventListener("click", function() {
@@ -277,13 +279,8 @@
 	const messagesArea = document.getElementById("messagesArea");
 	var self = '${userVO.user_id}';
 	
-// 	if("${productVO.user_id}"!=""){
-// 		var friend = '${productVO.user_id}'
-// 	}else{
-		
-// 	};
 	var webSocket;
-        connect();
+        connect(); //websocket直接啟動
         function connect() {
             // create a websocket
             webSocket = new WebSocket(endPointURL);
@@ -296,7 +293,6 @@
 
                 if ("open" === jsonObj.type) {
                     refreshFriendList(jsonObj);
-                    //addList
                 } else if ("history" === jsonObj.type) {
 					messagesArea.innerHTML = "";
                     var ul = document.createElement('ul');
@@ -316,9 +312,10 @@
                     messagesArea.scrollTop = messagesArea.scrollHeight;
                 } else if ("chat" === jsonObj.type) {
                     var li = document.createElement('li');
-                    jsonObj.sender === self ? li.className += 'me' : li.className += 'friend';
-                    li.innerHTML = jsonObj.message;
-                    console.log(li);
+					if(jsonObj.sender === statusOutput.textContent || jsonObj.sender ===self){ //完善版本 不會看到別人訊息
+                    jsonObj.sender === self ? li.className += 'me' : li.className += 'friend'; 
+					}
+					li.innerHTML = jsonObj.message;
                     document.getElementById("area").appendChild(li);
                     messagesArea.scrollTop = messagesArea.scrollHeight;
                 } else if ("close" === jsonObj.type) {
@@ -337,7 +334,12 @@
             var friend = statusOutput.textContent;
             var message = inputMessage.value.trim();
             if (message === "") {
-                alert("Input a message");
+				Swal.fire({
+			  		icon: 'error',
+			 		 title: '請輸入訊息',
+			 		 showConfirmButton: false,
+			 		 timer: 1000
+				});
                 inputMessage.focus();
             } else {
                 var jsonObj = {
@@ -356,7 +358,6 @@
             var friends = jsonObj.users;
 			var friendArea = document.getElementById("friendArea");
             friendArea.innerHTML = '';
-			messagesArea.innerHTML ='';
 			if(friends != ""){
 	            for (var i = 0; i < friends.length; i++) {
 	                if (friends[i] === self) { continue; }
@@ -365,8 +366,7 @@
 			}else{
 				friendArea.innerHTML +='<h3>請選擇聊天對象<h3>'
 			}
-
-//             addListener(); //註解掉好像沒差
+            addListener(); //註解掉好像沒差
         } 
         // 註冊列表點擊事件並抓取好友名字以取得歷史訊息
        function addListener(friend) {
@@ -412,14 +412,24 @@
 		  success: function(result) { 
 			const obj  = JSON.parse(result);
 				if(obj["results"].length == 0){
-					alert('很抱歉,查無此商品');
+		  			Swal.fire({
+			  			  icon: 'error',
+			  			  title: '很抱歉,查無此商品',
+			  			  showConfirmButton: false,
+			  			  timer: 1000
+			  			});
 	            } else {
 	            	var data = JSON.stringify(result);
 					window.location.href='<%=request.getContextPath()%>/front-end/productsell/shop.jsp?data='+encodeURI(data);
 	            }
 		  }, 
 		  error:function () {
-			  alert('很抱歉,查無此商品');
+	  			Swal.fire({
+		  			  icon: 'error',
+		  			  title: '很抱歉,查無此商品',
+		  			  showConfirmButton: false,
+		  			  timer: 1000
+		  			});
 		  },
 			
 		 }) 

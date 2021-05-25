@@ -175,7 +175,7 @@
            <div class="product-list">
             <div class="row" id="products">            
             <c:forEach var="productVO" items="${products}" begin="0" end="${products.size()}">
-          <div class="col-lg-4 col-sm-6">
+          <div class="col-lg-4 col-sm-6 productBox">
         <div class="card mb-2 productcard">
             <div class="product-item" >
                 <div class="pi-pic">
@@ -273,12 +273,22 @@
 			$("#products").html(str); 
 			
 			if(str.length === 0){
-				Swal.fire('很抱歉,查無此商品');
+	  			Swal.fire({
+		  			  icon: 'error',
+		  			  title: '很抱歉,查無此商品',
+		  			  showConfirmButton: false,
+		  			  timer: 1000
+		  			});
             }
 
 		  },
 		  error:function () {
-			  Swal.fire('很抱歉,查無此商品');
+	  			Swal.fire({
+		  			  icon: 'error',
+		  			  title: '很抱歉,查無此商品',
+		  			  showConfirmButton: false,
+		  			  timer: 1000
+		  			});
 		  },
 			
 		 }) 
@@ -294,7 +304,12 @@
 			$("#products").html(fromProduct); 
 			
 			if(fromProduct.length === 0){
-				Swal.fire('很抱歉,查無此商品');
+	  			Swal.fire({
+		  			  icon: 'error',
+		  			  title: '很抱歉,查無此商品',
+		  			  showConfirmButton: false,
+		  			  timer: 1000
+		  			});
             }
 		};	
 
@@ -355,51 +370,6 @@
 					 });
 			}
 		  
-		  
-		  
-// 		  $("#SC${productVO.product_no}").click(function(){
-// 				$.ajax({ 
-// 				  type:"POST",
-<%-- 				  url:"<%=request.getContextPath()%>/ShoppingServlet", --%>
-// 				  data:{
-// 					  "product_no": "${productVO.product_no}",
-// 					  "product_name": "${productVO.product_name}",
-// 					  "product_price": "${productVO.product_price}",
-// 					  "proqty": "1",
-// 					  "product_remaining": "${productVO.product_remaining}",
-// 					  "product_state": "${productVO.product_state}",
-// 					  "user_id": "${productVO.user_id}",
-// 					  "action": "ADD"
-// 				  },
-// 				  success: function(res) {
-					   
-<%-- 					  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>");  --%>
-// 					  $("#carts").html(cartproducts); 
-					  
-// 					  var carRes  = JSON.parse(res)
-// // 					  console.log(carRes["results"].length);
-// 					  var ibaCount = carRes["results"].length;
-// 					  $("#iba").html(ibaCount);
-
-// 					  var titlePrice = 0
-// 						carRes["results"].forEach(function (item,index) {
-// 							titlePrice += (item.product_price * item.product_quantity)
-// 						});
-// 					  $(".cart-price").html("$" + titlePrice);
-// 					  $("#cartHoverTotal").html("$" + titlePrice);
-					  
-// 			      }, 	  
-// 				  error:function () {
-// 			  			Swal.fire({
-// 				  			  icon: 'error',
-// 				  			  title: '很抱歉,加入購物車失敗',
-// 				  			  showConfirmButton: false,
-// 				  			  timer: 1000
-// 				  			});
-// 				  },				
-// 				 });
-				
-// 		  });
 		  
 function addFavorite(id){
 	const data =  JSON.parse(localStorage.getItem("favorite"));

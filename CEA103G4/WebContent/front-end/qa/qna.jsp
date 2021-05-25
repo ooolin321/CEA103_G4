@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/jquery-ui.min.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/slicknav.min.css" type="text/css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/front-template/css/style.css" type="text/css" />
+    
 
   </head>
 
@@ -187,5 +188,7 @@
     <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/ajaxSearch.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
   </body>
 </html>

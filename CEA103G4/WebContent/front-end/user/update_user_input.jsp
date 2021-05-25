@@ -55,7 +55,7 @@ margin: -30px -30px 0px;
 <main class="app-content">
                 <div class="app-title">
                   <div>
-                    <h1><i class="fa fa-user fa-lg"></i> 修改我的資料</h1>
+                    <h1><i class="fa fa-edit"></i> 修改我的資料</h1>
                   </div>
                   <ul class="app-breadcrumb breadcrumb">
                     <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><i class="fa fa-home fa-lg"></i></a></li>

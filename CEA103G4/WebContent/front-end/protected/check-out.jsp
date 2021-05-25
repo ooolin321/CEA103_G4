@@ -111,8 +111,10 @@ if (buylist3 != null) {
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb-text product-more">
-						<a href="./index.html"><i class="fa fa-home"></i> Home</a> <a
-							href="./shop.html">Shop</a> <span>Check Out</span>
+						<a href="${pageContext.request.contextPath}/front-end/index.jsp"><i class="fa fa-home"></i> 首頁</a> 
+						<a href="${pageContext.request.contextPath}/front-end/productsell/shop.jsp">商品頁</a> 
+						<a href="${pageContext.request.contextPath}/front-end/productsell/shoppingCart.jsp">購物車</a> 
+						<span>結帳</span>
 					</div>
 				</div>
 			</div>
@@ -132,13 +134,13 @@ if (buylist3 != null) {
 		<div class="container">
 			<form method="post" action="order.do" class="checkout-form">
 				<div class="row">
-
+							<c:set var="sum" value="0">
+							</c:set>
+				<c:if test="${sum > 0}">
 					<div class="col-lg-6">
 						<div class="place-order">
 							<h4>你的訂單</h4>
 
-							<c:set var="sum" value="0">
-							</c:set>
 							<c:forEach var="entry" items="${mBuylist}">
 								<div class="cart-table">
 									<table class="table">
@@ -205,6 +207,7 @@ if (buylist3 != null) {
 							</c:forEach>
 						</div>
 					</div>
+					
 					<div class="col-lg-6">
 						<h4>付款明細</h4>
 						<div class="row">
@@ -256,7 +259,7 @@ if (buylist3 != null) {
 								</div>
 							</div>
 						</div>
-
+						</c:if>
 					</div>
 				</div>
 			</form>
@@ -296,6 +299,7 @@ if (buylist3 != null) {
 	<script type="text/javascript">
 		$("#submit").click(function() { //尚未修正
 				$("#submit").submit();
+				
 		})
 		$("#twzipcode").twzipcode({
 			zipcodeIntoDistrict : true, // 郵遞區號自動顯示在區別選單中

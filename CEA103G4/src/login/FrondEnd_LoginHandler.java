@@ -50,6 +50,25 @@ public class FrondEnd_LoginHandler extends HttpServlet {
 			userVO.setUser_id(str);
 			userVO.setUser_pwd(str2);
 			
+	        //1 獲得使用者輸入的驗證碼
+	        String verifyCode = req.getParameter("verifyCode");
+	        if(verifyCode == null || (verifyCode.trim().length() == 0)){
+	            errorMsgs.put("verifyCode","請輸入驗證碼");
+	        }
+	        //2 獲得伺服器session 存放資料 ,如果沒有返回null
+	        String sessionCacheData = (String) req.getSession().getAttribute("sessionCacheData");
+	        // *將伺服器快取session資料移除
+	        req.getSession().removeAttribute("sessionCacheData");
+	        // ** 判斷伺服器是否存在
+	        if(sessionCacheData == null){
+	            errorMsgs.put("verifyCode","請不要重複提交");
+	        }
+	        //3 比較
+	        if(! sessionCacheData.equalsIgnoreCase(verifyCode)){
+	            //使用者輸入錯誤
+	            errorMsgs.put("verifyCode","驗證碼輸入錯誤");
+	        }
+			
 			// 錯誤發生時將內容發送回表單
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("userVO", userVO); // 含有輸入格式錯誤的userVO物件,也存入req

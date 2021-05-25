@@ -108,7 +108,7 @@
 			<div class="col-lg-4 col-sm-6">
 				<label for="product_photo" id="upload-img" class="card mb-2 productcard">
 				<input class="form-control" id="product_photo" type="file" name="product_photo" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"  value="<%= (productVO==null)? "" : productVO.getProduct_photo()%>">
-				<i class="fa fa-camera" id="iconcamera"></i>
+				<i class="fa fa-file-picture-o" id="iconcamera"></i>
 				<i class="delAvatar fa fa-times-circle-o" title="移除圖片"></i>
 				</label>
 			</div>

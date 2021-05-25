@@ -15330,13 +15330,13 @@ margin-top:10px;
 	display:none;
 }
 
-.productsAdd #upload-img .fa.fa-camera {
+.productsAdd #upload-img .fa.fa-file-picture-o {
 font-weight: bold;
-font-size: 450%;
+font-size: 700%;
 position: absolute;
 left: 0;
 width: 100%;
-top: 36%;
+top: 30%;
 }
 
 .productsAdd .delAvatar {
@@ -15673,6 +15673,7 @@ min-width: 100%;
     margin-left: 15px;
     box-sizing: border-box;
 }
+
 }
 
 /*mediaFinish*/

@@ -237,12 +237,13 @@ color: #007bff;
               <form METHOD="post" class="login-form" action="<%=request.getContextPath()%>/FrondEnd_LoginHandler">
                 <div class="group-input">
                   <label for="user_id">UserID</label>
-                  <input type="text" name="user_id" value="${(userVO==null)? '' : userVO.user_id}" placeholder="會員帳號" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></td>
+                  <input type="text" name="user_id" value="${(userVO==null)? '' : userVO.user_id}" placeholder="會員帳號" autofocus/><td><font color=red><b>${errorMsgs.user_id}</b></font></td>
                 </div>
                 <div class="group-input">
                   <label for="user_pwd">Password</label>
-                  <input type="password" name="user_pwd" placeholder="密碼"/><td><font color=red><b>${errorMsgs.user_pwd}</b></td>
+                  <input type="password" name="user_pwd" value="${(userVO==null)? '' : userVO.user_pwd}" placeholder="密碼"/><td><font color=red><b>${errorMsgs.user_pwd}</b></font></td>
                 </div>
+                	驗證碼：<input type="text" name="verifyCode" size="5" /> <img src="${pageContext.request.contextPath}/VerifyCodeServlet" /><font color=red><b>${errorMsgs.verifyCode}</b></font>
                 <div class="group-input gi-check">
                   <div class="gi-more">
 <!--                     <label for="memory"> -->

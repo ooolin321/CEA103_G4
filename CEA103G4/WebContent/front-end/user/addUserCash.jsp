@@ -68,7 +68,7 @@ button.btn.btn-info {
 		<div class="app-title">
 			<div>
 				<h1>
-					<i class="fa fa-user fa-lg"></i>我的錢包
+					<i class="fa fa-dollar"></i>&nbsp;我的錢包
 				</h1>
 			</div>
 			<ul class="app-breadcrumb breadcrumb">

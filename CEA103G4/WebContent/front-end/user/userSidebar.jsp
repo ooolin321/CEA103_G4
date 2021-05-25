@@ -64,7 +64,7 @@
                   <!-- User Menu-->
                   <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
                     <ul class="dropdown-menu settings-menu dropdown-menu-right">
-                      <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-cog fa-lg"></i> Settings</a></li>
+<!--                       <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-cog fa-lg"></i> Settings</a></li> -->
                       <FORM id="getOneUser2" METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/user/user.do">
 				      <input type="hidden" name="user_id"  value="${userVO.user_id}">
 				      <input type="hidden" name="action"	value="getOne_For_Display">
@@ -91,15 +91,15 @@
                 </div>
                 <ul class="app-menu">
                   <li><a class="app-menu__item" href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><i class="app-menu__icon fa fa-user fa-lg"></i><span class="app-menu__label">會員首頁</span></a></li>
-                  <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-gear fa-lg"></i><span class="app-menu__label">會員資料管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>  
+                  <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-address-book-o"></i><span class="app-menu__label">會員資料管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>  
                     <ul class="treeview-menu">
                     <FORM id="getOneUser" METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/user/user.do" style="margin-bottom: 0px;">
 				     <input type="hidden" name="user_id"  value="${userVO.user_id}">
 				     <input type="hidden" name="action"	value="getOne_For_Display">
-				     <li><a class="treeview-item" href="#" onclick="document.getElementById('getOneUser').submit();"><i class="icon fa fa-circle-o"></i> 個人檔案</a></li>
+				     <li><a class="treeview-item" href="#" onclick="document.getElementById('getOneUser').submit();"><i class="icon fa fa-file-text-o"></i> 個人檔案</a></li>
 				     </FORM>
-                     <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/updateUserPwd.jsp"><i class="icon fa fa-circle-o"></i> 更改密碼</a></li>        
-                     <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/addUserCash.jsp"><i class="icon fa fa-circle-o"></i>我的錢包</a></li>        
+                     <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/updateUserPwd.jsp"><i class="icon fa fa-edit"></i> 更改密碼</a></li>        
+                     <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/user/addUserCash.jsp"><i class="icon fa fa-dollar"></i>我的錢包</a></li>        
                     </ul>     
                   </li>       
                   <li class="treeview"><a class="app-menu__item" href="<%=request.getContextPath()%>/front-end/seller/productList.jsp" data-toggle="treeview"><i class="app-menu__icon fa fa-shopping-bag"></i><span class="app-menu__label">商品管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
@@ -109,26 +109,26 @@
                     </ul>
                   </li>
                   
-                  <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">直售訂單管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+                  <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-cogs"></i><span class="app-menu__label">直售訂單管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
-                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/orderManagement/OrderListA.jsp"><i class="icon fa fa-circle-o"></i>我的購買訂單</a></li>
-                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/orderManagement/OrderListB.jsp"><i class="icon fa fa-circle-o"></i>我的販賣訂單</a></li>
+                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/orderManagement/OrderListA.jsp"><i class="icon fa fa-th-list"></i>我的購買訂單</a></li>
+                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/orderManagement/OrderListB.jsp"><i class="icon fa fa-th-list"></i>我的販賣訂單</a></li>
                     </ul>
                   </li>
-                  <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-th-list"></i><span class="app-menu__label">直播訂單管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+                  <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-cogs"></i><span class="app-menu__label">直播訂單管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
-                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/liveOrderManagement/liveOrderListA.jsp"><i class="icon fa fa-circle-o"></i>我的購買訂單</a></li>
-                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/liveOrderManagement/liveOrderListB.jsp"><i class="icon fa fa-circle-o"></i>我的販賣訂單</a></li>
+                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/liveOrderManagement/liveOrderListA.jsp"><i class="icon fa fa-th-list"></i>我的購買訂單</a></li>
+                      <li><a class="treeview-item" href="<%=request.getContextPath()%>/front-end/liveOrderManagement/liveOrderListB.jsp"><i class="icon fa fa-th-list"></i>我的販賣訂單</a></li>
                     </ul>
                   </li>
                   <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">直播專案管理</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                     <ul class="treeview-menu">
                       <li>
-                      <a class="treeview-item" href="<%=request.getContextPath()%>/front-end/liveManagement/liveAdd.jsp"><i class="icon fa fa-circle-o"></i>新增直播專案</a>
+                      <a class="treeview-item" href="<%=request.getContextPath()%>/front-end/liveManagement/liveAdd.jsp"><i class="icon fa fa-edit"></i>新增直播專案</a>
                       <li>
-                      <li><a class="treeview-item" href='<%=request.getContextPath()%>/front-end/liveManagement/liveList.jsp'><i class="icon fa fa-circle-o"></i>我的直播專案</a></li>
+                      <li><a class="treeview-item" href='<%=request.getContextPath()%>/front-end/liveManagement/liveList.jsp'><i class="icon fa fa-th-list"></i>我的直播專案</a></li>
                       <li>
-                      <a class="treeview-item" href="<%=request.getContextPath()%>/front-end/liveManagement/liveHistory.jsp"><i class="icon fa fa-circle-o"></i>我的歷史專案</a>
+                      <a class="treeview-item" href="<%=request.getContextPath()%>/front-end/liveManagement/liveHistory.jsp"><i class="icon fa fa-archive"></i>我的歷史專案</a>
                       <li>
                     </ul>
                   </li>

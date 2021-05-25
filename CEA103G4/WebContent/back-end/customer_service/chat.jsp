@@ -40,14 +40,12 @@ pageEncoding="UTF-8"%>
 }
 
 .message-area {
-	height: 70%;
+	height: 350px;
 	resize: none;
 	box-sizing: border-box;
 	overflow: auto;
 	background-color: #ffffff;
-	min-width: 60%;
 	width:66%;
-	float:right;
 }
 
 .input-area {
@@ -90,7 +88,8 @@ h1 {
 	box-shadow: 0 0 5px #000000;
 	width: 30%;
 	margin-top: 1%;
-	margin-left: 48%;
+	margin-left: 52%;
+	height:45px;
 }
 
 #row {
@@ -101,7 +100,7 @@ h1 {
 }
 
 .column {
-  float: initial;
+/*   float: initial; */
   width: 50%;
   padding: 5%;
   margin-bottom: 5px;
@@ -192,12 +191,12 @@ color: black;
 				<div id="messagesArea" class="panel message-area" >
 	
 				</div>
-				<div class="panel input-area col-12">
+				<div class="panel input-area">
 					<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
 					<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
 					<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
 					<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
-					<input type="button" onclick="history.back()" value="回到上一頁"></input>
+<!-- 					<input type="button" onclick="history.back()" value="回到上一頁"></input> -->
 				</div>
 			</main>
 			<jsp:include page="/back-end/backendfooter.jsp" />

@@ -101,11 +101,17 @@ h1 {
 
 .column {
 /*   float: initial; */
-  width: 50%;
+  width: 100%;
   padding: 5%;
   margin-bottom: 5px;
   background-color: #ffffff;
 }
+
+button.btn.btn-outline-info {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
 #area{
   list-style: none;
   margin: 0;
@@ -336,7 +342,7 @@ color: black;
 		
 		for (var i = 0; i < friends.length; i++) {
 			if (friends[i] === self) { continue; }//從所有好友列表排除自己的帳號
-			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' > <img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id='+friends[i]+'" /> <h2>' + friends[i] + '</h2></div>';
+			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' > <img class="rounded-circle" width="45px" height="40px"  src="${pageContext.request.contextPath}/UserShowPhoto?user_id='+friends[i]+'" /> <button class="btn btn-outline-info">' + friends[i] + '</button></div>';
 		}
 		addListener();
 	}
@@ -344,7 +350,9 @@ color: black;
 	function addListener() {
 		var container = document.getElementById("row");
 		container.addEventListener("click", function(e) {
+
 			var friend = e.srcElement.textContent;
+			console.log(friend)
 			updateFriendName(friend);
 			var jsonObj = {
 				"type" : "history",

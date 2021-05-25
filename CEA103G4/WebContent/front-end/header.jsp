@@ -206,7 +206,7 @@
 				<i class="ti-angle-left" onclick="listFriend();"></i>
 				<div id="statusOutput"></div>
 				<div class="cancel">
-					<i class="ti-close"></i>
+					<i class="fa fa-close" style="font-size:20px;"></i>
 				</div>
 			</div>
 		<div class="middle" id="messagesArea" style="height: 240px"></div>
@@ -227,7 +227,7 @@
 			<div class="top-bar">
 				<div class="list">聊天室</div>
 				<div class="cancel">
-				<i class="ti-close" onclick="closefriendlist();"></i>
+				<i class="fa fa-close" onclick="closefriendlist();" style="font-size:20px;"></i>
 				</div>
 			</div>
 			<div class="friendArea" id="friendArea">
@@ -246,7 +246,7 @@
 	const openlist = document.querySelector(".friendlist");
 	const chatBtn = document.querySelector(".chat-btn");
 	const miniChat = document.querySelector(".mini-chat");
-	const closeChatBtn = document.querySelector(".ti-close");
+	const closeChatBtn = document.querySelector(".fa.fa-close");
 	
 	function closefriendlist(){
 		closelist.style.visibility="hidden";

@@ -54,7 +54,103 @@
     margin: 0;
     font-size: 14px;
 }
+.mini-chat{	
+	width: 240px;
+    height: 300px;
+    box-sizing: border-box;
+    border: 2px solid antiquewhite;
+    background:	pink;
+    transition: width .25s cubic-bezier(.4,.8,.74,1),height .25s cubic-bezier(.4,.8,.74,1);
+    position: fixed;
+	right: 74px;
+	bottom: 0px;
+	z-index: 99999;
+	visibility: hidden;
+	border-radius: 8px;
+	color: white;
+}
+.mini-chat .chat {
+	position: absolute;
+	bottom: 0.5px;
+	border-radius: 10px;
+	padding-left: 5px;
+}
 
+#statusOutput {
+	display: inline-block;
+	position: absolute;
+	right: 43%;
+	font-weight: 700;
+}
+.cancel {
+	position: absolute;
+	right: 3px;
+	display: inline-block;
+	cursor: pointer; 
+}
+.mini-chat .chat-input {
+	border: 1px;
+	display: inline;
+	border-radius: 15px;
+	padding-left: 5px;
+	margin-bottom: 3px;
+}
+.mini-chat .middle {
+	position: absolute;
+	display: block;
+	margin: 3px auto;
+	top: 20px;
+	width: 238px;
+	height: 245px;
+	background: white;
+	resize: none;
+	padding: 5px;
+	overflow: auto;
+}
+.me {
+	float: right;
+	background-color: lightblue;
+	margin-right: 5px;
+	margin-bottom:10px;
+	padding:5px;
+	border-radius: 10px 10px 0px 10px;
+	width: 60%;
+	text-align:right;
+	padding-right: 10px; 
+}
+#messagesArea ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#messagesArea ul li {
+	display: inline-block;
+	clear: both;
+	font-family: Helvetica, Arial, sans-serif;
+	color: white;
+}
+
+.mini-chat #sendMessage, .ti-angle-left{
+	cursor: pointer; 
+}
+
+.top-bar{
+	font-weight: 700px;
+}
+
+.top-bar .list, .ti-close{
+	display: inline-block;
+	font-size:10%;
+}
+.top-bar .list{
+	left:40%;
+	position: absolute;
+	font-weight: 500;
+}
+#sendMessage{
+	font-size: 20px;
+}
 </style>
 
 </head>
@@ -171,7 +267,8 @@
                         <c:if test="${sellerFollow.user_id == userVO.getUser_id()}">
                           <tr>
                            <td><a href="<%=request.getContextPath()%>/SellerProducts?user_id=${sellerFollow.seller_id}" target="_blank">${sellerFollow.seller_id}</a></td>
-                           <td><a href="#"><i class="fa fa-commenting-o"></i></a></td>
+                           <td><a href="#"><i id="chat-seller" class="fa fa-commenting-o"></i><input type="hidden" value="${sellerFollow.seller_id}"></a></td>
+                          
                            <td>
                             <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/seller_follow/seller_follow.do" style="margin-bottom: 0px;">
                              <button class="btn btn-outline-info" type="submit" name="tracer_no" value="${sellerFollow.tracer_no}">取消關注</button>
@@ -186,6 +283,27 @@
                       </div>
                     </div>
                   </div>
+                  
+      <div class="mini-chat">
+		<div class="content">
+			<div class="top-bar">
+				<div id="statusOutput"></div>
+				<div class="cancel">
+					<i class="ti-close fa fa-times" aria-hidden="true"></i>
+				</div>
+			</div>
+				<div class="middle" id="messagesArea" style="height: 240px"></div>
+					<div class="bottom-bar">
+						<div class="chat">
+							<input id="message" class="chat-input" type="text"
+								placeholder="Type a message..." size="21"
+								onkeydown="if (event.keyCode == 13) sendMessage();">
+								 <i id="sendMessage" class="fa fa-paper-plane-o"
+								onclick="sendMessage();"></i>
+						</div>
+					</div>
+				</div>
+		</div>
 <!--                 <div class="row"> -->
 <!--                   <div class="col-md-6"> -->
 <!--                     <div class="tile"> -->
@@ -219,6 +337,115 @@
          <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
          </body>
          <script>
+     	const miniChat = document.querySelector(".mini-chat");
+     	const closeChatBtn = document.querySelector(".ti-close");
+		$(".fa-commenting-o").click(function(){
+	     		var friend = $(this).next('input').val();
+	     		miniChat.style.visibility="visible";
+	     		console.log(friend);
+	     		addListener2(friend);
+		})
+		
+		closeChatBtn.addEventListener("click", function() {
+	     miniChat.style.visibility = "hidden";
+	})
+     	//WebSocket開始
+     	var MyPoint = "/FriendChatWS/${userVO.user_id}";
+     	var host = window.location.host;
+     	var path = window.location.pathname;
+     	var webCtx = path.substring(0, path.indexOf('/', 1));
+     	var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+     	                
+     	const statusOutput = document.getElementById("statusOutput");
+     	const messagesArea = document.getElementById("messagesArea");
+     	var self = '${userVO.user_id}';
+     	var webSocket;
+             connect(); //websocket直接啟動
+             function connect() {
+                 // create a websocket
+                 webSocket = new WebSocket(endPointURL);
+                 webSocket.onopen = function(event) {
+                     console.log("Connect Success!");
+                 };
+     			// OnMessaage
+                 webSocket.onmessage = function(event) {
+                     var jsonObj = JSON.parse(event.data);
+
+                     if ("open" === jsonObj.type) {
+                     } else if ("history" === jsonObj.type) {
+     					messagesArea.innerHTML = "";
+                         var ul = document.createElement('ul');
+                         ul.id = "area";
+                         messagesArea.appendChild(ul);
+                         // 這行的jsonObj.message是從redis撈出跟好友的歷史訊息，再parse成JSON格式處理
+                         var messages = JSON.parse(jsonObj.message);
+                         for (var i = 0; i < messages.length; i++) {
+                             var historyData = JSON.parse(messages[i]);
+                             var showMsg = historyData.message;
+                             var li = document.createElement('li');
+                             // 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
+                             historyData.sender === self ? li.className += 'me' : li.className += 'friend';
+                             li.innerHTML = showMsg;
+                             ul.appendChild(li);
+                         }
+                         messagesArea.scrollTop = messagesArea.scrollHeight;
+                     } else if ("chat" === jsonObj.type) {
+                         var li = document.createElement('li');
+     					if(jsonObj.sender === statusOutput.textContent || jsonObj.sender ===self){ //完善版本 不會看到別人訊息
+                         jsonObj.sender === self ? li.className += 'me' : li.className += 'friend'; 
+     					}
+     					li.innerHTML = jsonObj.message;
+                         document.getElementById("area").appendChild(li);
+                         messagesArea.scrollTop = messagesArea.scrollHeight;
+                     } else if ("close" === jsonObj.type) {
+                     }
+
+                 };
+     			//OnClose
+                 webSocket.onclose = function(event) {
+                     console.log("Disconnected!");
+                 };
+             }
+     		
+             function sendMessage() {
+                 var inputMessage = document.getElementById("message");
+                 var friend = statusOutput.textContent;
+                 var message = inputMessage.value.trim();
+                 if (message === "") {
+                     alert("Input a message");
+                     inputMessage.focus();
+                 } else {
+                     var jsonObj = {
+                         "type" : "chat",
+                         "sender" : self,
+                         "receiver" : friend,
+                         "message" : message
+                     };
+                     webSocket.send(JSON.stringify(jsonObj));
+                     inputMessage.value = "";
+                     inputMessage.focus();
+                 }
+             }
+             // 註冊列表點擊事件並抓取好友名字以取得歷史訊息
+     		function addListener2(friend) { //給私訊賣家用
+     		             updateFriendName(friend);
+     		            var jsonObj = {
+     		                "type" : "history",
+     		                "sender" : self,
+     		                "receiver" : friend,
+     		                "message" : ""
+     		            };
+     		            webSocket.send(JSON.stringify(jsonObj));
+             }
+             function disconnect() {
+                 webSocket.close();
+             };
+
+             function updateFriendName(name) {
+                 statusOutput.innerHTML = name;
+             };
+         
+         
          $(document).ready(function(){
         		switch($("#con").val()){
         		case "1":

@@ -9,7 +9,7 @@
 
 <%
 		Object SellerProducts = request.getAttribute("SellerProducts");
-	
+		ProductVO productVO = (ProductVO) request.getAttribute("productVO");
 %>
 <jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
 <jsp:useBean id="productSvc" scope="page" class="com.product.model.ProductService" />
@@ -175,11 +175,13 @@
                     	 <div class="product-price"><span>$</span>
                           ${productVO.product_price}
                     	</div>
+                    	
                     </a>
                 </div>
             </div>
         </div>
     </div>
+    <c:set var="seller" value="${productVO.user_id}"></c:set>
     <input class="user_id" type="hidden" value="${productVO.user_id}">
     <input class="user_regdate" type="hidden" value="${userSvc.getOneUser(productVO.user_id).regdate}">
           </c:forEach>
@@ -224,7 +226,7 @@
 	  			});
 		}else{
 		miniChat.style.visibility="visible";
-		var friend = "${productVO.user_id}";
+		var friend = "${seller}";
 		addListener2(friend);
 			
 		}

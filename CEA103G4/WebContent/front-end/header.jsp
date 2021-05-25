@@ -209,7 +209,7 @@
 					<i class="ti-close"></i>
 				</div>
 			</div>
-			<div class="middle" id="messagesArea" style="height: 240px"></div>
+		<div class="middle" id="messagesArea" style="height: 240px"></div>
 			<div class="bottom-bar">
 				<div class="chat">
 					<input id="message" class="chat-input" type="text"
@@ -253,8 +253,8 @@
 	}
 	function listFriend(){
 		openlist.style.visibility="visible";
-		disconnect();
-		connect();
+// 		disconnect();
+// 		connect();
 		
 	}
 
@@ -278,11 +278,6 @@
 	const messagesArea = document.getElementById("messagesArea");
 	var self = '${userVO.user_id}';
 	
-// 	if("${productVO.user_id}"!=""){
-// 		var friend = '${productVO.user_id}'
-// 	}else{
-		
-// 	};
 	var webSocket;
         connect(); //websocket直接啟動
         function connect() {

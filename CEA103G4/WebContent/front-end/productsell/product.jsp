@@ -227,9 +227,11 @@
 									</form>
 									<ul class="pd-tags">
 										<li><span id="maxRemaining"
-											value="${productVO.product_remaining}">商品數量：${productVO.product_remaining}</span>
+											value="${productVO.product_remaining}">剩餘數量：${productVO.product_remaining}</span>
 										</li>
-										<!-- <li><span>TAGS</span>: Clothing, T-shirt, Woman</li> -->
+										<li><span 
+											>已售出：${productVO.product_sold}</span>
+										</li>
 									</ul>
 								</c:if>
 								<c:if test="${productVO.product_state != 1}">

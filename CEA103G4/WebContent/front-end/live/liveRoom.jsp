@@ -592,7 +592,7 @@ function refresh(){
 						  },
 						  success: function(res) {
 							  Swal.fire('直播已結束').then(function(){
-								  window.location.href="<%=request.getContextPath()%>/front-end/live/liveWall.jsp"
+								  window.location.replace('<%=request.getContextPath()%>/front-end/live/liveWall.jsp');
 							  })
 								
 					      }  
@@ -649,8 +649,16 @@ function refresh(){
 				
 				}else if("/countdown"==jsonObj.message && '${liveVO.user_id}'==jsonObj.sender){
 					
-
-
+					//判斷有無商品
+					if($("#showProduct").find("td").eq(1).html()==undefined){
+						Swal.fire({
+							  icon: 'error',
+							  title: '目前無拍賣商品!'
+							})
+						return;
+					}
+					
+					//產生直播訂單
 					function doSomething() {
 						
 						Swal.fire({
@@ -688,6 +696,7 @@ function refresh(){
 						webSocket.send(JSON.stringify(json));
 					}
 					
+					//alert倒數 + 網頁上倒數
 					let timerInterval
 					Swal.fire({
 					  title: '競標倒數三十秒!',
@@ -728,11 +737,6 @@ function refresh(){
 					        timeLeft--;
 					    }
 					}
-					    
-					    
-					    
-					    
-					    
 					    timerInterval = setInterval(() => {
 					      const content = Swal.getHtmlContainer()
 					      if (content) {
@@ -803,21 +807,19 @@ function refresh(){
 				messagesArea.value = messagesArea.value + message;
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			}else if("max" ==jsonObj.type){
-				debugger;
 				if(jsonObj.timeStart =="0"){
 					$("#current_price").text(jsonObj.maxPrice);
 					$("#current_id").text("無人出價");
 				}else if(jsonObj.timeStart== "1"){
-					// addListener();
-// 					console.log(jsonObj);
 					$("#current_price").text(jsonObj.maxPrice);
 					$("#current_id").text(jsonObj.user_id);
 				}else if(jsonObj.timeStart== "2"){
 					//ajax  更改狀態
 					//refresh();
 					//注意元素可以抓到
+					
 					if(jsonObj.sender == '${userVO.user_id}'){
-						
+						//產生訂單
 						$.ajax({ 
 							  type:"POST",
 							  url:"<%=request.getContextPath()%>/live_order/live_order.do",
@@ -845,7 +847,7 @@ function refresh(){
 
 				
 				}else if(jsonObj.timeStart== "3"){
-					
+					//目前沒有狀態3
 				}
 				//開始競標後包裹   alert()開始競標
 				//競標中
@@ -880,9 +882,9 @@ function refresh(){
 	
 	var inputUserName = document.getElementById("userName");
 	inputUserName.focus();
-
+	//丟訊息
 	function sendMessage(e) {
-		
+		//登入
 		var userName = inputUserName.value.trim();
 		if (${userVO == null}) {
 			setTimeout(function(){
@@ -893,18 +895,20 @@ function refresh(){
 		
 		var inputMessage = document.getElementById("message");
 		var message = inputMessage.value.trim();
-
+		//空訊息
 		if (message === "") {
 			setTimeout(function(){
 				Swal.fire('請輸入訊息')
 			}, 1);
 			inputMessage.focus();
 		} else {
+			//判斷錢包錢
 			if(parseInt(message) > "${userVO.cash}"){
 				setTimeout(function(){
 					Swal.fire('錢包餘額不足，目前餘額為  ${userVO.cash} 元')
 				}, 1);
 				return;
+			//直播指令查詢
 			}else if(message == "/help"){
 				if("${userVO.user_id}" == "${liveVO.user_id}"){
 					

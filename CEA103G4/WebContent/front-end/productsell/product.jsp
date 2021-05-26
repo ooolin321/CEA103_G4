@@ -462,6 +462,7 @@
 	  			});
 		}else{
 		miniChat.style.visibility="visible";
+		
 		var friend = "${productVO.user_id}";
 		addListener2(friend);
 		}

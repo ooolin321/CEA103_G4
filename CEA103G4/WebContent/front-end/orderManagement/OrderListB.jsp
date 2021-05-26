@@ -110,12 +110,12 @@ h3 {
 												<tr id="tr">
 													<th scope="col"><input type="checkbox" id="AllCheck"></th>
 													<th scope="col">#</th>
-													<th scope="col">訂單時間</th>
-													<th scope="col">訂單狀態</th>
+													<th scope="col">訂單日期</th>
 													<th scope="col">訂單金額</th>
-													<th scope="col">付款方式</th>
-													<th scope="col">物流方式</th>
-													<th scope="col">物流狀態</th>
+													<th scope="col">收件人姓名</th>
+													<th scope="col">郵遞區號</th>
+													<th scope="col">收件人地址</th>
+													
 													<th></th>
 													<th></th>
 												</tr>
@@ -125,21 +125,21 @@ h3 {
 													items="${orderSvc.getAllByID2(userVO.user_id)}">
 													<c:if test="${orderVO.logisticsstate==0}">
 														<tr>
-															<td><input type="checkbox" name="order_no"
-																value="${orderVO.order_no}"></td>
-															<td>${orderVO.order_no}</td>
+															<td><input type="checkbox" name="order_no" value="${orderVO.order_no}"></td>
+															<td>
+															<FORM id="${orderVO.order_no}" METHOD="get" ACTION="<%=request.getContextPath()%>/front-end/order/order.do" style="margin-bottom: 0px;">
+															<input type="hidden" name="order_no" value="${orderVO.order_no}"> 
+															<input type="hidden" name="action" value="listDetails_ByNo">
+															<a href="#" onclick="document.getElementById('${orderVO.order_no}').submit();">${orderVO.order_no}</a>
+															</FORM>
+															</td>
+<%-- 															<td>${orderVO.order_no}</td> --%>
 															<td><fmt:formatDate value="${orderVO.order_date}"
 																	pattern="yyyy-MM-dd" /></td>
-															<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>
 															<td>${orderVO.order_price}</td>
-															<td>${(orderVO.pay_method==0)? '錢包':''}
-																${(orderVO.pay_method==1)? '信用卡':''}
-																${(orderVO.pay_method==2)? '轉帳':''}</td>
-															<td>${(orderVO.logistics==0)? '超商':'宅配'}</td>
-															<td>${(orderVO.logisticsstate==0)? '未出貨':''}
-																${(orderVO.logisticsstate==1)? '已出貨':''}
-																${(orderVO.logisticsstate==2)? '已取貨':''}</td>
-															<td></td>
+															<td>${orderVO.rec_name}</td>
+															<td>${orderVO.zipcode}</td>
+															<td>${orderVO.city}${orderVO.town}${orderVO.rec_addr}</td>
 														</tr>
 													</c:if>
 												</c:forEach>
@@ -147,6 +147,9 @@ h3 {
 										</table>
 									</div>
 								</FORM>
+								<% if (request.getAttribute("listDetails_ByNo") != null) { %>
+								<jsp:include page="listDetails_ByNo.jsp" />
+								<% 	}  %>
 							</div>
 						</div>
 					</div>

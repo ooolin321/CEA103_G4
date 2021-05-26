@@ -45,9 +45,9 @@
 				<div class="form-group">
 					<div class="utility">
 						<div class="animated-checkbox">
-							<label> <input type="checkbox"><span
-								class="label-text">Stay Signed in</span>
-							</label>
+<!-- 							<label> <input type="checkbox"><span -->
+<!-- 								class="label-text">Stay Signed in</span> -->
+<!-- 							</label> -->
 						</div>
 						<p class="semibold-text mb-2">
 							<a href="<%=request.getContextPath()%>/back-end/backendIndex.jsp" data-toggle="flip">Forgot Password ?</a>

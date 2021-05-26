@@ -52,7 +52,7 @@ font-size: 1.75rem;
 	float: right;
 	border: 5px solid rgb(0 0 0 / 15%);
 	border-radius: 5px;
-	width: 66%;
+	width: 76%;
 }
 .panel1 {
 	border: 5px solid rgb(0 0 0 / 15%);
@@ -66,7 +66,7 @@ font-size: 1.75rem;
 	box-sizing: border-box;
 	overflow: auto;
 	background-color: #ffffff;
-	width:66%;
+	width:76%;
 }
 
 .input-area {
@@ -111,7 +111,7 @@ h1 {
 
 #row {
 	float: left;
-	width: 33%;
+	width: 24%;
 	height:70%;
 /* 	background-color:lightblue; */
 }
@@ -139,7 +139,8 @@ button.btn.btn-outline-info {
   padding: 20px;
   border-radius: 30px;
   margin-bottom: 2px;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: Segoe UI, Microsoft JhengHei, sans-serif;
+    font-size: large;
 }
 
 #time{
@@ -165,6 +166,8 @@ color: black;
   float: right;
   background: pink;
   color: black;
+   font-family: Segoe UI, Microsoft JhengHei, sans-serif;
+    font-size: large;
 }
 
 .friend + .me{
@@ -203,7 +206,7 @@ color: black;
               <main class="app-content">
                 <div class="app-title">
                   <div>
-                    <h1><i class="fa fa-user fa-lg"></i> 會員首頁</h1>
+                    <h1><i class="fa fa-user fa-lg"></i> 客服聊天室</h1>
                     </div>
                   <ul class="app-breadcrumb breadcrumb">
                     <li class="breadcrumb-item"><a href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp"><i class="fa fa-home fa-lg"></i></a></li>
@@ -211,24 +214,21 @@ color: black;
                   </ul>
                 </div>
 <!-- 	<div id="showbox"></div> -->
-	<h3 id="statusOutput" class="statusOutput"></h3>
+	<h3 id="statusOutput" class="statusOutput">請點選客服</h3>
 	<div id="row"></div>
 	<div id="messagesArea" class="panel message-area"></div>
 	<div class="panel input-area">
-		<input id="message" class="text-field" type="text"
-			placeholder="Message"
-			onkeydown="if (event.keyCode == 13) sendMessage();" /> <input
-			type="submit" id="sendMessage" class="button" value="Send"
-			onclick="sendMessage();" /> <input type="button" id="connect"
-			class="button" value="連線" onclick="connect();" /> <input
-			type="button" id="disconnect" class="button" value="離開"
-			onclick="disconnect();" /> 
+					<input id="message" class="text-field app sidebar-mini rtl  pace-done" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
+					<input type="submit" id="sendMessage" class="btn btn-secondary" value="Send" onclick="sendMessage();" /> 
+					<input type="button" id="connect" class="btn btn-info" value="連線" onclick="connect();" /> 
+					<input type="button" id="disconnect" class="btn btn-danger" value="離開" onclick="disconnect();" />
 <!-- 			<input type="button" -->
 <!-- 			onclick="history.back()" value="回到上一頁"></input> -->
 	</div>
          <jsp:include page="/front-end/protected/userIndex_footer.jsp" />
          <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
-         </body>
+         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
 	var MyPoint = "/CustomerWS/${userName}";
 	var host = window.location.host;
@@ -340,6 +340,11 @@ console.log("222");
 
 		webSocket.onclose = function(event) {
 			console.log("Disconnected!");
+			var friends = jsonObj.users;
+			console.log(friends);
+			var chatArea = document.getElementByClassNamee("friendName");
+			console.log(chatArea);
+			chatArea.remove();
 		};
 	}
 	
@@ -351,12 +356,21 @@ console.log("222");
 		var timeStr = time.getFullYear() + "-" + (time.getMonth()+1).toString().padStart(2, "0") + "-" 
 					+ time.getDate() + " " + time.getHours().toString().padStart(2, "0") + ":" + time.getMinutes().toString().padStart(2, "0");
 		if (message === "") {
-			alert("Input a message");
+// 			alert("Input a message");
+			Swal.fire({
+  				icon: 'error',
+  				text: '請輸入訊息',		  
+			});
 			inputMessage.focus();
 		} 
-// 		else if (friend === "") {
+		else if (friend === "") {
 // 			alert("Choose a friend");
-// 		} 
+			Swal.fire({
+				 icon: 'warning',
+				 text: '請點選會員',				  
+			});
+			inputMessage.focus();
+		} 
 		else {
 			var jsonObj = {
 				"type" : "chat",
@@ -422,5 +436,5 @@ console.log(jsonObj.time);
 // 		　setTimeout('ShowTime()',1000);
 // 		}
 </script>
-
+         </body>
 </html>

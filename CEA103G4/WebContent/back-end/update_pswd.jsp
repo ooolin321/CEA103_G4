@@ -79,6 +79,12 @@ body {
 </head>
 
 <body id="gradient">
+<div class="shadow p-3 mb-1 bg-white rounded" style="font-size:40px">
+			<span class="badge badge-secondary">
+				修改密碼
+			</span>
+			
+		</div>	
 	<div class="container">
 		<!-- Outer Row -->
 		<div class="row justify-content-center">

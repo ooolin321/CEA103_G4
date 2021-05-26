@@ -102,8 +102,8 @@ justify-content: center;
 										<label><i class="fas fa-user-alt"></i>職位:</label>
 										<select
 											class="form-control" size="1" name="job">
-											<option value="<%=(empVO == null) ? "一般管理員" : empVO.getJob()%>">一般管理員</option>
-											<option value="<%=(empVO == null) ? "高級管理員" : empVO.getJob()%>">高級管理員</option>
+											<option value="一般管理員" ${(empVO.job).equals("一般管理員")? 'selected':''}>一般管理員</option>
+											<option value="高級管理員" ${(empVO.job).equals("高級管理員")? 'selected':''}>高級管理員</option>
 										</select>	
 									</div>
 								</div>

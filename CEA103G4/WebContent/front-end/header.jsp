@@ -189,7 +189,7 @@
 		</div>
 	</div>
 	<div id="goTop" style="position: fixed; right: 0px; bottom: 45px; z-index: 99999;">
-		<a href="#topLogo"><img style="height:75px;" src="<%=request.getContextPath()%>/front-template/images/top.gif" title="回上方"></a>
+		<img style="height:75px;" src="<%=request.getContextPath()%>/front-template/images/top.gif" title="回上方">
 	</div>
 	
 <c:if test="${not empty userVO.user_id}">	
@@ -242,6 +242,15 @@
 <!-- heade搜尋 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
 <script>
+
+
+const goTop = document.querySelector("#goTop");
+goTop.addEventListener("click", function() {
+	$("html,body").animate({scrollTop:0},1000);
+});
+
+
+
 	const closelist = document.querySelector(".friendlist");
 	const openlist = document.querySelector(".friendlist");
 	const chatBtn = document.querySelector(".chat-btn");
@@ -438,5 +447,7 @@
 			
 		 }) 
 	}
+	
+
 	
 </script>

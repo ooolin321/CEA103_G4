@@ -227,7 +227,8 @@ color: black;
 	</div>
          <jsp:include page="/front-end/protected/userIndex_footer.jsp" />
          <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
-         </body>
+         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
 	var MyPoint = "/CustomerWS/${userName}";
 	var host = window.location.host;
@@ -355,12 +356,21 @@ console.log("222");
 		var timeStr = time.getFullYear() + "-" + (time.getMonth()+1).toString().padStart(2, "0") + "-" 
 					+ time.getDate() + " " + time.getHours().toString().padStart(2, "0") + ":" + time.getMinutes().toString().padStart(2, "0");
 		if (message === "") {
-			alert("Input a message");
+// 			alert("Input a message");
+			Swal.fire({
+  				icon: 'error',
+  				text: '請輸入訊息',		  
+			});
 			inputMessage.focus();
 		} 
-// 		else if (friend === "") {
+		else if (friend === "") {
 // 			alert("Choose a friend");
-// 		} 
+			Swal.fire({
+				 icon: 'warning',
+				 text: '請點選會員',				  
+			});
+			inputMessage.focus();
+		} 
 		else {
 			var jsonObj = {
 				"type" : "chat",
@@ -426,5 +436,5 @@ console.log(jsonObj.time);
 // 		　setTimeout('ShowTime()',1000);
 // 		}
 </script>
-
+         </body>
 </html>

@@ -160,16 +160,16 @@ ion-icon {
 														<button class="btn btn-info" id="srating_btn" data-toggle="modal" data-target="#${orderVO.order_no}">評價</button>
 														<input type="hidden" value="${orderVO.order_no}">
 														
-														<input type="hidden" name="action" value="delete">
-														<button class="btn btn-danger">取消</button>
+<!-- 														<input type="hidden" name="action" value="delete"> -->
+<!-- 														<button class="btn btn-danger">取消</button> -->
 														
 														</c:if>
 														
 														<c:if test="${orderVO.logisticsstate!=1}">
 														<button class="btn btn-info" id="srating_btn" disabled>評價</button>
 														
-														<input type="hidden" name="action" value="delete">
-														<button class="btn btn-danger">取消</button>
+<!-- 														<input type="hidden" name="action" value="delete"> -->
+<!-- 														<button class="btn btn-danger">取消</button> -->
 														</c:if>
 													</td>
 												</FORM>

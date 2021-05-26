@@ -18,4 +18,5 @@ public interface OrderDAO_interface {
 	public void updateSrating(OrderVO orderVO);
 	public void insertWithOrderList(OrderVO orderVO , List<Order_detailVO> list);
 	public Set<Order_detailVO> getDetailsByNo(Integer order_no);
+	public void cancel(Integer order_no);
 }

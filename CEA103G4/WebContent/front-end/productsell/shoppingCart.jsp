@@ -238,30 +238,54 @@
 
 <script>
 <c:forEach var="order" items="${buylist}" varStatus="cartstatus">  
+// 各商品小計
     	// 直接修改數量
     	$("#PC${order.product_no}").change(function(){
 
 			var newValue = $('#PC${order.product_no}').parent().find('input').val();
 			var maxRemaining = $("#max${order.product_no}").attr("value");
 
-			if(newValue > maxRemaining){
+			if(parseInt(newValue) >= parseInt(maxRemaining)){
 				$('input[name="${order.product_no}"]').val(maxRemaining);
 				let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
 				$("#TP${order.product_no}").text(totalPrice);
 				sum();
-			}else if(newValue < maxRemaining){
-					$('input[name="${order.product_no}"]').val(newValue);
-					let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
-					$("#TP${order.product_no}").text(totalPrice);
-					sum();
-				}
-
+			}else if(parseInt(newValue) <= 0){
+				$('input[name="${order.product_no}"]').val(1);
+				let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
+				$("#TP${order.product_no}").text(totalPrice);
+				sum();
+			}else if(parseInt(newValue) < parseInt(maxRemaining)){
+				$('input[name="${order.product_no}"]').val(newValue);
+				let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
+				$("#TP${order.product_no}").text(totalPrice);
+				sum();
+			}
     	});
+    	// 直接修改數量並刷新後，商品數量不變
+    	shopping_cart.addEventListener('change', event => {
+    			$.ajax({ 
+   	 		  type:"POST",
+    				  url:"<%=request.getContextPath()%>/ShoppingServlet",
+   	 		  data:{
+   	 			  "product_no": "${order.product_no}",
+   	 			  "product_name": "${order.product_name}",
+   	 			  "product_price": "${order.product_price}",
+   	 			  "proqty": $('input[name="${order.product_no}"]').val(),
+   	 			  "product_remaining": "${order.product_remaining}",
+   	 			  "user_id": "${order.user_id}",
+   	 			  "action": "updateCount"
+   	 		  },
+   	 		  success: function() {
+   	 			  }
+   	 		  });
+    	});
+		
     	 </c:forEach> 
     	</script>
     <script>		
     const shopping_cart = document.getElementById('shopping_cart')
-    // 各商品小計
+// 各商品小計
      <c:forEach var="order" items="${buylist}" varStatus="cartstatus">  
      	// 點擊+-
     	$("#PC${order.product_no}").click(function(e){
@@ -269,7 +293,7 @@
 			$("#TP${order.product_no}").text(totalPrice);
 			sum();
 		});
-   	
+   		// 點擊+-並刷新後，商品數量不變
     	shopping_cart.addEventListener('click', event => {
     		if (event.target.matches('.dec${order.product_no}')) {
     			

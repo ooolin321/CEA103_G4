@@ -33,15 +33,15 @@ public class ProductDAO implements ProductDAO_interface {
 	//新增商品 賣家上架功能
 	private static final String INSERT_STMT = "INSERT INTO PRODUCT (product_name,product_info,product_price,product_remaining,product_state,product_photo,user_id,pdtype_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	//查詢所有商品(後台/賣家查詢使用)
-	private static final String GET_ALL_STMT = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";	
-	private static final String GET_ONE_STMT = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,product_photo,user_id,pdtype_no,start_price,live_no FROM PRODUCT where product_no = ?";
+	private static final String GET_ALL_STMT = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_sold,product_state,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";	
+	private static final String GET_ONE_STMT = "SELECT * FROM PRODUCT where product_no = ?";
 	//刪除商品 賣家使用
 	private static final String DELETE = "DELETE FROM PRODUCT where product_no = ?";
 	//修改商品 賣家使用
 	private static final String UPDATE = "UPDATE PRODUCT set product_name=?, product_info=?, product_price=?,product_remaining=?, product_state=?, product_photo=?, user_id=?, pdtype_no=? where product_no = ?";
 	private static final String GET_ALLJSON = "SELECT product_no,product_name,product_info,product_price,product_quantity,product_remaining,product_state,user_id,pdtype_no,start_price,live_no FROM PRODUCT order by product_no";
 	//修改商品 買家使用
-	private static final String UPDATE_REMAINING = "UPDATE PRODUCT set product_remaining=?, product_state=? where product_no = ?";
+	private static final String UPDATE_REMAINING = "UPDATE PRODUCT set product_remaining=?, product_sold=?, product_state=? where product_no = ?";
 	
 	//後台檢舉通過,狀態改為檢舉下架 or 商品狀態修改
 	private static final String UPDATESTATE = "UPDATE PRODUCT set product_state=? where product_no = ?";
@@ -265,6 +265,7 @@ public class ProductDAO implements ProductDAO_interface {
 				productVO.setProduct_price(rs.getInt("product_price"));
 				productVO.setProduct_quantity(rs.getInt("product_quantity"));
 				productVO.setProduct_remaining(rs.getInt("product_remaining"));
+				productVO.setProduct_sold(rs.getInt("product_sold"));
 				productVO.setProduct_state(rs.getInt("product_state"));
 				productVO.setProduct_photo(rs.getBytes("product_photo"));
 				productVO.setUser_id(rs.getString("user_id"));
@@ -327,6 +328,7 @@ public class ProductDAO implements ProductDAO_interface {
 				productVO.setProduct_price(rs.getInt("product_price"));
 				productVO.setProduct_quantity(rs.getInt("product_quantity"));
 				productVO.setProduct_remaining(rs.getInt("product_remaining"));
+				productVO.setProduct_sold(rs.getInt("product_sold"));
 				productVO.setProduct_state(rs.getInt("product_state"));
 				productVO.setUser_id(rs.getString("user_id"));
 				productVO.setPdtype_no(rs.getInt("pdtype_no"));
@@ -769,8 +771,9 @@ public class ProductDAO implements ProductDAO_interface {
 			pstmt = con.prepareStatement(UPDATE_REMAINING);
 
 			pstmt.setInt(1, productVO.getProduct_remaining());
-			pstmt.setInt(2, productVO.getProduct_state());
-			pstmt.setInt(3, productVO.getProduct_no());
+			pstmt.setInt(2, productVO.getProduct_sold());
+			pstmt.setInt(3, productVO.getProduct_state());
+			pstmt.setInt(4, productVO.getProduct_no());
 
 			pstmt.executeUpdate();
 			

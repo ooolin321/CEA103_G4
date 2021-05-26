@@ -34,7 +34,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>ShoppingCart - Mode Femme</title>
-
+	<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
     <!-- Google Font -->
     <link
       href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
@@ -85,6 +85,13 @@
   color: #4c4c4c;
   line-height: 40px;
   float: left;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    font-weight: 500;
 }
 
   </style>
@@ -163,7 +170,7 @@
 					<td class="close-td first-row">
                     <form action="<%=request.getContextPath()%>/ShoppingServlet" method="POST">
 		              <input type="hidden" name="action"  value="DELETE">
-		              <input type="hidden" name="del" value="${cartstatus.index}">
+		              <input type="hidden" name="delProductNo" value="${order.product_no}">
 		              <input type="submit" class="btn btn-info" value="刪 除">
 		          	</form>
 		          	</td>
@@ -176,13 +183,13 @@
             </c:forEach>
             
             <div class="row">
-              <div class="col-lg-2">
+              <div class="col-lg-2 col-6">
                 <div class="cart-buttons">
                   <a href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp" class="btn btn-info"
                     >繼續購物</a>
                 </div>
               </div>
-              <div class="col-lg-2 offset-lg-8">
+              <div class="col-lg-2 offset-lg-8 col-6">
               <form action="<%=request.getContextPath()%>/ShoppingServlet" method="POST">
                     <input type="hidden" name="action"  value="DELETEALL">
                     <input class="btn btn-info" style="margin-left: 45px;" type="submit" value="清空購物車"
@@ -191,7 +198,7 @@
               <div class="col-lg-4 offset-lg-8">
                 <div class="proceed-checkout">
                   <ul>
-                    <li class="cart-total">合計 <span id="Sum">${sum}</span></li>
+                    <li class="cart-total">合計 <span id="Sum">$${sum}</span></li>
                   </ul>
                   <a href="<%=request.getContextPath()%>/front-end/protected/check-out.jsp" class="proceed-btn" id="checkOut">結帳</a>
                 </div>

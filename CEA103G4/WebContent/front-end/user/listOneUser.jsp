@@ -64,6 +64,12 @@ margin: -30px -30px 0px;
 
 }
 
+@media (max-width: 480px)
+.app-content {
+    padding: 15px;
+    overflow-x: hidden;
+}
+
 
 </style>
 

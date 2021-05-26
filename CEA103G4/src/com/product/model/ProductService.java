@@ -106,13 +106,14 @@ public class ProductService {
 		dao.updateState(productVO);
 		return productVO;
 	}
-	public ProductVO updateProductRemaining(Integer product_no,Integer product_remaining, Integer product_state) 
+	public ProductVO updateProductRemaining(Integer product_no,Integer product_remaining, Integer product_sold,Integer product_state) 
 	{
 
 		ProductVO productVO = new ProductVO();
 
 		productVO.setProduct_no(product_no);
 		productVO.setProduct_remaining(product_remaining);
+		productVO.setProduct_sold(product_sold);
 		productVO.setProduct_state(product_state);
 		dao.update_remaining(productVO);
 

@@ -25,7 +25,7 @@ public class UserShowPhoto extends HttpServlet {
 		if (user_id != null) {
 		UserService userSvc = new UserService();
 		Optional<UserVO> userVO = userSvc.getUserPic(user_id);
-		
+
 		if (userVO.isPresent()) {		
 			
 			OutputStream out = response.getOutputStream();
@@ -41,7 +41,14 @@ public class UserShowPhoto extends HttpServlet {
 				in.close();
 			}
 
-		} 
+		} else {
+			OutputStream out = response.getOutputStream();
+			InputStream in = getServletContext().getResourceAsStream("/front-template/images/01.png");
+			byte[] b = new byte[in.available()];
+			in.read(b);
+			out.write(b);
+			in.close();
+		}
 	}
 		
 }

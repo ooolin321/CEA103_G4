@@ -1732,8 +1732,12 @@ ol {
   font-weight: 700;
 }
 
+.footer-logo {
+    padding-top: 20px;
+}
+
 .footer-logo img {
-  height: 120px;
+  height: 100px;
   margin-bottom: 15px;
 }
 
@@ -2957,6 +2961,7 @@ ul.modefemmeinfo {
   border:none;
   box-shadow: 1px 1px 10px rgb(0 0 0 / 10%);
   border-radius: 5px;
+  white-space: nowrap;
 }
 .cart-table .thead {
   box-shadow: 1px 1px 10px rgb(0 0 0 / 10%);
@@ -3137,12 +3142,13 @@ ul.modefemmeinfo {
 }
 
 .proceed-checkout ul {
-  border: 2px solid #ebebeb;
-  background: #f3f3f3;
+  box-shadow: 1px 1px 10px rgb(0 0 0 / 20%);
+  background: white;
   padding-left: 25px;
   padding-right: 25px;
   padding-top: 16px;
   padding-bottom: 20px;
+  border-radius: 6px;
 }
 
 .proceed-checkout ul li {
@@ -3178,14 +3184,25 @@ ul.modefemmeinfo {
 }
 
 .proceed-checkout .proceed-btn {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   color: #ffffff;
-  background: #252525;
+  background: pink;
   text-transform: uppercase;
   padding: 15px 25px 14px 25px;
   display: block;
   text-align: center;
+  border-radius: 6px;
+}
+
+.proceed-checkout .orderBtn {
+	border-radius: 8px;
+	margin-top: 30px;
+	background: pink;
+    border: 1px solid pink;
+}
+.proceed-checkout .checkoutBtn{
+	text-align:center;
 }
 
 /*---------------------
@@ -3194,7 +3211,7 @@ ul.modefemmeinfo {
 
 .checkout-section {
   padding-top: 80px;
-  padding-bottom: 80px;
+  padding-bottom: 50px;
 }
 
 .checkout-content {
@@ -4810,10 +4827,10 @@ ul.modefemmeinfo {
 }
 
 @media only screen and (max-width: 576px) {
-	.pi-pic .pi-img {
-	width:auto;
-	height:auto;	
-}
+/* 	.pi-pic .pi-img { */
+/* 	width:auto; */
+/* 	height:auto;	 */
+/* } */
 
 	.inner-header .advanced-search {
     height: 50px;
@@ -5000,6 +5017,20 @@ ul.modefemmeinfo {
   .benefit-items .single-benefit {
     padding-left: 15px;
     padding-right: 15px;
+  }
+  .report {
+      width: 340px; 
+  }
+  .report-input input {
+  width:325px;
+  
+  }
+  .report-input-content {
+  text-align:center;
+  }
+  .report-input label {
+  float:none;
+  
   }
 }
 

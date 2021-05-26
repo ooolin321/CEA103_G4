@@ -405,7 +405,16 @@
 		                "receiver" : friend,
 		                "message" : ""
 		            };
-		            webSocket.send(JSON.stringify(jsonObj));
+					webSocket.send(JSON.stringify(jsonObj));
+					
+					var jsonObj = {
+				                    "type" : "chat",
+				                    "sender" : self,
+				                    "receiver" : friend,
+				                    "message" : '<img class="product-big-img" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" alt="${productVO.product_name}" />'
+				                };
+					webSocket.send(JSON.stringify(jsonObj));
+		
 					var jsonObj = {
 				                    "type" : "chat",
 				                    "sender" : self,
@@ -413,6 +422,9 @@
 				                    "message" : "${productVO.product_name}"
 				                };
 					 webSocket.send(JSON.stringify(jsonObj));
+					
+					
+					
         }
         function disconnect() {
             webSocket.close();

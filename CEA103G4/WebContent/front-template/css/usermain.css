@@ -15624,9 +15624,9 @@ max-height:100%;
 @media (max-width: 576px) {
 .header-section .logo{
     float: left;
-    width: 33%;
+    width: 32%;
     height: 100%;
-    padding: 0px 4%;
+    padding: 0px 0%;
     box-sizing: border-box;
     font-size: 700;
     display: block;
@@ -15657,7 +15657,7 @@ min-width: 100%;
 }
 .app-nav__item {
     display: block;
-    padding: 10px;
+    padding: 7px;
     line-height: 20px;
     color: #fff;
     -webkit-transition: background-color 0.3s ease;
@@ -15672,6 +15672,16 @@ min-width: 100%;
 .productsAdd {
     margin-left: 15px;
     box-sizing: border-box;
+}
+.productList {
+    margin-top: -18px;
+    overflow-x: auto;
+}
+.productList .tab-item ul li a {
+	padding: 18px 27px;
+}
+.productList .table, .productList .thead {
+    white-space: nowrap;
 }
 
 }

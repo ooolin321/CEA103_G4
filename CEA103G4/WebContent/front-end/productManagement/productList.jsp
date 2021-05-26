@@ -62,7 +62,7 @@
                   </ul>
                 </div>
                 <div class="row productList" id="productList">
-             <div class="product-tab col-lg-12">
+             <div class="product-tab col-lg-12 col-12">
               <div class="tab-item">
                 <ul class="nav" role="tablist">
                   <li>

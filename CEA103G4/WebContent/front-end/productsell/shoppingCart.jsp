@@ -234,39 +234,42 @@
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
-    
-    <script>		
-    const shopping_cart = document.getElementById('shopping_cart')
-    // 各商品小計
-     <c:forEach var="order" items="${buylist}" varStatus="cartstatus">
-     	// 點擊+-
-    	$("#PC${order.product_no}").click(function(e){
-			let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
-			$("#TP${order.product_no}").text(totalPrice);
-			sum();
-		});
-    	
+
+
+<script>
+<c:forEach var="order" items="${buylist}" varStatus="cartstatus">  
     	// 直接修改數量
-    	$("#PC${order.product_no}").change(function(e){
-			
+    	$("#PC${order.product_no}").change(function(){
+
 			var newValue = $('#PC${order.product_no}').parent().find('input').val();
 			var maxRemaining = $("#max${order.product_no}").attr("value");
-			
-			if(newValue >= maxRemaining){
+
+			if('newValue' > 'maxRemaining'){
 				$('input[name="${order.product_no}"]').val(maxRemaining);
 				let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
 				$("#TP${order.product_no}").text(totalPrice);
 				sum();
 			}
-			if(newValue < maxRemaining){
+			if('newValue' < 'maxRemaining'){
 				$('input[name="${order.product_no}"]').val(newValue);
 				let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
 				$("#TP${order.product_no}").text(totalPrice);
 				sum();
 			}
     	});
-    	
-    	
+    	 </c:forEach> 
+    	</script>
+    <script>		
+    const shopping_cart = document.getElementById('shopping_cart')
+    // 各商品小計
+     <c:forEach var="order" items="${buylist}" varStatus="cartstatus">  
+     	// 點擊+-
+    	$("#PC${order.product_no}").click(function(e){
+			let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
+			$("#TP${order.product_no}").text(totalPrice);
+			sum();
+		});
+   	
     	shopping_cart.addEventListener('click', event => {
     		if (event.target.matches('.dec${order.product_no}')) {
     			
@@ -355,7 +358,7 @@
 // 		}
 // 	});
 
-	 </c:forEach>
+	
 	 
 		//計算合計方法
 		function sum(){
@@ -368,8 +371,8 @@
 	             $("#Sum").text(zong);
 		}
 						  
-	 
+		 </c:forEach>  
     </script>
-    
+  
   </body>
 </html>

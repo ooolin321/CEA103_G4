@@ -699,7 +699,7 @@ public class OrderServlet extends HttpServlet {
 				/*************************** 2.開始查詢資料 ****************************************/
 				OrderService orderSvc = new OrderService();
 				Set<Order_detailVO> set = orderSvc.getDetailsByNo(order_no);
-				System.out.println(orderSvc.getOneOrder(order_no).getSrating());
+//				System.out.println(orderSvc.getOneOrder(order_no).getSrating());
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("listDetails_ByNo", set);    // 資料庫取出的list物件,存入request
 				String url = null;

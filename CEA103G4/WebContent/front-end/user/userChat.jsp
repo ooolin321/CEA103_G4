@@ -342,7 +342,7 @@ console.log("222");
 			console.log("Disconnected!");
 			var friends = jsonObj.users;
 			console.log(friends);
-			var chatArea = document.getElementByClassNamee("friendName");
+			var chatArea = document.getElementsByClassName("friendName");
 			console.log(chatArea);
 			chatArea.remove();
 		};

@@ -82,10 +82,10 @@
 
 						<table class="col-md-12" id="sampleTable" style="font-size: 120%">
 							<thead>
-								<tr  role="row" class="table-info" ${(authVO.funno==param.funno) ? 'bgcolor=#CCCCFF':''}>
+								<tr  role="row" class="table-info" ${(authVO.empno==param.auth_no) ? 'bgcolor=#CCCCFF':''}>
 									<th>員工編號</th>
 									<th>員工姓名</th>
-									<th>功能編號</th>
+<!-- 									<th>功能編號</th> -->
 									<th class="sorting_asc">功能名稱</th>
 									<th>狀態</th>
 									<th></th>
@@ -93,13 +93,13 @@
 								</tr>
 							</thead>
 							<tbody>
-								<%@ include file="page1.file"%>
-								<c:forEach var="authVO" items="${list}" begin="<%=pageIndex%>"
-									end="<%=pageIndex+rowsPerPage-1%>">
-									<tr>
+<%-- 								<%@ include file="page1.file"%> --%>
+<%-- 								<c:forEach var="authVO" items="${list}" begin="<%=pageIndex%>" --%>
+<%-- 									end="<%=pageIndex+rowsPerPage-1%>"> --%>
+									<tr ${(authVO.empno==param.empno) ? 'bgcolor=#CCCCFF':''}>
 										<td>${authVO.empno}</td>
 										<td>${empSvc.getOneEmp(authVO.empno).ename}</td>
-										<td>${authVO.funno}</td>
+<%-- 										<td>${authVO.funno}</td> --%>
 										<td>${funSvc.getOneFun(authVO.funno).funName}</td>
 										<!-- 											<td><select class="form-control" size="1" name="auth_no"> -->
 										<%-- 													<option value="1" ${(authVO.auth_no==1)? 'selected':''}>正常</option> --%>
@@ -145,7 +145,7 @@
 <!-- 											</FORM> -->
 <!-- 										</td> -->
 									</tr>
-								</c:forEach>
+<%-- 								</c:forEach> --%>
 							</tbody>
 						</table>
 
@@ -154,7 +154,7 @@
 				</div>
 			</div>
 		</div>
-		<%@ include file="page2.file"%>
+<%-- 		<%@ include file="page2.file"%> --%>
 	</main>
 	<jsp:include page="/back-end/backendfooter.jsp" />
 </body>

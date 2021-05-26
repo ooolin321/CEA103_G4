@@ -101,7 +101,7 @@
 						<a href="${pageContext.request.contextPath}/front-end/index.jsp"><i
 							class="fa fa-home"></i> Home</a> <a
 							href="${pageContext.request.contextPath}/front-end/productsell/shop.jsp">Shop</a>
-						<span>Detail</span>
+						<span>商品詳情</span>
 					</div>
 				</div>
 			</div>

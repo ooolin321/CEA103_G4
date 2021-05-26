@@ -227,19 +227,21 @@ if (buylist3 != null) {
 								<div class="proceed-checkout">
 								 <c:set var="cash" value="${userSvc.getOneUser(userVO.user_id).cash}"></c:set>
 									<ul>
-									<li>我的錢包 <span>
-									${cash}
+									<li>錢包餘額 <span>
+									$${cash}
 									</span></li>
 									
 									</ul>
 									<ul>
-										<li class="cart-total">合計 <span id="Sum">${sum}</span></li>
+										<li class="cart-total">合計 <span id="Sum">$${sum}</span></li>
 									</ul>
 								
 								<c:if test="${sum < cash}">
 								<input type="hidden" name="user_id" value="${userVO.user_id}">
 								<input type="hidden" name="action" value="addOrderList">
+								<div class="checkoutBtn">
 								<button class="site-btn orderBtn" id="submit">送出</button>
+								</div>
 								</c:if>
 								<c:if test="${sum > cash}">
 									<a href="<%=request.getContextPath()%>/front-end/user/addUserCash.jsp">

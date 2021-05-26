@@ -108,6 +108,11 @@ input {
 	right: 0px;
 }
 
+.report {
+  height: 410px;
+
+}
+
 @media ( min-width : 768px) {
 	.col-md-3 {
 		padding: 0;
@@ -135,6 +140,10 @@ input {
     right: 30px;
     margin-top: 10px;
     margin-left: 11px;
+}
+.report {
+height: 520px;
+
 }
 
 }
@@ -348,7 +357,7 @@ input {
 			</div>	
 				<!--檢舉燈箱 -->
 				<div class="report-bg">
-					<div class="report" style="height: 410px;">
+					<div class="report" >
 						<div class="report-title" value="${liveVO.live_no}">
 							檢舉直播編號：${liveVO.live_no} <span><a
 								href="javascript:;" id="closeBtn">關閉</a></span>

@@ -87,6 +87,13 @@
   float: left;
 }
 
+.btn-info {
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    font-weight: 500;
+}
+
   </style>
   
   </head>
@@ -176,13 +183,13 @@
             </c:forEach>
             
             <div class="row">
-              <div class="col-lg-2">
+              <div class="col-lg-2 col-6">
                 <div class="cart-buttons">
                   <a href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp" class="btn btn-info"
                     >繼續購物</a>
                 </div>
               </div>
-              <div class="col-lg-2 offset-lg-8">
+              <div class="col-lg-2 offset-lg-8 col-6">
               <form action="<%=request.getContextPath()%>/ShoppingServlet" method="POST">
                     <input type="hidden" name="action"  value="DELETEALL">
                     <input class="btn btn-info" style="margin-left: 45px;" type="submit" value="清空購物車"
@@ -191,7 +198,7 @@
               <div class="col-lg-4 offset-lg-8">
                 <div class="proceed-checkout">
                   <ul>
-                    <li class="cart-total">合計 <span id="Sum">${sum}</span></li>
+                    <li class="cart-total">合計 <span id="Sum">$${sum}</span></li>
                   </ul>
                   <a href="<%=request.getContextPath()%>/front-end/protected/check-out.jsp" class="proceed-btn" id="checkOut">結帳</a>
                 </div>

@@ -15,7 +15,7 @@ import com.live.model.LiveService;
 import com.live.model.LiveVO;
 import com.product.model.*;
 
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 10 * 1024 * 1024, maxRequestSize = 10 * 10 * 1024 * 1024)
 public class ProductServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

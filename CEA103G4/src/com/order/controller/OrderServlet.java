@@ -654,26 +654,31 @@ public class OrderServlet extends HttpServlet {
 				
 				/*************************** 2.開始刪除資料 ***************************************/
 				OrderService orderSvc = new OrderService();
-				orderSvc.deleteOrder(order_no); //刪除該筆訂單
+				orderSvc.cancelOrder(order_no); //取消訂單
 				
 				UserService userSvc = new UserService();
 				cash +=order_price;
 				userSvc.updateCash(cash,user_id); //返還金額
+				System.out.println("返還金額： "+ order_price);
 				
 				Order_detailService order_detailSvc = new Order_detailService();
-				List<Order_detailVO> list= order_detailSvc.getAll();
-				
+				List<Order_detailVO> list = order_detailSvc.getOneOrder_detail(order_no);
 				ProductService productSvc = new ProductService();
+				System.out.println("list-size:"+list.size());
 				
-				for(Order_detailVO odv: list) {
+				for(Order_detailVO odv : list) {
+					System.out.println("checks");
 					Integer product_remaining = productSvc.getOneProduct(odv.getProduct_no()).getProduct_remaining();
 					Integer product_sold = productSvc.getOneProduct(odv.getProduct_no()).getProduct_sold();
+					System.out.println("check1");
 					Integer product_state = productSvc.getOneProduct(odv.getProduct_no()).getProduct_state();
 					product_remaining +=  odv.getProduct_num();
 					product_sold -= odv.getProduct_num();
+					System.out.println("check");
 					if(product_state == 3) {
 						product_state = 1;
 					}
+					System.out.println("商品："+ odv.getProduct_no()+"庫存補回："+product_remaining+"商品售出數量："+product_sold+"商品狀態："+product_state);
 					productSvc.updateProductRemaining(odv.getProduct_no(), product_remaining,product_sold, product_state);
 				} //更換商品狀態及庫存復原
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
@@ -699,7 +704,6 @@ public class OrderServlet extends HttpServlet {
 				/*************************** 2.開始查詢資料 ****************************************/
 				OrderService orderSvc = new OrderService();
 				Set<Order_detailVO> set = orderSvc.getDetailsByNo(order_no);
-				System.out.println(orderSvc.getOneOrder(order_no).getSrating());
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("listDetails_ByNo", set);    // 資料庫取出的list物件,存入request
 				String url = null;
@@ -908,20 +912,19 @@ public class OrderServlet extends HttpServlet {
 						
 						Integer remaining = null;
 						Integer sold = null;
-						Integer newSold = null;
 						ProductService productSvc = new ProductService();
 						if(asd.getProduct_remaining()-asd.getProduct_quantity()>0) {
 							remaining = asd.getProduct_remaining() - asd.getProduct_quantity();
-							Integer product_no = asd.getProduct_no();
-							sold = productSvc.getOneProduct(product_no).getProduct_sold();				
-							newSold = sold + asd.getProduct_quantity();						
-							productSvc.updateProductRemaining(asd.getProduct_no(), remaining ,newSold, asd.getProduct_state());
+							sold = productSvc.getOneProduct(asd.getProduct_no()).getProduct_sold();				
+							sold += asd.getProduct_quantity();
+							System.out.println("產品： "+ asd.getProduct_no()+"庫存： "+remaining+"已售出： "+sold+"商品狀態： "+asd.getProduct_state());
+							productSvc.updateProductRemaining(asd.getProduct_no(), remaining ,sold, asd.getProduct_state());
 						}else {
 							remaining = asd.getProduct_remaining() - asd.getProduct_quantity();
-							Integer product_no = asd.getProduct_no();
-							sold = productSvc.getOneProduct(product_no).getProduct_sold();
-							newSold = sold + asd.getProduct_quantity();
-							productSvc.updateProductRemaining(asd.getProduct_no(), remaining ,newSold, 3);//售完狀態變更為已售出
+							sold = productSvc.getOneProduct(asd.getProduct_no()).getProduct_sold();
+							sold += asd.getProduct_quantity();
+							System.out.println("產品： "+ asd.getProduct_no()+"庫存： "+remaining+"已售出： "+sold+"商品狀態： "+asd.getProduct_state());
+							productSvc.updateProductRemaining(asd.getProduct_no(), remaining ,sold, 3);//售完狀態變更為已售出
 						}
 					}
 

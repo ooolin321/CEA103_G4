@@ -31,7 +31,7 @@ public class Order_detailDAO implements Order_detailDAO_interface{
 	private static final String GET_ALL_STMT = 
 			"SELECT `ORDER_NO`,`PRODUCT_NO`,`PRODUCT_NUM`,`ORDER_PRICE` FROM `ORDER_DETAIL` ORDER BY `ORDER_NO`";
 	private static final String GET_ONE_STMT = 
-			"SELECT `ORDER_NO`,`PRODUCT_NO`,`PRODUCT_NUM`,`ORDER_PRICE` FROM `ORDER_DETAIL` WHERE `ORDER_NO` = ?";
+			"SELECT * FROM `ORDER_DETAIL` WHERE `ORDER_NO` = ?";
 	private static final String DELETE = 
 			"DELETE FROM `ORDER_DETAIL` WHERE `ORDER_NO` = ?";
 	private static final String UPDATE = 
@@ -165,8 +165,8 @@ public class Order_detailDAO implements Order_detailDAO_interface{
 		}
 
 		@Override
-		public Order_detailVO findByPrimaryKey(Integer notice_no) {
-
+		public List<Order_detailVO> findByPrimaryKey(Integer order_no) {
+			List<Order_detailVO> list = new ArrayList<Order_detailVO>();
 			Order_detailVO order_detailVO = null;
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -175,18 +175,15 @@ public class Order_detailDAO implements Order_detailDAO_interface{
 			try {
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(GET_ONE_STMT);
-
-				pstmt.setInt(1, notice_no);
-
+				pstmt.setInt(1, order_no);
 				rs = pstmt.executeQuery();
-
 				while (rs.next()) {
-					//
 					order_detailVO = new Order_detailVO();
 					order_detailVO.setOrder_no(rs.getInt("order_no"));
 					order_detailVO.setOrder_price(rs.getInt("order_price"));
 					order_detailVO.setProduct_no(rs.getInt("product_no"));
 					order_detailVO.setProduct_num(rs.getInt("product_num"));
+					list.add(order_detailVO);
 				}
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -214,7 +211,7 @@ public class Order_detailDAO implements Order_detailDAO_interface{
 					}
 				}
 			}
-			return order_detailVO;
+			return list;
 		}
 
 		

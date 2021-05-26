@@ -122,6 +122,9 @@ public class OrderService {
 	public void deleteOrder(Integer order_no) {
 		dao.delete(order_no);
 	}
+	public void cancelOrder(Integer order_no) {
+		dao.cancel(order_no);
+	}
 
 	public OrderVO getOneOrder(Integer order_no) {
 		return dao.findByPrimaryKey(order_no);

@@ -37,6 +37,8 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			"SELECT `ORDER_NO`,`ORDER_DATE`,`ORDER_STATE`,`ORDER_SHIPPING`,`ORDER_PRICE`,`PAY_METHOD`,`PAY_DEADLINE`,`REC_NAME`,`ZIPCODE`,`CITY`,`TOWN`,`REC_ADDR`,`REC_PHONE`,`REC_CELLPHONE`,`LOGISTICS`,`LOGISTICSSTATE`,`DISCOUNT`,`USER_ID`,`SELLER_ID`,`SRATING`,`SRATING_CONTENT`,`POINT` FROM `ORDER` WHERE `ORDER_NO` = ?";
 	private static final String DELETE = 
 			"DELETE FROM `ORDER` WHERE `ORDER_NO` = ?";
+	private static final String CANCEL = 
+			"UPDATE `ORDER` SET `ORDER_STATE`=? WHERE `ORDER_NO` = ?";
 	private static final String UPDATE = 
 			"UPDATE `ORDER` SET `ORDER_DATE`=?, `ORDER_STATE`=?, `ORDER_SHIPPING`=?,`ORDER_PRICE`=?,`PAY_METHOD`=?,`PAY_DEADLINE`=?,`REC_NAME`=?,`ZIPCODE`=?,`CITY`=?,`TOWN`=?,`REC_ADDR`=?,`REC_PHONE`=?,`REC_CELLPHONE`=?,`LOGISTICS`=?,`LOGISTICSSTATE`=?,`DISCOUNT`=?,`USER_ID`=?,`SELLER_ID`=?,`SRATING`=?,`SRATING_CONTENT`=?,`POINT`=? WHERE `ORDER_NO` = ?";
 	private static final String GET_ORDER_BY_ID =
@@ -744,7 +746,7 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			
 			// 2●設定於 pstm.executeUpdate()之後
 			con.commit();
-			con.setAutoCommit(true);
+			
 			System.out.println("list.size()-B="+list.size());
 			System.out.println("新增訂單編號" + next_No + "時,共有明細" + list.size()
 			+ "筆同時被新增");
@@ -763,6 +765,11 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 		} finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -833,6 +840,45 @@ public class OrderJNDIDAO implements OrderDAO_interface{
 			}
 		}
 		return set;
+	}
+
+	@Override
+	public void cancel(Integer order_no) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(CANCEL);
+
+			pstmt.setInt(1, 2);
+			pstmt.setInt(2, order_no);
+
+			pstmt.executeUpdate();
+
+			Order_detailDAO dao = new Order_detailDAO();
+			dao.delete(order_no);
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 	}
 
 }

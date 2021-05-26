@@ -45,14 +45,14 @@ pageEncoding="UTF-8"%>
 	box-sizing: border-box;
 	overflow: auto;
 	background-color: #ffffff;
-	width:66%;
+	width:76%;
 }
 
 .input-area {
 	background: #007d71;
-/* 	box-shadow: inset 0 0 10px #00568c; */
+/* 	box-shadow: inset#007d71px #00568c; */
 	min-width: 60%;
-	width:66%;
+	width:76%;
 }
 
 .input-area input {
@@ -88,13 +88,13 @@ h1 {
 	box-shadow: 0 0 5px #000000;
 	width: 30%;
 	margin-top: 1%;
-	margin-left: 52%;
+	margin-left: 45%;
 	height:45px;
 }
 
 #row {
 	float: left;
-	width: 33%;
+	width: 24%;
 	height:70%;
 /* 	background-color:lightblue; */
 }
@@ -118,13 +118,14 @@ button.btn.btn-outline-info {
   padding: 0;
 }
 
-#lis{
-  display:inline;
-  clear: both;
-  padding: 20px;
-  border-radius: 30px;
-  margin-bottom: 2px;
-  font-family: Helvetica, Arial, sans-serif;
+#lis {
+    display: inline;
+    clear: both;
+    padding: 20px;
+    border-radius: 30px;
+    margin-bottom: 2px;
+    font-family: Segoe UI, Microsoft JhengHei, sans-serif;
+    font-size: large;
 }
 
 #time{
@@ -132,14 +133,21 @@ width:100%;
 float: right;
 color: black;
 text-align: right;
+font-family: Segoe UI, Microsoft JhengHei, sans-serif;
+font-size: large;
 }
 
 #friendtime {
 width:100%;
 float: left;
 color: black;
+
 }
 
+.friendName{
+	font-family: Segoe UI, Microsoft JhengHei, sans-serif;
+	font-size: large;
+}
 
 .friend{
   background: #eee;
@@ -198,10 +206,11 @@ color: black;
 	
 				</div>
 				<div class="panel input-area">
-					<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
-					<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
-					<input type="button" id="connect" class="button" value="Connect" onclick="connect();" /> 
-					<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" />
+				
+					<input id="message" class="text-field app sidebar-mini rtl  pace-done" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
+					<input type="submit" id="sendMessage" class="btn btn-secondary" value="Send" onclick="sendMessage();" /> 
+					<input type="button" id="connect" class="btn btn-info" value="Connect" onclick="connect();" /> 
+					<input type="button" id="disconnect" class="btn btn-danger" value="Disconnect" onclick="disconnect();" />
 <!-- 					<input type="button" onclick="history.back()" value="回到上一頁"></input> -->
 				</div>
 			</main>
@@ -234,17 +243,17 @@ color: black;
 			if("openEmp"===jsonObj.type){
 				refreshFriendList(jsonObj);
 			}
-			else if("empNotAvailable"===jsonObj.type){
-				messagesArea.innerHTML = '';
-				var ul = document.createElement('ul');
-				ul.id = "area";
-				messagesArea.appendChild(ul);
-				var li = document.createElement('li');
-				li.id = "lis";
-				li.className = 'me'
-				li.innerHTML = "目前客服不在線";
-				ul.appendChild(li);
-			}
+// 			else if("empNotAvailable"===jsonObj.type){
+// 				messagesArea.innerHTML = '';
+// 				var ul = document.createElement('ul');
+// 				ul.id = "area";
+// 				messagesArea.appendChild(ul);
+// 				var li = document.createElement('li');
+// 				li.id = "lis";
+// 				li.className = 'me'
+// 				li.innerHTML = "目前客服不在線";
+// 				ul.appendChild(li);
+// 			}
 			else if ("history" === jsonObj.type) {
 
 				messagesArea.innerHTML = '';
@@ -271,19 +280,6 @@ color: black;
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
-
-				// var li = document.getElementsByClassName("msg-left");
-				// var div = document.getElementsByClassName("msg-left-sub");
-				// var div = document.getElementsByClassName("msg-desc");
-				// var small = document.createElement("small");
-				// jsonObj.sender === self?li.className="msg-left":li.className="msg-right";
-				// jsonObj.sender === self?small.className='time' :li.className='friendtime';
-				// li.innerHTML === jsonObj.message;
-				// small.innerHTML === jsonObj.time;
-				// document.getElementById("area").appendChild("li");
-				// document.getElementById("area").appendChild("small");
-				// messagesArea.scrollTop = messagesArea.scrollHeight;
-
 				var li = document.createElement('li');
 				li.id = "lis";
 				var span = document.createElement('span');
@@ -297,12 +293,18 @@ color: black;
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("close" === jsonObj.type) {
 				refreshFriendList(jsonObj);
+
 			}
 			
 		};
 
 		webSocket.onclose = function(event) {
 			console.log("Disconnected!");
+			var friends = jsonObj.users;
+			console.log(friends);
+			var chatArea = document.getElementByClassNamee("friendName");
+			console.log(chatArea);
+			chatArea.remove();
 		};
 	}
 	

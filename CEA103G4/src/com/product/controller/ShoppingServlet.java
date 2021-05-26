@@ -32,10 +32,13 @@ public class ShoppingServlet extends HttpServlet {
 
 			// 刪除購物車中的單一商品
 			if (action.equals("DELETE")) {
-				String del = req.getParameter("del");
-				int d = Integer.parseInt(del);
-				buylist.remove(d);
-				
+				Integer productNo = new Integer(req.getParameter("delProductNo"));
+				for (int i = 0; i < buylist.size(); i++) { 
+					if (buylist.get(i).getProduct_no().equals(productNo)) { 
+						buylist.remove(i);
+						break;
+					}
+				}
 				session.setAttribute("shoppingcart", buylist);
 				
 				String url = "/front-end/productsell/shoppingCart.jsp";

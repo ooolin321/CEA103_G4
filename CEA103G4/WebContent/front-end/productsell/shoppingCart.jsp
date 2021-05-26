@@ -163,7 +163,7 @@
 					<td class="close-td first-row">
                     <form action="<%=request.getContextPath()%>/ShoppingServlet" method="POST">
 		              <input type="hidden" name="action"  value="DELETE">
-		              <input type="hidden" name="del" value="${cartstatus.index}">
+		              <input type="hidden" name="delProductNo" value="${order.product_no}">
 		              <input type="submit" class="btn btn-info" value="刪 除">
 		          	</form>
 		          	</td>

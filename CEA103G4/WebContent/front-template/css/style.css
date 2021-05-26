@@ -4827,10 +4827,10 @@ ul.modefemmeinfo {
 }
 
 @media only screen and (max-width: 576px) {
-	.pi-pic .pi-img {
-	width:auto;
-	height:auto;	
-}
+/* 	.pi-pic .pi-img { */
+/* 	width:auto; */
+/* 	height:auto;	 */
+/* } */
 
 	.inner-header .advanced-search {
     height: 50px;

@@ -41,10 +41,8 @@ if (buylist3 != null) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <title>Modefemme</title>
+<link rel="icon" href="${pageContext.request.contextPath}/front-template/images/favicon.ico" type="image/x-icon">
 
-<link rel="icon"
-	href="${pageContext.request.contextPath}/front-template/images/favicon.ico"
-	type="image/x-icon">
 <!-- Google Font -->
 <link
 	href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"

@@ -244,18 +244,18 @@
 			var newValue = $('#PC${order.product_no}').parent().find('input').val();
 			var maxRemaining = $("#max${order.product_no}").attr("value");
 
-			if('newValue' > 'maxRemaining'){
+			if(newValue > maxRemaining){
 				$('input[name="${order.product_no}"]').val(maxRemaining);
 				let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
 				$("#TP${order.product_no}").text(totalPrice);
 				sum();
-			}
-			if('newValue' < 'maxRemaining'){
-				$('input[name="${order.product_no}"]').val(newValue);
-				let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
-				$("#TP${order.product_no}").text(totalPrice);
-				sum();
-			}
+			}else if(newValue < maxRemaining){
+					$('input[name="${order.product_no}"]').val(newValue);
+					let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
+					$("#TP${order.product_no}").text(totalPrice);
+					sum();
+				}
+
     	});
     	 </c:forEach> 
     	</script>

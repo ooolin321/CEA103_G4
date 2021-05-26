@@ -230,7 +230,7 @@
 								type="email" aria-describedby="emailHelp" name="user_mail"
 								formcontrolname="email"
 								class="form-control form-control-solid ng-untouched ng-pristine ng-invalid"
-								value="<%= (userVO==null)? "" : userVO.getUser_mail()%>" placeholder="XXXX@gmail.com"><td><font color=red><b>${errorMsgs.user_mail}</b>
+								value="<%= (userVO==null)? "" : userVO.getUser_mail()%>" placeholder="XXXX@gmail.com"><td><font color=red><b>${errorMsgs.user_mail}</b><br><b>${notifyMsgs.notifyMail}</b>
 						</div>
 						<div _ngcontent-sc209="" class="text-right">
 						 	<input type="hidden" name="action" value="getPassword">

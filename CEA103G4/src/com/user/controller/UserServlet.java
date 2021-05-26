@@ -380,7 +380,10 @@ public class UserServlet extends HttpServlet {
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			
+			Map<String, String> notifyMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("notifyMsgs", notifyMsgs);
+			
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String user_id = req.getParameter("user_id");
@@ -396,16 +399,16 @@ public class UserServlet extends HttpServlet {
 					errorMsgs.put("user_mail", "*Email格式不正確");
 				}
 				
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/user/forgetPassword.jsp");
-					failureView.forward(req, res);
-					return;
-				}
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/user/forgetPassword.jsp");
+//					failureView.forward(req, res);
+//					return;
+//				}
 				
 				UserService userSvc = new UserService();
 				UserVO userVO = new UserVO();
 				userVO = userSvc.getOneUser(user_id);
-				if(userVO == null) {
+				if(userVO == null && user_id.trim().length() != 0) {
 					errorMsgs.put("user_id", "*查無此帳號");
 				}
 				String mail = userVO.getUser_mail(); 
@@ -438,11 +441,14 @@ public class UserServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 ***************************************/
 				userVO = userSvc.getPassword_Update(user_id, user_newpwd, user_mail);// dao.service隨機密碼並修改資料庫密碼
+				
+				String link = req.getServerName() + ":" + req.getServerPort() + req.getContextPath();
+				userVO.setLink(link);
 				userVO = userSvc.sendPwdMail(userVO);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
-//				req.setAttribute("userVO", userVO);// 資料庫update成功後,正確的的userVO物件,存入req
-				String url = "/front-end/userLogin.jsp";
+				notifyMsgs.put("notifyMail", "已寄送新密碼至您的信箱，請確認~~~");
+				String url = "/front-end/user/forgetPassword.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交userLogin.jsp
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 **********************************/
@@ -457,6 +463,9 @@ public class UserServlet extends HttpServlet {
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			Map<String, String> notifyMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("notifyMsgs", notifyMsgs);
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
@@ -622,6 +631,7 @@ public class UserServlet extends HttpServlet {
 						user_state, user_comment, comment_total, cash);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				notifyMsgs.put("Register", "恭喜完成註冊！請由此處登入~");
 				req.setAttribute("userVO", userVO);// 資料庫insert成功後,正確的userVO物件,存入req
 				String url = "/front-end/userLogin.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交userLogin.jsp

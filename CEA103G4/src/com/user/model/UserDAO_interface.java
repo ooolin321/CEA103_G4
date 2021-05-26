@@ -23,7 +23,7 @@ public interface UserDAO_interface {
 	
 	public UserVO login(String user_id, String user_pwd);
 	
-	public List<UserVO> sendMail(UserVO userVO);
+	public void sendMail(UserVO userVO);
 	
 	public void getPassword_Update(UserVO userVO);
 	

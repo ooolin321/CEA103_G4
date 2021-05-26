@@ -137,8 +137,8 @@ justify-content: center;
 													<div class="form-group">
 														<label><i class="fas fa-user-alt"></i>性別:</label> <select
 															class="form-control" size="1" name="gender">
-															<option value="1" ${(empVO.gender==0)? 'selected':''}>男</option>
-															<option value="0" ${(empVO.gender==0)? 'selected':''}>女</option>
+															<option value="1" ${(empVO.gender==1)? 'selected':''}>男</option>
+															<option value="2" ${(empVO.gender==2)? 'selected':''}>女</option>
 														</select>
 													</div>
 												</div>
@@ -152,20 +152,14 @@ justify-content: center;
 												</div>
 												<div class="col-md-5">
 													<div class="form-group">
-														<label><i class="fas fa-user-alt"></i>員工密碼:</label> <input
-															class="form-control" type="TEXT" name="emp_pwd" size="45"
-															value="<%=(empVO == null) ? "" : empVO.getEmp_pwd()%>" />
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-5">
-													<div class="form-group">
 														<label><i class="fas fa-user-alt"></i>email:</label> <input
-															class="form-control" type="TEXT" name="email" size="45"
+															class="form-control" type="email" name="email" size="45"
 															value="<%=(empVO == null) ? "" : empVO.getEmail()%>" />
 													</div>
 												</div>
+
+											</div>
+											<div class="row">
 												<div class="col-md-5">
 													<div class="form-group">
 														<label><i class="fas fa-user-alt"></i>薪水:</label> <input
@@ -173,8 +167,6 @@ justify-content: center;
 															value="<%=(empVO == null) ? "" : empVO.getSal()%>" />
 													</div>
 												</div>
-											</div>
-											<div class="row">
 												<div class="col-md-5">
 													<div class="form-group">
 														<label><i class="fas fa-user-alt"></i>狀態:</label> <select
@@ -184,14 +176,8 @@ justify-content: center;
 														</select>
 													</div>
 												</div>
-											  <div class="col-md-5">
-													<div class="form-group">
-														<label><i class="fas fa-user-alt"></i>到職日期:</label> <input
-															class="form-control" name="hiredate" id="f_date1"
-															type="text">
-													</div>
-												</div>
 											</div>
+											
 											<div class="row address">
 													<div class="form-group col-md-10">
 														<label><i class="fas fa-user-alt"></i>地址:</label>
@@ -202,6 +188,21 @@ justify-content: center;
 															size="45" value="<%=empVO.getAddr()%>" />
 														</div>	
 													
+											</div>
+											<div class="row">
+												
+											  <div class="col-md-5">
+													<div class="form-group">
+														<label><i class="fas fa-user-alt"></i>到職日期:</label> <input
+															class="form-control" name="hiredate" id="f_date1"
+															type="text">
+													</div>
+												</div>
+												<div class="col-md-5">
+													<div class="form-group">
+														
+													</div>
+												</div>
 											</div>
 											<div class="row">
 												<div class="col-md-10">

@@ -30,55 +30,54 @@ public class CustomerWS {
 
 	@OnOpen
 	public void onOpen(@PathParam("userNameOrEmpno") String userName, Session userSession)
-			throws IOException, JSONException {	
-		if(userName.startsWith("14")) {
-			sessionsMapForEmp.put(userName,userSession);
-			Set<String> memNames=sessionsMapForMember.keySet();
-			Set<String> emps=sessionsMapForEmp.keySet();
-			if(memNames.size()>0) {
+			throws IOException, JSONException {
+		if (userName.startsWith("14")) {
+			sessionsMapForEmp.put(userName, userSession);
+			Set<String> memNames = sessionsMapForMember.keySet();
+			Set<String> emps = sessionsMapForEmp.keySet();
+			if (memNames.size() > 0) {
 				State stateMessage = new State();
 				stateMessage.setUsers(memNames);
 				stateMessage.setType("openEmp");
 				String stateMessageJson = gson.toJson(stateMessage);
 				userSession.getAsyncRemote().sendText(stateMessageJson);
-			}else{
+			} else {
 				State stateMessage = new State();
 				stateMessage.setUsers(emps);
 				stateMessage.setType("noMems");
 				String stateMessageJson = gson.toJson(stateMessage);
-				userSession.getAsyncRemote().sendText(stateMessageJson);				
-			}		
-		}else {
+				userSession.getAsyncRemote().sendText(stateMessageJson);
+			}
+		} else {
 			Set<String> empNames = sessionsMapForEmp.keySet();
-			sessionsMapForMember.put(userName,userSession);
-			if(empNames.size()>0) {
+			sessionsMapForMember.put(userName, userSession);
+			if (empNames.size() > 0) {
 				State stateMessage = new State();
 				stateMessage.setUsers(empNames);
 				stateMessage.setType("empAvailable");
 				String stateMessageJson = gson.toJson(stateMessage);
 				userSession.getAsyncRemote().sendText(stateMessageJson);
-			}else {
+			} else {
 				State stateMessage = new State();
 				stateMessage.setType("empNotAvailable");
 				String stateMessageJson = gson.toJson(stateMessage);
 				userSession.getAsyncRemote().sendText(stateMessageJson);
 			}
-			
-		}
-	
-	}	
 
-        
+		}
+
+	}
+
 	@OnMessage
 	public void onMessage(Session userSession, String message) {
-		
+
 		ChatMessage chatMessage = gson.fromJson(message, ChatMessage.class);
 		String sender = chatMessage.getSender();
 		String receiver = chatMessage.getReceiver();
-		String time = chatMessage.getTime();
+
 		if ("history".equals(chatMessage.getType())) {
 			List<String> historyData = JedisHandleMessage.getHistoryMsg(sender, receiver);
-			String historyMsg = gson.toJson(historyData);		
+			String historyMsg = gson.toJson(historyData);
 			ChatMessage cmHistory = new ChatMessage("history", sender, receiver, historyMsg);
 			if (userSession != null && userSession.isOpen()) {
 				userSession.getAsyncRemote().sendText(gson.toJson(cmHistory));
@@ -86,15 +85,15 @@ public class CustomerWS {
 				return;
 			}
 		}
-		
-		if(sender.startsWith("14")) {
+
+		if (sender.startsWith("14")) {
 			Session memSession = sessionsMapForMember.get(receiver);
 			if (memSession != null && memSession.isOpen()) {
 				memSession.getAsyncRemote().sendText(message);
 				userSession.getAsyncRemote().sendText(message);
 				JedisHandleMessage.saveChatMessage(sender, receiver, message);
 			}
-		} else {	
+		} else {
 			Session empSession = sessionsMapForEmp.get(receiver);
 			if (empSession != null && empSession.isOpen()) {
 				empSession.getAsyncRemote().sendText(message);
@@ -102,8 +101,6 @@ public class CustomerWS {
 				JedisHandleMessage.saveChatMessage(sender, receiver, message);
 			}
 		}
-		
-		
 
 		Session receiverSession = sessionsMap.get(receiver);
 		if (receiverSession != null && receiverSession.isOpen()) {
@@ -122,23 +119,25 @@ public class CustomerWS {
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {
 		String userNameClose = null;
-		Set<String> userNames = sessionsMap.keySet();
-		for (String userName : userNames) {
-			if (sessionsMap.get(userName).equals(userSession)) {
-				userNameClose = userName;
-				sessionsMap.remove(userName);
-				break;
+		if (sessionsMapForMember.values().contains(userSession)) { // 使用者離線
+			Set<String> userNames = sessionsMapForMember.keySet();
+			for (String userName : userNames) {
+				if (sessionsMapForMember.get(userName).equals(userSession)) {
+					userNameClose = userName;
+					sessionsMapForMember.remove(userName);
+					break;
+				}
 			}
-		}
 
-		if (userNameClose != null) {
-			State stateMessage = new State("close", userNameClose, userNames);
-			String stateMessageJson = gson.toJson(stateMessage);
-			Collection<Session> sessions = sessionsMap.values();
-			for (Session session : sessions) {
-				session.getAsyncRemote().sendText(stateMessageJson);
+			if (userNameClose != null) {
+				State stateMessage = new State("close", userNameClose, userNames);
+				String stateMessageJson = gson.toJson(stateMessage);
+				Collection<Session> empSessions = sessionsMapForEmp.values();
+				for (Session session : empSessions) {
+					session.getAsyncRemote().sendText(stateMessageJson);
+				}
 			}
-		}else { //會員離線
+		} else { // 會員離線
 			Set<String> empNames = sessionsMapForEmp.keySet();
 			for (String empno : empNames) {
 				if (sessionsMapForEmp.get(empno).equals(userSession)) {
@@ -148,7 +147,7 @@ public class CustomerWS {
 			}
 		}
 		String text = String.format("session ID = %s, disconnected; close code = %d%nusers: %s", userSession.getId(),
-				reason.getCloseCode().getCode(), userNames);
+				reason.getCloseCode().getCode(), userNameClose);
 		System.out.println(text);
 	}
 }

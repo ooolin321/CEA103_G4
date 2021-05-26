@@ -285,6 +285,10 @@ ol {
   Header
 -----------------------*/
 
+#goTop{
+	cursor:pointer;
+}
+
 #chatBtn {
 	position: fixed;
 	right: 8px;
@@ -1425,12 +1429,6 @@ ol {
   border-top-right-radius: 6px;
 }
 
-/* .product-item .pi-pic ul li.w-icon.active a { */
-/*   background: #e7ab3c; */
-/*   color: #ffffff; */
-/*   border-top-left-radius: 6px; */
-/*   border-top-right-radius: 6px; */
-/* } */
 
 .product-item .pi-pic ul li.w-icon i {
   font-size: 16px;
@@ -2465,15 +2463,7 @@ ul.modefemmeinfo {
   color: #e7ab3c;
   font-weight: 700;
 }
-/* ����蝚西�� */
-/* .product-details .pd-desc h4 span { */
-/*   font-size: 18px; */
-/*   font-weight: 400; */
-/*   color: #b7b7b7; */
-/*   text-decoration: line-through; */
-/*   display: inline-block; */
-/*   margin-left: 13px; */
-/* } */
+
 
 .product-details .pd-color {
   margin-bottom: 25px;
@@ -4966,6 +4956,18 @@ ul.modefemmeinfo {
     text-align: center;
     padding-top: 30px;
 }
+
+.product-item .pi-pic ul {
+    position: absolute;
+    right: 15px;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: right;
+    width: 100%;
+    left: initial;
+}
+
   
   .tab-item ul li a {
     padding: 18px 18px;

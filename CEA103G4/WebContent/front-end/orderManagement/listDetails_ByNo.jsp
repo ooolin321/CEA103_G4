@@ -31,8 +31,8 @@
 					</tr>
 				</thead>
 					<c:forEach var="order_detailVO" items="${listDetails_ByNo}">
+				<c:if test="${orderSvc.getOneOrder(order_detailVO.order_no).srating == 0}">
 						<tr>
-<%-- 							<td>${order_detailVO.order_no}</td> --%>
 							<td>${order_detailVO.product_no}</td>
 							<td><img width="120px" height="100px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order_detailVO.product_no}"
 							class="rounded d-block" alt="" style="margin:0px; "></td>
@@ -41,6 +41,20 @@
 							<td>${order_detailVO.order_price}</td>
 							<td>${order_detailVO.product_num}</td>
 						</tr>
+				</c:if>
+					</c:forEach>
+					<c:forEach var="order_detailVO" items="${listDetails_ByNo}">
+				<c:if test="${orderSvc.getOneOrder(order_detailVO.order_no).srating != 0}">
+						<tr>
+							<td>${order_detailVO.product_no}</td>
+							<td><img width="120px" height="100px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order_detailVO.product_no}"
+							class="rounded d-block" alt="" style="margin:0px; "></td>
+							
+							<td>${productSvc.getOneProduct(order_detailVO.product_no).product_name}</td>
+							<td>${order_detailVO.order_price}</td>
+							<td>${order_detailVO.product_num}</td>
+						</tr>
+				</c:if>
 					</c:forEach>
 				</table>
 			</div>

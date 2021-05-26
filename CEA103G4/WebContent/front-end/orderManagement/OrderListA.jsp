@@ -138,8 +138,8 @@ ion-icon {
 											<a href="#" onclick="document.getElementById('${orderVO.order_no}').submit();">${orderVO.order_no}</a>
 											</FORM>
 											
-											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do" >
 												</td>
+											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do" >
 													<td><fmt:formatDate value="${orderVO.order_date}" pattern="yyyy-MM-dd" /></td>
 													<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>
 													<td>${orderVO.order_price}</td>
@@ -203,11 +203,11 @@ ion-icon {
 											<tr>
 												<th>#</th>
 												<th>訂單時間</th>
-												<th>訂單狀態</th>
 												<th>訂單金額</th>
-												<th>付款方式</th>
-												<th>物流方式</th>
-												<th>物流狀態</th>
+												<th>賣家帳號</th>
+												<th>賣家評價分數</th>
+												<th>賣家評價內容</th>
+												
 												<th></th>
 											</tr>
 										</thead>
@@ -216,26 +216,34 @@ ion-icon {
 												items="${orderSvc.getAllByID(userVO.user_id)}">
 												<c:if test="${orderVO.logisticsstate==2 && orderVO.srating != 0}">
 												<tr>
-													<td>${orderVO.order_no}</td>
-													<td><fmt:formatDate value="${orderVO.order_date}"
-															pattern="yyyy-MM-dd" /></td>
-													<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>
+													<td>
+													<FORM id="${orderVO.order_no}" METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do" style="margin-bottom: 0px;">
+													<input type="hidden" name="order_no" value="${orderVO.order_no}"> 
+													<input type="hidden" name="action" value="listDetails_ByNo">
+													<a href="#" onclick="document.getElementById('${orderVO.order_no}').submit();">${orderVO.order_no}</a>
+													</FORM>
+													</td>
+													<td><fmt:formatDate value="${orderVO.order_date}" pattern="yyyy-MM-dd" /></td>
 													<td>${orderVO.order_price}</td>
-													<td>${(orderVO.pay_method==0)? '錢包':''}
-														${(orderVO.pay_method==1)? '信用卡':''}
-														${(orderVO.pay_method==2)? '轉帳':''}</td>
-													<td>${(orderVO.logistics==0)? '超商':'宅配'}</td>
-													<td>${(orderVO.logisticsstate==0)? '未出貨':''}
-														${(orderVO.logisticsstate==1)? '已出貨':''}
-														${(orderVO.logisticsstate==2)? '已取貨':''}</td>
-													<td></td>
+													<td><a href="<%=request.getContextPath()%>/SellerProducts?user_id=${orderVO.seller_id}" target="_blank">${orderVO.seller_id}</a></td>
+													<td>
+													  <input type="hidden" name="srating" value="${orderVO.srating}" id="con2"/>
+						                        	  <ion-icon name="star" class="star" id="st1" style="font-size: 15px;"></ion-icon>
+													  <ion-icon name="star" class="star" id="st2" style="font-size: 15px;"></ion-icon>
+													  <ion-icon name="star" class="star" id="st3" style="font-size: 15px;"></ion-icon>
+													  <ion-icon name="star" class="star" id="st4" style="font-size: 15px;"></ion-icon>
+													  <ion-icon name="star" class="star" id="st5" style="font-size: 15px;"></ion-icon>
+													</td>
+													<td>${orderVO.srating_content}</td>
 												</tr>
-<%-- 												<tr><jsp:include page="listDetails_ByNo.jsp" /></tr> --%>
 												</c:if>
 											</c:forEach>
 										</tbody>
 									</table>
 								</div>
+								<% if (request.getAttribute("listDetails_ByNo") != null) { %>
+								<jsp:include page="listDetails_ByNo.jsp" />
+								<% 	}  %>
 								<!-- 				form -->
 							</div>
 						</div>
@@ -251,8 +259,6 @@ ion-icon {
 								<div class="modal-content" id="sratingbox">
 									<div class="modal-header">
 										<h3 class="modal-title" id="exampleModalLongTitle">請為此次購物體驗評價</h3>
-<!-- 										<button type="button" class="close" data-dismiss="modal" -->
-<!-- 											aria-label="Close"> -->
 											
 										</button>
 									</div>
@@ -312,6 +318,26 @@ ion-icon {
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
 	<script>
+		switch($("#con2").val()){
+        		case "1":
+        			$("#st1").css("color","#f6d04d");
+        			break;
+        		case "2":
+        			$("#st1,#st2").css("color","#f6d04d");
+        			break;
+        		case "3":
+        			$("#st1,#st2,#st3").css("color","#f6d04d");
+        			break;
+        		case "4":
+        			$("#st1,#st2,#st3,#st4").css("color","#f6d04d");
+        			break;
+        		case "5":
+        			$("#st1,#st2,#st3,#st4,#st5").css("color","#f6d04d");
+        			break;
+        		default:
+        			$("#st1,#st2,#st3,#st4,#st5").css("color","black");
+        		}
+	
 	$(document).ready(function(){
 		$("button").click(function(){ //呼叫燈箱
 			let val =$(this).next('input').val();

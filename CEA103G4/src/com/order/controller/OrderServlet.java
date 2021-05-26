@@ -696,11 +696,10 @@ public class OrderServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer order_no = new Integer(req.getParameter("order_no"));
-				
 				/*************************** 2.開始查詢資料 ****************************************/
 				OrderService orderSvc = new OrderService();
 				Set<Order_detailVO> set = orderSvc.getDetailsByNo(order_no);
-				
+				System.out.println(orderSvc.getOneOrder(order_no).getSrating());
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("listDetails_ByNo", set);    // 資料庫取出的list物件,存入request
 				String url = null;

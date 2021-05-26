@@ -189,7 +189,7 @@
 		</div>
 	</div>
 	<div id="goTop" style="position: fixed; right: 0px; bottom: 45px; z-index: 99999;">
-		<a href="#topLogo"><img style="height:75px;" src="<%=request.getContextPath()%>/front-template/images/top.gif" title="回上方"></a>
+		<img style="height:75px;" src="<%=request.getContextPath()%>/front-template/images/top.gif" title="回上方">
 	</div>
 	
 <c:if test="${not empty userVO.user_id}">	
@@ -242,6 +242,15 @@
 <!-- heade搜尋 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
 <script>
+
+
+const goTop = document.querySelector("#goTop");
+goTop.addEventListener("click", function() {
+	$("html,body").animate({scrollTop:0},1000);
+});
+
+
+
 	const closelist = document.querySelector(".friendlist");
 	const openlist = document.querySelector(".friendlist");
 	const chatBtn = document.querySelector(".chat-btn");
@@ -253,9 +262,9 @@
 		miniChat.style.visibility="hidden";
 	}
 	function listFriend(){
-		openlist.style.visibility="visible";
 		disconnect();
 		connect();
+		openlist.style.visibility="visible";
 		
 	}
 
@@ -267,7 +276,7 @@
 	closeChatBtn.addEventListener("click", function() {
 		 closefriendlist();
 	     miniChat.style.visibility = "hidden";
-	})
+	});
 	//WebSocket開始
 	var MyPoint = "/FriendChatWS/${userVO.user_id}";
 	var host = window.location.host;
@@ -356,21 +365,29 @@
         // 有好友上線或離線就更新列表
          function refreshFriendList(jsonObj) {
             var friends = jsonObj.users;
-			console.log(jsonObj.user);
-			console.log(self)
+			console.log("this is user "+jsonObj.user);
+			
 			if(self == jsonObj.user){
 				var friendArea = document.getElementById("friendArea");
 	            friendArea.innerHTML = '';
 				if(friends != ""){
 		            for (var i = 0; i < friends.length; i++) {
 		                if (friends[i] === self) { continue; }
-		                friendArea.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + '><img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id='+friends[i]+'" /><h2>' + friends[i] + '</h2></div>';
-		            }
+		                friendArea.innerHTML +='<div id=' + friends[i] + ' class="column" name="friendName" value=' + friends[i] + '><img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id='+friends[i]+'" /><h2>' + friends[i] + '</h2></div>';
+						}
 				}else{
 					friendArea.innerHTML +='<h3>請選擇聊天對象<h3>'
 				}
+			}else if(jsonObj.type == 'open'){
+				var onlineUser = jsonObj.user
+				console.log("onlineUser: "+onlineUser);
+				document.getElementById(onlineUser).style.border= "2px solid lightgreen";
+			}else if(jsonObj.type == 'close'){
+				var offlineUser = jsonObj.user
+				console.log("offlineUser: "+offlineUser);
+				document.getElementById(offlineUser).style.border= "2px solid pink";
 			}
-            addListener(); //註解掉好像沒差
+//             addListener(); //註解掉好像沒差
         } 
         // 註冊列表點擊事件並抓取好友名字以取得歷史訊息
        function addListener(friend) {
@@ -397,7 +414,26 @@
 		                "receiver" : friend,
 		                "message" : ""
 		            };
-		            webSocket.send(JSON.stringify(jsonObj));
+					webSocket.send(JSON.stringify(jsonObj));
+					
+					var jsonObj = {
+				                    "type" : "chat",
+				                    "sender" : self,
+				                    "receiver" : friend,
+				                    "message" : '<img class="product-big-img" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" alt="${productVO.product_name}" />'
+				                };
+					webSocket.send(JSON.stringify(jsonObj));
+		
+					var jsonObj = {
+				                    "type" : "chat",
+				                    "sender" : self,
+				                    "receiver" : friend,
+				                    "message" : "${productVO.product_name}"
+				                };
+					 webSocket.send(JSON.stringify(jsonObj));
+					
+					
+					
         }
         function disconnect() {
             webSocket.close();
@@ -436,7 +472,9 @@
 		  			});
 		  },
 			
-		 }) 
+		  }) 
 	}
+	
+
 	
 </script>

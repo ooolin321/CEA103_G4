@@ -506,11 +506,11 @@ public class UserDAO implements UserDAO_interface {
 
 	@Override
 	// 設定傳送郵件:至收信人的Email信箱,Email主旨,Email內容
-	public List<UserVO> sendMail(UserVO userVO) {
+	public void sendMail(UserVO userVO) {
 		List<UserVO> list = new ArrayList<UserVO>();
 		String emailto = userVO.getUser_mail();
-
-		String subject = "新密碼通知";
+		String link = userVO.getLink();
+		String subject = "Mode Femme新密碼通知";
 
 		String GET_ONE_USER = "SELECT `USER_NAME` FROM USER WHERE `USER_ID` = ?";
 
@@ -532,9 +532,10 @@ public class UserDAO implements UserDAO_interface {
 				userVO.setUser_name(rs.getString("user_name"));
 			}
 
-			String ch_id = userVO.getUser_name();
+			String ch_name = userVO.getUser_name();
 			String passRandom = userVO.getUser_pwd();
-			String messageText = "Hello! " + ch_id + "\n" + "請改用此密碼登入: " + passRandom + "\n" + "並於登入後自行修改密碼！";
+			String messageText = "<h1>Hello! " + ch_name + "<br>" + "請改用此密碼登入: " + passRandom + "<br>" + "並於登入後重新修改密碼！"
+					+ " ( <a href=\"http://" + link + "/front-end/userLogin.jsp \"> 由此處登入 </a>) <h1>";
 
 			// 設定使用SSL連線至 Gmail smtp Server
 			Properties props = new Properties();
@@ -564,7 +565,8 @@ public class UserDAO implements UserDAO_interface {
 			// 設定信中的主旨
 			message.setSubject(subject);
 			// 設定信中的內容
-			message.setText(messageText);
+//			message.setText(messageText);
+			message.setContent(messageText, "text/html ;charset=UTF-8");
 
 			Transport.send(message);
 
@@ -603,8 +605,6 @@ public class UserDAO implements UserDAO_interface {
 				}
 			}
 		}
-
-		return list;
 	}
 
 	@Override

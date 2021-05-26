@@ -233,7 +233,8 @@ color: #007bff;
         <div class="row">
           <div class="col-lg-6 offset-lg-3">
             <div class="login-form">
-              <h2>會員登入</h2>
+              <h2 style="margin-top: 10px;margin-bottom: 10px;">會員登入</h2>
+              <div style="text-align: center;color:#e7ab3c;font-weight: 600;">${notifyMsgs.Register}${notifyMsgs.changePwd}</div>
               <form METHOD="post" class="login-form" action="<%=request.getContextPath()%>/FrondEnd_LoginHandler">
                 <div class="group-input">
                   <label for="user_id">UserID</label>
@@ -241,9 +242,9 @@ color: #007bff;
                 </div>
                 <div class="group-input">
                   <label for="user_pwd">Password</label>
-                  <input type="password" name="user_pwd" value="${(userVO==null)? '' : userVO.user_pwd}" placeholder="密碼"/><td><font color=red><b>${errorMsgs.user_pwd}</b></font></td>
+                  <input type="password" name="user_pwd" value="" placeholder="密碼"/><td><font color=red><b>${errorMsgs.user_pwd}</b></font></td>
                 </div>
-                	驗證碼：<input type="text" name="verifyCode" size="5" /> <img src="${pageContext.request.contextPath}/VerifyCodeServlet" onclick="this.src=this.src+'?'+Math.random()" id="img"/><a onclick="document.getElementById('img').onclick()" style="color:#007bff;"> 換一張?</a><font color=red><b>${errorMsgs.verifyCode}</b></font>
+                	驗證碼：<input type="text" name="verifyCode" size="5" /> <img src="${pageContext.request.contextPath}/VerifyCodeServlet" onclick="this.src=this.src+'?'+Math.random()" id="img"/><a onclick="document.getElementById('img').onclick()" style="color:#007bff;"> 換一張?</a><font color=red><b> ${errorMsgs.verifyCode}</b></font>
                 <div class="group-input gi-check">
                   <div class="gi-more">
 <!--                     <label for="memory"> -->

@@ -41,6 +41,7 @@
 	}
 	.register-form h2 {
     margin-bottom: 10px;
+    margin-top: 10px;
 	}
 	td {
     padding-right: 5px;

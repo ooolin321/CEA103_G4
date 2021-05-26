@@ -198,13 +198,17 @@
               <div class="col-lg-4 offset-lg-8">
                 <div class="proceed-checkout">
                   <ul>
-                    <li class="cart-total">合計 <span id="Sum">$${sum}</span></li>
+                    <li class="cart-total">合計 <span id="Sum">${sum}</span></li>
                   </ul>
                   <a href="<%=request.getContextPath()%>/front-end/protected/check-out.jsp" class="proceed-btn" id="checkOut">結帳</a>
                 </div>
               </div>
-<%}%>
             </div>
+<%}%>
+         <%if (buylist == null) {%>   
+                	<div style="text-align: center;color:#e7ab3c;font-weight: 700;font-size: x-large;margin-top: 10px;margin-bottom: 10px;">您的購物車空空如也...</div>
+                	<div style="text-align: center;"><a href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp" class="btn btn-info">去購物吧！</a></div>
+          <%}%>
           </div>
         </div>
       </div>
@@ -235,11 +239,32 @@
     const shopping_cart = document.getElementById('shopping_cart')
     // 各商品小計
      <c:forEach var="order" items="${buylist}" varStatus="cartstatus">
+     	// 點擊+-
     	$("#PC${order.product_no}").click(function(e){
 			let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
 			$("#TP${order.product_no}").text(totalPrice);
 			sum();
-	});
+		});
+    	
+    	// 直接修改數量
+    	$("#PC${order.product_no}").change(function(e){
+			
+			var newValue = $('#PC${order.product_no}').parent().find('input').val();
+			var maxRemaining = $("#max${order.product_no}").attr("value");
+			
+			if(newValue >= maxRemaining){
+				$('input[name="${order.product_no}"]').val(maxRemaining);
+				let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
+				$("#TP${order.product_no}").text(totalPrice);
+				sum();
+			}
+			if(newValue < maxRemaining){
+				$('input[name="${order.product_no}"]').val(newValue);
+				let totalPrice = ($(".PP${order.product_no}").attr("value"))*($("#PN${order.product_no}").val());
+				$("#TP${order.product_no}").text(totalPrice);
+				sum();
+			}
+    	});
     	
     	
     	shopping_cart.addEventListener('click', event => {
@@ -281,9 +306,9 @@
     	});
     	
     	
-    </c:forEach>
+//     </c:forEach>
 	
-    <c:forEach var="order" items="${buylist}" varStatus="cartstatus">
+//     <c:forEach var="order" items="${buylist}" varStatus="cartstatus">
     
     var proQty = $('#PC${order.product_no}');
 	proQty.on('click', '.qtybtn', function () {
@@ -293,10 +318,10 @@
 			var newVal = parseFloat(oldValue) + 1;
 		} else {
 			// Don't allow decrementing below zero
-			if (oldValue > 0) {
+			if (oldValue > 1) {
 				var newVal = parseFloat(oldValue) - 1;
 			} else {
-				newVal = 0;
+				newVal = 1;
 			}
 		}
 		$button.parent().find('input').val(newVal);
@@ -319,12 +344,16 @@
 	
 
 	
-	$("#PC${order.product_no}").change(function() {	
-		
-		var maxRemaining = $("#max${order.product_no}").attr("value");
-		$('input[name="${order.product_no}"]').val(maxRemaining);
-		
-	});
+// 	$("#PC${order.product_no}").change(function() {	
+// 		var newValue = $('#PC${order.product_no}').parent().find('input').val();
+// 		var maxRemaining = $("#max${order.product_no}").attr("value");
+// 		if(newValue > maxRemaining){
+// 			$('input[name="${order.product_no}"]').val(maxRemaining);
+// 		}
+// 		if(newValue < maxRemaining){
+// 			$('input[name="${order.product_no}"]').val(newValue);
+// 		}
+// 	});
 
 	 </c:forEach>
 	 

@@ -22,7 +22,7 @@
 				<table class="table table-hover">
 				<thead>
 					<tr>
-<!-- 						<th>訂單編號</th> -->
+						<th>訂單編號</th>
 						<th>商品編號</th>
 						<th>商品圖片</th>
 						<th>商品名稱</th>
@@ -33,6 +33,7 @@
 					<c:forEach var="order_detailVO" items="${listDetails_ByNo}">
 				<c:if test="${orderSvc.getOneOrder(order_detailVO.order_no).srating == 0}">
 						<tr>
+							<td>${order_detailVO.order_no}</td>
 							<td>${order_detailVO.product_no}</td>
 							<td><img width="120px" height="100px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order_detailVO.product_no}"
 							class="rounded d-block" alt="" style="margin:0px; "></td>
@@ -46,6 +47,7 @@
 					<c:forEach var="order_detailVO" items="${listDetails_ByNo}">
 				<c:if test="${orderSvc.getOneOrder(order_detailVO.order_no).srating != 0}">
 						<tr>
+							<td>${order_detailVO.order_no}</td>
 							<td>${order_detailVO.product_no}</td>
 							<td><img width="120px" height="100px" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${order_detailVO.product_no}"
 							class="rounded d-block" alt="" style="margin:0px; "></td>

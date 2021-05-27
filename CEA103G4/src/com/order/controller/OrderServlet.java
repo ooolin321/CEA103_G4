@@ -638,7 +638,7 @@ public class OrderServlet extends HttpServlet {
 			}
 		}
 
-		if ("delete".equals(action)) { // 來自listAllOrder.jsp
+		if ("cancel".equals(action)) { // 來自listAllOrder.jsp
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -655,19 +655,18 @@ public class OrderServlet extends HttpServlet {
 				/*************************** 2.開始刪除資料 ***************************************/
 				OrderService orderSvc = new OrderService();
 				orderSvc.cancelOrder(order_no); //取消訂單
-				
+				System.out.println("取消訂單： "+ order_no);
 				UserService userSvc = new UserService();
 				cash +=order_price;
 				userSvc.updateCash(cash,user_id); //返還金額
 				System.out.println("返還金額： "+ order_price);
 				
-				Order_detailService order_detailSvc = new Order_detailService();
-				List<Order_detailVO> list = order_detailSvc.getOneOrder_detail(order_no);
+				Set<Order_detailVO> set = orderSvc.getDetailsByNo(order_no);
+			
 				ProductService productSvc = new ProductService();
-				System.out.println("list-size:"+list.size());
+				System.out.println("list-size:"+set.size());
 				
-				for(Order_detailVO odv : list) {
-					System.out.println("checks");
+				for(Order_detailVO odv : set) {
 					Integer product_remaining = productSvc.getOneProduct(odv.getProduct_no()).getProduct_remaining();
 					Integer product_sold = productSvc.getOneProduct(odv.getProduct_no()).getProduct_sold();
 					System.out.println("check1");
@@ -701,6 +700,7 @@ public class OrderServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer order_no = new Integer(req.getParameter("order_no"));
+				
 				/*************************** 2.開始查詢資料 ****************************************/
 				OrderService orderSvc = new OrderService();
 				Set<Order_detailVO> set = orderSvc.getDetailsByNo(order_no);

@@ -33,21 +33,25 @@ public class FriendChatWS {
 		sessionsMap.put(user_id, userSession);
 		/* Sends all the connected users to the new user */
 		
-//		Set<String> user_ids = sessionsMap.keySet();
-		Set<String> user_ids = JedisHandleMessage.getFriendList(user_id); //好友名單
-		State stateMessage = new State("open", user_id, user_ids);
+		Set<String> onlineUser_ids = sessionsMap.keySet();//線上的使用者
+		Set<String> user_ids = JedisHandleMessage.getFriendList(user_id); //偽好友名單
+		
+		State stateMessage = new State("open", user_id, user_ids, onlineUser_ids);
+		
 		String stateMessageJson = gson.toJson(stateMessage);
+		
 		Collection<Session> sessions = sessionsMap.values();
 		for (Session session : sessions) {
-			if (session.isOpen()) {
-				session.getAsyncRemote().sendText(stateMessageJson);
-				System.out.println("Sessions "+stateMessageJson);
-			}
+				if (session.isOpen()) {
+					session.getAsyncRemote().sendText(stateMessageJson);
+					System.out.println(stateMessageJson);
+				}
 		}
 		
 		String text = String.format("Session ID = %s, connected; user_id = %s%nusers: %s", userSession.getId(),
 				user_id, user_ids);
 		System.out.println(text);
+		
 	}
 
 	@OnMessage
@@ -86,6 +90,7 @@ public class FriendChatWS {
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {
 		String user_idClose = null;
+		Set<String> offline_users = null;
 		Set<String> user_ids = sessionsMap.keySet();
 		for (String user_id : user_ids) {
 			if (sessionsMap.get(user_id).equals(userSession)) {
@@ -96,7 +101,7 @@ public class FriendChatWS {
 		}
 
 		if (user_idClose != null) {
-			State stateMessage = new State("close", user_idClose, user_ids);
+			State stateMessage = new State("close", user_idClose, user_ids, offline_users);
 			String stateMessageJson = gson.toJson(stateMessage);
 			Collection<Session> sessions = sessionsMap.values();
 			for (Session session : sessions) {

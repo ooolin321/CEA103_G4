@@ -270,7 +270,7 @@ goTop.addEventListener("click", function() {
 
 	chatBtn.addEventListener("click", function() {
 		 miniChat.style.visibility = "visible";
-		 listFriend();
+		 openlist.style.visibility="visible";
 		 addListener();
 	});
 	closeChatBtn.addEventListener("click", function() {
@@ -299,7 +299,7 @@ goTop.addEventListener("click", function() {
 			// OnMessaage
             webSocket.onmessage = function(event) {
                 var jsonObj = JSON.parse(event.data);
-
+		
                 if ("open" === jsonObj.type) {
                     refreshFriendList(jsonObj);
                 } else if ("history" === jsonObj.type) {
@@ -366,7 +366,7 @@ goTop.addEventListener("click", function() {
          function refreshFriendList(jsonObj) {
             var friends = jsonObj.users;
 			console.log("this is user "+jsonObj.user);
-			
+			console.log("this is type "+jsonObj.type);
 			if(self == jsonObj.user){
 				var friendArea = document.getElementById("friendArea");
 	            friendArea.innerHTML = '';
@@ -375,19 +375,24 @@ goTop.addEventListener("click", function() {
 		                if (friends[i] === self) { continue; }
 		                friendArea.innerHTML +='<div id=' + friends[i] + ' class="column" name="friendName" value=' + friends[i] + '><img class="rounded-circle" width="45px" height="40px" src="${pageContext.request.contextPath}/UserShowPhoto?user_id='+friends[i]+'" /><h2>' + friends[i] + '</h2></div>';
 						}
+					var onlineUsers = jsonObj.online_users;
+					for (var i = 0; i < onlineUsers.length; i++) { //更新自己好友上線狀況
+						if (onlineUsers[i] === self) { continue; }
+						 document.getElementById(onlineUsers[i]).style.border= "2px solid lightgreen";
+					}
 				}else{
 					friendArea.innerHTML +='<h3>請選擇聊天對象<h3>'
 				}
-			}else if(jsonObj.type == 'open'){
+			}else if(jsonObj.type == 'open'){ //更新對方好友上線狀況
 				var onlineUser = jsonObj.user
 				console.log("onlineUser: "+onlineUser);
 				document.getElementById(onlineUser).style.border= "2px solid lightgreen";
 			}else if(jsonObj.type == 'close'){
 				var offlineUser = jsonObj.user
 				console.log("offlineUser: "+offlineUser);
-				document.getElementById(offlineUser).style.border= "2px solid pink";
+				document.getElementById(offlineUser).style.border= "2px solid ghostwhite";
 			}
-//             addListener(); //註解掉好像沒差
+            addListener(); //
         } 
         // 註冊列表點擊事件並抓取好友名字以取得歷史訊息
        function addListener(friend) {
@@ -420,7 +425,7 @@ goTop.addEventListener("click", function() {
 				                    "type" : "chat",
 				                    "sender" : self,
 				                    "receiver" : friend,
-				                    "message" : '<img class="product-big-img" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" alt="${productVO.product_name}" />'
+				                    "message" : '<img class="product-img" src="${pageContext.request.contextPath}/ProductShowPhoto?product_no=${productVO.product_no}" alt="${productVO.product_name}" style="max-width: 150px;"/>'
 				                };
 					webSocket.send(JSON.stringify(jsonObj));
 		

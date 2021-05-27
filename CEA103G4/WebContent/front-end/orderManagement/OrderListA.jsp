@@ -132,14 +132,8 @@ ion-icon {
 												<c:if test="${orderVO.srating == 0 }">
 												<tr>
 												<td> 
-											<FORM id="${orderVO.order_no}" METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do" style="margin-bottom: 0px;">
-											<input type="hidden" name="order_no" value="${orderVO.order_no}"> 
-											<input type="hidden" name="action" value="listDetails_ByNo">
-											<a href="#" onclick="document.getElementById('${orderVO.order_no}').submit();">${orderVO.order_no}</a>
-											</FORM>
-											
+													<a href="${pageContext.request.contextPath}/front-end/order/order.do?action=listDetails_ByNo&order_no=${orderVO.order_no}">${orderVO.order_no}</a>
 												</td>
-											<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do" >
 													<td><fmt:formatDate value="${orderVO.order_date}" pattern="yyyy-MM-dd" /></td>
 													<td>${(orderVO.order_state==0)? '未付款':'已付款'}</td>
 													<td>${orderVO.order_price}</td>
@@ -147,32 +141,35 @@ ion-icon {
 														${(orderVO.logisticsstate==1)? '已出貨':''}
 														${(orderVO.logisticsstate==2)? '已取貨':''}
 													</td>
-													<td>
-														<input type="hidden" value="${orderVO.order_no}" name="order_no">
-														<input type="hidden" value="${orderVO.order_price}" name="order_price">
-														<input type="hidden" value="${userVO.cash}" name="cash">
-														<input type="hidden" value="${userVO.user_id}" name="user_id">
-													</td>
 													<td style="text-align: center;">
 														<!-- Button trigger modal --> 
   														<c:if test="${orderVO.logisticsstate==1}">
+  														
+<%--   														<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do"> --%>
+<!-- 														<input type="hidden" name="action" value="cancel"> -->
+<%-- 														<input type="hidden" name="order_no" value="${orderVO.order_no}"> --%>
+<%-- 														<input type="hidden" name="order_price" value="${orderVO.order_price}" > --%>
+<%-- 														<input type="hidden" name="cash" value="${userVO.cash}"> --%>
+<%-- 														<input type="hidden" name="user_id" value="${userVO.user_id}"> --%>
+<!-- 														<button class="btn btn-danger" id="cancel_btn">取消</button> -->
+<!-- 														</FORM> -->
+  														
 														<input type="hidden" value="${orderVO.seller_id}">
 														<button class="btn btn-info" id="srating_btn" data-toggle="modal" data-target="#${orderVO.order_no}">評價</button>
 														<input type="hidden" value="${orderVO.order_no}">
-														
-<!-- 														<input type="hidden" name="action" value="delete"> -->
-<!-- 														<button class="btn btn-danger">取消</button> -->
-														
 														</c:if>
-														
-														<c:if test="${orderVO.logisticsstate!=1}">
+														<c:if test="${orderVO.logisticsstate==0}">
 														<button class="btn btn-info" id="srating_btn" disabled>評價</button>
-														
-<!-- 														<input type="hidden" name="action" value="delete"> -->
-<!-- 														<button class="btn btn-danger">取消</button> -->
+<%-- 														<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do"> --%>
+<!-- 														<input type="hidden" name="action" value="cancel"> -->
+<%-- 														<input type="hidden" name="order_no" value="${orderVO.order_no}"> --%>
+<%-- 														<input type="hidden" name="order_price" value="${orderVO.order_price}" > --%>
+<%-- 														<input type="hidden" name="cash" value="${userVO.cash}"> --%>
+<%-- 														<input type="hidden" name="user_id" value="${userVO.user_id}"> --%>
+<!-- 														<button class="btn btn-danger" id="cancel_btn">取消</button> -->
+<!-- 														</FORM> -->
 														</c:if>
 													</td>
-												</FORM>
 												</tr>
 												<tr>
 												</tr>
@@ -184,9 +181,6 @@ ion-icon {
 								<% if (request.getAttribute("listDetails_ByNo") != null) { %>
 								<jsp:include page="listDetails_ByNo.jsp" />
 								<% 	}  %>
-								
-		
-								
 								<!-- 				form -->
 							</div>
 						</div>
@@ -217,11 +211,9 @@ ion-icon {
 												<c:if test="${orderVO.logisticsstate==2 && orderVO.srating != 0}">
 												<tr>
 													<td>
-													<FORM id="${orderVO.order_no}" METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do" style="margin-bottom: 0px;">
-													<input type="hidden" name="order_no" value="${orderVO.order_no}"> 
-													<input type="hidden" name="action" value="listDetails_ByNo">
-													<a href="#" onclick="document.getElementById('${orderVO.order_no}').submit();">${orderVO.order_no}</a>
-													</FORM>
+<%-- 														<a onclick="listOrder_detail();">${orderVO.order_no}</a> --%>
+<%-- 														<input type="hidden" name="order_no" value="${orderVO.order_no}"/> --%>
+													<a href="${pageContext.request.contextPath}/front-end/order/order.do?action=listDetails_ByNo&order_no=${orderVO.order_no}">${orderVO.order_no}</a>
 													</td>
 													<td><fmt:formatDate value="${orderVO.order_date}" pattern="yyyy-MM-dd" /></td>
 													<td>${orderVO.order_price}</td>
@@ -244,6 +236,7 @@ ion-icon {
 								<% if (request.getAttribute("listDetails_ByNo") != null) { %>
 								<jsp:include page="listDetails_ByNo.jsp" />
 								<% 	}  %>
+<%-- 									<div id="show" style="display: none;"><jsp:include page="listDetails_ByNo.jsp"/>xxx</div> --%>
 								<!-- 				form -->
 							</div>
 						</div>
@@ -260,7 +253,6 @@ ion-icon {
 									<div class="modal-header">
 										<h3 class="modal-title" id="exampleModalLongTitle">請為此次購物體驗評價</h3>
 											
-										</button>
 									</div>
 									<div class="modal-body">
 										<div>
@@ -318,6 +310,22 @@ ion-icon {
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
 	<script>
+	 
+// 	function listOrder_detail(){
+// 		$.ajax({ 
+// 			  type:"POST",
+// 			  url:"${pageContext.request.contextPath}/front-end/order/order.do",
+// 			  data:{
+// 				  "order_no":"6002",
+// 				  "action": "listDetails_ByNo"
+// 			  },
+// 			  success: function(res) {
+// 				  $("#show").attr("style","display:block;");
+// 				  alert("ccc")
+// 				  },
+// 		})
+// 	}
+		
 		switch($("#con2").val()){
         		case "1":
         			$("#st1").css("color","#f6d04d");

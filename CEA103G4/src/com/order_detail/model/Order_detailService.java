@@ -41,7 +41,7 @@ public class Order_detailService {
 	}
 
 	public List<Order_detailVO> getOneOrder_detail(Integer order_no) {
-		return dao.findByPrimaryKey(order_no);
+		return dao.getAllByNo(order_no);
 	}
 	
 	public List<Order_detailVO> getAll() {

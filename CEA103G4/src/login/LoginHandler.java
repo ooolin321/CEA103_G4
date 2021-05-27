@@ -67,19 +67,13 @@ public class LoginHandler extends HttpServlet {
 
 				EmpService empSvc = new EmpService();
 				EmpVO empVO = empSvc.selectEmp(empno, empPwd);// 查詢資料庫是否有此員工
-
+				String url = "/back-end/backendLogin.jsp";
 				if (empVO == null) {
-					errorMsgs.put("empno", "帳號密碼不正確，請重新輸入");
-					String url = "/back-end/backendLogin.jsp";
-					RequestDispatcher failureView = req.getRequestDispatcher(url);
-					failureView.forward(req, res);
-				} else if(empVO.getState()==0) {
-						String quit = "quit";
-						req.setAttribute("quit", quit);
-						errorMsgs.put("empno", "此員工已離職");
-						RequestDispatcher failureView = req.getRequestDispatcher("back-end/backendLogin.jsp");
-						failureView.forward(req, res);
+					errorMsgs.put("empno", "帳號密碼不正確，請重新輸入");					
 				
+				} else if(empVO.getState()==0) {					
+						errorMsgs.put("empno", "此員工已離職");
+						
 				}else {
 					AuthService authSvc = new AuthService();	// 取得員工帳號的權限
 					List<AuthVO> authList = authSvc.getAuthNOs(empno);

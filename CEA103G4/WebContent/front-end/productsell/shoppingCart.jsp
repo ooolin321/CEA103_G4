@@ -233,6 +233,7 @@
     <script src="${pageContext.request.contextPath}/front-template/js/jquery.slicknav.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/owl.carousel.min.js"></script>
     <script src="${pageContext.request.contextPath}/front-template/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/front-template/js/products-search.js" ></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
 
 
@@ -276,7 +277,20 @@
    	 			  "user_id": "${order.user_id}",
    	 			  "action": "updateCount"
    	 		  },
-   	 		  success: function() {
+   	 		  success: function(res) {
+				  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>"); 
+				  $("#carts").html(cartproducts); 
+				  
+				  var carRes  = JSON.parse(res)
+				  var ibaCount = carRes["results"].length;
+				  $("#iba").html(ibaCount);
+
+				  var titlePrice = 0
+					carRes["results"].forEach(function (item,index) {
+						titlePrice += (item.product_price * item.product_quantity)
+					});
+				  $(".cart-price").html("$" + titlePrice);
+				  $("#cartHoverTotal").html("$" + titlePrice);
    	 			  }
    	 		  });
     	});
@@ -309,7 +323,20 @@
    	 			  "user_id": "${order.user_id}",
    	 			  "action": "updateCount"
    	 		  },
-   	 		  success: function() {
+   	 		  success: function(res) {
+				  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>"); 
+				  $("#carts").html(cartproducts); 
+				  
+				  var carRes  = JSON.parse(res)
+				  var ibaCount = carRes["results"].length;
+				  $("#iba").html(ibaCount);
+
+				  var titlePrice = 0
+					carRes["results"].forEach(function (item,index) {
+						titlePrice += (item.product_price * item.product_quantity)
+					});
+				  $(".cart-price").html("$" + titlePrice);
+				  $("#cartHoverTotal").html("$" + titlePrice);
    	 			  }
    	 		  });
     		}else if (event.target.matches('.Add${order.product_no}')){
@@ -326,7 +353,20 @@
    	 			  "user_id": "${order.user_id}",
    	 			  "action": "updateCount"
    	 		  },
-   	 		  success: function() {
+   	 		  success: function(res) {
+				  const cartproducts=cartProduct(res, "<%=request.getContextPath()%>"); 
+				  $("#carts").html(cartproducts); 
+				  
+				  var carRes  = JSON.parse(res)
+				  var ibaCount = carRes["results"].length;
+				  $("#iba").html(ibaCount);
+
+				  var titlePrice = 0
+					carRes["results"].forEach(function (item,index) {
+						titlePrice += (item.product_price * item.product_quantity)
+					});
+				  $(".cart-price").html("$" + titlePrice);
+				  $("#cartHoverTotal").html("$" + titlePrice);
    	 			  }
    	 		  });	
         	}

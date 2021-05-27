@@ -2,6 +2,7 @@ package com.customer_service.controller;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,38 +34,64 @@ public class CustomerWS {
 			throws IOException, JSONException {
 		
 		if (userName.startsWith("14")) {// 員工線上
+			System.out.println("empID = " + userSession.getId());
 			sessionsMapForEmp.put(userName, userSession);
 			Set<String> emps = sessionsMapForEmp.keySet();
 			Set<String> memNames = sessionsMapForMember.keySet();
+			System.out.println(memNames.size());
+			for(String mem : memNames) {
+				System.out.println(mem);
+			}
 			if (memNames.size() > 0) {
 				State stateMessage = new State();
 				stateMessage.setUsers(memNames);
-				stateMessage.setType("openEmp");
+				stateMessage.setType("memAvailable");
 				String stateMessageJson = gson.toJson(stateMessage);
 				userSession.getAsyncRemote().sendText(stateMessageJson);
-			}
-		else {
+				for(String memName : memNames) {
+					Session session = sessionsMapForMember.get(memName);
+					State stateMessage1 = new State();
+					stateMessage1.setUsers(emps);
+					stateMessage1.setType("empAvailable");
+					String stateMessageJson1 = gson.toJson(stateMessage1);
+					session.getAsyncRemote().sendText(stateMessageJson1);
+				}
+			}else {
 			State stateMessage = new State();
 			stateMessage.setUsers(emps);
 			stateMessage.setType("empAvailable");
 			String stateMessageJson = gson.toJson(stateMessage);
 			userSession.getAsyncRemote().sendText(stateMessageJson);
-		}
+			}
+			
+		
 		} else {
+			System.out.println("memID = " + userSession.getId());
+			Set<String> memNames = sessionsMapForMember.keySet();
 			Set<String> empNames = sessionsMapForEmp.keySet();
+System.out.println(empNames.size());
 			sessionsMapForMember.put(userName, userSession);
 			if (empNames.size() > 0) {
 				State stateMessage = new State();
-				stateMessage.setUsers(empNames);
-				stateMessage.setType("empAvailable");
+				State stateMessage1 = new State();
+				stateMessage.setUsers(memNames);
+				stateMessage1.setUsers(empNames);
+				stateMessage.setType("onMem");
+				stateMessage1.setType("empAvailable");
 				String stateMessageJson = gson.toJson(stateMessage);
-				userSession.getAsyncRemote().sendText(stateMessageJson);
+				String stateMessageJson1 = gson.toJson(stateMessage1);
+				for(String emp : empNames) {
+					sessionsMapForEmp.get(emp).getAsyncRemote().sendText(stateMessageJson);
+				}
+				userSession.getAsyncRemote().sendText(stateMessageJson1);
 			} else {
 				State stateMessage = new State();
 				stateMessage.setType("empNotAvailable");
 				String stateMessageJson = gson.toJson(stateMessage);
 				userSession.getAsyncRemote().sendText(stateMessageJson);
 			}
+//			empNames = new HashSet<String>();
+//			empNames.add(userName);
 		}
 	}
 

@@ -250,7 +250,10 @@ button.btn.btn-outline-info {
 
 		webSocket.onmessage = function(event) {
 			var jsonObj = JSON.parse(event.data);
-			if("openEmp"===jsonObj.type){
+			if("onMem"===jsonObj.type){
+				refreshFriendList(jsonObj);
+			}
+			if("memAvailable"===jsonObj.type){
 				refreshFriendList(jsonObj);
 			}
 // 			else if("empNotAvailable"===jsonObj.type){
@@ -330,7 +333,8 @@ button.btn.btn-outline-info {
 			Swal.fire({
   			icon: 'error',
 			//   title: 'Oops...',
-  			text: '請輸入訊息',
+			timer : 1500,
+  			text: '請輸入訊息'
 			//   footer: '<a href>Why do I have this issue?</a>',
 		  
 			});
@@ -340,7 +344,8 @@ button.btn.btn-outline-info {
 // 			alert("Choose a friend");
 			Swal.fire({
 				  icon: 'warning',
-				  text: '請選擇會員',
+				  timer : 1500,
+				  text: '請選擇會員'
 						  
 				});
 			inputMessage.focus();

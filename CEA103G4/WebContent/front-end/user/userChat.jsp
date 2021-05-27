@@ -360,7 +360,8 @@ color: black;
 // 			alert("Input a message");
 			Swal.fire({
   				icon: 'error',
-  				text: '請輸入訊息',		  
+  				timer : 1500,
+  				text: '請輸入訊息'		  
 			});
 			inputMessage.focus();
 		} 
@@ -368,7 +369,8 @@ color: black;
 // 			alert("Choose a friend");
 			Swal.fire({
 				 icon: 'warning',
-				 text: '請點選會員',				  
+				 timer : 1500,
+				 text: '請點選會員'				  
 			});
 			inputMessage.focus();
 		} 

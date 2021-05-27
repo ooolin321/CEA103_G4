@@ -753,7 +753,7 @@ public class OrderServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/order/update_order_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/orderManagement/OrderListB.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -788,7 +788,7 @@ public class OrderServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/order/update_order_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/orderManagement/OrderListB.jsp");
 				failureView.forward(req, res);
 			}
 		}

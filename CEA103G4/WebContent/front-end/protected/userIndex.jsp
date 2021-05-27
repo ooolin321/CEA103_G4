@@ -121,6 +121,23 @@
 	text-align:right;
 	padding-right: 10px; 
 }
+.me img{
+	max-width: 130px;
+}
+.friend {
+	float: left;
+	background-color: lightgray;
+	margin-left: 5px;
+	margin-bottom:10px;
+	padding:5px;
+	border-radius: 10px 10px 10px 0px;
+	width: auto;
+	text-align:left;
+	padding-left: 10px;
+}
+.friend img{
+	max-width: 130px;
+}
 #messagesArea ul {
 	list-style: none;
 	margin: 0;

@@ -227,12 +227,47 @@ h3 {
 															<td>${orderVO.order_price}</td>
 															<td>${orderVO.user_id}</td>
 															<td>
-															  <input type="hidden" name="srating" value="${orderVO.srating}" id="con2"/>
-								                        	  <ion-icon name="star" class="star" id="st1" style="font-size: 15px;"></ion-icon>
-															  <ion-icon name="star" class="star" id="st2" style="font-size: 15px;"></ion-icon>
-															  <ion-icon name="star" class="star" id="st3" style="font-size: 15px;"></ion-icon>
-															  <ion-icon name="star" class="star" id="st4" style="font-size: 15px;"></ion-icon>
-															  <ion-icon name="star" class="star" id="st5" style="font-size: 15px;"></ion-icon>
+																<c:if test="${orderVO.srating == 1}">
+														  <ion-icon name="star" class="star" id="st1" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st2" style="font-size: 15px;"></ion-icon>
+														  <ion-icon name="star" class="star" id="st3" style="font-size: 15px;"></ion-icon>
+														  <ion-icon name="star" class="star" id="st4" style="font-size: 15px;"></ion-icon>
+														  <ion-icon name="star" class="star" id="st5" style="font-size: 15px;"></ion-icon>
+														</c:if>
+														<c:if test="${orderVO.srating == 2}">
+														  <ion-icon name="star" class="star" id="st1" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st2" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st3" style="font-size: 15px;"></ion-icon>
+														  <ion-icon name="star" class="star" id="st4" style="font-size: 15px;"></ion-icon>
+														  <ion-icon name="star" class="star" id="st5" style="font-size: 15px;"></ion-icon>
+														</c:if>
+														<c:if test="${orderVO.srating == 3}">
+														  <ion-icon name="star" class="star" id="st1" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st2" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st3" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st4" style="font-size: 15px;"></ion-icon>
+														  <ion-icon name="star" class="star" id="st5" style="font-size: 15px;"></ion-icon>
+														</c:if>
+														<c:if test="${orderVO.srating == 4}">
+														  <ion-icon name="star" class="star" id="st1" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st2" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st3" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st4" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st5" style="font-size: 15px;"></ion-icon>
+														</c:if>
+														<c:if test="${orderVO.srating == 5}">
+														  <ion-icon name="star" class="star" id="st1" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st2" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st3" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st4" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st5" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														</c:if>
+<%-- 															  <input type="hidden" name="srating" value="${orderVO.srating}" id="con2"/> --%>
+<!-- 								                        	  <ion-icon name="star" class="star" id="st1" style="font-size: 15px;"></ion-icon> -->
+<!-- 															  <ion-icon name="star" class="star" id="st2" style="font-size: 15px;"></ion-icon> -->
+<!-- 															  <ion-icon name="star" class="star" id="st3" style="font-size: 15px;"></ion-icon> -->
+<!-- 															  <ion-icon name="star" class="star" id="st4" style="font-size: 15px;"></ion-icon> -->
+<!-- 															  <ion-icon name="star" class="star" id="st5" style="font-size: 15px;"></ion-icon> -->
 															</td>
 															<td>${orderVO.srating_content}</td>
 														</tr>
@@ -279,25 +314,25 @@ h3 {
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
 	<script>
-	switch($("#con2").val()){
-        		case "1":
-        			$("#st1").css("color","#f6d04d");
-        			break;
-        		case "2":
-        			$("#st1,#st2").css("color","#f6d04d");
-        			break;
-        		case "3":
-        			$("#st1,#st2,#st3").css("color","#f6d04d");
-        			break;
-        		case "4":
-        			$("#st1,#st2,#st3,#st4").css("color","#f6d04d");
-        			break;
-        		case "5":
-        			$("#st1,#st2,#st3,#st4,#st5").css("color","#f6d04d");
-        			break;
-        		default:
-        			$("#st1,#st2,#st3,#st4,#st5").css("color","black");
-        		}
+// 	switch($("#con2").val()){
+//         		case "1":
+//         			$("#st1").css("color","#f6d04d");
+//         			break;
+//         		case "2":
+//         			$("#st1,#st2").css("color","#f6d04d");
+//         			break;
+//         		case "3":
+//         			$("#st1,#st2,#st3").css("color","#f6d04d");
+//         			break;
+//         		case "4":
+//         			$("#st1,#st2,#st3,#st4").css("color","#f6d04d");
+//         			break;
+//         		case "5":
+//         			$("#st1,#st2,#st3,#st4,#st5").css("color","#f6d04d");
+//         			break;
+//         		default:
+//         			$("#st1,#st2,#st3,#st4,#st5").css("color","black");
+//         		}
 	$(document).ready(function(){
 		$("#AllCheck").change(function() {
 			if ($("#AllCheck").is(":checked")) {

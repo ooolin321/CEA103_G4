@@ -217,7 +217,7 @@
 		closelist.style.visibility="hidden";
 		if("${userVO.user_id}" == ""){
 			login();
-		}else if("${userVO.user_id}" == "${productVO.user_id}"){
+		}else if("${userVO.user_id}" == "${seller}"){
 			Swal.fire({
 	  			  icon: 'error',
 	  			  title: '很抱歉,無法私訊自己',

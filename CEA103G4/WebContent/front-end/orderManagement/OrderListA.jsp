@@ -144,30 +144,12 @@ ion-icon {
 													<td style="text-align: center;">
 														<!-- Button trigger modal --> 
   														<c:if test="${orderVO.logisticsstate==1}">
-  														
-<%--   														<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do"> --%>
-<!-- 														<input type="hidden" name="action" value="cancel"> -->
-<%-- 														<input type="hidden" name="order_no" value="${orderVO.order_no}"> --%>
-<%-- 														<input type="hidden" name="order_price" value="${orderVO.order_price}" > --%>
-<%-- 														<input type="hidden" name="cash" value="${userVO.cash}"> --%>
-<%-- 														<input type="hidden" name="user_id" value="${userVO.user_id}"> --%>
-<!-- 														<button class="btn btn-danger" id="cancel_btn">取消</button> -->
-<!-- 														</FORM> -->
-  														
 														<input type="hidden" value="${orderVO.seller_id}">
 														<button class="btn btn-info" id="srating_btn" data-toggle="modal" data-target="#${orderVO.order_no}">評價</button>
 														<input type="hidden" value="${orderVO.order_no}">
 														</c:if>
 														<c:if test="${orderVO.logisticsstate==0}">
 														<button class="btn btn-info" id="srating_btn" disabled>評價</button>
-<%-- 														<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/order.do"> --%>
-<!-- 														<input type="hidden" name="action" value="cancel"> -->
-<%-- 														<input type="hidden" name="order_no" value="${orderVO.order_no}"> --%>
-<%-- 														<input type="hidden" name="order_price" value="${orderVO.order_price}" > --%>
-<%-- 														<input type="hidden" name="cash" value="${userVO.cash}"> --%>
-<%-- 														<input type="hidden" name="user_id" value="${userVO.user_id}"> --%>
-<!-- 														<button class="btn btn-danger" id="cancel_btn">取消</button> -->
-<!-- 														</FORM> -->
 														</c:if>
 													</td>
 												</tr>
@@ -211,20 +193,53 @@ ion-icon {
 												<c:if test="${orderVO.logisticsstate==2 && orderVO.srating != 0}">
 												<tr>
 													<td>
-<%-- 														<a onclick="listOrder_detail();">${orderVO.order_no}</a> --%>
-<%-- 														<input type="hidden" name="order_no" value="${orderVO.order_no}"/> --%>
 													<a href="${pageContext.request.contextPath}/front-end/order/order.do?action=listDetails_ByNo&order_no=${orderVO.order_no}">${orderVO.order_no}</a>
 													</td>
 													<td><fmt:formatDate value="${orderVO.order_date}" pattern="yyyy-MM-dd" /></td>
 													<td>${orderVO.order_price}</td>
 													<td><a href="<%=request.getContextPath()%>/SellerProducts?user_id=${orderVO.seller_id}" target="_blank">${orderVO.seller_id}</a></td>
 													<td>
-													  <input type="hidden" name="srating" value="${orderVO.srating}" id="con2"/>
-						                        	  <ion-icon name="star" class="star" id="st1" style="font-size: 15px;"></ion-icon>
-													  <ion-icon name="star" class="star" id="st2" style="font-size: 15px;"></ion-icon>
-													  <ion-icon name="star" class="star" id="st3" style="font-size: 15px;"></ion-icon>
-													  <ion-icon name="star" class="star" id="st4" style="font-size: 15px;"></ion-icon>
-													  <ion-icon name="star" class="star" id="st5" style="font-size: 15px;"></ion-icon>
+														<c:if test="${orderVO.srating == 1}">
+														  <ion-icon name="star" class="star" id="st1" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st2" style="font-size: 15px;"></ion-icon>
+														  <ion-icon name="star" class="star" id="st3" style="font-size: 15px;"></ion-icon>
+														  <ion-icon name="star" class="star" id="st4" style="font-size: 15px;"></ion-icon>
+														  <ion-icon name="star" class="star" id="st5" style="font-size: 15px;"></ion-icon>
+														</c:if>
+														<c:if test="${orderVO.srating == 2}">
+														  <ion-icon name="star" class="star" id="st1" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st2" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st3" style="font-size: 15px;"></ion-icon>
+														  <ion-icon name="star" class="star" id="st4" style="font-size: 15px;"></ion-icon>
+														  <ion-icon name="star" class="star" id="st5" style="font-size: 15px;"></ion-icon>
+														</c:if>
+														<c:if test="${orderVO.srating == 3}">
+														  <ion-icon name="star" class="star" id="st1" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st2" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st3" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st4" style="font-size: 15px;"></ion-icon>
+														  <ion-icon name="star" class="star" id="st5" style="font-size: 15px;"></ion-icon>
+														</c:if>
+														<c:if test="${orderVO.srating == 4}">
+														  <ion-icon name="star" class="star" id="st1" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st2" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st3" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st4" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st5" style="font-size: 15px;"></ion-icon>
+														</c:if>
+														<c:if test="${orderVO.srating == 5}">
+														  <ion-icon name="star" class="star" id="st1" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st2" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st3" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st4" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														  <ion-icon name="star" class="star" id="st5" style="font-size: 15px; color:#f6d04d"></ion-icon>
+														</c:if>
+<%-- 													  <input type="hidden" name="srating" value="${orderVO.srating}" id="con2"/> --%>
+<!-- 						                        	  <ion-icon name="star" class="star" id="st1" style="font-size: 15px;"></ion-icon> -->
+<!-- 													  <ion-icon name="star" class="star" id="st2" style="font-size: 15px;"></ion-icon> -->
+<!-- 													  <ion-icon name="star" class="star" id="st3" style="font-size: 15px;"></ion-icon> -->
+<!-- 													  <ion-icon name="star" class="star" id="st4" style="font-size: 15px;"></ion-icon> -->
+<!-- 													  <ion-icon name="star" class="star" id="st5" style="font-size: 15px;"></ion-icon> -->
 													</td>
 													<td>${orderVO.srating_content}</td>
 												</tr>
@@ -236,7 +251,6 @@ ion-icon {
 								<% if (request.getAttribute("listDetails_ByNo") != null) { %>
 								<jsp:include page="listDetails_ByNo.jsp" />
 								<% 	}  %>
-<%-- 									<div id="show" style="display: none;"><jsp:include page="listDetails_ByNo.jsp"/>xxx</div> --%>
 								<!-- 				form -->
 							</div>
 						</div>
@@ -311,40 +325,25 @@ ion-icon {
 		src="<%=request.getContextPath()%>/back-template/docs/js/plugins/chart.js"></script>
 	<script>
 	 
-// 	function listOrder_detail(){
-// 		$.ajax({ 
-// 			  type:"POST",
-// 			  url:"${pageContext.request.contextPath}/front-end/order/order.do",
-// 			  data:{
-// 				  "order_no":"6002",
-// 				  "action": "listDetails_ByNo"
-// 			  },
-// 			  success: function(res) {
-// 				  $("#show").attr("style","display:block;");
-// 				  alert("ccc")
-// 				  },
-// 		})
-// 	}
-		
-		switch($("#con2").val()){
-        		case "1":
-        			$("#st1").css("color","#f6d04d");
-        			break;
-        		case "2":
-        			$("#st1,#st2").css("color","#f6d04d");
-        			break;
-        		case "3":
-        			$("#st1,#st2,#st3").css("color","#f6d04d");
-        			break;
-        		case "4":
-        			$("#st1,#st2,#st3,#st4").css("color","#f6d04d");
-        			break;
-        		case "5":
-        			$("#st1,#st2,#st3,#st4,#st5").css("color","#f6d04d");
-        			break;
-        		default:
-        			$("#st1,#st2,#st3,#st4,#st5").css("color","black");
-        		}
+// 		switch($("input #con2").val()){
+//         		case "1":
+//         			$("#st1").css("color","#f6d04d");
+//         			break;
+//         		case "2":
+//         			$("#st1,#st2").css("color","#f6d04d");
+//         			break;
+//         		case "3":
+//         			$("#st1,#st2,#st3").css("color","#f6d04d");
+//         			break;
+//         		case "4":
+//         			$("#st1,#st2,#st3,#st4").css("color","#f6d04d");
+//         			break;
+//         		case "5":
+//         			$("#st1,#st2,#st3,#st4,#st5").css("color","#f6d04d");
+//         			break;
+//         		default:
+//         			$("#st1,#st2,#st3,#st4,#st5").css("color","black");
+//         		}
 	
 	$(document).ready(function(){
 		$("button").click(function(){ //呼叫燈箱

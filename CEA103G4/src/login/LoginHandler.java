@@ -105,12 +105,7 @@ public class LoginHandler extends HttpServlet {
 					// (-->如無來源網頁:則重導至login_success.jsp)
 
 				}
-					if (!errorMsgs.isEmpty()) {
-						req.setAttribute("empVO", empVO);
-						RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
-						failureView.forward(req, res);
-						return;
-					}
+					
 			} catch (Exception e) {
 				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/backendLogin.jsp");
 				failureView.forward(req, res);

@@ -201,7 +201,7 @@ color: black;
 </style>
 
 </head>
-<body class="app sidebar-mini rtl" onload="connect()" onunload="disconnect(); ">
+<body class="app sidebar-mini rtl" onload="connect();" onunload="disconnect()">
  <%@include file="/front-end/user/userSidebar.jsp"%>
               <main class="app-content">
                 <div class="app-title">
@@ -225,6 +225,7 @@ color: black;
 <!-- 			<input type="button" -->
 <!-- 			onclick="history.back()" value="回到上一頁"></input> -->
 	</div>
+	</main>
          <jsp:include page="/front-end/protected/userIndex_footer.jsp" />
          <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
          <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -257,7 +258,7 @@ color: black;
 			if("openEmp"===jsonObj.type){
 				refreshFriendList(jsonObj);
 			}else if("empAvailable"===jsonObj.type){
-console.log("222");
+
 				messagesArea.innerHTML = '';
 				var ul = document.createElement('ul');
 				ul.id = "area";
@@ -324,7 +325,7 @@ console.log("222");
 				var li = document.createElement('li');
 				li.id = "lis";
 				var span = document.createElement('span');
-
+				
 				jsonObj.sender === self ? li.className = 'me' : li.className = 'friend';
 				jsonObj.sender === self ? span.id = 'time' : span.id = 'friendtime';
 				li.innerHTML = jsonObj.message;
@@ -393,7 +394,7 @@ console.log(jsonObj);
 		row.innerHTML = '';
 		for (var i = 0; i < friends.length; i++) {
 			if (friends[i] === self) { continue; }//從所有好友列表排除自己的帳號
-			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><img class="rounded-circle" width="45px" height="40px" style="margin-right: 10px;" src="<%=request.getContextPath()%>/front-template/images/01.png" /><div class="primary-btn">' + friends[i] + '</div></div>';
+			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><img class="rounded-circle" width="50px" height="50px" style="margin-right: 10px;" src="<%=request.getContextPath()%>/front-template/images/01.png" /><div class="primary-btn">' + friends[i] + '</div></div>';
 		}
 		addListener();
 	}
@@ -426,6 +427,7 @@ console.log(jsonObj.time);
 	function updateFriendName(name) {
 		statusOutput.innerHTML = name;
 	}
+	
 
 // 	function ShowTime(){
 // 		　var NowDate=new Date();
@@ -436,5 +438,6 @@ console.log(jsonObj.time);
 // 		　setTimeout('ShowTime()',1000);
 // 		}
 </script>
+
          </body>
 </html>

@@ -19,6 +19,7 @@ public class ChatMessage {
 		this.sender = sender;
 		this.receiver = receiver;
 		this.message = message;
+
 	}
 
 	public String getType() {

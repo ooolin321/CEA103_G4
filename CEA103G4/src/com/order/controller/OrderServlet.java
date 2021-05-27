@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import com.live_order.model.Live_orderService;
 import com.live_order_detail.model.Live_order_detailVO;
+import com.notice.model.NoticeService;
 import com.order.model.OrderService;
 import com.order.model.OrderVO;
 import com.order_detail.model.Order_detailService;
@@ -899,6 +900,7 @@ public class OrderServlet extends HttpServlet {
 					
 					Vector<ProductVO> productlist = mBuylist.get(seller_id);
 					System.out.println("訂單筆數為:"+productlist.size());
+
 					for (ProductVO asd : productlist) {
 						Order_detailVO order_detailVO = new Order_detailVO();
 						
@@ -926,7 +928,7 @@ public class OrderServlet extends HttpServlet {
 							System.out.println("產品： "+ asd.getProduct_no()+"庫存： "+remaining+"已售出： "+sold+"商品狀態： "+asd.getProduct_state());
 							productSvc.updateProductRemaining(asd.getProduct_no(), remaining ,sold, 3);//售完狀態變更為已售出
 						}
-					}
+					}					
 
 					/*************************** 2.開始修改資料 ***************************************/
 					OrderService orderSvc = new OrderService();

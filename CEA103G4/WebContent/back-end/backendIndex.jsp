@@ -114,7 +114,7 @@
 					<div class="info">
 						<h4>直播間</h4>
 						<sql:query var="rs" dataSource="${xxx}" startRow="0">
-    						 SELECT LIVE_ID FROM LIVE
+    						 SELECT LIVE_ID FROM LIVE WHERE LIVE_STATE = 2;
  						 </sql:query>
 						<p>
 							<b>${rs.rowCount}</b>
@@ -269,23 +269,36 @@
 // 			} ]
 // 		};
 				
-				<sql:query var="rs3" dataSource="${xxx}" startRow="0">
+				<sql:query var="rs6" dataSource="${xxx}" startRow="0">
 				SELECT * FROM PRODUCT ;
  				</sql:query>
- 				
-				<sql:query var="rs2" dataSource="${xxx}" startRow="0">
+ 				<sql:query var="rs5" dataSource="${xxx}" startRow="0">
+				SELECT * FROM PRODUCT where PRODUCT_STATE = 5;
+ 				</sql:query>
+				<sql:query var="rs3" dataSource="${xxx}" startRow="0">
 				SELECT * FROM PRODUCT where PRODUCT_STATE = 3;
  				</sql:query>
+				<sql:query var="rs0" dataSource="${xxx}" startRow="0">
+				SELECT * FROM PRODUCT where PRODUCT_STATE = 0;
+ 				</sql:query>
 		var pdata = [ {
-			value : ${rs3.rowCount},
+			value : ${rs6.rowCount},
 			color : "#46BFBD",
 			highlight : "#5AD3D1",
 			label : "商品總上架數"}, {
-			value : ${rs2.rowCount},
+			value : ${rs3.rowCount},
 			color : "#F7464A",
 			highlight : "#FF5A5E",
-			label : "已售出"
-		} ]
+			label : "已售出"},{
+			value : ${rs5.rowCount},
+			color : "#B766AD",
+			highlight : "#CA8EC2",
+			label : "檢舉下架"}, {
+			value : ${rs0.rowCount},
+			color : "#F9F900",
+			highlight : "#FFFF93",
+			label : "待售"} ]
+			
 
 // 				var ctxl = $("#lineChartDemo").get(0).getContext("2d");
 // 				var lineChart = new Chart(ctxl).Line(data);

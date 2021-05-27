@@ -68,9 +68,8 @@
 	type="text/css" />
 <style>
 .nav-item .nav-menu {
-margin-left: 85px;
+	margin-left: 85px;
 }
-
 
 #messagesArea {
 	height: 500px;
@@ -109,8 +108,7 @@ input {
 }
 
 .report {
-  height: 410px;
-
+	height: 410px;
 }
 
 @media ( min-width : 768px) {
@@ -127,28 +125,24 @@ input {
 }
 
 @media only screen and (max-width: 479px) {
-#player{
- height: 240px;
- margin-left: 12px;
+	#player {
+		height: 240px;
+		margin-left: 12px;
+	}
+	#messagesArea {
+		height: 350px;
+		width: 100%;
+		border: 1px solid #bbbbbb;
+		overflow-y: scroll;
+		display: inline-block;
+		right: 30px;
+		margin-top: 10px;
+		margin-left: 11px;
+	}
+	.report {
+		height: 520px;
+	}
 }
-#messagesArea {
-    height: 350px;
-    width: 100%;
-    border: 1px solid #bbbbbb;
-    overflow-y: scroll;
-    display: inline-block;
-    right: 30px;
-    margin-top: 10px;
-    margin-left: 11px;
-}
-.report {
-height: 520px;
-
-}
-
-}
-
-
 </style>
 </head>
 
@@ -273,7 +267,8 @@ height: 520px;
 				<nav class="nav-menu mobile-menu">
 					<ul>
 						<li class="active" id="nav-index"><a
-							href="${pageContext.request.contextPath}/front-end/index.jsp" style="border-left: 2px solid #3b3b3b;">首頁</a></li>
+							href="${pageContext.request.contextPath}/front-end/index.jsp"
+							style="border-left: 2px solid #3b3b3b;">首頁</a></li>
 						<li><a
 							href="<%=request.getContextPath()%>/front-end/productsell/shop.jsp">商品專區</a></li>
 						<li><a
@@ -287,7 +282,8 @@ height: 520px;
 						<li><a
 							href="<%=request.getContextPath()%>/front-end/protected/userIndex.jsp">會員專區<i
 								class="icon_profile"></i></a></li>
-						<li><a href="#">線上客服&nbsp;<i class="fa fa-comment-o"></i></a></li>
+						<li><a
+							href="<%=request.getContextPath()%>/front-end/qa/qna.jsp">常見問題</a></li>
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -349,39 +345,43 @@ height: 520px;
 	<div class="row">
 		<div class="col-xl-9">
 			<div class="tile">
-			<div style="margin-top:10px;">
-				<h3 class="tile-title" style="display:inline-block">直播拍賣商品</h3>
+				<div style="margin-top: 10px;">
+					<h3 class="tile-title" style="display: inline-block">直播拍賣商品</h3>
 					<button id="reportLink" class="primary-btn userReport"
-						style="float:right;border:none;border-radius: 10px;" value="${userVO.user_id}">直播檢舉</button>
-				
-			</div>	
+						style="float: right; border: none; border-radius: 10px;"
+						value="${userVO.user_id}">直播檢舉</button>
+
+				</div>
 				<!--檢舉燈箱 -->
 				<div class="report-bg">
-					<div class="report" >
+					<div class="report">
 						<div class="report-title" value="${liveVO.live_no}">
-							檢舉直播編號：${liveVO.live_no} <span><a
-								href="javascript:;" id="closeBtn">關閉</a></span>
+							檢舉直播編號：${liveVO.live_no} <span><a href="javascript:;"
+								id="closeBtn">關閉</a></span>
 						</div>
 
 						<div class="report-input-content">
 							<div class="report-input">
 								<label for="">檢舉內容</label> <input type="text"
-									placeholder="請輸入檢舉原因" style="background-color:white;color:black;" name="pro_report_content" size="50"
-									required>
+									placeholder="請輸入檢舉原因"
+									style="background-color: white; color: black;"
+									name="pro_report_content" size="50" required>
 							</div>
 						</div>
 						<div class="report-input-pic">
 							<div class="report-input">
-								<label for="">檢舉圖片</label> 
+								<label for="">檢舉圖片</label>
 								<form enctype="multipart/form-data" id="uploadForm">
-								<input name="photo" type="file" style="background-color:white;" id="imgInp" accept="image/gif, image/jpeg, image/png">
+									<input name="photo" type="file"
+										style="background-color: white;" id="imgInp"
+										accept="image/gif, image/jpeg, image/png">
 								</form>
 							</div>
 						</div>
 						<div class="report-input-pic">
 							<div class="report-input">
-								<label for="">圖片預覽</label>
-								<img id="preview_img" src="#" style="display: none;" />
+								<label for="">圖片預覽</label> <img id="preview_img" src="#"
+									style="display: none;" />
 							</div>
 						</div>
 						<div class="report-button">
@@ -502,6 +502,7 @@ function refresh(){
 			for(let i of str){
 				if(i.product_state == 2 && i.user_id == '${liveVO.user_id}' && i.live_no == ${liveVO.live_no}){
 					let str = "<tr>";
+					
 					str+="<td>"+i.live_no+"</td>";
 					str+="<td>"+i.product_no+"</td>";
 // 					str+="<td>"+i.product_photo+"</td>";
@@ -933,9 +934,14 @@ function refresh(){
 							})
 					}, 1);
 				}else{
-					
 					setTimeout(function(){
-						Swal.fire('現在拍賣的商品:\n#'+$("#showProduct").find("td").eq(1).html()+'\n商品名稱:'+$("#showProduct").find("td").eq(2).html()+"\n最高出價者:"+$("#current_id").html()+"\n目前最高價:"+$("#current_price").html())
+						Swal.fire({
+							  title: '現在拍賣的商品:\n#'+$("#showProduct").find("td").eq(1).html()+'\n商品名稱:'+$("#showProduct").find("td").eq(2).html()+"\n最高出價者:"+$("#current_id").html()+"\n目前最高價:"+$("#current_price").html(),
+							  imageUrl: '<%=request.getContextPath()%>/ProductShowPhoto?product_no='+$("#showProduct").find("td").eq(1).html(),
+							  imageWidth: 200,
+							  imageHeight: 200,
+							  imageAlt: 'Custom image',
+							})
 					}, 1);
 				}
 				inputMessage.value = "";

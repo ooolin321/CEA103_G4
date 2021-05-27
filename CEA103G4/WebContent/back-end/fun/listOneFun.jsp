@@ -8,8 +8,7 @@
 	pageContext.setAttribute("list", list);
 %>
 
-<jsp:useBean id="getOne_For_Update" scope="request"
-	type="java.util.Set<AuthVO>" />
+<jsp:useBean id="getOne_For_Update" scope="request" type="java.util.Set<AuthVO>" />
 
 <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 <jsp:useBean id="funSvc" scope="page" class="com.fun.model.FunService" />
@@ -79,10 +78,10 @@
 									</tr>
 								</thead>
 								<tbody>
-		<%@ include file="page1.file"%>
-		<c:forEach var="authVO" items="${getOne_For_Update}" begin="<%=pageIndex%>"
-			end="<%=pageIndex+rowsPerPage-1%>">
-<%-- 									<c:forEach var="authVO" items="${getOne_For_Update}"> --%>
+<%-- 		<%@ include file="page1.file"%> --%>
+<%-- 		<c:forEach var="authVO" items="${getOne_For_Update}" begin="<%=pageIndex%>" --%>
+<%-- 			end="<%=pageIndex+rowsPerPage-1%>"> --%>
+									<c:forEach var="authVO" items="${getOne_For_Update}">
 										<tr>
 											<td>${authVO.empno}</td>
 											<td>${empSvc.getOneEmp(authVO.empno).ename}</td>
@@ -119,7 +118,7 @@
 					</div>
 				</div>
 			</div>
-			<%@ include file="page2.file"%>
+<%-- 			<%@ include file="page2.file"%> --%>
 	</main>
 	<jsp:include page="/back-end/backendfooter.jsp" />
 </body>

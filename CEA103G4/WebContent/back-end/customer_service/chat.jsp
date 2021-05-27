@@ -184,7 +184,7 @@ button.btn.btn-outline-info {
 </style>
 <title>Made Femme 客服聊天室</title>
 </head>
-<body class="app sidebar-mini rtl  pace-done" onload="connect()	"
+<body class="app sidebar-mini rtl  pace-done" onload="connect();"
 	onunload="disconnect(); ">
 	<jsp:include page="/back-end/backendMenu.jsp" />
 	<main class="app-content">
@@ -310,11 +310,11 @@ button.btn.btn-outline-info {
 
 		webSocket.onclose = function(event) {
 			console.log("Disconnected!");
-			var friends = jsonObj.users;
-			console.log(friends);
-			var chatArea = document.getElementsByClassName("friendName");
-			console.log(chatArea);
-			chatArea.remove();
+// 			var friends = jsonObj.users;
+// 			console.log(friends);
+// 			var chatArea = document.getElementsByClassName("friendName");
+// 			console.log(chatArea);
+// 			chatArea.remove();
 		};
 	}
 	
@@ -367,7 +367,7 @@ button.btn.btn-outline-info {
 		
 		for (var i = 0; i < friends.length; i++) {
 			if (friends[i] === self) { continue; }//從所有好友列表排除自己的帳號
-			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' > <img class="rounded-circle" width="45px" height="40px"  src="${pageContext.request.contextPath}/UserShowPhoto?user_id='+friends[i]+'" /> <button class="btn btn-outline-info">' + friends[i] + '</button></div>';
+			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' > <img class="rounded-circle" width="50px" height="50px"  src="${pageContext.request.contextPath}/UserShowPhoto?user_id='+friends[i]+'" /> <button class="btn btn-outline-info">' + friends[i] + '</button></div>';
 		}
 		addListener();
 	}
@@ -401,18 +401,17 @@ button.btn.btn-outline-info {
 	function updateFriendName(name) {
 		statusOutput.innerHTML = name;
 	}
-
-	function ShowTime(){
-		　var NowDate=new Date();
-		　var h=NowDate.getHours();
-		　var m=NowDate.getMinutes();
-		　var s=NowDate.getSeconds();　
-		　document.getElementById('showbox').innerHTML = h+'時'+m+'分'+s+'秒';
-		　setTimeout('ShowTime()',1000);
-	}
+	
+// 	function ShowTime(){
+// 		　var NowDate=new Date();
+// 		　var h=NowDate.getHours();
+// 		　var m=NowDate.getMinutes();
+// 		　var s=NowDate.getSeconds();　
+// 		　document.getElementById('showbox').innerHTML = h+'時'+m+'分'+s+'秒';
+// 		　setTimeout('ShowTime()',1000);
+// 	}
 </script>
 
 
-</body>
 
 </html>

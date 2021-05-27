@@ -114,7 +114,7 @@
 					<div class="info">
 						<h4>直播間</h4>
 						<sql:query var="rs" dataSource="${xxx}" startRow="0">
-    						 SELECT LIVE_ID FROM LIVE
+    						 SELECT LIVE_ID FROM LIVE WHERE LIVE_STATE = 2;
  						 </sql:query>
 						<p>
 							<b>${rs.rowCount}</b>

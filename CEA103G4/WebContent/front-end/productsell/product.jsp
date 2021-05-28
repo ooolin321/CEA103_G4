@@ -376,6 +376,7 @@
 								<div class="tab-pane fade" id="tab-3" role="tabpanel">
 									<div class="customer-review-option">
 										<h4>${userSvc.getOneUser(productVO.user_id).comment_total} 評價</h4>
+										<c:if test="${userSvc.getOneUser(productVO.user_id).user_comment != 0}">
 										<div class="comment-option">
 										<c:forEach var="seller" items="${orderSvc.getAllByID2(productVO.user_id)}" begin="0" end="${list2.size()}">
 											<div class="co-item">
@@ -399,6 +400,7 @@
 											</div>
 											 </c:forEach>
 										</div>
+									</c:if>
 <!-- 										<div class="leave-comment"> -->
 <!-- 											<h4>Leave A Comment</h4> -->
 <!-- 											<form action="#" class="comment-form"> -->

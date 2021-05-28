@@ -386,11 +386,11 @@
 												<div class="avatar-text">
 													<div class="at-rating">
 													<input type="hidden"  value="${seller.srating}"  id="star${seller.order_no}"/>
-                        	 							 <i class="fa fa-star-o" id="star1"></i>
-							 							 <i class="fa fa-star-o" id="star2"></i>
-							 							 <i class="fa fa-star-o" id="star3"></i>
-							 							 <i class="fa fa-star-o" id="star4"></i>
-							 							 <i class="fa fa-star-o" id="star5"></i>
+                        	 							 <i class="fa fa-star-o" id="s1${seller.order_no}"></i>
+							 							 <i class="fa fa-star-o" id="s2${seller.order_no}"></i>
+							 							 <i class="fa fa-star-o" id="s3${seller.order_no}"></i>
+							 							 <i class="fa fa-star-o" id="s4${seller.order_no}"></i>
+							 							 <i class="fa fa-star-o" id="s5${seller.order_no}"></i>
 													</div>
 													<h5>
 														${seller.user_id} <span><fmt:formatDate value="${seller.order_date}" pattern="yyyy-MM-dd" /></span>
@@ -840,19 +840,19 @@
     $(document).ready(function(){
 		switch($("#star${seller.order_no}").val()){
 		case "1":
-			$("#star1").removeClass("fa fa-star-o").addClass("fa fa-star");
+			$("#s1${seller.order_no}").removeClass("fa fa-star-o").addClass("fa fa-star");
 			break;
 		case "2":
-			$("#star1,#star2").removeClass("fa fa-star-o").addClass("fa fa-star");
+			$("#s1${seller.order_no},#s2${seller.order_no}").removeClass("fa fa-star-o").addClass("fa fa-star");
 			break;
 		case "3":
-			$("#star1,#star2,#star3").removeClass("fa fa-star-o").addClass("fa fa-star");
+			$("#s1${seller.order_no},#s2${seller.order_no},#s3${seller.order_no}").removeClass("fa fa-star-o").addClass("fa fa-star");
 			break;
 		case "4":
-			$("#star1,#star2,#star3,#star4").removeClass("fa fa-star-o").addClass("fa fa-star");
+			$("#s1${seller.order_no},#s2${seller.order_no},#s3${seller.order_no},#s4${seller.order_no}").removeClass("fa fa-star-o").addClass("fa fa-star");
 			break;
 		case "5":
-			$("#star1,#star2,#star3,#star4,#star5").removeClass("fa fa-star-o").addClass("fa fa-star");
+			$("#s1${seller.order_no},#s2${seller.order_no},#s3${seller.order_no},#s4${seller.order_no},#s5${seller.order_no}").removeClass("fa fa-star-o").addClass("fa fa-star");
 			break;
 		default:
 

@@ -842,7 +842,6 @@ function refresh(){
 					
 				$("#showProduct").empty();
 				$('#some_div').empty();
-				refresh();
 
 				$("#current_price").text(jsonObj.maxPrice);
 				$("#current_id").text("結束囉");

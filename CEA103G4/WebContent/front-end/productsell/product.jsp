@@ -379,7 +379,7 @@
 										<c:if test="${userSvc.getOneUser(productVO.user_id).user_comment != 0}">
 										<div class="comment-option">
 										<c:forEach var="seller" items="${orderSvc.getAllByID2(productVO.user_id)}" begin="0" end="${list2.size()}">
-										<c:if test="${seller.srating} != 0}">
+										<c:if test="${seller.srating != 0}">
 											<div class="co-item">
 												<div class="avatar-pic">
 													<img src="${pageContext.request.contextPath}/UserShowPhoto?user_id=${seller.user_id}" alt="" />
